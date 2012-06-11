@@ -3,9 +3,11 @@
  *****************************************************************************
  * Copyright (C) 2008 Pierre d'Herbemont
  * Copyright (C) 2008 VLC authors and VideoLAN
+ * Copyright (C) 2012 Brendon Justin
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
+ *          Brendon Justin <brendonjustin # gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -157,6 +159,7 @@
     {
         NSString * videoCodec = [transcodingOptions objectForKey:@"videoCodec"];
         NSString * audioCodec = [transcodingOptions objectForKey:@"audioCodec"];
+        NSString * subtitleCodec = [transcodingOptions objectForKey:@"subtitleCodec"];
         NSString * videoBitrate = [transcodingOptions objectForKey:@"videoBitrate"];
         NSString * audioBitrate = [transcodingOptions objectForKey:@"audioBitrate"];
         NSString * channels = [transcodingOptions objectForKey:@"channels"];
@@ -165,6 +168,8 @@
         NSString * width = [transcodingOptions objectForKey:@"width"];
         NSString * audioSync = [transcodingOptions objectForKey:@"audioSync"];
         NSString * videoEncoder = [transcodingOptions objectForKey:@"videoEncoder"];
+        NSString * subtitleEncoder = [transcodingOptions objectForKey:@"subtitleEncoder"];
+        NSString * subtitleOverlay = [transcodingOptions objectForKey:@"subtitleOverlay"];
         if( videoEncoder )   [subOptions addObject:[NSString stringWithFormat:@"venc=%@", videoEncoder]];
         if( videoCodec )   [subOptions addObject:[NSString stringWithFormat:@"vcodec=%@", videoCodec]];
         if( videoBitrate ) [subOptions addObject:[NSString stringWithFormat:@"vb=%@", videoBitrate]];
@@ -175,6 +180,9 @@
         if( audioBitrate ) [subOptions addObject:[NSString stringWithFormat:@"ab=%@", audioBitrate]];
         if( channels ) [subOptions addObject:[NSString stringWithFormat:@"channels=%@", channels]];
         if( audioSync ) [subOptions addObject:[NSString stringWithFormat:@"audioSync", width]];
+        if( subtitleCodec ) [subOptions addObject:[NSString stringWithFormat:@"scodec=%@", subtitleCodec]];
+        if( subtitleEncoder ) [subOptions addObject:[NSString stringWithFormat:@"senc=%@", subtitleEncoder]];
+        if( subtitleOverlay ) [subOptions addObject:@"soverlay"];
         [optionsAsArray addObject: [NSString stringWithFormat:@"#transcode{%@}", [subOptions componentsJoinedByString:@","]]];
         [subOptions removeAllObjects];
     }
