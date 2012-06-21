@@ -16,8 +16,8 @@
 
 // Here comes the nasty hack.
 #define MODULE_STRING "VLCKit"
-#import "../../../../lib/media_player_internal.h"
-#import "../../../../lib/libvlc_internal.h"
+#import "../vlc-unstable/lib/media_player_internal.h"
+#import "../vlc-unstable/lib/libvlc_internal.h"
 
 static input_thread_t *libvlc_media_player_get_input_thread(libvlc_media_player_t *player)
 {
