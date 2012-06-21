@@ -281,9 +281,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = MobileVLCKit;
+				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
 			};
 			name = Debug;
 		};
@@ -296,9 +297,10 @@
 				DSTROOT = /tmp/MobileVLCKit.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../../include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = MobileVLCKit;
+				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
 			};
 			name = Release;
 		};
