@@ -53,7 +53,7 @@ static VLCLibrary * sharedLibrary = nil;
 {
     if (self = [super init])
     {
-        NSArray *vlcParams = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"VLCParams"];
+        NSArray *vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
         if (!vlcParams) {
             NSMutableArray *defaultParams = [NSMutableArray array];
             [defaultParams addObject:@"--play-and-pause"];                          // We want every movie to pause instead of stopping at eof
@@ -71,6 +71,10 @@ static VLCLibrary * sharedLibrary = nil;
             [defaultParams addObject:@"--text-renderer=quartztext"];                // our CoreText-based renderer
             [defaultParams addObject:@"--extraintf=macosx_dialog_provider"];        // Some extra dialog (login, progress) may come up from here
 #endif
+
+            [[NSUserDefaults standardUserDefaults] setObject:defaultParams forKey:@"VLCParams"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+
             vlcParams = defaultParams;
         }
 
