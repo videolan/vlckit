@@ -15,7 +15,7 @@ echo "PROJECT DIR = $PROJECT_DIR"
 
 VLC_ARCH="arm"
 ARCH="arm"
-VLC_SRC_DIR="$PROJECT_DIR/../../../.."
+VLC_SRC_DIR="$PROJECT_DIR/../../vlc"
 
 VLC_BUILD_DIR="$VLC_SRC_DIR/build-ios-OS"
 VLC_INSTALL_DIR="$VLC_SRC_DIR/install-ios-OS"

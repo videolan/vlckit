@@ -42,6 +42,16 @@
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		CCD5C82E15947E6B00AED565 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7A5ECAF911DE917B00F66AF3;
+			remoteInfo = "Aggregate static plugins";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		7A5ECB6211DE961B00F66AF3 /* Copy Headers */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -200,6 +210,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				CCD5C82F15947E6B00AED565 /* PBXTargetDependency */,
 			);
 			name = MobileVLCKit;
 			productName = MobileVLCKit;
@@ -267,6 +278,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CCD5C82F15947E6B00AED565 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7A5ECAF911DE917B00F66AF3 /* Aggregate static plugins */;
+			targetProxy = CCD5C82E15947E6B00AED565 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB921F08733DC00010E9CD /* Debug */ = {
