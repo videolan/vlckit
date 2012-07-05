@@ -302,6 +302,7 @@
 				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../vlc/include";
 				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
 				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
 			};
@@ -318,6 +319,7 @@
 				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/../vlc/include";
 				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
 				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
 			};
@@ -331,6 +333,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
@@ -343,6 +346,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 			};
@@ -354,6 +358,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "Aggregate static plugins";
 			};
 			name = Debug;
@@ -363,6 +368,7 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = "Aggregate static plugins";
 				ZERO_LINK = NO;
 			};
