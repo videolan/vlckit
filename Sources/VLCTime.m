@@ -99,13 +99,13 @@
         long long duration = [value longLongValue] / 1000;
         long long positiveDuration = llabs(duration);
         if( positiveDuration > 3600 )
-            return [NSString stringWithFormat:@"%s%01d:%02d:%02d",
+            return [NSString stringWithFormat:@"%s%01ld:%02ld:%02ld",
                         duration < 0 ? "-" : "",
                 (long) (positiveDuration / 3600),
                 (long)((positiveDuration / 60) % 60),
                 (long) (positiveDuration % 60)];
         else
-            return [NSString stringWithFormat:@"%s%02d:%02d",
+            return [NSString stringWithFormat:@"%s%02ld:%02ld",
                             duration < 0 ? "-" : "",
                     (long)((positiveDuration / 60) % 60),
                     (long) (positiveDuration % 60)];
@@ -128,13 +128,13 @@
         long seconds = positiveDuration % 60;
         const char * remaining = duration < 0 ? " remaining" : "";
         if (hours > 0)
-            return [NSString stringWithFormat:@"%d hours %d minutes%s", hours, mins, remaining];
+            return [NSString stringWithFormat:@"%ld hours %ld minutes%s", hours, mins, remaining];
         else if (mins > 5)
-            return [NSString stringWithFormat:@"%d minutes%s", mins, remaining];
+            return [NSString stringWithFormat:@"%ld minutes%s", mins, remaining];
         else if (mins > 0)
-            return [NSString stringWithFormat:@"%d minutes %d seconds%s", mins, seconds, remaining];
+            return [NSString stringWithFormat:@"%ld minutes %ld seconds%s", mins, seconds, remaining];
         else
-            return [NSString stringWithFormat:@"%d seconds%s", seconds, remaining];
+            return [NSString stringWithFormat:@"%ld seconds%s", seconds, remaining];
     }
     else
     {
