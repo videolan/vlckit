@@ -53,30 +53,28 @@ static VLCLibrary * sharedLibrary = nil;
 {
     if (self = [super init])
     {
-        NSArray *vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
+        NSArray *vlcParams;
+#if TARGET_OS_IPHONE
+        vlcParams = [NSArray arrayWithObjects:@"--play-and-pause", @"--no-color", @"--no-video-title-show", @"--verbose=2", @"--avcodec-fast", @"--avcodec-skiploopfilter=all", @"--vout=vout_ios", @"--aout=audioqueue", nil];
+#else
+        vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
         if (!vlcParams) {
             NSMutableArray *defaultParams = [NSMutableArray array];
             [defaultParams addObject:@"--play-and-pause"];                          // We want every movie to pause instead of stopping at eof
             [defaultParams addObject:@"--no-color"];                                // Don't use color in output (Xcode doesn't show it)
             [defaultParams addObject:@"--no-video-title-show"];                     // Don't show the title on overlay when starting to play
             [defaultParams addObject:@"--verbose=4"];                               // Let's not wreck the logs
-#if TARGET_OS_IPHONE
-            [defaultParams addObject:@"--avcodec-fast"];
-            [defaultParams addObject:@"--avcodec-skiploopfilter=all"];
-            [defaultParams addObject:@"--vout=vout_ios"];
-            [defaultParams addObject:@"--aout=audioqueue"];
-#else
             [defaultParams addObject:@"--no-sout-keep"];
             [defaultParams addObject:@"--vout=macosx"];                             // Select Mac OS X video output
             [defaultParams addObject:@"--text-renderer=quartztext"];                // our CoreText-based renderer
             [defaultParams addObject:@"--extraintf=macosx_dialog_provider"];        // Some extra dialog (login, progress) may come up from here
-#endif
 
             [[NSUserDefaults standardUserDefaults] setObject:defaultParams forKey:@"VLCParams"];
             [[NSUserDefaults standardUserDefaults] synchronize];
 
             vlcParams = defaultParams;
         }
+#endif
 
         NSUInteger paramNum = 0;
         NSUInteger count = [vlcParams count];
