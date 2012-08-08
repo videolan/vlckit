@@ -30,6 +30,7 @@ SPEEX=$(VLC_CONTRIB_DIR)/lib/libspeex.a $(VLC_CONTRIB_DIR)/lib/libspeexdsp.a
 TAGLIB=$(VLC_CONTRIB_DIR)/lib/libtag.a
 OGG=$(VLC_CONTRIB_DIR)/lib/libogg.a $(VLC_CONTRIB_DIR)/lib/libtheora.a $(VLC_CONTRIB_DIR)/lib/libtheoradec.a $(VLC_CONTRIB_DIR)/lib/libtheoraenc.a
 XML=$(VLC_CONTRIB_DIR)/lib/libxml2.a
+MAD=$(VLC_CONTRIB_DIR)/lib/libmad.a
 PICS=$(VLC_CONTRIB_DIR)/lib/libpng.a $(VLC_CONTRIB_DIR)/lib/libopenjpeg.a
 
-OTHER_LIBTOOLFLAGS=$(AVCODEC) $(DVBPSI) $(LIVE555) $(MODPLUG) $(A52) $(DCA) $(MKV) $(TAGLIB) $(XML) $(PICS) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS)
+OTHER_LIBTOOLFLAGS=$(AVCODEC) $(DVBPSI) $(LIVE555) $(MODPLUG) $(A52) $(DCA) $(MKV) $(TAGLIB) $(XML) $(MAD) $(PICS) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS)
