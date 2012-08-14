@@ -179,7 +179,7 @@
         if( audioCodec )   [subOptions addObject:[NSString stringWithFormat:@"acodec=%@", audioCodec]];
         if( audioBitrate ) [subOptions addObject:[NSString stringWithFormat:@"ab=%@", audioBitrate]];
         if( channels ) [subOptions addObject:[NSString stringWithFormat:@"channels=%@", channels]];
-        if( audioSync ) [subOptions addObject:[NSString stringWithFormat:@"audioSync", width]];
+        if( audioSync ) [subOptions addObject:@"audioSync"];
         if( subtitleCodec ) [subOptions addObject:[NSString stringWithFormat:@"scodec=%@", subtitleCodec]];
         if( subtitleEncoder ) [subOptions addObject:[NSString stringWithFormat:@"senc=%@", subtitleEncoder]];
         if( subtitleOverlay ) [subOptions addObject:@"soverlay"];
