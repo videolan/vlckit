@@ -20,11 +20,9 @@ VLC_INSTALL_DIR=$(VLC_SRC_DIR)/install-ios-$(VLC_PLATFORM)
 VLC_CONTRIB_DIR=$VLC_SRC_DIR/contrib/$(VLC_ARCH)-apple-darwin11
 A52=$(VLC_CONTRIB_DIR)/lib/liba52.a
 AVCODEC=$(VLC_CONTRIB_DIR)/lib/libavutil.a ${VLC_CONTRIB_DIR}/lib/libavcodec.a $(VLC_CONTRIB_DIR)/lib/libavformat.a $(VLC_CONTRIB_DIR)/lib/libavresample.a $(VLC_CONTRIB_DIR)/lib/libswscale.a $(VLC_CONTRIB_DIR)/lib/libpostproc.a $(VLC_CONTRIB_DIR)/lib/libgsm.a
-CHARSET=$(VLC_CONTRIB_DIR)/lib/libcharset.a
 DCA=$(VLC_CONTRIB_DIR)/lib/libdca.a
 DVBPSI=$(VLC_CONTRIB_DIR)/lib/libdvbpsi.a
 FLAC=$(VLC_CONTRIB_DIR)/lib/libFLAC.a
-ICONV=$(VLC_CONTRIB_DIR)/lib/libiconv.a
 LIVE555=$(VLC_CONTRIB_DIR)/lib/libUsageEnvironment.a $(VLC_CONTRIB_DIR)/lib/libBasicUsageEnvironment.a $(VLC_CONTRIB_DIR)/lib/libgroupsock.a $(VLC_CONTRIB_DIR)/lib/libz.a $(VLC_CONTRIB_DIR)/lib/libliveMedia.a
 LUA=$(VLC_CONTRIB_DIR)/lib/liblua.a
 MAD=$(VLC_CONTRIB_DIR)/lib/libmad.a
@@ -36,4 +34,4 @@ SPEEX=$(VLC_CONTRIB_DIR)/lib/libspeex.a $(VLC_CONTRIB_DIR)/lib/libspeexdsp.a
 TAGLIB=$(VLC_CONTRIB_DIR)/lib/libtag.a $(VLC_CONTRIB_DIR)/lib/libtag_c.a
 XML=$(VLC_CONTRIB_DIR)/lib/libxml2.a
 
-OTHER_LIBTOOLFLAGS=$(A52) $(AVCODEC) $(CHARSET) $(DCA) $(DVBPSI) $(FLAC) $(ICONV) $(LIVE555) $(LUA) $(MAD) $(MKV) $(MODPLUG) $(OGG) $(PICS) $(SPEEX) $(TAGLIB) $(XML) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
+OTHER_LIBTOOLFLAGS=$(A52) $(AVCODEC) $(DCA) $(DVBPSI) $(FLAC) $(LIVE555) $(LUA) $(MAD) $(MKV) $(MODPLUG) $(OGG) $(PICS) $(SPEEX) $(TAGLIB) $(XML) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
