@@ -3,3 +3,5 @@
 *.pbxuser
 *.xcworkspace
 xcuserdata
+MobileVLCKit/vlc-plugins.xcconfig
+MobileVLCKit/vlc-plugins.h
