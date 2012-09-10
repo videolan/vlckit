@@ -28,10 +28,11 @@ LUA=$(VLC_CONTRIB_DIR)/lib/liblua.a
 MAD=$(VLC_CONTRIB_DIR)/lib/libmad.a
 MKV=$(VLC_CONTRIB_DIR)/lib/libebml.a $(VLC_CONTRIB_DIR)/lib/libmatroska.a
 MODPLUG=$(VLC_CONTRIB_DIR)/lib/libmodplug.a
+OPUS=$(VLC_CONTRIB_DIR)/lib/libopus.a
 OGG=$(VLC_CONTRIB_DIR)/lib/libogg.a $(VLC_CONTRIB_DIR)/lib/libtheora.a $(VLC_CONTRIB_DIR)/lib/libtheoradec.a $(VLC_CONTRIB_DIR)/lib/libtheoraenc.a
 PICS=$(VLC_CONTRIB_DIR)/lib/libpng.a $(VLC_CONTRIB_DIR)/lib/libopenjpeg.a
 SPEEX=$(VLC_CONTRIB_DIR)/lib/libspeex.a $(VLC_CONTRIB_DIR)/lib/libspeexdsp.a
 TAGLIB=$(VLC_CONTRIB_DIR)/lib/libtag.a $(VLC_CONTRIB_DIR)/lib/libtag_c.a
 XML=$(VLC_CONTRIB_DIR)/lib/libxml2.a
 
-OTHER_LIBTOOLFLAGS=$(A52) $(AVCODEC) $(DCA) $(DVBPSI) $(FLAC) $(LIVE555) $(LUA) $(MAD) $(MKV) $(MODPLUG) $(OGG) $(PICS) $(SPEEX) $(TAGLIB) $(XML) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
+OTHER_LIBTOOLFLAGS=$(A52) $(AVCODEC) $(DCA) $(DVBPSI) $(FLAC) $(LIVE555) $(LUA) $(MAD) $(MKV) $(MODPLUG) $(OGG) $(OPUS) $(PICS) $(SPEEX) $(TAGLIB) $(XML) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
