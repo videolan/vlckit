@@ -119,11 +119,11 @@
 {
     int i;
     NSArray  * droppedItems = [[info draggingPasteboard] propertyListForType: NSFilenamesPboardType];
- 
+
     for (i = 0; i < [droppedItems count]; i++)
     {
         NSString * filename = [droppedItems objectAtIndex:i];
-        
+
         [[self playlist] insertMedia:[VLCMedia mediaWithURL:filename] atIndex:row+i];
     }
 
@@ -165,7 +165,7 @@
     for (i = 0; i < [droppedItems count]; i++)
     {
         NSString * filename = [droppedItems objectAtIndex:i];
-        
+
         [aPlaylist insertMedia:[VLCMedia mediaWithURL:filename] atIndex:index+i];
     }
     return YES;

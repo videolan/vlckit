@@ -85,7 +85,7 @@
                                             [NSDictionary dictionaryWithObjectsAndKeys:
                                                 @"mp4", @"muxer",
                                                 @"file", @"access",
-                                                [[filePath copy] autorelease], @"destination", 
+                                                [[filePath copy] autorelease], @"destination",
                                                 nil
                                             ], @"outputOptions",
                                             nil
@@ -186,7 +186,7 @@
         [optionsAsArray addObject: [NSString stringWithFormat:@"#transcode{%@}", [subOptions componentsJoinedByString:@","]]];
         [subOptions removeAllObjects];
     }
-    
+
     NSDictionary * outputOptions = [options objectForKey:@"outputOptions"];
     if( outputOptions )
     {

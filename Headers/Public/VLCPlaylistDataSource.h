@@ -35,7 +35,7 @@
 {
     VLCPlaylist  * playlist;
     VLCVideoView * videoView;
-    
+
     NSOutlineView *outlineView;
 }
 - (id)initWithPlaylist:(VLCPlaylist *)aPlaylist;

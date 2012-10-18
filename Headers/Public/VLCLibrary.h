@@ -38,7 +38,7 @@
  * Currently, the framework does not support multiple instances of VLCLibrary.  Furthermore, you cannot destroy any
  * instiantiation of VLCLibrary, as previously noted, this is done automatically by the dynamic link loader.
  */
-@interface VLCLibrary : NSObject 
+@interface VLCLibrary : NSObject
 {
     void * instance;
 }

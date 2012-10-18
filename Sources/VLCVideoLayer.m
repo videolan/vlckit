@@ -38,7 +38,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 /******************************************************************************
- * VLCVideoView (Private) 
+ * VLCVideoView (Private)
  */
 
 @interface VLCVideoLayer (Private)
@@ -51,7 +51,7 @@
 @end
 
 /******************************************************************************
- * Implementation VLCVideoLayer 
+ * Implementation VLCVideoLayer
  */
 
 @implementation VLCVideoLayer
@@ -77,19 +77,19 @@
 @implementation VLCVideoLayer (Private)
 
 
-/* This is called by the libvlc module 'opengllayer' as soon as there is one 
+/* This is called by the libvlc module 'opengllayer' as soon as there is one
  * vout available
  */
 - (void)addVoutLayer:(CALayer *)voutLayer
 {
     [CATransaction begin];
- 
+
     voutLayer.name = @"vlcopengllayer";
-    
+
     VLCVideoLayoutManager * layoutManager = [VLCVideoLayoutManager layoutManager];
     layoutManager.originalVideoSize = voutLayer.bounds.size;
     self.layoutManager = layoutManager;
-    
+
     [self insertSublayer:voutLayer atIndex:0];
     [self setNeedsDisplayOnBoundsChange:YES];
 
@@ -106,7 +106,7 @@
     [CATransaction begin];
     [voutLayer removeFromSuperlayer];
     [CATransaction commit];
-    
+
     /* Trigger by hand, as it doesn't go through else. Assumed bug from Cocoa */
     [self willChangeValueForKey:@"hasVideo"];
     self.hasVideo = NO;

@@ -38,11 +38,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 /******************************************************************************
- * Soon deprecated stuff 
+ * Soon deprecated stuff
  */
 
 /* This is a forward reference to VLCOpenGLVoutView specified in minimal_macosx
-   library.  We could get rid of this, but it prevents warnings from the 
+   library.  We could get rid of this, but it prevents warnings from the
    compiler. (Scheduled to deletion) */
 @interface VLCOpenGLVoutView : NSView
 - (void)detachFromVout;
@@ -58,7 +58,7 @@
 @end
 
 /******************************************************************************
- * VLCVideoView (Private) 
+ * VLCVideoView (Private)
  */
 
 @interface VLCVideoView (Private)
@@ -72,7 +72,7 @@
 @end
 
 /******************************************************************************
- * Implementation VLCVideoView 
+ * Implementation VLCVideoView
  */
 
 @implementation VLCVideoView
@@ -80,13 +80,13 @@
 /* Initializers */
 - (id)initWithFrame:(NSRect)rect
 {
-    if (self = [super initWithFrame:rect]) 
+    if (self = [super initWithFrame:rect])
     {
         self.delegate = nil;
         self.backColor = [NSColor blackColor];
         self.fillScreen = NO;
         self.hasVideo = NO;
-        
+
         [self setStretchesVideo:NO];
         [self setAutoresizesSubviews:YES];
         layoutManager = [[VLCVideoLayoutManager layoutManager] retain];
@@ -139,14 +139,14 @@
 
 @implementation VLCVideoView (Private)
 
-/* This is called by the libvlc module 'opengllayer' as soon as there is one 
+/* This is called by the libvlc module 'opengllayer' as soon as there is one
  * vout available
  */
 - (void)addVoutLayer:(CALayer *)aLayer
 {
     [CATransaction begin];
     [self setWantsLayer: YES];
-	CALayer * rootLayer = [self layer];
+    CALayer * rootLayer = [self layer];
 
     aLayer.name = @"vlcopengllayer";
 

@@ -27,10 +27,10 @@
 /******************************************************************************
  * Implementation VLCVideoLayoutManager
  *
- * Manage the size of the video layer 
+ * Manage the size of the video layer
  */
 
-@implementation VLCVideoLayoutManager 
+@implementation VLCVideoLayoutManager
 
 /* Factories */
 + (id)layoutManager
@@ -47,16 +47,16 @@
         CALayer * videolayer = [[layer sublayers] objectAtIndex:0];
         CGRect bounds = layer.bounds;
         CGRect videoRect = bounds;
-        
+
         CGFloat xRatio = CGRectGetWidth(bounds)/originalVideoSize.width;
         CGFloat yRatio = CGRectGetHeight(bounds)/originalVideoSize.height;
         CGFloat ratio = fillScreenEntirely ? MAX(xRatio, yRatio) : MIN(xRatio, yRatio);
-        
+
         videoRect.size.width = ratio*originalVideoSize.width;
         videoRect.size.height = ratio*originalVideoSize.height;
         videoRect.origin.x += (CGRectGetWidth(bounds) - CGRectGetWidth(videoRect))/2.0;
         videoRect.origin.y += (CGRectGetHeight(bounds) - CGRectGetHeight(videoRect))/2.0;
-        
+
         videolayer.frame = videoRect;
     }
 }
