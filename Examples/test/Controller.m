@@ -16,15 +16,15 @@ static void *sleepForMe(void)
     // Allocate a VLCVideoView instance and tell it what area to occupy.
     NSRect rect = NSMakeRect(0, 0, 0, 0);
     rect.size = [videoHolderView frame].size;
-    
+
     videoView = [[VLCVideoView alloc] initWithFrame:rect];
     [videoHolderView addSubview:videoView];
     [videoView setAutoresizingMask: NSViewHeightSizable|NSViewWidthSizable];
     videoView.fillScreen = YES;
-    
+
     playlist = [[VLCMediaList alloc] init];
     [playlist addObserver:self forKeyPath:@"media" options:NSKeyValueObservingOptionNew context:nil];
-    
+
     player = [[VLCMediaPlayer alloc] initWithVideoView:videoView];
     mediaIndex = -1;
 
@@ -39,7 +39,7 @@ static void *sleepForMe(void)
 - (void)applicationWillTerminate:(NSNotification *)aNotification
 {
     [playlist removeObserver:self forKeyPath:@"media"];
-    
+
     [player pause];
     [player setMedia:nil];
     [player release];
@@ -51,22 +51,22 @@ static void *sleepForMe(void)
 {
     if ([playlistOutline selectedRow] != mediaIndex)
     {
-		[self setMediaIndex:[playlistOutline selectedRow]];
-		if (![player isPlaying])
-			[player play];
+        [self setMediaIndex:[playlistOutline selectedRow]];
+        if (![player isPlaying])
+            [player play];
     }
 }
 
 - (void)setMediaIndex:(int)value
 {
     if ([playlist count] <= 0)
-		return;
-    
+        return;
+
     if (value < 0)
-		value = 0;
+        value = 0;
     if (value > [playlist count] - 1)
-		value = [playlist count] - 1;
-    
+        value = [playlist count] - 1;
+
     mediaIndex = value;
     [player setMedia:[playlist mediaAtIndex:mediaIndex]];
 }
@@ -76,8 +76,8 @@ static void *sleepForMe(void)
     [self setMediaIndex:mediaIndex+1];
     if (![player isPlaying])
     {
-		NSLog(@"%@ length = %@", [playlist mediaAtIndex:mediaIndex], [[playlist mediaAtIndex:mediaIndex] lengthWaitUntilDate:[NSDate dateWithTimeIntervalSinceNow:60]]);
-		[player play];
+        NSLog(@"%@ length = %@", [playlist mediaAtIndex:mediaIndex], [[playlist mediaAtIndex:mediaIndex] lengthWaitUntilDate:[NSDate dateWithTimeIntervalSinceNow:60]]);
+        [player play];
     }
 }
 
@@ -101,30 +101,30 @@ static void *sleepForMe(void)
 }
 
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn
-			row:(int)row
+            row:(int)row
 {
     return [(VLCMedia *)[playlist mediaAtIndex:row].metaDictionary valueForKey:VLCMetaInformationTitle];
 }
 
-- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info 
-				 proposedRow:(int)row proposedDropOperation:(NSTableViewDropOperation)op
+- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info
+                 proposedRow:(int)row proposedDropOperation:(NSTableViewDropOperation)op
 {
     return NSDragOperationEvery; /* This is for now */
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info
-			  row:(int)row dropOperation:(NSTableViewDropOperation)operation
+              row:(int)row dropOperation:(NSTableViewDropOperation)operation
 {
     int i;
     NSArray *droppedItems = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
-    
+
     for (i = 0; i < [droppedItems count]; i++)
     {
         NSString * filename = [droppedItems objectAtIndex:i];
-		VLCMedia * media = [VLCMedia mediaWithURL:[NSURL fileURLWithPath:filename]];
-		[playlist addMedia:media];
+        VLCMedia * media = [VLCMedia mediaWithURL:[NSURL fileURLWithPath:filename]];
+        [playlist addMedia:media];
     }
     return YES;
-}    
+}
 
 @end

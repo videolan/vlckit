@@ -23,7 +23,7 @@
 - (id)transformedValue:(id)value
 {
     if( !value ) return nil;
- 
+
     if(![value respondsToSelector: @selector(floatValue)])
     {
         [NSException raise: NSInternalInconsistencyException
@@ -31,14 +31,14 @@
         [value class]];
         return nil;
     }
- 
+
     return [NSNumber numberWithFloat: [value floatValue]*10000.];
 }
 
 - (id)reverseTransformedValue:(id)value
 {
     if( !value ) return nil;
- 
+
     if(![value respondsToSelector: @selector(floatValue)])
     {
         [NSException raise: NSInternalInconsistencyException
@@ -46,7 +46,7 @@
         [value class]];
         return nil;
     }
- 
+
     return [NSNumber numberWithFloat: [value floatValue]/10000.];
 }
 @end
