@@ -23,7 +23,7 @@
 - (id)transformedValue:(id)value
 {
     if( !value ) return nil;
- 
+
     if(![value respondsToSelector: @selector(floatValue)])
     {
         [NSException raise: NSInternalInconsistencyException
@@ -31,14 +31,14 @@
         [value class]];
         return nil;
     }
- 
+
     return [NSNumber numberWithFloat: [value floatValue]*10000.];
 }
 
 - (id)reverseTransformedValue:(id)value
 {
     if( !value ) return nil;
- 
+
     if(![value respondsToSelector: @selector(floatValue)])
     {
         [NSException raise: NSInternalInconsistencyException
@@ -46,7 +46,7 @@
         [value class]];
         return nil;
     }
- 
+
     return [NSNumber numberWithFloat: [value floatValue]/10000.];
 }
 @end
@@ -65,9 +65,9 @@
     if(self = [super init])
     {
         [self bind:@"outputFolderPath" toObject:[NSUserDefaultsController sharedUserDefaultsController]
-              withKeyPath:@"values.outputFolderPath" options:nil]; 
+              withKeyPath:@"values.outputFolderPath" options:nil];
         [[[NSUserDefaultsController sharedUserDefaultsController] values] bind:@"outputFolderPath" toObject:self
-              withKeyPath:@"outputFolderPath" options:nil]; 
+              withKeyPath:@"outputFolderPath" options:nil];
         VLCFloat10000FoldTransformer *float100fold;
         float100fold = [[[VLCFloat10000FoldTransformer alloc] init] autorelease];
         [NSValueTransformer setValueTransformer:(id)float100fold forName:@"Float10000FoldTransformer"];
@@ -207,7 +207,7 @@
 
             /* Set the icon */
             [openConvertedFileButton setImage:[[NSWorkspace sharedWorkspace] iconForFile:[self outputFilePath]]];
-            
+
             /* Rename the link with a nicer name */
             NSString * oldPath = [self outputFilePath];
             [self freezeOutputFilePath];

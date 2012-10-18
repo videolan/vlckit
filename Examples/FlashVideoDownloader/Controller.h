@@ -15,7 +15,7 @@
 
     VLCMedia * media;
     VLCStreamSession * streamSession;
-    
+
     NSString * outputFilePath;
     NSString * outputFolderPath;
 }
