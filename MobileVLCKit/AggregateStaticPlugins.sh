@@ -3,8 +3,8 @@
 # Pre-Compile.sh
 # MobileVLC
 #
-# Created by Pierre d'Herbemont on 6/27/10.
-# Copyright 2010 __MyCompanyName__. All rights reserved.
+# Copyright Pierre d'Herbemont
+# License is the same as the COPYING file at root of the project
 
 
 pushd `dirname $0` > /dev/null
