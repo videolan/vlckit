@@ -159,7 +159,6 @@ static void * EventDispatcherMainLoop(void * user_data)
             [self performSelectorOnMainThread:@selector(callObjectMethodWithArgs:)
                                    withObject:dataMessage
                                 waitUntilDone: YES];
-        [dataMessage autorelease];
 
         [pool drain];
     }
