@@ -139,7 +139,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
 - (void)removeMediaAtIndex:(NSInteger)index
 {
-    [[self mediaAtIndex:index] release];
+    [cachedMedia removeObjectAtIndex:index];
 
     // Remove it from the libvlc's medialist
     libvlc_media_list_remove_index(p_mlist, index);

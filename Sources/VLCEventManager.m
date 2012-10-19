@@ -159,6 +159,7 @@ static void * EventDispatcherMainLoop(void * user_data)
             [self performSelectorOnMainThread:@selector(callObjectMethodWithArgs:)
                                    withObject:dataMessage
                                 waitUntilDone: YES];
+        [dataMessage autorelease];
 
         [pool drain];
     }
@@ -230,6 +231,7 @@ static void * EventDispatcherMainLoop(void * user_data)
         NSData *nsd_message = [NSData dataWithBytes:&message length:sizeof(message_t)];
         [self addMessageToHandleOnMainThread:nsd_message];
         [self callDelegateOfObjectAndSendNotificationWithArgs:[nsd_message retain] /* released in the call */];
+        [nsd_message autorelease];
     }
     else
     {
