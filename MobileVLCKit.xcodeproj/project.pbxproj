@@ -305,7 +305,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 i386";
 				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
 			};
 			name = Debug;
@@ -324,7 +324,7 @@
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "armv7 i386";
 				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
 			};
 			name = Release;
