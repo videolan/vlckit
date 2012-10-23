@@ -55,7 +55,6 @@ args="--disable-xvideo $args"
 args="--disable-xcb $args"
 args="--disable-sdl $args"
 args="--disable-sdl-image $args"
-args="--disable-visual $args"
 args="--disable-samplerate $args"
 
 if test "x$SDKROOT" != "x"
@@ -86,7 +85,6 @@ for arch in $ARCHS; do
     mkdir -p $arch
     cd $arch
 
-    echo "Running [$arch] configure $this_args"
     if test $arch = "x86_64"; then
         export CFLAGS="-m64 -arch x86_64"
         export CXXFLAGS="-m64 -arch x86_64"
@@ -110,6 +108,7 @@ for arch in $ARCHS; do
         export CPPFLAGS="-m32 -arch ppc"
         this_args="--build=powerpc-apple-darwin9 --with-contrib=$VLC_SRC_DIR/contrib/powerpc-apple-darwin9 $this_args"
     fi
+    echo "Running [$arch] configure $this_args"
 
     $VLC_SRC_DIR/configure $this_args
     err=$?
