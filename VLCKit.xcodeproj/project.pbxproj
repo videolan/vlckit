@@ -27,6 +27,7 @@
 				633BD6E30D2ADF030012A314 /* make */,
 			);
 			dependencies = (
+				7D4D509D1636267E00DFF142 /* PBXTargetDependency */,
 			);
 			name = "Setup VLC contribs";
 			productName = "vlc-contrib";
@@ -39,6 +40,7 @@
 				63FFDBCD0D2AE2AE0092FC96 /* configure */,
 			);
 			dependencies = (
+				7D4D509F1636268200DFF142 /* PBXTargetDependency */,
 			);
 			name = "Run VLC configure";
 			productName = "vlc-bootstrap";
@@ -152,6 +154,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7D4D509C1636267E00DFF142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CC1EA79815938D7E00C40EF9;
+			remoteInfo = "Fetch libvlc";
+		};
+		7D4D509E1636268200DFF142 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 633BD6E40D2ADF030012A314;
+			remoteInfo = "Setup VLC contribs";
+		};
 		CC1EA7A115938F2200C40EF9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -586,7 +602,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "VLCKit" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -811,6 +827,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		7D4D509D1636267E00DFF142 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CC1EA79815938D7E00C40EF9 /* Fetch libvlc */;
+			targetProxy = 7D4D509C1636267E00DFF142 /* PBXContainerItemProxy */;
+		};
+		7D4D509F1636268200DFF142 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 633BD6E40D2ADF030012A314 /* Setup VLC contribs */;
+			targetProxy = 7D4D509E1636268200DFF142 /* PBXContainerItemProxy */;
+		};
 		CC1EA7A215938F2200C40EF9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC1EA79815938D7E00C40EF9 /* Fetch libvlc */;
@@ -852,6 +878,7 @@
 		1DEB91AE08733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -889,6 +916,7 @@
 		1DEB91AF08733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -964,6 +992,7 @@
 		6337547C10ED090B0072A0D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = VLC;
 				SDKROOT = macosx;
@@ -974,6 +1003,7 @@
 		6337547D10ED090B0072A0D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = VLC;
 				SDKROOT = macosx;
@@ -984,6 +1014,7 @@
 		633BD6E50D2ADF030012A314 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -997,6 +1028,7 @@
 		633BD6E60D2ADF030012A314 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1011,6 +1043,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CC = "xcrun clang";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				CXX = "xcrun clang++";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1027,6 +1060,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CC = "xcrun clang";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				CXX = "xcrun clang++";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -1042,6 +1076,7 @@
 		CC1EA79B15938D7E00C40EF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1055,6 +1090,7 @@
 		CC1EA79C15938D7E00C40EF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1068,6 +1104,7 @@
 		CC4C593D13F53EA400FB0EFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -1105,6 +1142,7 @@
 		CC4C593E13F53EA400FB0EFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -1140,6 +1178,7 @@
 		CC61094D112F4AB600FAFD22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1153,6 +1192,7 @@
 		CC61094E112F4AB600FAFD22 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
