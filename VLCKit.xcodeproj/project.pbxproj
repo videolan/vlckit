@@ -887,8 +887,6 @@
 				OTHER_LDFLAGS = (
 					"-lvlccore",
 					"-single_module",
-					"-read_only_relocs",
-					suppress,
 					"-lvlc",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
@@ -923,8 +921,6 @@
 				OTHER_LDFLAGS = (
 					"-lvlccore",
 					"-single_module",
-					"-read_only_relocs",
-					suppress,
 					"-lvlc",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
@@ -1117,8 +1113,6 @@
 				OTHER_LDFLAGS = (
 					"-lvlccore",
 					"-single_module",
-					"-read_only_relocs",
-					suppress,
 					"-lvlc",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
@@ -1153,8 +1147,6 @@
 				OTHER_LDFLAGS = (
 					"-lvlccore",
 					"-single_module",
-					"-read_only_relocs",
-					suppress,
 					"-lvlc",
 				);
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
