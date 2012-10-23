@@ -27,7 +27,7 @@
 				633BD6E30D2ADF030012A314 /* make */,
 			);
 			dependencies = (
-				7D4D509D1636267E00DFF142 /* PBXTargetDependency */,
+				7D4D50D416362A8700DFF142 /* PBXTargetDependency */,
 			);
 			name = "Setup VLC contribs";
 			productName = "vlc-contrib";
@@ -40,7 +40,6 @@
 				63FFDBCD0D2AE2AE0092FC96 /* configure */,
 			);
 			dependencies = (
-				7D4D509F1636268200DFF142 /* PBXTargetDependency */,
 			);
 			name = "Run VLC configure";
 			productName = "vlc-bootstrap";
@@ -154,19 +153,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		7D4D509C1636267E00DFF142 /* PBXContainerItemProxy */ = {
+		7D4D50D316362A8700DFF142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = CC1EA79815938D7E00C40EF9;
 			remoteInfo = "Fetch libvlc";
-		};
-		7D4D509E1636268200DFF142 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 633BD6E40D2ADF030012A314;
-			remoteInfo = "Setup VLC contribs";
 		};
 		CC1EA7A115938F2200C40EF9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -662,7 +654,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "top_srcdir=`pwd`/vlc-unstable\n\nif test \"$ACTION\" = \"clean\"\nthen\n    exit 0\nfi\n\nif test \"$arch\" = \"x86_64\"; then\n    export PATH=$top_srcdir/contrib/x86_64-apple-darwin10:$PATH\nfi\n\nexport PATH=$top_srcdir/extras/tools/build/bin:$PATH\ncd \"$top_srcdir\" && ./bootstrap\n";
+			shellScript = "top_srcdir=`pwd`/vlc-unstable\n\nif test \"$ACTION\" = \"clean\"\nthen\n    exit 0\nfi\n\nif test \"$arch\" = \"x86_64\"; then\n    export PATH=$top_srcdir/contrib/x86_64-apple-darwin10:$PATH\nfi\n\nexport PATH=$top_srcdir/extras/tools/build/bin:$PATH\n\nif ! [ -e $top_srcdir/configure ]; then\n  cd \"$top_srcdir\" && ./bootstrap\nfi";
 			showEnvVarsInLog = 0;
 		};
 		6337548010ED091D0072A0D9 /* make */ = {
@@ -711,7 +703,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if test $ACTION = \"clean\"\nthen\nmake clean\nexit 0\nfi\n\necho \"Building tools\"\necho \"\"\ncd $SOURCE_ROOT/vlc-unstable/extras/tools\n./bootstrap\nmake\n\necho \"Building a set of contribs for $ARCHS...\"\necho \"\"\n\nfor arch in $ARCHS; do\n\tcd $SOURCE_ROOT/vlc-unstable/contrib\n\techo \"Making contribs for $arch\"\n\trm -rf vlckit-$arch\t\n\tmkdir vlckit-$arch\n\tcd vlckit-$arch\n\tif test \"$arch\" = \"x86_64\"; then\n          export OSX_VERSION=10.6\nexport TRIPLET=x86_64-apple-darwin10\nelse\nexport TRIPLET=i686-apple-darwin9\nfi\n          ../bootstrap --build=$TRIPLET --host=$TRIPLET\n\tmake prebuilt\ndone\n";
+			shellScript = "if test $ACTION = \"clean\"\nthen\nmake clean\nexit 0\nfi\n\necho \"Building tools\"\necho \"\"\ncd $SOURCE_ROOT/vlc-unstable/extras/tools\n./bootstrap\nmake\n\necho \"Building a set of contribs for $ARCHS...\"\necho \"\"\n\nexport PATH=$SOURCE_ROOT/vlc-unstable/extras/tools/build/bin:$PATH\n\nfor arch in $ARCHS; do\n\tcd $SOURCE_ROOT/vlc-unstable/contrib\n\techo \"Making contribs for $arch\"\n\trm -rf vlckit-$arch\t\n\tmkdir vlckit-$arch\n\tcd vlckit-$arch\n\tif test \"$arch\" = \"x86_64\"; then\n          export OSX_VERSION=10.7\nexport TRIPLET=x86_64-apple-darwin10\nelse\nexport TRIPLET=i686-apple-darwin9\nfi\n          ../bootstrap --build=$TRIPLET --host=$TRIPLET\n\tmake prebuilt\ndone\n";
 			showEnvVarsInLog = 0;
 		};
 		63FFDBCD0D2AE2AE0092FC96 /* configure */ = {
@@ -726,7 +718,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh $SOURCE_ROOT/Configure.sh";
+			shellScript = "echo $ARCHS\nsh $SOURCE_ROOT/Configure.sh";
 		};
 		CC1EA79915938D7E00C40EF9 /* make */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -740,7 +732,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "git clone git://git.videolan.org/vlc.git $VLC_SRC_DIR";
+			shellScript = "if ! [ -e $VLC_SRC_DIR ]; then\n  git clone git://git.videolan.org/vlc.git $VLC_SRC_DIR\nfi";
 			showEnvVarsInLog = 0;
 		};
 		CC4C590F13F53EA400FB0EFC /* ShellScript */ = {
@@ -827,15 +819,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		7D4D509D1636267E00DFF142 /* PBXTargetDependency */ = {
+		7D4D50D416362A8700DFF142 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC1EA79815938D7E00C40EF9 /* Fetch libvlc */;
-			targetProxy = 7D4D509C1636267E00DFF142 /* PBXContainerItemProxy */;
-		};
-		7D4D509F1636268200DFF142 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 633BD6E40D2ADF030012A314 /* Setup VLC contribs */;
-			targetProxy = 7D4D509E1636268200DFF142 /* PBXContainerItemProxy */;
+			targetProxy = 7D4D50D316362A8700DFF142 /* PBXContainerItemProxy */;
 		};
 		CC1EA7A215938F2200C40EF9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -958,12 +945,13 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = supported;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 ppc ppc64 ppc7400 x86_64";
+				VALID_ARCHS = "i386 x86_64";
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
 				VLC_SRC_DIR = "$(SRCROOT)/../../..";
 			};
@@ -978,12 +966,13 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_OBJC_GC = supported;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 ppc ppc64 ppc7400 x86_64";
+				VALID_ARCHS = "i386 x86_64";
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
 				VLC_SRC_DIR = "$(SRCROOT)/../../..";
 			};
@@ -1052,6 +1041,7 @@
 				OBJC = "xcrun clang";
 				PRODUCT_NAME = "vlc-bootstrap";
 				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Debug;
@@ -1068,6 +1058,7 @@
 				OBJC = "xcrun clang";
 				PRODUCT_NAME = "vlc-bootstrap";
 				SDKROOT = macosx;
+				VALID_ARCHS = "i386 x86_64";
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				ZERO_LINK = NO;
 			};
