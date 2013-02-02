@@ -13,19 +13,18 @@ popd > /dev/null
 
 echo "PROJECT DIR = $PROJECT_DIR"
 
-VLC_ARCH="arm"
 ARCH=$ARCHS
 VLC_SRC_DIR="$PROJECT_DIR/../../vlc"
 
-if test "$ARCH" = "armv7"; then
-VLC_BUILD_DIR="$VLC_SRC_DIR/build-ios-OS"
-VLC_INSTALL_DIR="$VLC_SRC_DIR/install-ios-OS"
+if [ "$PLATFORM_NAME" = "iphoneos" ]; then
+VLC_BUILD_DIR="$VLC_SRC_DIR/build-ios-OS/$CURRENT_ARCH"
+VLC_INSTALL_DIR="$VLC_SRC_DIR/install-ios-OS/$CURRENT_ARCH"
 else
-VLC_BUILD_DIR="$VLC_SRC_DIR/build-ios-Simulator"
-VLC_INSTALL_DIR="$VLC_SRC_DIR/install-ios-Simulator"
+VLC_BUILD_DIR="$VLC_SRC_DIR/build-ios-Simulator/$CURRENT_ARCH"
+VLC_INSTALL_DIR="$VLC_SRC_DIR/install-ios-Simulator/$CURRENT_ARCH"
 fi
 
-VLC_CONTRIB_DIR="$VLC_SRC_DIR/contrib/\$(VLC_ARCH)-apple-darwin11"
+VLC_CONTRIB_DIR="$VLC_INSTAL_DIR/contribs/"
 LDFLAGS=""
 
 echo "VLC_BUILD_DIR   = $VLC_BUILD_DIR"
