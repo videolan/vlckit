@@ -2,8 +2,8 @@
  * VLCMediaPlayer.m: VLCKit.framework VLCMediaPlayer implementation
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2009 VLC authors and VideoLAN
- * Partial Copyright (C) 2009 Felix Paul Kühne
+ * Copyright (C) 2007-2013 VLC authors and VideoLAN
+ * Partial Copyright (C) 2009-2013 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -206,7 +206,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     [self unregisterObservers];
     [[VLCEventManager sharedManager] cancelCallToObject:self];
+#if TARGET_OS_IPHONE
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+#endif
 
     // Always get rid of the delegate first so we can stop sending messages to it
     // TODO: Should we tell the delegate that we're shutting down?
@@ -728,8 +730,10 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
         instance = libvlc_media_player_new([VLCLibrary sharedInstance]);
 
         [self registerObservers];
+#if TARGET_OS_IPHONE
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
                                                      name:UIApplicationWillResignActiveNotification object:nil];
+#endif
 
         [self setDrawable:aDrawable];
     }
@@ -768,10 +772,12 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
     libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   self);
 }
 
+#if TARGET_OS_IPHONE
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
     [self pause];
 }
+#endif
 
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime
 {
