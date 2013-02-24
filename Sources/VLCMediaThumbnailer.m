@@ -63,10 +63,6 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     [thumbnailer performSelectorOnMainThread:@selector(didFetchThumbnail) withObject:nil waitUntilDone:YES];
 }
 
-void display(void *opaque, void *picture)
-{
-}
-
 @implementation VLCMediaThumbnailer
 @synthesize media=_media;
 @synthesize delegate=_delegate;
@@ -168,7 +164,7 @@ void display(void *opaque, void *picture)
 
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
-    libvlc_video_set_callbacks(_mp, lock, unlock, display, self);
+    libvlc_video_set_callbacks(_mp, lock, unlock, NULL, self);
     libvlc_media_player_play(_mp);
     libvlc_media_player_set_position(_mp, kSnapshotPosition);
 
