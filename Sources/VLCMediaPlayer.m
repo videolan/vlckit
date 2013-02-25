@@ -272,6 +272,42 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 }
 
 #pragma mark -
+#pragma mark Video Tracks
+- (void)setCurrentVideoTrackIndex:(NSUInteger)value
+{
+    libvlc_video_set_track(instance, (int)value);
+}
+
+- (NSUInteger)currentVideoTrackIndex
+{
+    NSInteger count = libvlc_video_get_track_count(instance);
+    if (count <= 0)
+        return NSNotFound;
+
+    NSUInteger result = libvlc_video_get_track(instance);
+    return result;
+}
+
+- (NSArray *)videoTracks
+{
+    NSInteger count = libvlc_video_get_track_count(instance);
+    if (count <= 0)
+        return [NSArray array];
+
+    libvlc_track_description_t *tracks = libvlc_video_get_track_description(instance);
+    NSMutableArray *tempArray = [NSMutableArray array];
+    NSUInteger i;
+    for (i = 0; i < count ; i++)
+    {
+        [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
+        tracks = tracks->p_next;
+    }
+    libvlc_track_description_release(tracks);
+
+    return [NSArray arrayWithArray: tempArray];
+}
+
+#pragma mark -
 #pragma mark Subtitles
 
 - (void)setCurrentVideoSubTitleIndex:(NSUInteger)index
@@ -481,7 +517,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 #pragma mark Audio tracks
 - (void)setCurrentAudioTrackIndex:(NSUInteger)value
 {
-    libvlc_audio_set_track( instance, (int)value);
+    libvlc_audio_set_track(instance, (int)value);
 }
 
 - (NSUInteger)currentAudioTrackIndex

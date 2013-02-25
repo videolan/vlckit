@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
  * Copyright (C) 2007-2009 VLC authors and VideoLAN
- * Partial Copyright (C) 2009 Felix Paul Kühne
+ * Copyright (C) 2009-2013 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -165,6 +165,23 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 @property (readonly) VLCTime *remainingTime;
 @property (readonly) NSUInteger fps;
+
+/**
+ * Return the current video track index
+ * Note that the handled values do not match the videoTracks array indexes
+ * but refer to VLCMedia's VLCMediaTracksInformationId.
+ * \return 0 if none is set.
+ *
+ * Pass 0 to disable.
+ */
+@property (readwrite) NSUInteger currentVideoTrackIndex;
+
+/**
+ * Return the video tracks
+ *
+ * It includes the disabled fake track at index 0.
+ */
+- (NSArray *)videoTracks;
 
 /**
  * Return the current video subtitle index
