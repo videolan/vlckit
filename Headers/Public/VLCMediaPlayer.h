@@ -168,6 +168,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Return the current video subtitle index
+ * Note that the handled values do not match the videoSubTitles array indexes
+ * but refer to VLCMedia's VLCMediaTracksInformationId.
  * \return 0 if none is set.
  *
  * Pass 0 to disable.
@@ -215,6 +217,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Return the current audio track index
+ * Note that the handled values do not match the audioTracks array indexes
+ * but refer to VLCMedia's VLCMediaTracksInformationId.
  * \return 0 if none is set.
  *
  * Pass 0 to disable.
