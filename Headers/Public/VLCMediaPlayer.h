@@ -208,6 +208,14 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path;
 
 /**
+ * Get the current subtitle delay. Positive values means subtitles are being
+ * displayed later, negative values earlier.
+ *
+ * \return time (in microseconds) the display of subtitles is being delayed
+ */
+@property (readwrite) NSInteger currentVideoSubTitleDelay;
+
+/**
  * Chapter selection and enumeration, it is bound
  * to a title option.
  */

@@ -343,6 +343,16 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return [NSArray arrayWithArray: tempArray];
 }
 
+- (void)setCurrentVideoSubTitleDelay:(NSInteger)index
+{
+    libvlc_video_set_spu_delay(instance, index);
+}
+
+- (NSInteger)currentVideoSubTitleDelay
+{
+    return libvlc_video_get_spu_delay(instance);
+}
+
 
 #pragma mark -
 #pragma mark Video Crop geometry
