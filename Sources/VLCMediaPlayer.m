@@ -378,6 +378,16 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return result;
 }
 
+- (void)setScaleFactor:(float)value
+{
+    libvlc_video_set_scale(instance, value);
+}
+
+- (float)scaleFactor
+{
+    return libvlc_video_get_scale(instance);
+}
+
 - (void)saveVideoSnapshotAt:(NSString *)path withWidth:(NSUInteger)width andHeight:(NSUInteger)height
 {
     int failure = libvlc_video_take_snapshot(instance, 0, [path UTF8String], width, height);

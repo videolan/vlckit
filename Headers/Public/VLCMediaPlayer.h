@@ -124,6 +124,17 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (char *)videoCropGeometry;
 
 /**
+ * Set/Get the current video scaling factor.
+ * That is the ratio of the number of pixels on
+ * screen to the number of pixels in the original decoded video in each
+ * dimension. Zero is a special value; it will adjust the video to the output
+ * window/drawable (in windowed mode) or the entire screen.
+ *
+ * \param relative scale factor as float 
+ */
+@property (readwrite) float scaleFactor;
+
+/**
  * Take a snapshot of the current video.
  *
  * If width AND height is 0, original size is used.
