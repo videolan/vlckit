@@ -2,10 +2,12 @@
  * VLCMedia.h: VLCKit.framework VLCMedia header
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2013 Felix Paul Kühne
+ * Copyright (C) 2007-2013 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
+ *          Felix Paul Kühne <fkuehne # videolan.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -266,7 +268,20 @@ extern NSString *VLCMediaTracksInformationCodecProfile;
 extern NSString *VLCMediaTracksInformationCodecLevel;
 
 /**
- * \returns the audio channels number as NSNumber
+ * \returns the bitrate as NSNumber
+ */
+extern NSString *VLCMediaTracksInformationBitrate;
+/**
+ * \returns the language as NSString
+ */
+extern NSString *VLCMediaTracksInformationLanguage;
+/**
+ * \returns the description as NSString
+ */
+extern NSString *VLCMediaTracksInformationDescription;
+
+/**
+ * \returns the audio channel number as NSNumber
  */
 extern NSString *VLCMediaTracksInformationAudioChannelsNumber;
 /**
@@ -284,6 +299,29 @@ extern NSString *VLCMediaTracksInformationVideoHeight;
 extern NSString *VLCMediaTracksInformationVideoWidth;
 
 /**
+ * \returns the source aspect ratio as NSNumber
+ */
+extern NSString *VLCMediaTracksInformationSourceAspectRatio;
+/**
+ * \returns the source aspect ratio denominator as NSNumber
+ */
+extern NSString *VLCMediaTracksInformationSourceAspectRatioDenominator;
+
+/**
+ * \returns the frame rate as NSNumber
+ */
+extern NSString *VLCMediaTracksInformationFrameRate;
+/**
+ * \returns the frame rate denominator as NSNumber
+ */
+extern NSString *VLCMediaTracksInformationFrameRateDenominator;
+
+/**
+ * \returns the text encoding as NSString
+ */
+extern NSString *VLCMediaTracksInformationTextEncoding;
+
+/**
  * Tracks information NSDictionary values for
  * VLCMediaTracksInformationType
  */
@@ -297,7 +335,7 @@ extern NSString *VLCMediaTracksInformationTypeUnknown;
  * Returns the tracks information.
  *
  * This is an array of NSDictionary representing each track.
- * It can contains the following keys:
+ * It can contain the following keys:
  *
  * \see VLCMediaTracksInformationCodec
  * \see VLCMediaTracksInformationId
@@ -306,11 +344,23 @@ extern NSString *VLCMediaTracksInformationTypeUnknown;
  * \see VLCMediaTracksInformationCodecProfile
  * \see VLCMediaTracksInformationCodecLevel
  *
+ * \see VLCMediaTracksInformationBitrate
+ * \see VLCMediaTracksInformationLanguage
+ * \see VLCMediaTracksInformationDescription
+ *
  * \see VLCMediaTracksInformationAudioChannelsNumber
  * \see VLCMediaTracksInformationAudioRate
  *
  * \see VLCMediaTracksInformationVideoHeight
  * \see VLCMediaTracksInformationVideoWidth
+ *
+ * \see VLCMediaTracksInformationSourceAspectRatio
+ * \see VLCMediaTracksInformationSourceAspectDenominator
+ *
+ * \see VLCMediaTracksInformationFrameRate
+ * \see VLCMediaTracksInformationFrameRateDenominator
+ *
+ * \see VLCMediaTracksInformationTextEncoding
  */
 
 - (NSArray *)tracksInformation;
