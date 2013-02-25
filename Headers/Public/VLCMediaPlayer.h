@@ -354,9 +354,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Returns the receiver's position in the reading.
- * \return A number between 0 and 1. indicating the position
+ * \return movie position as percentage between 0.0 and 1.0.
  */
 - (float)position;
+/**
+ * Set movie position. This has no effect if playback is not enabled.
+ * \param movie position as percentage between 0.0 and 1.0.
+ */
 - (void)setPosition:(float)newPosition;
 
 - (BOOL)isSeekable;
