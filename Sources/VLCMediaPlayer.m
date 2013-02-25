@@ -302,7 +302,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
         tracks = tracks->p_next;
     }
-    libvlc_track_description_release(tracks);
+    libvlc_track_description_list_release(tracks);
 
     return [NSArray arrayWithArray: tempArray];
 }
@@ -339,7 +339,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_release(currentTrack);
+    libvlc_track_description_list_release(currentTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -472,7 +472,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         [tempArray addObject:[NSString stringWithUTF8String:tracks->psz_name]];
         tracks = tracks->p_next;
     }
-    libvlc_track_description_release(tracks);
+    libvlc_track_description_list_release(tracks);
     return [NSArray arrayWithArray:tempArray];
 }
 
@@ -509,7 +509,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
         tracks = tracks->p_next;
     }
-    libvlc_track_description_release(tracks);
+    libvlc_track_description_list_release(tracks);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -544,7 +544,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
         tracks = tracks->p_next;
     }
-    libvlc_track_description_release(tracks);
+    libvlc_track_description_list_release(tracks);
 
     return [NSArray arrayWithArray: tempArray];
 }
