@@ -111,9 +111,8 @@ static inline VLCMediaState LibVLCStateToMediaState( libvlc_state_t state )
  */
 static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
 {
-    if( event->u.media_meta_changed.meta_type == libvlc_meta_Publisher ||
-        event->u.media_meta_changed.meta_type == libvlc_meta_NowPlaying )
-    {
+    if (event->u.media_meta_changed.meta_type == libvlc_meta_Publisher ||
+        event->u.media_meta_changed.meta_type == libvlc_meta_NowPlaying) {
         /* Skip those meta. We don't really care about them for now.
          * And they occure a lot */
         return;
@@ -192,8 +191,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (id)initWithURL:(NSURL *)anURL
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         p_md = libvlc_media_new_location([VLCLibrary sharedInstance],
                                            [[anURL absoluteString] UTF8String]);
 
@@ -211,8 +209,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (id)initAsNodeWithName:(NSString *)aName
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         p_md = libvlc_media_new_as_node([VLCLibrary sharedInstance],
                                                    [aName UTF8String]);
 
@@ -270,12 +267,10 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (VLCTime *)length
 {
-    if (!length)
-    {
+    if (!length) {
         // Try figuring out what the length is
         long long duration = libvlc_media_get_duration( p_md );
-        if (duration > -1)
-        {
+        if (duration > -1) {
             length = [[VLCTime timeWithNumber:[NSNumber numberWithLongLong:duration]] retain];
             return [[length retain] autorelease];
         }
@@ -288,16 +283,13 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 {
     static const long long thread_sleep = 10000;
 
-    if (!length)
-    {
+    if (!length) {
         // Force parsing of this item.
         [self parseIfNeeded];
 
         // wait until we are preparsed
         while (!length && !libvlc_media_is_parsed(p_md) && [aDate timeIntervalSinceNow] > 0)
-        {
             usleep( thread_sleep );
-        }
 
         // So we're done waiting, but sometimes we trap the fact that the parsing
         // was done before the length gets assigned, so lets go ahead and assign
@@ -321,10 +313,8 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (void)addOptions:(NSDictionary*)options
 {
-    if (p_md)
-    {
-        for (NSString * key in [options allKeys])
-        {
+    if (p_md) {
+        for (NSString * key in [options allKeys]) {
             if ([options objectForKey:key] != [NSNull null])
                 libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, [options objectForKey:key]] UTF8String]);
             else
@@ -335,7 +325,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (NSDictionary*) stats
 {
-    if(!p_md)
+    if (!p_md)
         return NULL;
 
     NSMutableDictionary *d = [NSMutableDictionary dictionary];
@@ -482,9 +472,8 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (id)initWithLibVLCMediaDescriptor:(void *)md
 {
-    if (self = [super init])
-    {
-        libvlc_media_retain( md );
+    if (self = [super init]) {
+        libvlc_media_retain(md);
         p_md = md;
 
         metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
@@ -501,11 +490,10 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 + (id)mediaWithMedia:(VLCMedia *)media andLibVLCOptions:(NSDictionary *)options
 {
     libvlc_media_t * p_md;
-    p_md = libvlc_media_duplicate( [media libVLCMediaDescriptor] );
+    p_md = libvlc_media_duplicate([media libVLCMediaDescriptor]);
 
-    for( NSString * key in [options allKeys] )
-    {
-        if ( [options objectForKey:key] != [NSNull null] )
+    for (NSString * key in [options allKeys]) {
+        if ([options objectForKey:key] != [NSNull null])
             libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, [options objectForKey:key]] UTF8String]);
         else
             libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@", key] UTF8String]);
@@ -525,8 +513,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 {
     static NSDictionary * stringToMetaDictionary = nil;
     // TODO: Thread safe-ize
-    if( !stringToMetaDictionary )
-    {
+    if (!stringToMetaDictionary) {
 #define VLCStringToMeta( name ) [NSNumber numberWithInt: libvlc_meta_##name], VLCMetaInformation##name
         stringToMetaDictionary =
             [[NSDictionary dictionaryWithObjectsAndKeys:
@@ -581,11 +568,11 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     char * p_url = libvlc_media_get_mrl( p_md );
 
     url = [[NSURL URLWithString:[NSString stringWithUTF8String:p_url]] retain];
-    if( !url ) /* Attempt to interpret as a file path then */
+    if (!url) /* Attempt to interpret as a file path then */
         url = [[NSURL fileURLWithPath:[NSString stringWithUTF8String:p_url]] retain];
-    free( p_url );
+    free(p_url);
 
-    libvlc_media_set_user_data( p_md, (void*)self );
+    libvlc_media_set_user_data(p_md, (void*)self);
 
     libvlc_event_manager_t * p_em = libvlc_media_event_manager( p_md );
     libvlc_event_attach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     self);
@@ -598,8 +585,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
     if (!p_mlist)
         subitems = nil;
-    else
-    {
+    else {
         subitems = [[VLCMediaList mediaListWithLibVLCMediaList:p_mlist] retain];
         libvlc_media_list_release( p_mlist );
     }
@@ -615,11 +601,9 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     NSString * oldValue = [metaDictionary valueForKey:metaType];
     free(psz_value);
 
-    if ( newValue != oldValue && !(oldValue && newValue && [oldValue compare:newValue] == NSOrderedSame) )
-    {
+    if (newValue != oldValue && !(oldValue && newValue && [oldValue compare:newValue] == NSOrderedSame)) {
         // Only fetch the art if needed. (ie, create the NSImage, if it was requested before)
-        if (isArtFetched && [metaType isEqualToString:VLCMetaInformationArtworkURL])
-        {
+        if (isArtFetched && [metaType isEqualToString:VLCMetaInformationArtworkURL]) {
             [NSThread detachNewThreadSelector:@selector(fetchMetaInformationForArtWorkWithURL:)
                                          toTarget:self
                                        withObject:newValue];
@@ -635,8 +619,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     NSImage * art = nil;
 
-    if( anURL )
-    {
+    if (anURL) {
         // Go ahead and load up the art work
         NSURL * artUrl = [NSURL URLWithString:[anURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         // Don't attempt to fetch artwork from remote. Core will do that alone
@@ -652,8 +635,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (void)setArtwork:(NSImage *)art
 {
-    if (!art)
-    {
+    if (!art) {
         [metaDictionary removeObjectForKey:@"artwork"];
         return;
     }
@@ -675,7 +657,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (void)subItemAdded
 {
-    if( subitems )
+    if (subitems)
         return; /* Nothing to do */
 
     libvlc_media_list_t * p_mlist = libvlc_media_subitems( p_md );
@@ -698,9 +680,8 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (!delegate || !isParsed)
         return;
 
-    if ([delegate respondsToSelector:@selector(mediaDidFinishParsing:)]) {
+    if ([delegate respondsToSelector:@selector(mediaDidFinishParsing:)])
         [delegate mediaDidFinishParsing:self];
-    }
 }
 
 - (void)setStateAsNumber:(NSNumber *)newStateAsNumber
@@ -718,8 +699,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationTitle];
 
     }
-    if (!isArtURLFetched)
-    {
+    if (!isArtURLFetched) {
         isArtURLFetched = YES;
         /* Force isArtURLFetched, that will trigger artwork download eventually
          * And all the other meta will be added through the libvlc event system */
@@ -732,22 +712,16 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (id)valueForKeyPath:(NSString *)keyPath
 {
-    if( !isArtFetched && [keyPath isEqualToString:@"metaDictionary.artwork"])
-    {
+    if (!isArtFetched && [keyPath isEqualToString:@"metaDictionary.artwork"]) {
         isArtFetched = YES;
         /* Force the retrieval of the artwork now that someone asked for it */
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationArtworkURL];
-    }
-    else if( !areOthersMetaFetched && [keyPath hasPrefix:@"metaDictionary."])
-    {
+    } else if (!areOthersMetaFetched && [keyPath hasPrefix:@"metaDictionary."]) {
         areOthersMetaFetched = YES;
         /* Force VLCMetaInformationTitle, that will trigger preparsing
          * And all the other meta will be added through the libvlc event system */
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationTitle];
-
-    }
-    else if( !isArtURLFetched && [keyPath hasPrefix:@"metaDictionary.artworkURL"])
-    {
+    } else if (!isArtURLFetched && [keyPath hasPrefix:@"metaDictionary.artworkURL"]) {
         isArtURLFetched = YES;
         /* Force isArtURLFetched, that will trigger artwork download eventually
          * And all the other meta will be added through the libvlc event system */

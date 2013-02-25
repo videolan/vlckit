@@ -74,8 +74,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 @implementation VLCMediaList
 - (id)init
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         // Create a new libvlc media list instance
         p_mlist = libvlc_media_list_new([VLCLibrary sharedInstance]);
 
@@ -104,9 +103,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (NSString *)description
 {
     NSMutableString * content = [NSMutableString string];
-    int i;
-    for( i = 0; i < [self count]; i++)
-    {
+    for (NSInteger i = 0; i < [self count]; i++) {
         [content appendFormat:@"%@\n", [self mediaAtIndex: i]];
     }
     return [NSString stringWithFormat:@"<%@ %p> {\n%@}", [self class], self, content];
@@ -199,16 +196,14 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
 - (id)initWithLibVLCMediaList:(void *)p_new_mlist;
 {
-    if( self = [super init] )
-    {
+    if (self = [super init]) {
         p_mlist = p_new_mlist;
         libvlc_media_list_retain( p_mlist );
         libvlc_media_list_lock( p_mlist );
         cachedMedia = [[NSMutableArray alloc] initWithCapacity:libvlc_media_list_count(p_mlist)];
 
-        NSUInteger i, count = libvlc_media_list_count(p_mlist);
-        for( i = 0; i < count; i++ )
-        {
+        NSUInteger count = libvlc_media_list_count(p_mlist);
+        for (NSUInteger i = 0; i < count; i++) {
             libvlc_media_t * p_md = libvlc_media_list_item_at_index(p_mlist, i);
             [cachedMedia addObject:[VLCMedia mediaWithLibVLCMediaDescriptor:p_md]];
             libvlc_media_release(p_md);
@@ -242,12 +237,11 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     NSRange range = NSMakeRange(start, end-start);
 
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] forKey:@"media"];
-    for( NSDictionary * args in arrayOfArgs )
-    {
+    for (NSDictionary * args in arrayOfArgs) {
         NSInteger index = [[args objectForKey:@"index"] intValue];
         VLCMedia * media = [args objectForKey:@"media"];
         /* Sanity check */
-        if( index && index > [cachedMedia count] )
+        if (index && index > [cachedMedia count])
             index = [cachedMedia count];
         [cachedMedia insertObject:media atIndex:index];
     }

@@ -214,9 +214,7 @@ void display(void *opaque, void *picture)
         // Arbitrary choice to work around broken files.
         libvlc_media_player_get_length(_mp) > 1000 &&
         _numberOfReceivedFrames < 10)
-    {
         return;
-    }
 
     NSAssert(_data, @"We have no data");
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();

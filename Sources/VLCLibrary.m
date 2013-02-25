@@ -41,8 +41,7 @@ static VLCLibrary * sharedLibrary = nil;
 @implementation VLCLibrary
 + (VLCLibrary *)sharedLibrary
 {
-    if (!sharedLibrary)
-    {
+    if (!sharedLibrary) {
         /* Initialize a shared instance */
         sharedLibrary = [[self alloc] init];
     }
@@ -51,8 +50,7 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (id)init
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         NSArray *vlcParams;
 #if TARGET_OS_IPHONE
         vlcParams = [NSArray arrayWithObjects:@"--play-and-pause", @"--no-color", @"--no-video-title-show", @"--verbose=2", @"--avcodec-fast", @"--avcodec-skiploopfilter=all", @"--vout=vout_ios", @"--aout=audioqueue", nil];
@@ -103,10 +101,10 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (void)dealloc
 {
-    if( instance )
-        libvlc_release( instance );
+    if (instance)
+        libvlc_release(instance);
 
-    if( self == sharedLibrary )
+    if (self == sharedLibrary)
         sharedLibrary = nil;
 
     instance = nil;

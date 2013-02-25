@@ -71,8 +71,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 @implementation VLCMediaDiscoverer
 + (NSArray *)availableMediaDiscoverer
 {
-    if( !availableMediaDiscoverer )
-    {
+    if (!availableMediaDiscoverer) {
         availableMediaDiscoverer = [[NSArray arrayWithObjects:
                                 [[[VLCMediaDiscoverer alloc] initWithName:@"sap"] autorelease],
                                 [[[VLCMediaDiscoverer alloc] initWithName:@"upnp"] autorelease],
@@ -84,8 +83,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 
 - (id)initWithName:(NSString *)aServiceName
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         localizedName = nil;
         discoveredMedia = nil;
         mdis = libvlc_media_discoverer_new_from_name([VLCLibrary sharedInstance],
@@ -115,7 +113,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 
 - (VLCMediaList *) discoveredMedia
 {
-    if( discoveredMedia )
+    if (discoveredMedia)
         return discoveredMedia;
 
     libvlc_media_list_t * p_mlist = libvlc_media_discoverer_media_list( mdis );
@@ -128,12 +126,11 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 
 - (NSString *)localizedName
 {
-    if ( localizedName )
+    if (localizedName)
         return localizedName;
 
     char * name = libvlc_media_discoverer_localized_name( mdis );
-    if (name)
-    {
+    if (name) {
         localizedName = [[NSString stringWithUTF8String:name] retain];
         free( name );
     }

@@ -100,20 +100,19 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
 {
     VLCMediaPlayerState newState;
 
-    if( event->type == libvlc_MediaPlayerPlaying )
+    if (event->type == libvlc_MediaPlayerPlaying)
         newState = VLCMediaPlayerStatePlaying;
-    else if( event->type == libvlc_MediaPlayerPaused )
+    else if (event->type == libvlc_MediaPlayerPaused)
         newState = VLCMediaPlayerStatePaused;
-    else if( event->type == libvlc_MediaPlayerEndReached )
+    else if (event->type == libvlc_MediaPlayerEndReached)
         newState = VLCMediaPlayerStateStopped;
-    else if( event->type == libvlc_MediaPlayerEncounteredError )
+    else if (event->type == libvlc_MediaPlayerEncounteredError)
         newState = VLCMediaPlayerStateError;
-    else if( event->type == libvlc_MediaPlayerBuffering )
+    else if (event->type == libvlc_MediaPlayerBuffering)
         newState = VLCMediaPlayerStateBuffering;
-    else if( event->type == libvlc_MediaPlayerOpening )
+    else if (event->type == libvlc_MediaPlayerOpening)
         newState = VLCMediaPlayerStateOpening;
-    else
-    {
+    else {
         NSLog(@"%s: Unknown event", __FUNCTION__);
         return;
     }
@@ -164,8 +163,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     static NSDictionary * dict = nil;
     NSSet * superKeyPaths;
-    if( !dict )
-    {
+    if (!dict) {
         dict = [[NSDictionary dictionaryWithObjectsAndKeys:
             [NSSet setWithObject:@"state"], @"playing",
             [NSSet setWithObjects:@"state", @"media", nil], @"seekable",
@@ -173,8 +171,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
             [NSSet setWithObjects:@"state", @"media", nil], @"description",
             nil] retain];
     }
-    if( (superKeyPaths = [super keyPathsForValuesAffectingValueForKey: key]) )
-    {
+    if ((superKeyPaths = [super keyPathsForValuesAffectingValueForKey: key])) {
         NSMutableSet * ret = [NSMutableSet setWithSet:[dict objectForKey: key]];
         [ret unionSet:superKeyPaths];
         return ret;
@@ -296,9 +293,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     libvlc_track_description_t *tracks = libvlc_video_get_track_description(instance);
     NSMutableArray *tempArray = [NSMutableArray array];
-    NSUInteger i;
-    for (i = 0; i < count ; i++)
-    {
+    for (NSUInteger i = 0; i < count ; i++) {
         [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
         tracks = tracks->p_next;
     }
@@ -369,12 +364,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setVideoAspectRatio:(char *)value
 {
-    libvlc_video_set_aspect_ratio( instance, value );
+    libvlc_video_set_aspect_ratio(instance, value);
 }
 
 - (char *)videoAspectRatio
 {
-    char * result = libvlc_video_get_aspect_ratio( instance );
+    char * result = libvlc_video_get_aspect_ratio(instance);
     return result;
 }
 
@@ -485,9 +480,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     libvlc_track_description_t *tracks = libvlc_video_get_chapter_description(instance, title);
     NSMutableArray *tempArray = [NSMutableArray array];
-    NSInteger i;
-    for (i = 0; i < count ; i++)
-    {
+    for (NSInteger i = 0; i < count ; i++) {
         [tempArray addObject:[NSString stringWithUTF8String:tracks->psz_name]];
         tracks = tracks->p_next;
     }
@@ -522,9 +515,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     libvlc_track_description_t *tracks = libvlc_video_get_title_description(instance);
     NSMutableArray *tempArray = [NSMutableArray array];
-    NSInteger i;
-    for (i = 0; i < [self countOfTitles] ; i++)
-    {
+    for (NSInteger i = 0; i < [self countOfTitles] ; i++) {
         [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
         tracks = tracks->p_next;
     }
@@ -557,9 +548,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     libvlc_track_description_t *tracks = libvlc_audio_get_track_description(instance);
     NSMutableArray *tempArray = [NSMutableArray array];
-    NSUInteger i;
-    for (i = 0; i < count ; i++)
-    {
+    for (NSUInteger i = 0; i < count ; i++) {
         [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
         tracks = tracks->p_next;
     }
@@ -593,8 +582,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setMedia:(VLCMedia *)value
 {
-    if (media != value)
-    {
+    if (media != value) {
         if (media && [media compare:value] == NSOrderedSame)
             return;
 
@@ -621,8 +609,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)pause
 {
-    if( [NSThread isMainThread] )
-    {
+    if ([NSThread isMainThread]) {
         /* Hack because we create a dead lock here, when the vout is stopped
          * and tries to recontact us on the main thread */
         /* FIXME: to do this properly we need to do some locking. We may want
@@ -668,8 +655,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)jumpBackward:(NSInteger)interval
 {
-    if( [self isSeekable] )
-    {
+    if ([self isSeekable]) {
         interval = interval * 1000;
         [self setTime: [VLCTime timeWithInt: ([[self time] intValue] - interval)]];
     }
@@ -677,8 +663,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)jumpForward:(NSInteger)interval
 {
-    if( [self isSeekable] )
-    {
+    if ([self isSeekable]) {
         interval = interval * 1000;
         [self setTime: [VLCTime timeWithInt: ([[self time] intValue] + interval)]];
     }
@@ -786,8 +771,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 @implementation VLCMediaPlayer (Private)
 - (id)initWithDrawable:(id)aDrawable
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         delegate = nil;
         media = nil;
         cachedTime = [[VLCTime nullTime] retain];
