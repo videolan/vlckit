@@ -260,6 +260,14 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (void)setAudioChannel:(NSInteger)value;
 - (NSInteger)audioChannel;
 
+/**
+ * Get the current audio delay. Positive values means audio is delayed further,
+ * negative values less.
+ *
+ * \return time (in microseconds) the audio playback is being delayed
+ */
+@property (readwrite) NSInteger currentAudioPlaybackDelay;
+
 /* Media Options */
 - (void)setMedia:(VLCMedia *)value;
 - (VLCMedia *)media;

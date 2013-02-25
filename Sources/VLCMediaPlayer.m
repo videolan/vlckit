@@ -353,7 +353,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return libvlc_video_get_spu_delay(instance);
 }
 
-
 #pragma mark -
 #pragma mark Video Crop geometry
 
@@ -569,6 +568,19 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return libvlc_audio_get_channel(instance);
 }
 
+- (void)setCurrentAudioPlaybackDelay:(NSInteger)index
+{
+    libvlc_audio_set_delay(instance, index);
+}
+
+- (NSInteger)currentAudioPlaybackDelay
+{
+    return libvlc_audio_get_delay(instance);
+}
+
+#pragma mark -
+#pragma mark set/get media
+
 - (void)setMedia:(VLCMedia *)value
 {
     if (media != value)
@@ -587,6 +599,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     return media;
 }
+
+#pragma mark -
+#pragma mark playback
 
 - (BOOL)play
 {
