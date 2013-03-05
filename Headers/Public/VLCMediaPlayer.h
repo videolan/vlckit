@@ -249,7 +249,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (VLCTime *)time;
 
 @property (readonly) VLCTime *remainingTime;
-@property (readonly) NSUInteger fps;
+
+/**
+ * Frames per second
+ * \note this property is deprecated. use (float)fps instead.
+ * \return current media's frames per second value
+ */
+@property (readonly) NSUInteger fps __attribute__((deprecated));
 
 /**
  * Return the current video track index
