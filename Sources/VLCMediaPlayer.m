@@ -395,6 +395,60 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_video_set_deinterlace(instance, [name UTF8String]);
 }
 
+- (BOOL)adjustFilterEnabled
+{
+    return libvlc_video_get_adjust_int(instance, libvlc_adjust_Enable);
+}
+- (void)setAdjustFilterEnabled:(BOOL)b_value
+{
+    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, b_value);
+}
+- (float)contrast
+{
+    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Contrast);
+}
+- (void)setContrast:(float)f_value
+{
+    if (f_value <= 2. && f_value >= 0.)
+        libvlc_video_set_adjust_float(instance,libvlc_adjust_Contrast, f_value);
+}
+- (float)brightness
+{
+    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Brightness);
+}
+- (void)setBrightness:(float)f_value
+{
+    if (f_value <= 2. && f_value >= 0.)
+        libvlc_video_set_adjust_float(instance, libvlc_adjust_Brightness, f_value);
+}
+- (NSInteger)hue
+{
+    return libvlc_video_get_adjust_int(instance, libvlc_adjust_Hue);
+}
+- (void)setHue:(NSInteger)i_value
+{
+    if (i_value <= 360 && i_value >= 0)
+        libvlc_video_set_adjust_int(instance, libvlc_adjust_Hue, i_value);
+}
+- (float)saturation
+{
+    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Saturation);
+}
+- (void)setSaturation:(float)f_value
+{
+    if (f_value <= 3. && f_value >= 0.)
+        libvlc_video_set_adjust_float(instance, libvlc_adjust_Saturation, f_value);
+}
+- (float)gamma
+{
+    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Gamma);
+}
+- (void)setGamma:(float)f_value
+{
+    if (f_value <= 10. && f_value >= 0.)
+        libvlc_video_set_adjust_float(instance, libvlc_adjust_Gamma, f_value);
+}
+
 - (void)setRate:(float)value
 {
     libvlc_media_player_set_rate(instance, value);

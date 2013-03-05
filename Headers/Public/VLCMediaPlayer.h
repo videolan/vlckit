@@ -167,6 +167,43 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)setDeinterlaceFilter: (NSString *)name;
 
+/**
+ * Enable or disable adjust video filter (contrast, brightness, hue, saturation, gamma)
+ *
+ * \param bool value
+ */
+@property BOOL adjustFilterEnabled;
+/**
+ * Set/Get the adjust filter's contrast value
+ *
+ * \param float value (range: 0-2, default: 1.0)
+ */
+@property float contrast;
+/**
+ * Set/Get the adjust filter's brightness value
+ *
+ * \param float value (range: 0-2, default: 1.0)
+ */
+@property float brightness;
+/**
+ * Set/Get the adjust filter's hue value
+ *
+ * \param integer value (range: 0-360, default: 0)
+ */
+@property NSInteger hue;
+/**
+ * Set/Get the adjust filter's saturation value
+ *
+ * \param float value (range: 0-3, default: 1.0)
+ */
+@property float saturation;
+/**
+ * Set/Get the adjust filter's gamma value
+ *
+ * \param float value (range: 0-10, default: 1.0)
+ */
+@property float gamma;
+
 @property float rate;
 
 @property (readonly) VLCAudio * audio;
