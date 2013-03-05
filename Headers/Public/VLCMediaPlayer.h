@@ -117,9 +117,23 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 @property (retain) id drawable; /* The videoView or videoLayer */
 
+/**
+ * Set/Get current video aspect ratio.
+ *
+ * \param psz_aspect new video aspect-ratio or NULL to reset to default
+ * \note Invalid aspect ratios are ignored.
+ * \return the video aspect ratio or NULL if unspecified
+ * (the result must be released with free()).
+ */
 - (void)setVideoAspectRatio:(char *)value;
 - (char *)videoAspectRatio;
 
+/**
+ * Set/Get current crop filter geometry.
+ *
+ * \param psz_geometry new crop filter geometry (NULL to unset)
+ * \return the crop filter geometry or NULL if unset
+ */
 - (void)setVideoCropGeometry:(char *)value;
 - (char *)videoCropGeometry;
 
