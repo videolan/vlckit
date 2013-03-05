@@ -204,13 +204,36 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property float gamma;
 
+/**
+ * Get the requested movie play rate.
+ * @warning Depending on the underlying media, the requested rate may be
+ * different from the real playback rate. Due to limitations of some protocols
+ * this option may not be taken into account at all, if set.
+ * \param rate movie play rate to set
+ *
+ * \return movie play rate
+ */
 @property float rate;
 
 @property (readonly) VLCAudio * audio;
 
 /* Video Information */
+/**
+ * Get the current video size
+ * \return video size as CGSize
+ */
 - (CGSize)videoSize;
+/**
+ * Does the current media have a video output?
+ * \note a false return value doesn't mean that the video doesn't have any video
+ * \note tracks. Those might just be disabled.
+ * \return current video output status
+ */
 - (BOOL)hasVideoOut;
+/**
+ * Frames per second
+ * \return current media's frames per second value
+ */
 - (float)framesPerSecond;
 
 /**
