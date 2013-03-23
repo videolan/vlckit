@@ -840,8 +840,13 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 
         [self registerObservers];
 #if TARGET_OS_IPHONE
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:)
-                                                     name:UIApplicationWillResignActiveNotification object:nil];
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(applicationWillResignActive:)
+                       name:UIApplicationWillResignActiveNotification object:nil];
+        [center addObserver:self selector:@selector(applicationDidBecomeActive:)
+                       name:UIApplicationDidBecomeActiveNotification object:nil];
+        [center addObserver:self selector:@selector(applicationDidEnterBackground:)
+                       name:UIApplicationDidEnterBackgroundNotification object:nil];
 #endif
 
         [self setDrawable:aDrawable];
@@ -884,7 +889,21 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 #if TARGET_OS_IPHONE
 - (void)applicationWillResignActive:(NSNotification *)notification
 {
+    shouldResumePlaying = YES;
     [self pause];
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    shouldResumePlaying = NO;
+}
+
+- (void)applicationDidBecomeActive:(NSNotification *)notification
+{
+    if (shouldResumePlaying) {
+        shouldResumePlaying = NO;
+        [self play];
+    }
 }
 #endif
 
