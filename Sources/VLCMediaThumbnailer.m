@@ -134,7 +134,7 @@ void display(void *opaque, void *picture)
     unsigned imageHeight = _thumbnailHeight > 0 ? _thumbnailHeight : kDefaultImageHeight;
 
     if (!videoTrack)
-        NSLog(@"WARNING: Can't find video track info, still attempting to thumbnail in doubt");
+        VKLog(@"WARNING: Can't find video track info, still attempting to thumbnail in doubt");
     else {
         int videoHeight = [[videoTrack objectForKey:VLCMediaTracksInformationVideoHeight] intValue];
         int videoWidth = [[videoTrack objectForKey:VLCMediaTracksInformationVideoWidth] intValue];
@@ -179,7 +179,7 @@ void display(void *opaque, void *picture)
 
 - (void)mediaParsingTimedOut
 {
-    NSLog(@"WARNING: media thumbnailer media parsing timed out");
+    VKLog(@"WARNING: media thumbnailer media parsing timed out");
     [_media removeObserver:self forKeyPath:@"parsed"];
 
     [self startFetchingThumbnail];

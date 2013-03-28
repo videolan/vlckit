@@ -86,7 +86,7 @@ static void * EventDispatcherMainLoop(void * user_data)
             pthread_cond_wait([self signalData], [self queueLock]);
 
         //if ([[self messageQueue] count] % 100 == 0 || [[self messageQueue] count] < 100)
-          //  NSLog(@"[EVENT_MANAGER] On the stack we have %d elements", [[self messageQueue] count]);
+          //  VKLog(@"[EVENT_MANAGER] On the stack we have %d elements", [[self messageQueue] count]);
 
         /* Get the first object off the queue. */
         dataMessage = [[[self messageQueue] lastObject] retain];    // Released in 'call'

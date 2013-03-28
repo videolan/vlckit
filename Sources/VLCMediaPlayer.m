@@ -113,7 +113,7 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
     else if (event->type == libvlc_MediaPlayerOpening)
         newState = VLCMediaPlayerStateOpening;
     else {
-        NSLog(@"%s: Unknown event", __FUNCTION__);
+        VKLog(@"%s: Unknown event", __FUNCTION__);
         return;
     }
 
