@@ -408,7 +408,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
         if (tracksInfo[i]->psz_description)
             [dictionary setObject:[NSString stringWithFormat:@"%s",tracksInfo[i]->psz_description]
-                           forKey:VLCMediaTracksInformationLanguage];
+                           forKey:VLCMediaTracksInformationDescription];
 
         NSString *type;
         switch (tracksInfo[i]->i_type) {
