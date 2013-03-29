@@ -145,7 +145,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * dimension. Zero is a special value; it will adjust the video to the output
  * window/drawable (in windowed mode) or the entire screen.
  *
- * \param relative scale factor as float 
+ * \param relative scale factor as float
  */
 @property (readwrite) float scaleFactor;
 
@@ -261,36 +261,60 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Return the current video track index
  * Note that the handled values do not match the videoTracks array indexes
- * but refer to VLCMedia's VLCMediaTracksInformationId.
+ * but refer to videoSubTitlesIndexes.
  * \return 0 if none is set.
  *
- * Pass 0 to disable.
+ * Pass -1 to disable.
  */
 @property (readwrite) NSUInteger currentVideoTrackIndex;
+
+/**
+ * Returns the video track names, usually a language name or a description
+ * It includes the "Disabled" fake track at index 0.
+ */
+- (NSArray *)videoTrackNames;
+
+/**
+ * Returns the video track IDs
+ * those are needed to set the video index
+ */
+- (NSArray *)videoTrackIndexes;
 
 /**
  * Return the video tracks
  *
  * It includes the disabled fake track at index 0.
  */
-- (NSArray *)videoTracks;
+- (NSArray *)videoTracks __attribute__((deprecated));
 
 /**
  * Return the current video subtitle index
  * Note that the handled values do not match the videoSubTitles array indexes
- * but refer to VLCMedia's VLCMediaTracksInformationId.
+ * but refer to videoSubTitlesIndexes
  * \return 0 if none is set.
  *
- * Pass 0 to disable.
+ * Pass -1 to disable.
  */
 @property (readwrite) NSUInteger currentVideoSubTitleIndex;
 
 /**
+ * Returns the video subtitle track names, usually a language name or a description
+ * It includes the "Disabled" fake track at index 0.
+ */
+- (NSArray *)videoSubTitlesNames;
+
+/**
+ * Returns the video subtitle track IDs
+ * those are needed to set the video subtitle index
+ */
+- (NSArray *)videoSubTitlesIndexes;
+
+/**
  * Return the video subtitle tracks
- *
+ * \note this property is deprecated. use (NSArray *)videoSubtitleNames instead.
  * It includes the disabled fake track at index 0.
  */
-- (NSArray *)videoSubTitles;
+- (NSArray *)videoSubTitles __attribute__((deprecated));
 
 /**
  * Load and set a specific video subtitle, from a file.
@@ -335,19 +359,31 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Return the current audio track index
  * Note that the handled values do not match the audioTracks array indexes
- * but refer to VLCMedia's VLCMediaTracksInformationId.
+ * but refer to audioTrackIndexes.
  * \return 0 if none is set.
  *
- * Pass 0 to disable.
+ * Pass -1 to disable.
  */
 @property (readwrite) NSUInteger currentAudioTrackIndex;
+
+/**
+ * Returns the audio track names, usually a language name or a description
+ * It includes the "Disabled" fake track at index 0.
+ */
+- (NSArray *)audioTrackNames;
+
+/**
+ * Returns the audio track IDs
+ * those are needed to set the video index
+ */
+- (NSArray *)audioTrackIndexes;
 
 /**
  * Return the audio tracks
  *
  * It includes the "Disable" fake track at index 0.
  */
-- (NSArray *)audioTracks;
+- (NSArray *)audioTracks __attribute__((deprecated));
 
 - (void)setAudioChannel:(NSInteger)value;
 - (NSInteger)audioChannel;

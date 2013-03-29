@@ -285,6 +285,40 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return result;
 }
 
+- (NSArray *)videoTrackNames
+{
+    NSInteger count = libvlc_video_get_track_count(instance);
+    if (count <= 0)
+        return [NSArray array];
+
+    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(instance);
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(currentTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (NSArray *)videoTrackIndexes
+{
+    NSInteger count = libvlc_video_get_track_count(instance);
+    if (count <= 0)
+        return [NSArray array];
+
+    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(instance);
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:[NSNumber numberWithInt:currentTrack->i_id]];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(currentTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
 - (NSArray *)videoTracks
 {
     NSInteger count = libvlc_video_get_track_count(instance);
@@ -318,6 +352,40 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         return NSNotFound;
 
     return libvlc_video_get_spu(instance);
+}
+
+- (NSArray *)videoSubTitlesNames
+{
+    NSInteger count = libvlc_video_get_spu_count(instance);
+    if (count <= 0)
+        return [NSArray array];
+
+    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(instance);
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(currentTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (NSArray *)videoSubTitlesIndexes
+{
+    NSInteger count = libvlc_video_get_spu_count(instance);
+    if (count <= 0)
+        return [NSArray array];
+
+    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(instance);
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:[NSNumber numberWithInt:currentTrack->i_id]];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(currentTrack);
+    return [NSArray arrayWithArray: tempArray];
 }
 
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path
@@ -592,6 +660,40 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     NSUInteger result = libvlc_audio_get_track(instance);
     return result;
+}
+
+- (NSArray *)audioTrackNames
+{
+    NSInteger count = libvlc_audio_get_track_count(instance);
+    if (count <= 0)
+        return [NSArray array];
+
+    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(instance);
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(currentTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (NSArray *)audioTrackIndexes
+{
+    NSInteger count = libvlc_audio_get_track_count(instance);
+    if (count <= 0)
+        return [NSArray array];
+
+    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(instance);
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:[NSNumber numberWithInt:currentTrack->i_id]];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(currentTrack);
+    return [NSArray arrayWithArray: tempArray];
 }
 
 - (NSArray *)audioTracks
