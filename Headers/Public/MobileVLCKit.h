@@ -20,13 +20,14 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#import <MobileVLCKit/VLCAudio.h>
 #import <MobileVLCKit/VLCLibrary.h>
 #import <MobileVLCKit/VLCMedia.h>
+#import <MobileVLCKit/VLCMediaDiscoverer.h>
 #import <MobileVLCKit/VLCMediaList.h>
 #import <MobileVLCKit/VLCMediaPlayer.h>
-#import <MobileVLCKit/VLCMediaDiscoverer.h>
+#import <MobileVLCKit/VLCMediaThumbnailer.h>
 #import <MobileVLCKit/VLCTime.h>
-#import <MobileVLCKit/VLCAudio.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
@@ -34,3 +35,4 @@
 @class VLCTime;
 @class VLCVideoView;
 @class VLCAudio;
+@class VLCMediaThumbnailer;
