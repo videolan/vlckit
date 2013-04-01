@@ -237,6 +237,11 @@ typedef enum VLCMediaState
 @property (readonly) VLCMediaState state;
 
 /**
+ * returns a bool whether is the media is expected to play fluently on this
+ * device or not. It always returns YES on a Mac.*/
+- (BOOL)isMediaSizeSuitableForDevice;
+
+/**
  * Tracks information NSDictionary Possible Keys
  */
 
