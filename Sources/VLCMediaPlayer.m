@@ -1046,6 +1046,12 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 {
     [self willChangeValueForKey:@"state"];
     cachedState = [newState intValue];
+
+#if TARGET_OS_IPHONE
+    // Disable idle timer if player is playing media
+    // Exclusion can be made for audio only media
+    [UIApplication sharedApplication].idleTimerDisabled = [self isPlaying];
+#endif
     [self didChangeValueForKey:@"state"];
 }
 
