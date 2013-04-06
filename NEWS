@@ -1,0 +1,57 @@
+Changes VLCKit 2.0.0 and 2.1.0:
+-------------------------------
+The entire framework was relicensed to LGPL as well as its underlying
+playback modules. Support for transcoding and streaming as well as
+DVD playback was not affected by this move and stays under GPL until
+further notice.
+
+New APIs:
+- VLCStreamOutput:
+  - support for subtitle transcoding
+- VLCMedia:
+  - extended media track information for bitrate, language, description, source
+    aspect ratio, source aspect denominator, frame rate, frame rate denominator,
+    and text encoding
+  - added (BOOL)isMediaSizeSuitableForDevice to let VLCKit determine whether the
+    current media is considered to be suitable for the current device or
+    playback is discouraged. Will always return true on OS X devices.
+- VLCMediaPlayer:
+  - added support to enable, switch and disable video tracks
+  - added setter/getter for SPU and audio delays
+  - added setter/getter for the video scale factor
+  - added support for the "adjust" video filter to manipulate contrast,
+    brightness, hue, saturation and gamma on the fly
+  - new interfaces to fetch names and IDs of audio, subtitle and video tracks
+
+Deprecated APIs:
+- VLCMediaPlayer:
+  @property (readonly) NSUInteger fps;
+    - use (float)fps instead.
+  - (NSArray *)videoSubTitles;
+    - use - (NSArray *)videoSubtitleNames; instead
+  - (NSArray *)audioTracks;
+    - use - (NSArray *)audioTrackNames; instead
+  - (NSArray *)videoTracks;
+    - use - (NSArray *)videoTrackNames; instead
+
+Modified behavior:
+- use of clang instead of llvm-gcc-4.2
+- updated project file for Xcode 4.3 and later
+- iOS Deployment target was raised to iOS 5.1
+- dropped support for the PowerPC architecture
+- Mac Deployment target was raised to OS X 10.7
+- different logging behavior: to see any debug messages, the framework needs
+  to be compiled in debug mode
+
+MobileVLCKit features:
+- added support for Opus
+- slimmed binary by removing dysfunctional or irrelevant modules
+- playback is paused if client app resigns active state
+- playback resumes if client app is being active again
+- idle state and screen sleep is prevented during playback
+
+Removed APIs:
+- VLCMediaList:
+  - (id)initWithArray:(NSArray *)array;
+- VLCMedia:
+  - (void)setValue:(id)value forMeta:(NSString *)VLCMetaInformation;
