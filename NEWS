@@ -1,9 +1,9 @@
-Changes VLCKit 2.0.0 and 2.1.0:
--------------------------------
-The entire framework was relicensed to LGPL as well as its underlying
-playback modules. Support for transcoding and streaming as well as
-DVD playback was not affected by this move and stays under GPL until
-further notice.
+Changes within VLCKit between 2.0.0 and 2.1.0:
+----------------------------------------------
+The entire framework was relicensed to LGPL 2.1 or later as well as its
+underlying playback modules.
+Support for transcoding and streaming as well as DVD playback was not affected
+by this move and stays under GPL until further notice.
 
 New APIs:
 - VLCStreamOutput:
