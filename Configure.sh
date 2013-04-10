@@ -65,7 +65,6 @@ fi
 
 # Debug Flags
 if test "$CONFIGURATION" = "Debug"; then
-    args="--enable-debug $args"
     optim="-g"
 else
     optim=""
