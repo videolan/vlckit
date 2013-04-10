@@ -3,9 +3,11 @@
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
  * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2009, 2013 Felix Paul KŸhne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
+ *          Felix Paul KŸhne <fkuehne # videolan.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -136,15 +138,19 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
 - (void)removeMediaAtIndex:(NSInteger)index
 {
-    [cachedMedia removeObjectAtIndex:index];
+    if (index < [cachedMedia count]) {
+        [cachedMedia removeObjectAtIndex:index];
 
-    // Remove it from the libvlc's medialist
-    libvlc_media_list_remove_index(p_mlist, index);
+        // Remove it from the libvlc's medialist
+        libvlc_media_list_remove_index(p_mlist, index);
+    }
 }
 
 - (VLCMedia *)mediaAtIndex:(NSInteger)index
 {
-    return [cachedMedia objectAtIndex:index];
+    if (index < [cachedMedia count])
+        return [cachedMedia objectAtIndex:index];
+    return NULL;
 }
 
 - (NSInteger)indexOfMedia:(VLCMedia *)media
