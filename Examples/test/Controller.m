@@ -1,9 +1,10 @@
 /*****************************************************************************
  * test: Controller.m
  *****************************************************************************
- * Copyright (C) 2007-2012 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2007-2013 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont
+ *          Felix Paul Kühne
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,17 +23,10 @@
 
 #import "Controller.h"
 
-static void *sleepForMe(void)
-{
-    while (1) sleep(60);
-}
-
 @implementation Controller
 
 - (void)awakeFromNib
 {
-//    atexit((void*)sleepForMe);    // Only used for memory leak debugging
-
     [NSApp setDelegate:self];
 
     // Allocate a VLCVideoView instance and tell it what area to occupy.
@@ -71,8 +65,7 @@ static void *sleepForMe(void)
 
 - (void)changeAndPlay:(id)sender
 {
-    if ([playlistOutline selectedRow] != mediaIndex)
-    {
+    if ([playlistOutline selectedRow] != mediaIndex) {
         [self setMediaIndex:[playlistOutline selectedRow]];
         if (![player isPlaying])
             [player play];
@@ -96,8 +89,7 @@ static void *sleepForMe(void)
 - (void)play:(id)sender
 {
     [self setMediaIndex:mediaIndex+1];
-    if (![player isPlaying])
-    {
+    if (![player isPlaying]) {
         NSLog(@"%@ length = %@", [playlist mediaAtIndex:mediaIndex], [[playlist mediaAtIndex:mediaIndex] lengthWaitUntilDate:[NSDate dateWithTimeIntervalSinceNow:60]]);
         [player play];
     }
@@ -111,9 +103,8 @@ static void *sleepForMe(void)
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:@"media"] && object == playlist) {
+    if ([keyPath isEqualToString:@"media"] && object == playlist)
         [playlistOutline reloadData];
-    }
 }
 
 // NSTableView Implementation
@@ -125,6 +116,7 @@ static void *sleepForMe(void)
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn
             row:(int)row
 {
+    NSLog(@"URL is %@", [playlist mediaAtIndex:row].url.absoluteString);
     return [(VLCMedia *)[playlist mediaAtIndex:row].metaDictionary valueForKey:VLCMetaInformationTitle];
 }
 
@@ -137,13 +129,11 @@ static void *sleepForMe(void)
 - (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info
               row:(int)row dropOperation:(NSTableViewDropOperation)operation
 {
-    int i;
     NSArray *droppedItems = [[info draggingPasteboard] propertyListForType:NSFilenamesPboardType];
 
-    for (i = 0; i < [droppedItems count]; i++)
-    {
+    for (int i = 0; i < [droppedItems count]; i++) {
         NSString * filename = [droppedItems objectAtIndex:i];
-        VLCMedia * media = [VLCMedia mediaWithURL:[NSURL fileURLWithPath:filename]];
+        VLCMedia * media = [VLCMedia mediaWithPath:filename];
         [playlist addMedia:media];
     }
     return YES;
