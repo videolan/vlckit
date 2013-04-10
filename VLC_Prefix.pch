@@ -3,16 +3,8 @@
 //
 
 
-#ifdef __IPHONE_OS_VERSION_MIN_REQUIRED
-# define IPHONE_OS
-#endif
-
 #ifdef __OBJC__
-# ifndef IPHONE_OS
 #  import <Cocoa/Cocoa.h>
-# else
-#  import <UIKit/UIKit.h>
-# endif
 #endif
 
 #ifdef HAVE_CONFIG_H
@@ -23,3 +15,8 @@
 #include <vlc/libvlc_structures.h>
 #include <vlc/libvlc.h>
 
+#ifndef NDEBUG
+#define VKLog(format, ...) NSLog(format, ## __VA_ARGS__)
+#else
+#define VKLog(format, ...)
+#endif
