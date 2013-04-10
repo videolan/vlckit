@@ -105,13 +105,6 @@ for arch in $ARCHS; do
         export CPPFLAGS="-m32 -arch i386 $optim"
         this_args="--build=i686-apple-darwin9 --with-contrib=$VLC_SRC_DIR/contrib/i686-apple-darwin9 $this_args"
     fi
-    if test $arch = "ppc"; then
-        export CFLAGS="-m32 -arch ppc $optim"
-        export CXXFLAGS="-m32 -arch ppc $optim"
-        export OBJCFLAGS="-m32 -arch ppc $optim"
-        export CPPFLAGS="-m32 -arch ppc $optim"
-        this_args="--build=powerpc-apple-darwin9 --with-contrib=$VLC_SRC_DIR/contrib/powerpc-apple-darwin9 $this_args"
-    fi
     echo "Running [$arch] configure $this_args"
 
     $VLC_SRC_DIR/configure $this_args
