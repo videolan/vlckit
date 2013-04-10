@@ -732,8 +732,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if ! [ -e $VLC_SRC_DIR ]; then\n  git clone git://git.videolan.org/vlc.git $VLC_SRC_DIR\nfi";
-			showEnvVarsInLog = 0;
+			shellScript = "if ! [ -e $VLC_SRC_DIR ]; then\n  git clone git://git.videolan.org/vlc.git $VLC_SRC_DIR\nelse\n  echo \"VLC_SRC_DIR exists\"\nfi";
 		};
 		CC4C590F13F53EA400FB0EFC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -872,7 +871,6 @@
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VLC_Prefix.pch;
@@ -907,7 +905,6 @@
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VLC_Prefix.pch;
 				GCC_VERSION = "";
@@ -940,7 +937,6 @@
 					i386,
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -949,7 +945,7 @@
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
-				VLC_SRC_DIR = "$(SRCROOT)/../../..";
+				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Debug;
 		};
@@ -961,7 +957,6 @@
 					i386,
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -970,7 +965,7 @@
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64";
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
-				VLC_SRC_DIR = "$(SRCROOT)/../../..";
+				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Release;
 		};
@@ -1098,7 +1093,6 @@
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VLC_Prefix.pch;
@@ -1133,7 +1127,6 @@
 				FRAMEWORK_VERSION = A;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
-				GCC_MODEL_TUNING = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VLC_Prefix.pch;
 				GCC_VERSION = "";
