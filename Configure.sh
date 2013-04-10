@@ -66,6 +66,9 @@ fi
 # Debug Flags
 if test "$CONFIGURATION" = "Debug"; then
     args="--enable-debug $args"
+    optim="-g"
+else
+    optim=""
 fi
 
 # 64 bits switches
@@ -87,26 +90,26 @@ for arch in $ARCHS; do
     cd $arch
 
     if test $arch = "x86_64"; then
-        export CFLAGS="-m64 -arch x86_64"
-        export CXXFLAGS="-m64 -arch x86_64"
-        export OBJCFLAGS="-m64 -arch x86_64"
-        export CPPFLAGS="-m64 -arch x86_64"
+        export CFLAGS="-m64 -arch x86_64 $optim"
+        export CXXFLAGS="-m64 -arch x86_64 $optim"
+        export OBJCFLAGS="-m64 -arch x86_64 $optim"
+        export CPPFLAGS="-m64 -arch x86_64 $optim"
         this_args="--build=x86_64-apple-darwin10 --with-contrib=$VLC_SRC_DIR/contrib/x86_64-apple-darwin10 $this_args"
         export PATH=$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/x86_64-apple-darwin10/bin:$PATH
         export PKG_CONFIG_PATH=$VLC_SRC_DIR/contrib/x86_64-apple-darwin10/lib/pkgconfig
     fi
     if test $arch = "i386"; then
-        export CFLAGS="-m32 -arch i386"
-        export CXXFLAGS="-m32 -arch i386"
-        export OBJCFLAGS="-m32 -arch i386"
-        export CPPFLAGS="-m32 -arch i386"
+        export CFLAGS="-m32 -arch i386 $optim"
+        export CXXFLAGS="-m32 -arch i386 $optim"
+        export OBJCFLAGS="-m32 -arch i386 $optim"
+        export CPPFLAGS="-m32 -arch i386 $optim"
         this_args="--build=i686-apple-darwin9 --with-contrib=$VLC_SRC_DIR/contrib/i686-apple-darwin9 $this_args"
     fi
     if test $arch = "ppc"; then
-        export CFLAGS="-m32 -arch ppc"
-        export CXXFLAGS="-m32 -arch ppc"
-        export OBJCFLAGS="-m32 -arch ppc"
-        export CPPFLAGS="-m32 -arch ppc"
+        export CFLAGS="-m32 -arch ppc $optim"
+        export CXXFLAGS="-m32 -arch ppc $optim"
+        export OBJCFLAGS="-m32 -arch ppc $optim"
+        export CPPFLAGS="-m32 -arch ppc $optim"
         this_args="--build=powerpc-apple-darwin9 --with-contrib=$VLC_SRC_DIR/contrib/powerpc-apple-darwin9 $this_args"
     fi
     echo "Running [$arch] configure $this_args"
