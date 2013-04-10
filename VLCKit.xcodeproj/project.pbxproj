@@ -233,8 +233,8 @@
 		6341FCB00D2C0936002A97B7 /* VLCVideoLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCVideoLayer.m; sourceTree = "<group>"; };
 		636E974C11E8DCF1002FE8A9 /* VLCMediaThumbnailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaThumbnailer.m; sourceTree = "<group>"; };
 		637CFB930D2D280800A041B6 /* VLCLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCLibrary.h; path = Public/VLCLibrary.h; sourceTree = "<group>"; };
-		637D5ABC0CF6F2650073EA45 /* VLCMediaDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCMediaDiscoverer.h; path = Public/VLCMediaDiscoverer.h; sourceTree = "<group>"; };
-		637D5ADB0CF6F2720073EA45 /* VLCMediaDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCMediaDiscoverer.m; sourceTree = "<group>"; };
+		637D5ABC0CF6F2650073EA45 /* VLCMediaDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaDiscoverer.h; path = Public/VLCMediaDiscoverer.h; sourceTree = "<group>"; };
+		637D5ADB0CF6F2720073EA45 /* VLCMediaDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaDiscoverer.m; sourceTree = "<group>"; };
 		6384FD070D0DBA20005EB1F7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		63D88C56124E9A5100F65FA0 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		63D88CA9124E9A8200F65FA0 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
@@ -258,24 +258,24 @@
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		EF73118E0CB5797B009473B4 /* VLCAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCAudio.h; path = Public/VLCAudio.h; sourceTree = "<group>"; };
 		EF73118F0CB5797B009473B4 /* VLCAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCAudio.m; sourceTree = "<group>"; };
-		EF78BD0D0CAEEEC300354E6E /* VLCEventManager.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCEventManager.h; path = Internal/VLCEventManager.h; sourceTree = "<group>"; };
-		EF78BD120CAEEEE700354E6E /* VLCKit.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCKit.h; path = Public/VLCKit.h; sourceTree = "<group>"; };
-		EF78BD130CAEEEE700354E6E /* VLCMedia.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCMedia.h; path = Public/VLCMedia.h; sourceTree = "<group>"; };
-		EF78BD150CAEEEE700354E6E /* VLCMediaLibrary.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCMediaLibrary.h; path = Public/VLCMediaLibrary.h; sourceTree = "<group>"; };
-		EF78BD160CAEEEE700354E6E /* VLCMediaList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCMediaList.h; path = Public/VLCMediaList.h; sourceTree = "<group>"; };
-		EF78BD190CAEEEE700354E6E /* VLCTime.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCTime.h; path = Public/VLCTime.h; sourceTree = "<group>"; };
-		EF78BD1A0CAEEEE700354E6E /* VLCVideoView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCVideoView.h; path = Public/VLCVideoView.h; sourceTree = "<group>"; };
+		EF78BD0D0CAEEEC300354E6E /* VLCEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEventManager.h; path = Internal/VLCEventManager.h; sourceTree = "<group>"; };
+		EF78BD120CAEEEE700354E6E /* VLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCKit.h; path = Public/VLCKit.h; sourceTree = "<group>"; };
+		EF78BD130CAEEEE700354E6E /* VLCMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMedia.h; path = Public/VLCMedia.h; sourceTree = "<group>"; };
+		EF78BD150CAEEEE700354E6E /* VLCMediaLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaLibrary.h; path = Public/VLCMediaLibrary.h; sourceTree = "<group>"; };
+		EF78BD160CAEEEE700354E6E /* VLCMediaList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaList.h; path = Public/VLCMediaList.h; sourceTree = "<group>"; };
+		EF78BD190CAEEEE700354E6E /* VLCTime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCTime.h; path = Public/VLCTime.h; sourceTree = "<group>"; };
+		EF78BD1A0CAEEEE700354E6E /* VLCVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoView.h; path = Public/VLCVideoView.h; sourceTree = "<group>"; };
 		EF78BD350CAEEFB000354E6E /* Pre-Compile.sh */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.sh; path = "Pre-Compile.sh"; sourceTree = "<group>"; };
-		EF78BD3C0CAEEFF600354E6E /* VLCEventManager.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCEventManager.m; sourceTree = "<group>"; };
-		EF78BD3D0CAEEFF600354E6E /* VLCLibrary.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCLibrary.m; sourceTree = "<group>"; };
-		EF78BD3E0CAEEFF600354E6E /* VLCMedia.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCMedia.m; sourceTree = "<group>"; };
-		EF78BD400CAEEFF600354E6E /* VLCMediaLibrary.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCMediaLibrary.m; sourceTree = "<group>"; };
-		EF78BD410CAEEFF600354E6E /* VLCMediaList.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCMediaList.m; sourceTree = "<group>"; };
-		EF78BD440CAEEFF600354E6E /* VLCTime.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCTime.m; sourceTree = "<group>"; };
-		EF78BD450CAEEFF600354E6E /* VLCVideoView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = VLCVideoView.m; sourceTree = "<group>"; };
+		EF78BD3C0CAEEFF600354E6E /* VLCEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCEventManager.m; sourceTree = "<group>"; };
+		EF78BD3D0CAEEFF600354E6E /* VLCLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCLibrary.m; sourceTree = "<group>"; };
+		EF78BD3E0CAEEFF600354E6E /* VLCMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMedia.m; sourceTree = "<group>"; };
+		EF78BD400CAEEFF600354E6E /* VLCMediaLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaLibrary.m; sourceTree = "<group>"; };
+		EF78BD410CAEEFF600354E6E /* VLCMediaList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaList.m; sourceTree = "<group>"; };
+		EF78BD440CAEEFF600354E6E /* VLCTime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCTime.m; sourceTree = "<group>"; };
+		EF78BD450CAEEFF600354E6E /* VLCVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCVideoView.m; sourceTree = "<group>"; };
 		EF8BB8CE0CAFA8D80038A613 /* VLCMediaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaPlayer.h; path = Public/VLCMediaPlayer.h; sourceTree = "<group>"; };
 		EF8BB8CF0CAFA8D80038A613 /* VLCMediaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaPlayer.m; sourceTree = "<group>"; };
-		EFD551DC0CC6DD720074CEE1 /* VLCLibVLCBridging.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = VLCLibVLCBridging.h; path = Internal/VLCLibVLCBridging.h; sourceTree = "<group>"; };
+		EFD551DC0CC6DD720074CEE1 /* VLCLibVLCBridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCLibVLCBridging.h; path = Internal/VLCLibVLCBridging.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

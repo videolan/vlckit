@@ -2,12 +2,12 @@
  * VLCMedia.m: VLCKit.framework VLCMedia implementation
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2013 Felix Paul Kühne
+ * Copyright (C) 2013 Felix Paul K√ºhne
  * Copyright (C) 2007, 2013 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
- *          Felix Paul Kühne <fkuehne # videolan.org>
+ *          Felix Paul K√ºhne <fkuehne # videolan.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by

@@ -3,11 +3,11 @@
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
  * Copyright (C) 2007 VLC authors and VideoLAN
- * Copyright (C) 2009, 2013 Felix Paul KŸhne
+ * Copyright (C) 2009, 2013 Felix Paul KÃ¼hne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
- *          Felix Paul KŸhne <fkuehne # videolan.org>
+ *          Felix Paul KÃ¼hne <fkuehne # videolan.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
