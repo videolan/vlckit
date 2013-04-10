@@ -8,3 +8,5 @@ MobileVLCKit/vlc-plugins.h
 .DS_Store
 build
 /vlc-unstable
+DerivedData
+
