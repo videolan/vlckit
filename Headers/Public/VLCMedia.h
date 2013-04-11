@@ -398,4 +398,89 @@ extern NSString *VLCMediaTracksInformationTypeUnknown;
  */
 - (NSDictionary*) stats;
 
+#pragma mark - individual stats
+
+/**
+ * returns the number of bytes read by the current input module
+ * \return a NSInteger with the raw number of bytes
+ */
+- (NSInteger)numberOfReadBytesOnInput;
+/**
+ * returns the current input bitrate. may be 0 if the buffer is full
+ * \return a float of the current input bitrate
+ */
+- (float)inputBitrate;
+
+/**
+ * returns the number of bytes read by the current demux module
+ * \return a NSInteger with the raw number of bytes
+ */
+- (NSInteger)numberOfReadBytesOnDemux;
+/**
+ * returns the current demux bitrate. may be 0 if the buffer is empty
+ * \return a float of the current demux bitrate
+ */
+- (float)demuxBitrate;
+
+/**
+ * returns the total number of decoded video blocks in the current media session
+ * \return a NSInteger with the total number of decoded blocks
+ */
+- (NSInteger)numberOfDecodedVideoBlocks;
+/**
+ * returns the total number of decoded audio blocks in the current media session
+ * \return a NSInteger with the total number of decoded blocks
+ */
+- (NSInteger)numberOfDecodedAudioBlocks;
+
+/**
+ * returns the total number of displayed pictures during the current media session
+ * \return a NSInteger with the total number of displayed pictures
+ */
+- (NSInteger)numberOfDisplayedPictures;
+/**
+ * returns the total number of pictures lost during the current media session
+ * \return a NSInteger with the total number of lost pictures
+ */
+- (NSInteger)numberOfLostPictures;
+
+/**
+ * returns the total number of played audio buffers during the current media session
+ * \return a NSInteger with the total number of played audio buffers
+ */
+- (NSInteger)numberOfPlayedAudioBuffers;
+/**
+ * returns the total number of audio buffers lost during the current media session
+ * \return a NSInteger with the total number of displayed pictures
+ */
+- (NSInteger)numberOfLostAudioBuffers;
+
+/**
+ * returns the total number of packets sent during the current media session
+ * \return a NSInteger with the total number of sent packets
+ */
+- (NSInteger)numberOfSentPackets;
+/**
+ * returns the total number of raw bytes sent during the current media session
+ * \return a NSInteger with the total number of sent bytes
+ */
+- (NSInteger)numberOfSentBytes;
+/**
+ * returns the current bitrate of sent bytes
+ * \return a float of the current bitrate of sent bits
+ */
+- (float)streamOutputBitrate;
+/**
+ * returns the total number of corrupted data packets during current sout session
+ * \note value is 0 on non-stream-output operations
+ * \return a NSInteger with the total number of corrupted data packets
+ */
+- (NSInteger)numberOfCorruptedDataPackets;
+/**
+ * returns the total number of discontinuties during current sout session
+ * \note value is 0 on non-stream-output operations
+ * \return a NSInteger with the total number of discontinuties
+ */
+- (NSInteger)numberOfDiscontinuties;
+
 @end

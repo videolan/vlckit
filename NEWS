@@ -15,6 +15,9 @@ New APIs:
   - added (BOOL)isMediaSizeSuitableForDevice to let VLCKit determine whether the
     current media is considered to be suitable for the current device or
     playback is discouraged. Will always return true on OS X devices.
+  - added individual getters for all statistic values, so client application can
+    fetch single values instead of having to process a NSDictionary with all the
+    available values. The old API is still available and will stay.
 - VLCMediaPlayer:
   - added support to enable, switch and disable video tracks
   - added setter/getter for SPU and audio delays

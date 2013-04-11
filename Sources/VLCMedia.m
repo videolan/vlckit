@@ -352,6 +352,171 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return d;
 }
 
+- (NSInteger)numberOfReadBytesOnInput
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_read_bytes;
+}
+
+- (float)inputBitrate
+{
+    if (!p_md)
+        return .0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.f_input_bitrate;
+}
+
+- (NSInteger)numberOfReadBytesOnDemux
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_demux_read_bytes;
+}
+
+- (float)demuxBitrate
+{
+    if (!p_md)
+        return .0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.f_demux_bitrate;
+}
+
+- (NSInteger)numberOfDecodedVideoBlocks
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_decoded_video;
+}
+
+- (NSInteger)numberOfDecodedAudioBlocks
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_decoded_audio;
+}
+
+- (NSInteger)numberOfDisplayedPictures
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_displayed_pictures;
+}
+
+- (NSInteger)numberOfLostPictures
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_lost_pictures;
+}
+
+- (NSInteger)numberOfPlayedAudioBuffers
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_played_abuffers;
+}
+
+- (NSInteger)numberOfLostAudioBuffers
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_lost_abuffers;
+}
+
+- (NSInteger)numberOfSentPackets
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_sent_packets;
+}
+
+- (NSInteger)numberOfSentBytes
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_sent_bytes;
+}
+
+- (float)streamOutputBitrate
+{
+    if (!p_md)
+        return .0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.f_send_bitrate;
+}
+
+- (NSInteger)numberOfCorruptedDataPackets
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_demux_corrupted;
+}
+
+- (NSInteger)numberOfDiscontinuties
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_demux_discontinuity;
+}
+
 NSString *VLCMediaTracksInformationCodec = @"codec"; // NSNumber
 NSString *VLCMediaTracksInformationId    = @"id";    // NSNumber
 NSString *VLCMediaTracksInformationType  = @"type";  // NSString
