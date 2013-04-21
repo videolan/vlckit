@@ -93,16 +93,27 @@ static void * EventDispatcherMainLoop(void * user_data)
         [[self messageQueue] removeLastObject];
         message = (message_t *)[dataMessage bytes];
 
-        /* Remove duplicate notifications. */
+        /* Remove duplicate notifications (keep the newest one). */
         if (message->type == VLCNotification) {
+            NSInteger last_match_msg = -1;
             for (NSInteger i = [[self messageQueue] count]-1; i >= 0; i-- ) {
                 message_newer = (message_t *)[(NSData *)[[self messageQueue] objectAtIndex:i] bytes];
                 if (message_newer->type == VLCNotification &&
                     message_newer->target == message->target &&
                     [message_newer->u.name isEqualToString:message->u.name]) {
-                    [message_newer->u.name release];
-                    [[self messageQueue] removeObjectAtIndex:i];
+                    if (last_match_msg >= 0) {
+                        message_t * msg = (message_t *)[(NSData *)[[self messageQueue] objectAtIndex:last_match_msg] bytes];
+                        [msg->u.name release];
+                        [[self messageQueue] removeObjectAtIndex:last_match_msg];
+                    }
+                    last_match_msg = i;
                 }
+            }
+            if (last_match_msg >= 0) {
+                // newer notification detected, ignore current one
+                [message->u.name release];
+                pthread_mutex_unlock([self queueLock]);
+                continue;
             }
         } else if (message->type == VLCObjectMethodWithArrayArg) {
             NSMutableArray * newArg = nil;
