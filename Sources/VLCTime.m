@@ -60,7 +60,7 @@
 {
     if (self = [super init]) {
         if (aInt)
-            value = [[NSNumber numberWithInt: aInt] retain];
+            value = [@(aInt) retain];
         else
             value = nil;
     }

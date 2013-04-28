@@ -29,7 +29,7 @@
 
 #include <vlc/libvlc.h>
 
-static NSMutableArray * availableMediaDiscoverer = nil;     // Global list of media discoverers
+static NSArray * availableMediaDiscoverer = nil;     // Global list of media discoverers
 
 /**
  * Declares call back functions to be used with libvlc event callbacks.
@@ -72,11 +72,10 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 + (NSArray *)availableMediaDiscoverer
 {
     if (!availableMediaDiscoverer) {
-        availableMediaDiscoverer = [[NSArray arrayWithObjects:
-                                [[[VLCMediaDiscoverer alloc] initWithName:@"sap"] autorelease],
+        availableMediaDiscoverer = [@[[[[VLCMediaDiscoverer alloc] initWithName:@"sap"] autorelease],
                                 [[[VLCMediaDiscoverer alloc] initWithName:@"upnp"] autorelease],
                                 [[[VLCMediaDiscoverer alloc] initWithName:@"freebox"] autorelease],
-                                [[[VLCMediaDiscoverer alloc] initWithName:@"video_dir"] autorelease], nil] retain];
+                                [[[VLCMediaDiscoverer alloc] initWithName:@"video_dir"] autorelease]] retain];
     }
     return availableMediaDiscoverer;
 }
@@ -131,7 +130,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 
     char * name = libvlc_media_discoverer_localized_name( mdis );
     if (name) {
-        localizedName = [[NSString stringWithUTF8String:name] retain];
+        localizedName = [@(name) retain];
         free( name );
     }
     return localizedName;

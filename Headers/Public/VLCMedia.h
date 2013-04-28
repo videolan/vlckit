@@ -61,13 +61,13 @@ extern NSString * VLCMediaMetaChanged;  //< Notification message for when the me
 @class VLCMediaList;
 @class VLCMedia;
 
-typedef enum VLCMediaState
-{
+enum {
     VLCMediaStateNothingSpecial,        //< Nothing
     VLCMediaStateBuffering,             //< Stream is buffering
     VLCMediaStatePlaying,               //< Stream is playing
     VLCMediaStateError,                 //< Can't be played because an error occurred
-} VLCMediaState;
+};
+typedef NSInteger VLCMediaState;
 
 /**
  * Informal protocol declaration for VLCMedia delegates.  Allows data changes to be

@@ -78,7 +78,7 @@ static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaPlayerTimeChanged:)
-                                       withArgumentAsObject:[NSNumber numberWithLongLong:event->u.media_player_time_changed.new_time]];
+                                       withArgumentAsObject:@(event->u.media_player_time_changed.new_time)];
 
     [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:self
                                                    withDelegateMethod:@selector(mediaPlayerTimeChanged:)
@@ -92,7 +92,7 @@ static void HandleMediaPositionChanged(const libvlc_event_t * event, void * self
 
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaPlayerPositionChanged:)
-                                       withArgumentAsObject:[NSNumber numberWithFloat:event->u.media_player_position_changed.new_position]];
+                                       withArgumentAsObject:@(event->u.media_player_position_changed.new_position)];
     [pool drain];
 }
 
@@ -121,7 +121,7 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
 
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaPlayerStateChanged:)
-                                       withArgumentAsObject:[NSNumber numberWithInt:newState]];
+                                       withArgumentAsObject:@(newState)];
 
     [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:self
                                                    withDelegateMethod:@selector(mediaPlayerStateChanged:)
@@ -164,19 +164,17 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     static NSDictionary * dict = nil;
     NSSet * superKeyPaths;
     if (!dict) {
-        dict = [[NSDictionary dictionaryWithObjectsAndKeys:
-            [NSSet setWithObject:@"state"], @"playing",
-            [NSSet setWithObjects:@"state", @"media", nil], @"seekable",
-            [NSSet setWithObjects:@"state", @"media", nil], @"canPause",
-            [NSSet setWithObjects:@"state", @"media", nil], @"description",
-            nil] retain];
+        dict = [@{@"playing": [NSSet setWithObject:@"state"],
+            @"seekable": [NSSet setWithObjects:@"state", @"media", nil],
+            @"canPause": [NSSet setWithObjects:@"state", @"media", nil],
+            @"description": [NSSet setWithObjects:@"state", @"media", nil]} retain];
     }
     if ((superKeyPaths = [super keyPathsForValuesAffectingValueForKey: key])) {
-        NSMutableSet * ret = [NSMutableSet setWithSet:[dict objectForKey: key]];
+        NSMutableSet * ret = [NSMutableSet setWithSet:dict[key]];
         [ret unionSet:superKeyPaths];
         return ret;
     }
-    return [dict objectForKey: key];
+    return dict[key];
 }
 
 /* Contructor */
@@ -289,13 +287,13 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_video_get_track_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(instance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
+        [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
@@ -306,13 +304,13 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_video_get_track_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(instance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:[NSNumber numberWithInt:currentTrack->i_id]];
+        [tempArray addObject:@(currentTrack->i_id)];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
@@ -323,12 +321,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_video_get_track_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *tracks = libvlc_video_get_track_description(instance);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < count ; i++) {
-        [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
+        [tempArray addObject:@(tracks->psz_name)];
         tracks = tracks->p_next;
     }
     libvlc_track_description_list_release(tracks);
@@ -358,13 +356,13 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_video_get_spu_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(instance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
+        [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
@@ -375,13 +373,13 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_video_get_spu_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(instance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:[NSNumber numberWithInt:currentTrack->i_id]];
+        [tempArray addObject:@(currentTrack->i_id)];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
@@ -399,7 +397,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
+        [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
@@ -598,12 +596,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_media_player_get_chapter_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *tracks = libvlc_video_get_chapter_description(instance, title);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSInteger i = 0; i < count ; i++) {
-        [tempArray addObject:[NSString stringWithUTF8String:tracks->psz_name]];
+        [tempArray addObject:@(tracks->psz_name)];
         tracks = tracks->p_next;
     }
     libvlc_track_description_list_release(tracks);
@@ -638,7 +636,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_track_description_t *tracks = libvlc_video_get_title_description(instance);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSInteger i = 0; i < [self countOfTitles] ; i++) {
-        [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
+        [tempArray addObject:@(tracks->psz_name)];
         tracks = tracks->p_next;
     }
     libvlc_track_description_list_release(tracks);
@@ -666,13 +664,13 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_audio_get_track_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(instance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:[NSString stringWithUTF8String:currentTrack->psz_name]];
+        [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
@@ -683,13 +681,13 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_audio_get_track_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(instance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:[NSNumber numberWithInt:currentTrack->i_id]];
+        [tempArray addObject:@(currentTrack->i_id)];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
@@ -700,12 +698,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_audio_get_track_count(instance);
     if (count <= 0)
-        return [NSArray array];
+        return @[];
 
     libvlc_track_description_t *tracks = libvlc_audio_get_track_description(instance);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < count ; i++) {
-        [tempArray addObject:[NSString stringWithUTF8String: tracks->psz_name]];
+        [tempArray addObject:@(tracks->psz_name)];
         tracks = tracks->p_next;
     }
     libvlc_track_description_list_release(tracks);
@@ -1018,7 +1016,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
     [cachedRemainingTime release];
     double currentTime = [[cachedTime numberValue] doubleValue];
     double remaining = currentTime / position * (1 - position);
-    cachedRemainingTime = [[VLCTime timeWithNumber:[NSNumber numberWithDouble:-remaining]] retain];
+    cachedRemainingTime = [[VLCTime timeWithNumber:@(-remaining)] retain];
     [self didChangeValueForKey:@"remainingTime"];
     [self didChangeValueForKey:@"time"];
 }

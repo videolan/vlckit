@@ -53,7 +53,7 @@ static VLCLibrary * sharedLibrary = nil;
     if (self = [super init]) {
         NSArray *vlcParams;
 #if TARGET_OS_IPHONE
-        vlcParams = [NSArray arrayWithObjects:@"--play-and-pause", @"--no-color", @"--no-video-title-show", @"--verbose=3", @"--avcodec-fast", @"--avcodec-skiploopfilter=all", @"--no-stats", @"--no-plugins-cache", @"--vout=vout_ios2", nil];
+        vlcParams = @[@"--play-and-pause", @"--no-color", @"--no-video-title-show", @"--verbose=3", @"--avcodec-fast", @"--avcodec-skiploopfilter=all", @"--no-stats", @"--no-plugins-cache", @"--vout=vout_ios2"];
 #else
         vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
         if (!vlcParams) {
@@ -78,7 +78,7 @@ static VLCLibrary * sharedLibrary = nil;
         NSUInteger count = [vlcParams count];
         const char *lib_vlc_params[count];
         while (paramNum < count) {
-            NSString *vlcParam = [vlcParams objectAtIndex:paramNum];
+            NSString *vlcParam = vlcParams[paramNum];
             lib_vlc_params[paramNum] = [vlcParam cStringUsingEncoding:NSASCIIStringEncoding];
             paramNum++;
         }
@@ -91,12 +91,12 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (NSString *)version
 {
-    return [NSString stringWithUTF8String:libvlc_get_version()];
+    return @(libvlc_get_version());
 }
 
 - (NSString *)changeset
 {
-    return [NSString stringWithUTF8String:libvlc_get_changeset()];
+    return @(libvlc_get_changeset());
 }
 
 - (void)dealloc

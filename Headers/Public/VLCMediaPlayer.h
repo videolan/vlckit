@@ -44,7 +44,7 @@ extern NSString * VLCMediaPlayerStateChanged;
 /**
  * VLCMediaPlayerState describes the state of the media player.
  */
-typedef enum VLCMediaPlayerState
+enum
 {
     VLCMediaPlayerStateStopped,        //< Player has stopped
     VLCMediaPlayerStateOpening,        //< Stream is opening
@@ -53,7 +53,8 @@ typedef enum VLCMediaPlayerState
     VLCMediaPlayerStateError,          //< Player has generated an error
     VLCMediaPlayerStatePlaying,        //< Stream is playing
     VLCMediaPlayerStatePaused          //< Stream is paused
-} VLCMediaPlayerState;
+};
+typedef NSInteger VLCMediaPlayerState;
 
 /**
  * Returns the name of the player state as a string.

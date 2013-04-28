@@ -123,7 +123,7 @@ void display(void *opaque, void *picture)
     // Find the video track
     NSDictionary *videoTrack = nil;
     for (NSDictionary *track in tracks) {
-        NSString *type = [track objectForKey:VLCMediaTracksInformationType];
+        NSString *type = track[VLCMediaTracksInformationType];
         if ([type isEqualToString:VLCMediaTracksInformationTypeVideo]) {
             videoTrack = track;
             break;
@@ -136,8 +136,8 @@ void display(void *opaque, void *picture)
     if (!videoTrack)
         VKLog(@"WARNING: Can't find video track info, still attempting to thumbnail in doubt");
     else {
-        int videoHeight = [[videoTrack objectForKey:VLCMediaTracksInformationVideoHeight] intValue];
-        int videoWidth = [[videoTrack objectForKey:VLCMediaTracksInformationVideoWidth] intValue];
+        int videoHeight = [videoTrack[VLCMediaTracksInformationVideoHeight] intValue];
+        int videoWidth = [videoTrack[VLCMediaTracksInformationVideoWidth] intValue];
 
         // Constraining to the aspect ratio of the video.
         double ratio;

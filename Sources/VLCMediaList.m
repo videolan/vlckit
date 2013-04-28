@@ -56,10 +56,8 @@ static void HandleMediaListItemAdded(const libvlc_event_t * event, void * user_d
     id self = user_data;
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaListItemAdded:)
-                                       withArgumentAsObject:[NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                          [VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_list_item_added.item], @"media",
-                                                          [NSNumber numberWithInt:event->u.media_list_item_added.index], @"index",
-                                                          nil]]];
+                                       withArgumentAsObject:@[@{@"media": [VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_list_item_added.item],
+                                                          @"index": @(event->u.media_list_item_added.index)}]];
     [pool drain];
 }
 
@@ -69,7 +67,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     id self = user_data;
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaListItemRemoved:)
-                                       withArgumentAsObject:[NSNumber numberWithInt:event->u.media_list_item_deleted.index]];
+                                       withArgumentAsObject:@(event->u.media_list_item_deleted.index)];
     [pool drain];
 }
 
@@ -149,7 +147,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (VLCMedia *)mediaAtIndex:(NSInteger)index
 {
     if (index < [cachedMedia count])
-        return [cachedMedia objectAtIndex:index];
+        return cachedMedia[index];
     return NULL;
 }
 
@@ -238,14 +236,14 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (void)mediaListItemAdded:(NSArray *)arrayOfArgs
 {
     /* We hope to receive index in a nide range, that could change one day */
-    NSInteger start = [[[arrayOfArgs objectAtIndex: 0] objectForKey:@"index"] intValue];
-    NSInteger end = [[[arrayOfArgs objectAtIndex: [arrayOfArgs count]-1] objectForKey:@"index"] intValue];
+    NSInteger start = [arrayOfArgs[0][@"index"] intValue];
+    NSInteger end = [arrayOfArgs[[arrayOfArgs count]-1][@"index"] intValue];
     NSRange range = NSMakeRange(start, end-start);
 
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] forKey:@"media"];
     for (NSDictionary * args in arrayOfArgs) {
-        NSInteger index = [[args objectForKey:@"index"] intValue];
-        VLCMedia * media = [args objectForKey:@"media"];
+        NSInteger index = [args[@"index"] intValue];
+        VLCMedia * media = args[@"media"];
         /* Sanity check */
         if (index && index > [cachedMedia count])
             index = [cachedMedia count];
@@ -272,9 +270,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     // Post the notification
     [[NSNotificationCenter defaultCenter] postNotificationName:VLCMediaListItemDeleted
                                                         object:self
-                                                      userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                          index, @"index",
-                                                          nil]];
+                                                      userInfo:@{@"index": index}];
 
     // Let the delegate know that the item is being removed
     if (delegate && [delegate respondsToSelector:@selector(mediaList:mediaRemovedAtIndex:)])

@@ -132,7 +132,7 @@ static void HandleMediaDurationChanged(const libvlc_event_t * event, void * self
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(setLength:)
                                        withArgumentAsObject:[VLCTime timeWithNumber:
-                                           [NSNumber numberWithLongLong:event->u.media_duration_changed.new_duration]]];
+                                           @(event->u.media_duration_changed.new_duration)]];
     [pool drain];
 }
 
@@ -142,8 +142,7 @@ static void HandleMediaStateChanged(const libvlc_event_t * event, void * self)
 
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(setStateAsNumber:)
-                                       withArgumentAsObject:[NSNumber numberWithInt:
-                                            LibVLCStateToMediaState(event->u.media_state_changed.new_state)]];
+                                       withArgumentAsObject:@(LibVLCStateToMediaState(event->u.media_state_changed.new_state))];
     [pool drain];
 }
 
@@ -161,7 +160,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(parsedChanged:)
-                                       withArgumentAsObject:[NSNumber numberWithBool:event->u.media_parsed_changed.new_status]];
+                                       withArgumentAsObject:@((BOOL)event->u.media_parsed_changed.new_status)];
     [pool release];
 }
 
@@ -251,7 +250,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (NSString *)description
 {
-    NSString * result = [metaDictionary objectForKey:VLCMetaInformationTitle];
+    NSString * result = metaDictionary[VLCMetaInformationTitle];
     return [NSString stringWithFormat:@"<%@ %p> %@", [self class], self, (result ? result : [url absoluteString])];
 }
 
@@ -272,7 +271,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         // Try figuring out what the length is
         long long duration = libvlc_media_get_duration( p_md );
         if (duration > -1) {
-            length = [[VLCTime timeWithNumber:[NSNumber numberWithLongLong:duration]] retain];
+            length = [[VLCTime timeWithNumber:@(duration)] retain];
             return [[length retain] autorelease];
         }
         return [VLCTime nullTime];
@@ -316,8 +315,8 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 {
     if (p_md) {
         for (NSString * key in [options allKeys]) {
-            if ([options objectForKey:key] != [NSNull null])
-                libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, [options objectForKey:key]] UTF8String]);
+            if (options[key] != [NSNull null])
+                libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, options[key]] UTF8String]);
             else
                 libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@", key] UTF8String]);
         }
@@ -333,21 +332,21 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     libvlc_media_stats_t p_stats;
     libvlc_media_get_stats(p_md, &p_stats);
 
-    [d setObject:[NSNumber numberWithFloat: p_stats.f_demux_bitrate]       forKey:@"demuxBitrate"];
-    [d setObject:[NSNumber numberWithFloat: p_stats.f_input_bitrate]       forKey:@"inputBitrate"];
-    [d setObject:[NSNumber numberWithFloat: p_stats.f_send_bitrate]        forKey:@"sendBitrate"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_decoded_audio]       forKey:@"decodedAudio"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_decoded_video]       forKey:@"decodedVideo"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_demux_corrupted]     forKey:@"demuxCorrupted"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_demux_discontinuity] forKey:@"demuxDiscontinuity"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_demux_read_bytes]    forKey:@"demuxReadBytes"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_displayed_pictures]  forKey:@"displayedPictures"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_lost_abuffers]       forKey:@"lostAbuffers"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_lost_pictures]       forKey:@"lostPictures"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_played_abuffers]     forKey:@"playedAbuffers"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_read_bytes]          forKey:@"readBytes"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_sent_bytes]          forKey:@"sentBytes"];
-    [d setObject:[NSNumber numberWithInt:   p_stats.i_sent_packets]        forKey:@"sentPackets"];
+    d[@"demuxBitrate"] = @(p_stats.f_demux_bitrate);
+    d[@"inputBitrate"] = @(p_stats.f_input_bitrate);
+    d[@"sendBitrate"] = @(p_stats.f_send_bitrate);
+    d[@"decodedAudio"] = @(p_stats.i_decoded_audio);
+    d[@"decodedVideo"] = @(p_stats.i_decoded_video);
+    d[@"demuxCorrupted"] = @(p_stats.i_demux_corrupted);
+    d[@"demuxDiscontinuity"] = @(p_stats.i_demux_discontinuity);
+    d[@"demuxReadBytes"] = @(p_stats.i_demux_read_bytes);
+    d[@"displayedPictures"] = @(p_stats.i_displayed_pictures);
+    d[@"lostAbuffers"] = @(p_stats.i_lost_abuffers);
+    d[@"lostPictures"] = @(p_stats.i_lost_pictures);
+    d[@"playedAbuffers"] = @(p_stats.i_played_abuffers);
+    d[@"readBytes"] = @(p_stats.i_read_bytes);
+    d[@"sentBytes"] = @(p_stats.i_sent_bytes);
+    d[@"sentPackets"] = @(p_stats.i_sent_packets);
 
     return d;
 }
@@ -557,54 +556,43 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     NSMutableArray *array = [NSMutableArray array];
     for (NSUInteger i = 0; i < count; i++) {
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           [NSNumber numberWithUnsignedInt:tracksInfo[i]->i_codec],
+                                           @(tracksInfo[i]->i_codec),
                                            VLCMediaTracksInformationCodec,
-                                           [NSNumber numberWithInt:tracksInfo[i]->i_id],
+                                           @(tracksInfo[i]->i_id),
                                            VLCMediaTracksInformationId,
-                                           [NSNumber numberWithInt:tracksInfo[i]->i_profile],
+                                           @(tracksInfo[i]->i_profile),
                                            VLCMediaTracksInformationCodecProfile,
-                                           [NSNumber numberWithInt:tracksInfo[i]->i_level],
+                                           @(tracksInfo[i]->i_level),
                                            VLCMediaTracksInformationCodecLevel,
-                                           [NSNumber numberWithUnsignedInt:tracksInfo[i]->i_bitrate],
+                                           @(tracksInfo[i]->i_bitrate),
                                            VLCMediaTracksInformationBitrate,
                                            nil];
         if (tracksInfo[i]->psz_language)
-            [dictionary setObject:[NSString stringWithFormat:@"%s",tracksInfo[i]->psz_language]
-                           forKey:VLCMediaTracksInformationLanguage];
+            dictionary[VLCMediaTracksInformationLanguage] = [NSString stringWithFormat:@"%s",tracksInfo[i]->psz_language];
 
         if (tracksInfo[i]->psz_description)
-            [dictionary setObject:[NSString stringWithFormat:@"%s",tracksInfo[i]->psz_description]
-                           forKey:VLCMediaTracksInformationDescription];
+            dictionary[VLCMediaTracksInformationDescription] = [NSString stringWithFormat:@"%s",tracksInfo[i]->psz_description];
 
         NSString *type;
         switch (tracksInfo[i]->i_type) {
             case libvlc_track_audio:
                 type = VLCMediaTracksInformationTypeAudio;
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->audio->i_channels]
-                               forKey:VLCMediaTracksInformationAudioChannelsNumber];
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->audio->i_rate]
-                               forKey:VLCMediaTracksInformationAudioRate];
+                dictionary[VLCMediaTracksInformationAudioChannelsNumber] = @(tracksInfo[i]->audio->i_channels);
+                dictionary[VLCMediaTracksInformationAudioRate] = @(tracksInfo[i]->audio->i_rate);
                 break;
             case libvlc_track_video:
                 type = VLCMediaTracksInformationTypeVideo;
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->video->i_width]
-                               forKey:VLCMediaTracksInformationVideoWidth];
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->video->i_height]
-                               forKey:VLCMediaTracksInformationVideoHeight];
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->video->i_sar_num]
-                               forKey:VLCMediaTracksInformationSourceAspectRatio];
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->video->i_sar_den]
-                               forKey:VLCMediaTracksInformationSourceAspectDenominator];
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->video->i_frame_rate_num]
-                               forKey:VLCMediaTracksInformationFrameRate];
-                [dictionary setObject:[NSNumber numberWithUnsignedInt:tracksInfo[i]->video->i_frame_rate_den]
-                               forKey:VLCMediaTracksInformationFrameRateDenominator];
+                dictionary[VLCMediaTracksInformationVideoWidth] = @(tracksInfo[i]->video->i_width);
+                dictionary[VLCMediaTracksInformationVideoHeight] = @(tracksInfo[i]->video->i_height);
+                dictionary[VLCMediaTracksInformationSourceAspectRatio] = @(tracksInfo[i]->video->i_sar_num);
+                dictionary[VLCMediaTracksInformationSourceAspectDenominator] = @(tracksInfo[i]->video->i_sar_den);
+                dictionary[VLCMediaTracksInformationFrameRate] = @(tracksInfo[i]->video->i_frame_rate_num);
+                dictionary[VLCMediaTracksInformationFrameRateDenominator] = @(tracksInfo[i]->video->i_frame_rate_den);
                 break;
             case libvlc_track_text:
                 type = VLCMediaTracksInformationTypeText;
                 if (tracksInfo[i]->subtitle->psz_encoding)
-                    [dictionary setObject:[NSString stringWithFormat:@"%s", tracksInfo[i]->subtitle->psz_encoding]
-                                   forKey:VLCMediaTracksInformationTextEncoding];
+                    dictionary[VLCMediaTracksInformationTextEncoding] = [NSString stringWithFormat:@"%s", tracksInfo[i]->subtitle->psz_encoding];
                 break;
             case libvlc_track_unknown:
             default:
@@ -649,7 +637,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         char *answer = malloc(size);
         sysctlbyname("hw.machine", answer, &size, NULL, 0);
 
-        NSString *currentMachine = [NSString stringWithCString:answer encoding: NSUTF8StringEncoding];
+        NSString *currentMachine = @(answer);
         free(answer);
 
         NSUInteger totalNumberOfPixels = biggestWidth * biggestHeight;
@@ -710,8 +698,8 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     p_md = libvlc_media_duplicate([media libVLCMediaDescriptor]);
 
     for (NSString * key in [options allKeys]) {
-        if ([options objectForKey:key] != [NSNull null])
-            libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, [options objectForKey:key]] UTF8String]);
+        if (options[key] != [NSNull null])
+            libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, options[key]] UTF8String]);
         else
             libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@", key] UTF8String]);
 
@@ -753,7 +741,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
                 nil] retain];
 #undef VLCStringToMeta
     }
-    NSNumber * number = [stringToMetaDictionary objectForKey:string];
+    NSNumber * number = stringToMetaDictionary[string];
     return number ? [number intValue] : -1;
 }
 
@@ -784,9 +772,9 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 {
     char * p_url = libvlc_media_get_mrl( p_md );
 
-    url = [[NSURL URLWithString:[NSString stringWithUTF8String:p_url]] retain];
+    url = [[NSURL URLWithString:@(p_url)] retain];
     if (!url) /* Attempt to interpret as a file path then */
-        url = [[NSURL fileURLWithPath:[NSString stringWithUTF8String:p_url]] retain];
+        url = [[NSURL fileURLWithPath:@(p_url)] retain];
     free(p_url);
 
     libvlc_media_set_user_data(p_md, (void*)self);
@@ -814,7 +802,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 - (void)fetchMetaInformationFromLibVLCWithType:(NSString *)metaType
 {
     char * psz_value = libvlc_media_get_meta( p_md, [VLCMedia stringToMetaType:metaType] );
-    NSString * newValue = psz_value ? [NSString stringWithUTF8String: psz_value] : nil;
+    NSString * newValue = psz_value ? @(psz_value) : nil;
     NSString * oldValue = [metaDictionary valueForKey:metaType];
     free(psz_value);
 

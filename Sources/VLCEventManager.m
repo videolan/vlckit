@@ -97,12 +97,12 @@ static void * EventDispatcherMainLoop(void * user_data)
         if (message->type == VLCNotification) {
             NSInteger last_match_msg = -1;
             for (NSInteger i = [[self messageQueue] count]-1; i >= 0; i-- ) {
-                message_newer = (message_t *)[(NSData *)[[self messageQueue] objectAtIndex:i] bytes];
+                message_newer = (message_t *)[(NSData *)[self messageQueue][i] bytes];
                 if (message_newer->type == VLCNotification &&
                     message_newer->target == message->target &&
                     [message_newer->u.name isEqualToString:message->u.name]) {
                     if (last_match_msg >= 0) {
-                        message_t * msg = (message_t *)[(NSData *)[[self messageQueue] objectAtIndex:last_match_msg] bytes];
+                        message_t * msg = (message_t *)[(NSData *)[self messageQueue][last_match_msg] bytes];
                         [msg->u.name release];
                         [[self messageQueue] removeObjectAtIndex:last_match_msg];
                     }
@@ -120,7 +120,7 @@ static void * EventDispatcherMainLoop(void * user_data)
 
             /* Collapse messages that takes array arg by sending one bigger array */
             for (NSInteger i = [[self messageQueue] count] - 1; i >= 0; i--) {
-                message_newer = (message_t *)[(NSData *)[[self messageQueue] objectAtIndex: i] bytes];
+                message_newer = (message_t *)[(NSData *)[self messageQueue][i] bytes];
                 if (message_newer->type == VLCObjectMethodWithArrayArg &&
                     message_newer->target == message->target &&
                     message_newer->sel == message->sel) {
@@ -264,7 +264,7 @@ static void * EventDispatcherMainLoop(void * user_data)
 
     NSMutableArray *queue = [self messageQueue];
     for (int i = [queue count] - 1; i >= 0; i--) {
-        NSData *data = [queue objectAtIndex:i];
+        NSData *data = queue[i];
         message_t *message = (message_t *)[data bytes];
         if (message->target == target)
             [queue removeObjectAtIndex:i];
@@ -273,7 +273,7 @@ static void * EventDispatcherMainLoop(void * user_data)
     // Remove all pending messages
     NSMutableArray *messages = pendingMessagesOnMainThread;
     for (int i = [messages count] - 1; i >= 0; i--) {
-        NSData *data = [messages objectAtIndex:i];
+        NSData *data = messages[i];
         message_t *message = (message_t *)[data bytes];
 
         if (message->target == target)
