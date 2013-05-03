@@ -20,6 +20,9 @@ AVCODEC=$(VLC_CONTRIB_DIR)/lib/libavutil.a ${VLC_CONTRIB_DIR}/lib/libavcodec.a $
 DVBPSI=$(VLC_CONTRIB_DIR)/lib/libdvbpsi.a
 FLAC=$(VLC_CONTRIB_DIR)/lib/libFLAC.a
 FREETYPE=$(VLC_CONTRIB_DIR)/lib/libfreetype.a
+FRIBIDI=$(VLC_CONTRIB_DIR)/lib/libfribidi.a
+ASS=$(VLC_CONTRIB_DIR)/lib/libass.a
+HARFBUZZ=$(VLC_CONTRIB_DIR)/lib/libharfbuzz.a
 LIVE555=$(VLC_CONTRIB_DIR)/lib/libUsageEnvironment.a $(VLC_CONTRIB_DIR)/lib/libBasicUsageEnvironment.a $(VLC_CONTRIB_DIR)/lib/libgroupsock.a $(VLC_CONTRIB_DIR)/lib/libz.a $(VLC_CONTRIB_DIR)/lib/libliveMedia.a
 LUA=$(VLC_CONTRIB_DIR)/lib/liblua.a
 MKV=$(VLC_CONTRIB_DIR)/lib/libebml.a $(VLC_CONTRIB_DIR)/lib/libmatroska.a
@@ -29,5 +32,6 @@ OGG=$(VLC_CONTRIB_DIR)/lib/libogg.a $(VLC_CONTRIB_DIR)/lib/libtheora.a $(VLC_CON
 PICS=$(VLC_CONTRIB_DIR)/lib/libpng.a $(VLC_CONTRIB_DIR)/lib/libopenjpeg.a
 SPEEX=$(VLC_CONTRIB_DIR)/lib/libspeex.a $(VLC_CONTRIB_DIR)/lib/libspeexdsp.a
 XML=$(VLC_CONTRIB_DIR)/lib/libxml2.a
+ZLIB=$(VLC_CONTRIB_DIR)/lib/libz.a
 
-OTHER_LIBTOOLFLAGS=$(AVCODEC) $(DVBPSI) $(FLAC) $(FREETYPE) $(LIVE555) $(LUA) $(MKV) $(MODPLUG) $(OGG) $(OPUS) $(PICS) $(SPEEX) $(XML) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
+OTHER_LIBTOOLFLAGS=$(ASS) $(AVCODEC) $(DVBPSI) $(FLAC) $(FRIBIDI) $(FREETYPE) $(HARFBUZZ) $(LIVE555) $(LUA) $(MKV) $(MODPLUG) $(OGG) $(OPUS) $(PICS) $(SPEEX) $(XML) $(ZLIB) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
