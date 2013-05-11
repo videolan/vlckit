@@ -83,7 +83,7 @@ static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
     [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:self
                                                    withDelegateMethod:@selector(mediaPlayerTimeChanged:)
                                                  withNotificationName:VLCMediaPlayerTimeChanged];
-    [pool drain];
+    [pool release];
 }
 
 static void HandleMediaPositionChanged(const libvlc_event_t * event, void * self)
@@ -93,7 +93,7 @@ static void HandleMediaPositionChanged(const libvlc_event_t * event, void * self
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaPlayerPositionChanged:)
                                        withArgumentAsObject:@(event->u.media_player_position_changed.new_position)];
-    [pool drain];
+    [pool release];
 }
 
 static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void * self)
@@ -127,8 +127,7 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
                                                    withDelegateMethod:@selector(mediaPlayerStateChanged:)
                                                  withNotificationName:VLCMediaPlayerStateChanged];
 
-    [pool drain];
-
+    [pool release];
 }
 
 static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * self)
@@ -139,8 +138,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
                                                  withMethod:@selector(mediaPlayerMediaChanged:)
                                        withArgumentAsObject:[VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_player_media_changed.new_media]];
 
-    [pool drain];
-
+    [pool release];
 }
 
 

@@ -158,7 +158,7 @@ static void * EventDispatcherMainLoop(void * user_data)
                                    withObject:dataMessage
                                 waitUntilDone: YES];
 
-        [pool drain];
+        [pool release];
     }
     return nil;
 }
@@ -233,7 +233,7 @@ static void * EventDispatcherMainLoop(void * user_data)
         pthread_mutex_unlock([self queueLock]);
     }
 
-    [pool drain];
+    [pool release];
 }
 
 - (void)callOnMainThreadObject:(id)aTarget withMethod:(SEL)aSelector withArgumentAsObject:(id)arg
@@ -252,7 +252,7 @@ static void * EventDispatcherMainLoop(void * user_data)
     pthread_cond_signal([self signalData]);
     pthread_mutex_unlock([self queueLock]);
 
-    [pool drain];
+    [pool release];
 }
 
 - (void)cancelCallToObject:(id)target

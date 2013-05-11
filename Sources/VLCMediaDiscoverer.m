@@ -54,7 +54,7 @@ static void HandleMediaDiscovererStarted(const libvlc_event_t * event, void * us
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaDiscovererStarted)
                                        withArgumentAsObject:nil];
-    [pool drain];
+    [pool release];
 }
 
 static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * user_data)
@@ -64,7 +64,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(mediaDiscovererEnded)
                                        withArgumentAsObject:nil];
-    [pool drain];
+    [pool release];
 }
 
 
