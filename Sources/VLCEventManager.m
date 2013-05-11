@@ -221,17 +221,10 @@ static void * EventDispatcherMainLoop(void * user_data)
         VLCNotification
     };
 
-    if ([NSThread isMainThread]) {
-        NSData *nsd_message = [NSData dataWithBytes:&message length:sizeof(message_t)];
-        [self addMessageToHandleOnMainThread:nsd_message];
-        [self callDelegateOfObjectAndSendNotificationWithArgs:[nsd_message retain] /* released in the call */];
-        [nsd_message autorelease];
-    } else {
-        pthread_mutex_lock([self queueLock]);
-        [[self messageQueue] insertObject:[NSData dataWithBytes:&message length:sizeof(message_t)] atIndex:0];
-        pthread_cond_signal([self signalData]);
-        pthread_mutex_unlock([self queueLock]);
-    }
+    pthread_mutex_lock([self queueLock]);
+    [[self messageQueue] insertObject:[NSData dataWithBytes:&message length:sizeof(message_t)] atIndex:0];
+    pthread_cond_signal([self signalData]);
+    pthread_mutex_unlock([self queueLock]);
 
     [pool release];
 }
