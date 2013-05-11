@@ -469,48 +469,63 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 }
 - (float)contrast
 {
+    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
     return libvlc_video_get_adjust_float(instance, libvlc_adjust_Contrast);
 }
 - (void)setContrast:(float)f_value
 {
-    if (f_value <= 2. && f_value >= 0.)
+    if (f_value <= 2. && f_value >= 0.) {
+        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
         libvlc_video_set_adjust_float(instance,libvlc_adjust_Contrast, f_value);
+    }
 }
 - (float)brightness
 {
+    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
     return libvlc_video_get_adjust_float(instance, libvlc_adjust_Brightness);
 }
 - (void)setBrightness:(float)f_value
 {
-    if (f_value <= 2. && f_value >= 0.)
+    if (f_value <= 2. && f_value >= 0.) {
+        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
         libvlc_video_set_adjust_float(instance, libvlc_adjust_Brightness, f_value);
+    }
 }
 - (NSInteger)hue
 {
+    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
     return libvlc_video_get_adjust_int(instance, libvlc_adjust_Hue);
 }
 - (void)setHue:(NSInteger)i_value
 {
-    if (i_value <= 360 && i_value >= 0)
+    if (i_value <= 360 && i_value >= 0) {
+        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
         libvlc_video_set_adjust_int(instance, libvlc_adjust_Hue, i_value);
+    }
 }
 - (float)saturation
 {
+    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
     return libvlc_video_get_adjust_float(instance, libvlc_adjust_Saturation);
 }
 - (void)setSaturation:(float)f_value
 {
-    if (f_value <= 3. && f_value >= 0.)
+    if (f_value <= 3. && f_value >= 0.) {
+        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
         libvlc_video_set_adjust_float(instance, libvlc_adjust_Saturation, f_value);
+    }
 }
 - (float)gamma
 {
+    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
     return libvlc_video_get_adjust_float(instance, libvlc_adjust_Gamma);
 }
 - (void)setGamma:(float)f_value
 {
-    if (f_value <= 10. && f_value >= 0.)
+    if (f_value <= 10. && f_value >= 0.) {
+        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
         libvlc_video_set_adjust_float(instance, libvlc_adjust_Gamma, f_value);
+    }
 }
 
 - (void)setRate:(float)value
