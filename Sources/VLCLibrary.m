@@ -53,7 +53,7 @@ static VLCLibrary * sharedLibrary = nil;
     if (self = [super init]) {
         NSArray *vlcParams;
 #if TARGET_OS_IPHONE
-        vlcParams = @[@"--play-and-pause", @"--no-color", @"--no-video-title-show", @"--verbose=3", @"--avcodec-fast", @"--avcodec-skiploopfilter=all", @"--no-stats", @"--no-plugins-cache", @"--vout=vout_ios2"];
+        vlcParams = @[@"--play-and-pause", @"--no-color", @"--no-video-title-show", @"--verbose=3", @"--avcodec-fast", @"--avcodec-skiploopfilter=all", @"--no-stats", @"--no-plugins-cache", @"--vout=vout_ios2", @"--no-audio-time-stretch"];
 #else
         vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
         if (!vlcParams) {
