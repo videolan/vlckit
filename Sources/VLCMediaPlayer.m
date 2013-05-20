@@ -199,9 +199,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     [self unregisterObservers];
     [[VLCEventManager sharedManager] cancelCallToObject:self];
-#if TARGET_OS_IPHONE
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-#endif
 
     // Always get rid of the delegate first so we can stop sending messages to it
     // TODO: Should we tell the delegate that we're shutting down?
@@ -952,15 +949,6 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
         instance = libvlc_media_player_new([VLCLibrary sharedInstance]);
 
         [self registerObservers];
-#if TARGET_OS_IPHONE
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(applicationWillResignActive:)
-                       name:UIApplicationWillResignActiveNotification object:nil];
-        [center addObserver:self selector:@selector(applicationDidBecomeActive:)
-                       name:UIApplicationDidBecomeActiveNotification object:nil];
-        [center addObserver:self selector:@selector(applicationDidEnterBackground:)
-                       name:UIApplicationDidEnterBackgroundNotification object:nil];
-#endif
 
         [self setDrawable:aDrawable];
     }
@@ -998,27 +986,6 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
     libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          self);
     libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   self);
 }
-
-#if TARGET_OS_IPHONE
-- (void)applicationWillResignActive:(NSNotification *)notification
-{
-    shouldResumePlaying = YES;
-    [self pause];
-}
-
-- (void)applicationDidEnterBackground:(NSNotification *)notification
-{
-    shouldResumePlaying = NO;
-}
-
-- (void)applicationDidBecomeActive:(NSNotification *)notification
-{
-    if (shouldResumePlaying) {
-        shouldResumePlaying = NO;
-        [self play];
-    }
-}
-#endif
 
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime
 {

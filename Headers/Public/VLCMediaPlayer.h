@@ -96,7 +96,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
     float position;                     //< The position of the media being played
     id drawable;                        //< The drawable associated to this media player
     VLCAudio *audio;
-    BOOL shouldResumePlaying;           //< resume playing on iOS
 }
 
 #if !TARGET_OS_IPHONE

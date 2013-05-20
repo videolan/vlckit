@@ -50,8 +50,6 @@ Modified behavior:
 MobileVLCKit features:
 - added support for Opus
 - slimmed binary by removing dysfunctional or irrelevant modules
-- playback is paused if client app resigns active state
-- playback resumes if client app is being active again
 - idle state and screen sleep is prevented during playback
 
 Removed APIs:
