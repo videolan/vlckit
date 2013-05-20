@@ -51,6 +51,13 @@
 + (VLCLibrary *)sharedLibrary;
 
 /**
+ * returns an individual instance which can be customized with options
+ * \param a NSArray with NSString instance containing the options
+ * \return the individual library instance
+ */
+ - (id)initWithOptions:(NSArray*)options;
+
+/**
  * Returns the library's version
  * \return The library version example "0.9.0-git Grishenko".
  */
