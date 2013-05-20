@@ -27,6 +27,9 @@
 
 
 @interface VLCMediaThumbnailer ()
+{
+    VLCLibrary *_privateLibrary;
+}
 - (void)didFetchThumbnail;
 - (void)notifyDelegate;
 - (void)fetchThumbnail;
@@ -93,6 +96,7 @@ void display(void *opaque, void *picture)
     if (_thumbnail)
         CGImageRelease(_thumbnail);
     [_media release];
+    [_privateLibrary release];
     [super dealloc];
 }
 
@@ -114,11 +118,9 @@ void display(void *opaque, void *picture)
     [self startFetchingThumbnail];
 }
 
-
 - (void)startFetchingThumbnail
 {
     NSArray *tracks = [_media tracksInformation];
-
 
     // Find the video track
     NSDictionary *videoTrack = nil;
@@ -163,7 +165,9 @@ void display(void *opaque, void *picture)
     NSAssert(_data, @"Can't create data");
 
     NSAssert(!_mp, @"We are already fetching a thumbnail");
-    _mp = libvlc_media_player_new([VLCLibrary sharedInstance]);
+    if (!_privateLibrary)
+        _privateLibrary = [[VLCLibrary alloc] initWithOptions:[NSArray arrayWithObject:@"--avcodec-threads=1"]];
+    _mp = libvlc_media_player_new([_privateLibrary instance]);
 
     libvlc_media_add_option([_media libVLCMediaDescriptor], "no-audio");
 
