@@ -86,11 +86,11 @@ static VLCLibrary * sharedLibrary = nil;
         }
 
         /* add requested options */
-        paramNum = 0;
-        while (paramNum < count) {
-            NSString *vlcParam = options[paramNum];
-            lib_vlc_params[paramNum] = [vlcParam cStringUsingEncoding:NSASCIIStringEncoding];
-            paramNum++;
+        NSUInteger optionNum = 0;
+        while (optionNum < optionsCount) {
+            NSString *vlcParam = options[optionNum];
+            lib_vlc_params[paramNum + optionNum] = [vlcParam cStringUsingEncoding:NSASCIIStringEncoding];
+            optionNum++;
         }
         unsigned argc = sizeof(lib_vlc_params)/sizeof(lib_vlc_params[0]);
         instance = libvlc_new(argc, lib_vlc_params);
