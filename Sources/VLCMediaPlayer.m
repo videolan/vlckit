@@ -145,7 +145,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 // TODO: Documentation
 @interface VLCMediaPlayer (Private)
 
-- (id)initWithDrawable:(id)aDrawable;
+- (id)initWithDrawable:(id)aDrawable options:(NSArray *)options;
 
 - (void)registerObservers;
 - (void)unregisterObservers;
@@ -182,23 +182,38 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return dict[key];
 }
 
-/* Contructor */
+/* Constructor */
 - (id)init
 {
-    return [self initWithDrawable:nil];
+    return [self initWithDrawable:nil options:nil];
 }
 
 #if !TARGET_OS_IPHONE
 - (id)initWithVideoView:(VLCVideoView *)aVideoView
 {
-    return [self initWithDrawable: aVideoView];
+    return [self initWithDrawable: aVideoView options:nil];
 }
 
 - (id)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer
 {
-    return [self initWithDrawable: aVideoLayer];
+    return [self initWithDrawable: aVideoLayer options:nil];
+}
+
+- (id)initWithVideoView:(VLCVideoView *)aVideoView options:(NSArray *)options
+{
+    return [self initWithDrawable: aVideoView options:options];
+}
+
+- (id)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer options:(NSArray *)options
+{
+    return [self initWithDrawable: aVideoLayer options:options];
 }
 #endif
+
+- (id)initWithOptions:(NSArray *)options
+{
+    return [self initWithDrawable:nil options:options];
+}
 
 - (void)dealloc
 {
@@ -946,7 +961,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
     [super dealloc];
 }
 
-- (id)initWithDrawable:(id)aDrawable
+- (id)initWithDrawable:(id)aDrawable options:(NSArray *)options
 {
     if (self = [super init]) {
         delegate = nil;
@@ -959,7 +974,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
         // Create a media instance, it doesn't matter what library we start off with
         // it will change depending on the media descriptor provided to the media
         // instance
-        _privateLibrary = [[VLCLibrary alloc] init];
+        _privateLibrary = [[VLCLibrary alloc] initWithOptions:options];
         instance = libvlc_media_player_new([_privateLibrary instance]);
 
         [self registerObservers];

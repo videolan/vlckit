@@ -103,6 +103,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (id)initWithVideoView:(VLCVideoView *)aVideoView;
 - (id)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
+- (id)initWithOptions:(NSArray *)options;
 
 /* Properties */
 - (void)setDelegate:(id)value;
