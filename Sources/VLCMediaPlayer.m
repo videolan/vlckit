@@ -144,6 +144,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 // TODO: Documentation
 @interface VLCMediaPlayer (Private)
+
 - (id)initWithDrawable:(id)aDrawable;
 
 - (void)registerObservers;
@@ -152,6 +153,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
 - (void)mediaPlayerStateChanged:(NSNumber *)newState;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
+@end
+
+@interface VLCMediaPlayer ()
+{
+    VLCLibrary *_privateLibrary;
+}
 @end
 
 @implementation VLCMediaPlayer
@@ -933,6 +940,12 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 @end
 
 @implementation VLCMediaPlayer (Private)
+- (void)dealloc
+{
+    [_privateLibrary release];
+    [super dealloc];
+}
+
 - (id)initWithDrawable:(id)aDrawable
 {
     if (self = [super init]) {
@@ -946,7 +959,8 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
         // Create a media instance, it doesn't matter what library we start off with
         // it will change depending on the media descriptor provided to the media
         // instance
-        instance = libvlc_media_player_new([VLCLibrary sharedInstance]);
+        _privateLibrary = [[VLCLibrary alloc] init];
+        instance = libvlc_media_player_new([_privateLibrary instance]);
 
         [self registerObservers];
 
