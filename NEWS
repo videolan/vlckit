@@ -26,6 +26,9 @@ New APIs:
   - added support for the "adjust" video filter to manipulate contrast,
     brightness, hue, saturation and gamma on the fly
   - new interfaces to fetch names and IDs of audio, subtitle and video tracks
+  - added the ability to launch instances with custom libvlc options
+- VLCLibrary:
+  - added the ability to launch instances with custom libvlc options
 
 Deprecated APIs:
 - VLCMediaPlayer:
