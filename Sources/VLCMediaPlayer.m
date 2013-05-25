@@ -239,6 +239,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     [cachedRemainingTime release];
     [drawable release];
     [audio release];
+    [_privateLibrary release];
 
     [super dealloc];
 }
@@ -955,12 +956,6 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 @end
 
 @implementation VLCMediaPlayer (Private)
-- (void)dealloc
-{
-    [_privateLibrary release];
-    [super dealloc];
-}
-
 - (id)initWithDrawable:(id)aDrawable options:(NSArray *)options
 {
     if (self = [super init]) {
