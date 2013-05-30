@@ -308,7 +308,8 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (void)parse
 {
-    libvlc_media_parse_async(p_md);
+    if (p_md)
+        libvlc_media_parse_async(p_md);
 }
 
 - (void)addOptions:(NSDictionary*)options
