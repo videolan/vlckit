@@ -978,7 +978,10 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
         // Create a media instance, it doesn't matter what library we start off with
         // it will change depending on the media descriptor provided to the media
         // instance
-        _privateLibrary = [VLCLibrary sharedLibrary];
+        if (options && options.count > 0)
+            _privateLibrary = [[VLCLibrary alloc] initWithOptions:options];
+        else
+            _privateLibrary = [VLCLibrary sharedLibrary];
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
 
         [self registerObservers];
