@@ -158,6 +158,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 @interface VLCMediaPlayer ()
 {
     VLCLibrary *_privateLibrary;
+    id _delegate;                        //< Object delegate
+    void * _playerInstance;              //  Internal
+    VLCMedia * _media;                   //< Current media being played
+    VLCTime * _cachedTime;               //< Cached time of the media being played
+    VLCTime * _cachedRemainingTime;      //< Cached remaining time of the media being played
+    VLCMediaPlayerState _cachedState;    //< Cached state of the media being played
+    float _position;                     //< The position of the media being played
+    id _drawable;                        //< The drawable associated to this media player
+    VLCAudio *_audio;
 }
 @end
 
@@ -170,9 +179,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     NSSet * superKeyPaths;
     if (!dict) {
         dict = [@{@"playing": [NSSet setWithObject:@"state"],
-            @"seekable": [NSSet setWithObjects:@"state", @"media", nil],
-            @"canPause": [NSSet setWithObjects:@"state", @"media", nil],
-            @"description": [NSSet setWithObjects:@"state", @"media", nil]} retain];
+                @"seekable": [NSSet setWithObjects:@"state", @"media", nil],
+                @"canPause": [NSSet setWithObjects:@"state", @"media", nil],
+                @"description": [NSSet setWithObjects:@"state", @"media", nil]} retain];
     }
     if ((superKeyPaths = [super keyPathsForValuesAffectingValueForKey: key])) {
         NSMutableSet * ret = [NSMutableSet setWithSet:dict[key]];
@@ -217,28 +226,28 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)dealloc
 {
-    NSAssert(libvlc_media_player_get_state(instance) == libvlc_Stopped, @"You released the media player before ensuring that it is stopped");
+    NSAssert(libvlc_media_player_get_state(_playerInstance) == libvlc_Stopped, @"You released the media player before ensuring that it is stopped");
 
     [self unregisterObservers];
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     // Always get rid of the delegate first so we can stop sending messages to it
     // TODO: Should we tell the delegate that we're shutting down?
-    delegate = nil;
+    _delegate = nil;
 
     // Clear our drawable as we are going to release it, we don't
     // want the core to use it from this point. This won't happen as
     // the media player must be stopped.
-    libvlc_media_player_set_nsobject(instance, nil);
+    libvlc_media_player_set_nsobject(_playerInstance, nil);
 
-    libvlc_media_player_release(instance);
+    libvlc_media_player_release(_playerInstance);
 
     // Get rid of everything else
-    [media release];
-    [cachedTime release];
-    [cachedRemainingTime release];
-    [drawable release];
-    [audio release];
+    [_media release];
+    [_cachedTime release];
+    [_cachedRemainingTime release];
+    [_drawable release];
+    [_audio release];
     [_privateLibrary release];
 
     [super dealloc];
@@ -246,12 +255,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setDelegate:(id)value
 {
-    delegate = value;
+    _delegate = value;
 }
 
 - (id)delegate
 {
-    return delegate;
+    return _delegate;
 }
 
 #if !TARGET_OS_IPHONE
@@ -269,45 +278,45 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (void)setDrawable:(id)aDrawable
 {
     // Make sure that this instance has been associated with the drawing canvas.
-    libvlc_media_player_set_nsobject(instance, aDrawable);
+    libvlc_media_player_set_nsobject(_playerInstance, aDrawable);
 }
 
 - (id)drawable
 {
-    return libvlc_media_player_get_nsobject(instance);
+    return libvlc_media_player_get_nsobject(_playerInstance);
 }
 
 - (VLCAudio *)audio
 {
-    if (!audio)
-        audio = [[VLCAudio alloc] initWithMediaPlayer:self];
-    return audio;
+    if (!_audio)
+        _audio = [[VLCAudio alloc] initWithMediaPlayer:self];
+    return _audio;
 }
 
 #pragma mark -
 #pragma mark Video Tracks
 - (void)setCurrentVideoTrackIndex:(NSUInteger)value
 {
-    libvlc_video_set_track(instance, (int)value);
+    libvlc_video_set_track(_playerInstance, (int)value);
 }
 
 - (NSUInteger)currentVideoTrackIndex
 {
-    NSInteger count = libvlc_video_get_track_count(instance);
+    NSInteger count = libvlc_video_get_track_count(_playerInstance);
     if (count <= 0)
         return NSNotFound;
 
-    NSUInteger result = libvlc_video_get_track(instance);
+    NSUInteger result = libvlc_video_get_track(_playerInstance);
     return result;
 }
 
 - (NSArray *)videoTrackNames
 {
-    NSInteger count = libvlc_video_get_track_count(instance);
+    NSInteger count = libvlc_video_get_track_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(instance);
+    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(_playerInstance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
@@ -320,11 +329,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (NSArray *)videoTrackIndexes
 {
-    NSInteger count = libvlc_video_get_track_count(instance);
+    NSInteger count = libvlc_video_get_track_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(instance);
+    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(_playerInstance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
@@ -337,11 +346,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (NSArray *)videoTracks
 {
-    NSInteger count = libvlc_video_get_track_count(instance);
+    NSInteger count = libvlc_video_get_track_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *tracks = libvlc_video_get_track_description(instance);
+    libvlc_track_description_t *tracks = libvlc_video_get_track_description(_playerInstance);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < count ; i++) {
         [tempArray addObject:@(tracks->psz_name)];
@@ -357,26 +366,26 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setCurrentVideoSubTitleIndex:(NSUInteger)index
 {
-    libvlc_video_set_spu(instance, (int)index);
+    libvlc_video_set_spu(_playerInstance, (int)index);
 }
 
 - (NSUInteger)currentVideoSubTitleIndex
 {
-    NSInteger count = libvlc_video_get_spu_count(instance);
+    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
 
     if (count <= 0)
         return NSNotFound;
 
-    return libvlc_video_get_spu(instance);
+    return libvlc_video_get_spu(_playerInstance);
 }
 
 - (NSArray *)videoSubTitlesNames
 {
-    NSInteger count = libvlc_video_get_spu_count(instance);
+    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(instance);
+    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(_playerInstance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
@@ -389,11 +398,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (NSArray *)videoSubTitlesIndexes
 {
-    NSInteger count = libvlc_video_get_spu_count(instance);
+    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(instance);
+    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(_playerInstance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
@@ -406,12 +415,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path
 {
-    return libvlc_video_set_subtitle_file(instance, [path UTF8String]);
+    return libvlc_video_set_subtitle_file(_playerInstance, [path UTF8String]);
 }
 
 - (NSArray *)videoSubTitles
 {
-    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(instance);
+    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(_playerInstance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
@@ -424,12 +433,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setCurrentVideoSubTitleDelay:(NSInteger)index
 {
-    libvlc_video_set_spu_delay(instance, index);
+    libvlc_video_set_spu_delay(_playerInstance, index);
 }
 
 - (NSInteger)currentVideoSubTitleDelay
 {
-    return libvlc_video_get_spu_delay(instance);
+    return libvlc_video_get_spu_delay(_playerInstance);
 }
 
 #pragma mark -
@@ -437,131 +446,131 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setVideoCropGeometry:(char *)value
 {
-    libvlc_video_set_crop_geometry(instance, value);
+    libvlc_video_set_crop_geometry(_playerInstance, value);
 }
 
 - (char *)videoCropGeometry
 {
-    char * result = libvlc_video_get_crop_geometry(instance);
+    char * result = libvlc_video_get_crop_geometry(_playerInstance);
     return result;
 }
 
 - (void)setVideoAspectRatio:(char *)value
 {
-    libvlc_video_set_aspect_ratio(instance, value);
+    libvlc_video_set_aspect_ratio(_playerInstance, value);
 }
 
 - (char *)videoAspectRatio
 {
-    char * result = libvlc_video_get_aspect_ratio(instance);
+    char * result = libvlc_video_get_aspect_ratio(_playerInstance);
     return result;
 }
 
 - (void)setScaleFactor:(float)value
 {
-    libvlc_video_set_scale(instance, value);
+    libvlc_video_set_scale(_playerInstance, value);
 }
 
 - (float)scaleFactor
 {
-    return libvlc_video_get_scale(instance);
+    return libvlc_video_get_scale(_playerInstance);
 }
 
 - (void)saveVideoSnapshotAt:(NSString *)path withWidth:(NSUInteger)width andHeight:(NSUInteger)height
 {
-    int failure = libvlc_video_take_snapshot(instance, 0, [path UTF8String], width, height);
+    int failure = libvlc_video_take_snapshot(_playerInstance, 0, [path UTF8String], width, height);
     if (failure)
         [[NSException exceptionWithName:@"Can't take a video snapshot" reason:@"No video output" userInfo:nil] raise];
 }
 
 - (void)setDeinterlaceFilter:(NSString *)name
 {
-    libvlc_video_set_deinterlace(instance, [name UTF8String]);
+    libvlc_video_set_deinterlace(_playerInstance, [name UTF8String]);
 }
 
 - (BOOL)adjustFilterEnabled
 {
-    return libvlc_video_get_adjust_int(instance, libvlc_adjust_Enable);
+    return libvlc_video_get_adjust_int(_playerInstance, libvlc_adjust_Enable);
 }
 - (void)setAdjustFilterEnabled:(BOOL)b_value
 {
-    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, b_value);
+    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, b_value);
 }
 - (float)contrast
 {
-    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Contrast);
+    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Contrast);
 }
 - (void)setContrast:(float)f_value
 {
     if (f_value <= 2. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(instance,libvlc_adjust_Contrast, f_value);
+        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+        libvlc_video_set_adjust_float(_playerInstance,libvlc_adjust_Contrast, f_value);
     }
 }
 - (float)brightness
 {
-    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Brightness);
+    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Brightness);
 }
 - (void)setBrightness:(float)f_value
 {
     if (f_value <= 2. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(instance, libvlc_adjust_Brightness, f_value);
+        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Brightness, f_value);
     }
 }
 - (NSInteger)hue
 {
-    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_int(instance, libvlc_adjust_Hue);
+    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+    return libvlc_video_get_adjust_int(_playerInstance, libvlc_adjust_Hue);
 }
 - (void)setHue:(NSInteger)i_value
 {
     if (i_value <= 360 && i_value >= 0) {
-        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_int(instance, libvlc_adjust_Hue, i_value);
+        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Hue, i_value);
     }
 }
 - (float)saturation
 {
-    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Saturation);
+    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Saturation);
 }
 - (void)setSaturation:(float)f_value
 {
     if (f_value <= 3. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(instance, libvlc_adjust_Saturation, f_value);
+        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Saturation, f_value);
     }
 }
 - (float)gamma
 {
-    libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(instance, libvlc_adjust_Gamma);
+    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Gamma);
 }
 - (void)setGamma:(float)f_value
 {
     if (f_value <= 10. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(instance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(instance, libvlc_adjust_Gamma, f_value);
+        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
+        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Gamma, f_value);
     }
 }
 
 - (void)setRate:(float)value
 {
-    libvlc_media_player_set_rate(instance, value);
+    libvlc_media_player_set_rate(_playerInstance, value);
 }
 
 - (float)rate
 {
-    return libvlc_media_player_get_rate(instance);
+    return libvlc_media_player_get_rate(_playerInstance);
 }
 
 - (CGSize)videoSize
 {
     unsigned height = 0, width = 0;
-    int failure = libvlc_video_get_size(instance, 0, &width, &height);
+    int failure = libvlc_video_get_size(_playerInstance, 0, &width, &height);
     if (failure)
         [[NSException exceptionWithName:@"Can't get video size" reason:@"No video output" userInfo:nil] raise];
     return CGSizeMake(width, height);
@@ -569,69 +578,69 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (BOOL)hasVideoOut
 {
-    return libvlc_media_player_has_vout(instance);
+    return libvlc_media_player_has_vout(_playerInstance);
 }
 
 - (float)framesPerSecond
 {
-    return libvlc_media_player_get_fps(instance);
+    return libvlc_media_player_get_fps(_playerInstance);
 }
 
 - (void)setTime:(VLCTime *)value
 {
     // Time is managed in seconds, while duration is managed in microseconds
     // TODO: Redo VLCTime to provide value numberAsMilliseconds, numberAsMicroseconds, numberAsSeconds, numberAsMinutes, numberAsHours
-    libvlc_media_player_set_time(instance, value ? [[value numberValue] longLongValue] : 0);
+    libvlc_media_player_set_time(_playerInstance, value ? [[value numberValue] longLongValue] : 0);
 }
 
 - (VLCTime *)time
 {
-    return cachedTime;
+    return _cachedTime;
 }
 
 - (VLCTime *)remainingTime
 {
-    return cachedRemainingTime;
+    return _cachedRemainingTime;
 }
 
 - (NSUInteger)fps
 {
-    return libvlc_media_player_get_fps(instance);
+    return libvlc_media_player_get_fps(_playerInstance);
 }
 
 #pragma mark -
 #pragma mark Chapters
 - (void)setCurrentChapterIndex:(NSUInteger)value;
 {
-    libvlc_media_player_set_chapter(instance, value);
+    libvlc_media_player_set_chapter(_playerInstance, value);
 }
 
 - (NSUInteger)currentChapterIndex
 {
-    NSInteger count = libvlc_media_player_get_chapter_count(instance);
+    NSInteger count = libvlc_media_player_get_chapter_count(_playerInstance);
     if (count <= 0)
         return NSNotFound;
-    NSUInteger result = libvlc_media_player_get_chapter(instance);
+    NSUInteger result = libvlc_media_player_get_chapter(_playerInstance);
     return result;
 }
 
 - (void)nextChapter
 {
-    libvlc_media_player_next_chapter(instance);
+    libvlc_media_player_next_chapter(_playerInstance);
 }
 
 - (void)previousChapter
 {
-    libvlc_media_player_previous_chapter(instance);
+    libvlc_media_player_previous_chapter(_playerInstance);
 }
 
 - (NSArray *)chaptersForTitleIndex:(NSUInteger)title
 {
-    NSInteger count = libvlc_media_player_get_chapter_count(instance);
+    NSInteger count = libvlc_media_player_get_chapter_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *tracks = libvlc_video_get_chapter_description(instance, title);
+    libvlc_track_description_t *tracks = libvlc_video_get_chapter_description(_playerInstance, title);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSInteger i = 0; i < count ; i++) {
         [tempArray addObject:@(tracks->psz_name)];
@@ -646,27 +655,27 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setCurrentTitleIndex:(NSUInteger)value
 {
-    libvlc_media_player_set_title(instance, value);
+    libvlc_media_player_set_title(_playerInstance, value);
 }
 
 - (NSUInteger)currentTitleIndex
 {
-    NSInteger count = libvlc_media_player_get_title_count(instance);
+    NSInteger count = libvlc_media_player_get_title_count(_playerInstance);
     if (count <= 0)
         return NSNotFound;
 
-    return libvlc_media_player_get_title(instance);
+    return libvlc_media_player_get_title(_playerInstance);
 }
 
 - (NSUInteger)countOfTitles
 {
-    NSUInteger result = libvlc_media_player_get_title_count(instance);
+    NSUInteger result = libvlc_media_player_get_title_count(_playerInstance);
     return result;
 }
 
 - (NSArray *)titles
 {
-    libvlc_track_description_t *tracks = libvlc_video_get_title_description(instance);
+    libvlc_track_description_t *tracks = libvlc_video_get_title_description(_playerInstance);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSInteger i = 0; i < [self countOfTitles] ; i++) {
         [tempArray addObject:@(tracks->psz_name)];
@@ -680,26 +689,26 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 #pragma mark Audio tracks
 - (void)setCurrentAudioTrackIndex:(NSUInteger)value
 {
-    libvlc_audio_set_track(instance, (int)value);
+    libvlc_audio_set_track(_playerInstance, (int)value);
 }
 
 - (NSUInteger)currentAudioTrackIndex
 {
-    NSInteger count = libvlc_audio_get_track_count(instance);
+    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
     if (count <= 0)
         return NSNotFound;
 
-    NSUInteger result = libvlc_audio_get_track(instance);
+    NSUInteger result = libvlc_audio_get_track(_playerInstance);
     return result;
 }
 
 - (NSArray *)audioTrackNames
 {
-    NSInteger count = libvlc_audio_get_track_count(instance);
+    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(instance);
+    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(_playerInstance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
@@ -712,11 +721,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (NSArray *)audioTrackIndexes
 {
-    NSInteger count = libvlc_audio_get_track_count(instance);
+    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(instance);
+    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(_playerInstance);
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
@@ -729,11 +738,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (NSArray *)audioTracks
 {
-    NSInteger count = libvlc_audio_get_track_count(instance);
+    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *tracks = libvlc_audio_get_track_description(instance);
+    libvlc_track_description_t *tracks = libvlc_audio_get_track_description(_playerInstance);
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < count ; i++) {
         [tempArray addObject:@(tracks->psz_name)];
@@ -746,22 +755,22 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setAudioChannel:(NSInteger)value
 {
-    libvlc_audio_set_channel(instance, value);
+    libvlc_audio_set_channel(_playerInstance, value);
 }
 
 - (NSInteger)audioChannel
 {
-    return libvlc_audio_get_channel(instance);
+    return libvlc_audio_get_channel(_playerInstance);
 }
 
 - (void)setCurrentAudioPlaybackDelay:(NSInteger)index
 {
-    libvlc_audio_set_delay(instance, index);
+    libvlc_audio_set_delay(_playerInstance, index);
 }
 
 - (NSInteger)currentAudioPlaybackDelay
 {
-    return libvlc_audio_get_delay(instance);
+    return libvlc_audio_get_delay(_playerInstance);
 }
 
 #pragma mark -
@@ -769,20 +778,20 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setMedia:(VLCMedia *)value
 {
-    if (media != value) {
-        if (media && [media compare:value] == NSOrderedSame)
+    if (_media != value) {
+        if (_media && [_media compare:value] == NSOrderedSame)
             return;
 
-        [media release];
-        media = [value retain];
+        [_media release];
+        _media = [value retain];
 
-        libvlc_media_player_set_media(instance, [media libVLCMediaDescriptor]);
+        libvlc_media_player_set_media(_playerInstance, [_media libVLCMediaDescriptor]);
     }
 }
 
 - (VLCMedia *)media
 {
-    return media;
+    return _media;
 }
 
 #pragma mark -
@@ -790,7 +799,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (BOOL)play
 {
-    libvlc_media_player_play(instance);
+    libvlc_media_player_play(_playerInstance);
     return YES;
 }
 
@@ -806,17 +815,17 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     }
 
     // Pause the stream
-    libvlc_media_player_pause(instance);
+    libvlc_media_player_pause(_playerInstance);
 }
 
 - (void)stop
 {
-    libvlc_media_player_stop(instance);
+    libvlc_media_player_stop(_playerInstance);
 }
 
 - (void)gotoNextFrame
 {
-    libvlc_media_player_next_frame(instance);
+    libvlc_media_player_next_frame(_playerInstance);
 
 }
 
@@ -910,7 +919,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (BOOL)willPlay
 {
-    return libvlc_media_player_will_play(instance);
+    return libvlc_media_player_will_play(_playerInstance);
 }
 
 static const VLCMediaPlayerState libvlc_to_local_state[] =
@@ -926,32 +935,32 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 
 - (VLCMediaPlayerState)state
 {
-    return cachedState;
+    return _cachedState;
 }
 
 - (float)position
 {
-    return position;
+    return _position;
 }
 
 - (void)setPosition:(float)newPosition
 {
-    libvlc_media_player_set_position(instance, newPosition);
+    libvlc_media_player_set_position(_playerInstance, newPosition);
 }
 
 - (BOOL)isSeekable
 {
-    return libvlc_media_player_is_seekable(instance);
+    return libvlc_media_player_is_seekable(_playerInstance);
 }
 
 - (BOOL)canPause
 {
-    return libvlc_media_player_can_pause(instance);
+    return libvlc_media_player_can_pause(_playerInstance);
 }
 
 - (void *)libVLCMediaPlayer
 {
-    return instance;
+    return _playerInstance;
 }
 @end
 
@@ -959,18 +968,18 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 - (id)initWithDrawable:(id)aDrawable options:(NSArray *)options
 {
     if (self = [super init]) {
-        delegate = nil;
-        media = nil;
-        cachedTime = [[VLCTime nullTime] retain];
-        cachedRemainingTime = [[VLCTime nullTime] retain];
-        position = 0.0f;
-        cachedState = VLCMediaPlayerStateStopped;
+        _delegate = nil;
+        _media = nil;
+        _cachedTime = [[VLCTime nullTime] retain];
+        _cachedRemainingTime = [[VLCTime nullTime] retain];
+        _position = 0.0f;
+        _cachedState = VLCMediaPlayerStateStopped;
 
         // Create a media instance, it doesn't matter what library we start off with
         // it will change depending on the media descriptor provided to the media
         // instance
-        _privateLibrary = [[VLCLibrary alloc] initWithOptions:options];
-        instance = libvlc_media_player_new([_privateLibrary instance]);
+        _privateLibrary = [VLCLibrary sharedLibrary];
+        _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
 
         [self registerObservers];
 
@@ -982,7 +991,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 - (void)registerObservers
 {
     // Attach event observers into the media instance
-    libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(instance);
+    libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
     libvlc_event_attach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, self);
     libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, self);
     libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, self);
@@ -998,7 +1007,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 
 - (void)unregisterObservers
 {
-    libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(instance);
+    libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
     libvlc_event_detach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, self);
     libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, self);
     libvlc_event_detach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, self);
@@ -1015,12 +1024,12 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 {
     [self willChangeValueForKey:@"time"];
     [self willChangeValueForKey:@"remainingTime"];
-    [cachedTime release];
-    cachedTime = [[VLCTime timeWithNumber:newTime] retain];
-    [cachedRemainingTime release];
-    double currentTime = [[cachedTime numberValue] doubleValue];
-    double remaining = currentTime / position * (1 - position);
-    cachedRemainingTime = [[VLCTime timeWithNumber:@(-remaining)] retain];
+    [_cachedTime release];
+    _cachedTime = [[VLCTime timeWithNumber:newTime] retain];
+    [_cachedRemainingTime release];
+    double currentTime = [[_cachedTime numberValue] doubleValue];
+    double remaining = currentTime / _position * (1 - _position);
+    _cachedRemainingTime = [[VLCTime timeWithNumber:@(-remaining)] retain];
     [self didChangeValueForKey:@"remainingTime"];
     [self didChangeValueForKey:@"time"];
 }
@@ -1040,14 +1049,14 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 #endif
 
     [self willChangeValueForKey:@"position"];
-    position = [newPosition floatValue];
+    _position = [newPosition floatValue];
     [self didChangeValueForKey:@"position"];
 }
 
 - (void)mediaPlayerStateChanged:(NSNumber *)newState
 {
     [self willChangeValueForKey:@"state"];
-    cachedState = [newState intValue];
+    _cachedState = [newState intValue];
 
 #if TARGET_OS_IPHONE
     // Disable idle timer if player is playing media
@@ -1060,10 +1069,10 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 - (void)mediaPlayerMediaChanged:(VLCMedia *)newMedia
 {
     [self willChangeValueForKey:@"media"];
-    if (media != newMedia)
+    if (_media != newMedia)
     {
-        [media release];
-        media = [newMedia retain];
+        [_media release];
+        _media = [newMedia retain];
     }
     [self didChangeValueForKey:@"media"];
 }
