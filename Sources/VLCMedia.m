@@ -312,6 +312,12 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         libvlc_media_parse_async(p_md);
 }
 
+- (void)synchronousParse
+{
+    if (p_md)
+        libvlc_media_parse(p_md);
+}
+
 - (void)addOptions:(NSDictionary*)options
 {
     if (p_md) {
@@ -549,8 +555,7 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (NSArray *)tracksInformation
 {
-    // Trigger parsing if needed
-    [self parseIfNeeded];
+    [self synchronousParse];
 
     libvlc_media_track_t **tracksInfo;
     unsigned int count = libvlc_media_tracks_get(p_md, &tracksInfo);

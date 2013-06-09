@@ -382,6 +382,12 @@ extern NSString *VLCMediaTracksInformationTypeUnknown;
 - (void)parse;
 
 /**
+ * Trigger a synchronous parsing of the media
+ * the selector won't return until parsing finished
+ */
+- (void)synchronousParse;
+
+/**
  * Add options to the media, that will be used to determine how
  * VLCMediaPlayer will read the media. This allow to use VLC advanced
  * reading/streaming options in a per-media basis
