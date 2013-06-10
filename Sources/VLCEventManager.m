@@ -188,12 +188,13 @@ static void * EventDispatcherMainLoop(void * user_data)
             NSAssert([NSThread isMultiThreaded], @"Can't put Cocoa in multithreaded mode");
         }
 
-        pthread_mutex_init(&queueLock, NULL);
-        pthread_cond_init(&signalData, NULL);
-        pthread_create(&dispatcherThread, NULL, EventDispatcherMainLoop, self);
         messageQueue = [[NSMutableArray alloc] initWithCapacity:10];
         pendingMessagesOnMainThread = [[NSMutableArray alloc] initWithCapacity:10];
         pendingMessagesLock = [[NSLock alloc] init];
+
+        pthread_mutex_init(&queueLock, NULL);
+        pthread_cond_init(&signalData, NULL);
+        pthread_create(&dispatcherThread, NULL, EventDispatcherMainLoop, self);
     }
     return self;
 }
