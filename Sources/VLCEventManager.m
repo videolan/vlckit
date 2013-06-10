@@ -166,11 +166,12 @@ static void * EventDispatcherMainLoop(void * user_data)
 @implementation VLCEventManager
 + (id)sharedManager
 {
-    static VLCEventManager *defaultManager = NULL;
+    static VLCEventManager *defaultManager = nil;
 
-    /* We do want a lock here to avoid leaks */
-    if (!defaultManager)
-        defaultManager = [[VLCEventManager alloc] init];
+    if (defaultManager == nil)
+        @synchronized([VLCEventManager class]) {
+            defaultManager = [[VLCEventManager alloc] init];
+        }
 
     return defaultManager;
 }
