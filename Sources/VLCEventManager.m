@@ -112,6 +112,8 @@ static void * EventDispatcherMainLoop(void * user_data)
             if (last_match_msg >= 0) {
                 // newer notification detected, ignore current one
                 [message->u.name release];
+                [dataMessage release];
+                [pool release];
                 pthread_mutex_unlock([self queueLock]);
                 continue;
             }
