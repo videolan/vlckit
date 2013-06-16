@@ -108,7 +108,7 @@ static VLCLibrary * sharedLibrary = nil;
                   @"--no-video-title-show",
                   @"--no-stats",
                   @"--avcodec-fast",
-                  @"--avcodec-skiploopfilter=all",
+                  @"--avcodec-skiploopfilter=4",
                   @"--verbose=0"];
 #else
     vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
