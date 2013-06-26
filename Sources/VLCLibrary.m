@@ -137,9 +137,26 @@ static VLCLibrary * sharedLibrary = nil;
     return @(libvlc_get_version());
 }
 
+- (NSString *)compiler
+{
+    return @(libvlc_get_compiler());
+}
+
 - (NSString *)changeset
 {
     return @(libvlc_get_changeset());
+}
+
+- (void)setHumanReadableName:(NSString *)readableName withHTTPUserAgent:(NSString *)userAgent
+{
+    if (instance)
+        libvlc_set_user_agent(instance, [readableName UTF8String], [userAgent UTF8String]);
+}
+
+- (void)setApplicationIdentifier:(NSString *)identifier withVersion:(NSString *)version andApplicationIconName:(NSString *)icon
+{
+    if (instance)
+        libvlc_set_app_id(instance, [identifier UTF8String], [version UTF8String], [icon UTF8String]);
 }
 
 - (void)dealloc

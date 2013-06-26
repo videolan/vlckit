@@ -65,10 +65,34 @@
 @property (readonly) NSString * version;
 
 /**
+ * Returns the compiler used to build the libvlc binary
+ * \return The compiler version string.
+ */
+
+@property (readonly) NSString * compiler;
+
+/**
  * Returns the library's changeset
  * \return The library version example "adfee99".
  */
 
 @property (readonly) NSString * changeset;
+
+/**
+ * sets the application name and HTTP User Agend
+ * libvlc will pass it to servers when required by protocol
+ * \param readableName human-readable application name, e.g. "FooBar player 1.2.3"
+ * \param userAgent HTTP User Agent, e.g. "FooBar/1.2.3 Python/2.6.0"
+ */
+- (void)setHumanReadableName:(NSString *)readableName withHTTPUserAgent:(NSString *)userAgent;
+
+/**
+ * Sets some meta-information about the application.
+ *
+ * \param identifier Java-style application identifier, e.g. "com.acme.foobar"
+ * \param version application version numbers, e.g. "1.2.3"
+ * \param icon application icon name, e.g. "foobar"
+ */
+- (void)setApplicationIdentifier:(NSString *)identifier withVersion:(NSString *)version andApplicationIconName:(NSString *)icon;
 
 @end
