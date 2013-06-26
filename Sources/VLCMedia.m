@@ -617,7 +617,8 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 {
 #if TARGET_OS_IPHONE
     // Trigger parsing if needed
-    [self parseIfNeeded];
+    if (![self isParsed])
+        [self synchronousParse];
 
     NSUInteger biggestWidth = 0;
     NSUInteger biggestHeight = 0;
