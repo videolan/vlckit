@@ -666,6 +666,43 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 @synthesize url;
 @synthesize subitems;
+
+
+- (NSString *)metadataForKey:(NSString *)key
+{
+    if (!p_md)
+        return NULL;
+
+    if (![self isParsed])
+        [self synchronousParse];
+
+    char *returnValue = libvlc_media_get_meta(p_md, [VLCMedia stringToMetaType:key]);
+
+    if (!returnValue)
+        return NULL;
+
+    NSString *actualReturnValue = [NSString stringWithUTF8String:returnValue];
+    free(returnValue);
+
+    return actualReturnValue;
+}
+
+- (void)setMetadata:(NSString *)data forKey:(NSString *)key
+{
+    if (!p_md)
+        return;
+
+    libvlc_media_set_meta(p_md, [VLCMedia stringToMetaType:key], [data UTF8String]);
+}
+
+- (BOOL)saveMetadata
+{
+    if (p_md)
+        return libvlc_media_save_meta(p_md);
+
+    return NO;
+}
+
 @synthesize metaDictionary;
 @synthesize state;
 

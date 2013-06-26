@@ -227,6 +227,28 @@ typedef NSInteger VLCMediaState;
 @property (retain, readonly) VLCMediaList * subitems;
 
 /**
+ * get meta property for key
+ * \note for performance reasons, fetching the metaDictionary will be faster!
+ * \see metaDictionary
+ * \see dictionary keys above
+ */
+- (NSString *)metadataForKey:(NSString *)key;
+
+/**
+ * set meta property for key
+ * \param metadata to set as NSString
+ * \param metadata key
+ * \see dictionary keys above
+ */
+- (void)setMetadata:(NSString *)data forKey:(NSString *)key;
+
+/**
+ * Save the previously changed metadata
+ * \return true if saving was successful
+ */
+- (BOOL)saveMetadata;
+
+/**
  * The receiver's meta data as a NSDictionary object.
  */
 @property (retain, readonly) NSDictionary * metaDictionary;
@@ -334,7 +356,6 @@ extern NSString *VLCMediaTracksInformationTypeAudio;
 extern NSString *VLCMediaTracksInformationTypeVideo;
 extern NSString *VLCMediaTracksInformationTypeText;
 extern NSString *VLCMediaTracksInformationTypeUnknown;
-
 
 /**
  * Returns the tracks information.
