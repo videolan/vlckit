@@ -58,10 +58,10 @@ Modified behavior:
 MobileVLCKit features:
 - added support for Opus
 - slimmed binary by removing dysfunctional or irrelevant modules
-- idle state and screen sleep is prevented during playback
+- screen sleep is prevented during playback
+- functionality is strictly limited for full LGPL compliance
 
 Removed APIs:
-- VLCMediaList:
-  - (id)initWithArray:(NSArray *)array;
 - VLCMedia:
   - (void)setValue:(id)value forMeta:(NSString *)VLCMetaInformation;
+    use setMetadata:(NSString *)data forKey:(NSString *)key instead
