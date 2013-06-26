@@ -82,6 +82,19 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
         cachedMedia = [[NSMutableArray alloc] init];
         [self initInternalMediaList];
     }
+
+    return self;
+}
+
+- (id)initWithArray:(NSArray *)array
+{
+    if (self = [self init]) {
+        /* do something useful with the provided array */
+        NSUInteger count = [array count];
+        for (NSUInteger x = 0; x < count; x++)
+            [self addMedia:array[x]];
+    }
+
     return self;
 }
 
