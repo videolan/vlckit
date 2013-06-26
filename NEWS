@@ -4,7 +4,8 @@ The entire framework was relicensed to LGPL 2.1 or later as well as its
 underlying playback modules.
 Support for transcoding and streaming as well as DVD playback was not affected
 by this move and stays under GPL until further notice.
-Please note that the Objective-C syntax was updated, so VLCKit may no longer compile with outdated versions of Xcode / clang.
+Please note that the Objective-C syntax was updated, so VLCKit may no longer
+compile with outdated versions of Xcode / clang.
 
 New APIs:
 - VLCStreamOutput:
@@ -13,6 +14,8 @@ New APIs:
   - extended media track information for bitrate, language, description, source
     aspect ratio, source aspect denominator, frame rate, frame rate denominator,
     and text encoding
+  - added setter and getter for individual meta data values as well as the
+    ability to write changes to the media file
   - added (BOOL)isMediaSizeSuitableForDevice to let VLCKit determine whether the
     current media is considered to be suitable for the current device or
     playback is discouraged. Will always return true on OS X devices.
@@ -29,6 +32,8 @@ New APIs:
   - added the ability to launch instances with custom libvlc options
 - VLCLibrary:
   - added the ability to launch instances with custom libvlc options
+  - added methods to set App ID and User-Agent
+  - added readonly property to fetch compiler information
 
 Deprecated APIs:
 - VLCMediaPlayer:
