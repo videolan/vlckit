@@ -981,7 +981,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
         if (options && options.count > 0)
             _privateLibrary = [[VLCLibrary alloc] initWithOptions:options];
         else
-            _privateLibrary = [VLCLibrary sharedLibrary];
+            _privateLibrary = [[VLCLibrary sharedLibrary] retain];
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
 
         [self registerObservers];
