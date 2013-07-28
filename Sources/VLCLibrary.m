@@ -108,7 +108,8 @@ static VLCLibrary * sharedLibrary = nil;
                   @"--no-video-title-show",
                   @"--no-stats",
                   @"--avcodec-fast",
-                  @"--verbose=0"];
+                  @"--verbose=0",
+                  @"--text-renderer=quartztext"];
 #else
     vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
     if (!vlcParams) {
