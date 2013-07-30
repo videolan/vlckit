@@ -20,3 +20,8 @@
 #else
 #define VKLog(format, ...)
 #endif
+
+#ifndef N_
+#define N_(str) gettext_noop(str)
+#define gettext_noop(str) (str)
+#endif
