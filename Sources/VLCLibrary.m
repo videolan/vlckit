@@ -168,7 +168,6 @@ static VLCLibrary * sharedLibrary = nil;
     if (self == sharedLibrary)
         sharedLibrary = nil;
 
-    instance = nil;
     [super dealloc];
 }
 
