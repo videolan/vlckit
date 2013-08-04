@@ -943,10 +943,13 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 {
     if (!areOthersMetaFetched) {
         areOthersMetaFetched = YES;
-        /* Force VLCMetaInformationTitle, that will trigger preparsing
-         * And all the other meta will be added through the libvlc event system */
-        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationTitle];
 
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationTitle];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationArtist];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationAlbum];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationDate];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationGenre];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationTrackNumber];
     }
     if (!isArtURLFetched) {
         isArtURLFetched = YES;
