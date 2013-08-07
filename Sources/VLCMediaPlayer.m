@@ -820,6 +820,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)stop
 {
+    if ([NSThread isMainThread]) {
+        /* Hack because we create a dead lock here, when the vout is stopped
+         * and tries to recontact us on the main thread */
+        /* FIXME: to do this properly we need to do some locking. We may want
+         * to move that to libvlc */
+        [self performSelectorInBackground:@selector(stop) withObject:nil];
+        return;
+    }
+
     libvlc_media_player_stop(_playerInstance);
 }
 
