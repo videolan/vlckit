@@ -280,6 +280,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 
 - (void)mediaThumbnailingTimedOut
 {
+    VKLog(@"WARNING: media thumbnailer media thumbnailing timed out");
     [self endThumbnailing];
 
     // Call delegate
