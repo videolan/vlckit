@@ -101,7 +101,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 
     if (![_media isParsed]) {
         [_media addObserver:self forKeyPath:@"parsed" options:0 context:NULL];
-        [_media parse];
+        [_media synchronousParse];
         NSAssert(!_parsingTimeoutTimer, @"We already have a timer around");
         _parsingTimeoutTimer = [[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaParsingTimedOut) userInfo:nil repeats:NO] retain];
         return;
