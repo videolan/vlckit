@@ -63,6 +63,7 @@ static VLCLibrary * sharedLibrary = nil;
         }
         unsigned argc = sizeof(lib_vlc_params)/sizeof(lib_vlc_params[0]);
         instance = libvlc_new(argc, lib_vlc_params);
+        libvlc_retain(instance);
         NSAssert(instance, @"libvlc failed to initialize");
     }
     return self;
@@ -176,11 +177,15 @@ static VLCLibrary * sharedLibrary = nil;
 @implementation VLCLibrary (VLCLibVLCBridging)
 + (void *)sharedInstance
 {
+    NSAssert([self sharedLibrary].instance, @"shared library doesn't have an instance");
+
     return [self sharedLibrary].instance;
 }
 
 - (void *)instance
 {
+    NSAssert(instance, @"library doesn't have an instance");
+
     return instance;
 }
 @end
