@@ -192,8 +192,10 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 - (id)initWithURL:(NSURL *)anURL
 {
     if (self = [super init]) {
-        p_md = libvlc_media_new_location([VLCLibrary sharedInstance],
-                                           [[anURL absoluteString] UTF8String]);
+        VLCLibrary *library = [VLCLibrary sharedLibrary];
+        NSAssert(library.instance, @"no library instance when creating media");
+
+        p_md = libvlc_media_new_location(library.instance, [[anURL absoluteString] UTF8String]);
 
         delegate = nil;
         metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
@@ -815,6 +817,8 @@ NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 - (void)initInternalMediaDescriptor
 {
     char * p_url = libvlc_media_get_mrl( p_md );
+    if (!p_url)
+        return;
 
     url = [[NSURL URLWithString:@(p_url)] retain];
     if (!url) /* Attempt to interpret as a file path then */
