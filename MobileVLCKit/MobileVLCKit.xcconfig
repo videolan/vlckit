@@ -32,5 +32,6 @@ PICS=$(VLC_CONTRIB_DIR)/lib/libpng.a $(VLC_CONTRIB_DIR)/lib/libopenjpeg.a
 SPEEX=$(VLC_CONTRIB_DIR)/lib/libspeex.a $(VLC_CONTRIB_DIR)/lib/libspeexdsp.a
 XML=$(VLC_CONTRIB_DIR)/lib/libxml2.a
 ZLIB=$(VLC_CONTRIB_DIR)/lib/libz.a
+ZVBI=$(VLC_CONTRIB_DIR)/lib/libzvbi.a
 
-OTHER_LIBTOOLFLAGS=$(ASS) $(AVCODEC) $(DVBPSI) $(FLAC) $(FRIBIDI) $(FREETYPE) $(HARFBUZZ) $(LIVE555) $(MKV) $(MODPLUG) $(OGG) $(OPUS) $(PICS) $(SPEEX) $(XML) $(ZLIB) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
+OTHER_LIBTOOLFLAGS=$(ASS) $(AVCODEC) $(DVBPSI) $(FLAC) $(FRIBIDI) $(FREETYPE) $(HARFBUZZ) $(LIVE555) $(MKV) $(MODPLUG) $(OGG) $(OPUS) $(PICS) $(SPEEX) $(XML) $(ZLIB) $(ZVBI) $(VLC_INSTALL_DIR)/lib/vlc/libcompat.a  $(VLC_INSTALL_DIR)/lib/libvlc.a $(VLC_INSTALL_DIR)/lib/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)
