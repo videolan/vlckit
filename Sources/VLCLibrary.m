@@ -37,6 +37,14 @@
 #include <vlc/libvlc_structures.h>
 
 static VLCLibrary * sharedLibrary = nil;
+static void * sharedInstance = nil;
+
+@interface VLCLibrary()
+{
+    void *instance;
+}
+
+@end
 
 @implementation VLCLibrary
 + (VLCLibrary *)sharedLibrary
@@ -44,6 +52,7 @@ static VLCLibrary * sharedLibrary = nil;
     if (!sharedLibrary) {
         /* Initialize a shared instance */
         sharedLibrary = [[self alloc] init];
+        sharedInstance = sharedLibrary.instance;
     }
     return sharedLibrary;
 }
@@ -166,8 +175,11 @@ static VLCLibrary * sharedLibrary = nil;
     if (instance)
         libvlc_release(instance);
 
-    if (self == sharedLibrary)
+    if (self == sharedLibrary) {
         sharedLibrary = nil;
+        libvlc_release(sharedInstance);
+        sharedInstance = nil;
+    }
 
     [super dealloc];
 }
@@ -177,9 +189,9 @@ static VLCLibrary * sharedLibrary = nil;
 @implementation VLCLibrary (VLCLibVLCBridging)
 + (void *)sharedInstance
 {
-    NSAssert([self sharedLibrary].instance, @"shared library doesn't have an instance");
+    NSAssert(sharedInstance, @"shared library doesn't have an instance");
 
-    return [self sharedLibrary].instance;
+    return sharedInstance;
 }
 
 - (void *)instance

@@ -39,9 +39,6 @@
  * instiantiation of VLCLibrary, as previously noted, this is done automatically by the dynamic link loader.
  */
 @interface VLCLibrary : NSObject
-{
-    void * instance;
-}
 
 /* Factories */
 /**
