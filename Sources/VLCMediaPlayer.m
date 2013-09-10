@@ -241,6 +241,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_media_player_set_nsobject(_playerInstance, nil);
 
     libvlc_media_player_release(_playerInstance);
+    libvlc_release(_privateLibrary.instance);
 
     // Get rid of everything else
     [_media release];
@@ -991,6 +992,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
             _privateLibrary = [[VLCLibrary alloc] initWithOptions:options];
         else
             _privateLibrary = [[VLCLibrary sharedLibrary] retain];
+        libvlc_retain([_privateLibrary instance]);
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
 
         [self registerObservers];
