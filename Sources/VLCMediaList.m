@@ -36,8 +36,8 @@
 #include <vlc/libvlc.h>
 
 /* Notification Messages */
-NSString * VLCMediaListItemAdded        = @"VLCMediaListItemAdded";
-NSString * VLCMediaListItemDeleted      = @"VLCMediaListItemDeleted";
+NSString *const VLCMediaListItemAdded        = @"VLCMediaListItemAdded";
+NSString *const VLCMediaListItemDeleted      = @"VLCMediaListItemDeleted";
 
 // TODO: Documentation
 @interface VLCMediaList (Private)

@@ -28,7 +28,7 @@
 /**
  * Standard notification messages that are emitted by VLCAudio object.
  */
-extern NSString * VLCMediaPlayerVolumeChanged;
+extern NSString *const VLCMediaPlayerVolumeChanged;
 
 @class VLCMediaPlayer;
 

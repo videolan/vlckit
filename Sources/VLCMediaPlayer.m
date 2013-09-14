@@ -48,8 +48,8 @@
 #include <vlc/vlc.h>
 
 /* Notification Messages */
-NSString * VLCMediaPlayerTimeChanged    = @"VLCMediaPlayerTimeChanged";
-NSString * VLCMediaPlayerStateChanged   = @"VLCMediaPlayerStateChanged";
+NSString *const VLCMediaPlayerTimeChanged    = @"VLCMediaPlayerTimeChanged";
+NSString *const VLCMediaPlayerStateChanged   = @"VLCMediaPlayerStateChanged";
 
 NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 {

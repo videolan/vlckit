@@ -38,8 +38,8 @@
 #endif
 
 /* Notification Messages */
-extern NSString * VLCMediaPlayerTimeChanged;
-extern NSString * VLCMediaPlayerStateChanged;
+extern NSString *const VLCMediaPlayerTimeChanged;
+extern NSString *const VLCMediaPlayerStateChanged;
 
 /**
  * VLCMediaPlayerState describes the state of the media player.

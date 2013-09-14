@@ -26,8 +26,8 @@
 #import "VLCMedia.h"
 
 /* Notification Messages */
-extern NSString * VLCMediaListItemAdded;
-extern NSString * VLCMediaListItemDeleted;
+extern NSString *const VLCMediaListItemAdded;
+extern NSString *const VLCMediaListItemDeleted;
 
 @class VLCMedia;
 @class VLCMediaList;

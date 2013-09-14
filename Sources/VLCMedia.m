@@ -33,27 +33,27 @@
 #import <sys/sysctl.h> // for sysctlbyname
 
 /* Meta Dictionary Keys */
-NSString * VLCMetaInformationTitle          = @"title";
-NSString * VLCMetaInformationArtist         = @"artist";
-NSString * VLCMetaInformationGenre          = @"genre";
-NSString * VLCMetaInformationCopyright      = @"copyright";
-NSString * VLCMetaInformationAlbum          = @"album";
-NSString * VLCMetaInformationTrackNumber    = @"trackNumber";
-NSString * VLCMetaInformationDescription    = @"description";
-NSString * VLCMetaInformationRating         = @"rating";
-NSString * VLCMetaInformationDate           = @"date";
-NSString * VLCMetaInformationSetting        = @"setting";
-NSString * VLCMetaInformationURL            = @"url";
-NSString * VLCMetaInformationLanguage       = @"language";
-NSString * VLCMetaInformationNowPlaying     = @"nowPlaying";
-NSString * VLCMetaInformationPublisher      = @"publisher";
-NSString * VLCMetaInformationEncodedBy      = @"encodedBy";
-NSString * VLCMetaInformationArtworkURL     = @"artworkURL";
-NSString * VLCMetaInformationArtwork        = @"artwork";
-NSString * VLCMetaInformationTrackID        = @"trackID";
+NSString *const VLCMetaInformationTitle          = @"title";
+NSString *const VLCMetaInformationArtist         = @"artist";
+NSString *const VLCMetaInformationGenre          = @"genre";
+NSString *const VLCMetaInformationCopyright      = @"copyright";
+NSString *const VLCMetaInformationAlbum          = @"album";
+NSString *const VLCMetaInformationTrackNumber    = @"trackNumber";
+NSString *const VLCMetaInformationDescription    = @"description";
+NSString *const VLCMetaInformationRating         = @"rating";
+NSString *const VLCMetaInformationDate           = @"date";
+NSString *const VLCMetaInformationSetting        = @"setting";
+NSString *const VLCMetaInformationURL            = @"url";
+NSString *const VLCMetaInformationLanguage       = @"language";
+NSString *const VLCMetaInformationNowPlaying     = @"nowPlaying";
+NSString *const VLCMetaInformationPublisher      = @"publisher";
+NSString *const VLCMetaInformationEncodedBy      = @"encodedBy";
+NSString *const VLCMetaInformationArtworkURL     = @"artworkURL";
+NSString *const VLCMetaInformationArtwork        = @"artwork";
+NSString *const VLCMetaInformationTrackID        = @"trackID";
 
 /* Notification Messages */
-NSString * VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
+NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
 
 /******************************************************************************
  * @property (readwrite)
@@ -525,35 +525,35 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return p_stats.i_demux_discontinuity;
 }
 
-NSString *VLCMediaTracksInformationCodec = @"codec"; // NSNumber
-NSString *VLCMediaTracksInformationId    = @"id";    // NSNumber
-NSString *VLCMediaTracksInformationType  = @"type";  // NSString
+NSString *const VLCMediaTracksInformationCodec = @"codec"; // NSNumber
+NSString *const VLCMediaTracksInformationId    = @"id";    // NSNumber
+NSString *const VLCMediaTracksInformationType  = @"type";  // NSString
 
-NSString *VLCMediaTracksInformationCodecProfile  = @"profile"; // NSNumber
-NSString *VLCMediaTracksInformationCodecLevel    = @"level";   // NSNumber
+NSString *const VLCMediaTracksInformationCodecProfile  = @"profile"; // NSNumber
+NSString *const VLCMediaTracksInformationCodecLevel    = @"level";   // NSNumber
 
-NSString *VLCMediaTracksInformationTypeAudio    = @"audio";
-NSString *VLCMediaTracksInformationTypeVideo    = @"video";
-NSString *VLCMediaTracksInformationTypeText     = @"text";
-NSString *VLCMediaTracksInformationTypeUnknown  = @"unknown";
+NSString *const VLCMediaTracksInformationTypeAudio    = @"audio";
+NSString *const VLCMediaTracksInformationTypeVideo    = @"video";
+NSString *const VLCMediaTracksInformationTypeText     = @"text";
+NSString *const VLCMediaTracksInformationTypeUnknown  = @"unknown";
 
-NSString *VLCMediaTracksInformationBitrate      = @"bitrate"; // NSNumber
-NSString *VLCMediaTracksInformationLanguage     = @"language"; // NSString
-NSString *VLCMediaTracksInformationDescription  = @"description"; // NSString
+NSString *const VLCMediaTracksInformationBitrate      = @"bitrate"; // NSNumber
+NSString *const VLCMediaTracksInformationLanguage     = @"language"; // NSString
+NSString *const VLCMediaTracksInformationDescription  = @"description"; // NSString
 
-NSString *VLCMediaTracksInformationAudioChannelsNumber = @"channelsNumber"; // NSNumber
-NSString *VLCMediaTracksInformationAudioRate           = @"rate";           // NSNumber
+NSString *const VLCMediaTracksInformationAudioChannelsNumber = @"channelsNumber"; // NSNumber
+NSString *const VLCMediaTracksInformationAudioRate           = @"rate";           // NSNumber
 
-NSString *VLCMediaTracksInformationVideoHeight = @"height"; // NSNumber
-NSString *VLCMediaTracksInformationVideoWidth  = @"width";  // NSNumber
+NSString *const VLCMediaTracksInformationVideoHeight = @"height"; // NSNumber
+NSString *const VLCMediaTracksInformationVideoWidth  = @"width";  // NSNumber
 
-NSString *VLCMediaTracksInformationSourceAspectRatio        = @"sar_num"; // NSNumber
-NSString *VLCMediaTracksInformationSourceAspectDenominator  = @"sar_den";  // NSNumber
+NSString *const VLCMediaTracksInformationSourceAspectRatio        = @"sar_num"; // NSNumber
+NSString *const VLCMediaTracksInformationSourceAspectDenominator  = @"sar_den";  // NSNumber
 
-NSString *VLCMediaTracksInformationFrameRate             = @"frame_rate_num"; // NSNumber
-NSString *VLCMediaTracksInformationFrameRateDenominator  = @"frame_rate_den";  // NSNumber
+NSString *const VLCMediaTracksInformationFrameRate             = @"frame_rate_num"; // NSNumber
+NSString *const VLCMediaTracksInformationFrameRateDenominator  = @"frame_rate_den";  // NSNumber
 
-NSString *VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
+NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (NSArray *)tracksInformation
 {
