@@ -65,14 +65,6 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
     return stateToStrings[state];
 }
 
-/* libvlc event callback */
-static void HandleMediaInstanceVolumeChanged(const libvlc_event_t * event, void * self)
-{
-    [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:self
-                                                   withDelegateMethod:@selector(mediaPlayerVolumeChanged:)
-                                                 withNotificationName:VLCMediaPlayerVolumeChanged];
-}
-
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
