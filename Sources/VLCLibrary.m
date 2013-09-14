@@ -49,11 +49,11 @@ static void * sharedInstance = nil;
 @implementation VLCLibrary
 + (VLCLibrary *)sharedLibrary
 {
-    if (!sharedLibrary) {
-        /* Initialize a shared instance */
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         sharedLibrary = [[self alloc] init];
         sharedInstance = sharedLibrary.instance;
-    }
+    });
     return sharedLibrary;
 }
 

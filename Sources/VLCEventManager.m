@@ -168,12 +168,11 @@ static void * EventDispatcherMainLoop(void * user_data)
 @implementation VLCEventManager
 + (id)sharedManager
 {
+    static dispatch_once_t onceToken;
     static VLCEventManager *defaultManager = nil;
-
-    if (defaultManager == nil)
-        @synchronized([VLCEventManager class]) {
-            defaultManager = [[VLCEventManager alloc] init];
-        }
+    dispatch_once(&onceToken, ^{
+        defaultManager = [[VLCEventManager alloc] init];
+    });
 
     return defaultManager;
 }
