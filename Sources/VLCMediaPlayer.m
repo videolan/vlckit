@@ -241,7 +241,8 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_media_player_set_nsobject(_playerInstance, nil);
 
     libvlc_media_player_release(_playerInstance);
-    libvlc_release(_privateLibrary.instance);
+    if (_privateLibrary != [VLCLibrary sharedLibrary])
+        libvlc_release(_privateLibrary.instance);
 
     // Get rid of everything else
     [_media release];
@@ -249,7 +250,8 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     [_cachedRemainingTime release];
     [_drawable release];
     [_audio release];
-    [_privateLibrary release];
+    if (_privateLibrary != [VLCLibrary sharedLibrary])
+        [_privateLibrary release];
 
     [super dealloc];
 }
