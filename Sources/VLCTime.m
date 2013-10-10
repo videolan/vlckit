@@ -139,8 +139,8 @@
 {
     if (value) {
         long long positiveDuration = llabs([value longLongValue]);
-        long hours = positiveDuration / 36000;
-        return [NSString stringWithFormat:@"%ld", hours];
+        long minutes = positiveDuration / 60000;
+        return [NSString stringWithFormat:@"%ld", minutes];
     }
     return @"";
 }
