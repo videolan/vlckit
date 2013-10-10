@@ -40,6 +40,7 @@
 				63FFDBCD0D2AE2AE0092FC96 /* configure */,
 			);
 			dependencies = (
+				29EC337A1806F69600165783 /* PBXTargetDependency */,
 			);
 			name = "Run VLC configure";
 			productName = "vlc-bootstrap";
@@ -153,6 +154,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		29EC33791806F69600165783 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 633BD6E40D2ADF030012A314;
+			remoteInfo = "Setup VLC contribs";
+		};
 		7D4D50D316362A8700DFF142 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -818,6 +826,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		29EC337A1806F69600165783 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 633BD6E40D2ADF030012A314 /* Setup VLC contribs */;
+			targetProxy = 29EC33791806F69600165783 /* PBXContainerItemProxy */;
+		};
 		7D4D50D416362A8700DFF142 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC1EA79815938D7E00C40EF9 /* Fetch libvlc */;
