@@ -619,13 +619,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				CC4C590813F53EA400FB0EFC /* Build Everything */,
 				CC1EA79815938D7E00C40EF9 /* Fetch libvlc */,
 				633BD6E40D2ADF030012A314 /* Setup VLC contribs */,
 				63FFDBCE0D2AE2AE0092FC96 /* Run VLC configure */,
 				6337547910ED090A0072A0D9 /* Make VLC */,
 				8DC2EF4F0486A6940098B216 /* Build just VLCKit */,
 				CC61094C112F4AB500FAFD22 /* Make VLC and VLCKit */,
-				CC4C590813F53EA400FB0EFC /* Build Everything */,
 			);
 		};
 /* End PBXProject section */
