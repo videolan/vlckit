@@ -135,6 +135,16 @@
     }
 }
 
+- (NSString *)minuteStringValue
+{
+    if (value) {
+        long long positiveDuration = llabs([value longLongValue]);
+        long hours = positiveDuration / 36000;
+        return [NSString stringWithFormat:@"%ld", hours];
+    }
+    return @"";
+}
+
 - (int)intValue
 {
     if (value)
