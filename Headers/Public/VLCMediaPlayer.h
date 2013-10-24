@@ -68,12 +68,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * to be trapped by delegated objects.
  */
 @protocol VLCMediaPlayerDelegate
-/**
- * Sent by the default notification center whenever the player's time has changed.
- * \details Discussion The value of aNotification is always an VLCMediaPlayerTimeChanged notification. You can retrieve
- * the VLCMediaPlayer object in question by sending object to aNotification.
- */
-- (void)mediaPlayerTimeChanged:(NSNotification *)aNotification;
 
 /**
  * Sent by the default notification center whenever the player's state has changed.
@@ -81,6 +75,15 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * the VLCMediaPlayer object in question by sending object to aNotification.
  */
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification;
+
+@optional
+/**
+ * Sent by the default notification center whenever the player's time has changed.
+ * \details Discussion The value of aNotification is always an VLCMediaPlayerTimeChanged notification. You can retrieve
+ * the VLCMediaPlayer object in question by sending object to aNotification.
+ */
+- (void)mediaPlayerTimeChanged:(NSNotification *)aNotification;
+
 @end
 
 

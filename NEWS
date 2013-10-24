@@ -1,3 +1,11 @@
+Next version:
+-------------
+
+Modified API behavior:
+- VLCMediaPlayer:
+  - implementing mediaPlayerTimeChanged is now optional
+
+
 Changes within VLCKit between 2.0.0 and 2.1.0:
 ----------------------------------------------
 The entire framework was relicensed to LGPL 2.1 or later as well as its
