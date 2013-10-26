@@ -1040,8 +1040,11 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
     _cachedTime = [[VLCTime timeWithNumber:newTime] retain];
     [_cachedRemainingTime release];
     double currentTime = [[_cachedTime numberValue] doubleValue];
-    double remaining = currentTime / _position * (1 - _position);
-    _cachedRemainingTime = [[VLCTime timeWithNumber:@(-remaining)] retain];
+    if (currentTime > 0) {
+        double remaining = currentTime / _position * (1 - _position);
+        _cachedRemainingTime = [[VLCTime timeWithNumber:@(-remaining)] retain];
+    } else
+        _cachedRemainingTime = [[VLCTime nullTime] retain];
     [self didChangeValueForKey:@"remainingTime"];
     [self didChangeValueForKey:@"time"];
 }
