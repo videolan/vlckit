@@ -740,7 +740,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if ! [ -e $VLC_SRC_DIR ]; then\n  git clone git://git.videolan.org/vlc.git $VLC_SRC_DIR\nelse\n  echo \"VLC_SRC_DIR exists\"\nfi";
+			shellScript = "if ! [ -e $VLC_SRC_DIR ]; then\n  git clone git://git.videolan.org/vlc/vlc-2.1.git $VLC_SRC_DIR\nelse\n  echo \"VLC_SRC_DIR exists\"\nfi";
 		};
 		CC4C590F13F53EA400FB0EFC /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
