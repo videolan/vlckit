@@ -5,6 +5,10 @@ VLCKit:
 - VLCMediaThumbnailer is a public API on the Mac now matching the mobile
   counterpart
 
+New APIs:
+- VLCMediaThumbnailer:
+  - added property: snapshotPosition to overwrite the default
+
 Modified API behavior:
 - VLCMediaPlayer:
   - implementing mediaPlayerTimeChanged is now optional
