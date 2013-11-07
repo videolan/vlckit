@@ -1,6 +1,10 @@
 Next version:
 -------------
 
+VLCKit:
+- VLCMediaThumbnailer is a public API on the Mac now matching the mobile
+  counterpart
+
 Modified API behavior:
 - VLCMediaPlayer:
   - implementing mediaPlayerTimeChanged is now optional

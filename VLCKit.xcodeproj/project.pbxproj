@@ -88,7 +88,7 @@
 		637D5ABD0CF6F2650073EA45 /* VLCMediaDiscoverer.h in Headers */ = {isa = PBXBuildFile; fileRef = 637D5ABC0CF6F2650073EA45 /* VLCMediaDiscoverer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		637D5ADC0CF6F2720073EA45 /* VLCMediaDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 637D5ADB0CF6F2720073EA45 /* VLCMediaDiscoverer.m */; };
 		6384FD080D0DBA20005EB1F7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6384FD070D0DBA20005EB1F7 /* QuartzCore.framework */; };
-		63D88D93124E9BF600F65FA0 /* VLCMediaThumbnailer.h in Headers */ = {isa = PBXBuildFile; fileRef = 63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */; };
+		63D88D93124E9BF600F65FA0 /* VLCMediaThumbnailer.h in Headers */ = {isa = PBXBuildFile; fileRef = 63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		A7A0CEA40D2EF13000F2C039 /* VLCVideoCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */; };
 		A7A0CEA50D2EF13000F2C039 /* VLCVideoCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = A7A0CEA30D2EF13000F2C039 /* VLCVideoCommon.m */; };
@@ -424,7 +424,6 @@
 		637CFB960D2D281900A041B6 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */,
 				EFD551DC0CC6DD720074CEE1 /* VLCLibVLCBridging.h */,
 				EF78BD0D0CAEEEC300354E6E /* VLCEventManager.h */,
 				A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */,
@@ -470,6 +469,7 @@
 				63014B7D1042E64A00534090 /* VLCMediaListPlayer.h */,
 				EF8BB8CE0CAFA8D80038A613 /* VLCMediaPlayer.h */,
 				EF78BD150CAEEEE700354E6E /* VLCMediaLibrary.h */,
+				63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */,
 				6341FCAE0D2C0929002A97B7 /* VLCVideoLayer.h */,
 				EF78BD1A0CAEEEE700354E6E /* VLCVideoView.h */,
 				EF78BD190CAEEEE700354E6E /* VLCTime.h */,
@@ -514,10 +514,10 @@
 				A7A0CEA40D2EF13000F2C039 /* VLCVideoCommon.h in Headers */,
 				632A0E850D3835C400AFC99B /* VLCStreamSession.h in Headers */,
 				632A0EC30D38392E00AFC99B /* VLCStreamOutput.h in Headers */,
+				63D88D93124E9BF600F65FA0 /* VLCMediaThumbnailer.h in Headers */,
 				63014B7E1042E64A00534090 /* VLCMediaListPlayer.h in Headers */,
 				6309994B110FC791005F46AE /* VLCExtension.h in Headers */,
 				6309994C110FC791005F46AE /* VLCExtensionsManager.h in Headers */,
-				63D88D93124E9BF600F65FA0 /* VLCMediaThumbnailer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

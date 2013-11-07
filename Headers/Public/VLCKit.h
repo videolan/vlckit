@@ -2,7 +2,7 @@
  * VLCKit.h: VLCKit.framework main header
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007, 2013 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -38,6 +38,7 @@
 #import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCStreamSession.h>
 #import <VLCKit/VLCStreamOutput.h>
+#import <VLCKit/VLCMediaThumbnailer.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
