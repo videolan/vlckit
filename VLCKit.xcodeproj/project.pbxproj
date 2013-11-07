@@ -129,7 +129,7 @@
 		CC4C593413F53EA400FB0EFC /* VLCMediaListPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 63014B7D1042E64A00534090 /* VLCMediaListPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC4C593513F53EA400FB0EFC /* VLCExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = 63099949110FC791005F46AE /* VLCExtension.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC4C593613F53EA400FB0EFC /* VLCExtensionsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6309994A110FC791005F46AE /* VLCExtensionsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CC4C593713F53EA400FB0EFC /* VLCMediaThumbnailer.h in Headers */ = {isa = PBXBuildFile; fileRef = 63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */; };
+		CC4C593713F53EA400FB0EFC /* VLCMediaThumbnailer.h in Headers */ = {isa = PBXBuildFile; fileRef = 63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC4C593A13F53EA400FB0EFC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		CC4C593B13F53EA400FB0EFC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6384FD070D0DBA20005EB1F7 /* QuartzCore.framework */; };
 		EF7311900CB5797B009473B4 /* VLCAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = EF73118E0CB5797B009473B4 /* VLCAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -541,10 +541,10 @@
 				CC4C593113F53EA400FB0EFC /* VLCVideoCommon.h in Headers */,
 				CC4C593213F53EA400FB0EFC /* VLCStreamSession.h in Headers */,
 				CC4C593313F53EA400FB0EFC /* VLCStreamOutput.h in Headers */,
+				CC4C593713F53EA400FB0EFC /* VLCMediaThumbnailer.h in Headers */,
 				CC4C593413F53EA400FB0EFC /* VLCMediaListPlayer.h in Headers */,
 				CC4C593513F53EA400FB0EFC /* VLCExtension.h in Headers */,
 				CC4C593613F53EA400FB0EFC /* VLCExtensionsManager.h in Headers */,
-				CC4C593713F53EA400FB0EFC /* VLCMediaThumbnailer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
