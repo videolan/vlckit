@@ -70,6 +70,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 @synthesize dataPointer=_data;
 @synthesize thumbnailWidth=_thumbnailWidth;
 @synthesize thumbnailHeight=_thumbnailHeight;
+@synthesize snapshotPosition=_snapshotPosition;
 @synthesize shouldRejectFrames=_shouldRejectFrames;
 
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media andDelegate:(id<VLCMediaThumbnailerDelegate>)delegate
@@ -126,6 +127,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 
     unsigned imageWidth = _thumbnailWidth > 0 ? _thumbnailWidth : kDefaultImageWidth;
     unsigned imageHeight = _thumbnailHeight > 0 ? _thumbnailHeight : kDefaultImageHeight;
+    unsigned snapshotPosition = _snapshotPosition > 0 ? _snapshotPosition : kSnapshotPosition;
 
     if (!videoTrack)
         VKLog(@"WARNING: Can't find video track info, still attempting to thumbnail in doubt");
@@ -166,7 +168,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
     libvlc_video_set_callbacks(_mp, lock, unlock, NULL, self);
     libvlc_media_player_play(_mp);
-    libvlc_media_player_set_position(_mp, kSnapshotPosition);
+    libvlc_media_player_set_position(_mp, snapshotPosition);
 
     NSAssert(!_thumbnailingTimeoutTimer, @"We already have a timer around");
     _thumbnailingTimeoutTimer = [[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaThumbnailingTimedOut) userInfo:nil repeats:NO] retain];

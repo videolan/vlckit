@@ -37,7 +37,7 @@
     NSTimer *_parsingTimeoutTimer;
     NSTimer *_thumbnailingTimeoutTimer;
 
-    CGFloat _thumbnailHeight,_thumbnailWidth;
+    CGFloat _thumbnailHeight,_thumbnailWidth,_snapshotPosition;
     CGFloat _effectiveThumbnailHeight,_effectiveThumbnailWidth;
     int _numberOfReceivedFrames;
     BOOL _shouldRejectFrames;
@@ -65,6 +65,14 @@
  * @return thumbnail height. Default value 320
  */
 @property (readwrite, assign) CGFloat thumbnailWidth;
+
+/**
+ * Snapshot Position
+ * You shouldn't change this after -fetchThumbnail
+ * has been called.
+ * @return snapshot position. Default value 0.5
+ */
+@property (readwrite, assign) CGFloat snapshotPosition;
 @end
 
 @protocol VLCMediaThumbnailerDelegate
