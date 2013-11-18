@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		632A105C0D39148A00AFC99B /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632A0F710D38F71A00AFC99B /* VLCKit.framework */; };
 		632A122C0D3947D900AFC99B /* GradientBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632A122B0D3947D900AFC99B /* GradientBackgroundView.m */; };
 		6333027B0BD24CDB00193D7D /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 633302790BD24CDB00193D7D /* Controller.m */; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
@@ -15,23 +14,6 @@
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		632A0F700D38F71A00AFC99B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 632A0F680D38F71A00AFC99B /* VLCKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = VLCKit;
-		};
-		632A0F780D38F72F00AFC99B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 632A0F680D38F71A00AFC99B /* VLCKit.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
-			remoteInfo = VLCKit;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -42,7 +24,6 @@
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32CA4F630368D1EE00C91783 /* FlashVideoDownloader_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashVideoDownloader_Prefix.pch; sourceTree = "<group>"; };
-		632A0F680D38F71A00AFC99B /* VLCKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VLCKit.xcodeproj; path = ../../VLCKit.xcodeproj; sourceTree = SOURCE_ROOT; };
 		632A122A0D3947D900AFC99B /* GradientBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientBackgroundView.h; sourceTree = "<group>"; };
 		632A122B0D3947D900AFC99B /* GradientBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientBackgroundView.m; sourceTree = "<group>"; };
 		633302780BD24CDB00193D7D /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
@@ -56,7 +37,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				632A105C0D39148A00AFC99B /* VLCKit.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,7 +84,6 @@
 		29B97314FDCFA39411CA2CEA /* test */ = {
 			isa = PBXGroup;
 			children = (
-				632A0F680D38F71A00AFC99B /* VLCKit.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -142,14 +121,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		632A0F690D38F71A00AFC99B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				632A0F710D38F71A00AFC99B /* VLCKit.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -157,7 +128,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Flash Video Downloader" */;
 			buildPhases = (
-				636836C00D399CF0003A1400 /* ShellScript */,
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
@@ -165,7 +135,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				632A0F790D38F72F00AFC99B /* PBXTargetDependency */,
 			);
 			name = "Flash Video Downloader";
 			productInstallPath = "$(HOME)/Applications";
@@ -180,31 +149,19 @@
 			isa = PBXProject;
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "FlashVideoDownloader" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* test */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 632A0F690D38F71A00AFC99B /* Products */;
-					ProjectRef = 632A0F680D38F71A00AFC99B /* VLCKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				8D1107260486CEB800E47090 /* Flash Video Downloader */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		632A0F710D38F71A00AFC99B /* VLCKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = VLCKit.framework;
-			remoteRef = 632A0F700D38F71A00AFC99B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		8D1107290486CEB800E47090 /* Resources */ = {
@@ -218,23 +175,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		636836C00D399CF0003A1400 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if test \"$SYMROOT\" == \"$PROJECT_DIR/build\"\nthen\n\tVLCFRAMEWORK=\"$SRCROOT/../../build/$CONFIGURATION/VLCKit.framework\"\nelse\n\tVLCFRAMEWORK=\"$SYMROOT/$CONFIGURATION/VLCKit.framework\"\nfi\nmkdir -p \"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH\"\n/Developer/Library/PrivateFrameworks/DevToolsCore.framework/Resources/pbxcp -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \"$VLCFRAMEWORK\" \"$BUILT_PRODUCTS_DIR/$FRAMEWORKS_FOLDER_PATH\"";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		8D11072C0486CEB800E47090 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -247,14 +187,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		632A0F790D38F72F00AFC99B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VLCKit;
-			targetProxy = 632A0F780D38F72F00AFC99B /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
