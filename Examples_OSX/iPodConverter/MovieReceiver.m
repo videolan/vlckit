@@ -1,7 +1,7 @@
 /*****************************************************************************
  * iPodConverter: MovieReceiver.m
  *****************************************************************************
- * Copyright (C) 2007-2012 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2007-2013 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont
  *
@@ -27,16 +27,19 @@
  */
 
 @implementation MovieReceiver
+
 - (void)awakeFromNib
 {
     [self registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, NSURLPboardType, nil]];
 
 }
+
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
     return NSDragOperationGeneric;
 }
-- (NSDragOperation)performDragOperation:(id <NSDraggingInfo>)sender
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
     NSPasteboard *pboard = [sender draggingPasteboard];
 
@@ -49,7 +52,6 @@
         }
     }
     return YES;
-
-    return NSDragOperationGeneric;
 }
+
 @end

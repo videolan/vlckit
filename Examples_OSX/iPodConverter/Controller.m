@@ -129,8 +129,8 @@
 }
 - (NSString *)outputFilePath
 {
-    return [NSString stringWithFormat:[@"~/Movies/iPod Converted/%@.mp4" stringByExpandingTildeInPath],
-                            [[self.media metaDictionary] objectForKey:@"title"]];
+    return [NSString stringWithFormat:[@"~/Movies/%@.mp4" stringByExpandingTildeInPath],
+                            [[[self.media metaDictionary] objectForKey:@"title"] stringByDeletingPathExtension]];
 }
 
 - (IBAction)convert:(id)sender

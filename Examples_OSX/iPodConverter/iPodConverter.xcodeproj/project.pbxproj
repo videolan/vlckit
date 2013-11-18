@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6333027B0BD24CDB00193D7D /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 633302790BD24CDB00193D7D /* Controller.m */; };
+		7DAE7546183A7DCC00ED6F89 /* VLCKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC786BB31715AAB50024EDC0 /* VLCKit.framework */; };
 		7DD54F38183A749F004149F5 /* GradientBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD54F36183A749F004149F5 /* GradientBackgroundView.m */; };
 		7DD54F39183A749F004149F5 /* MovieReceiver.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD54F37183A749F004149F5 /* MovieReceiver.m */; };
 		7DD54F3D183A74E9004149F5 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 7DD54F3B183A74E9004149F5 /* MainMenu.nib */; };
@@ -16,6 +17,19 @@
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		CC786BB41715AAB50024EDC0 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC786BB31715AAB50024EDC0 /* VLCKit.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7DAE7545183A7DC200ED6F89 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7DAE7546183A7DCC00ED6F89 /* VLCKit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -55,10 +69,10 @@
 			children = (
 				633302780BD24CDB00193D7D /* Controller.h */,
 				633302790BD24CDB00193D7D /* Controller.m */,
-				7DD54F34183A749F004149F5 /* GradientBackgroundView.h */,
 				7DD54F35183A749F004149F5 /* MovieReceiver.h */,
-				7DD54F36183A749F004149F5 /* GradientBackgroundView.m */,
 				7DD54F37183A749F004149F5 /* MovieReceiver.m */,
+				7DD54F34183A749F004149F5 /* GradientBackgroundView.h */,
+				7DD54F36183A749F004149F5 /* GradientBackgroundView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -140,6 +154,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
+				7DAE7545183A7DC200ED6F89 /* CopyFiles */,
 			);
 			buildRules = (
 			);
