@@ -38,6 +38,8 @@
     [videoView setAutoresizingMask: NSViewHeightSizable|NSViewWidthSizable];
     videoView.fillScreen = YES;
 
+    [VLCLibrary sharedLibrary];
+
     playlist = [[VLCMediaList alloc] init];
     [playlist addObserver:self forKeyPath:@"media" options:NSKeyValueObservingOptionNew context:nil];
 
