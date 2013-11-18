@@ -89,7 +89,7 @@
 - (void)play:(id)sender
 {
     [self setMediaIndex:mediaIndex+1];
-    if (![player isPlaying]) {
+    if (![player isPlaying] && [playlist count] > 0) {
         NSLog(@"%@ length = %@", [playlist mediaAtIndex:mediaIndex], [[playlist mediaAtIndex:mediaIndex] lengthWaitUntilDate:[NSDate dateWithTimeIntervalSinceNow:60]]);
         [player play];
     }
@@ -116,8 +116,9 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn
             row:(int)row
 {
-    NSLog(@"URL is %@", [playlist mediaAtIndex:row].url.absoluteString);
-    return [(VLCMedia *)[playlist mediaAtIndex:row].metaDictionary valueForKey:VLCMetaInformationTitle];
+    NSString *title = [(VLCMedia *)[playlist mediaAtIndex:row].metaDictionary valueForKey:VLCMetaInformationTitle];
+
+    return title ? title : [playlist mediaAtIndex:row].url.lastPathComponent;
 }
 
 - (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info
