@@ -14,7 +14,7 @@ popd > /dev/null
 echo "PROJECT DIR = $PROJECT_DIR"
 
 ARCH=$ARCHS
-VLC_SRC_DIR="$PROJECT_DIR/../../vlc"
+VLC_SRC_DIR="$PROJECT_DIR/ImportedSources/vlc"
 
 if [ "$PLATFORM_NAME" = "iphoneos" ]; then
 VLC_BUILD_DIR="$VLC_SRC_DIR/build-ios-OS/$CURRENT_ARCH"

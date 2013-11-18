@@ -306,7 +306,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
 				VALID_ARCHS = "armv7 i386 armv7s";
-				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
+				VLC_SRC_DIR = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc";
 			};
 			name = Debug;
 		};
@@ -325,7 +325,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
 				VALID_ARCHS = "armv7 i386 armv7s";
-				VLC_SRC_DIR = "$(PROJECT_DIR)/../vlc";
+				VLC_SRC_DIR = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc";
 			};
 			name = Release;
 		};

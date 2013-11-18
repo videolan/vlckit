@@ -7,7 +7,7 @@
 //
 
 
-VLC_SRC_DIR=$(PROJECT_DIR)/../../..
+VLC_SRC_DIR=$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc
 VLC_PLATFORM[sdk=iphonesimulator*]=Simulator
 VLC_PLATFORM[sdk=iphoneos*]=OS
 VLC_INSTALL_DIR=$(VLC_SRC_DIR)/install-ios-$(VLC_PLATFORM)/$(CURRENT_ARCH)
