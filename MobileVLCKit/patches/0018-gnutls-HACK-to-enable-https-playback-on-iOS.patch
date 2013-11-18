@@ -1,0 +1,56 @@
+From 668b5f3120de700e443d91855cde9dbbf8e02188 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Tue, 19 Nov 2013 00:09:34 +0100
+Subject: [PATCH 18/18] gnutls: HACK to enable https playback on iOS
+
+Note that certificates presented by a server won't verified at all so we cannot trust the stream
+---
+ modules/misc/gnutls.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/modules/misc/gnutls.c b/modules/misc/gnutls.c
+index 4a6056a..1d70ea5 100644
+--- a/modules/misc/gnutls.c
++++ b/modules/misc/gnutls.c
+@@ -40,6 +40,10 @@
+ #include <gnutls/x509.h>
+ #include "dhparams.h"
+ 
++#if defined (__APPLE__)
++#include <TargetConditionals.h>
++#endif
++
+ /*****************************************************************************
+  * Module descriptor
+  *****************************************************************************/
+@@ -291,9 +295,11 @@ static int gnutls_CertSearch (vlc_tls_t *obj, const char *host,
+             return -1;
+     }
+ 
++#if !TARGET_OS_IPHONE
+     if (dialog_Question (obj, _("Insecure site"), vlc_gettext (msg),
+                          _("Abort"), _("View certificate"), NULL, host) != 2)
+         return -1;
++#endif
+ 
+     gnutls_x509_crt_t cert;
+     gnutls_datum_t desc;
+@@ -308,11 +314,15 @@ static int gnutls_CertSearch (vlc_tls_t *obj, const char *host,
+     }
+     gnutls_x509_crt_deinit (cert);
+ 
++#if !TARGET_OS_IPHONE
+     val = dialog_Question (obj, _("Insecure site"),
+          _("This is the certificate presented by %s:\n%s\n\n"
+            "If in doubt, abort now.\n"),
+                            _("Abort"), _("Accept 24 hours"),
+                            _("Accept permanently"), host, desc.data);
++#else
++    val = 2;
++#endif
+     gnutls_free (desc.data);
+ 
+     time_t expiry = 0;
+-- 
+1.8.3.4 (Apple Git-47)
+
