@@ -74,18 +74,18 @@
                                             [NSDictionary dictionaryWithObjectsAndKeys:
                                                 @"h264", @"videoCodec",
                                                 @"1024",  @"videoBitrate", // max by Apple: 1.5 mbps
-                                                @"mp4a", @"audioCodec",
+                                                @"mp3", @"audioCodec",
                                                 @"128", @"audioBitrate", // max by Apple: 160 kbps
                                                 @"2",   @"channels",
                                                 @"640", @"width", // max by Apple: do.
-                                                @"480", @"canvasHeight", // max by Apple: do.
+                                                @"480", @"height", // max by Apple: do.
                                                 @"Yes", @"audio-sync",
                                                 nil
                                             ], @"transcodingOptions",
                                             [NSDictionary dictionaryWithObjectsAndKeys:
                                                 @"mp4", @"muxer",
                                                 @"file", @"access",
-                                                [[filePath copy] autorelease], @"destination",
+                                                [[NSURL URLWithString:filePath] absoluteString], @"destination",
                                                 nil
                                             ], @"outputOptions",
                                             nil
