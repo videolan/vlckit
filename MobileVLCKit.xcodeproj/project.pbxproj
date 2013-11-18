@@ -301,7 +301,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../vlc/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
@@ -320,7 +320,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/../vlc/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				PRODUCT_NAME = MobileVLCKit;
