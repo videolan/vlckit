@@ -1,0 +1,31 @@
+From cb2dcd865ebe6a7106ae6651e077151565961581 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Tue, 19 Nov 2013 17:16:28 +0100
+Subject: [PATCH 3/3] contrib/gmp: compile without pic on iOS
+
+---
+ contrib/src/gmp/rules.mak | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/src/gmp/rules.mak b/contrib/src/gmp/rules.mak
+index 5f60fb0..818d541 100644
+--- a/contrib/src/gmp/rules.mak
++++ b/contrib/src/gmp/rules.mak
+@@ -18,8 +18,13 @@ gmp: gmp-$(GMP_VERSION).tar.bz2 .sum-gmp
+ 	$(APPLY) $(SRC)/gmp/ansi2knr.diff
+ 	$(MOVE)
+ 
++GMP_CONF := $(HOSTCONF)
++ifdef HAVE_IOS
++GMP_CONF += --without-pic
++endif
++
+ .gmp: gmp
+ 	$(RECONF)
+-	cd $< && $(HOSTVARS) ./configure $(HOSTCONF)
++	cd $< && $(HOSTVARS) ./configure $(GMP_CONF)
+ 	cd $< && $(MAKE) install
+ 	touch $@
+-- 
+1.8.3.4 (Apple Git-47)
+
