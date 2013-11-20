@@ -1,7 +1,7 @@
-From 4a0b343a4c84cc148cc5afa8805fc430741a0fee Mon Sep 17 00:00:00 2001
+From 206c4c192f5bd59180faab5f7ed9b2bd95e57d09 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 21 Jul 2013 18:18:33 +0200
-Subject: [PATCH 08/17] freetype: fix corner-case crash
+Subject: [PATCH 08/21] freetype: fix corner-case crash
 
 ---
  modules/text_renderer/freetype.c | 2 ++

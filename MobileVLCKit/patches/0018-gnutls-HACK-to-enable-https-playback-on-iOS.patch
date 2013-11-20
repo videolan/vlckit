@@ -1,7 +1,7 @@
-From 668b5f3120de700e443d91855cde9dbbf8e02188 Mon Sep 17 00:00:00 2001
+From b6af33445628d16241d6925da46ce59539a35824 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 19 Nov 2013 00:09:34 +0100
-Subject: [PATCH 18/18] gnutls: HACK to enable https playback on iOS
+Subject: [PATCH 18/21] gnutls: HACK to enable https playback on iOS
 
 Note that certificates presented by a server won't verified at all so we cannot trust the stream
 ---

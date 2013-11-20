@@ -1,7 +1,7 @@
-From f83557034fccbdbb72ba409edf63a1e73ca8e109 Mon Sep 17 00:00:00 2001
+From 63f4f78d9880b9b5e88e11ce46356af8be997340 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:38:25 +0200
-Subject: [PATCH 14/17] contrib/png: fix compilation for arm64 which is unknown
+Subject: [PATCH 14/21] contrib/png: fix compilation for arm64 which is unknown
  to the libpng developers
 
 ---

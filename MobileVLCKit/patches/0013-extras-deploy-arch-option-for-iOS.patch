@@ -1,14 +1,14 @@
-From 4b1752e265ac88a458fe029d27885ee65e6d2e1e Mon Sep 17 00:00:00 2001
+From 6a2aade44a61699d9eccc84a21e299d803c11f86 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:28:26 +0200
-Subject: [PATCH 13/17] extras: deploy arch option for iOS
+Subject: [PATCH 13/21] extras: deploy arch option for iOS
 
 ---
  extras/package/ios/build.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index e9a818a..19e87e7 100755
+index da0f3bd..26d1957 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
 @@ -181,7 +181,7 @@ else

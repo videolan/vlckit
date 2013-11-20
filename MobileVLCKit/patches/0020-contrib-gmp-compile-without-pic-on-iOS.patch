@@ -1,7 +1,7 @@
-From cb2dcd865ebe6a7106ae6651e077151565961581 Mon Sep 17 00:00:00 2001
+From c93b4e0c1b96888c27089c9daae6f78622fdab67 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 19 Nov 2013 17:16:28 +0100
-Subject: [PATCH 3/3] contrib/gmp: compile without pic on iOS
+Subject: [PATCH 20/21] contrib/gmp: compile without pic on iOS
 
 ---
  contrib/src/gmp/rules.mak | 7 ++++++-

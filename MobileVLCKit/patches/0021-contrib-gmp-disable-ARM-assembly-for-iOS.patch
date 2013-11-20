@@ -1,7 +1,7 @@
-From e6c05836a97b244f7fd19da40927030c4b941d3d Mon Sep 17 00:00:00 2001
+From d1c2c9addcc8eea36f53797a1e0f91f555860571 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 19 Nov 2013 22:02:38 +0100
-Subject: [PATCH] contrib/gmp: disable ARM assembly for iOS
+Subject: [PATCH 21/21] contrib/gmp: disable ARM assembly for iOS
 
 ---
  contrib/src/gmp/disable-arm-assembly-on-ios.patch | 14 ++++++++++++++
@@ -30,7 +30,7 @@ index 0000000..d47ce96
 +   arm*-*-*)
 +     path="arm"
 diff --git a/contrib/src/gmp/rules.mak b/contrib/src/gmp/rules.mak
-index 5f60fb0..9c7a1b6 100644
+index 818d541..f51bf31 100644
 --- a/contrib/src/gmp/rules.mak
 +++ b/contrib/src/gmp/rules.mak
 @@ -16,6 +16,9 @@ gmp: gmp-$(GMP_VERSION).tar.bz2 .sum-gmp
@@ -42,7 +42,7 @@ index 5f60fb0..9c7a1b6 100644
 +endif
  	$(MOVE)
  
- .gmp: gmp
+ GMP_CONF := $(HOSTCONF)
 -- 
 1.8.3.4 (Apple Git-47)
 

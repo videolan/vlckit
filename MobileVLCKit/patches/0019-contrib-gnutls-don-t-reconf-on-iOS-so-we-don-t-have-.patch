@@ -1,7 +1,7 @@
-From db1877bdb5fb0999916a678da12fec618caebea5 Mon Sep 17 00:00:00 2001
+From dd45893ffd2b3561aeefece1b1dcbd42f88d1f98 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 19 Nov 2013 16:56:24 +0100
-Subject: [PATCH 2/3] contrib/gnutls: don't reconf on iOS so we don't have to
+Subject: [PATCH 19/21] contrib/gnutls: don't reconf on iOS so we don't have to
  compile gettext
 
 ---
