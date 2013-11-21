@@ -93,7 +93,7 @@
         self.media = nil;
         self.streamSession = nil;
         selectedStreamOutput = [[NSNumber alloc] initWithInt:0];
-        self.remoteURLAsString = [NSString stringWithString:@"http://youtube.com/watch?v=IXpx2OEWBdA&feature=bz303"];
+        self.remoteURLAsString = @"http://youtube.com/watch?v=IXpx2OEWBdA&feature=bz303";
         outputFilePath = nil;
         if( !self.outputFolderPath || [self.outputFolderPath isKindOfClass:[NSNull class]])
             self.outputFolderPath = [@"~/Movies/Flash Video Converted" stringByExpandingTildeInPath];
