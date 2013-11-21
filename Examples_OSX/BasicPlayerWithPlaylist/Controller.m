@@ -44,6 +44,7 @@
     [playlist addObserver:self forKeyPath:@"media" options:NSKeyValueObservingOptionNew context:nil];
 
     player = [[VLCMediaPlayer alloc] initWithVideoView:videoView];
+    player.delegate = self;
     mediaIndex = -1;
 
     [playlistOutline registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType, NSURLPboardType, nil]];
@@ -101,6 +102,30 @@
 {
     NSLog(@"Sending pause message to media player...");
     [player pause];
+}
+
+- (void)mediaPlayerStateChanged:(NSNotification *)aNotification
+{
+    if (player.media) {
+        NSArray *spuTracks = [player videoSubTitlesNames];
+        NSArray *spuTrackIndexes = [player videoSubTitlesIndexes];
+
+        NSUInteger count = [spuTracks count];
+        [spuPopup removeAllItems];
+        if (count <= 1)
+            return;
+
+        for (NSUInteger x = 0; x < count; x++) {
+            [spuPopup addItemWithTitle:spuTracks[x]];
+            [[spuPopup lastItem] setTag:spuTrackIndexes[x]];
+        }
+    }
+}
+
+- (void)setSPU:(id)sender
+{
+    if (player.media)
+        player.currentVideoSubTitleIndex = [[spuPopup selectedItem] tag];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

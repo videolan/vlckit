@@ -28,6 +28,7 @@
     IBOutlet id window;
     IBOutlet id playlistOutline;
     IBOutlet id videoHolderView;
+    IBOutlet id spuPopup;
 
     VLCVideoView * videoView;
     VLCMediaList *playlist;
@@ -39,5 +40,7 @@
 - (void)setMediaIndex:(int)value;
 - (void)play:(id)sender;
 - (void)pause:(id)sender;
+
+- (IBAction)setSPU:(id)sender;
 
 @end
