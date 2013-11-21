@@ -42,6 +42,7 @@
 
 - (IBAction)closePlayback:(id)sender;
 
+- (IBAction)positionSliderDrag:(id)sender;
 - (IBAction)positionSliderAction:(id)sender;
 - (IBAction)toggleTimeDisplay:(id)sender;
 

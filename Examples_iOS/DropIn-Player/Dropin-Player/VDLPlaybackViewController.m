@@ -36,6 +36,7 @@
     UIActionSheet *_audiotrackActionSheet;
     UIActionSheet *_subtitleActionSheet;
     NSURL *_url;
+    NSTimer *_idleTimer;
 }
 
 @end
@@ -61,6 +62,18 @@
     rect.size.height += 20.;
     self.toolbar.frame = rect;
     [self.timeDisplay setTitle:@"" forState:UIControlStateNormal];
+
+    /* this looks a bit weird, but let's try to support iOS 5 */
+    UISlider *volumeSlider = nil;
+    for (id aView in self.volumeView.subviews){
+        if ([[[aView class] description] isEqualToString:@"MPVolumeSlider"]){
+            volumeSlider = (UISlider *)aView;
+            break;
+        }
+    }
+    [volumeSlider addTarget:self
+                     action:@selector(volumeSliderAction:)
+           forControlEvents:UIControlEventValueChanged];
 
     /* setup gesture recognizer to toggle controls' visibility */
     _movieView.userInteractionEnabled = NO;
@@ -106,6 +119,11 @@
     _mediaplayer.media = [VLCMedia mediaWithURL:_url];
 
     [_mediaplayer play];
+
+    if (self.controllerPanel.hidden)
+        [self toggleControlsVisible];
+
+    [self _resetIdleTimer];
 }
 
 
@@ -129,12 +147,25 @@
             _mediaplayer = nil;
     }
 
+    if (_idleTimer) {
+        [_idleTimer invalidate];
+        _idleTimer = nil;
+    }
+
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
 }
 
+- (UIResponder *)nextResponder
+{
+    [self _resetIdleTimer];
+    return [super nextResponder];
+}
+
 - (IBAction)positionSliderAction:(UISlider *)sender
 {
+    [self _resetIdleTimer];
+
     /* we need to limit the number of events sent by the slider, since otherwise, the user
      * wouldn't see the I-frames when seeking on current mobile devices. This isn't a problem
      * within the Simulator, but especially on older ARMv7 devices, it's clearly noticeable. */
@@ -148,6 +179,16 @@
         _mediaplayer.position = _positionSlider.value;
         _setPosition = YES;
     }
+}
+
+- (IBAction)positionSliderDrag:(id)sender
+{
+    [self _resetIdleTimer];
+}
+
+- (IBAction)volumeSliderAction:(id)sender
+{
+    [self _resetIdleTimer];
 }
 
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification
@@ -177,6 +218,7 @@
 
 - (IBAction)toggleTimeDisplay:(id)sender
 {
+    [self _resetIdleTimer];
     _displayRemainingTime = !_displayRemainingTime;
 }
 
@@ -188,8 +230,32 @@
     [[UIApplication sharedApplication] setStatusBarHidden:controlsHidden withAnimation:UIStatusBarAnimationFade];
 }
 
+- (void)_resetIdleTimer
+{
+    if (!_idleTimer)
+        _idleTimer = [NSTimer scheduledTimerWithTimeInterval:5.
+                                                      target:self
+                                                    selector:@selector(idleTimerExceeded)
+                                                    userInfo:nil
+                                                     repeats:NO];
+    else {
+        if (fabs([_idleTimer.fireDate timeIntervalSinceNow]) < 5.)
+            [_idleTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:5.]];
+    }
+}
+
+- (void)idleTimerExceeded
+{
+    _idleTimer = nil;
+
+    if (!self.controllerPanel.hidden)
+        [self toggleControlsVisible];
+}
+
 - (IBAction)switchVideoDimensions:(id)sender
 {
+    [self _resetIdleTimer];
+
     NSUInteger count = [_aspectRatios count];
 
     if (_currentAspectRatioMask + 1 > count - 1) {
