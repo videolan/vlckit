@@ -1,0 +1,57 @@
+From 46d3855907924bf9138ba9c9a868076fb825c323 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Thu, 21 Nov 2013 01:35:43 +0100
+Subject: [PATCH 20/22] Revert "gnutls: require version 3.0.20 or later"
+
+This reverts commit 55f8f754788a0ad228f53ea40706710b517e5f2a.
+---
+ configure.ac          |  2 +-
+ modules/misc/gnutls.c | 12 +++++++++++-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 02fb8aa..98ba0c4 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -3969,7 +3969,7 @@ dnl
+ AC_ARG_ENABLE(gnutls,
+   [  --enable-gnutls         GNU TLS TLS/SSL support (default enabled)])
+ AS_IF([test "${enable_gnutls}" != "no"], [
+-  PKG_CHECK_MODULES(GNUTLS, [gnutls >= 3.0.20], [
++  PKG_CHECK_MODULES(GNUTLS, [gnutls >= 2.6.6], [
+     VLC_ADD_PLUGIN([gnutls])
+   ], [
+     AS_IF([test -n "${enable_gnutls}"], [
+diff --git a/modules/misc/gnutls.c b/modules/misc/gnutls.c
+index 1d70ea5..6630af1 100644
+--- a/modules/misc/gnutls.c
++++ b/modules/misc/gnutls.c
+@@ -38,6 +38,16 @@
+ 
+ #include <gnutls/gnutls.h>
+ #include <gnutls/x509.h>
++#if (GNUTLS_VERSION_NUMBER < 0x030014)
++# define gnutls_certificate_set_x509_system_trust(c) \
++    (c, GNUTLS_E_UNIMPLEMENTED_FEATURE)
++#endif
++#if (GNUTLS_VERSION_NUMBER < 0x03000D)
++# define gnutls_verify_stored_pubkey(db,tdb,host,serv,ctype,cert,fl) \
++    (db, host, serv, ctype, cert, fl, GNUTLS_E_NO_CERTIFICATE_FOUND)
++# define gnutls_store_pubkey(db,tdb,host,serv,ctype,cert,e,fl) \
++    (db, host, serv, ctype, cert, fl, GNUTLS_E_UNIMPLEMENTED_FEATURE)
++#endif
+ #include "dhparams.h"
+ 
+ #if defined (__APPLE__)
+@@ -108,7 +118,7 @@ static int gnutls_Init (vlc_object_t *p_this)
+         goto error;
+     }
+ 
+-    const char *psz_version = gnutls_check_version ("3.0.20");
++    const char *psz_version = gnutls_check_version ("2.6.6");
+     if (psz_version == NULL)
+     {
+         msg_Err (p_this, "unsupported GnuTLS version");
+-- 
+1.8.3.4 (Apple Git-47)
+

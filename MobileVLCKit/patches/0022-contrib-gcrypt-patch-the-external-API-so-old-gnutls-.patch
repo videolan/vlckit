@@ -1,0 +1,68 @@
+From 022968d85e0ed54e18962e72244dd3742a5b4f9b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Thu, 21 Nov 2013 02:40:27 +0100
+Subject: [PATCH 22/22] contrib/gcrypt: patch the external API so old gnutls
+ versions can still access what they need
+
+---
+ .../gcrypt/fixup-external-api-for-old-gnutls.patch | 35 ++++++++++++++++++++++
+ contrib/src/gcrypt/rules.mak                       |  1 +
+ 2 files changed, 36 insertions(+)
+ create mode 100644 contrib/src/gcrypt/fixup-external-api-for-old-gnutls.patch
+
+diff --git a/contrib/src/gcrypt/fixup-external-api-for-old-gnutls.patch b/contrib/src/gcrypt/fixup-external-api-for-old-gnutls.patch
+new file mode 100644
+index 0000000..2f5fa63
+--- /dev/null
++++ b/contrib/src/gcrypt/fixup-external-api-for-old-gnutls.patch
+@@ -0,0 +1,35 @@
++diff -ru libgcrypt/src/gcrypt.h.in libgcrypt-fixed/src/gcrypt.h.in
++--- libgcrypt/src/gcrypt.h.in	2013-11-21 01:22:12.000000000 +0100
+++++ libgcrypt-fixed/src/gcrypt.h.in	2013-11-21 01:26:15.000000000 +0100
++@@ -217,6 +217,30 @@
++        Bits  7 - 0  are used for the thread model
++        Bits 15 - 8  are used for the version number.  */
++   unsigned int option;
+++  int (*init) (void);
+++  int (*mutex_init) (void **priv);
+++  int (*mutex_destroy) (void **priv);
+++  int (*mutex_lock) (void **priv);
+++  int (*mutex_unlock) (void **priv);
+++  ssize_t (*read) (int fd, void *buf, size_t nbytes);
+++  ssize_t (*write) (int fd, const void *buf, size_t nbytes);
+++#ifdef _WIN32
+++  ssize_t (*select) (int nfd, void *rset, void *wset, void *eset,
+++		     struct timeval *timeout);
+++  ssize_t (*waitpid) (pid_t pid, int *status, int options);
+++  int (*accept) (int s, void  *addr, int *length_ptr);
+++  int (*connect) (int s, void *addr, gcry_socklen_t length);
+++  int (*sendmsg) (int s, const void *msg, int flags);
+++  int (*recvmsg) (int s, void *msg, int flags);
+++#else
+++  ssize_t (*select) (int nfd, fd_set *rset, fd_set *wset, fd_set *eset,
+++		     struct timeval *timeout);
+++  ssize_t (*waitpid) (pid_t pid, int *status, int options);
+++  int (*accept) (int s, struct sockaddr *addr, gcry_socklen_t *length_ptr);
+++  int (*connect) (int s, struct sockaddr *addr, gcry_socklen_t length);
+++  int (*sendmsg) (int s, const struct msghdr *msg, int flags);
+++  int (*recvmsg) (int s, struct msghdr *msg, int flags);
+++#endif
++ } _GCRY_ATTR_INTERNAL;
++ 
++ #define GCRY_THREAD_OPTION_PTH_IMPL                                     \
++
+diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
+index 332d2ad..305e5c8 100644
+--- a/contrib/src/gcrypt/rules.mak
++++ b/contrib/src/gcrypt/rules.mak
+@@ -22,6 +22,7 @@ libgcrypt: libgcrypt-git.tar.xz .sum-gcrypt
+ 	$(UNPACK)
+ 	$(APPLY) $(SRC)/gcrypt/disable-doc-compilation.patch
+ 	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
++	$(APPLY) $(SRC)/gcrypt/fixup-external-api-for-old-gnutls.patch
+ 	$(MOVE)
+ endif
+ 
+-- 
+1.8.3.4 (Apple Git-47)
+
