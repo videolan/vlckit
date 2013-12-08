@@ -1,8 +1,8 @@
-From cf0d839ba875e5583c78ca5b5ad80bba66f473bf Mon Sep 17 00:00:00 2001
+From 627d6323c68e997929b642ee26f6b90b41e65b62 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 02:36:43 +0100
-Subject: [PATCH 21/22] contrib/gnutls: use version 2.12.23 instead of 3.1.16
- which still depends on gcrypt instead of nettle
+Subject: [PATCH 21/23] contrib/gnutls: use version 2.12.23 instead of 3.1.16 which
+ still depends on gcrypt instead of nettle
 
 ---
  contrib/src/gnutls/SHA512SUMS |  2 +-
@@ -10,23 +10,23 @@ Subject: [PATCH 21/22] contrib/gnutls: use version 2.12.23 instead of 3.1.16
  2 files changed, 8 insertions(+), 19 deletions(-)
 
 diff --git a/contrib/src/gnutls/SHA512SUMS b/contrib/src/gnutls/SHA512SUMS
-index 72a6ed1..098d2ae 100644
+index 67b664a..098d2ae 100644
 --- a/contrib/src/gnutls/SHA512SUMS
 +++ b/contrib/src/gnutls/SHA512SUMS
 @@ -1 +1 @@
--dfd1fa108877994c7b2c7c127aea9267c8d78145c0902fbe4b19131fb77bb454e96e3b65af66b8e98596d601cfb07abb8966e5882533002bed9ccc51b11d7d3f  gnutls-3.1.16.tar.xz
+-ab6ab90966d1be767320f7c0aaea89cfd574391f82c4d602e8d73fec5f3b6bdee6032ea127f3d5fefd5db035ccabfb1ce34db0fdb87b0f451bd9d6f842195593  gnutls-3.1.17.tar.xz
 +7780e9ca7b592350ce9b11e53a63d3212320402d8ad2462bfbc0e69aec4a48bb372a1925627abb7996535c87c90e3d79537ea118c8bb36d26aae8e19eaae3a06  gnutls-2.12.23.tar.bz2
 diff --git a/contrib/src/gnutls/rules.mak b/contrib/src/gnutls/rules.mak
-index 7d997d8..0e3ffbb 100644
+index f2d5c7a..a2c1c9e 100644
 --- a/contrib/src/gnutls/rules.mak
 +++ b/contrib/src/gnutls/rules.mak
 @@ -1,32 +1,20 @@
  # GnuTLS
  
--GNUTLS_VERSION := 3.1.16
+-GNUTLS_VERSION := 3.1.17
 -GNUTLS_URL := ftp://ftp.gnutls.org/gcrypt/gnutls/v3.1/gnutls-$(GNUTLS_VERSION).tar.xz
 +GNUTLS_VERSION := 2.12.23
-+GNUTLS_URL := ftp://ftp.gnutls.org/gcrypt/gnutls/v2.12/gnutls-$(GNUTLS_VERSION).tar.bz2
++GNUTLS_URL := ftp://ftp.gnutls.org/gcrypt/gnutls/v3.1/gnutls-$(GNUTLS_VERSION).tar.bz2
  
  PKGS += gnutls
  ifeq ($(call need_pkg,"gnutls >= 3.0.20"),)
