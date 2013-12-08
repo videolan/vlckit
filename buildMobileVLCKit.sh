@@ -12,7 +12,7 @@ CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 
-TESTEDHASH=b89c7bd8b
+TESTEDHASH=87b457f18
 
 usage()
 {
@@ -125,7 +125,7 @@ if ! [ -e vlc ]; then
 git clone git://git.videolan.org/vlc/vlc-2.1.git vlc
 info "Applying patches to vlc.git"
 cd vlc
-#git checkout -B localAspenBranch ${TESTEDHASH}
+git checkout -B localAspenBranch ${TESTEDHASH}
 git am ../../patches/*.patch
 if [ $? -ne 0 ]; then
 git am --abort
@@ -136,6 +136,7 @@ cd ..
 else
 cd vlc
 git pull --rebase
+git reset --hard {TESTEDHASH}
 cd ..
 fi
 fi
