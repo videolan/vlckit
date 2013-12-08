@@ -126,6 +126,7 @@ git clone git://git.videolan.org/vlc/vlc-2.1.git vlc
 info "Applying patches to vlc.git"
 cd vlc
 git checkout -B localAspenBranch ${TESTEDHASH}
+git branch --set-upstream-to=origin/master localAspenBranch
 git am ../../patches/*.patch
 if [ $? -ne 0 ]; then
 git am --abort
