@@ -138,6 +138,7 @@ else
 cd vlc
 git pull --rebase
 git reset --hard ${TESTEDHASH}
+git am ../../patches/*.patch
 cd ..
 fi
 fi
