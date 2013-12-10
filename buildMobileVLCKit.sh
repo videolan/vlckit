@@ -137,7 +137,7 @@ cd ..
 else
 cd vlc
 git pull --rebase
-git reset --hard {TESTEDHASH}
+git reset --hard ${TESTEDHASH}
 cd ..
 fi
 fi
