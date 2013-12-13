@@ -2,8 +2,8 @@
  * VLCMediaListPlayer.h: VLCKit.framework VLCMediaListPlayer implementation
  *****************************************************************************
  * Copyright (C) 2009 Pierre d'Herbemont
- * Partial Copyright (C) 2009 Felix Paul Kühne
- * Copyright (C) 2009 VLC authors and VideoLAN
+ * Partial Copyright (C) 2009-2013 Felix Paul Kühne
+ * Copyright (C) 2009-2013 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>

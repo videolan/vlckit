@@ -3,7 +3,8 @@
  *****************************************************************************
  * Copyright (C) 2010-2013 Pierre d'Herbemont and VideoLAN
  *
- * Authors: Pierre d'Herbemont
+ * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
+ *          Felix Paul Kühne <fkuehne # videolan.org
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
