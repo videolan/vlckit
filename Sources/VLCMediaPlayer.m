@@ -163,6 +163,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 @end
 
 @implementation VLCMediaPlayer
+@synthesize libraryInstance = _privateLibrary;
 
 /* Bindings */
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key

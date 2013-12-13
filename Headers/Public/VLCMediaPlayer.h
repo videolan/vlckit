@@ -37,6 +37,8 @@
 @class VLCVideoLayer;
 #endif
 
+@class VLCLibrary;
+
 /* Notification Messages */
 extern NSString *const VLCMediaPlayerTimeChanged;
 extern NSString *const VLCMediaPlayerStateChanged;
@@ -89,6 +91,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 // TODO: Should we use medialist_player or our own flavor of media player?
 @interface VLCMediaPlayer : NSObject
+
+@property (readonly) VLCLibrary *libraryInstance;
 
 #if !TARGET_OS_IPHONE
 /* Initializers */
