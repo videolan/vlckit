@@ -65,6 +65,14 @@ typedef NSInteger VLCRepeatMode;
 - (void)stop;
 
 /**
+ * previous, next, play item at index
+ * \return 0 on success, -1 if there is no such item
+ */
+- (int)next;
+- (int)previous;
+- (int)playItemAtIndex:(int)index;
+
+/**
  * Playmode selection (don't repeat anything, repeat one, repeat all)
  * See VLCRepeatMode.
  */

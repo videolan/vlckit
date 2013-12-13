@@ -23,6 +23,7 @@ New APIs:
 - VLCMediaListPlayer:
   - added initWithOptions selector matching VLCMediaPlayer's implementation
   - added pause selector
+  - added previous, next and playItemAtIndex selectors
 
 Modified API behavior:
 - VLCMediaPlayer:

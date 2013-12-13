@@ -128,6 +128,21 @@
     libvlc_media_list_player_stop(instance);
 }
 
+- (int)next
+{
+    return libvlc_media_list_player_next(instance);
+}
+
+- (int)previous
+{
+    return libvlc_media_list_player_previous(instance);
+}
+
+- (int)playItemAtIndex:(int)index
+{
+    return libvlc_media_list_player_play_item_at_index(instance, index);
+}
+
 - (void)setRepeatMode:(VLCRepeatMode)repeatMode
 {
     libvlc_playback_mode_t mode;
