@@ -37,7 +37,7 @@
         if (self = [super init]) {
             _mediaPlayer = [[VLCMediaPlayer alloc] initWithOptions:options];
 
-            instance = libvlc_media_list_player_new([VLCLibrary sharedInstance]);
+            instance = libvlc_media_list_player_new([_mediaPlayer.libraryInstance instance]);
             libvlc_media_list_player_set_media_player(instance, [_mediaPlayer libVLCMediaPlayer]);
         }
         return self;
@@ -51,6 +51,7 @@
 
 - (void)dealloc
 {
+    [_mediaPlayer stop];
     libvlc_media_list_player_release(instance);
     [_mediaPlayer release];
     [_rootMedia release];

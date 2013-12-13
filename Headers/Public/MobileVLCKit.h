@@ -38,3 +38,5 @@
 @class VLCVideoView;
 @class VLCAudio;
 @class VLCMediaThumbnailer;
+@class VLCMediaListPlayer;
+@class VLCMediaPlayer;
