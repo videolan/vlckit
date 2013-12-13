@@ -39,6 +39,8 @@
 		7A5ECB5911DE961700F66AF3 /* VLCTime.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD811DE8FAB00F66AF3 /* VLCTime.h */; };
 		7A5ECB5A11DE961700F66AF3 /* VLCAudio.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD911DE8FAB00F66AF3 /* VLCAudio.h */; };
 		7A5ECB9E11DE975A00F66AF3 /* MobileVLCKit.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */; };
+		7D5F800A185B72EB00C2CD75 /* VLCMediaListPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */; };
+		7D5F800C185B733800C2CD75 /* VLCMediaListPlayer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +67,7 @@
 				636E979111EBC97C002FE8A9 /* VLCMediaThumbnailer.h in Copy Headers */,
 				7A5ECB5711DE961700F66AF3 /* VLCMediaList.h in Copy Headers */,
 				7A5ECB5811DE961700F66AF3 /* VLCMediaPlayer.h in Copy Headers */,
+				7D5F800C185B733800C2CD75 /* VLCMediaListPlayer.h in Copy Headers */,
 				6360B10611E7F27300EAD790 /* VLCMediaDiscoverer.h in Copy Headers */,
 				7A5ECB5911DE961700F66AF3 /* VLCTime.h in Copy Headers */,
 				7A5ECB5A11DE961700F66AF3 /* VLCAudio.h in Copy Headers */,
@@ -98,6 +101,8 @@
 		7A5ECB3411DE94D600F66AF3 /* vlc-plugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins.h"; path = "MobileVLCKit/vlc-plugins.h"; sourceTree = "<group>"; };
 		7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobileVLCKit.h; path = Headers/Public/MobileVLCKit.h; sourceTree = "<group>"; };
 		7A5ECBAC11DE987400F66AF3 /* AggregateStaticPlugins.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = AggregateStaticPlugins.sh; path = MobileVLCKit/AggregateStaticPlugins.sh; sourceTree = "<group>"; };
+		7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaListPlayer.m; path = Sources/VLCMediaListPlayer.m; sourceTree = "<group>"; };
+		7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaListPlayer.h; path = Headers/Public/VLCMediaListPlayer.h; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* MobileVLCKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileVLCKit_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libMobileVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,6 +156,7 @@
 				7A5ECAC611DE8F7300F66AF3 /* VLCMedia.m */,
 				7A5ECAC711DE8F7300F66AF3 /* VLCMediaList.m */,
 				7A5ECAC811DE8F7300F66AF3 /* VLCMediaPlayer.m */,
+				7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */,
 				636E975711EBC67A002FE8A9 /* VLCMediaThumbnailer.m */,
 				6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */,
 				7A5ECAC911DE8F7300F66AF3 /* VLCTime.m */,
@@ -179,6 +185,7 @@
 				636E979011EBC96D002FE8A9 /* VLCMediaThumbnailer.h */,
 				7A5ECAD611DE8FAB00F66AF3 /* VLCMediaList.h */,
 				7A5ECAD711DE8FAB00F66AF3 /* VLCMediaPlayer.h */,
+				7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */,
 				6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */,
 				7A5ECAD811DE8FAB00F66AF3 /* VLCTime.h */,
 				7A5ECAD911DE8FAB00F66AF3 /* VLCAudio.h */,
@@ -266,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A5ECACB11DE8F7300F66AF3 /* VLCEventManager.m in Sources */,
+				7D5F800A185B72EB00C2CD75 /* VLCMediaListPlayer.m in Sources */,
 				7A5ECACC11DE8F7300F66AF3 /* VLCLibrary.m in Sources */,
 				7A5ECACD11DE8F7300F66AF3 /* VLCMedia.m in Sources */,
 				7A5ECACE11DE8F7300F66AF3 /* VLCMediaList.m in Sources */,
