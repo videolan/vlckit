@@ -22,6 +22,7 @@ New APIs:
   - added property: snapshotPosition to overwrite the default
 - VLCMediaListPlayer:
   - added initWithOptions selector matching VLCMediaPlayer's implementation
+  - added pause selector
 
 Modified API behavior:
 - VLCMediaPlayer:

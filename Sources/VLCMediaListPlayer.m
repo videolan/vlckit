@@ -118,6 +118,11 @@
     libvlc_media_list_player_play(instance);
 }
 
+- (void)pause
+{
+    libvlc_media_list_player_pause(instance);
+}
+
 - (void)stop
 {
     libvlc_media_list_player_stop(instance);

@@ -58,10 +58,10 @@ typedef NSInteger VLCRepeatMode;
 - (id)initWithOptions:(NSArray *)options;
 
 /**
- * Basic play and stop are here. For other method, use the mediaPlayer.
- * This may change.
+ * Basic play, pause and stop are here. For other methods, use the mediaPlayer.
  */
 - (void)play;
+- (void)pause;
 - (void)stop;
 
 /**
