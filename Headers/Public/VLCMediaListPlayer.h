@@ -55,6 +55,7 @@ typedef NSInteger VLCRepeatMode;
 @property (readwrite, retain) VLCMedia *rootMedia;
 @property (readonly, retain) VLCMediaPlayer *mediaPlayer;
 
+- (id)initWithOptions:(NSArray *)options;
 
 /**
  * Basic play and stop are here. For other method, use the mediaPlayer.

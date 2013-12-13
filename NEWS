@@ -10,6 +10,7 @@ MobileVLCKit:
   party scripts
 - Added 2 sample projects illustrating video playback
 - Added support for https and hls playback
+- VLCMediaListPlayer is available now
 
 VLCKit:
 - VLCMediaThumbnailer is a public API on the Mac now matching the mobile
@@ -19,6 +20,8 @@ VLCKit:
 New APIs:
 - VLCMediaThumbnailer:
   - added property: snapshotPosition to overwrite the default
+- VLCMediaListPlayer:
+  - added initWithOptions selector matching VLCMediaPlayer's implementation
 
 Modified API behavior:
 - VLCMediaPlayer:

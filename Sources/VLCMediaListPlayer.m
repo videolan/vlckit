@@ -31,16 +31,22 @@
 #import "VLCLibVLCBridging.h"
 
 @implementation VLCMediaListPlayer
+
+- (id)initWithOptions:(NSArray *)options
+{
+        if (self = [super init]) {
+            _mediaPlayer = [[VLCMediaPlayer alloc] initWithOptions:options];
+
+            instance = libvlc_media_list_player_new([VLCLibrary sharedInstance]);
+            libvlc_media_list_player_set_media_player(instance, [_mediaPlayer libVLCMediaPlayer]);
+        }
+        return self;
+
+}
+
 - (id)init
 {
-    if (self = [super init])
-    {
-        _mediaPlayer = [[VLCMediaPlayer alloc] init];
-
-        instance = libvlc_media_list_player_new([VLCLibrary sharedInstance]);
-        libvlc_media_list_player_set_media_player(instance, [_mediaPlayer libVLCMediaPlayer]);
-    }
-    return self;
+    return [self initWithOptions:nil];
 }
 
 - (void)dealloc
@@ -51,6 +57,7 @@
     [_mediaList release];
     [super dealloc];
 }
+
 - (VLCMediaPlayer *)mediaPlayer
 {
     return _mediaPlayer;
