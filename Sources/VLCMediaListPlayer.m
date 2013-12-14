@@ -128,19 +128,19 @@
     libvlc_media_list_player_stop(instance);
 }
 
-- (int)next
+- (BOOL)next
 {
-    return libvlc_media_list_player_next(instance);
+    return libvlc_media_list_player_next(instance) == 0 ? YES : NO;
 }
 
-- (int)previous
+- (BOOL)previous
 {
-    return libvlc_media_list_player_previous(instance);
+    return libvlc_media_list_player_previous(instance) == 0 ? YES : NO;
 }
 
-- (int)playItemAtIndex:(int)index
+- (BOOL)playItemAtIndex:(int)index
 {
-    return libvlc_media_list_player_play_item_at_index(instance, index);
+    return libvlc_media_list_player_play_item_at_index(instance, index) == 0 ? YES : NO;
 }
 
 - (void)setRepeatMode:(VLCRepeatMode)repeatMode
