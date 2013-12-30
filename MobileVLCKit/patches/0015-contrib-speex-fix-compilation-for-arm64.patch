@@ -1,17 +1,17 @@
-From 4c9f0cd545cb9924adde27f15a45836a5a5aba15 Mon Sep 17 00:00:00 2001
+From 5a36158793a16d02ced092dd96d3c56269c1754a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 19:30:01 +0200
-Subject: [PATCH 15/21] contrib/speex: fix compilation for arm64
+Subject: [PATCH 15/23] contrib/speex: fix compilation for arm64
 
 ---
  contrib/src/speex/rules.mak | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/contrib/src/speex/rules.mak b/contrib/src/speex/rules.mak
-index 974eac2..8bbbfa7 100644
+index b13133f..3cc7500 100644
 --- a/contrib/src/speex/rules.mak
 +++ b/contrib/src/speex/rules.mak
-@@ -36,6 +36,11 @@ ifeq ($(ARCH),arm)
+@@ -38,6 +38,11 @@ ifeq ($(ARCH),arm)
  SPEEX_CONF += --enable-arm5e-asm
  endif
  endif

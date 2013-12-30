@@ -1,7 +1,7 @@
-From dd45893ffd2b3561aeefece1b1dcbd42f88d1f98 Mon Sep 17 00:00:00 2001
+From af7cf133c158afe651f279ad73dcffda2edccddd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 19 Nov 2013 16:56:24 +0100
-Subject: [PATCH 19/21] contrib/gnutls: don't reconf on iOS so we don't have to
+Subject: [PATCH 19/23] contrib/gnutls: don't reconf on iOS so we don't have to
  compile gettext
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 19/21] contrib/gnutls: don't reconf on iOS so we don't have to
  1 file changed, 2 insertions(+)
 
 diff --git a/contrib/src/gnutls/rules.mak b/contrib/src/gnutls/rules.mak
-index b587686..7d997d8 100644
+index b7f1bed..f2d5c7a 100644
 --- a/contrib/src/gnutls/rules.mak
 +++ b/contrib/src/gnutls/rules.mak
 @@ -48,7 +48,9 @@ GNUTLS_CONF := \

@@ -1,8 +1,8 @@
-From 7ae76fb68493f0cf11dccd2fec1460b8d27364a3 Mon Sep 17 00:00:00 2001
+From 68fbb7b754620327f2c577f253513e42e89c120b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 02:36:43 +0100
-Subject: [PATCH 21/23] contrib/gnutls: use version 2.12.23 instead of 3.1.16 which
- still depends on gcrypt instead of nettle
+Subject: [PATCH 21/23] contrib/gnutls: use version 2.12.23 instead of 3.1.16
+ which still depends on gcrypt instead of nettle
 
 ---
  contrib/src/gnutls/SHA512SUMS |  2 +-

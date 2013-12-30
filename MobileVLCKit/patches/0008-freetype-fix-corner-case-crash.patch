@@ -1,17 +1,17 @@
-From 206c4c192f5bd59180faab5f7ed9b2bd95e57d09 Mon Sep 17 00:00:00 2001
+From 4ddaf9d4298756544f02587b8db2a190d44b5388 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 21 Jul 2013 18:18:33 +0200
-Subject: [PATCH 08/21] freetype: fix corner-case crash
+Subject: [PATCH 08/23] freetype: fix corner-case crash
 
 ---
  modules/text_renderer/freetype.c | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/modules/text_renderer/freetype.c b/modules/text_renderer/freetype.c
-index 9a00739..c7f3c1f 100644
+index 93beba8..4bac64d 100644
 --- a/modules/text_renderer/freetype.c
 +++ b/modules/text_renderer/freetype.c
-@@ -825,6 +825,8 @@ static char *iOSFake_Select( filter_t *p_filter, bool b_monospace, bool b_bold,
+@@ -826,6 +826,8 @@ static char *iOSFake_Select( filter_t *p_filter, bool b_monospace, bool b_bold,
                                        CFSTR("OpenSans-Regular.ttf") : CFSTR("SourceCodePro-Regular.ttf"),
                                        NULL,
                                        NULL);

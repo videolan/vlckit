@@ -1,7 +1,7 @@
-From 022968d85e0ed54e18962e72244dd3742a5b4f9b Mon Sep 17 00:00:00 2001
+From e3229e765c0a748c690a4d34573d01e6a487fda9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 02:40:27 +0100
-Subject: [PATCH 22/22] contrib/gcrypt: patch the external API so old gnutls
+Subject: [PATCH 22/23] contrib/gcrypt: patch the external API so old gnutls
  versions can still access what they need
 
 ---
@@ -52,7 +52,7 @@ index 0000000..2f5fa63
 + #define GCRY_THREAD_OPTION_PTH_IMPL                                     \
 +
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 332d2ad..305e5c8 100644
+index 44dfcab..7e2cc30 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -22,6 +22,7 @@ libgcrypt: libgcrypt-git.tar.xz .sum-gcrypt

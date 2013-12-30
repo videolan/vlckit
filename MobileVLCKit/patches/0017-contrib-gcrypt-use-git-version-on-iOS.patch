@@ -1,7 +1,7 @@
-From 06386c3c1fe9cd4d2683cda1404f35125ceb587f Mon Sep 17 00:00:00 2001
+From 5397b09b17580f1d10d855f91a4bb8c51de4a570 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
-Subject: [PATCH 17/21] contrib/gcrypt: use git version on iOS
+Subject: [PATCH 17/23] contrib/gcrypt: use git version on iOS
 
 ---
  contrib/src/gcrypt/disable-doc-compilation.patch   | 43 ++++++++++++++++++++++
@@ -61,12 +61,12 @@ index 0000000..e63224e
 +1.8.3.4 (Apple Git-47)
 +
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 38c96b5..332d2ad 100644
+index ae55695..44dfcab 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -1,6 +1,7 @@
  # GCRYPT
- GCRYPT_VERSION := 1.5.3
+ GCRYPT_VERSION := 1.6.0
  GCRYPT_URL := ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-$(GCRYPT_VERSION).tar.bz2
 +GCRYPT_GITURL := git://git.gnupg.org/libgcrypt.git
  

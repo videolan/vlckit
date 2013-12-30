@@ -1,7 +1,7 @@
-From 46d3855907924bf9138ba9c9a868076fb825c323 Mon Sep 17 00:00:00 2001
+From dc8026e7bbd228a2ded2c43ffea8c070d9c500a5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 01:35:43 +0100
-Subject: [PATCH 20/22] Revert "gnutls: require version 3.0.20 or later"
+Subject: [PATCH 20/23] Revert "gnutls: require version 3.0.20 or later"
 
 This reverts commit 55f8f754788a0ad228f53ea40706710b517e5f2a.
 ---
@@ -10,7 +10,7 @@ This reverts commit 55f8f754788a0ad228f53ea40706710b517e5f2a.
  2 files changed, 12 insertions(+), 2 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 02fb8aa..98ba0c4 100644
+index 92e6916..e697a3e 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -3969,7 +3969,7 @@ dnl

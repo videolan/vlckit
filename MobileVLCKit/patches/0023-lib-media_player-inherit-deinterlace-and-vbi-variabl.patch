@@ -1,8 +1,8 @@
-From 9a996dfec6000dce657b582a4d86e99beb5b7aef Mon Sep 17 00:00:00 2001
+From 372ba9d5696c00400e87eeaa07124c3e194b4312 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 16:26:40 +0100
-Subject: [PATCH] lib/media_player: inherit deinterlace and vbi variables to
- fix correct variables values on first use
+Subject: [PATCH 23/23] lib/media_player: inherit deinterlace and vbi variables
+ to fix correct variables values on first use
 
 ---
  lib/media_player.c | 4 ++--
