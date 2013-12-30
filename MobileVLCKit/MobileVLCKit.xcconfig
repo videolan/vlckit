@@ -3,7 +3,7 @@
 //  VLC
 //
 //  Created by Pierre d'Herbemont on 6/26/10.
-//  Copyright 2010-2012 VLC Authors and VideoLAN. All rights reserved.
+//  Copyright 2010-2013 VLC Authors and VideoLAN. All rights reserved.
 //
 
 
@@ -16,7 +16,7 @@ VLC_INSTALL_DIR=$(VLC_SRC_DIR)/install-ios-$(VLC_PLATFORM)/$(CURRENT_ARCH)
 #include "vlc-plugins.xcconfig"
 
 VLC_CONTRIB_DIR=$VLC_INSTALL_DIR/contribs
-AVCODEC=$(VLC_CONTRIB_DIR)/lib/libavutil.a ${VLC_CONTRIB_DIR}/lib/libavcodec.a $(VLC_CONTRIB_DIR)/lib/libavformat.a $(VLC_CONTRIB_DIR)/lib/libavresample.a $(VLC_CONTRIB_DIR)/lib/libswscale.a $(VLC_CONTRIB_DIR)/lib/libgsm.a
+AVCODEC=$(VLC_CONTRIB_DIR)/lib/libavutil.a ${VLC_CONTRIB_DIR}/lib/libavcodec.a $(VLC_CONTRIB_DIR)/lib/libavformat.a $(VLC_CONTRIB_DIR)/lib/libswscale.a $(VLC_CONTRIB_DIR)/lib/libgsm.a
 DVBPSI=$(VLC_CONTRIB_DIR)/lib/libdvbpsi.a
 FLAC=$(VLC_CONTRIB_DIR)/lib/libFLAC.a
 FREETYPE=$(VLC_CONTRIB_DIR)/lib/libfreetype.a
