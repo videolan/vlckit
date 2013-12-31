@@ -1,7 +1,7 @@
-From 3328f06b081f63e17e7a97c989286c0dda14003f Mon Sep 17 00:00:00 2001
+From a07f4a447e56ea6e459c5503a73b87eb8897e9dd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 18 Oct 2012 18:38:17 +0200
-Subject: [PATCH 05/23] posix/thread: add a hack to work-around crashes when
+Subject: [PATCH 06/18] posix/thread: add a hack to work-around crashes when
  using the buggy iOS 6 runtime
 
 ---

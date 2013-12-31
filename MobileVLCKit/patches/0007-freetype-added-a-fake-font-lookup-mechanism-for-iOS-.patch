@@ -1,7 +1,7 @@
-From 9c951054886ec558da8e947c1a0914aad8a74336 Mon Sep 17 00:00:00 2001
+From 54f927c0d90cfa26ff4b92a35fcadfee87e3d45c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 19 Jul 2013 18:38:41 +0700
-Subject: [PATCH 06/23] freetype: added a fake font lookup mechanism for iOS to
+Subject: [PATCH 07/18] freetype: added a fake font lookup mechanism for iOS to
  use the packaged demo fonts
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 06/23] freetype: added a fake font lookup mechanism for iOS to
  1 file changed, 42 insertions(+)
 
 diff --git a/modules/text_renderer/freetype.c b/modules/text_renderer/freetype.c
-index 25d6b15..dbeb0f1 100644
+index c27ec45..93beba8 100644
 --- a/modules/text_renderer/freetype.c
 +++ b/modules/text_renderer/freetype.c
-@@ -106,6 +106,9 @@
+@@ -107,6 +107,9 @@
  #include <TargetConditionals.h>
  #if !TARGET_OS_IPHONE
  #include <Carbon/Carbon.h>
@@ -22,7 +22,7 @@ index 25d6b15..dbeb0f1 100644
  #endif
  #include <sys/param.h>                         /* for MAXPATHLEN */
  #undef HAVE_FONTCONFIG
-@@ -807,6 +810,40 @@ static char* MacLegacy_Select( filter_t *p_filter, const char* psz_fontname,
+@@ -808,6 +811,40 @@ static char* MacLegacy_Select( filter_t *p_filter, const char* psz_fontname,
  
      return psz_path;
  }
@@ -63,7 +63,7 @@ index 25d6b15..dbeb0f1 100644
  #endif
  #endif
  
-@@ -1988,6 +2025,8 @@ static FT_Face LoadFace( filter_t *p_filter,
+@@ -1989,6 +2026,8 @@ static FT_Face LoadFace( filter_t *p_filter,
  #elif defined( __APPLE__ )
  #if !TARGET_OS_IPHONE
          psz_fontfile = MacLegacy_Select( p_filter, p_style->psz_fontname, false, false, -1, &i_idx );
@@ -72,7 +72,7 @@ index 25d6b15..dbeb0f1 100644
  #endif
  #elif defined( _WIN32 )
          psz_fontfile = Win32_Select( p_filter,
-@@ -2894,6 +2933,9 @@ static int Create( vlc_object_t *p_this )
+@@ -2895,6 +2934,9 @@ static int Create( vlc_object_t *p_this )
  #elif defined(__APPLE__)
  #if !TARGET_OS_IPHONE
      psz_fontfile = MacLegacy_Select( p_filter, psz_fontfamily, false, false, 0, &fontindex );
