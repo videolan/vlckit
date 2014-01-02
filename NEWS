@@ -24,11 +24,16 @@ New APIs:
   - added initWithOptions selector matching VLCMediaPlayer's implementation
   - added pause selector
   - added previous, next and playItemAtIndex selectors
+- VLCMedia:
+  - added delegate method mediaMetaDataDidChange
 
 Modified API behavior:
 - VLCMediaPlayer:
   - implementing mediaPlayerTimeChanged is now optional
 
+Deprecated APIs:
+- VLCMedia:
+  - media:metaValueChangedFrom:forKey:
 
 Changes within VLCKit between 2.0.0 and 2.1.0:
 ----------------------------------------------

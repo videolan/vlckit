@@ -906,6 +906,9 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 - (void)metaChanged:(NSString *)metaType
 {
     [self fetchMetaInformationFromLibVLCWithType:metaType];
+
+    if ([delegate respondsToSelector:@selector(mediaMetaDataDidChange:)])
+        [self.delegate mediaMetaDataDidChange:self];
 }
 
 - (void)subItemAdded
