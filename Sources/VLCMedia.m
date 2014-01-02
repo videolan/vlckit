@@ -112,12 +112,6 @@ static inline VLCMediaState LibVLCStateToMediaState( libvlc_state_t state )
  */
 static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
 {
-    if (event->u.media_meta_changed.meta_type == libvlc_meta_Publisher ||
-        event->u.media_meta_changed.meta_type == libvlc_meta_NowPlaying) {
-        /* Skip those meta. We don't really care about them for now.
-         * And they occure a lot */
-        return;
-    }
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                  withMethod:@selector(metaChanged:)
@@ -957,6 +951,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationDate];
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationGenre];
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationTrackNumber];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationNowPlaying];
     }
     if (!isArtURLFetched) {
         isArtURLFetched = YES;

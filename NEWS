@@ -30,6 +30,8 @@ New APIs:
 Modified API behavior:
 - VLCMediaPlayer:
   - implementing mediaPlayerTimeChanged is now optional
+- VLCMedia:
+  - nowPlaying meta information is correctly handled now
 
 Deprecated APIs:
 - VLCMedia:
