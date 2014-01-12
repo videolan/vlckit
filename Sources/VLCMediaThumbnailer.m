@@ -129,9 +129,11 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     unsigned imageHeight = _thumbnailHeight > 0 ? _thumbnailHeight : kDefaultImageHeight;
     unsigned snapshotPosition = _snapshotPosition > 0 ? _snapshotPosition : kSnapshotPosition;
 
-    if (!videoTrack)
-        VKLog(@"WARNING: Can't find video track info, still attempting to thumbnail in doubt");
-    else {
+    if (!videoTrack) {
+        VKLog(@"WARNING: Can't find video track info, skipping file");
+        [self mediaThumbnailingTimedOut];
+        return;
+    } else {
         int videoHeight = [videoTrack[VLCMediaTracksInformationVideoHeight] intValue];
         int videoWidth = [videoTrack[VLCMediaTracksInformationVideoWidth] intValue];
 
@@ -162,7 +164,9 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     _mp = libvlc_media_player_new([VLCLibrary sharedInstance]);
 
     libvlc_media_add_option([_media libVLCMediaDescriptor], "no-audio");
-    libvlc_media_add_option([_media libVLCMediaDescriptor], "--avcodec-threads=1");
+    libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-threads=1");
+    libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-skip-frame=4");
+    libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-skip-idct=2");
 
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
@@ -244,12 +248,15 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 
 - (void)stopAsync
 {
-    libvlc_media_player_stop(_mp);
-    libvlc_media_player_release(_mp);
-    _mp = NULL;
+    if (_mp) {
+        libvlc_media_player_stop(_mp);
+        libvlc_media_player_release(_mp);
+        _mp = NULL;
+    }
 
     // Now release data
-    free(_data);
+    if (_data)
+        free(_data);
     _data = NULL;
 
     _shouldRejectFrames = NO;
@@ -262,9 +269,6 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     [_thumbnailingTimeoutTimer invalidate];
     [_thumbnailingTimeoutTimer release];
     _thumbnailingTimeoutTimer = nil;
-
-    // Stop the media player
-    NSAssert(_mp, @"We have already destroyed mp");
 
     [self performSelectorInBackground:@selector(stopAsync) withObject:nil];
 
