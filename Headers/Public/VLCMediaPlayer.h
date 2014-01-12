@@ -71,6 +71,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @protocol VLCMediaPlayerDelegate
 
+@optional
 /**
  * Sent by the default notification center whenever the player's state has changed.
  * \details Discussion The value of aNotification is always an VLCMediaPlayerStateChanged notification. You can retrieve
@@ -78,7 +79,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification;
 
-@optional
 /**
  * Sent by the default notification center whenever the player's time has changed.
  * \details Discussion The value of aNotification is always an VLCMediaPlayerTimeChanged notification. You can retrieve
