@@ -47,6 +47,7 @@ static void *lock(void *opaque, void **pixels)
 static const size_t kDefaultImageWidth = 320;
 static const size_t kDefaultImageHeight = 240;
 static const float kSnapshotPosition = 0.5;
+static const long long kStandardStartTime = 30000;
 
 void unlock(void *opaque, void *picture, void *const *p_pixels)
 {
@@ -127,7 +128,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 
     unsigned imageWidth = _thumbnailWidth > 0 ? _thumbnailWidth : kDefaultImageWidth;
     unsigned imageHeight = _thumbnailHeight > 0 ? _thumbnailHeight : kDefaultImageHeight;
-    unsigned snapshotPosition = _snapshotPosition > 0 ? _snapshotPosition : kSnapshotPosition;
+    float snapshotPosition = _snapshotPosition > 0 ? _snapshotPosition : kSnapshotPosition;
 
     if (!videoTrack) {
         VKLog(@"WARNING: Can't find video track info, skipping file");
@@ -173,8 +174,9 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
     libvlc_video_set_callbacks(_mp, lock, unlock, NULL, self);
+    if (snapshotPosition == kSnapshotPosition)
+        libvlc_media_add_option([_media libVLCMediaDescriptor], [NSString stringWithFormat:@"start-time=%lli", (kStandardStartTime / 1000)].UTF8String);
     libvlc_media_player_play(_mp);
-    libvlc_media_player_set_position(_mp, snapshotPosition);
 
     NSAssert(!_thumbnailingTimeoutTimer, @"We already have a timer around");
     _thumbnailingTimeoutTimer = [[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaThumbnailingTimedOut) userInfo:nil repeats:NO] retain];
@@ -209,15 +211,24 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
         return;
 
     // The video thread is blocking on us. Beware not to do too much work.
-
     _numberOfReceivedFrames++;
 
+    float position = libvlc_media_player_get_position(_mp);
+    long long length = libvlc_media_player_get_length(_mp);
+
     // Make sure we are getting the right frame
-    if (libvlc_media_player_get_position(_mp) < kSnapshotPosition / 2 &&
-        // Arbitrary choice to work around broken files.
-        libvlc_media_player_get_length(_mp) > 1000 &&
-        _numberOfReceivedFrames < 10)
+    if (position < self.snapshotPosition && _numberOfReceivedFrames < 2) {
+        libvlc_media_player_set_position(_mp, self.snapshotPosition);
         return;
+    }
+    if (length < kStandardStartTime * 2 && _numberOfReceivedFrames < 3) {
+        libvlc_media_player_set_position(_mp, 0.1);
+        return;
+    }
+    if ((length > 1000 || position <= 0.0) && _numberOfReceivedFrames < 10) {
+        // Arbitrary choice to work around broken files.
+        return;
+    }
 
     NSAssert(_data, @"We have no data");
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
