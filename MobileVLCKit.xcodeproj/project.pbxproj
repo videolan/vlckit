@@ -301,7 +301,7 @@
 			baseConfigurationReference = 7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/MobileVLCKit.dst;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -311,9 +311,9 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = MobileVLCKit;
-				VALID_ARCHS = "armv7 i386 armv7s";
+				VALID_ARCHS = "armv7 i386 armv7s arm64";
 				VLC_SRC_DIR = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc";
 			};
 			name = Debug;
@@ -323,16 +323,16 @@
 			baseConfigurationReference = 7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				DSTROOT = /tmp/MobileVLCKit.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = MobileVLCKit;
-				VALID_ARCHS = "armv7 i386 armv7s";
+				VALID_ARCHS = "armv7 i386 armv7s arm64";
 				VLC_SRC_DIR = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc";
 			};
 			name = Release;
@@ -367,10 +367,11 @@
 		7A5ECAFA11DE917B00F66AF3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "Aggregate static plugins";
 			};
 			name = Debug;
@@ -378,9 +379,10 @@
 		7A5ECAFB11DE917B00F66AF3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
 				PRODUCT_NAME = "Aggregate static plugins";
 				ZERO_LINK = NO;
 			};
