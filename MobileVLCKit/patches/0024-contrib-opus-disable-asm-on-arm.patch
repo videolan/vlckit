@@ -1,24 +1,22 @@
-From 7ba6c55e23d4026f42821bd6201be08509ca9e6f Mon Sep 17 00:00:00 2001
+From 44d5fa79102a04d70ed340310c25c37b0aa75b03 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:26:46 +0100
-Subject: [PATCH 24/24] contrib/opus: disable asm on arm64
+Subject: [PATCH 24/24] contrib/opus disable asm on arm
 
 ---
- contrib/src/opus/rules.mak | 5 +++++
- 1 file changed, 5 insertions(+)
+ contrib/src/opus/rules.mak | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/contrib/src/opus/rules.mak b/contrib/src/opus/rules.mak
-index d783648..4c769d4 100644
+index d783648..f09a112 100644
 --- a/contrib/src/opus/rules.mak
 +++ b/contrib/src/opus/rules.mak
-@@ -23,6 +23,11 @@ OPUS_CONF=
+@@ -23,6 +23,9 @@ OPUS_CONF=
  ifndef HAVE_FPU
  OPUS_CONF += --enable-fixed-point
  endif
 +ifdef HAVE_IOS
-+ifeq ($(ARCH),arm64)
 +OPUS_CONF += --disable-asm
-+endif
 +endif
  
  .opus: opus
