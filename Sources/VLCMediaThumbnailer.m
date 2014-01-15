@@ -175,7 +175,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
     libvlc_video_set_callbacks(_mp, lock, unlock, NULL, self);
     if (snapshotPosition == kSnapshotPosition)
-        libvlc_media_add_option([_media libVLCMediaDescriptor], [NSString stringWithFormat:@"start-time=%lli", (kStandardStartTime / 1000)].UTF8String);
+        libvlc_media_add_option([_media libVLCMediaDescriptor], [[NSString stringWithFormat:@"start-time=%lli", (kStandardStartTime / 1000)] UTF8String]);
     libvlc_media_player_play(_mp);
 
     NSAssert(!_thumbnailingTimeoutTimer, @"We already have a timer around");
