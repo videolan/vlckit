@@ -1,7 +1,7 @@
-From 2dff3bf03a26fc5534ba07a1d1945e987b535d15 Mon Sep 17 00:00:00 2001
+From 9b2170627a87edee98f307f1ba44866e78b05098 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:15:12 +0100
-Subject: [PATCH 22/24] contrib: don't try to guess ARCH if it was given as an
+Subject: [PATCH 13/19] contrib: don't try to guess ARCH if it was given as an
  argument
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 22/24] contrib: don't try to guess ARCH if it was given as an
  1 file changed, 2 insertions(+)
 
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
-index 9562165..ae76215 100644
+index a22b717..149baa0 100644
 --- a/contrib/src/main.mak
 +++ b/contrib/src/main.mak
 @@ -35,7 +35,9 @@ PREFIX := $(abspath $(PREFIX))

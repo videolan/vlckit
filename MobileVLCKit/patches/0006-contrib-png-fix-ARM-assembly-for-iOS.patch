@@ -1,12 +1,12 @@
-From 6ed3110b140d3de05a307f1c90896cdae8e8dc72 Mon Sep 17 00:00:00 2001
+From b96d48651b73f6d89529b9d3b519775919f3d114 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20Ku=CC=88hne?= <fkuehne@videolan.org>
 Date: Sat, 20 Jul 2013 23:35:05 +0200
-Subject: [PATCH 11/18] contrib/png: fix ARM assembly for iOS
+Subject: [PATCH 06/19] contrib/png: fix ARM assembly for iOS
 
 ---
  contrib/src/png/ios.patch | 66 +++++++++++++++++++++++++++++++++++++++++++++++
- contrib/src/png/rules.mak |  3 +++
- 2 files changed, 69 insertions(+)
+ contrib/src/png/rules.mak | 14 +++++++++-
+ 2 files changed, 79 insertions(+), 1 deletion(-)
  create mode 100644 contrib/src/png/ios.patch
 
 diff --git a/contrib/src/png/ios.patch b/contrib/src/png/ios.patch
@@ -82,10 +82,26 @@ index 0000000..f4b8bc1
 +         ldr             r12, [r0, #4]           @ rowbytes
 +         vmov.i8         d3,  #0
 diff --git a/contrib/src/png/rules.mak b/contrib/src/png/rules.mak
-index d1adc34..701e3a8 100644
+index d1adc34..4f12595 100644
 --- a/contrib/src/png/rules.mak
 +++ b/contrib/src/png/rules.mak
-@@ -17,6 +17,9 @@ png: libpng-$(PNG_VERSION).tar.xz .sum-png
+@@ -7,6 +7,15 @@ ifeq ($(call need_pkg,"libpng"),)
+ PKGS_FOUND += png
+ endif
+ 
++PNGCONF =
++ifdef HAVE_IOS
++ifdef HAVE_ARMV7A
++PNGCONF = --enable-arm-neon=yes
++else
++PNGCONF = --enable-arm-neon=no
++endif
++endif
++
+ $(TARBALLS)/libpng-$(PNG_VERSION).tar.xz:
+ 	$(call download,$(PNG_URL))
+ 
+@@ -17,12 +26,15 @@ png: libpng-$(PNG_VERSION).tar.xz .sum-png
  	$(APPLY) $(SRC)/png/winrt.patch
  	$(APPLY) $(SRC)/png/bins.patch
  	$(APPLY) $(SRC)/png/automake.patch
@@ -95,6 +111,13 @@ index d1adc34..701e3a8 100644
  	$(MOVE)
  
  DEPS_png = zlib $(DEPS_zlib)
+ 
+ .png: png
+ 	$(RECONF)
+-	cd $< && $(HOSTVARS) ./configure $(HOSTCONF)
++	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(PNGCONF)
+ 	cd $< && $(MAKE) install
+ 	touch $@
 -- 
 1.8.3.4 (Apple Git-47)
 
