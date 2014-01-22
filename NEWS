@@ -1,5 +1,5 @@
-Version 2.2.0-pre1:
--------------------
+Version 2.2.0:
+--------------
 
 Cross-platform:
 - Fixed deinterlacing if requested
@@ -28,6 +28,8 @@ New APIs:
   - added previous, next and playItemAtIndex selectors
 - VLCMedia:
   - added delegate method mediaMetaDataDidChange
+- VLCMediaPlayer:
+  - added equalizer
 
 Modified API behavior:
 - VLCMediaPlayer:

@@ -2,8 +2,8 @@
  * VLCMediaPlayer.m: VLCKit.framework VLCMediaPlayer implementation
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2013 VLC authors and VideoLAN
- * Partial Copyright (C) 2009-2013 Felix Paul Kühne
+ * Copyright (C) 2007-2014 VLC authors and VideoLAN
+ * Partial Copyright (C) 2009-2014 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -159,6 +159,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     float _position;                     //< The position of the media being played
     id _drawable;                        //< The drawable associated to this media player
     VLCAudio *_audio;
+    libvlc_equalizer_t *_equalizerInstance;
 }
 @end
 
@@ -235,6 +236,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     // want the core to use it from this point. This won't happen as
     // the media player must be stopped.
     libvlc_media_player_set_nsobject(_playerInstance, nil);
+
+    if (_equalizerInstance) {
+        libvlc_media_player_set_equalizer(_playerInstance, NULL);
+        libvlc_audio_equalizer_release(_equalizerInstance);
+    }
 
     libvlc_media_player_release(_playerInstance);
     if (_privateLibrary != [VLCLibrary sharedLibrary])
@@ -770,6 +776,90 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (NSInteger)currentAudioPlaybackDelay
 {
     return libvlc_audio_get_delay(_playerInstance);
+}
+
+#pragma mark -
+#pragma mark equalizer
+
+- (void)setEqualizerEnabled:(BOOL)equalizerEnabled
+{
+    if (!equalizerEnabled) {
+        libvlc_media_player_set_equalizer(_playerInstance, NULL);
+
+        if (_equalizerInstance)
+            libvlc_audio_equalizer_release(_equalizerInstance);
+        return;
+    }
+
+    if (!_equalizerInstance)
+        _equalizerInstance = libvlc_audio_equalizer_new();
+    libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
+}
+
+- (NSArray *)equalizerProfiles
+{
+    unsigned count = libvlc_audio_equalizer_get_preset_count();
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:count];
+    for (unsigned x = 0; x < count; x++)
+        [array addObject:[NSString stringWithUTF8String:libvlc_audio_equalizer_get_preset_name(x)]];
+
+    return [NSArray arrayWithArray:array];
+}
+
+- (void)resetEqualizerFromProfile:(unsigned)profile
+{
+    BOOL wasactive = NO;
+    if (_equalizerInstance) {
+        libvlc_media_player_set_equalizer(_playerInstance, NULL);
+        libvlc_audio_equalizer_release(_equalizerInstance);
+        wasactive = YES;
+    }
+
+    _equalizerInstance = libvlc_audio_equalizer_new_from_preset(profile);
+    if (wasactive)
+        libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
+}
+
+- (CGFloat)preAmplification
+{
+    if (!_equalizerInstance)
+        return 0.;
+
+    return libvlc_audio_equalizer_get_preamp(_equalizerInstance);
+}
+
+- (void)setPreAmplification:(CGFloat)preAmplification
+{
+    if (!_equalizerInstance)
+        _equalizerInstance = libvlc_audio_equalizer_new();
+
+    libvlc_audio_equalizer_set_preamp(_equalizerInstance, preAmplification);
+}
+
+- (unsigned)numberOfBands
+{
+    return libvlc_audio_equalizer_get_band_count();
+}
+
+- (CGFloat)frequencyOfBandAtIndex:(unsigned int)index
+{
+    return libvlc_audio_equalizer_get_band_frequency(index);
+}
+
+- (void)setAmplification:(CGFloat)amplification forBand:(unsigned int)index
+{
+    if (!_equalizerInstance)
+        _equalizerInstance = libvlc_audio_equalizer_new();
+
+    libvlc_audio_equalizer_set_amp_at_index(_equalizerInstance, amplification, index);
+}
+
+- (CGFloat)amplificationOfBand:(unsigned int)index
+{
+    if (!_equalizerInstance)
+        return 0.;
+
+    return libvlc_audio_equalizer_get_amp_at_index(_equalizerInstance, index);
 }
 
 #pragma mark -
