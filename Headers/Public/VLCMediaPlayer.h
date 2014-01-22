@@ -108,6 +108,9 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /* Video View Options */
 // TODO: Should be it's own object?
 
+#pragma mark -
+#pragma mark video functionality
+
 #if !TARGET_OS_IPHONE
 - (void)setVideoView:(VLCVideoView *)aVideoView;
 - (void)setVideoLayer:(VLCVideoLayer *)aVideoLayer;
@@ -234,6 +237,9 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (float)framesPerSecond;
 
+#pragma mark -
+#pragma mark time
+
 /**
  * Sets the current position (or time) of the feed.
  * \param value New time to set the current position to.  If time is [VLCTime nullTime], 0 is assumed.
@@ -254,6 +260,9 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return current media's frames per second value
  */
 @property (readonly) NSUInteger fps __attribute__((deprecated));
+
+#pragma mark -
+#pragma mark ES track handling
 
 /**
  * Return the current video track index
@@ -382,6 +391,9 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (NSArray *)audioTracks __attribute__((deprecated));
 
+#pragma mark -
+#pragma mark audio functionality
+
 - (void)setAudioChannel:(NSInteger)value;
 - (NSInteger)audioChannel;
 
@@ -393,11 +405,15 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property (readwrite) NSInteger currentAudioPlaybackDelay;
 
+#pragma mark -
+#pragma mark media handling
+
 /* Media Options */
 - (void)setMedia:(VLCMedia *)value;
 - (VLCMedia *)media;
 
-/* Playback Operations */
+#pragma mark -
+#pragma mark playback operations
 /**
  * Plays a media resource using the currently selected media controller (or
  * default controller.  If feed was paused then the feed resumes at the position
@@ -495,7 +511,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)longJumpForward;
 
-/* Playback Information */
+#pragma mark -
+#pragma mark playback information
 /**
  * Playback state flag identifying that the stream is currently playing.
  * \return TRUE if the feed is playing, FALSE if otherwise.
