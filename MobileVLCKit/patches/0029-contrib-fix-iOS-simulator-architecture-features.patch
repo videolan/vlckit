@@ -1,0 +1,34 @@
+From fafa89aad243d2e2e8f215ae07f9f2d20f5ba169 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Wed, 22 Jan 2014 12:21:12 +0100
+Subject: [PATCH 29/29] contrib: fix iOS simulator architecture features
+
+---
+ contrib/bootstrap | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/bootstrap b/contrib/bootstrap
+index bddb1a8..53a8f6c 100755
+--- a/contrib/bootstrap
++++ b/contrib/bootstrap
+@@ -225,10 +225,13 @@ case "${OS}" in
+ 			add_make_enabled "HAVE_MACOSX" "HAVE_DARWIN_OS" "HAVE_BSD"
+ 		else
+ 			check_ios_sdk
+-			add_make_enabled "HAVE_IOS" "HAVE_DARWIN_OS" "HAVE_BSD" "HAVE_NEON"
+- 			if [ "$ARCH" != "arm64" ]; then
+- 				add_make_enabled "HAVE_ARMV7A"
+- 			fi
++			add_make_enabled "HAVE_IOS" "HAVE_DARWIN_OS" "HAVE_BSD"
++			if [ "$ARCH" != "x86_64" && "$ARCH" != "i386" ]; then
++				add_make_enabled "HAVE_NEON"
++				if [ "$ARCH" != "arm64" ]; then
++				add_make_enabled "HAVE_ARMV7A"
++				fi
++			fi
+ 		fi
+ 		;;
+ 	*bsd*)
+-- 
+1.8.3.4 (Apple Git-47)
+
