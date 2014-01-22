@@ -1,0 +1,33 @@
+From 2b064b5808344fa33c7983c20b43d77e47eafc50 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Wed, 22 Jan 2014 02:32:01 +0100
+Subject: [PATCH 25/25] contrib: reverse logic
+
+---
+ contrib/src/main.mak | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/src/main.mak b/contrib/src/main.mak
+index ae76215..5c24cf0 100644
+--- a/contrib/src/main.mak
++++ b/contrib/src/main.mak
+@@ -130,12 +130,12 @@ CCAS=$(CC) -c
+ ifdef HAVE_IOS
+ CC=xcrun clang
+ CXX=xcrun clang++
+-ifeq ($(ARCH), arm)
+-AS=perl $(abspath ../../extras/tools/build/bin/gas-preprocessor.pl) $(CC)
+-CCAS=gas-preprocessor.pl $(CC) -c
+-else
++ifeq ($(ARCH), i386)
+ CCAS=$(CC) -c
+ AS=xcrun as
++else
++AS=perl $(abspath ../../extras/tools/build/bin/gas-preprocessor.pl) $(CC)
++CCAS=gas-preprocessor.pl $(CC) -c
+ endif
+ AR=xcrun ar
+ LD=xcrun ld
+-- 
+1.8.3.4 (Apple Git-47)
+
