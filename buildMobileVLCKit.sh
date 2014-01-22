@@ -162,7 +162,7 @@ if [ "$VERBOSE" = "yes" ]; then
 fi
 if [ "$PLATFORM" = "iphonesimulator" ]; then
     args="${args} -s"
-    ./build.sh ${args} -k "${SDK}"
+    ./build.sh -a i386 ${args} -k "${SDK}" && ./build.sh -a x86_64 ${args} -k "${SDK}"
 else
     ./build.sh -a armv7 ${args} -k "${SDK}" && ./build.sh -a armv7s ${args} -k "${SDK}"
 fi
