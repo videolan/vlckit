@@ -1,7 +1,7 @@
-From 64482a17f5ebbc0fa2945635d236047ebff7016f Mon Sep 17 00:00:00 2001
+From fd926a04c29b78acd66a125076a80fc52485790b Mon Sep 17 00:00:00 2001
 From: David Fuhrmann <david.fuhrmann@googlemail.com>
 Date: Tue, 17 Dec 2013 23:03:06 +0100
-Subject: [PATCH 01/18] Add secure transport TLS module
+Subject: [PATCH 01/21] Add secure transport TLS module
 
 Secure Transport is a TLS library part of the Security framework
 (preinstalled on every iOS and MacOS device). This library does

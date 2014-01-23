@@ -1,7 +1,7 @@
-From 431dd60c4a7e9bf2278eeaed4f8cbeb3fb79878d Mon Sep 17 00:00:00 2001
+From 6719ef1cee79211e9128ae47554d4da476f029f8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 19:30:01 +0200
-Subject: [PATCH 15/18] contrib/speex: fix compilation for arm64
+Subject: [PATCH 12/21] contrib/speex: fix compilation for arm64
 
 ---
  contrib/src/speex/rules.mak | 5 +++++
