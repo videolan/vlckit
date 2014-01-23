@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>Quartz</string>
+	<string>VLCKit</string>
 	<key>CFBundleIdentifier</key>
 	<string>org.videolan.vlckitframework</string>
 	<key>CFBundleInfoDictionaryVersion</key>
