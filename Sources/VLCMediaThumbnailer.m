@@ -133,6 +133,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     if (!videoTrack) {
         VKLog(@"WARNING: Can't find video track info, skipping file");
         [_parsingTimeoutTimer invalidate];
+        [_parsingTimeoutTimer release];
         _parsingTimeoutTimer = nil;
         [self mediaThumbnailingTimedOut];
         return;
