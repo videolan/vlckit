@@ -160,6 +160,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     id _drawable;                        //< The drawable associated to this media player
     VLCAudio *_audio;
     libvlc_equalizer_t *_equalizerInstance;
+    BOOL _equalizerEnabled;
 }
 @end
 
@@ -783,7 +784,8 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setEqualizerEnabled:(BOOL)equalizerEnabled
 {
-    if (!equalizerEnabled) {
+    _equalizerEnabled = equalizerEnabled;
+    if (!_equalizerEnabled) {
         libvlc_media_player_set_equalizer(_playerInstance, NULL);
 
         if (_equalizerInstance)
@@ -794,6 +796,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (!_equalizerInstance)
         _equalizerInstance = libvlc_audio_equalizer_new();
     libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
+}
+
+- (BOOL)equalizerEnabled
+{
+    return _equalizerEnabled;
 }
 
 - (NSArray *)equalizerProfiles
