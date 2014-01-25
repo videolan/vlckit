@@ -104,6 +104,7 @@ static void * sharedInstance = nil;
         }
         unsigned argc = sizeof(lib_vlc_params)/sizeof(lib_vlc_params[0]);
         instance = libvlc_new(argc, lib_vlc_params);
+        libvlc_retain(instance);
         NSAssert(instance, @"libvlc failed to initialize");
     }
     return self;
