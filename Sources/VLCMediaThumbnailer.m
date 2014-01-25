@@ -27,6 +27,9 @@
 
 
 @interface VLCMediaThumbnailer ()
+{
+    void * _internalLibVLCInstance;
+}
 - (void)didFetchThumbnail;
 - (void)notifyDelegate;
 - (void)fetchThumbnail;
@@ -47,7 +50,7 @@ static void *lock(void *opaque, void **pixels)
 static const size_t kDefaultImageWidth = 320;
 static const size_t kDefaultImageHeight = 240;
 static const float kSnapshotPosition = 0.5;
-static const long long kStandardStartTime = 30000;
+static const long long kStandardStartTime = 150000;
 
 void unlock(void *opaque, void *picture, void *const *p_pixels)
 {
@@ -79,6 +82,19 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     id obj = [[[self class] alloc] init];
     [obj setMedia:media];
     [obj setDelegate:delegate];
+    [obj setLibVLCinstance:[VLCLibrary sharedInstance]];
+    return [obj autorelease];
+}
+
++ (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library
+{
+    id obj = [[[self class] alloc] init];
+    [obj setMedia:media];
+    [obj setDelegate:delegate];
+    if (library)
+        [obj setLibVLCinstance:library.instance];
+    else
+        [obj setLibVLCinstance:[VLCLibrary sharedInstance]];
     return [obj autorelease];
 }
 
@@ -91,9 +107,21 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     if (_thumbnail)
         CGImageRelease(_thumbnail);
     [_media release];
+    if (_internalLibVLCInstance)
+        libvlc_release(_internalLibVLCInstance);
     [super dealloc];
 }
 
+- (void)setLibVLCinstance:(void *)libVLCinstance
+{
+    _internalLibVLCInstance = libVLCinstance;
+    libvlc_retain(_internalLibVLCInstance);
+}
+
+- (void *)libVLCinstance
+{
+    return _internalLibVLCInstance;
+}
 
 - (void)fetchThumbnail
 {
@@ -165,12 +193,9 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     NSAssert(_data, @"Can't create data");
 
     NSAssert(!_mp, @"We are already fetching a thumbnail");
-    _mp = libvlc_media_player_new([VLCLibrary sharedInstance]);
+    _mp = libvlc_media_player_new(self.libVLCinstance);
 
     libvlc_media_add_option([_media libVLCMediaDescriptor], "no-audio");
-    libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-threads=1");
-    libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-skip-frame=4");
-    libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-skip-idct=2");
 
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
@@ -223,7 +248,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
         return;
     }
     if (length < kStandardStartTime * 2 && _numberOfReceivedFrames < 3) {
-        libvlc_media_player_set_position(_mp, 0.1);
+        libvlc_media_player_set_position(_mp, kSnapshotPosition);
         return;
     }
     if ((length > 1000 || position <= 0.0) && _numberOfReceivedFrames < 10) {

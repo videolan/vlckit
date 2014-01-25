@@ -26,6 +26,7 @@
 #endif
 
 @class VLCMedia;
+@class VLCLibrary;
 @protocol VLCMediaThumbnailerDelegate;
 
 @interface VLCMediaThumbnailer : NSObject {
@@ -44,11 +45,13 @@
 }
 
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media andDelegate:(id<VLCMediaThumbnailerDelegate>)delegate;
++ (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library;
 - (void)fetchThumbnail;
 
 @property (readwrite, assign) id<VLCMediaThumbnailerDelegate> delegate;
 @property (readwrite, retain) VLCMedia *media;
 @property (readwrite, assign) CGImageRef thumbnail;
+@property (readwrite) void * libVLCinstance;
 
 /**
  * Thumbnail Height
