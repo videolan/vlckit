@@ -49,7 +49,7 @@ static void *lock(void *opaque, void **pixels)
 
 static const size_t kDefaultImageWidth = 320;
 static const size_t kDefaultImageHeight = 240;
-static const float kSnapshotPosition = 0.5;
+static const float kSnapshotPosition = 0.3;
 static const long long kStandardStartTime = 150000;
 
 void unlock(void *opaque, void *picture, void *const *p_pixels)
@@ -247,14 +247,18 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
         libvlc_media_player_set_position(_mp, self.snapshotPosition);
         return;
     }
-    if (length < kStandardStartTime * 2 && _numberOfReceivedFrames < 3) {
+    if ((length < kStandardStartTime * 2 && _numberOfReceivedFrames < 5) && self.snapshotPosition == kSnapshotPosition) {
         libvlc_media_player_set_position(_mp, kSnapshotPosition);
         return;
     }
-    if ((length > 1000 || position <= 0.0) && _numberOfReceivedFrames < 10) {
+    if ((position <= 0.05 && _numberOfReceivedFrames < 8) && length > 1000) {
         // Arbitrary choice to work around broken files.
+        libvlc_media_player_set_position(_mp, kSnapshotPosition);
         return;
     }
+    // it isn't always best what comes first
+    if (_numberOfReceivedFrames < 4)
+        return;
 
     NSAssert(_data, @"We have no data");
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
