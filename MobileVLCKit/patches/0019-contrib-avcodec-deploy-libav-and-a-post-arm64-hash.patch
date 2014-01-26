@@ -1,4 +1,4 @@
-From 5d3ae3a09d585beb778361f7a5b653d218dec320 Mon Sep 17 00:00:00 2001
+From 6265702f5c4fd9defef05c7aed6a51a98bd80992 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 23 Jan 2014 13:30:06 +0100
 Subject: [PATCH 19/21] contrib/avcodec: deploy libav and a post-arm64 hash
@@ -8,7 +8,7 @@ Subject: [PATCH 19/21] contrib/avcodec: deploy libav and a post-arm64 hash
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 84acdd2..c1cca3a 100644
+index 84acdd2..8b7f4d3 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -1,14 +1,14 @@
@@ -25,7 +25,7 @@ index 84acdd2..c1cca3a 100644
  FFMPEG_SNAPURL := http://git.videolan.org/?p=ffmpeg.git;a=snapshot;h=$(HASH);sf=tgz
  else
 -HASH=8b2e5e42bb9d6a59ede5af2e6df4aaf7750d1195
-+HASH=fe96769bed828cf54c0d9dc5d55b74948a68946d
++HASH=9e057f53aa8549e94b7f52a67f69ce94d607da0a
  FFMPEG_SNAPURL := http://git.libav.org/?p=libav.git;a=snapshot;h=$(HASH);sf=tgz
  endif
  
