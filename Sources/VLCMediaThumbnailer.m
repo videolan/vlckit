@@ -200,8 +200,17 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
     libvlc_video_set_callbacks(_mp, lock, unlock, NULL, self);
-    if (snapshotPosition == kSnapshotPosition)
-        libvlc_media_add_option([_media libVLCMediaDescriptor], [[NSString stringWithFormat:@"start-time=%lli", (kStandardStartTime / 1000)] UTF8String]);
+    if (snapshotPosition == kSnapshotPosition) {
+        int length = _media.length.intValue;
+        if (length < kStandardStartTime) {
+            VKLog(@"short file detected");
+            if (length > 1000) {
+                VKLog(@"attempting seek to %is", (length * 25 / 100000));
+                libvlc_media_add_option([_media libVLCMediaDescriptor], [[NSString stringWithFormat:@"start-time=%i", (length * 25 / 100000)] UTF8String]);
+            }
+        } else
+            libvlc_media_add_option([_media libVLCMediaDescriptor], [[NSString stringWithFormat:@"start-time=%lli", (kStandardStartTime / 1000)] UTF8String]);
+    }
     libvlc_media_player_play(_mp);
 
     NSAssert(!_thumbnailingTimeoutTimer, @"We already have a timer around");
