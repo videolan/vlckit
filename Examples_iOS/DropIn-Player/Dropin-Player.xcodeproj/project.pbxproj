@@ -27,11 +27,11 @@
 		7DEBFE78183BEAD500BC53D5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE72183BEAD500BC53D5 /* Default.png */; };
 		7DEBFE79183BEAD500BC53D5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE73183BEAD500BC53D5 /* Default@2x.png */; };
 		7DEBFE7B183BEAD500BC53D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE76183BEAD500BC53D5 /* main.m */; };
-		7DEBFE7D183BECDE00BC53D5 /* Dropin-Player-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE7C183BECDE00BC53D5 /* Dropin-Player-Info.plist */; };
 		7DEBFE7F183BEE7500BC53D5 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DEBFE7E183BEE7500BC53D5 /* MediaPlayer.framework */; };
 		7DEBFE81183BF0AA00BC53D5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DEBFE80183BF0AA00BC53D5 /* AVFoundation.framework */; };
 		7DEBFE85183BFC6300BC53D5 /* VDLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE83183BFC6300BC53D5 /* VDLMainViewController.m */; };
 		7DEBFE86183BFC6300BC53D5 /* VDLMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE84183BFC6300BC53D5 /* VDLMainViewController.xib */; };
+		D4771D93189848E70087441B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4771D92189848E70087441B /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +66,7 @@
 		7DEBFE82183BFC6300BC53D5 /* VDLMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDLMainViewController.h; sourceTree = SOURCE_ROOT; };
 		7DEBFE83183BFC6300BC53D5 /* VDLMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDLMainViewController.m; sourceTree = SOURCE_ROOT; };
 		7DEBFE84183BFC6300BC53D5 /* VDLMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VDLMainViewController.xib; sourceTree = SOURCE_ROOT; };
+		D4771D92189848E70087441B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4771D93189848E70087441B /* Security.framework in Frameworks */,
 				7DEBFE81183BF0AA00BC53D5 /* AVFoundation.framework in Frameworks */,
 				7DEBFE7F183BEE7500BC53D5 /* MediaPlayer.framework in Frameworks */,
 				7D8745C8183BACBF00FD09E0 /* CoreGraphics.framework in Frameworks */,
@@ -113,6 +115,7 @@
 		7D11B368183BA71600FF0D25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D4771D92189848E70087441B /* Security.framework */,
 				7DEBFE80183BF0AA00BC53D5 /* AVFoundation.framework */,
 				7DEBFE7E183BEE7500BC53D5 /* MediaPlayer.framework */,
 				7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */,
@@ -190,7 +193,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = VDL;
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = VideoLAN;
 			};
 			buildConfigurationList = 7D11B361183BA71600FF0D25 /* Build configuration list for PBXProject "Dropin-Player" */;
@@ -217,7 +220,6 @@
 			files = (
 				7DEBFE70183BEAC300BC53D5 /* InfoPlist.strings in Resources */,
 				7DEBFE86183BFC6300BC53D5 /* VDLMainViewController.xib in Resources */,
-				7DEBFE7D183BECDE00BC53D5 /* Dropin-Player-Info.plist in Resources */,
 				7DEBFE6D183BEAB500BC53D5 /* VDLPlaybackViewController.xib in Resources */,
 				7DEBFE79183BEAD500BC53D5 /* Default@2x.png in Resources */,
 				7DEBFE77183BEAD500BC53D5 /* Default-568h@2x.png in Resources */,
