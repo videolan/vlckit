@@ -4,7 +4,9 @@
 
 set -e
 
-PLATFORM=iphoneos
+BUILD_DEVICE=1
+BUILD_SIMULATOR=0
+BUILD_FRAMEWORK=0
 SDK=7.0
 SDK_MIN=6.1
 VERBOSE=no
@@ -23,6 +25,7 @@ OPTIONS
    -k       Specify which sdk to use (see 'xcodebuild -showsdks', current: ${SDK})
    -v       Be more verbose
    -s       Build for simulator
+   -f       Build framework for device and simulator
    -d       Enable Debug
    -n       Skip script steps requiring network interaction
    -l       Skip libvlc compilation
@@ -55,19 +58,14 @@ buildxcodeproj()
 
     info "Building $1 ($target, ${CONFIGURATION})"
 
-    local extra=""
-    if [ "$PLATFORM" = "Simulator" ]; then
-        extra="ARCHS=i386"
-    fi
-
     xcodebuild -project "$1.xcodeproj" \
                -target "$target" \
                -sdk $PLATFORM$SDK \
-               -configuration ${CONFIGURATION} ${extra} \
+               -configuration ${CONFIGURATION} \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} > ${out}
 }
 
-while getopts "hvsdnlk:" OPTION
+while getopts "hvsfdnlk:" OPTION
 do
      case $OPTION in
          h)
@@ -78,7 +76,13 @@ do
              VERBOSE=yes
              ;;
          s)
-             PLATFORM=iphonesimulator
+             BUILD_DEVICE=0
+             BUILD_SIMULATOR=1
+             ;;
+         f)
+             BUILD_DEVICE=1
+             BUILD_SIMULATOR=1
+             BUILD_FRAMEWORK=1
              ;;
          d)  CONFIGURATION="Debug"
              ;;
@@ -148,30 +152,57 @@ spopd
 # Build time
 #
 
-info "Building"
+buildMobileKit() {
+    PLATFORM="$1"
 
-spushd MobileVLCKit/ImportedSources
+    info "Building for $PLATFORM"
 
-if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
-spushd vlc/extras/package/ios
-info "Building vlc"
-args=""
-if [ "$VERBOSE" = "yes" ]; then
-    args="${args} -v"
+    spushd MobileVLCKit/ImportedSources
+
+    if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
+    spushd vlc/extras/package/ios
+    info "Building vlc"
+    args=""
+    if [ "$VERBOSE" = "yes" ]; then
+        args="${args} -v"
+    fi
+    if [ "$PLATFORM" = "iphonesimulator" ]; then
+        args="${args} -s"
+        ./build.sh -a i386 ${args} -k "${SDK}" && ./build.sh -a x86_64 ${args} -k "${SDK}"
+    else
+        ./build.sh -a armv7 ${args} -k "${SDK}" && ./build.sh -a armv7s ${args} -k "${SDK}" && ./build.sh -a arm64 ${args} -k "${SDK}"
+    fi
+
+    spopd
+    fi
+
+    spopd # MobileVLCKit/ImportedSources
+
+    buildxcodeproj MobileVLCKit "Aggregate static plugins"
+    buildxcodeproj MobileVLCKit "MobileVLCKit"
+
+    info "Build for $PLATFORM completed"
+}
+
+if [ $BUILD_DEVICE ]; then
+    buildMobileKit iphoneos
 fi
-if [ "$PLATFORM" = "iphonesimulator" ]; then
-    args="${args} -s"
-    ./build.sh -a i386 ${args} -k "${SDK}" && ./build.sh -a x86_64 ${args} -k "${SDK}"
-else
-    ./build.sh -a armv7 ${args} -k "${SDK}" && ./build.sh -a armv7s ${args} -k "${SDK}" && ./build.sh -a arm64 ${args} -k "${SDK}"
+if [ $BUILD_SIMULATOR ]; then
+    buildMobileKit iphonesimulator
 fi
+if [ $BUILD_FRAMEWORK ]; then
+    info "Building MobileVLCKit.framework"
 
-spopd
+    # Assumes both platforms were built currently
+    spushd build
+    rm -rf MobileVLCKit.framework && \
+    mkdir MobileVLCKit.framework && \
+    lipo -create Release-iphoneos/libMobileVLCKit.a \
+                 Release-iphonesimulator/libMobileVLCKit.a \
+              -o MobileVLCKit.framework/MobileVLCKit && \
+    chmod a+x MobileVLCKit.framework/MobileVLCKit && \
+    cp -pr Release-iphoneos/include/MobileVLCKit MobileVLCKit.framework/Headers
+    spopd # build
+
+    info "Build of MobileVLCKit.framework completed"
 fi
-
-spopd # MobileVLCKit/ImportedSources
-
-buildxcodeproj MobileVLCKit "Aggregate static plugins"
-buildxcodeproj MobileVLCKit "MobileVLCKit"
-
-info "Build completed"
