@@ -1,0 +1,27 @@
+From b7c261a6249ca9d856e14e5c65ac7ddbfd35b621 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Tue, 4 Feb 2014 12:21:28 +0100
+Subject: [PATCH 22/22] contrib/avcodec: deploy libav
+
+---
+ contrib/src/ffmpeg/rules.mak | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
+index 84acdd2..415b6b5 100644
+--- a/contrib/src/ffmpeg/rules.mak
++++ b/contrib/src/ffmpeg/rules.mak
+@@ -1,8 +1,8 @@
+ # FFmpeg
+ 
+ #Uncomment the one you want
+-#USE_LIBAV ?= 1
+-USE_FFMPEG ?= 1
++USE_LIBAV ?= 1
++#USE_FFMPEG ?= 1
+ 
+ ifdef USE_FFMPEG
+ HASH=ad8d063f230c05f8b5efbd05cc5a9f51a2549dcf
+-- 
+1.8.3.4 (Apple Git-47)
+
