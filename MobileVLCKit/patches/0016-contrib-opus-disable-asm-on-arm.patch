@@ -1,7 +1,7 @@
-From 6e5b1bb00ca1d09d5fc1b8b0690a505e3bfe9fc7 Mon Sep 17 00:00:00 2001
+From 5814dff5bf72cf9db81a6aed15bd88f640879812 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:26:46 +0100
-Subject: [PATCH 17/21] contrib/opus disable asm on arm
+Subject: [PATCH 16/19] contrib/opus disable asm on arm
 
 ---
  contrib/src/opus/rules.mak | 3 +++

@@ -1,14 +1,16 @@
-From f869132e62564ab7e212ffa0bc8961c50cf87083 Mon Sep 17 00:00:00 2001
+From e1fa0747d51da8c2adcfddf1058f1ffe37140b20 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
-Date: Thu, 23 Jan 2014 14:06:17 +0100
-Subject: [PATCH 20/21] contrib: add arch option
+Date: Thu, 3 Oct 2013 18:27:43 +0200
+Subject: [PATCH 18/19] contrib: add arch option for platforms where the arch
+ triplet would be ambigous
 
 ---
- contrib/bootstrap | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ contrib/bootstrap    | 16 +++++++++++++++-
+ contrib/src/main.mak |  2 ++
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/bootstrap b/contrib/bootstrap
-index 6d5753b..beb8602 100755
+index 5e5f935..c5e7abb 100755
 --- a/contrib/bootstrap
 +++ b/contrib/bootstrap
 @@ -30,6 +30,7 @@ usage()
@@ -45,15 +47,37 @@ index 6d5753b..beb8602 100755
  
  #
  # Checks
-@@ -220,7 +226,7 @@ case "${OS}" in
+@@ -219,7 +225,15 @@ case "${OS}" in
+ 			add_make_enabled "HAVE_MACOSX" "HAVE_DARWIN_OS" "HAVE_BSD"
  		else
  			check_ios_sdk
-  			add_make_enabled "HAVE_IOS" "HAVE_DARWIN_OS" "HAVE_BSD"
-- 			if [ "$ARCH" != "x86_64" && "$ARCH" != "i386" ]; then
-+ 			if [ "$ARCH" != "x86_64" -a "$ARCH" != "i386" ]; then
-  				add_make_enabled "HAVE_NEON"
-  				if [ "$ARCH" != "arm64" ]; then
-  				add_make_enabled "HAVE_ARMV7A"
+-			add_make_enabled "HAVE_IOS" "HAVE_DARWIN_OS" "HAVE_BSD" "HAVE_NEON" "HAVE_ARMV7A"
++			add_make_enabled "HAVE_IOS" "HAVE_DARWIN_OS" "HAVE_BSD"
++			case "${ARCH}" in
++			*arm*)
++				add_make_enabled "HAVE_NEON"
++				if [ "$ARCH" != "arm64" ]; then
++				add_make_enabled "HAVE_ARMV7A"
++				fi
++				;;
++			esac
+ 		fi
+ 		;;
+ 	*bsd*)
+diff --git a/contrib/src/main.mak b/contrib/src/main.mak
+index c261bad..90a822e 100644
+--- a/contrib/src/main.mak
++++ b/contrib/src/main.mak
+@@ -35,7 +35,9 @@ PREFIX := $(abspath $(PREFIX))
+ ifneq ($(HOST),$(BUILD))
+ HAVE_CROSS_COMPILE = 1
+ endif
++ifndef ARCH
+ ARCH := $(shell $(SRC)/get-arch.sh $(HOST))
++endif
+ 
+ ifeq ($(ARCH)-$(HAVE_WIN32),x86_64-1)
+ HAVE_WIN64 := 1
 -- 
 1.8.3.4 (Apple Git-47)
 

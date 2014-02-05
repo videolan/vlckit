@@ -1,7 +1,7 @@
-From 8ceb0f553c0f7170aa1b6f9a8b9b7c9257ab90a0 Mon Sep 17 00:00:00 2001
+From a958845f8feee74d680f91b0445538331fdcb152 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20Ku=CC=88hne?= <fkuehne@videolan.org>
 Date: Sat, 20 Jul 2013 23:35:05 +0200
-Subject: [PATCH 09/21] contrib/png: fix ARM assembly for iOS
+Subject: [PATCH 09/19] contrib/png: fix ARM assembly for iOS
 
 ---
  contrib/src/png/ios.patch | 66 +++++++++++++++++++++++++++++++++++++++++++++++
