@@ -1,7 +1,7 @@
-From ccac438450daf117a151e44cd5d06b9f93e8a37a Mon Sep 17 00:00:00 2001
+From 399426ce576cb1d73fa88d4b7d941e9e2b361c7b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:43:11 +0100
-Subject: [PATCH 12/19] contrib/avcodec: deploy libav
+Subject: [PATCH 11/20] contrib/avcodec: deploy libav
 
 ---
  contrib/src/ffmpeg/rules.mak | 2 +-
