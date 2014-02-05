@@ -841,6 +841,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         _equalizerInstance = libvlc_audio_equalizer_new();
 
     libvlc_audio_equalizer_set_preamp(_equalizerInstance, preAmplification);
+    libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
 }
 
 - (unsigned)numberOfBands
