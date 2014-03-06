@@ -1,7 +1,7 @@
-From d1c71ffe72f27b0ea1855aa020bc8d804361e7b0 Mon Sep 17 00:00:00 2001
+From f60c084fa4590e1339e28be48acf603fd2c93020 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
-Subject: [PATCH 07/20] contrib/speex: fix compilation for non-ARMv7 iOS
+Subject: [PATCH 07/18] contrib/speex: fix compilation for non-ARMv7 iOS
  targets
 
 the neon code included in speex doesn't do ARMv8 yet

@@ -1,7 +1,7 @@
-From 345f0afcde20e811b9afc29218c0da7f9bb1b8b2 Mon Sep 17 00:00:00 2001
+From 9bf8926abdc3d92fec03822ea83bbe53d55d99af Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
-Subject: [PATCH 09/20] contrib/gcrypt: use git version on iOS
+Subject: [PATCH 09/18] contrib/gcrypt: use git version on iOS
 
 ---
  contrib/src/gcrypt/disable-doc-compilation.patch   | 43 ++++++++++++++++++++++

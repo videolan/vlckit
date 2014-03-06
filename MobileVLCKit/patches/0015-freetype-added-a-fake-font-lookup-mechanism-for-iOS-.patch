@@ -1,7 +1,7 @@
-From 6046587ef9aa62deab17405ceb99213bc15dbb00 Mon Sep 17 00:00:00 2001
+From 889159a162b0349789c387f3e3f01bf7f1784680 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:55:16 +0100
-Subject: [PATCH 16/20] freetype: added a fake font lookup mechanism for iOS to
+Subject: [PATCH 15/18] freetype: added a fake font lookup mechanism for iOS to
  use the packaged demo fonts
 
 ---
@@ -24,7 +24,7 @@ index 573d49b..214cb76 100644
  #elif defined( _WIN32 )
      p_sys->pf_select = Win32_Select;
 diff --git a/modules/text_renderer/platform_fonts.c b/modules/text_renderer/platform_fonts.c
-index 28d4437..b7dd200 100644
+index 3e0c3f1..2abc5de 100644
 --- a/modules/text_renderer/platform_fonts.c
 +++ b/modules/text_renderer/platform_fonts.c
 @@ -42,6 +42,9 @@
@@ -37,7 +37,7 @@ index 28d4437..b7dd200 100644
  #endif
  #include <sys/param.h>                         /* for MAXPATHLEN */
  #undef HAVE_FONTCONFIG
-@@ -410,6 +413,43 @@ char* MacLegacy_Select( filter_t *p_filter, const char* psz_fontname,
+@@ -405,6 +408,43 @@ char* MacLegacy_Select( filter_t *p_filter, const char* psz_fontname,
  
      return psz_path;
  }
