@@ -120,7 +120,9 @@ static void * sharedInstance = nil;
                   @"--no-stats",
                   @"--avcodec-fast",
                   @"--verbose=0",
-                  @"--text-renderer=quartztext"];
+                  @"--text-renderer=quartztext",
+                  @"--avi-index=3",
+                  @"--extraintf=ios_dialog_provider"];
 #else
     vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
     if (!vlcParams) {
