@@ -1018,9 +1018,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (BOOL)isPlaying
 {
-    VLCMediaPlayerState state = [self state];
-    return ((state == VLCMediaPlayerStateOpening) || (state == VLCMediaPlayerStateBuffering) ||
-            (state == VLCMediaPlayerStatePlaying));
+    return libvlc_media_player_is_playing(_playerInstance);
 }
 
 - (BOOL)willPlay
