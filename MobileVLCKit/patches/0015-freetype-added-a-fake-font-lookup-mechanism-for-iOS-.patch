@@ -1,8 +1,8 @@
-From 889159a162b0349789c387f3e3f01bf7f1784680 Mon Sep 17 00:00:00 2001
+From 25ff904732470d9feb9b563c319df1b65d3401d5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:55:16 +0100
-Subject: [PATCH 15/18] freetype: added a fake font lookup mechanism for iOS to
- use the packaged demo fonts
+Subject: [PATCH 15/18] freetype: added a fake font lookup mechanism for iOS to use
+ the packaged demo fonts
 
 ---
  modules/text_renderer/freetype.c       |  2 ++
@@ -11,20 +11,20 @@ Subject: [PATCH 15/18] freetype: added a fake font lookup mechanism for iOS to
  3 files changed, 45 insertions(+)
 
 diff --git a/modules/text_renderer/freetype.c b/modules/text_renderer/freetype.c
-index 573d49b..214cb76 100644
+index f7fcd80..79bdfd4 100644
 --- a/modules/text_renderer/freetype.c
 +++ b/modules/text_renderer/freetype.c
-@@ -1948,6 +1948,8 @@ static int Create( vlc_object_t *p_this )
+@@ -1950,6 +1950,8 @@ static int Create( vlc_object_t *p_this )
  #elif defined( __APPLE__ )
  #if !TARGET_OS_IPHONE
      p_sys->pf_select = MacLegacy_Select;
 +#else
 +    p_sys->pf_select = iOSFake_Select;
  #endif
- #elif defined( _WIN32 )
+ #elif defined( _WIN32 ) && defined( HAVE_GET_FONT_BY_FAMILY_NAME )
      p_sys->pf_select = Win32_Select;
 diff --git a/modules/text_renderer/platform_fonts.c b/modules/text_renderer/platform_fonts.c
-index 3e0c3f1..2abc5de 100644
+index 7869dba..2ede6a0 100644
 --- a/modules/text_renderer/platform_fonts.c
 +++ b/modules/text_renderer/platform_fonts.c
 @@ -42,6 +42,9 @@
@@ -82,7 +82,7 @@ index 3e0c3f1..2abc5de 100644
  #endif
  
 diff --git a/modules/text_renderer/platform_fonts.h b/modules/text_renderer/platform_fonts.h
-index 1cb9162..6fcab1e 100644
+index cff52b1..40b25fb 100644
 --- a/modules/text_renderer/platform_fonts.h
 +++ b/modules/text_renderer/platform_fonts.h
 @@ -95,6 +95,9 @@ char* Win32_Select( filter_t *p_filter, const char* family,
