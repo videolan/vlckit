@@ -4,7 +4,7 @@ VLCKit.zip: VLCKit
 VLCKit: build/Debug/VLCKit.framework
 	rm -rf $@-tmp && mkdir -p $@-tmp
 	cp -R $< $@-tmp
-	cp vlc-unstable/COPYING $@-tmp
+	cp COPYING $@-tmp
 	mv $@-tmp $@ && touch $@
 
 build/Debug/VLCKit.framework:
