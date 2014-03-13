@@ -7,7 +7,7 @@ set -e
 BUILD_DEVICE=1
 BUILD_SIMULATOR=0
 BUILD_FRAMEWORK=0
-SDK=7.1
+SDK=`xcrun --sdk iphoneos --show-sdk-version`
 SDK_MIN=6.1
 VERBOSE=no
 CONFIGURATION="Release"
