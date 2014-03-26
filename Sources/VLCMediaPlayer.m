@@ -491,7 +491,10 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)setDeinterlaceFilter:(NSString *)name
 {
-    libvlc_video_set_deinterlace(_playerInstance, [name UTF8String]);
+    if (!name || name.length < 1)
+        libvlc_video_set_deinterlace(_playerInstance, NULL);
+    else
+        libvlc_video_set_deinterlace(_playerInstance, [name UTF8String]);
 }
 
 - (BOOL)adjustFilterEnabled
