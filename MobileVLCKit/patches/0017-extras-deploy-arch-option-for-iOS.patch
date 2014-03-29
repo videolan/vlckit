@@ -1,17 +1,17 @@
-From cf42fdb428ab875e81f289b5a805491688f98502 Mon Sep 17 00:00:00 2001
+From 725076cb2b8ca12eb7ab4c4791a1aa3c07e24289 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:28:26 +0200
-Subject: [PATCH 18/18] extras: deploy arch option for iOS
+Subject: [PATCH 17/19] extras: deploy arch option for iOS
 
 ---
  extras/package/ios/build.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index 81b2a17..cc1aee6 100755
+index c3aec25..d82d636 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
-@@ -187,7 +187,7 @@ else
+@@ -188,7 +188,7 @@ else
      export ASCPP="xcrun as"
  fi
  
@@ -21,5 +21,5 @@ index 81b2a17..cc1aee6 100755
      --disable-sdl \
      --disable-SDL_image \
 -- 
-1.8.3.4 (Apple Git-47)
+1.8.5.2 (Apple Git-48)
 

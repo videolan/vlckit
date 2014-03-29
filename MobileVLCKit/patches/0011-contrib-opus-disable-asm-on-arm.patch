@@ -1,7 +1,7 @@
-From 371926f1e783f42994d6beb27b070844da099518 Mon Sep 17 00:00:00 2001
+From 4a32373acb892bfddaa603291218fb428b67b143 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:26:46 +0100
-Subject: [PATCH 12/18] contrib/opus disable asm on arm
+Subject: [PATCH 11/19] contrib/opus disable asm on arm
 
 ---
  contrib/src/opus/rules.mak | 3 +++
@@ -22,5 +22,5 @@ index d783648..f09a112 100644
  .opus: opus
  	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(OPUS_CONF)
 -- 
-1.8.3.4 (Apple Git-47)
+1.8.5.2 (Apple Git-48)
 

@@ -1,7 +1,7 @@
-From 9a5009bc2f0298b348d9d76fec608226a191e021 Mon Sep 17 00:00:00 2001
+From a2c3775e11e6c5b4ce5fe2c3d362988f01006072 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:07 +0200
-Subject: [PATCH 03/18] deinterlace/merge: use a macro to fix compilation for
+Subject: [PATCH 03/19] deinterlace/merge: use a macro to fix compilation for
  iOS
 
 ---
@@ -82,5 +82,5 @@ index dd77902..03e5042 100644
  	b		1b
 +endfunc
 -- 
-1.8.3.4 (Apple Git-47)
+1.8.5.2 (Apple Git-48)
 

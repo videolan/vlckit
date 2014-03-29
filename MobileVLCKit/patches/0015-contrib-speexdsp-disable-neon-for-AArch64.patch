@@ -1,7 +1,7 @@
-From c465462809d024bdfd6fca0ccf46c9ddc734d344 Mon Sep 17 00:00:00 2001
+From b7fcf17da304c886e8dec0580dd4c23781814bd2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 15:19:43 +0100
-Subject: [PATCH 16/18] contrib/speexdsp: disable neon for AArch64
+Subject: [PATCH 15/19] contrib/speexdsp: disable neon for AArch64
 
 ---
  contrib/src/speexdsp/rules.mak | 5 +++++
@@ -24,5 +24,5 @@ index 2244813..84ce8a9 100644
  .speexdsp: speexdsp
  	mkdir -p $</m4 && $(RECONF)
 -- 
-1.8.3.4 (Apple Git-47)
+1.8.5.2 (Apple Git-48)
 

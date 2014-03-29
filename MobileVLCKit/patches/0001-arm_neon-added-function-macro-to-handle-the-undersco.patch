@@ -1,7 +1,7 @@
-From 4e9b88ca430112cc5b7803b926b53a7c0de2212e Mon Sep 17 00:00:00 2001
+From 0bd4648b799ec260d869a21efd2479bb52b3b070 Mon Sep 17 00:00:00 2001
 From: David Geldreich <david.geldreich@free.fr>
 Date: Fri, 20 Apr 2012 16:41:19 +0200
-Subject: [PATCH 01/18] arm_neon: added function macro to handle the underscore
+Subject: [PATCH 01/19] arm_neon: added function macro to handle the underscore
  prefix for the iOS ARM ABI
 
 ---
@@ -65,5 +65,5 @@ index 0000000..d853255
 +.endm
 +
 -- 
-1.8.3.4 (Apple Git-47)
+1.8.5.2 (Apple Git-48)
 
