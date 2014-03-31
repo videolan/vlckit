@@ -447,6 +447,21 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return libvlc_video_get_spu_delay(_playerInstance);
 }
 
+- (void)setTextRendererFontSize:(NSNumber *)fontSize
+{
+    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontsize, [fontSize intValue]);
+}
+
+- (void)setTextRendererFont:(NSString *)fontname
+{
+    libvlc_video_set_textrenderer_string(_playerInstance, libvlc_textrender_font, [fontname UTF8String]);
+}
+
+- (void)setTextRendererFontColor:(NSNumber *)fontColor
+{
+    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontcolor, [fontColor intValue]);
+}
+
 #pragma mark -
 #pragma mark Video Crop geometry
 
