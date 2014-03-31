@@ -497,7 +497,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return libvlc_video_get_scale(_playerInstance);
 }
 
-- (void)saveVideoSnapshotAt:(NSString *)path withWidth:(NSUInteger)width andHeight:(NSUInteger)height
+- (void)saveVideoSnapshotAt:(NSString *)path withWidth:(int)width andHeight:(int)height
 {
     int failure = libvlc_video_take_snapshot(_playerInstance, 0, [path UTF8String], width, height);
     if (failure)
@@ -549,7 +549,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
     return libvlc_video_get_adjust_int(_playerInstance, libvlc_adjust_Hue);
 }
-- (void)setHue:(NSInteger)i_value
+- (void)setHue:(int)i_value
 {
     if (i_value <= 360 && i_value >= 0) {
         libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
@@ -634,7 +634,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 #pragma mark -
 #pragma mark Chapters
-- (void)setCurrentChapterIndex:(NSUInteger)value;
+- (void)setCurrentChapterIndex:(int)value;
 {
     libvlc_media_player_set_chapter(_playerInstance, value);
 }
@@ -658,7 +658,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_media_player_previous_chapter(_playerInstance);
 }
 
-- (NSArray *)chaptersForTitleIndex:(NSUInteger)title
+- (NSArray *)chaptersForTitleIndex:(int)title
 {
     NSInteger count = libvlc_media_player_get_chapter_count(_playerInstance);
     if (count <= 0)
@@ -777,7 +777,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return [NSArray arrayWithArray: tempArray];
 }
 
-- (void)setAudioChannel:(NSInteger)value
+- (void)setAudioChannel:(int)value
 {
     libvlc_audio_set_channel(_playerInstance, value);
 }
@@ -973,7 +973,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     [self setRate: -rate];
 }
 
-- (void)jumpBackward:(NSInteger)interval
+- (void)jumpBackward:(int)interval
 {
     if ([self isSeekable]) {
         interval = interval * 1000;
@@ -981,7 +981,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     }
 }
 
-- (void)jumpForward:(NSInteger)interval
+- (void)jumpForward:(int)interval
 {
     if ([self isSeekable]) {
         interval = interval * 1000;

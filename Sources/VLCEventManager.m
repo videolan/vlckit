@@ -259,7 +259,7 @@ static void * EventDispatcherMainLoop(void * user_data)
     [pendingMessagesLock lock];
 
     NSMutableArray *queue = [self messageQueue];
-    for (int i = [queue count] - 1; i >= 0; i--) {
+    for (NSInteger i = [queue count] - 1; i >= 0; i--) {
         NSData *data = queue[i];
         message_t *message = (message_t *)[data bytes];
         if (message->target == target)
@@ -268,7 +268,7 @@ static void * EventDispatcherMainLoop(void * user_data)
 
     // Remove all pending messages
     NSMutableArray *messages = pendingMessagesOnMainThread;
-    for (int i = [messages count] - 1; i >= 0; i--) {
+    for (NSInteger i = [messages count] - 1; i >= 0; i--) {
         NSData *data = messages[i];
         message_t *message = (message_t *)[data bytes];
 

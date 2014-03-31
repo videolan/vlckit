@@ -159,7 +159,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \param width the snapshot's width
  * \param height the snapshot's height
  */
-- (void)saveVideoSnapshotAt: (NSString *)path withWidth:(NSUInteger)width andHeight:(NSUInteger)height;
+- (void)saveVideoSnapshotAt: (NSString *)path withWidth:(int)width andHeight:(int)height;
 
 /**
  * Enable or disable deinterlace filter
@@ -191,7 +191,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * \param integer value (range: 0-360, default: 0)
  */
-@property NSInteger hue;
+@property int hue;
 /**
  * Set/Get the adjust filter's saturation value
  *
@@ -348,10 +348,10 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * To disable subtitle pass NSNotFound.
  */
-@property (readwrite) NSUInteger currentChapterIndex;
+@property (readwrite) int currentChapterIndex;
 - (void)previousChapter;
 - (void)nextChapter;
-- (NSArray *)chaptersForTitleIndex:(NSUInteger)titleIndex;
+- (NSArray *)chaptersForTitleIndex:(int)titleIndex;
 
 /**
  * Title selection and enumeration
@@ -394,8 +394,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 #pragma mark -
 #pragma mark audio functionality
 
-- (void)setAudioChannel:(NSInteger)value;
-- (NSInteger)audioChannel;
+- (void)setAudioChannel:(int)value;
+- (int)audioChannel;
 
 /**
  * Get the current audio delay. Positive values means audio is delayed further,
@@ -516,13 +516,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Jumps shortly backward in current stream if seeking is supported.
  * \param interval to skip, in sec.
  */
-- (void)jumpBackward:(NSInteger)interval;
+- (void)jumpBackward:(int)interval;
 
 /**
  * Jumps shortly forward in current stream if seeking is supported.
  * \param interval to skip, in sec.
  */
-- (void)jumpForward:(NSInteger)interval;
+- (void)jumpForward:(int)interval;
 
 /**
  * Jumps shortly backward in current stream if seeking is supported.

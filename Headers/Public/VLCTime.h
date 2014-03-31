@@ -35,7 +35,7 @@
 /* Factories */
 + (VLCTime *)nullTime;
 + (VLCTime *)timeWithNumber:(NSNumber *)aNumber;
-+ (VLCTime *)timeWithInt:(NSInteger)aInt;
++ (VLCTime *)timeWithInt:(int)aInt;
 
 /* Initializers */
 - (id)initWithNumber:(NSNumber *)aNumber;
