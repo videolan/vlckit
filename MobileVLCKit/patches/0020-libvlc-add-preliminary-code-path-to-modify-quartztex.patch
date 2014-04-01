@@ -1,16 +1,16 @@
-From 1cfa3cc52c34469bbd5199b91089661320fd7ef6 Mon Sep 17 00:00:00 2001
+From 7a64d54c92c295463ba2a1ceedf422c8feed2d76 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
 Subject: [PATCH] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
- include/vlc/libvlc_media_player.h  | 21 +++++++++++++++
+ include/vlc/libvlc_media_player.h  | 21 +++++++++++++
  lib/libvlc.sym                     |  4 +++
- lib/media_player.c                 |  7 +++++
- lib/video.c                        | 47 ++++++++++++++++++++++++++++++++++
- modules/text_renderer/quartztext.c | 52 +++++++++++++++++++++++++++++++++-----
- 5 files changed, 125 insertions(+), 6 deletions(-)
+ lib/media_player.c                 |  6 ++++
+ lib/video.c                        | 47 +++++++++++++++++++++++++++++
+ modules/text_renderer/quartztext.c | 61 ++++++++++++++++++++++++++++++++------
+ 5 files changed, 130 insertions(+), 9 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
 index fb91f59..47996f0 100644
@@ -67,15 +67,14 @@ index fdfd164..9ea91db 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 7027bf4..dfbe64e 100644
+index 7027bf4..bd8d37c 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -464,6 +464,13 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -464,6 +464,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
 +#ifdef __APPLE__
-+#warning created!
 +    var_Create (mp, "quartztext-font", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
 +    var_Create (mp, "quartztext-fontsize", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
 +    var_Create (mp, "quartztext-color", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
@@ -140,7 +139,7 @@ index 43471b9..4eb8de5 100644
 +    return get_string( p_mi, "quartztext", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
-index 73ed014..a5f73a6 100644
+index 73ed014..463e09e 100644
 --- a/modules/text_renderer/quartztext.c
 +++ b/modules/text_renderer/quartztext.c
 @@ -65,6 +65,10 @@
@@ -208,7 +207,7 @@ index 73ed014..a5f73a6 100644
      LoadFontsFromAttachments(p_filter);
  
      return VLC_SUCCESS;
-@@ -229,6 +242,12 @@ static void Destroy(vlc_object_t *p_this)
+@@ -229,6 +242,16 @@ static void Destroy(vlc_object_t *p_this)
  {
      filter_t *p_filter = (filter_t *)p_this;
      filter_sys_t *p_sys = p_filter->p_sys;
@@ -218,20 +217,40 @@ index 73ed014..a5f73a6 100644
 +    var_DelCallback( p_filter, "quartztext-color", QuartztextCallback, p_sys );
 +    vlc_mutex_destroy( &p_sys->lock );
 +
++    var_Destroy( p_filter, "quartztext-font" ) ;
++    var_Destroy( p_filter, "quartztext-fontsize" );
++    var_Destroy( p_filter, "quartztext-color" );
++
  #ifndef TARGET_OS_IPHONE
      if (p_sys->p_fonts) {
          for (int k = 0; k < p_sys->i_fonts; k++) {
-@@ -959,7 +978,8 @@ static int GetFontSize(filter_t *p_filter)
+@@ -236,8 +259,8 @@ static void Destroy(vlc_object_t *p_this)
+ 
+         free(p_sys->p_fonts);
+     }
+-#endif
+     free(p_sys->psz_font_name);
++#endif
+     free(p_sys);
+ }
+ 
+@@ -959,12 +982,12 @@ static int GetFontSize(filter_t *p_filter)
  {
      int i_size = 0;
  
 -    int i_ratio = var_CreateGetInteger( p_filter, "quartztext-rel-fontsize" );
 +    int i_ratio = var_CreateGetIntegerCommand( p_filter, "quartztext-fontsize" );
-+    msg_Err(p_filter, "ratio is %i", i_ratio);
++
      if( i_ratio > 0 )
          i_size = (int)p_filter->fmt_out.video.i_height / i_ratio;
  
-@@ -1048,3 +1068,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
+-    if( i_size <= 0 )
+-    {
++    if( i_size <= 0 ) {
+         msg_Warn( p_filter, "invalid fontsize, using 12" );
+         i_size = 12;
+     }
+@@ -1048,3 +1071,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
  
      return VLC_SUCCESS;
  }
