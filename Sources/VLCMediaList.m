@@ -261,6 +261,9 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
         if (index && index > [cachedMedia count])
             index = [cachedMedia count];
         [cachedMedia insertObject:media atIndex:index];
+        index = [cachedMedia count] - 1;
+        if (delegate && [delegate respondsToSelector:@selector(mediaList:mediaAdded:atIndex:)])
+            [delegate mediaList:self mediaAdded:media atIndex:index];
     }
     [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] forKey:@"media"];
 
@@ -268,10 +271,6 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 //    [[NSNotificationCenter defaultCenter] postNotificationName:VLCMediaListItemAdded
 //                                                        object:self
 //                                                      userInfo:args];
-
-    // Let the delegate know that the item was added
-  //  if (delegate && [delegate respondsToSelector:@selector(mediaList:mediaAdded:atIndex:)])
-    //    [delegate mediaList:self mediaAdded:media atIndex:index];
 }
 
 - (void)mediaListItemRemoved:(NSNumber *)index

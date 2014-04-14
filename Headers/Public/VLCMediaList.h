@@ -36,6 +36,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * TODO: Documentation VLCMediaListDelegate
  */
 @protocol VLCMediaListDelegate
+@optional
 /**
  * TODO: Documentation - [VLCMediaListDelegate mediaList:mediaAdded:atIndex:]
  */
