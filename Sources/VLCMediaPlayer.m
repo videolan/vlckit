@@ -221,10 +221,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (void)dealloc
 {
-    if (libvlc_media_player_get_state(_playerInstance) != libvlc_Stopped)
-        [self stop];
-
-    NSAssert(libvlc_media_player_get_state(_playerInstance) == libvlc_Stopped, @"You released the media player before ensuring that it is stopped");
+    NSAssert(libvlc_media_player_get_state(_playerInstance) == libvlc_Stopped || libvlc_media_player_get_state(_playerInstance) == libvlc_NothingSpecial, @"You released the media player before ensuring that it is stopped");
 
     [self unregisterObservers];
     [[VLCEventManager sharedManager] cancelCallToObject:self];
