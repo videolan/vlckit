@@ -547,7 +547,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Brightness, f_value);
     }
 }
-- (NSInteger)hue
+- (int)hue
 {
     libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
     return libvlc_video_get_adjust_int(_playerInstance, libvlc_adjust_Hue);
@@ -642,12 +642,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_media_player_set_chapter(_playerInstance, value);
 }
 
-- (NSUInteger)currentChapterIndex
+- (int)currentChapterIndex
 {
-    NSInteger count = libvlc_media_player_get_chapter_count(_playerInstance);
+    int count = libvlc_media_player_get_chapter_count(_playerInstance);
     if (count <= 0)
         return NSNotFound;
-    NSUInteger result = libvlc_media_player_get_chapter(_playerInstance);
+    int result = libvlc_media_player_get_chapter(_playerInstance);
     return result;
 }
 
@@ -785,7 +785,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_audio_set_channel(_playerInstance, value);
 }
 
-- (NSInteger)audioChannel
+- (int)audioChannel
 {
     return libvlc_audio_get_channel(_playerInstance);
 }
