@@ -20,7 +20,7 @@ spopd()
 
 MOBILE=no
 VERBOSE=no
-USEZIP=nos
+USEZIP=no
 
 usage()
 {
