@@ -20,6 +20,7 @@ spopd()
 
 MOBILE=no
 VERBOSE=no
+USEZIP=nos
 
 usage()
 {
@@ -32,11 +33,12 @@ OPTIONS:
    -h            Show some help
    -v            Be verbose
    -m            Package MobileVLCKit
+   -z            Use zip file format
 EOF
 
 }
 
-while getopts "hvm" OPTION
+while getopts "hvmz" OPTION
 do
      case $OPTION in
          h)
@@ -48,6 +50,9 @@ do
              ;;
          m)
              MOBILE=yes
+             ;;
+         z)
+             USEZIP=yes
              ;;
      esac
 done
@@ -69,7 +74,11 @@ DMGFOLDERNAME="VLCKit - binary package"
 DMGITEMNAME="VLCKit-REPLACEWITHVERSION"
 
 if [ "$MOBILE" = "yes" ]; then
+if [ "$USEZIP" = "yes" ]; then
+    DMGFOLDERNAME="MobileVLCKit-binary"
+else
     DMGFOLDERNAME="MobileVLCKit - binary package"
+fi
     DMGITEMNAME="MobileVLCKit-REPLACEWITHVERSION"
 fi
 
@@ -112,6 +121,7 @@ spopd
 rm -f ${DMGITEMNAME}-rw.dmg
 fi
 
+if [ "$USEZIP" = "no" ]; then
 info "Creating disk-image"
 hdiutil create -srcfolder "${DMGFOLDERNAME}" "${DMGITEMNAME}-rw.dmg" -scrub -format UDRW
 mkdir -p ./mount
@@ -130,7 +140,11 @@ rm -f ${DMGITEMNAME}.dmg
 hdiutil convert "${DMGITEMNAME}-rw.dmg" -format UDBZ -o "${DMGITEMNAME}.dmg"
 rm -f ${DMGITEMNAME}-rw.dmg
 rm -rf "${DMGFOLDERNAME}"
+else
+info "Creating zip-archive"
+zip -r ${DMGITEMNAME}.zip "${DMGFOLDERNAME}"
+fi
 
 spopd
 
-info "Disk-image created"
+info "Distributable package created"
