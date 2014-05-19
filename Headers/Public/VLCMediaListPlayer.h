@@ -30,12 +30,11 @@
  * VLCRepeatMode
  * (don't repeat anything, repeat one, repeat all)
  */
-enum VLCRepeatMode {
+typedef NS_ENUM(NSInteger, VLCRepeatMode) {
     VLCDoNotRepeat,
     VLCRepeatCurrentItem,
     VLCRepeatAllItems
 };
-typedef NSInteger VLCRepeatMode;
 
 @interface VLCMediaListPlayer : NSObject {
     void *instance;
