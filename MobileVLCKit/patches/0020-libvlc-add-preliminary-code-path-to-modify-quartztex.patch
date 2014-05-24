@@ -1,7 +1,7 @@
-From 7a64d54c92c295463ba2a1ceedf422c8feed2d76 Mon Sep 17 00:00:00 2001
+From 0166690c33c086b44d278547de643264b02c189d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 20/20] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -13,7 +13,7 @@ Subject: [PATCH] libvlc: add preliminary code path to modify quartztext
  5 files changed, 130 insertions(+), 9 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index fb91f59..47996f0 100644
+index 4b2f449..59beb48 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
 @@ -1382,6 +1382,27 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
@@ -45,10 +45,10 @@ index fb91f59..47996f0 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index fdfd164..9ea91db 100644
+index c0c66dd..7810ed7 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -216,6 +216,8 @@ libvlc_video_get_spu_count
+@@ -217,6 +217,8 @@ libvlc_video_get_spu_count
  libvlc_video_get_spu_delay
  libvlc_video_get_spu_description
  libvlc_video_get_teletext
@@ -57,7 +57,7 @@ index fdfd164..9ea91db 100644
  libvlc_video_get_title_description
  libvlc_video_get_track
  libvlc_video_get_track_count
-@@ -240,6 +242,8 @@ libvlc_video_set_spu
+@@ -241,6 +243,8 @@ libvlc_video_set_spu
  libvlc_video_set_spu_delay
  libvlc_video_set_subtitle_file
  libvlc_video_set_teletext
@@ -67,7 +67,7 @@ index fdfd164..9ea91db 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 7027bf4..bd8d37c 100644
+index cfb64b2..d105c6e 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -464,6 +464,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -84,10 +84,10 @@ index 7027bf4..bd8d37c 100644
      var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
      var_Create (mp, "mute", VLC_VAR_BOOL);
 diff --git a/lib/video.c b/lib/video.c
-index 43471b9..4eb8de5 100644
+index c8b3711..cda3c35 100644
 --- a/lib/video.c
 +++ b/lib/video.c
-@@ -933,3 +933,50 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -903,3 +903,50 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  {
      return get_float( p_mi, "adjust", adjust_option_bynumber(option) );
  }
@@ -139,7 +139,7 @@ index 43471b9..4eb8de5 100644
 +    return get_string( p_mi, "quartztext", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
-index 73ed014..463e09e 100644
+index f0b5b67..aecb7b9 100644
 --- a/modules/text_renderer/quartztext.c
 +++ b/modules/text_renderer/quartztext.c
 @@ -65,6 +65,10 @@
@@ -234,7 +234,7 @@ index 73ed014..463e09e 100644
      free(p_sys);
  }
  
-@@ -959,12 +982,12 @@ static int GetFontSize(filter_t *p_filter)
+@@ -949,12 +972,12 @@ static int GetFontSize(filter_t *p_filter)
  {
      int i_size = 0;
  
@@ -250,7 +250,7 @@ index 73ed014..463e09e 100644
          msg_Warn( p_filter, "invalid fontsize, using 12" );
          i_size = 12;
      }
-@@ -1048,3 +1071,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
+@@ -1041,3 +1064,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
  
      return VLC_SUCCESS;
  }

@@ -1,7 +1,7 @@
-From 725076cb2b8ca12eb7ab4c4791a1aa3c07e24289 Mon Sep 17 00:00:00 2001
+From ee7049a59e627ee62184c17d782db24767039a23 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:28:26 +0200
-Subject: [PATCH 17/19] extras: deploy arch option for iOS
+Subject: [PATCH 17/20] extras: deploy arch option for iOS
 
 ---
  extras/package/ios/build.sh | 2 +-
