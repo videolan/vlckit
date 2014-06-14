@@ -4,9 +4,9 @@
 
 set -e
 
-BUILD_DEVICE=1
-BUILD_SIMULATOR=0
-BUILD_FRAMEWORK=0
+BUILD_DEVICE=yes
+BUILD_SIMULATOR=no
+BUILD_FRAMEWORK=no
 SDK=`xcrun --sdk iphoneos --show-sdk-version`
 SDK_MIN=6.1
 VERBOSE=no
@@ -76,13 +76,14 @@ do
              VERBOSE=yes
              ;;
          s)
-             BUILD_DEVICE=0
-             BUILD_SIMULATOR=1
+             BUILD_DEVICE=no
+             BUILD_SIMULATOR=yes
+             BUILD_FRAMEWORK=no
              ;;
          f)
-             BUILD_DEVICE=1
-             BUILD_SIMULATOR=1
-             BUILD_FRAMEWORK=1
+             BUILD_DEVICE=yes
+             BUILD_SIMULATOR=yes
+             BUILD_FRAMEWORK=yes
              ;;
          d)  CONFIGURATION="Debug"
              ;;
@@ -184,13 +185,13 @@ buildMobileKit() {
     info "Build for $PLATFORM completed"
 }
 
-if [ $BUILD_DEVICE ]; then
+if [ "$BUILD_DEVICE" != "no" ]; then
     buildMobileKit iphoneos
 fi
-if [ $BUILD_SIMULATOR ]; then
+if [ "$BUILD_SIMULATOR" != "no" ]; then
     buildMobileKit iphonesimulator
 fi
-if [ $BUILD_FRAMEWORK ]; then
+if [ "$BUILD_FRAMEWORK" != "no" ]; then
     info "Building MobileVLCKit.framework"
 
     # Assumes both platforms were built currently
