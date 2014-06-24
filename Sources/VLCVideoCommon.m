@@ -48,15 +48,17 @@
         CGRect bounds = layer.bounds;
         CGRect videoRect = bounds;
 
-        CGFloat xRatio = CGRectGetWidth(bounds)/originalVideoSize.width;
-        CGFloat yRatio = CGRectGetHeight(bounds)/originalVideoSize.height;
-        CGFloat ratio = fillScreenEntirely ? MAX(xRatio, yRatio) : MIN(xRatio, yRatio);
+        if (originalVideoSize.height > 0 && originalVideoSize.width > 0)
+        {
+            CGFloat xRatio = CGRectGetWidth(bounds) / originalVideoSize.width;
+            CGFloat yRatio = CGRectGetHeight(bounds) / originalVideoSize.height;
+            CGFloat ratio = fillScreenEntirely ? MAX(xRatio, yRatio) : MIN(xRatio, yRatio);
 
-        videoRect.size.width = ratio*originalVideoSize.width;
-        videoRect.size.height = ratio*originalVideoSize.height;
-        videoRect.origin.x += (CGRectGetWidth(bounds) - CGRectGetWidth(videoRect))/2.0;
-        videoRect.origin.y += (CGRectGetHeight(bounds) - CGRectGetHeight(videoRect))/2.0;
-
+            videoRect.size.width = ratio * originalVideoSize.width;
+            videoRect.size.height = ratio * originalVideoSize.height;
+            videoRect.origin.x += (CGRectGetWidth(bounds) - CGRectGetWidth(videoRect)) / 2.0;
+            videoRect.origin.y += (CGRectGetHeight(bounds) - CGRectGetHeight(videoRect)) / 2.0;
+        }
         videolayer.frame = videoRect;
     }
 }
