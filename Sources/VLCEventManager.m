@@ -207,6 +207,7 @@ static void * EventDispatcherMainLoop(void * user_data)
     pthread_join(dispatcherThread, NULL);
 
     [messageQueue release];
+    [pendingMessagesLock release];
     [pendingMessagesOnMainThread release];
     [super dealloc];
 }
