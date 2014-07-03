@@ -1,4 +1,4 @@
-From b59e610cb019bd30e1dfc9cf6336fa5442cd8525 Mon Sep 17 00:00:00 2001
+From bd9c4aa32660d935495942835248d680f05b4a6d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:43:11 +0100
 Subject: [PATCH 10/20] contrib/avcodec: deploy libav
@@ -8,7 +8,7 @@ Subject: [PATCH 10/20] contrib/avcodec: deploy libav
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 4ce4682..bde43c3 100644
+index 62bb9e6..9137273 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -1,7 +1,7 @@

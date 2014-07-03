@@ -1,4 +1,4 @@
-From 26fd934ffbe0a8052b0087e298ba27620ced73cd Mon Sep 17 00:00:00 2001
+From 9ea73113a6aa2cb4bb285212383bd1297b3da10d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
 Subject: [PATCH 19/20] contrib/gcrypt: use git version on iOS

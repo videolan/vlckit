@@ -1,4 +1,4 @@
-From 3443fdc552460190226b23d7e05be63c990764a2 Mon Sep 17 00:00:00 2001
+From df32f0d8210940b910720fc2c872abe1bb91cf87 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 29 May 2013 13:25:54 +0200
 Subject: [PATCH 05/20] libass: fix text rendering on iOS by providing a font

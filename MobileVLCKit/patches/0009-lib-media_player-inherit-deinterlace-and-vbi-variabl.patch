@@ -1,4 +1,4 @@
-From cff961452bd498e5596d47519959a4c56ea2b961 Mon Sep 17 00:00:00 2001
+From c2a220795002ead5df2f728b3fce2d249a8f5349 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 16:26:40 +0100
 Subject: [PATCH 09/20] lib/media_player: inherit deinterlace and vbi variables
@@ -9,7 +9,7 @@ Subject: [PATCH 09/20] lib/media_player: inherit deinterlace and vbi variables
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 5e8f6b2..cfb64b2 100644
+index 5225079..f04e6dc 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -435,10 +435,10 @@ libvlc_media_player_new( libvlc_instance_t *instance )

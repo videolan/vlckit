@@ -1,4 +1,4 @@
-From 0166690c33c086b44d278547de643264b02c189d Mon Sep 17 00:00:00 2001
+From c651cfc2743486e5f51771364953dd7c08e4c74f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
 Subject: [PATCH 20/20] libvlc: add preliminary code path to modify quartztext
@@ -67,7 +67,7 @@ index c0c66dd..7810ed7 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index cfb64b2..d105c6e 100644
+index f04e6dc..801c130 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -464,6 +464,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )

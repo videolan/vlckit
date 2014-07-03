@@ -1,4 +1,4 @@
-From 704a51c1338959b317f148bfa210fabc6cc476ea Mon Sep 17 00:00:00 2001
+From 8c33ce53b28ed8b55b8dc9b69ad696d731a5308c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 09:56:23 +0100
 Subject: [PATCH 12/20] contrib/gcrypt: disable asm on iOS

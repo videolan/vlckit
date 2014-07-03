@@ -14,7 +14,7 @@ CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 
-TESTEDHASH=1aaaece95
+TESTEDHASH=9396fb6e4
 
 usage()
 {
@@ -127,8 +127,8 @@ spushd MobileVLCKit/ImportedSources
 
 if [ "$NONETWORK" != "yes" ]; then
 if ! [ -e vlc ]; then
-git clone git://git.videolan.org/vlc.git vlc
-info "Applying patches to vlc.git"
+git clone git://git.videolan.org/vlc/vlc-2.2.git vlc
+info "Applying patches to vlc-2.2.git"
 cd vlc
 git checkout -B localBranch ${TESTEDHASH}
 git branch --set-upstream-to=origin/master localBranch

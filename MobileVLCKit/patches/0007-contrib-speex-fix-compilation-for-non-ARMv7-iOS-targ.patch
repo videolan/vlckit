@@ -1,4 +1,4 @@
-From 5c8d3ecadd139afb01c27302804c5e9ad332574a Mon Sep 17 00:00:00 2001
+From 6d35e4ff5e822218c089b22aafaeb039ae8120af Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
 Subject: [PATCH 07/20] contrib/speex: fix compilation for non-ARMv7 iOS

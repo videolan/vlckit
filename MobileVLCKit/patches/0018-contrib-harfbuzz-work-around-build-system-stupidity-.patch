@@ -1,4 +1,4 @@
-From db3c7e76872d172ce8e49aefb551f0c30b45f2b3 Mon Sep 17 00:00:00 2001
+From ee332ffb09ed6db5a79df01717e1c72a6e8ca86f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 12 Mar 2014 14:48:12 +0100
 Subject: [PATCH 18/20] contrib/harfbuzz: work-around build system stupidity

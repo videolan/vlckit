@@ -1,4 +1,4 @@
-From a90f83c5e102d401163f29fa1b36e8ee652e54ce Mon Sep 17 00:00:00 2001
+From 661ecb6fcec9a5243c4d1e2cdc6a3c2a67641851 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:27:43 +0200
 Subject: [PATCH 16/20] contrib: add arch option for platforms where the arch
@@ -10,7 +10,7 @@ Subject: [PATCH 16/20] contrib: add arch option for platforms where the arch
  2 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/bootstrap b/contrib/bootstrap
-index 2c755df..b46f536 100755
+index b77a9d9..86d4b9e 100755
 --- a/contrib/bootstrap
 +++ b/contrib/bootstrap
 @@ -31,6 +31,7 @@ usage()
@@ -65,7 +65,7 @@ index 2c755df..b46f536 100755
  		;;
  	*bsd*)
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
-index ae01fea..de82f38 100644
+index dd2bd25..2b085ea 100644
 --- a/contrib/src/main.mak
 +++ b/contrib/src/main.mak
 @@ -35,7 +35,9 @@ PREFIX := $(abspath $(PREFIX))
