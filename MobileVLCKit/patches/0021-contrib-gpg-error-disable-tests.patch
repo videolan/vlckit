@@ -1,0 +1,53 @@
+From d4cfed802be595dd0cfda4ff5350e9d19c7d541d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Fri, 4 Jul 2014 00:48:09 +0200
+Subject: [PATCH] contrib/gpg-error: disable tests
+
+---
+ contrib/src/gpg-error/disable-tests.patch | 21 +++++++++++++++++++++
+ contrib/src/gpg-error/rules.mak           |  1 +
+ 2 files changed, 22 insertions(+)
+ create mode 100644 contrib/src/gpg-error/disable-tests.patch
+
+diff --git a/contrib/src/gpg-error/disable-tests.patch b/contrib/src/gpg-error/disable-tests.patch
+new file mode 100644
+index 0000000..efcd79d
+--- /dev/null
++++ b/contrib/src/gpg-error/disable-tests.patch
+@@ -0,0 +1,21 @@
++diff -ru libgpg-error/Makefile.in libgpg-error-fixed/Makefile.in
++--- libgpg-error/Makefile.in	2014-04-15 14:25:49.000000000 +0200
+++++ libgpg-error-fixed/Makefile.in	2014-07-04 00:46:04.000000000 +0200
++@@ -121,7 +121,7 @@
++ 	distdir dist dist-all distcheck
++ ETAGS = etags
++ CTAGS = ctags
++-DIST_SUBDIRS = m4 src tests po lang
+++DIST_SUBDIRS = m4 src po lang
++ DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
++ distdir = $(PACKAGE)-$(VERSION)
++ top_distdir = $(distdir)
++@@ -326,7 +326,7 @@
++ 
++ @LANGUAGES_SOME_FALSE@lang_subdirs = 
++ @LANGUAGES_SOME_TRUE@lang_subdirs = lang
++-SUBDIRS = m4 src tests po $(lang_subdirs)
+++SUBDIRS = m4 src po $(lang_subdirs)
++ gen_start_date = 2011-12-01T00:00:00
++ all: config.h
++ 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
+diff --git a/contrib/src/gpg-error/rules.mak b/contrib/src/gpg-error/rules.mak
+index e7ff25c..4582903 100644
+--- a/contrib/src/gpg-error/rules.mak
++++ b/contrib/src/gpg-error/rules.mak
+@@ -12,6 +12,7 @@ libgpg-error: libgpg-error-$(GPGERROR_VERSION).tar.bz2 .sum-gpg-error
+ ifdef HAVE_WIN32
+ 	$(APPLY) $(SRC)/gpg-error/windres-make.patch
+ endif
++	$(APPLY) $(SRC)/gpg-error/disable-tests.patch
+ 	$(MOVE)
+ 	cp $@/src/syscfg/lock-obj-pub.arm-unknown-linux-androideabi.h $@/src/syscfg/lock-obj-pub.linux-android.h
+ ifdef HAVE_IOS
+-- 
+1.8.5.2 (Apple Git-48)
+
