@@ -67,25 +67,25 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(mediaPlayerTimeChanged:)
-                                       withArgumentAsObject:@(event->u.media_player_time_changed.new_time)];
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerTimeChanged:)
+                                           withArgumentAsObject:@(event->u.media_player_time_changed.new_time)];
 
-    [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:self
-                                                   withDelegateMethod:@selector(mediaPlayerTimeChanged:)
-                                                 withNotificationName:VLCMediaPlayerTimeChanged];
-    [pool release];
+        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
+                                                       withDelegateMethod:@selector(mediaPlayerTimeChanged:)
+                                                     withNotificationName:VLCMediaPlayerTimeChanged];
+    }
 }
 
 static void HandleMediaPositionChanged(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(mediaPlayerPositionChanged:)
-                                       withArgumentAsObject:@(event->u.media_player_position_changed.new_position)];
-    [pool release];
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerPositionChanged:)
+                                           withArgumentAsObject:@(event->u.media_player_position_changed.new_position)];
+    }
 }
 
 static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void * self)
@@ -109,28 +109,28 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
         return;
     }
 
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(mediaPlayerStateChanged:)
-                                       withArgumentAsObject:@(newState)];
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerStateChanged:)
+                                           withArgumentAsObject:@(newState)];
 
-    [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:self
-                                                   withDelegateMethod:@selector(mediaPlayerStateChanged:)
-                                                 withNotificationName:VLCMediaPlayerStateChanged];
+        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
+                                                       withDelegateMethod:@selector(mediaPlayerStateChanged:)
+                                                     withNotificationName:VLCMediaPlayerStateChanged];
 
-    [pool release];
+    }
 }
 
 static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(mediaPlayerMediaChanged:)
-                                       withArgumentAsObject:[VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_player_media_changed.new_media]];
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerMediaChanged:)
+                                           withArgumentAsObject:[VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_player_media_changed.new_media]];
 
-    [pool release];
+    }
 }
 
 
@@ -173,10 +173,10 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     static NSDictionary * dict = nil;
     NSSet * superKeyPaths;
     if (!dict) {
-        dict = [@{@"playing": [NSSet setWithObject:@"state"],
+        dict = @{@"playing": [NSSet setWithObject:@"state"],
                 @"seekable": [NSSet setWithObjects:@"state", @"media", nil],
                 @"canPause": [NSSet setWithObjects:@"state", @"media", nil],
-                @"description": [NSSet setWithObjects:@"state", @"media", nil]} retain];
+                @"description": [NSSet setWithObjects:@"state", @"media", nil]};
     }
     if ((superKeyPaths = [super keyPathsForValuesAffectingValueForKey: key])) {
         NSMutableSet * ret = [NSMutableSet setWithSet:dict[key]];
@@ -243,17 +243,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_media_player_release(_playerInstance);
     if (_privateLibrary != [VLCLibrary sharedLibrary])
         libvlc_release(_privateLibrary.instance);
-
-    // Get rid of everything else
-    [_media release];
-    [_cachedTime release];
-    [_cachedRemainingTime release];
-    [_drawable release];
-    [_audio release];
-    if (_privateLibrary != [VLCLibrary sharedLibrary])
-        [_privateLibrary release];
-
-    [super dealloc];
 }
 
 - (void)setDelegate:(id)value
@@ -281,12 +270,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (void)setDrawable:(id)aDrawable
 {
     // Make sure that this instance has been associated with the drawing canvas.
-    libvlc_media_player_set_nsobject(_playerInstance, aDrawable);
+    libvlc_media_player_set_nsobject(_playerInstance, (__bridge void *)(aDrawable));
 }
 
 - (id)drawable
 {
-    return libvlc_media_player_get_nsobject(_playerInstance);
+    return (__bridge id)(libvlc_media_player_get_nsobject(_playerInstance));
 }
 
 - (VLCAudio *)audio
@@ -900,8 +889,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         if (_media && [_media compare:value] == NSOrderedSame)
             return;
 
-        [_media release];
-        _media = [value retain];
+        _media = value;
 
         libvlc_media_player_set_media(_playerInstance, [_media libVLCMediaDescriptor]);
     }
@@ -1047,17 +1035,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return libvlc_media_player_will_play(_playerInstance);
 }
 
-static const VLCMediaPlayerState libvlc_to_local_state[] =
-{
-    [libvlc_Stopped]    = VLCMediaPlayerStateStopped,
-    [libvlc_Opening]    = VLCMediaPlayerStateOpening,
-    [libvlc_Buffering]  = VLCMediaPlayerStateBuffering,
-    [libvlc_Playing]    = VLCMediaPlayerStatePlaying,
-    [libvlc_Paused]     = VLCMediaPlayerStatePaused,
-    [libvlc_Ended]      = VLCMediaPlayerStateEnded,
-    [libvlc_Error]      = VLCMediaPlayerStateError
-};
-
 - (VLCMediaPlayerState)state
 {
     return _cachedState;
@@ -1095,8 +1072,8 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
     if (self = [super init]) {
         _delegate = nil;
         _media = nil;
-        _cachedTime = [[VLCTime nullTime] retain];
-        _cachedRemainingTime = [[VLCTime nullTime] retain];
+        _cachedTime = [VLCTime nullTime];
+        _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
 
@@ -1108,7 +1085,7 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
             _privateLibrary = [[VLCLibrary alloc] initWithOptions:options];
         } else {
             VKLog(@"creating player instance using shared library");
-            _privateLibrary = [[VLCLibrary sharedLibrary] retain];
+            _privateLibrary = [VLCLibrary sharedLibrary];
         }
         libvlc_retain([_privateLibrary instance]);
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
@@ -1125,48 +1102,46 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 {
     // Attach event observers into the media instance
     libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, self);
+    libvlc_event_attach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
 
-    libvlc_event_attach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          self);
-    libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   self);
+    libvlc_event_attach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
 }
 
 - (void)unregisterObservers
 {
     libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, self);
+    libvlc_event_detach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
 
-    libvlc_event_detach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          self);
-    libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   self);
+    libvlc_event_detach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
 }
 
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime
 {
     [self willChangeValueForKey:@"time"];
     [self willChangeValueForKey:@"remainingTime"];
-    [_cachedTime release];
-    _cachedTime = [[VLCTime timeWithNumber:newTime] retain];
-    [_cachedRemainingTime release];
+    _cachedTime = [VLCTime timeWithNumber:newTime];
     double currentTime = [[_cachedTime numberValue] doubleValue];
     if (currentTime > 0) {
         double remaining = currentTime / _position * (1 - _position);
-        _cachedRemainingTime = [[VLCTime timeWithNumber:@(-remaining)] retain];
+        _cachedRemainingTime = [VLCTime timeWithNumber:@(-remaining)];
     } else
-        _cachedRemainingTime = [[VLCTime nullTime] retain];
+        _cachedRemainingTime = [VLCTime nullTime];
     [self didChangeValueForKey:@"remainingTime"];
     [self didChangeValueForKey:@"time"];
 }
@@ -1207,10 +1182,8 @@ static const VLCMediaPlayerState libvlc_to_local_state[] =
 {
     [self willChangeValueForKey:@"media"];
     if (_media != newMedia)
-    {
-        [_media release];
-        _media = [newMedia retain];
-    }
+        _media = newMedia;
+
     [self didChangeValueForKey:@"media"];
 }
 

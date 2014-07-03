@@ -112,50 +112,50 @@ static inline VLCMediaState LibVLCStateToMediaState( libvlc_state_t state )
  */
 static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(metaChanged:)
-                                       withArgumentAsObject:[VLCMedia metaTypeToString:event->u.media_meta_changed.meta_type]];
-    [pool release];
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(metaChanged:)
+                                           withArgumentAsObject:[VLCMedia metaTypeToString:event->u.media_meta_changed.meta_type]];
+    }
 }
 
 static void HandleMediaDurationChanged(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(setLength:)
-                                       withArgumentAsObject:[VLCTime timeWithNumber:
-                                           @(event->u.media_duration_changed.new_duration)]];
-    [pool release];
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(setLength:)
+                                           withArgumentAsObject:[VLCTime timeWithNumber:
+                                               @(event->u.media_duration_changed.new_duration)]];
+    }
 }
 
 static void HandleMediaStateChanged(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
 
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(setStateAsNumber:)
-                                       withArgumentAsObject:@(LibVLCStateToMediaState(event->u.media_state_changed.new_state))];
-    [pool release];
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(setStateAsNumber:)
+                                           withArgumentAsObject:@(LibVLCStateToMediaState(event->u.media_state_changed.new_state))];
+    }
 }
 
 static void HandleMediaSubItemAdded(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(subItemAdded)
-                                       withArgumentAsObject:nil];
-    [pool release];
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(subItemAdded)
+                                           withArgumentAsObject:nil];
+    }
 }
 
 static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(parsedChanged:)
-                                       withArgumentAsObject:@((BOOL)event->u.media_parsed_changed.new_status)];
-    [pool release];
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(parsedChanged:)
+                                           withArgumentAsObject:@((BOOL)event->u.media_parsed_changed.new_status)];
+    }
 }
 
 
@@ -165,17 +165,17 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 @implementation VLCMedia
 + (id)mediaWithURL:(NSURL *)anURL;
 {
-    return [[[VLCMedia alloc] initWithURL:anURL] autorelease];
+    return [[VLCMedia alloc] initWithURL:anURL];
 }
 
 + (id)mediaWithPath:(NSString *)aPath;
 {
-    return [[[VLCMedia alloc] initWithPath:aPath] autorelease];
+    return [[VLCMedia alloc] initWithPath:aPath];
 }
 
 + (id)mediaAsNodeWithName:(NSString *)aName;
 {
-    return [[[VLCMedia alloc] initAsNodeWithName:aName] autorelease];
+    return [[VLCMedia alloc] initAsNodeWithName:aName];
 }
 
 - (id)initWithPath:(NSString *)aPath
@@ -224,24 +224,19 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 - (void)dealloc
 {
     libvlc_event_manager_t * p_em = libvlc_media_event_manager(p_md);
-    libvlc_event_detach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     self);
-    libvlc_event_detach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, self);
-    libvlc_event_detach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    self);
-    libvlc_event_detach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    self);
-    libvlc_event_detach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   self);
+    libvlc_event_detach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   (__bridge void *)(self));
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     // Testing to see if the pointer exists is not required, if the pointer is null
     // then the release message is not sent to it.
     delegate = nil;
-    [length release];
-    [url release];
-    [subitems release];
-    [metaDictionary release];
 
     libvlc_media_release( p_md );
 
-    [super dealloc];
 }
 
 - (NSString *)description
@@ -267,12 +262,12 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         // Try figuring out what the length is
         long long duration = libvlc_media_get_duration( p_md );
         if (duration > -1) {
-            length = [[VLCTime timeWithNumber:@(duration)] retain];
-            return [[length retain] autorelease];
+            length = [VLCTime timeWithNumber:@(duration)];
+            return length;
         }
         return [VLCTime nullTime];
     }
-    return [[length retain] autorelease];
+    return length;
 }
 
 - (VLCTime *)lengthWaitUntilDate:(NSDate *)aDate
@@ -294,7 +289,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
             return [self length];
     }
 
-    return [[length retain] autorelease];
+    return length;
 }
 
 - (BOOL)isParsed
@@ -712,7 +707,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 + (id)mediaWithLibVLCMediaDescriptor:(void *)md
 {
-    return [[[VLCMedia alloc] initWithLibVLCMediaDescriptor:md] autorelease];
+    return [[VLCMedia alloc] initWithLibVLCMediaDescriptor:md];
 }
 
 - (id)initWithLibVLCMediaDescriptor:(void *)md
@@ -761,7 +756,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (!stringToMetaDictionary) {
 #define VLCStringToMeta( name ) [NSNumber numberWithInt: libvlc_meta_##name], VLCMetaInformation##name
         stringToMetaDictionary =
-            [[NSDictionary dictionaryWithObjectsAndKeys:
+            [NSDictionary dictionaryWithObjectsAndKeys:
                 VLCStringToMeta(Title),
                 VLCStringToMeta(Artist),
                 VLCStringToMeta(Genre),
@@ -778,7 +773,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
                 VLCStringToMeta(Publisher),
                 VLCStringToMeta(ArtworkURL),
                 VLCStringToMeta(TrackID),
-                nil] retain];
+                nil];
 #undef VLCStringToMeta
     }
     NSNumber * number = stringToMetaDictionary[string];
@@ -814,26 +809,26 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (!p_url)
         return;
 
-    url = [[NSURL URLWithString:@(p_url)] retain];
+    url = [NSURL URLWithString:@(p_url)];
     if (!url) /* Attempt to interpret as a file path then */
-        url = [[NSURL fileURLWithPath:@(p_url)] retain];
+        url = [NSURL fileURLWithPath:@(p_url)];
     free(p_url);
 
-    libvlc_media_set_user_data(p_md, (void*)self);
+    libvlc_media_set_user_data(p_md, (__bridge void*)self);
 
     libvlc_event_manager_t * p_em = libvlc_media_event_manager( p_md );
-    libvlc_event_attach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     self);
-    libvlc_event_attach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, self);
-    libvlc_event_attach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    self);
-    libvlc_event_attach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    self);
-    libvlc_event_attach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   self);
+    libvlc_event_attach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   (__bridge void *)(self));
 
     libvlc_media_list_t * p_mlist = libvlc_media_subitems( p_md );
 
     if (!p_mlist)
         subitems = nil;
     else {
-        subitems = [[VLCMediaList mediaListWithLibVLCMediaList:p_mlist] retain];
+        subitems = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
         libvlc_media_list_release( p_mlist );
     }
 
@@ -915,7 +910,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     NSAssert( p_mlist, @"The mlist shouldn't be nil, we are receiving a subItemAdded");
 
     [self willChangeValueForKey:@"subitems"];
-    subitems = [[VLCMediaList mediaListWithLibVLCMediaList:p_mlist] retain];
+    subitems = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
     [self didChangeValueForKey:@"subitems"];
     libvlc_media_list_release( p_mlist );
 }
@@ -997,8 +992,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (length && value && [length compare:value] == NSOrderedSame)
         return;
 
-    [length release];
-    length = value ? [value retain] : nil;
+    length = value ? value : nil;
 }
 
 @end

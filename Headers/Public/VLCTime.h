@@ -42,10 +42,10 @@
 - (id)initWithInt:(int)aInt;
 
 /* Properties */
-@property (readonly) NSNumber * numberValue;
-@property (readonly) NSString * stringValue;
-@property (readonly) NSString * verboseStringValue;
-@property (readonly) NSString * minuteStringValue;
+@property (weak, readonly) NSNumber * numberValue;
+@property (readonly, copy) NSString * stringValue;
+@property (readonly, copy) NSString * verboseStringValue;
+@property (readonly, copy) NSString * minuteStringValue;
 @property (readonly) int intValue;
 
 /* Comparitors */

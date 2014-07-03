@@ -54,7 +54,7 @@ extern NSString *const VLCMediaListItemDeleted;
 @interface VLCMediaList : NSObject
 {
     void * p_mlist;                                 //< Internal instance of media list
-    id <VLCMediaListDelegate,NSObject> delegate;    //< Delegate object
+    id <VLCMediaListDelegate,NSObject> __weak delegate;    //< Delegate object
     /* We need that private copy because of Cocoa Bindings, that need to be working on first thread */
     NSMutableArray * cachedMedia;                   //< Private copy of media objects.
 }
@@ -106,7 +106,7 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * TODO: Documentation VLCMediaList.delegate
  */
-@property (assign) id delegate;
+@property (weak) id delegate;
 
 /**
  * TODO: Documentation VLCMediaList.isReadOnly

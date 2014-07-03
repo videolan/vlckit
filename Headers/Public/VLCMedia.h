@@ -128,7 +128,7 @@ typedef NSInteger VLCMediaState;
     VLCMediaList *        subitems;          //< Sub list of items
     VLCTime *             length;            //< Cached duration of the media
     NSMutableDictionary * metaDictionary;    //< Meta data storage
-    id                    delegate;          //< Delegate object
+    id                    __weak delegate;          //< Delegate object
     BOOL                  isArtFetched;      //< Value used to determine of the artwork has been parsed
     BOOL                  areOthersMetaFetched; //< Value used to determine of the other meta has been parsed
     BOOL                  isArtURLFetched;   //< Value used to determine of the other meta has been preparsed
@@ -199,14 +199,14 @@ typedef NSInteger VLCMediaState;
 /**
  * Receiver's delegate.
  */
-@property (assign) id delegate;
+@property (weak) id delegate;
 
 /**
  * A VLCTime object describing the length of the media resource, only if it is
  * available.  Use lengthWaitUntilDate: to wait for a specified length of time.
  * \see lengthWaitUntilDate
  */
-@property (retain, readonly) VLCTime * length;
+@property (readonly) VLCTime * length;
 
 /**
  * Returns a VLCTime object describing the length of the media resource,
@@ -226,12 +226,12 @@ typedef NSInteger VLCMediaState;
 /**
  * The URL for the receiver's media resource.
  */
-@property (retain, readonly) NSURL * url;
+@property (readonly) NSURL * url;
 
 /**
  * The receiver's sub list.
  */
-@property (retain, readonly) VLCMediaList * subitems;
+@property (readonly) VLCMediaList * subitems;
 
 /**
  * get meta property for key
@@ -258,7 +258,7 @@ typedef NSInteger VLCMediaState;
 /**
  * The receiver's meta data as a NSDictionary object.
  */
-@property (retain, readonly) NSDictionary * metaDictionary;
+@property (readonly) NSDictionary * metaDictionary;
 
 /**
  * The receiver's state, such as Playing, Error, NothingSpecial, Buffering.

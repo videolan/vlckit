@@ -52,24 +52,24 @@ static NSArray * availableMediaDiscoverer = nil;     // Global list of media dis
 /* libvlc event callback */
 static void HandleMediaDiscovererStarted(const libvlc_event_t * event, void * user_data)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    NSLog(@"HandleMediaDiscovererStarted");
-    id self = user_data;
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(_mediaDiscovererStarted)
-                                       withArgumentAsObject:nil];
-    [pool release];
+    @autoreleasepool {
+        NSLog(@"HandleMediaDiscovererStarted");
+        id self = (__bridge id)(user_data);
+        [[VLCEventManager sharedManager] callOnMainThreadObject:self
+                                                     withMethod:@selector(_mediaDiscovererStarted)
+                                           withArgumentAsObject:nil];
+    }
 }
 
 static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * user_data)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    NSLog(@"HandleMediaDiscovererEnded");
-    id self = user_data;
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(_mediaDiscovererEnded)
-                                       withArgumentAsObject:nil];
-    [pool release];
+    @autoreleasepool {
+        NSLog(@"HandleMediaDiscovererEnded");
+        id self = (__bridge id)(user_data);
+        [[VLCEventManager sharedManager] callOnMainThreadObject:self
+                                                     withMethod:@selector(_mediaDiscovererEnded)
+                                           withArgumentAsObject:nil];
+    }
 }
 
 
@@ -77,10 +77,10 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 + (NSArray *)availableMediaDiscoverer
 {
     if (!availableMediaDiscoverer) {
-        availableMediaDiscoverer = [@[[[[VLCMediaDiscoverer alloc] initWithName:@"sap"] autorelease],
-                                [[[VLCMediaDiscoverer alloc] initWithName:@"upnp"] autorelease],
-                                [[[VLCMediaDiscoverer alloc] initWithName:@"freebox"] autorelease],
-                                [[[VLCMediaDiscoverer alloc] initWithName:@"video_dir"] autorelease]] retain];
+        availableMediaDiscoverer = @[[[VLCMediaDiscoverer alloc] initWithName:@"sap"],
+                                [[VLCMediaDiscoverer alloc] initWithName:@"upnp"],
+                                [[VLCMediaDiscoverer alloc] initWithName:@"freebox"],
+                                [[VLCMediaDiscoverer alloc] initWithName:@"video_dir"]];
     }
     return availableMediaDiscoverer;
 }
@@ -91,15 +91,15 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
         localizedName = nil;
         discoveredMedia = nil;
 
-        _privateLibrary = [[VLCLibrary sharedLibrary] retain];
+        _privateLibrary = [VLCLibrary sharedLibrary];
         libvlc_retain([_privateLibrary instance]);
 
         mdis = libvlc_media_discoverer_new_from_name([_privateLibrary instance],
                                                      [aServiceName UTF8String]);
         NSAssert(mdis, @"No such media discoverer");
         libvlc_event_manager_t * p_em = libvlc_media_discoverer_event_manager(mdis);
-        libvlc_event_attach(p_em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, self);
-        libvlc_event_attach(p_em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   self);
+        libvlc_event_attach(p_em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
 
         running = libvlc_media_discoverer_is_running(mdis);
     }
@@ -109,18 +109,14 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 - (void)dealloc
 {
     libvlc_event_manager_t *em = libvlc_media_list_event_manager(mdis);
-    libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, self);
-    libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   self);
+    libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
+    libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
-    [localizedName release];
-    [discoveredMedia release];
     libvlc_media_discoverer_release( mdis );
 
     libvlc_release(_privateLibrary.instance);
-    [_privateLibrary release];
 
-    [super dealloc];
 }
 
 - (VLCMediaList *) discoveredMedia
@@ -132,7 +128,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
     VLCMediaList * ret = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
     libvlc_media_list_release( p_mlist );
 
-    discoveredMedia = [ret retain];
+    discoveredMedia = ret;
     return discoveredMedia;
 }
 
@@ -143,7 +139,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 
     char * name = libvlc_media_discoverer_localized_name( mdis );
     if (name) {
-        localizedName = [@(name) retain];
+        localizedName = @(name);
         free( name );
     }
     return localizedName;

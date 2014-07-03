@@ -44,15 +44,15 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
     VLCRepeatMode _repeatMode;
 }
 
-@property (readwrite, retain) VLCMediaList *mediaList;
+@property (readwrite) VLCMediaList *mediaList;
 
 /**
  * rootMedia - Use this method to play a media and its subitems.
  * This will erase mediaList.
  * Setting mediaList will erase rootMedia.
  */
-@property (readwrite, retain) VLCMedia *rootMedia;
-@property (readonly, retain) VLCMediaPlayer *mediaPlayer;
+@property (readwrite) VLCMedia *rootMedia;
+@property (readonly) VLCMediaPlayer *mediaPlayer;
 
 - (id)initWithOptions:(NSArray *)options;
 

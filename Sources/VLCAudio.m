@@ -63,7 +63,6 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
 - (void) dealloc
 {
     libvlc_media_player_release([self instance]);
-    [super dealloc];
 }
 
 - (void)setMute:(BOOL)value

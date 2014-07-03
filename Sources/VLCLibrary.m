@@ -184,7 +184,6 @@ static void * sharedInstance = nil;
         sharedInstance = nil;
     }
 
-    [super dealloc];
 }
 
 @end

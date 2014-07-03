@@ -40,7 +40,7 @@
 
 static void *lock(void *opaque, void **pixels)
 {
-    VLCMediaThumbnailer *thumbnailer = opaque;
+    VLCMediaThumbnailer *thumbnailer = (__bridge VLCMediaThumbnailer *)(opaque);
 
     *pixels = [thumbnailer dataPointer];
     assert(*pixels);
@@ -54,7 +54,7 @@ static const long long kStandardStartTime = 150000;
 
 void unlock(void *opaque, void *picture, void *const *p_pixels)
 {
-    VLCMediaThumbnailer *thumbnailer = opaque;
+    VLCMediaThumbnailer *thumbnailer = (__bridge VLCMediaThumbnailer *)(opaque);
     assert(!picture);
 
     assert([thumbnailer dataPointer] == *p_pixels);
@@ -83,7 +83,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     [obj setMedia:media];
     [obj setDelegate:delegate];
     [obj setLibVLCinstance:[VLCLibrary sharedInstance]];
-    return [obj autorelease];
+    return obj;
 }
 
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library
@@ -95,7 +95,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
         [obj setLibVLCinstance:library.instance];
     else
         [obj setLibVLCinstance:[VLCLibrary sharedInstance]];
-    return [obj autorelease];
+    return obj;
 }
 
 - (void)dealloc
@@ -106,10 +106,8 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     NSAssert(!_mp, @"Not properly retained");
     if (_thumbnail)
         CGImageRelease(_thumbnail);
-    [_media release];
     if (_internalLibVLCInstance)
         libvlc_release(_internalLibVLCInstance);
-    [super dealloc];
 }
 
 - (void)setLibVLCinstance:(void *)libVLCinstance
@@ -127,13 +125,11 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 {
     NSAssert(!_data, @"We are already fetching a thumbnail");
 
-    [self retain]; // Balanced in -notifyDelegate
-
     if (![_media isParsed]) {
         [_media addObserver:self forKeyPath:@"parsed" options:0 context:NULL];
         [_media synchronousParse];
         NSAssert(!_parsingTimeoutTimer, @"We already have a timer around");
-        _parsingTimeoutTimer = [[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaParsingTimedOut) userInfo:nil repeats:NO] retain];
+        _parsingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaParsingTimedOut) userInfo:nil repeats:NO];
         return;
     }
 
@@ -161,7 +157,6 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     if (!videoTrack) {
         VKLog(@"WARNING: Can't find video track info, skipping file");
         [_parsingTimeoutTimer invalidate];
-        [_parsingTimeoutTimer release];
         _parsingTimeoutTimer = nil;
         [self mediaThumbnailingTimedOut];
         return;
@@ -199,7 +194,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
 
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
-    libvlc_video_set_callbacks(_mp, lock, unlock, NULL, self);
+    libvlc_video_set_callbacks(_mp, lock, unlock, NULL, (__bridge void *)(self));
     if (snapshotPosition == kSnapshotPosition) {
         int length = _media.length.intValue;
         if (length < kStandardStartTime) {
@@ -214,7 +209,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     libvlc_media_player_play(_mp);
 
     NSAssert(!_thumbnailingTimeoutTimer, @"We already have a timer around");
-    _thumbnailingTimeoutTimer = [[NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaThumbnailingTimedOut) userInfo:nil repeats:NO] retain];
+    _thumbnailingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaThumbnailingTimedOut) userInfo:nil repeats:NO];
 }
 
 - (void)mediaParsingTimedOut
@@ -230,7 +225,6 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     if (object == _media && [keyPath isEqualToString:@"parsed"]) {
         if ([_media isParsed]) {
             [_parsingTimeoutTimer invalidate];
-            [_parsingTimeoutTimer release];
             _parsingTimeoutTimer = nil;
             [_media removeObserver:self forKeyPath:@"parsed"];
             [self startFetchingThumbnail];
@@ -319,12 +313,9 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     _shouldRejectFrames = YES;
 
     [_thumbnailingTimeoutTimer invalidate];
-    [_thumbnailingTimeoutTimer release];
     _thumbnailingTimeoutTimer = nil;
 
     [self performSelectorInBackground:@selector(stopAsync) withObject:nil];
-
-    [self autorelease]; // Balancing -fetchThumbnail
 }
 
 - (void)notifyDelegate

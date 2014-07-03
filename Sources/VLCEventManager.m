@@ -38,130 +38,133 @@ typedef enum
 /**
  * Data structured used to enqueue messages onto the queue.
  */
-typedef struct {
-    id target;                      //< Target object that should receive the message (retained until method is called).
-    SEL sel;                        //< A selector that identifies the message to be sent to the target.
-    union u                         //< Object could either be a VLCNotification or other.
-    {
-        NSString * name;            //< Name to be used for NSNotification
-        id object;                  //< Object argument to pass to the target via the selector.
-    } u;
-    message_type_t type;            //< Type of queued message.
-} message_t;
+@interface message_t : NSObject
+
+@property (nonatomic) id target;    //< Target object that should receive the message (retained until method is called).
+@property (nonatomic) SEL sel;      //< A selector that identifies the message to be sent to the target.
+@property (nonatomic, copy) NSString * name;           //< Name to be used for NSNotification
+@property (nonatomic) id object;                  //< Object argument to pass to the target via the selector.
+@property (nonatomic) message_type_t type;            //< Type of queued message.
+
+@end
+
+@implementation message_t
+
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[message_t class]]) return NO;
+
+    message_t *otherObject = object;
+    BOOL notificatonMatches =
+        (otherObject.type == VLCNotification              && [otherObject.name isEqualToString:self.name]) ||
+        (otherObject.type == VLCObjectMethodWithArrayArg  && [otherObject.object isEqual:self.object]) ||
+        (otherObject.type == VLCObjectMethodWithObjectArg && [otherObject.object isEqual:self.object]);
+
+    return [otherObject.target isEqual:_target] &&
+            otherObject.sel == self.sel         &&
+            otherObject.type == self.type       &&
+            notificatonMatches;
+}
+
+@end
 
 @interface VLCEventManager (Private)
-- (void)callDelegateOfObjectAndSendNotificationWithArgs:(NSData*)data;
-- (void)callObjectMethodWithArgs:(NSData*)data;
-- (void)callDelegateOfObject:(id) aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName;
+- (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message;
+- (void)callObjectMethodWithArgs:(message_t *)message;
+- (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName;
 - (pthread_cond_t *)signalData;
 - (pthread_mutex_t *)queueLock;
 - (NSMutableArray *)messageQueue;
 - (NSMutableArray *)pendingMessagesOnMainThread;
 - (NSLock *)pendingMessagesLock;
 
-- (void)addMessageToHandleOnMainThread:(NSData *)messageAsData;
+- (void)addMessageToHandleOnMainThread:(message_t *)message;
 @end
 
 /**
- * Provides a function for the main entry point for the dispatch thread.  It dispatches any messages that is queued.
+ * Provides a function for the main entry point for the dispatch thread. It dispatches any messages that is queued.
  * \param user_data Pointer to the VLCEventManager instance that instiated this thread.
  */
 static void * EventDispatcherMainLoop(void * user_data)
 {
-    VLCEventManager * self = user_data;
+    VLCEventManager * self = (__bridge VLCEventManager *)(user_data);
 
     for (;;) {
-        NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-        message_t * message, * message_newer = NULL;
-        NSData * dataMessage;
+            message_t * message, * message_newer = NULL;
 
-        /* Sleep a bit not to flood the interface */
-        usleep(300);
+            /* Sleep a bit not to flood the interface */
+            usleep(300);
 
-        /* Wait for some data */
+            /* Wait for some data */
 
-        pthread_mutex_lock([self queueLock]);
-        /* Wait until we have something on the queue */
-        while ([[self messageQueue] count] <= 0)
-            pthread_cond_wait([self signalData], [self queueLock]);
+            pthread_mutex_lock([self queueLock]);
+            /* Wait until we have something on the queue */
+            while ([[self messageQueue] count] <= 0)
+                pthread_cond_wait([self signalData], [self queueLock]);
 
-        //if ([[self messageQueue] count] % 100 == 0 || [[self messageQueue] count] < 100)
-          //  VKLog(@"[EVENT_MANAGER] On the stack we have %d elements", [[self messageQueue] count]);
+            /* Get the first object off the queue. */
+            message = [[self messageQueue] lastObject];    // Released in 'call'
+            [[self messageQueue] removeLastObject];
 
-        /* Get the first object off the queue. */
-        dataMessage = [[[self messageQueue] lastObject] retain];    // Released in 'call'
-        [[self messageQueue] removeLastObject];
-        message = (message_t *)[dataMessage bytes];
-
-        /* Remove duplicate notifications (keep the newest one). */
-        if (message->type == VLCNotification) {
-            NSInteger last_match_msg = -1;
-            for (NSInteger i = [[self messageQueue] count]-1; i >= 0; i-- ) {
-                message_newer = (message_t *)[(NSData *)[self messageQueue][i] bytes];
-                if (message_newer->type == VLCNotification &&
-                    message_newer->target == message->target &&
-                    [message_newer->u.name isEqualToString:message->u.name]) {
-                    if (last_match_msg >= 0) {
-                        message_t * msg = (message_t *)[(NSData *)[self messageQueue][last_match_msg] bytes];
-                        [msg->u.name release];
-                        [[self messageQueue] removeObjectAtIndex:last_match_msg];
+            /* Remove duplicate notifications (keep the newest one). */
+            if (message.type == VLCNotification) {
+                NSInteger last_match_msg = -1;
+                for (NSInteger i = [[self messageQueue] count]-1; i >= 0; i--) {
+                    message_newer = [self messageQueue][i];
+                    if (message_newer.type == VLCNotification &&
+                        message_newer.target == message.target &&
+                        [message_newer.name isEqualToString:message.name]) {
+                        if (last_match_msg >= 0) {
+                            [[self messageQueue] removeObjectAtIndex:last_match_msg];
+                        }
+                        last_match_msg = i;
                     }
-                    last_match_msg = i;
                 }
-            }
-            if (last_match_msg >= 0) {
-                // newer notification detected, ignore current one
-                [message->u.name release];
-                [dataMessage release];
-                [pool release];
-                pthread_mutex_unlock([self queueLock]);
-                continue;
-            }
-        } else if (message->type == VLCObjectMethodWithArrayArg) {
-            NSMutableArray * newArg = nil;
+                if (last_match_msg >= 0) {
+                    // newer notification detected, ignore current one
+                    pthread_mutex_unlock([self queueLock]);
+                    continue;
+                }
+            } else if (message.type == VLCObjectMethodWithArrayArg) {
+                NSMutableArray * newArg = nil;
 
-            /* Collapse messages that takes array arg by sending one bigger array */
-            for (NSInteger i = [[self messageQueue] count] - 1; i >= 0; i--) {
-                message_newer = (message_t *)[(NSData *)[self messageQueue][i] bytes];
-                if (message_newer->type == VLCObjectMethodWithArrayArg &&
-                    message_newer->target == message->target &&
-                    message_newer->sel == message->sel) {
-                    if (!newArg) {
-                        newArg = [NSMutableArray arrayWithArray:message->u.object];
-                        [message->u.object release];
+                /* Collapse messages that takes array arg by sending one bigger array */
+                for (NSInteger i = [[self messageQueue] count] - 1; i >= 0; i--) {
+                    message_newer = [self messageQueue][i];
+                    if (message_newer.type == VLCObjectMethodWithArrayArg &&
+                        message_newer.target == message.target &&
+                        message_newer.sel == message.sel) {
+                        if (!newArg) {
+                            newArg = [NSMutableArray arrayWithArray:message.object];
+                        }
+
+                        [newArg addObjectsFromArray:message_newer.object];
+                        [[self messageQueue] removeObjectAtIndex:i];
                     }
-
-                    [newArg addObjectsFromArray:message_newer->u.object];
-                    [message_newer->u.object release];
-                    [[self messageQueue] removeObjectAtIndex:i];
+                    /* It shouldn be a good idea not to collapse event with other kind of event in-between.
+                     * This could be particulary problematic when the same object receive two related events
+                     * (for instance Added and Removed).
+                     * Ignore for now only if target is the same */
+                    else if (message_newer.target == message.target)
+                        break;
                 }
-                /* It shouldn be a good idea not to collapse event with other kind of event in-between.
-                 * This could be particulary problematic when the same object receive two related events
-                 * (for instance Added and Removed).
-                 * Ignore for now only if target is the same */
-                else if (message_newer->target == message->target)
-                    break;
-            }
 
-            if (newArg)
-                message->u.object = [newArg retain];
+                if (newArg)
+                    message.object = newArg;
+            }
+            [self addMessageToHandleOnMainThread:message];
+
+            pthread_mutex_unlock([self queueLock]);
+
+            if (message.type == VLCNotification)
+                [self performSelectorOnMainThread:@selector(callDelegateOfObjectAndSendNotificationWithArgs:)
+                                       withObject:message
+                                    waitUntilDone: NO];
+            else
+                [self performSelectorOnMainThread:@selector(callObjectMethodWithArgs:)
+                                       withObject:message
+                                    waitUntilDone: YES];
         }
-
-        [self addMessageToHandleOnMainThread:dataMessage];
-
-        pthread_mutex_unlock([self queueLock]);
-
-        if (message->type == VLCNotification)
-            [self performSelectorOnMainThread:@selector(callDelegateOfObjectAndSendNotificationWithArgs:)
-                                   withObject:dataMessage
-                                waitUntilDone: NO];
-        else
-            [self performSelectorOnMainThread:@selector(callObjectMethodWithArgs:)
-                                   withObject:dataMessage
-                                waitUntilDone: YES];
-
-        [pool release];
-    }
     return nil;
 }
 
@@ -190,13 +193,13 @@ static void * EventDispatcherMainLoop(void * user_data)
             NSAssert([NSThread isMultiThreaded], @"Can't put Cocoa in multithreaded mode");
         }
 
-        messageQueue = [[NSMutableArray alloc] initWithCapacity:10];
-        pendingMessagesOnMainThread = [[NSMutableArray alloc] initWithCapacity:10];
+        messageQueue = [NSMutableArray new];
+        pendingMessagesOnMainThread = [NSMutableArray new];
         pendingMessagesLock = [[NSLock alloc] init];
 
         pthread_mutex_init(&queueLock, NULL);
         pthread_cond_init(&signalData, NULL);
-        pthread_create(&dispatcherThread, NULL, EventDispatcherMainLoop, self);
+        pthread_create(&dispatcherThread, NULL, EventDispatcherMainLoop, (__bridge void *)(self));
     }
     return self;
 }
@@ -205,51 +208,39 @@ static void * EventDispatcherMainLoop(void * user_data)
 {
     pthread_kill(dispatcherThread, SIGKILL);
     pthread_join(dispatcherThread, NULL);
-
-    [messageQueue release];
-    [pendingMessagesLock release];
-    [pendingMessagesOnMainThread release];
-    [super dealloc];
 }
 
 - (void)callOnMainThreadDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName
 {
     /* Don't send on main thread before this gets sorted out */
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
+    @autoreleasepool {
+        message_t *message = [message_t new];
+        message.sel = aSelector;
+        message.target = aTarget;
+        message.name = aNotificationName;
+        message.type = VLCNotification;
 
-    message_t message =
-    {
-        aTarget,
-        aSelector,
-        [aNotificationName retain],
-        VLCNotification
-    };
-
-    pthread_mutex_lock([self queueLock]);
-    [[self messageQueue] insertObject:[NSData dataWithBytes:&message length:sizeof(message_t)] atIndex:0];
-    pthread_cond_signal([self signalData]);
-    pthread_mutex_unlock([self queueLock]);
-
-    [pool release];
+        pthread_mutex_lock([self queueLock]);
+        [[self messageQueue] insertObject:message atIndex:0];
+        pthread_cond_signal([self signalData]);
+        pthread_mutex_unlock([self queueLock]);
+    }
 }
 
 - (void)callOnMainThreadObject:(id)aTarget withMethod:(SEL)aSelector withArgumentAsObject:(id)arg
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    message_t message =
-    {
-        aTarget,
-        aSelector,
-        [arg retain],
-        [arg isKindOfClass:[NSArray class]] ? VLCObjectMethodWithArrayArg : VLCObjectMethodWithObjectArg
-    };
+    @autoreleasepool {
+        message_t *message = [message_t new];
+        message.sel = aSelector;
+        message.target = aTarget;
+        message.object = arg;
+        message.type = [arg isKindOfClass:[NSArray class]] ? VLCObjectMethodWithArrayArg : VLCObjectMethodWithObjectArg;
 
-    pthread_mutex_lock([self queueLock]);
-    [[self messageQueue] insertObject:[NSData dataWithBytes:&message length:sizeof(message_t)] atIndex:0];
-    pthread_cond_signal([self signalData]);
-    pthread_mutex_unlock([self queueLock]);
-
-    [pool release];
+        pthread_mutex_lock([self queueLock]);
+        [[self messageQueue] insertObject:message atIndex:0];
+        pthread_cond_signal([self signalData]);
+        pthread_mutex_unlock([self queueLock]);
+    }
 }
 
 - (void)cancelCallToObject:(id)target
@@ -261,73 +252,63 @@ static void * EventDispatcherMainLoop(void * user_data)
 
     NSMutableArray *queue = [self messageQueue];
     for (NSInteger i = [queue count] - 1; i >= 0; i--) {
-        NSData *data = queue[i];
-        message_t *message = (message_t *)[data bytes];
-        if (message->target == target)
+        message_t *message = (message_t *)queue[i];
+        if (message.target == target)
             [queue removeObjectAtIndex:i];
     }
 
     // Remove all pending messages
     NSMutableArray *messages = pendingMessagesOnMainThread;
+    // need to interate in reverse since we are removing objects
     for (NSInteger i = [messages count] - 1; i >= 0; i--) {
-        NSData *data = messages[i];
-        message_t *message = (message_t *)[data bytes];
+        message_t *message = messages[i];
 
-        if (message->target == target)
+        if (message.target == target)
             [messages removeObjectAtIndex:i];
     }
 
     [pendingMessagesLock unlock];
     pthread_mutex_unlock([self queueLock]);
-
 }
 @end
 
 @implementation VLCEventManager (Private)
 
-- (void)addMessageToHandleOnMainThread:(NSData *)messageAsData
+- (void)addMessageToHandleOnMainThread:(message_t *)message
 {
     [pendingMessagesLock lock];
-    [pendingMessagesOnMainThread addObject:messageAsData];
+    [pendingMessagesOnMainThread addObject:message];
     [pendingMessagesLock unlock];
 
 }
 
-- (BOOL)markMessageHandledOnMainThreadIfExists:(NSData *)messageAsData
+- (BOOL)markMessageHandledOnMainThreadIfExists:(message_t *)message
 {
     [pendingMessagesLock lock];
-    BOOL cancelled = ![pendingMessagesOnMainThread containsObject:messageAsData];
-    if (!cancelled)
-        [pendingMessagesOnMainThread removeObject:messageAsData];
+    BOOL cancelled = ![pendingMessagesOnMainThread containsObject:message];
+    if (!cancelled) {
+        [pendingMessagesOnMainThread removeObject:message];
+    }
     [pendingMessagesLock unlock];
 
     return !cancelled;
 }
 
-- (void)callDelegateOfObjectAndSendNotificationWithArgs:(NSData*)data
+- (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message
 {
-    message_t * message = (message_t *)[data bytes];
-
     // Check that we were not cancelled, ie, target was released
-    if ([self markMessageHandledOnMainThreadIfExists:data])
-        [self callDelegateOfObject:message->target withDelegateMethod:message->sel withNotificationName:message->u.name];
+    if ([self markMessageHandledOnMainThreadIfExists:message])
+        [self callDelegateOfObject:message.target withDelegateMethod:message.sel withNotificationName:message.name];
 
-    [message->u.name release];
-    [data release];
 }
 
-- (void)callObjectMethodWithArgs:(NSData*)data
+- (void)callObjectMethodWithArgs:(message_t *)message
 {
-    message_t * message = (message_t *)[data bytes];
-
     // Check that we were not cancelled
-    if ([self markMessageHandledOnMainThreadIfExists:data]) {
-        void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[message->target methodForSelector: message->sel];
-        method(message->target, message->sel, message->u.object);
+    if ([self markMessageHandledOnMainThreadIfExists:message]) {
+        void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[message.target methodForSelector: message.sel];
+        method(message.target, message.sel, message.object);
     }
-
-    [message->u.object release];
-    [data release];
 }
 
 - (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName
@@ -338,8 +319,8 @@ static void * EventDispatcherMainLoop(void * user_data)
     if (!delegate || ![delegate respondsToSelector:aSelector])
         return;
 
-    void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[[aTarget delegate] methodForSelector: aSelector];
-    method([aTarget delegate], aSelector, [NSNotification notificationWithName:aNotificationName object:aTarget]);
+    void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[delegate methodForSelector: aSelector];
+    method(delegate, aSelector, [NSNotification notificationWithName:aNotificationName object:aTarget]);
 }
 
 - (NSMutableArray *)messageQueue

@@ -56,12 +56,12 @@
 /**
  * TODO: Documentation VLCMediaDiscoverer.discoveredMedia
  */
-@property (readonly) VLCMediaList * discoveredMedia;
+@property (weak, readonly) VLCMediaList * discoveredMedia;
 
 /**
  * TODO: Documentation VLCMediaDiscoverer.localizedName
  */
-@property (readonly) NSString * localizedName;
+@property (readonly, copy) NSString * localizedName;
 
 /**
  * TODO: Documentation VLCMediaDiscoverer.isRunning

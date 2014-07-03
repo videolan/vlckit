@@ -53,10 +53,6 @@
 {
     [_mediaPlayer stop];
     libvlc_media_list_player_release(instance);
-    [_mediaPlayer release];
-    [_rootMedia release];
-    [_mediaList release];
-    [super dealloc];
 }
 
 - (VLCMediaPlayer *)mediaPlayer
@@ -68,12 +64,10 @@
 {
     if (_mediaList == mediaList)
         return;
-    [_mediaList release];
-    _mediaList = [mediaList retain];
+    _mediaList = mediaList;
 
     libvlc_media_list_player_set_media_list(instance, [mediaList libVLCMediaList]);
     [self willChangeValueForKey:@"rootMedia"];
-    [_rootMedia release];
     _rootMedia = nil;
     [self didChangeValueForKey:@"rootMedia"];
 }
@@ -87,7 +81,6 @@
 {
     if (_rootMedia == media)
         return;
-    [_rootMedia release];
     _rootMedia = nil;
 
     VLCMediaList *mediaList = [[VLCMediaList alloc] init];
@@ -98,9 +91,8 @@
     [self setMediaList:mediaList];
 
     // Thus set rootMedia here.
-    _rootMedia = [media retain];
+    _rootMedia = media;
 
-    [mediaList release];
 }
 
 - (VLCMedia *)rootMedia

@@ -52,23 +52,23 @@ NSString *const VLCMediaListItemDeleted      = @"VLCMediaListItemDeleted";
 /* libvlc event callback */
 static void HandleMediaListItemAdded(const libvlc_event_t * event, void * user_data)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    id self = user_data;
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(mediaListItemAdded:)
-                                       withArgumentAsObject:@[@{@"media": [VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_list_item_added.item],
-                                                          @"index": @(event->u.media_list_item_added.index)}]];
-    [pool release];
+    @autoreleasepool {
+        id self = (__bridge id)(user_data);
+        [[VLCEventManager sharedManager] callOnMainThreadObject:self
+                                                     withMethod:@selector(mediaListItemAdded:)
+                                           withArgumentAsObject:@[@{@"media": [VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_list_item_added.item],
+                                                              @"index": @(event->u.media_list_item_added.index)}]];
+    }
 }
 
 static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * user_data)
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    id self = user_data;
-    [[VLCEventManager sharedManager] callOnMainThreadObject:self
-                                                 withMethod:@selector(mediaListItemRemoved:)
-                                       withArgumentAsObject:@(event->u.media_list_item_deleted.index)];
-    [pool release];
+    @autoreleasepool {
+        id self = (__bridge id)(user_data);
+        [[VLCEventManager sharedManager] callOnMainThreadObject:self
+                                                     withMethod:@selector(mediaListItemRemoved:)
+                                           withArgumentAsObject:@(event->u.media_list_item_deleted.index)];
+    }
 }
 
 @implementation VLCMediaList
@@ -101,16 +101,14 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (void)dealloc
 {
     libvlc_event_manager_t *em = libvlc_media_list_event_manager(p_mlist);
-    libvlc_event_detach(em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, self);
-    libvlc_event_detach(em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   self);
+    libvlc_event_detach(em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
+    libvlc_event_detach(em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     // Release allocated memory
     delegate = nil;
 
     libvlc_media_list_release( p_mlist );
-    [cachedMedia release];
-    [super dealloc];
 }
 
 - (NSString *)description
@@ -141,8 +139,6 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
 - (void)insertMedia:(VLCMedia *)media atIndex: (NSInteger)index
 {
-    [media retain];
-
     // Add it to the libvlc's medialist
     libvlc_media_list_insert_media(p_mlist, [media libVLCMediaDescriptor], (int)index);
 }
@@ -208,7 +204,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 @implementation VLCMediaList (LibVLCBridging)
 + (id)mediaListWithLibVLCMediaList:(void *)p_new_mlist;
 {
-    return [[[VLCMediaList alloc] initWithLibVLCMediaList:p_new_mlist] autorelease];
+    return [[VLCMediaList alloc] initWithLibVLCMediaList:p_new_mlist];
 }
 
 - (id)initWithLibVLCMediaList:(void *)p_new_mlist;
@@ -242,8 +238,8 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 {
     // Add event callbacks
     libvlc_event_manager_t * p_em = libvlc_media_list_event_manager(p_mlist);
-    libvlc_event_attach( p_em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   self);
-    libvlc_event_attach( p_em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, self);
+    libvlc_event_attach( p_em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
+    libvlc_event_attach( p_em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
 }
 
 - (void)mediaListItemAdded:(NSArray *)arrayOfArgs

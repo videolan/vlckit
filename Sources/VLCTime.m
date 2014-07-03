@@ -30,18 +30,18 @@
 {
     static VLCTime * nullTime = nil;
     if (!nullTime)
-        nullTime = [[VLCTime timeWithNumber:nil] retain];
+        nullTime = [VLCTime timeWithNumber:nil];
     return nullTime;
 }
 
 + (VLCTime *)timeWithNumber:(NSNumber *)aNumber
 {
-    return [[[VLCTime alloc] initWithNumber:aNumber] autorelease];
+    return [[VLCTime alloc] initWithNumber:aNumber];
 }
 
 + (VLCTime *)timeWithInt:(int)aInt
 {
-    return [[[VLCTime alloc] initWithInt:aInt] autorelease];
+    return [[VLCTime alloc] initWithInt:aInt];
 }
 
 /* Initializers */
@@ -60,17 +60,11 @@
 {
     if (self = [super init]) {
         if (aInt)
-            value = [@(aInt) retain];
+            value = @(aInt);
         else
             value = nil;
     }
     return self;
-}
-
-- (void)dealloc
-{
-    [value release];
-    [super dealloc];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -87,7 +81,7 @@
 /* Operations */
 - (NSNumber *)numberValue
 {
-    return value ? [[value copy] autorelease] : nil;
+    return value ? [value copy] : nil;
 }
 
 - (NSString *)stringValue

@@ -116,7 +116,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (void)setVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
 
-@property (retain) id drawable; /* The videoView or videoLayer */
+@property (strong) id drawable; /* The videoView or videoLayer */
 
 /**
  * Set/Get current video aspect ratio.
@@ -216,7 +216,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property float rate;
 
-@property (readonly) VLCAudio * audio;
+@property (weak, readonly) VLCAudio * audio;
 
 /* Video Information */
 /**
@@ -252,7 +252,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (VLCTime *)time;
 
-@property (readonly) VLCTime *remainingTime;
+@property (weak, readonly) VLCTime *remainingTime;
 
 /**
  * Frames per second
@@ -415,7 +415,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * \return array of equalizer profiles
  */
-@property (readonly) NSArray *equalizerProfiles;
+@property (weak, readonly) NSArray *equalizerProfiles;
 
 /**
  * Re-set the equalizer to a profile retrieved from the list

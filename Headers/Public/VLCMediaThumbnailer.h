@@ -30,7 +30,7 @@
 @protocol VLCMediaThumbnailerDelegate;
 
 @interface VLCMediaThumbnailer : NSObject {
-    id<VLCMediaThumbnailerDelegate> _delegate;
+    id<VLCMediaThumbnailerDelegate> __weak _delegate;
     VLCMedia *_media;
     void *_mp;
     CGImageRef _thumbnail;
@@ -49,8 +49,8 @@
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library;
 - (void)fetchThumbnail;
 
-@property (readwrite, assign) id<VLCMediaThumbnailerDelegate> delegate;
-@property (readwrite, retain) VLCMedia *media;
+@property (readwrite, weak) id<VLCMediaThumbnailerDelegate> delegate;
+@property (readwrite) VLCMedia *media;
 @property (readwrite, assign) CGImageRef thumbnail;
 @property (readwrite) void * libVLCinstance;
 
