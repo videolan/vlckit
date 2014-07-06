@@ -28,6 +28,20 @@
 
 @interface VLCMediaThumbnailer ()
 {
+    id<VLCMediaThumbnailerDelegate> __weak _delegate;
+    VLCMedia *_media;
+    void *_mp;
+    CGImageRef _thumbnail;
+    void *_data;
+    NSTimer *_parsingTimeoutTimer;
+    NSTimer *_thumbnailingTimeoutTimer;
+
+    CGFloat _thumbnailHeight,_thumbnailWidth;
+    float _snapshotPosition;
+    CGFloat _effectiveThumbnailHeight,_effectiveThumbnailWidth;
+    int _numberOfReceivedFrames;
+    BOOL _shouldRejectFrames;
+
     void * _internalLibVLCInstance;
 }
 - (void)didFetchThumbnail;

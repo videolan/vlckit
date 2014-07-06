@@ -29,21 +29,7 @@
 @class VLCLibrary;
 @protocol VLCMediaThumbnailerDelegate;
 
-@interface VLCMediaThumbnailer : NSObject {
-    id<VLCMediaThumbnailerDelegate> __weak _delegate;
-    VLCMedia *_media;
-    void *_mp;
-    CGImageRef _thumbnail;
-    void *_data;
-    NSTimer *_parsingTimeoutTimer;
-    NSTimer *_thumbnailingTimeoutTimer;
-
-    CGFloat _thumbnailHeight,_thumbnailWidth;
-    float _snapshotPosition;
-    CGFloat _effectiveThumbnailHeight,_effectiveThumbnailWidth;
-    int _numberOfReceivedFrames;
-    BOOL _shouldRejectFrames;
-}
+@interface VLCMediaThumbnailer : NSObject
 
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media andDelegate:(id<VLCMediaThumbnailerDelegate>)delegate;
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library;

@@ -122,19 +122,6 @@ typedef NSInteger VLCMediaState;
  * \see VLCMediaList
  */
 @interface VLCMedia : NSObject
-{
-    void *                p_md;              //< Internal media descriptor instance
-    NSURL *               url;               //< URL (MRL) for this media resource
-    VLCMediaList *        subitems;          //< Sub list of items
-    VLCTime *             length;            //< Cached duration of the media
-    NSMutableDictionary * metaDictionary;    //< Meta data storage
-    id                    __weak delegate;          //< Delegate object
-    BOOL                  isArtFetched;      //< Value used to determine of the artwork has been parsed
-    BOOL                  areOthersMetaFetched; //< Value used to determine of the other meta has been parsed
-    BOOL                  isArtURLFetched;   //< Value used to determine of the other meta has been preparsed
-    VLCMediaState         state;             //< Current state of the media
-    BOOL                  isParsed;
-}
 
 /* Factories */
 /**

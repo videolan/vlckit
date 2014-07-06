@@ -52,12 +52,6 @@ extern NSString *const VLCMediaListItemDeleted;
  * TODO: Documentation VLCMediaList
  */
 @interface VLCMediaList : NSObject
-{
-    void * p_mlist;                                 //< Internal instance of media list
-    id <VLCMediaListDelegate,NSObject> __weak delegate;    //< Delegate object
-    /* We need that private copy because of Cocoa Bindings, that need to be working on first thread */
-    NSMutableArray * cachedMedia;                   //< Private copy of media objects.
-}
 
 - (id)initWithArray:(NSArray *)array;
 

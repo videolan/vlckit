@@ -67,6 +67,13 @@
 @end
 
 @interface VLCVideoView ()
+{
+    id delegate;
+    NSColor * backColor;
+    BOOL stretchesVideo;
+    id layoutManager;
+    BOOL hasVideo;
+}
 /* Proeprties */
 @property (readwrite) BOOL hasVideo;
 @end
