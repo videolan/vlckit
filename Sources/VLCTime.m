@@ -51,10 +51,7 @@
 - (id)initWithNumber:(NSNumber *)aNumber
 {
     if (self = [super init]) {
-        if (aNumber)
-            value = [aNumber copy];
-        else
-            value = nil;
+        _value = aNumber;
     }
     return self;
 }
@@ -63,16 +60,9 @@
 {
     if (self = [super init]) {
         if (aInt)
-            value = @(aInt);
-        else
-            value = nil;
+            _value = @(aInt);
     }
     return self;
-}
-
-- (id)copyWithZone:(NSZone *)zone
-{
-    return [[VLCTime alloc] initWithNumber:value];
 }
 
 /* NSObject Overrides */
@@ -81,16 +71,15 @@
     return self.stringValue;
 }
 
-/* Operations */
 - (NSNumber *)numberValue
 {
-    return value ? [value copy] : nil;
+    return _value;
 }
 
 - (NSString *)stringValue
 {
-    if (value) {
-        long long duration = [value longLongValue] / 1000;
+    if (_value) {
+        long long duration = [_value longLongValue] / 1000;
         long long positiveDuration = llabs(duration);
         if (positiveDuration > 3600)
             return [NSString stringWithFormat:@"%s%01ld:%02ld:%02ld",
@@ -111,32 +100,31 @@
 
 - (NSString *)verboseStringValue
 {
-    if (value) {
-        long long duration = [value longLongValue] / 1000;
+    if (_value) {
+        long long duration = [_value longLongValue] / 1000;
         long long positiveDuration = llabs(duration);
-        long hours = positiveDuration / 3600;
-        long mins = (positiveDuration / 60) % 60;
-        long seconds = positiveDuration % 60;
+        long hours = (long)(positiveDuration / 3600);
+        long mins = (long)((positiveDuration / 60) % 60);
+        long seconds = (long)(positiveDuration % 60);
         const char * remaining = duration < 0 ? " remaining" : "";
         if (hours > 0)
             return [NSString stringWithFormat:@"%ld hours %ld minutes%s", hours, mins, remaining];
-        else if (mins > 5)
+        if (mins > 5)
             return [NSString stringWithFormat:@"%ld minutes%s", mins, remaining];
-        else if (mins > 0)
+        if (mins > 0)
             return [NSString stringWithFormat:@"%ld minutes %ld seconds%s", mins, seconds, remaining];
-        else
-            return [NSString stringWithFormat:@"%ld seconds%s", seconds, remaining];
-    } else {
-        // Return a string that represents an undefined time.
-        return @"";
+        return [NSString stringWithFormat:@"%ld seconds%s", seconds, remaining];
     }
+
+    // Return a string that represents an undefined time.
+    return @"";
 }
 
 - (NSString *)minuteStringValue
 {
-    if (value) {
-        long long positiveDuration = llabs([value longLongValue]);
-        long minutes = positiveDuration / 60000;
+    if (_value) {
+        long long positiveDuration = llabs([_value longLongValue]);
+        long minutes = (long)(positiveDuration / 60000);
         return [NSString stringWithFormat:@"%ld", minutes];
     }
     return @"";
@@ -144,18 +132,17 @@
 
 - (int)intValue
 {
-    if (value)
-        return [value intValue];
-    return 0;
+    return [_value intValue];
 }
 
 - (NSComparisonResult)compare:(VLCTime *)aTime
 {
-    if (!aTime && !value)
-        return NSOrderedSame;
-    else if (!aTime)
-        return NSOrderedDescending;
-    else
-        return [value compare:aTime.numberValue];
+    NSInteger a = [_value integerValue];
+    NSInteger b = [aTime.value integerValue];
+
+    return (a > b) ? NSOrderedDescending :
+        (a < b) ? NSOrderedAscending :
+            NSOrderedSame;
 }
+
 @end

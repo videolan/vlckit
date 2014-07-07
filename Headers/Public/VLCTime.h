@@ -27,10 +27,7 @@
 /**
  * Provides an object to define VLCMedia's time.
  */
-@interface VLCTime : NSObject <NSCopying>
-{
-    NSNumber * value;       //< Holds, in milliseconds, the VLCTime value
-}
+@interface VLCTime : NSObject
 
 /* Factories */
 + (VLCTime *)nullTime;
@@ -42,12 +39,14 @@
 - (id)initWithInt:(int)aInt;
 
 /* Properties */
-@property (weak, readonly) NSNumber * numberValue;
-@property (readonly, copy) NSString * stringValue;
-@property (readonly, copy) NSString * verboseStringValue;
-@property (readonly, copy) NSString * minuteStringValue;
+@property (nonatomic, readonly) NSNumber * value;	//< Holds, in milliseconds, the VLCTime value
+@property (readonly) NSNumber * numberValue;		// here for backwards compatibility
+@property (readonly) NSString * stringValue;
+@property (readonly) NSString * verboseStringValue;
+@property (readonly) NSString * minuteStringValue;
 @property (readonly) int intValue;
 
-/* Comparitors */
+/* Comparators */
 - (NSComparisonResult)compare:(VLCTime *)aTime;
+
 @end
