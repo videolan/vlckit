@@ -35,5 +35,5 @@
 - (NSArray *)extensions;
 - (void)runExtension:(VLCExtension *)extension;
 
-@property (readwrite, retain) VLCMediaPlayer *mediaPlayer;
+@property (readwrite, strong) VLCMediaPlayer *mediaPlayer;
 @end
