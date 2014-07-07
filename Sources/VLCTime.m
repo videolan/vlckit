@@ -25,12 +25,15 @@
 #import "VLCTime.h"
 
 @implementation VLCTime
+
 /* Factories */
 + (VLCTime *)nullTime
 {
     static VLCTime * nullTime = nil;
-    if (!nullTime)
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
         nullTime = [VLCTime timeWithNumber:nil];
+    });
     return nullTime;
 }
 
