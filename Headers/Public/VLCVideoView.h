@@ -26,9 +26,11 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface VLCVideoView : NSView
+
 /* Properties */
-@property (assign) id delegate;
-@property (copy) NSColor *backColor;
+@property (nonatomic, weak) id delegate;
+@property (nonatomic, copy) NSColor *backColor;
+
 @property BOOL fillScreen;
-@property (readonly) BOOL hasVideo;
+@property (nonatomic, readonly) BOOL hasVideo;
 @end
