@@ -26,21 +26,19 @@
 #import "VLCLibVLCBridging.h"
 
 @interface VLCStreamSession ()
-@property (readwrite) BOOL isComplete;
+
+@property (nonatomic, readwrite) BOOL isComplete;
+@property (nonatomic, readwrite) NSUInteger reattemptedConnections;
+
 @end
 
 @implementation VLCStreamSession
-@synthesize media=originalMedia;
-@synthesize streamOutput;
-@synthesize isComplete;
 
 - (id)init
 {
     if( self = [super init] )
     {
-        reattemptedConnections = 0;
         [self addObserver:self forKeyPath:@"state" options:NSKeyValueObservingOptionNew context:nil];
-        self.isComplete = NO;
     }
     return self;
 }
@@ -48,12 +46,11 @@
 - (void)dealloc
 {
     [self removeObserver:self forKeyPath:@"state"];
-    [super dealloc];
 }
 
 + (id)streamSession
 {
-    return [[[self alloc] init] autorelease];
+    return [[self alloc] init];
 }
 
 
@@ -73,20 +70,22 @@
 {
     NSString * libvlcArgs;
     if( self.drawable )
-        libvlcArgs = [NSString stringWithFormat:@"#duplicate{dst=display,dst=\"%@\"}",[streamOutput representedLibVLCOptions]];
+        libvlcArgs = [NSString stringWithFormat:@"#duplicate{dst=display,dst=\"%@\"}",[_streamOutput representedLibVLCOptions]];
     else
-        libvlcArgs = [streamOutput representedLibVLCOptions];
+        libvlcArgs = [_streamOutput representedLibVLCOptions];
     if( libvlcArgs )
     {
-        [super setMedia: [VLCMedia mediaWithMedia:originalMedia andLibVLCOptions:
-                                [NSDictionary dictionaryWithObject: libvlcArgs forKey: @"sout"]]];
+        [super setMedia:[VLCMedia mediaWithMedia:_media
+                                andLibVLCOptions:@{
+                                    @"sout" : libvlcArgs
+                                }]];
     }
     else
     {
         [super setMedia: self.media];
     }
     [super play];
-	return YES;
+    return YES;
 }
 
 + (NSSet *)keyPathsForValuesAffectingDescription
@@ -96,12 +95,13 @@
 
 - (NSString *)description
 {
-    if([self isComplete])
+    if ([self isComplete])
         return @"Done.";
-    else if([self state] == VLCMediaPlayerStateError)
+
+    if ([self state] == VLCMediaPlayerStateError)
         return @"Error while Converting. Open Console.app to diagnose.";
-    else
-        return @"Converting...";
+
+    return @"Converting...";
 }
 
 + (NSSet *)keyPathsForValuesAffectingEncounteredError
@@ -124,7 +124,7 @@
             self.isComplete = YES;
             return;
         }
-        if( reattemptedConnections > 4 )
+        if( _reattemptedConnections > 4 )
             return;
 
         /* Our media has in fact gained subitems, let's change our playing media */
@@ -133,7 +133,7 @@
             [self stop];
             self.media = [[super.media subitems] mediaAtIndex:0];
             [self play];
-            reattemptedConnections++;
+            _reattemptedConnections++;
         }
         return;
     }
