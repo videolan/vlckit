@@ -30,6 +30,15 @@
 #import "VLCMediaList.h"
 #import "VLCLibVLCBridging.h"
 
+@interface VLCMediaListPlayer () {
+    void *instance;
+    VLCMedia *_rootMedia;
+    VLCMediaPlayer *_mediaPlayer;
+    VLCMediaList *_mediaList;
+    VLCRepeatMode _repeatMode;
+}
+@end
+
 @implementation VLCMediaListPlayer
 
 - (id)initWithOptions:(NSArray *)options

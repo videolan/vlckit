@@ -36,13 +36,7 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
     VLCRepeatAllItems
 };
 
-@interface VLCMediaListPlayer : NSObject {
-    void *instance;
-    VLCMedia *_rootMedia;
-    VLCMediaPlayer *_mediaPlayer;
-    VLCMediaList *_mediaList;
-    VLCRepeatMode _repeatMode;
-}
+@interface VLCMediaListPlayer : NSObject
 
 @property (readwrite) VLCMediaList *mediaList;
 
