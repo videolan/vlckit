@@ -29,48 +29,50 @@
 
 #include <vlc/libvlc.h>
 
+@interface VLCMediaLibrary ()
+
+@property (nonatomic) dispatch_once_t once;
+@property (nonatomic, readwrite, strong) VLCMediaList * allMedia;
+
+@end
+
 @implementation VLCMediaLibrary
+
 + (id)sharedMediaLibrary
 {
     static VLCMediaLibrary * sharedMediaLibrary = nil;
-    if( !sharedMediaLibrary )
-    {
+    static dispatch_once_t onceToken;
+
+    dispatch_once(&onceToken, ^{
         sharedMediaLibrary = [[VLCMediaLibrary alloc] init];
-    }
+    });
+
     return sharedMediaLibrary;
 }
 
 - (id)init
 {
-    if (self = [super init])
-    {
+    if (self = [super init]) {
         mlib = libvlc_media_library_new( [VLCLibrary sharedInstance]);
-
         libvlc_media_library_load( mlib );
-
-        allMedia = nil;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    [allMedia release];
-
     libvlc_media_library_release(mlib);
     mlib = nil;     // make sure that the pointer is dead
-
-    [super dealloc];
 }
 
 - (VLCMediaList *)allMedia
 {
-    if( !allMedia )
-    {
+    dispatch_once(&_once, ^{
         libvlc_media_list_t * p_mlist = libvlc_media_library_media_list( mlib );
-        allMedia = [[VLCMediaList mediaListWithLibVLCMediaList:p_mlist] retain];
+        _allMedia = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
         libvlc_media_list_release(p_mlist);
-    }
-    return allMedia;
+    });
+    return _allMedia;
 }
+
 @end

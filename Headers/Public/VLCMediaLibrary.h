@@ -32,11 +32,12 @@
 @interface VLCMediaLibrary : NSObject
 {
     void * mlib;
-    VLCMediaList * allMedia;
 }
+
 /* Factories */
 + (id)sharedMediaLibrary;
 
 /* Properties */
-@property (readonly) VLCMediaList * allMedia;
+@property (nonatomic, readonly, strong) VLCMediaList * allMedia;
+
 @end
