@@ -78,14 +78,8 @@ typedef enum
     pthread_cond_t   _signalData;        //< Data lock.
 }
 
-- (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message;
-- (void)callObjectMethodWithArgs:(message_t *)message;
-- (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName;
-- (pthread_cond_t *)signalData;
-- (pthread_mutex_t *)queueLock;
 - (void)startEventLoop;
 
-- (void)addMessageToHandleOnMainThread:(message_t *)message;
 @end
 
 /**
@@ -344,4 +338,5 @@ static void * EventDispatcherMainLoop(void * user_data)
 {
     return &_queueLock;
 }
+
 @end
