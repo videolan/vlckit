@@ -5,6 +5,9 @@ Cross-platform:
 - Fixed deinterlacing if requested
 - Fixed decoding and display of Teletext-based subtitles
 - Improved thumbnailing reliability
+- Added support for inclusion in swift projects
+- Switched to Automatic Reference Counting
+- Various stability improvements
 
 MobileVLCKit:
 - It is finally possible to compile the framework without relying on third
