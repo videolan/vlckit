@@ -150,7 +150,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 @interface VLCMediaPlayer ()
 {
     VLCLibrary *_privateLibrary;
-    id _delegate;                        //< Object delegate
     void * _playerInstance;              //  Internal
     VLCMedia * _media;                   //< Current media being played
     VLCTime * _cachedTime;               //< Cached time of the media being played
@@ -243,16 +242,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_media_player_release(_playerInstance);
     if (_privateLibrary != [VLCLibrary sharedLibrary])
         libvlc_release(_privateLibrary.instance);
-}
-
-- (void)setDelegate:(id)value
-{
-    _delegate = value;
-}
-
-- (id)delegate
-{
-    return _delegate;
 }
 
 #if !TARGET_OS_IPHONE
@@ -1070,8 +1059,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (id)initWithDrawable:(id)aDrawable options:(NSArray *)options
 {
     if (self = [super init]) {
-        _delegate = nil;
-        _media = nil;
         _cachedTime = [VLCTime nullTime];
         _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;

@@ -93,6 +93,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @interface VLCMediaPlayer : NSObject
 
 @property (readonly) VLCLibrary *libraryInstance;
+@property (weak) id<VLCMediaPlayerDelegate> delegate;
 
 #if !TARGET_OS_IPHONE
 /* Initializers */
@@ -100,10 +101,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (id)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
 - (id)initWithOptions:(NSArray *)options;
-
-/* Properties */
-- (void)setDelegate:(id)value;
-- (id)delegate;
 
 /* Video View Options */
 // TODO: Should be it's own object?
