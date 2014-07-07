@@ -38,16 +38,15 @@
 #import <QuartzCore/QuartzCore.h>
 
 /******************************************************************************
- * VLCVideoView (Private)
+ * VLCVideoLayer (Private)
  */
 
-@interface VLCVideoLayer (Private)
-/* Method */
-- (void)addVoutLayer:(CALayer *)aLayer;
-@end
-
 @interface VLCVideoLayer ()
-@property (readwrite) BOOL hasVideo;
+
+@property (nonatomic, readwrite) BOOL hasVideo;
+
+- (void)addVoutLayer:(CALayer *)aLayer;
+
 @end
 
 /******************************************************************************
@@ -55,7 +54,6 @@
  */
 
 @implementation VLCVideoLayer
-@synthesize hasVideo;
 
 - (BOOL)fillScreen
 {
@@ -68,14 +66,9 @@
     [self setNeedsLayout];
 }
 
-@end
-
 /******************************************************************************
  * Implementation VLCVideoLayer  (Private)
  */
-
-@implementation VLCVideoLayer (Private)
-
 
 /* This is called by the libvlc module 'opengllayer' as soon as there is one
  * vout available
@@ -109,7 +102,7 @@
 
     /* Trigger by hand, as it doesn't go through else. Assumed bug from Cocoa */
     [self willChangeValueForKey:@"hasVideo"];
-    self.hasVideo = NO;
+    _hasVideo = NO;
     [self didChangeValueForKey:@"hasVideo"];
 }
 

@@ -25,11 +25,8 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface VLCVideoLayer : CALayer
-{
-    BOOL hasVideo;
-}
 
-/* Properties */
-@property (readonly) BOOL hasVideo;
-@property BOOL fillScreen;
+@property (nonatomic, readonly) BOOL hasVideo;
+@property (nonatomic) BOOL fillScreen;
+
 @end
