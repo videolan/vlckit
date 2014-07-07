@@ -68,7 +68,16 @@ typedef enum
 
 @end
 
-@interface VLCEventManager (Private)
+@interface VLCEventManager ()
+{
+    NSMutableArray *_messageQueue;      //< Holds a queue of messages.
+    NSMutableArray *_pendingMessagesOnMainThread;   //< Holds the message that are being posted on main thread.
+    NSLock          *_pendingMessagesLock;
+    pthread_t        _dispatcherThread;  //< Thread responsible for dispatching messages.
+    pthread_mutex_t  _queueLock;         //< Queue lock.
+    pthread_cond_t   _signalData;        //< Data lock.
+}
+
 - (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message;
 - (void)callObjectMethodWithArgs:(message_t *)message;
 - (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName;
@@ -193,21 +202,21 @@ static void * EventDispatcherMainLoop(void * user_data)
             NSAssert([NSThread isMultiThreaded], @"Can't put Cocoa in multithreaded mode");
         }
 
-        messageQueue = [NSMutableArray new];
-        pendingMessagesOnMainThread = [NSMutableArray new];
-        pendingMessagesLock = [[NSLock alloc] init];
+        _messageQueue = [NSMutableArray new];
+        _pendingMessagesOnMainThread = [NSMutableArray new];
+        _pendingMessagesLock = [[NSLock alloc] init];
 
-        pthread_mutex_init(&queueLock, NULL);
-        pthread_cond_init(&signalData, NULL);
-        pthread_create(&dispatcherThread, NULL, EventDispatcherMainLoop, (__bridge void *)(self));
+        pthread_mutex_init(&_queueLock, NULL);
+        pthread_cond_init(&_signalData, NULL);
+        pthread_create(&_dispatcherThread, NULL, EventDispatcherMainLoop, (__bridge void *)(self));
     }
     return self;
 }
 
 - (void)dealloc
 {
-    pthread_kill(dispatcherThread, SIGKILL);
-    pthread_join(dispatcherThread, NULL);
+    pthread_kill(_dispatcherThread, SIGKILL);
+    pthread_join(_dispatcherThread, NULL);
 }
 
 - (void)callOnMainThreadDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName
@@ -248,7 +257,7 @@ static void * EventDispatcherMainLoop(void * user_data)
 
     // Remove all queued message
     pthread_mutex_lock([self queueLock]);
-    [pendingMessagesLock lock];
+    [_pendingMessagesLock lock];
 
     NSMutableArray *queue = [self messageQueue];
     for (NSInteger i = [queue count] - 1; i >= 0; i--) {
@@ -258,7 +267,7 @@ static void * EventDispatcherMainLoop(void * user_data)
     }
 
     // Remove all pending messages
-    NSMutableArray *messages = pendingMessagesOnMainThread;
+    NSMutableArray *messages = _pendingMessagesOnMainThread;
     // need to interate in reverse since we are removing objects
     for (NSInteger i = [messages count] - 1; i >= 0; i--) {
         message_t *message = messages[i];
@@ -267,29 +276,26 @@ static void * EventDispatcherMainLoop(void * user_data)
             [messages removeObjectAtIndex:i];
     }
 
-    [pendingMessagesLock unlock];
+    [_pendingMessagesLock unlock];
     pthread_mutex_unlock([self queueLock]);
 }
-@end
-
-@implementation VLCEventManager (Private)
 
 - (void)addMessageToHandleOnMainThread:(message_t *)message
 {
-    [pendingMessagesLock lock];
-    [pendingMessagesOnMainThread addObject:message];
-    [pendingMessagesLock unlock];
+    [_pendingMessagesLock lock];
+    [_pendingMessagesOnMainThread addObject:message];
+    [_pendingMessagesLock unlock];
 
 }
 
 - (BOOL)markMessageHandledOnMainThreadIfExists:(message_t *)message
 {
-    [pendingMessagesLock lock];
-    BOOL cancelled = ![pendingMessagesOnMainThread containsObject:message];
+    [_pendingMessagesLock lock];
+    BOOL cancelled = ![_pendingMessagesOnMainThread containsObject:message];
     if (!cancelled) {
-        [pendingMessagesOnMainThread removeObject:message];
+        [_pendingMessagesOnMainThread removeObject:message];
     }
-    [pendingMessagesLock unlock];
+    [_pendingMessagesLock unlock];
 
     return !cancelled;
 }
@@ -325,27 +331,27 @@ static void * EventDispatcherMainLoop(void * user_data)
 
 - (NSMutableArray *)messageQueue
 {
-    return messageQueue;
+    return _messageQueue;
 }
 
 - (NSMutableArray *)pendingMessagesOnMainThread
 {
-    return pendingMessagesOnMainThread;
+    return _pendingMessagesOnMainThread;
 }
 
 - (NSLock *)pendingMessagesLock
 {
-    return pendingMessagesLock;
+    return _pendingMessagesLock;
 }
 
 
 - (pthread_cond_t *)signalData
 {
-    return &signalData;
+    return &_signalData;
 }
 
 - (pthread_mutex_t *)queueLock
 {
-    return &queueLock;
+    return &_queueLock;
 }
 @end

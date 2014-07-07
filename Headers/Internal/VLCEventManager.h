@@ -28,14 +28,6 @@
  * The VLCEventManager class provides a safe way for inter-thread communications.
  */
 @interface VLCEventManager : NSObject
-{
-    NSMutableArray *messageQueue;      //< Holds a queue of messages.
-    NSMutableArray *pendingMessagesOnMainThread;   //< Holds the message that are being posted on main thread.
-    NSLock          *pendingMessagesLock;
-    pthread_t        dispatcherThread;  //< Thread responsible for dispatching messages.
-    pthread_mutex_t  queueLock;         //< Queue lock.
-    pthread_cond_t   signalData;        //< Data lock.
-}
 
 /* Factories */
 /**
