@@ -65,7 +65,6 @@ NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
     VLCMediaList *        subitems;          //< Sub list of items
     VLCTime *             length;            //< Cached duration of the media
     NSMutableDictionary * metaDictionary;    //< Meta data storage
-    id                    delegate;          //< Delegate object
     BOOL                  isArtFetched;      //< Value used to determine of the artwork has been parsed
     BOOL                  areOthersMetaFetched; //< Value used to determine of the other meta has been parsed
     BOOL                  isArtURLFetched;   //< Value used to determine of the other meta has been preparsed
@@ -204,7 +203,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
         p_md = libvlc_media_new_location(library.instance, [[anURL absoluteString] UTF8String]);
 
-        delegate = nil;
         metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
 
         // This value is set whenever the demuxer figures out what the length is.
@@ -222,7 +220,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         p_md = libvlc_media_new_as_node([VLCLibrary sharedInstance],
                                                    [aName UTF8String]);
 
-        delegate = nil;
         metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
 
         // This value is set whenever the demuxer figures out what the length is.
@@ -246,7 +243,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
     // Testing to see if the pointer exists is not required, if the pointer is null
     // then the release message is not sent to it.
-    delegate = nil;
+    _delegate = nil;
 
     libvlc_media_release( p_md );
 
@@ -266,8 +263,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         return NSOrderedDescending;
     return p_md == [media libVLCMediaDescriptor] ? NSOrderedSame : NSOrderedAscending;
 }
-
-@synthesize delegate;
 
 - (VLCTime *)length
 {
@@ -909,8 +904,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 {
     [self fetchMetaInformationFromLibVLCWithType:metaType];
 
-    if ([delegate respondsToSelector:@selector(mediaMetaDataDidChange:)])
-        [self.delegate mediaMetaDataDidChange:self];
+    if ([_delegate respondsToSelector:@selector(mediaMetaDataDidChange:)])
+        [_delegate mediaMetaDataDidChange:self];
 }
 
 - (void)subItemAdded
@@ -935,11 +930,11 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     [self didChangeValueForKey:@"parsed"];
 
     // FIXME: Probably don't even call this if there is no delegate.
-    if (!delegate || !isParsed)
+    if (!_delegate || !isParsed)
         return;
 
-    if ([delegate respondsToSelector:@selector(mediaDidFinishParsing:)])
-        [delegate mediaDidFinishParsing:self];
+    if ([_delegate respondsToSelector:@selector(mediaDidFinishParsing:)])
+        [_delegate mediaDidFinishParsing:self];
 }
 
 - (void)setStateAsNumber:(NSNumber *)newStateAsNumber

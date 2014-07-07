@@ -73,7 +73,7 @@ typedef NSInteger VLCMediaState;
  * Informal protocol declaration for VLCMedia delegates.  Allows data changes to be
  * trapped.
  */
-@protocol VLCMediaDelegate
+@protocol VLCMediaDelegate <NSObject>
 // TODO: SubItemAdded/SubItemRemoved implementation.  Not sure if we really want to implement this.
 ///**
 // * Delegate method called whenever a sub item has been added to the specified VLCMedia.
@@ -186,7 +186,7 @@ typedef NSInteger VLCMediaState;
 /**
  * Receiver's delegate.
  */
-@property (weak) id delegate;
+@property (weak) id<VLCMediaDelegate> delegate;
 
 /**
  * A VLCTime object describing the length of the media resource, only if it is
