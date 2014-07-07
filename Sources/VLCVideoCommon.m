@@ -32,13 +32,17 @@
 
 @implementation VLCVideoLayoutManager
 
-/* Factories */
 + (id)layoutManager
 {
-    return [[[self alloc] init] autorelease];
+	static id sLayoutManager = nil;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		sLayoutManager = [[self alloc] init];
+	});
+    return sLayoutManager;
 }
 
-/* CALayoutManager Impelmentation */
+/* CALayoutManager Implementation */
 - (void)layoutSublayersOfLayer:(CALayer *)layer
 {
     /* After having done everything normally resize the vlcopengllayer */
@@ -47,15 +51,15 @@
         CALayer * videolayer = [[layer sublayers] objectAtIndex:0];
         CGRect bounds = layer.bounds;
         CGRect videoRect = bounds;
-
-        if (originalVideoSize.height > 0 && originalVideoSize.width > 0)
+		CGSize original = self.originalVideoSize;
+        if (original.height > 0 && original.width > 0)
         {
-            CGFloat xRatio = CGRectGetWidth(bounds) / originalVideoSize.width;
-            CGFloat yRatio = CGRectGetHeight(bounds) / originalVideoSize.height;
-            CGFloat ratio = fillScreenEntirely ? MAX(xRatio, yRatio) : MIN(xRatio, yRatio);
+            CGFloat xRatio = CGRectGetWidth(bounds) / original.width;
+            CGFloat yRatio = CGRectGetHeight(bounds) / original.height;
+            CGFloat ratio = self.fillScreenEntirely ? MAX(xRatio, yRatio) : MIN(xRatio, yRatio);
 
-            videoRect.size.width = ratio * originalVideoSize.width;
-            videoRect.size.height = ratio * originalVideoSize.height;
+            videoRect.size.width = ratio * original.width;
+            videoRect.size.height = ratio * original.height;
             videoRect.origin.x += (CGRectGetWidth(bounds) - CGRectGetWidth(videoRect)) / 2.0;
             videoRect.origin.y += (CGRectGetHeight(bounds) - CGRectGetHeight(videoRect)) / 2.0;
         }
@@ -63,7 +67,4 @@
     }
 }
 
-/* Properties */
-@synthesize fillScreenEntirely;
-@synthesize originalVideoSize;
 @end

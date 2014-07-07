@@ -28,15 +28,12 @@
  * TODO: Documentation
  */
 @interface VLCVideoLayoutManager : NSObject
-{
-    CGSize originalVideoSize;
-    BOOL  fillScreenEntirely;
-}
 
 /* Factories */
 + (id)layoutManager;
 
 /* Properties */
-@property BOOL  fillScreenEntirely;
-@property CGSize originalVideoSize;
+@property (nonatomic) BOOL  fillScreenEntirely;
+@property (nonatomic) CGSize originalVideoSize;
+
 @end
