@@ -37,43 +37,33 @@
 #include <vlc/libvlc_structures.h>
 
 static VLCLibrary * sharedLibrary = nil;
-static void * sharedInstance = nil;
 
 @interface VLCLibrary()
-{
-    void *instance;
-}
+
+@property (nonatomic, assign) void *instance;
 
 @end
 
 @implementation VLCLibrary
+
 + (VLCLibrary *)sharedLibrary
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedLibrary = [[self alloc] init];
-        sharedInstance = sharedLibrary.instance;
     });
     return sharedLibrary;
+}
+
++ (void *)sharedInstance
+{
+    return [self sharedLibrary].instance;
 }
 
 - (id)init
 {
     if (self = [super init]) {
-        NSArray *vlcParams = [self _defaultOptions];
-
-        NSUInteger paramNum = 0;
-        NSUInteger count = [vlcParams count];
-        const char *lib_vlc_params[count];
-        while (paramNum < count) {
-            NSString *vlcParam = vlcParams[paramNum];
-            lib_vlc_params[paramNum] = [vlcParam cStringUsingEncoding:NSASCIIStringEncoding];
-            paramNum++;
-        }
-        unsigned argc = sizeof(lib_vlc_params)/sizeof(lib_vlc_params[0]);
-        instance = libvlc_new(argc, lib_vlc_params);
-        libvlc_retain(instance);
-        NSAssert(instance, @"libvlc failed to initialize");
+        [self prepareInstanceWithOptions:nil];
     }
     return self;
 }
@@ -81,33 +71,27 @@ static void * sharedInstance = nil;
 - (id)initWithOptions:(NSArray*)options
 {
     if (self = [super init]) {
-        NSArray *vlcParams = [self _defaultOptions];
-
-        NSUInteger paramNum = 0;
-        NSUInteger count = [vlcParams count];
-        NSUInteger optionsCount = [options count];
-        const char *lib_vlc_params[count+optionsCount];
-
-        /* add default stuff */
-        while (paramNum < count) {
-            NSString *vlcParam = vlcParams[paramNum];
-            lib_vlc_params[paramNum] = [vlcParam cStringUsingEncoding:NSASCIIStringEncoding];
-            paramNum++;
-        }
-
-        /* add requested options */
-        NSUInteger optionNum = 0;
-        while (optionNum < optionsCount) {
-            NSString *vlcParam = options[optionNum];
-            lib_vlc_params[paramNum + optionNum] = [vlcParam cStringUsingEncoding:NSASCIIStringEncoding];
-            optionNum++;
-        }
-        unsigned argc = sizeof(lib_vlc_params)/sizeof(lib_vlc_params[0]);
-        instance = libvlc_new(argc, lib_vlc_params);
-        libvlc_retain(instance);
-        NSAssert(instance, @"libvlc failed to initialize");
+        [self prepareInstanceWithOptions:options];
     }
     return self;
+}
+
+- (void)prepareInstanceWithOptions:(NSArray *)options
+{
+    NSArray *allOptions = options ? [[self _defaultOptions] arrayByAddingObjectsFromArray:options] : [self _defaultOptions];
+
+    NSUInteger paramNum = 0;
+    NSUInteger count = allOptions.count;
+    const char *lib_vlc_params[count];
+    while (paramNum < count) {
+        lib_vlc_params[paramNum] = [allOptions[paramNum] cStringUsingEncoding:NSASCIIStringEncoding];
+        paramNum++;
+    }
+    _instance = libvlc_new(count, lib_vlc_params);
+    if (_instance)
+        libvlc_retain(_instance);
+
+    NSAssert(_instance, @"libvlc failed to initialize");
 }
 
 - (NSArray *)_defaultOptions
@@ -163,44 +147,20 @@ static void * sharedInstance = nil;
 
 - (void)setHumanReadableName:(NSString *)readableName withHTTPUserAgent:(NSString *)userAgent
 {
-    if (instance)
-        libvlc_set_user_agent(instance, [readableName UTF8String], [userAgent UTF8String]);
+    if (_instance)
+        libvlc_set_user_agent(_instance, [readableName UTF8String], [userAgent UTF8String]);
 }
 
 - (void)setApplicationIdentifier:(NSString *)identifier withVersion:(NSString *)version andApplicationIconName:(NSString *)icon
 {
-    if (instance)
-        libvlc_set_app_id(instance, [identifier UTF8String], [version UTF8String], [icon UTF8String]);
+    if (_instance)
+        libvlc_set_app_id(_instance, [identifier UTF8String], [version UTF8String], [icon UTF8String]);
 }
 
 - (void)dealloc
 {
-    if (instance)
-        libvlc_release(instance);
-
-    if (self == sharedLibrary) {
-        sharedLibrary = nil;
-        libvlc_release(sharedInstance);
-        sharedInstance = nil;
-    }
-
+    if (_instance)
+        libvlc_release(_instance);
 }
 
 @end
-
-@implementation VLCLibrary (VLCLibVLCBridging)
-+ (void *)sharedInstance
-{
-    NSAssert(sharedInstance, @"shared library doesn't have an instance");
-
-    return sharedInstance;
-}
-
-- (void *)instance
-{
-    NSAssert(instance, @"library doesn't have an instance");
-
-    return instance;
-}
-@end
-
