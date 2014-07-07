@@ -40,10 +40,10 @@ typedef enum
  */
 @interface message_t : NSObject
 
-@property (nonatomic) id target;    //< Target object that should receive the message (retained until method is called).
+@property (nonatomic, strong) id target;    //< Target object that should receive the message (retained until method is called).
 @property (nonatomic) SEL sel;      //< A selector that identifies the message to be sent to the target.
 @property (nonatomic, copy) NSString * name;           //< Name to be used for NSNotification
-@property (nonatomic) id object;                  //< Object argument to pass to the target via the selector.
+@property (nonatomic, strong) id object;                  //< Object argument to pass to the target via the selector.
 @property (nonatomic) message_type_t type;            //< Type of queued message.
 
 @end
@@ -55,7 +55,7 @@ typedef enum
     if (![object isKindOfClass:[message_t class]]) return NO;
 
     message_t *otherObject = object;
-    BOOL notificatonMatches =
+    BOOL notificationMatches =
         (otherObject.type == VLCNotification              && [otherObject.name isEqualToString:self.name]) ||
         (otherObject.type == VLCObjectMethodWithArrayArg  && [otherObject.object isEqual:self.object]) ||
         (otherObject.type == VLCObjectMethodWithObjectArg && [otherObject.object isEqual:self.object]);
@@ -63,7 +63,7 @@ typedef enum
     return [otherObject.target isEqual:_target] &&
             otherObject.sel == self.sel         &&
             otherObject.type == self.type       &&
-            notificatonMatches;
+            notificationMatches;
 }
 
 @end
@@ -79,6 +79,16 @@ typedef enum
 }
 
 - (void)startEventLoop;
+
+- (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t
+*)message;
+- (void)callObjectMethodWithArgs:(message_t *)message;
+- (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector
+withNotificationName:(NSString *)aNotificationName;
+- (pthread_cond_t *)signalData;
+- (pthread_mutex_t *)queueLock;
+
+- (void)addMessageToHandleOnMainThread:(message_t *)message;
 
 @end
 
