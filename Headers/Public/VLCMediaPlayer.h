@@ -92,7 +92,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 // TODO: Should we use medialist_player or our own flavor of media player?
 @interface VLCMediaPlayer : NSObject
 
-@property (readonly) VLCLibrary *libraryInstance;
+@property (nonatomic, readonly) VLCLibrary *libraryInstance;
 @property (weak) id<VLCMediaPlayerDelegate> delegate;
 
 #if !TARGET_OS_IPHONE
@@ -144,7 +144,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * \param relative scale factor as float
  */
-@property (readwrite) float scaleFactor;
+@property (nonatomic) float scaleFactor;
 
 /**
  * Take a snapshot of the current video.
@@ -170,37 +170,37 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * \param bool value
  */
-@property BOOL adjustFilterEnabled;
+@property (nonatomic) BOOL adjustFilterEnabled;
 /**
  * Set/Get the adjust filter's contrast value
  *
  * \param float value (range: 0-2, default: 1.0)
  */
-@property float contrast;
+@property (nonatomic) float contrast;
 /**
  * Set/Get the adjust filter's brightness value
  *
  * \param float value (range: 0-2, default: 1.0)
  */
-@property float brightness;
+@property (nonatomic)  float brightness;
 /**
  * Set/Get the adjust filter's hue value
  *
  * \param integer value (range: 0-360, default: 0)
  */
-@property int hue;
+@property (nonatomic)  int hue;
 /**
  * Set/Get the adjust filter's saturation value
  *
  * \param float value (range: 0-3, default: 1.0)
  */
-@property float saturation;
+@property (nonatomic)  float saturation;
 /**
  * Set/Get the adjust filter's gamma value
  *
  * \param float value (range: 0-10, default: 1.0)
  */
-@property float gamma;
+@property (nonatomic)  float gamma;
 
 /**
  * Get the requested movie play rate.
@@ -211,9 +211,9 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * \return movie play rate
  */
-@property float rate;
+@property (nonatomic)  float rate;
 
-@property (weak, readonly) VLCAudio * audio;
+@property (nonatomic, readonly, weak) VLCAudio * audio;
 
 /* Video Information */
 /**
@@ -221,6 +221,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return video size as CGSize
  */
 - (CGSize)videoSize;
+
 /**
  * Does the current media have a video output?
  * \note a false return value doesn't mean that the video doesn't have any video
@@ -228,6 +229,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return current video output status
  */
 - (BOOL)hasVideoOut;
+
 /**
  * Frames per second
  * \return current media's frames per second value
@@ -249,7 +251,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (VLCTime *)time;
 
-@property (weak, readonly) VLCTime *remainingTime;
+@property (nonatomic, readonly, weak) VLCTime *remainingTime;
 
 /**
  * Frames per second
