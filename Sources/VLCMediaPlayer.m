@@ -577,7 +577,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     unsigned height = 0, width = 0;
     int failure = libvlc_video_get_size(_playerInstance, 0, &width, &height);
     if (failure)
-        [[NSException exceptionWithName:@"Can't get video size" reason:@"No video output" userInfo:nil] raise];
+        return CGSizeZero;
     return CGSizeMake(width, height);
 }
 
