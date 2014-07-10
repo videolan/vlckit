@@ -82,7 +82,6 @@ typedef enum
 
 - (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message;
 - (void)callObjectMethodWithArgs:(message_t *)message;
-- (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName;
 - (pthread_cond_t *)signalData;
 - (pthread_mutex_t *)queueLock;
 
@@ -268,19 +267,19 @@ static void * EventDispatcherMainLoop(void * user_data)
     pthread_mutex_lock([self queueLock]);
     [_pendingMessagesLock lock];
 
-	// Keep a hold on the secondary objects and release them only AFTER we have released our locks to prevents deadlocks.
-	// i.e. dealloc'ing a VLCMediaPlayer that has pending messages with its VLCMedia as message object,
-	// and these references are the last ones to the VLCMedia, so releasing message->u.object would dealloc the VLCMedia which in
-	// turn would call -cancelCallToObject, effectively causing a deadlock.
-	NSMutableArray *secondaryObjects = [[NSMutableArray alloc] init];
+    // Keep a hold on the secondary objects and release them only AFTER we have released our locks to prevents deadlocks.
+    // i.e. dealloc'ing a VLCMediaPlayer that has pending messages with its VLCMedia as message object,
+    // and these references are the last ones to the VLCMedia, so releasing message->u.object would dealloc the VLCMedia which in
+    // turn would call -cancelCallToObject, effectively causing a deadlock.
+    NSMutableArray *secondaryObjects = [[NSMutableArray alloc] init];
 
     for (NSInteger i = _messageQueue.count - 1; i >= 0; i--) {
         message_t *message = _messageQueue[i];
         if (message.target == target) {
-			if (message.object != nil)
-				[secondaryObjects addObject:message.object];
-			[_messageQueue removeObjectAtIndex:(NSUInteger) i];
-		}
+            if (message.object != nil)
+                [secondaryObjects addObject:message.object];
+            [_messageQueue removeObjectAtIndex:(NSUInteger) i];
+        }
     }
 
     // Remove all pending messages
@@ -329,9 +328,16 @@ static void * EventDispatcherMainLoop(void * user_data)
 - (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message
 {
     // Check that we were not cancelled, ie, target was released
-    if ([self markMessageHandledOnMainThreadIfExists:message])
-        [self callDelegateOfObject:message.target withDelegateMethod:message.sel withNotificationName:message.name];
+    if ([self markMessageHandledOnMainThreadIfExists:message]) {
+        id target = message.target;
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:message.object object:target]];
 
+        id delegate = [target delegate];
+        if ([delegate respondsToSelector:message.sel]) {
+            void (*method)(id, SEL, id) = (void (*)(id, SEL, id)) [delegate methodForSelector:message.sel];
+            method(delegate, message.sel, [NSNotification notificationWithName:message.object object:target]);
+        }
+    }
 }
 
 - (void)callObjectMethodWithArgs:(message_t *)message
@@ -341,18 +347,6 @@ static void * EventDispatcherMainLoop(void * user_data)
         void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[message.target methodForSelector: message.sel];
         method(message.target, message.sel, message.object);
     }
-}
-
-- (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName
-{
-    [[NSNotificationCenter defaultCenter] postNotification: [NSNotification notificationWithName:aNotificationName object:aTarget]];
-
-    id delegate = [aTarget delegate];
-    if (!delegate || ![delegate respondsToSelector:aSelector])
-        return;
-
-    void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[delegate methodForSelector: aSelector];
-    method(delegate, aSelector, [NSNotification notificationWithName:aNotificationName object:aTarget]);
 }
 
 - (pthread_cond_t *)signalData
