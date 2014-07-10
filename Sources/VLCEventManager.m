@@ -80,11 +80,9 @@ typedef enum
 
 - (void)startEventLoop;
 
-- (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t
-*)message;
+- (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message;
 - (void)callObjectMethodWithArgs:(message_t *)message;
-- (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector
-withNotificationName:(NSString *)aNotificationName;
+- (void)callDelegateOfObject:(id)aTarget withDelegateMethod:(SEL)aSelector withNotificationName:(NSString *)aNotificationName;
 - (pthread_cond_t *)signalData;
 - (pthread_mutex_t *)queueLock;
 
