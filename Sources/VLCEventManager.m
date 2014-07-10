@@ -153,13 +153,10 @@ static void * EventDispatcherMainLoop(void * user_data)
         @autoreleasepool {
             message_t * message, * message_newer = NULL;
 
-            /* Sleep a bit not to flood the interface */
-            usleep(300);
-
             /* Wait for some data */
 
-            pthread_mutex_lock([self queueLock]);
             /* Wait until we have something on the queue */
+            pthread_mutex_lock([self queueLock]);
             while (_messageQueue.count <= 0)
                 pthread_cond_wait([self signalData], [self queueLock]);
 
@@ -226,6 +223,9 @@ static void * EventDispatcherMainLoop(void * user_data)
                                        withObject:message
                                     waitUntilDone: YES];
         }
+
+        /* Sleep a bit not to flood the interface */
+        usleep(300);
     }
 }
 
