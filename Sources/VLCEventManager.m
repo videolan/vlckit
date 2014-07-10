@@ -173,7 +173,7 @@ static void * EventDispatcherMainLoop(void * user_data)
                         message_newer.target == message.target &&
                         [message_newer.name isEqualToString:message.name]) {
                         if (last_match_msg >= 0) {
-                            [_messageQueue removeObjectAtIndex:last_match_msg];
+                            [_messageQueue removeObjectAtIndex:(NSUInteger) last_match_msg];
                         }
                         last_match_msg = i;
                     }
@@ -197,7 +197,7 @@ static void * EventDispatcherMainLoop(void * user_data)
                         }
 
                         [newArg addObjectsFromArray:message_newer.object];
-                        [_messageQueue removeObjectAtIndex:i];
+                        [_messageQueue removeObjectAtIndex:(NSUInteger) i];
                     }
                     /* It shouldn be a good idea not to collapse event with other kind of event in-between.
                      * This could be particulary problematic when the same object receive two related events
@@ -281,7 +281,7 @@ static void * EventDispatcherMainLoop(void * user_data)
         message_t *message = messages[i];
 
         if (message.target == target)
-            [messages removeObjectAtIndex:i];
+            [messages removeObjectAtIndex:(NSUInteger) i];
     }
 
     [_pendingMessagesLock unlock];
