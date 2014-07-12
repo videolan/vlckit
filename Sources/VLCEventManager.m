@@ -268,10 +268,19 @@ static void * EventDispatcherMainLoop(void * user_data)
     pthread_mutex_lock([self queueLock]);
     [_pendingMessagesLock lock];
 
+	// Keep a hold on the secondary objects and release them only AFTER we have released our locks to prevents deadlocks.
+	// i.e. dealloc'ing a VLCMediaPlayer that has pending messages with its VLCMedia as message object,
+	// and these references are the last ones to the VLCMedia, so releasing message->u.object would dealloc the VLCMedia which in
+	// turn would call -cancelCallToObject, effectively causing a deadlock.
+	NSMutableArray *secondaryObjects = [[NSMutableArray alloc] init];
+
     for (NSInteger i = _messageQueue.count - 1; i >= 0; i--) {
         message_t *message = _messageQueue[i];
-        if (message.target == target)
-            [_messageQueue removeObjectAtIndex:i];
+        if (message.target == target) {
+			if (message.object != nil)
+				[secondaryObjects addObject:message.object];
+			[_messageQueue removeObjectAtIndex:(NSUInteger) i];
+		}
     }
 
     // Remove all pending messages
@@ -280,12 +289,21 @@ static void * EventDispatcherMainLoop(void * user_data)
     for (NSInteger i = [messages count] - 1; i >= 0; i--) {
         message_t *message = messages[i];
 
-        if (message.target == target)
+        if (message.target == target) {
+            if (message.object != nil)
+                [secondaryObjects addObject:message.object];
             [messages removeObjectAtIndex:(NSUInteger) i];
+        }
+
     }
 
     [_pendingMessagesLock unlock];
     pthread_mutex_unlock([self queueLock]);
+
+    // secondaryObjects will be disposed of now, but just to make sure that ARC doesn't
+    // dispose it earlier, play a little trick to keep it alive up to this point by calling a selector
+    // keeping the objects alive until the mutex has been unlocked is crucial to preventing recursion+deadlock
+    [secondaryObjects removeAllObjects];
 }
 
 - (void)addMessageToHandleOnMainThread:(message_t *)message
