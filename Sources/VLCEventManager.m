@@ -82,8 +82,6 @@ typedef enum
 
 - (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message;
 - (void)callObjectMethodWithArgs:(message_t *)message;
-- (pthread_cond_t *)signalData;
-- (pthread_mutex_t *)queueLock;
 
 - (void)addMessageToHandleOnMainThread:(message_t *)message;
 
@@ -155,9 +153,9 @@ static void * EventDispatcherMainLoop(void * user_data)
             /* Wait for some data */
 
             /* Wait until we have something on the queue */
-            pthread_mutex_lock([self queueLock]);
+            pthread_mutex_lock(&_queueLock);
             while (_messageQueue.count <= 0)
-                pthread_cond_wait([self signalData], [self queueLock]);
+                pthread_cond_wait(&_signalData, &_queueLock);
 
             /* Get the first object off the queue. */
             message = [_messageQueue lastObject];    // Released in 'call'
@@ -179,7 +177,7 @@ static void * EventDispatcherMainLoop(void * user_data)
                 }
                 if (last_match_msg >= 0) {
                     // newer notification detected, ignore current one
-                    pthread_mutex_unlock([self queueLock]);
+                    pthread_mutex_unlock(&_queueLock);
                     continue;
                 }
             } else if (message.type == VLCObjectMethodWithArrayArg) {
@@ -211,7 +209,7 @@ static void * EventDispatcherMainLoop(void * user_data)
             }
             [self addMessageToHandleOnMainThread:message];
 
-            pthread_mutex_unlock([self queueLock]);
+            pthread_mutex_unlock(&_queueLock);
 
             if (message.type == VLCNotification)
                 [self performSelectorOnMainThread:@selector(callDelegateOfObjectAndSendNotificationWithArgs:)
@@ -238,10 +236,10 @@ static void * EventDispatcherMainLoop(void * user_data)
         message.name = aNotificationName;
         message.type = VLCNotification;
 
-        pthread_mutex_lock([self queueLock]);
+        pthread_mutex_lock(&_queueLock);
         [_messageQueue insertObject:message atIndex:0];
-        pthread_cond_signal([self signalData]);
-        pthread_mutex_unlock([self queueLock]);
+        pthread_cond_signal(&_signalData);
+        pthread_mutex_unlock(&_queueLock);
     }
 }
 
@@ -254,17 +252,17 @@ static void * EventDispatcherMainLoop(void * user_data)
         message.object = arg;
         message.type = [arg isKindOfClass:[NSArray class]] ? VLCObjectMethodWithArrayArg : VLCObjectMethodWithObjectArg;
 
-        pthread_mutex_lock([self queueLock]);
+        pthread_mutex_lock(&_queueLock);
         [_messageQueue insertObject:message atIndex:0];
-        pthread_cond_signal([self signalData]);
-        pthread_mutex_unlock([self queueLock]);
+        pthread_cond_signal(&_signalData);
+        pthread_mutex_unlock(&_queueLock);
     }
 }
 
 - (void)cancelCallToObject:(id)target
 {
     // Remove all queued message
-    pthread_mutex_lock([self queueLock]);
+    pthread_mutex_lock(&_queueLock);
     [_pendingMessagesLock lock];
 
     // Keep a hold on the secondary objects and release them only AFTER we have released our locks to prevents deadlocks.
@@ -297,7 +295,7 @@ static void * EventDispatcherMainLoop(void * user_data)
     }
 
     [_pendingMessagesLock unlock];
-    pthread_mutex_unlock([self queueLock]);
+    pthread_mutex_unlock(&_queueLock);
 
     // secondaryObjects will be disposed of now, but just to make sure that ARC doesn't
     // dispose it earlier, play a little trick to keep it alive up to this point by calling a selector
@@ -347,16 +345,6 @@ static void * EventDispatcherMainLoop(void * user_data)
         void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[message.target methodForSelector: message.sel];
         method(message.target, message.sel, message.object);
     }
-}
-
-- (pthread_cond_t *)signalData
-{
-    return &_signalData;
-}
-
-- (pthread_mutex_t *)queueLock
-{
-    return &_queueLock;
 }
 
 @end
