@@ -186,14 +186,14 @@ typedef NSInteger VLCMediaState;
 /**
  * Receiver's delegate.
  */
-@property (weak) id<VLCMediaDelegate> delegate;
+@property (nonatomic, weak) id<VLCMediaDelegate> delegate;
 
 /**
  * A VLCTime object describing the length of the media resource, only if it is
  * available.  Use lengthWaitUntilDate: to wait for a specified length of time.
  * \see lengthWaitUntilDate
  */
-@property (readonly) VLCTime * length;
+@property (nonatomic, readonly, strong) VLCTime * length;
 
 /**
  * Returns a VLCTime object describing the length of the media resource,
@@ -208,17 +208,17 @@ typedef NSInteger VLCMediaState;
 /**
  * Determines if the media has already been preparsed.
  */
-@property (readonly) BOOL isParsed;
+@property (nonatomic, readonly) BOOL isParsed;
 
 /**
  * The URL for the receiver's media resource.
  */
-@property (readonly) NSURL * url;
+@property (nonatomic, readonly, strong) NSURL * url;
 
 /**
  * The receiver's sub list.
  */
-@property (readonly) VLCMediaList * subitems;
+@property (nonatomic, readonly, strong) VLCMediaList * subitems;
 
 /**
  * get meta property for key
@@ -245,12 +245,12 @@ typedef NSInteger VLCMediaState;
 /**
  * The receiver's meta data as a NSDictionary object.
  */
-@property (readonly) NSDictionary * metaDictionary;
+@property (nonatomic, readonly, copy) NSDictionary * metaDictionary;
 
 /**
  * The receiver's state, such as Playing, Error, NothingSpecial, Buffering.
  */
-@property (readonly) VLCMediaState state;
+@property (nonatomic, readonly) VLCMediaState state;
 
 /**
  * returns a bool whether is the media is expected to play fluently on this
