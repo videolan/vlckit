@@ -322,6 +322,9 @@ static void * EventDispatcherMainLoop(void * user_data)
     // Check that we were not cancelled, ie, target was released
     if ([self markMessageHandledOnMainThreadIfExists:message]) {
         id target = message.target;
+        if (message.object == NULL)
+            return;
+
         [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:message.object object:target]];
 
         id delegate = [target delegate];
