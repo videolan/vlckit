@@ -988,19 +988,3 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 }
 #endif
 @end
-
-/******************************************************************************
- * Implementation VLCMedia (VLCMediaPlayerBridging)
- */
-
-@implementation VLCMedia (VLCMediaPlayerBridging)
-
-- (void)setLength:(VLCTime *)value
-{
-    if (length && value && [length compare:value] == NSOrderedSame)
-        return;
-
-    length = value ? value : nil;
-}
-
-@end
