@@ -79,10 +79,6 @@ typedef enum
 }
 
 - (void)startEventLoop;
-
-- (void)callDelegateOfObjectAndSendNotificationWithArgs:(message_t *)message;
-- (void)callObjectMethodWithArgs:(message_t *)message;
-
 - (void)addMessageToHandleOnMainThread:(message_t *)message;
 
 @end
@@ -211,14 +207,12 @@ static void * EventDispatcherMainLoop(void * user_data)
 
             pthread_mutex_unlock(&_queueLock);
 
-            if (message.type == VLCNotification)
-                [self performSelectorOnMainThread:@selector(callDelegateOfObjectAndSendNotificationWithArgs:)
-                                       withObject:message
-                                    waitUntilDone: NO];
-            else
-                [self performSelectorOnMainThread:@selector(callObjectMethodWithArgs:)
-                                       withObject:message
-                                    waitUntilDone: YES];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (message.type == VLCNotification)
+                    [self callDelegateOfObjectAndSendNotificationWithArgs:message];
+                else
+                    [self callObjectMethodWithArgs:message];
+            });
         }
 
         /* Sleep a bit not to flood the interface */
