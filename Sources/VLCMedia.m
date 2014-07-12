@@ -69,7 +69,6 @@ NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
 
 /* Make our properties internally readwrite */
 @property (nonatomic, readwrite) VLCMediaState state;
-@property (nonatomic, readwrite, strong) VLCTime *length;
 @property (nonatomic, readwrite, copy) NSDictionary *metaDictionary;
 @property (nonatomic, readwrite, strong) VLCMediaList * subitems;
 
@@ -881,7 +880,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
          * And all the other meta will be added through the libvlc event system */
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationArtworkURL];
     }
-    return [metaDictionary copy];
+    return [NSDictionary dictionaryWithDictionary:_metaDictionary];
 }
 
 #else

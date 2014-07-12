@@ -193,7 +193,7 @@ typedef NSInteger VLCMediaState;
  * available.  Use lengthWaitUntilDate: to wait for a specified length of time.
  * \see lengthWaitUntilDate
  */
-@property (nonatomic, readonly, strong) VLCTime * length;
+@property (nonatomic, readwrite, strong) VLCTime * length;
 
 /**
  * Returns a VLCTime object describing the length of the media resource,
