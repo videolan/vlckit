@@ -866,21 +866,20 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 #if !TARGET_OS_IPHONE
 - (void)fetchMetaInformationForArtWorkWithURL:(NSString *)anURL
 {
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    NSImage * art = nil;
+    @autoreleasepool {
+        NSImage * art = nil;
 
-    if (anURL) {
-        // Go ahead and load up the art work
-        NSURL * artUrl = [NSURL URLWithString:[anURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        // Don't attempt to fetch artwork from remote. Core will do that alone
-        if ([artUrl isFileURL])
-            art  = [[[NSImage alloc] initWithContentsOfURL:artUrl] autorelease];
+        if (anURL) {
+            // Go ahead and load up the art work
+            NSURL * artUrl = [NSURL URLWithString:[anURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            // Don't attempt to fetch artwork from remote. Core will do that alone
+            if ([artUrl isFileURL])
+                art  = [[NSImage alloc] initWithContentsOfURL:artUrl];
+        }
+
+        // If anything was found, lets save it to the meta data dictionary
+        [self performSelectorOnMainThread:@selector(setArtwork:) withObject:art waitUntilDone:NO];
     }
-
-    // If anything was found, lets save it to the meta data dictionary
-    [self performSelectorOnMainThread:@selector(setArtwork:) withObject:art waitUntilDone:NO];
-
-    [pool release];
 }
 
 - (void)setArtwork:(NSImage *)art
