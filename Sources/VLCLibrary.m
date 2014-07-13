@@ -96,19 +96,20 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (NSArray *)_defaultOptions
 {
-    NSArray *vlcParams;
+    NSArray *vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
 #if TARGET_OS_IPHONE
-    vlcParams = @[@"--no-color",
-                  @"--no-osd",
-                  @"--no-video-title-show",
-                  @"--no-stats",
-                  @"--avcodec-fast",
-                  @"--verbose=0",
-                  @"--text-renderer=quartztext",
-                  @"--avi-index=3",
-                  @"--extraintf=ios_dialog_provider"];
+    if (!vlcParams) {
+        vlcParams = @[@"--no-color",
+                      @"--no-osd",
+                      @"--no-video-title-show",
+                      @"--no-stats",
+                      @"--avcodec-fast",
+                      @"--verbose=0",
+                      @"--text-renderer=quartztext",
+                      @"--avi-index=3",
+                      @"--extraintf=ios_dialog_provider"];
+    }
 #else
-    vlcParams = [[NSUserDefaults standardUserDefaults] objectForKey:@"VLCParams"];
     if (!vlcParams) {
         NSMutableArray *defaultParams = [NSMutableArray array];
         [defaultParams addObject:@"--play-and-pause"];                          // We want every movie to pause instead of stopping at eof
