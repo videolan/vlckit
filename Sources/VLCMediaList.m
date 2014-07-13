@@ -167,7 +167,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 {
     if (index < [cachedMedia count])
         return cachedMedia[index];
-    return NULL;
+    return nil;
 }
 
 - (NSInteger)indexOfMedia:(VLCMedia *)media

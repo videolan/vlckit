@@ -311,7 +311,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 - (NSDictionary*) stats
 {
     if (!p_md)
-        return NULL;
+        return nil;
 
     libvlc_media_stats_t p_stats;
     libvlc_media_get_stats(p_md, &p_stats);
@@ -645,7 +645,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 - (NSString *)metadataForKey:(NSString *)key
 {
     if (!p_md)
-        return NULL;
+        return nil;
 
     if (![self isParsed])
         [self synchronousParse];
@@ -653,7 +653,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     char *returnValue = libvlc_media_get_meta(p_md, [VLCMedia stringToMetaType:key]);
 
     if (!returnValue)
-        return NULL;
+        return nil;
 
     NSString *actualReturnValue = @(returnValue);
     free(returnValue);

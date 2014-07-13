@@ -29,7 +29,7 @@
 
 #include <vlc/libvlc.h>
 
-static VLCServicesDiscoverer * sharedDiscoverer = NULL;
+static VLCServicesDiscoverer * sharedDiscoverer = nil;
 
 @implementation VLCServicesDiscoverer
 + (id)sharedDiscoverer
