@@ -81,7 +81,7 @@ static VLCLibrary * sharedLibrary = nil;
     NSArray *allOptions = options ? [[self _defaultOptions] arrayByAddingObjectsFromArray:options] : [self _defaultOptions];
 
     NSUInteger paramNum = 0;
-    NSUInteger count = allOptions.count;
+    int count = (int)allOptions.count;
     const char *lib_vlc_params[count];
     while (paramNum < count) {
         lib_vlc_params[paramNum] = [allOptions[paramNum] cStringUsingEncoding:NSASCIIStringEncoding];
