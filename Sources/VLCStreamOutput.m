@@ -28,7 +28,7 @@
 #import "VLCLibVLCBridging.h"
 
 @implementation VLCStreamOutput
-- (id)initWithOptionDictionary:(NSDictionary *)dictionary
+- (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary
 {
     if( self = [super init] )
     {
@@ -40,7 +40,7 @@
 {
     return [self representedLibVLCOptions];
 }
-+ (id)streamOutputWithOptionDictionary:(NSDictionary *)dictionary
++ (instancetype)streamOutputWithOptionDictionary:(NSDictionary *)dictionary
 {
     return [[self alloc] initWithOptionDictionary:dictionary];
 }
@@ -101,7 +101,7 @@
     }];
 }
 
-+ (id)streamOutputWithFilePath:(NSString *)filePath
++ (instancetype)streamOutputWithFilePath:(NSString *)filePath
 {
     return [self streamOutputWithOptionDictionary:@{
         @"outputOptions" : @{

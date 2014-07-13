@@ -45,12 +45,12 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
     return instance;
 }
 
-- (id)init
+- (instancetype)init
 {
     return nil;
 }
 
-- (id)initWithMediaPlayer:(VLCMediaPlayer *)mediaPlayer
+- (instancetype)initWithMediaPlayer:(VLCMediaPlayer *)mediaPlayer
 {
     self = [super init];
     if (!self)

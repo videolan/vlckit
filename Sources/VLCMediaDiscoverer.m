@@ -85,7 +85,7 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
     return availableMediaDiscoverer;
 }
 
-- (id)initWithName:(NSString *)aServiceName
+- (instancetype)initWithName:(NSString *)aServiceName
 {
     if (self = [super init]) {
         localizedName = nil;

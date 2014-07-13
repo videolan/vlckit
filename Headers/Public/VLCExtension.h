@@ -27,10 +27,10 @@
     struct extension_t *_instance;
 }
 
-- (id)initWithInstance:(struct extension_t *)instance; // FIXME: Should be internal
-- (struct extension_t *)instance; // FIXME: Should be internal
+- (instancetype)initWithInstance:(struct extension_t *)instance NS_DESIGNATED_INITIALIZER; // FIXME: Should be internal
+@property (NS_NONATOMIC_IOSONLY, readonly) struct extension_t *instance; // FIXME: Should be internal
 
-- (NSString *)name;
-- (NSString *)title;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *name;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *title;
 
 @end

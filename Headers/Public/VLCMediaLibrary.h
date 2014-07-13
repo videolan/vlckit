@@ -35,7 +35,7 @@
 }
 
 /* Factories */
-+ (id)sharedMediaLibrary;
++ (VLCMediaLibrary*)sharedMediaLibrary;
 
 /* Properties */
 @property (nonatomic, readonly, strong) VLCMediaList * allMedia;

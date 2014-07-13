@@ -82,7 +82,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 @end
 
 @implementation VLCMediaList
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         // Create a new libvlc media list instance
@@ -96,7 +96,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     return self;
 }
 
-- (id)initWithArray:(NSArray *)array
+- (instancetype)initWithArray:(NSArray *)array
 {
     if (self = [self init]) {
         /* do something useful with the provided array */

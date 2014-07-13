@@ -46,7 +46,7 @@ extern NSString *const VLCMediaPlayerStateChanged;
 /**
  * VLCMediaPlayerState describes the state of the media player.
  */
-enum
+typedef NS_ENUM(NSInteger, VLCMediaPlayerState)
 {
     VLCMediaPlayerStateStopped,        //< Player has stopped
     VLCMediaPlayerStateOpening,        //< Stream is opening
@@ -56,7 +56,6 @@ enum
     VLCMediaPlayerStatePlaying,        //< Stream is playing
     VLCMediaPlayerStatePaused          //< Stream is paused
 };
-typedef NSInteger VLCMediaPlayerState;
 
 /**
  * Returns the name of the player state as a string.
@@ -97,10 +96,10 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 #if !TARGET_OS_IPHONE
 /* Initializers */
-- (id)initWithVideoView:(VLCVideoView *)aVideoView;
-- (id)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer;
+- (instancetype)initWithVideoView:(VLCVideoView *)aVideoView;
+- (instancetype)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
-- (id)initWithOptions:(NSArray *)options;
+- (instancetype)initWithOptions:(NSArray *)options;
 
 /* Video View Options */
 // TODO: Should be it's own object?
@@ -123,8 +122,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return the video aspect ratio or NULL if unspecified
  * (the result must be released with free()).
  */
-- (void)setVideoAspectRatio:(char *)value;
-- (char *)videoAspectRatio;
+@property (NS_NONATOMIC_IOSONLY) char *videoAspectRatio;
 
 /**
  * Set/Get current crop filter geometry.
@@ -132,8 +130,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \param psz_geometry new crop filter geometry (NULL to unset)
  * \return the crop filter geometry or NULL if unset
  */
-- (void)setVideoCropGeometry:(char *)value;
-- (char *)videoCropGeometry;
+@property (NS_NONATOMIC_IOSONLY) char *videoCropGeometry;
 
 /**
  * Set/Get the current video scaling factor.
@@ -220,7 +217,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Get the current video size
  * \return video size as CGSize
  */
-- (CGSize)videoSize;
+@property (NS_NONATOMIC_IOSONLY, readonly) CGSize videoSize;
 
 /**
  * Does the current media have a video output?
@@ -228,13 +225,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \note tracks. Those might just be disabled.
  * \return current video output status
  */
-- (BOOL)hasVideoOut;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasVideoOut;
 
 /**
  * Frames per second
  * \return current media's frames per second value
  */
-- (float)framesPerSecond;
+@property (NS_NONATOMIC_IOSONLY, readonly) float framesPerSecond;
 
 #pragma mark -
 #pragma mark time
@@ -243,13 +240,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Sets the current position (or time) of the feed.
  * \param value New time to set the current position to.  If time is [VLCTime nullTime], 0 is assumed.
  */
-- (void)setTime:(VLCTime *)value;
 
 /**
  * Returns the current position (or time) of the feed.
  * \return VLCTIme object with current time.
  */
-- (VLCTime *)time;
+@property (NS_NONATOMIC_IOSONLY, strong) VLCTime *time;
 
 @property (nonatomic, readonly, weak) VLCTime *remainingTime;
 
@@ -277,13 +273,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Returns the video track names, usually a language name or a description
  * It includes the "Disabled" fake track at index 0.
  */
-- (NSArray *)videoTrackNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoTrackNames;
 
 /**
  * Returns the video track IDs
  * those are needed to set the video index
  */
-- (NSArray *)videoTrackIndexes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoTrackIndexes;
 
 /**
  * Return the video tracks
@@ -306,13 +302,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Returns the video subtitle track names, usually a language name or a description
  * It includes the "Disabled" fake track at index 0.
  */
-- (NSArray *)videoSubTitlesNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoSubTitlesNames;
 
 /**
  * Returns the video subtitle track IDs
  * those are needed to set the video subtitle index
  */
-- (NSArray *)videoSubTitlesIndexes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoSubTitlesIndexes;
 
 /**
  * Return the video subtitle tracks
@@ -357,7 +353,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return NSNotFound if none is set.
  */
 @property (readwrite) NSUInteger currentTitleIndex;
-- (NSArray *)titles;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles;
 
 /* Audio Options */
 
@@ -375,13 +371,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Returns the audio track names, usually a language name or a description
  * It includes the "Disabled" fake track at index 0.
  */
-- (NSArray *)audioTrackNames;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *audioTrackNames;
 
 /**
  * Returns the audio track IDs
  * those are needed to set the video index
  */
-- (NSArray *)audioTrackIndexes;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *audioTrackIndexes;
 
 /**
  * Return the audio tracks
@@ -393,8 +389,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 #pragma mark -
 #pragma mark audio functionality
 
-- (void)setAudioChannel:(int)value;
-- (int)audioChannel;
+@property (NS_NONATOMIC_IOSONLY) int audioChannel;
 
 /**
  * Get the current audio delay. Positive values means audio is delayed further,
@@ -461,8 +456,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 #pragma mark media handling
 
 /* Media Options */
-- (void)setMedia:(VLCMedia *)value;
-- (VLCMedia *)media;
+@property (NS_NONATOMIC_IOSONLY, strong) VLCMedia *media;
 
 #pragma mark -
 #pragma mark playback operations
@@ -472,7 +466,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * it was paused in.
  * \return A Boolean determining whether the stream was played or not.
  */
-- (BOOL)play;
+-(BOOL)play;
 
 /**
  * Toggle's the pause state of the feed.
@@ -569,33 +563,32 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Playback state flag identifying that the stream is currently playing.
  * \return TRUE if the feed is playing, FALSE if otherwise.
  */
-- (BOOL)isPlaying;
+@property (NS_NONATOMIC_IOSONLY, getter=isPlaying, readonly) BOOL playing;
 
 /**
  * Playback state flag identifying wheather the stream will play.
  * \return TRUE if the feed is ready for playback, FALSE if otherwise.
  */
-- (BOOL)willPlay;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL willPlay;
 
 /**
  * Playback's current state.
  * \see VLCMediaState
  */
-- (VLCMediaPlayerState)state;
+@property (NS_NONATOMIC_IOSONLY, readonly) VLCMediaPlayerState state;
 
 /**
  * Returns the receiver's position in the reading.
  * \return movie position as percentage between 0.0 and 1.0.
  */
-- (float)position;
+@property (NS_NONATOMIC_IOSONLY) float position;
 /**
  * Set movie position. This has no effect if playback is not enabled.
  * \param movie position as percentage between 0.0 and 1.0.
  */
-- (void)setPosition:(float)newPosition;
 
-- (BOOL)isSeekable;
+@property (NS_NONATOMIC_IOSONLY, getter=isSeekable, readonly) BOOL seekable;
 
-- (BOOL)canPause;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL canPause;
 
 @end

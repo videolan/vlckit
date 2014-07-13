@@ -68,7 +68,7 @@
 @implementation VLCVideoView
 
 /* Initializers */
-- (id)initWithFrame:(NSRect)rect
+- (instancetype)initWithFrame:(NSRect)rect
 {
     if (self = [super initWithFrame:rect])
     {

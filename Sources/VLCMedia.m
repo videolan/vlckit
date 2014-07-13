@@ -168,27 +168,27 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
  */
 @implementation VLCMedia
 
-+ (id)mediaWithURL:(NSURL *)anURL;
++ (instancetype)mediaWithURL:(NSURL *)anURL;
 {
     return [[VLCMedia alloc] initWithURL:anURL];
 }
 
-+ (id)mediaWithPath:(NSString *)aPath;
++ (instancetype)mediaWithPath:(NSString *)aPath;
 {
     return [[VLCMedia alloc] initWithPath:aPath];
 }
 
-+ (id)mediaAsNodeWithName:(NSString *)aName;
++ (instancetype)mediaAsNodeWithName:(NSString *)aName;
 {
     return [[VLCMedia alloc] initAsNodeWithName:aName];
 }
 
-- (id)initWithPath:(NSString *)aPath
+- (instancetype)initWithPath:(NSString *)aPath
 {
     return [self initWithURL:[NSURL fileURLWithPath:aPath isDirectory:NO]];
 }
 
-- (id)initWithURL:(NSURL *)anURL
+- (instancetype)initWithURL:(NSURL *)anURL
 {
     if (self = [super init]) {
         VLCLibrary *library = [VLCLibrary sharedLibrary];
@@ -203,7 +203,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return self;
 }
 
-- (id)initAsNodeWithName:(NSString *)aName
+- (instancetype)initAsNodeWithName:(NSString *)aName
 {
     if (self = [super init]) {
         p_md = libvlc_media_new_as_node([VLCLibrary sharedInstance], [aName UTF8String]);
@@ -655,7 +655,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (!returnValue)
         return NULL;
 
-    NSString *actualReturnValue = [NSString stringWithUTF8String:returnValue];
+    NSString *actualReturnValue = @(returnValue);
     free(returnValue);
 
     return actualReturnValue;
@@ -809,7 +809,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (!art)
         [(NSMutableDictionary *)_metaDictionary removeObjectForKey:@"artwork"];
     else
-        [(NSMutableDictionary *)_metaDictionary setObject:art forKey:@"artwork"];
+        ((NSMutableDictionary *)_metaDictionary)[@"artwork"] = art;
 }
 #endif
 

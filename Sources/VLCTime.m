@@ -48,7 +48,7 @@
 }
 
 /* Initializers */
-- (id)initWithNumber:(NSNumber *)aNumber
+- (instancetype)initWithNumber:(NSNumber *)aNumber
 {
     if (self = [super init]) {
         _value = aNumber;
@@ -56,7 +56,7 @@
     return self;
 }
 
-- (id)initWithInt:(int)aInt
+- (instancetype)initWithInt:(int)aInt
 {
     if (self = [super init]) {
         if (aInt)

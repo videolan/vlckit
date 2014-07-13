@@ -29,9 +29,8 @@
 
 @interface VLCStreamSession : VLCMediaPlayer
 
-+ (id)streamSession;
++ (instancetype)streamSession;
 
-@property (nonatomic, strong) VLCMedia * media;
 @property (nonatomic, strong) VLCStreamOutput * streamOutput;
 @property (nonatomic, readonly) BOOL isComplete;
 @property (nonatomic, readonly) NSUInteger reattemptedConnections;

@@ -51,7 +51,7 @@
  * \param aSerchName Name of the service for this VLCMediaDiscoverer object.
  * \returns Newly created media discoverer.
  */
-- (id)initWithName:(NSString *)aServiceName;
+- (instancetype)initWithName:(NSString *)aServiceName NS_DESIGNATED_INITIALIZER;
 
 /**
  * TODO: Documentation VLCMediaDiscoverer.discoveredMedia

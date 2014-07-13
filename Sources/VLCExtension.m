@@ -29,7 +29,7 @@
     return [NSString stringWithFormat:@"VLC Extension %@", [self name]];
 }
 
-- (id)initWithInstance:(struct extension_t *)instance
+- (instancetype)initWithInstance:(struct extension_t *)instance
 {
     self = [super init];
     if (!self)
@@ -45,12 +45,12 @@
 
 - (NSString *)name
 {
-    return [NSString stringWithUTF8String:_instance->psz_name];
+    return @(_instance->psz_name);
 }
 
 - (NSString *)title
 {
-    return [NSString stringWithUTF8String:_instance->psz_title];
+    return @(_instance->psz_title);
 }
 
 @end

@@ -60,7 +60,7 @@ static VLCLibrary * sharedLibrary = nil;
     return [self sharedLibrary].instance;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         [self prepareInstanceWithOptions:nil];
@@ -68,7 +68,7 @@ static VLCLibrary * sharedLibrary = nil;
     return self;
 }
 
-- (id)initWithOptions:(NSArray*)options
+- (instancetype)initWithOptions:(NSArray*)options
 {
     if (self = [super init]) {
         [self prepareInstanceWithOptions:options];

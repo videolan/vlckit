@@ -30,13 +30,13 @@ extern NSString * VLCDefaultStreamOutputRTP;
     NSMutableDictionary * options;
 }
 
-- (id)initWithOptionDictionary:(NSDictionary *)dictionary;
-+ (id)streamOutputWithOptionDictionary:(NSDictionary *)dictionary;
+- (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
++ (instancetype)streamOutputWithOptionDictionary:(NSDictionary *)dictionary;
 
 + (id)rtpBroadcastStreamOutputWithSAPAnnounce:(NSString *)announceName;
 + (id)rtpBroadcastStreamOutput;
 + (id)ipodStreamOutputWithFilePath:(NSString *)filePath;
-+ (id)streamOutputWithFilePath:(NSString *)filePath;
++ (instancetype)streamOutputWithFilePath:(NSString *)filePath;
 + (id)mpeg2StreamOutputWithFilePath:(NSString *)filePath;
 + (id)mpeg4StreamOutputWithFilePath:(NSString *)filePath;
 

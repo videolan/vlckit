@@ -34,7 +34,7 @@
 
 @implementation VLCStreamSession
 
-- (id)init
+- (instancetype)init
 {
     if( self = [super init] )
     {
@@ -48,7 +48,7 @@
     [self removeObserver:self forKeyPath:@"state"];
 }
 
-+ (id)streamSession
++ (instancetype)streamSession
 {
     return [[self alloc] init];
 }
@@ -75,7 +75,7 @@
         libvlcArgs = [_streamOutput representedLibVLCOptions];
     if( libvlcArgs )
     {
-        [super setMedia:[VLCMedia mediaWithMedia:_media
+        [super setMedia:[VLCMedia mediaWithMedia:self.media
                                 andLibVLCOptions:@{
                                     @"sout" : libvlcArgs
                                 }]];

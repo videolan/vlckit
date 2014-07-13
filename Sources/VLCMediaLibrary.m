@@ -38,7 +38,7 @@
 
 @implementation VLCMediaLibrary
 
-+ (id)sharedMediaLibrary
++ (VLCMediaLibrary*)sharedMediaLibrary
 {
     static VLCMediaLibrary * sharedMediaLibrary = nil;
     static dispatch_once_t onceToken;
@@ -50,7 +50,7 @@
     return sharedMediaLibrary;
 }
 
-- (id)init
+- (instancetype)init
 {
     if (self = [super init]) {
         mlib = libvlc_media_library_new( [VLCLibrary sharedInstance]);

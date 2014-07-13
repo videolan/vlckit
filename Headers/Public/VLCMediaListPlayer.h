@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
 @property (readwrite) VLCMedia *rootMedia;
 @property (readonly) VLCMediaPlayer *mediaPlayer;
 
-- (id)initWithOptions:(NSArray *)options;
+- (instancetype)initWithOptions:(NSArray *)options NS_DESIGNATED_INITIALIZER;
 
 /**
  * Basic play, pause and stop are here. For other methods, use the mediaPlayer.
@@ -61,8 +61,8 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
  * previous, next, play item at index
  * \returns YES on success, NO if there is no such item
  */
-- (BOOL)next;
-- (BOOL)previous;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL next;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL previous;
 - (BOOL)playItemAtIndex:(int)index;
 
 /**

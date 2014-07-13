@@ -186,34 +186,34 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 }
 
 /* Constructor */
-- (id)init
+- (instancetype)init
 {
     return [self initWithDrawable:nil options:nil];
 }
 
 #if !TARGET_OS_IPHONE
-- (id)initWithVideoView:(VLCVideoView *)aVideoView
+- (instancetype)initWithVideoView:(VLCVideoView *)aVideoView
 {
     return [self initWithDrawable: aVideoView options:nil];
 }
 
-- (id)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer
+- (instancetype)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer
 {
     return [self initWithDrawable: aVideoLayer options:nil];
 }
 
-- (id)initWithVideoView:(VLCVideoView *)aVideoView options:(NSArray *)options
+- (instancetype)initWithVideoView:(VLCVideoView *)aVideoView options:(NSArray *)options
 {
     return [self initWithDrawable: aVideoView options:options];
 }
 
-- (id)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer options:(NSArray *)options
+- (instancetype)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer options:(NSArray *)options
 {
     return [self initWithDrawable: aVideoLayer options:options];
 }
 #endif
 
-- (id)initWithOptions:(NSArray *)options
+- (instancetype)initWithOptions:(NSArray *)options
 {
     return [self initWithDrawable:nil options:options];
 }
@@ -807,7 +807,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     unsigned count = libvlc_audio_equalizer_get_preset_count();
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:count];
     for (unsigned x = 0; x < count; x++)
-        [array addObject:[NSString stringWithUTF8String:libvlc_audio_equalizer_get_preset_name(x)]];
+        [array addObject:@(libvlc_audio_equalizer_get_preset_name(x))];
 
     return [NSArray arrayWithArray:array];
 }

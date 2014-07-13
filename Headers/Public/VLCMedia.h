@@ -61,13 +61,12 @@ extern NSString *const VLCMediaMetaChanged;  //< Notification message for when t
 @class VLCMediaList;
 @class VLCMedia;
 
-enum {
+typedef NS_ENUM(NSInteger, VLCMediaState) {
     VLCMediaStateNothingSpecial,        //< Nothing
     VLCMediaStateBuffering,             //< Stream is buffering
     VLCMediaStatePlaying,               //< Stream is playing
     VLCMediaStateError,                 //< Can't be played because an error occurred
 };
-typedef NSInteger VLCMediaState;
 
 /**
  * Informal protocol declaration for VLCMedia delegates.  Allows data changes to be
@@ -130,7 +129,7 @@ typedef NSInteger VLCMediaState;
  * \return A new VLCMedia object, only if there were no errors.  This object will be automatically released.
  * \see initWithMediaURL
  */
-+ (id)mediaWithURL:(NSURL *)anURL;
++ (instancetype)mediaWithURL:(NSURL *)anURL;
 
 /**
  * Manufactures a new VLCMedia object using the path specified.
@@ -138,7 +137,7 @@ typedef NSInteger VLCMediaState;
  * \return A new VLCMedia object, only if there were no errors.  This object will be automatically released.
  * \see initWithPath
  */
-+ (id)mediaWithPath:(NSString *)aPath;
++ (instancetype)mediaWithPath:(NSString *)aPath;
 
 /**
  * TODO
@@ -147,7 +146,7 @@ typedef NSInteger VLCMediaState;
  * will be automatically released.
  * \see initAsNodeWithName
  */
-+ (id)mediaAsNodeWithName:(NSString *)aName;
++ (instancetype)mediaAsNodeWithName:(NSString *)aName;
 
 /* Initializers */
 /**
@@ -155,21 +154,21 @@ typedef NSInteger VLCMediaState;
  * \param aPath Path to media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (id)initWithURL:(NSURL *)anURL;
+- (instancetype)initWithURL:(NSURL *)anURL NS_DESIGNATED_INITIALIZER;
 
 /**
  * Initializes a new VLCMedia object to use the specified path.
  * \param aPath Path to media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (id)initWithPath:(NSString *)aPath;
+- (instancetype)initWithPath:(NSString *)aPath;
 
 /**
  * TODO
  * \param aName TODO
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (id)initAsNodeWithName:(NSString *)aName;
+- (instancetype)initAsNodeWithName:(NSString *)aName NS_DESIGNATED_INITIALIZER;
 
 /**
  * Returns an NSComparisonResult value that indicates the lexical ordering of
@@ -240,7 +239,7 @@ typedef NSInteger VLCMediaState;
  * Save the previously changed metadata
  * \return true if saving was successful
  */
-- (BOOL)saveMetadata;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL saveMetadata;
 
 /**
  * The receiver's meta data as a NSDictionary object.
@@ -255,7 +254,7 @@ typedef NSInteger VLCMediaState;
 /**
  * returns a bool whether is the media is expected to play fluently on this
  * device or not. It always returns YES on a Mac.*/
-- (BOOL)isMediaSizeSuitableForDevice;
+@property (NS_NONATOMIC_IOSONLY, getter=isMediaSizeSuitableForDevice, readonly) BOOL mediaSizeSuitableForDevice;
 
 /**
  * Tracks information NSDictionary Possible Keys
@@ -383,7 +382,7 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  * \see VLCMediaTracksInformationTextEncoding
  */
 
-- (NSArray *)tracksInformation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *tracksInformation;
 
 /**
  * Start asynchronously to parse the media.
@@ -417,7 +416,7 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  * Returns a NSDictionary with NSNumbers for values.
  *
  */
-- (NSDictionary*) stats;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *stats;
 
 #pragma mark - individual stats
 
@@ -425,83 +424,83 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  * returns the number of bytes read by the current input module
  * \return a NSInteger with the raw number of bytes
  */
-- (NSInteger)numberOfReadBytesOnInput;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfReadBytesOnInput;
 /**
  * returns the current input bitrate. may be 0 if the buffer is full
  * \return a float of the current input bitrate
  */
-- (float)inputBitrate;
+@property (NS_NONATOMIC_IOSONLY, readonly) float inputBitrate;
 
 /**
  * returns the number of bytes read by the current demux module
  * \return a NSInteger with the raw number of bytes
  */
-- (NSInteger)numberOfReadBytesOnDemux;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfReadBytesOnDemux;
 /**
  * returns the current demux bitrate. may be 0 if the buffer is empty
  * \return a float of the current demux bitrate
  */
-- (float)demuxBitrate;
+@property (NS_NONATOMIC_IOSONLY, readonly) float demuxBitrate;
 
 /**
  * returns the total number of decoded video blocks in the current media session
  * \return a NSInteger with the total number of decoded blocks
  */
-- (NSInteger)numberOfDecodedVideoBlocks;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDecodedVideoBlocks;
 /**
  * returns the total number of decoded audio blocks in the current media session
  * \return a NSInteger with the total number of decoded blocks
  */
-- (NSInteger)numberOfDecodedAudioBlocks;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDecodedAudioBlocks;
 
 /**
  * returns the total number of displayed pictures during the current media session
  * \return a NSInteger with the total number of displayed pictures
  */
-- (NSInteger)numberOfDisplayedPictures;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDisplayedPictures;
 /**
  * returns the total number of pictures lost during the current media session
  * \return a NSInteger with the total number of lost pictures
  */
-- (NSInteger)numberOfLostPictures;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfLostPictures;
 
 /**
  * returns the total number of played audio buffers during the current media session
  * \return a NSInteger with the total number of played audio buffers
  */
-- (NSInteger)numberOfPlayedAudioBuffers;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfPlayedAudioBuffers;
 /**
  * returns the total number of audio buffers lost during the current media session
  * \return a NSInteger with the total number of displayed pictures
  */
-- (NSInteger)numberOfLostAudioBuffers;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfLostAudioBuffers;
 
 /**
  * returns the total number of packets sent during the current media session
  * \return a NSInteger with the total number of sent packets
  */
-- (NSInteger)numberOfSentPackets;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSentPackets;
 /**
  * returns the total number of raw bytes sent during the current media session
  * \return a NSInteger with the total number of sent bytes
  */
-- (NSInteger)numberOfSentBytes;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSentBytes;
 /**
  * returns the current bitrate of sent bytes
  * \return a float of the current bitrate of sent bits
  */
-- (float)streamOutputBitrate;
+@property (NS_NONATOMIC_IOSONLY, readonly) float streamOutputBitrate;
 /**
  * returns the total number of corrupted data packets during current sout session
  * \note value is 0 on non-stream-output operations
  * \return a NSInteger with the total number of corrupted data packets
  */
-- (NSInteger)numberOfCorruptedDataPackets;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfCorruptedDataPackets;
 /**
  * returns the total number of discontinuties during current sout session
  * \note value is 0 on non-stream-output operations
  * \return a NSInteger with the total number of discontinuties
  */
-- (NSInteger)numberOfDiscontinuties;
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDiscontinuties;
 
 @end

@@ -53,7 +53,7 @@ extern NSString *const VLCMediaListItemDeleted;
  */
 @interface VLCMediaList : NSObject
 
-- (id)initWithArray:(NSArray *)array;
+- (instancetype)initWithArray:(NSArray *)array;
 
 /* Operations */
 /**
