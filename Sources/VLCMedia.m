@@ -58,18 +58,18 @@ NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
 /******************************************************************************
  * VLCMedia ()
  */
-@interface VLCMedia ()
+@interface VLCMedia()
 {
-    void *                p_md;              //< Internal media descriptor instance
-    BOOL                  isArtFetched;      //< Value used to determine of the artwork has been parsed
-    BOOL                  areOthersMetaFetched; //< Value used to determine of the other meta has been parsed
-    BOOL                  isArtURLFetched;   //< Value used to determine of the other meta has been preparsed
-    BOOL                  isParsed;
+    void *                  p_md;              //< Internal media descriptor instance
+    BOOL                    isArtFetched;      //< Value used to determine of the artwork has been parsed
+    BOOL                    areOthersMetaFetched; //< Value used to determine of the other meta has been parsed
+    BOOL                    isArtURLFetched;   //< Value used to determine of the other meta has been preparsed
+    BOOL                    isParsed;
+    NSMutableDictionary     *_metaDictionary;
 }
 
 /* Make our properties internally readwrite */
 @property (nonatomic, readwrite) VLCMediaState state;
-@property (nonatomic, readwrite, copy) NSDictionary *metaDictionary;
 @property (nonatomic, readwrite, strong) VLCMediaList * subitems;
 
 /* Statics */
@@ -885,6 +885,11 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 #else
 
+- (NSDictionary *)metaDictionary
+{
+    return [NSDictionary dictionaryWithDictionary:_metaDictionary];
+}
+
 - (id)valueForKeyPath:(NSString *)keyPath
 {
     if (!isArtFetched && [keyPath isEqualToString:@"metaDictionary.artwork"]) {
@@ -937,7 +942,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         libvlc_media_retain(md);
         p_md = md;
 
-        self.metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
+        _metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
 
         [self initInternalMediaDescriptor];
     }
