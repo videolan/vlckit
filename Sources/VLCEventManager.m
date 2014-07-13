@@ -321,17 +321,17 @@ static void * EventDispatcherMainLoop(void * user_data)
 {
     // Check that we were not cancelled, ie, target was released
     if ([self markMessageHandledOnMainThreadIfExists:message]) {
+        NSString *notificationName = message.name;
         id target = message.target;
-        if (message.object == NULL)
+        SEL targetSelector = message.sel;
+        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:notificationName object:target]];
+
+        id delegate = [message.target delegate];
+        if (!delegate || ![delegate respondsToSelector:targetSelector])
             return;
 
-        [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:message.object object:target]];
-
-        id delegate = [target delegate];
-        if ([delegate respondsToSelector:message.sel]) {
-            void (*method)(id, SEL, id) = (void (*)(id, SEL, id)) [delegate methodForSelector:message.sel];
-            method(delegate, message.sel, [NSNotification notificationWithName:message.object object:target]);
-        }
+        void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[delegate methodForSelector:targetSelector];
+        method(delegate, targetSelector, [NSNotification notificationWithName:notificationName object:target]);
     }
 }
 
