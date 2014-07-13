@@ -35,8 +35,8 @@
 + (VLCTime *)timeWithInt:(int)aInt;
 
 /* Initializers */
-- (instancetype)initWithNumber:(NSNumber *)aNumber NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithInt:(int)aInt NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithNumber:(NSNumber *)aNumber;
+- (instancetype)initWithInt:(int)aInt;
 
 /* Properties */
 @property (nonatomic, readonly) NSNumber * value;	//< Holds, in milliseconds, the VLCTime value

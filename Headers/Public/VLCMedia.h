@@ -154,7 +154,7 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  * \param aPath Path to media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (instancetype)initWithURL:(NSURL *)anURL NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithURL:(NSURL *)anURL;
 
 /**
  * Initializes a new VLCMedia object to use the specified path.
@@ -168,7 +168,7 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  * \param aName TODO
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (instancetype)initAsNodeWithName:(NSString *)aName NS_DESIGNATED_INITIALIZER;
+- (instancetype)initAsNodeWithName:(NSString *)aName;
 
 /**
  * Returns an NSComparisonResult value that indicates the lexical ordering of

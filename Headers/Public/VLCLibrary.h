@@ -52,7 +52,7 @@
  * \param a NSArray with NSString instance containing the options
  * \return the individual library instance
  */
- - (instancetype)initWithOptions:(NSArray*)options NS_DESIGNATED_INITIALIZER;
+ - (instancetype)initWithOptions:(NSArray*)options;
 
 /**
  * Returns the library's version
