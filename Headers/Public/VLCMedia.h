@@ -90,6 +90,8 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
 // */
 // - (void)media:(VLCMedia *)aMedia removedSubItem:(VLCMedia *)childMedia atIndex:(int)index;
 
+@optional
+
 /**
  * Delegate method called whenever the meta has changed for the receiver.
  * \param aMedia The media resource whose meta data has been changed.
