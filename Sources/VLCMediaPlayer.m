@@ -658,12 +658,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 #pragma mark -
 #pragma mark Titles
 
-- (void)setCurrentTitleIndex:(NSUInteger)value
+- (void)setCurrentTitleIndex:(int)value
 {
     libvlc_media_player_set_title(_playerInstance, value);
 }
 
-- (NSUInteger)currentTitleIndex
+- (int)currentTitleIndex
 {
     NSInteger count = libvlc_media_player_get_title_count(_playerInstance);
     if (count <= 0)

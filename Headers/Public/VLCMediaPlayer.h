@@ -352,7 +352,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Title selection and enumeration
  * \return NSNotFound if none is set.
  */
-@property (readwrite) NSUInteger currentTitleIndex;
+@property (readwrite) int currentTitleIndex;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles;
 
 /* Audio Options */
