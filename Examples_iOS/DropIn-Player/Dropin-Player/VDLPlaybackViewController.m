@@ -26,7 +26,7 @@
 #import "VDLPlaybackViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
-@interface VDLPlaybackViewController () <UIGestureRecognizerDelegate, UIActionSheetDelegate>
+@interface VDLPlaybackViewController () <UIGestureRecognizerDelegate, UIActionSheetDelegate, VLCMediaPlayerDelegate>
 {
     VLCMediaPlayer *_mediaplayer;
     BOOL _setPosition;

@@ -25,7 +25,7 @@
 
 #import "VDLViewController.h"
 
-@interface VDLViewController ()
+@interface VDLViewController () <VLCMediaPlayerDelegate>
 {
     VLCMediaPlayer *_mediaplayer;
 }
