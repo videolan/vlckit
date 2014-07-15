@@ -207,12 +207,15 @@ static void * EventDispatcherMainLoop(void * user_data)
 
             pthread_mutex_unlock(&_queueLock);
 
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (message.type == VLCNotification)
+            if (message.type == VLCNotification) {
+                dispatch_async(dispatch_get_main_queue(), ^{
                     [self callDelegateOfObjectAndSendNotificationWithArgs:message];
-                else
+                });
+            } else {
+                dispatch_sync(dispatch_get_main_queue(), ^{
                     [self callObjectMethodWithArgs:message];
-            });
+                });
+            }
         }
 
         /* Sleep a bit not to flood the interface */
