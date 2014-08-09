@@ -1,4 +1,4 @@
-From ee332ffb09ed6db5a79df01717e1c72a6e8ca86f Mon Sep 17 00:00:00 2001
+From 12588578479f7961de39f6d623964e4751a0b2ca Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 12 Mar 2014 14:48:12 +0100
 Subject: [PATCH 18/20] contrib/harfbuzz: work-around build system stupidity
@@ -45,5 +45,5 @@ index a34ee2b..30e9a2b 100644
  
  DEPS_harfbuzz = freetype2 $(DEPS_freetype2)
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

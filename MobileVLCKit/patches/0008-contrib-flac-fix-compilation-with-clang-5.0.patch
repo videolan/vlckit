@@ -1,4 +1,4 @@
-From 652c14e593b55405b1efe52e131a45e716d22183 Mon Sep 17 00:00:00 2001
+From ae00808b5b063e8a7780063aa96170fb409f152b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 7 Oct 2013 17:05:21 +0200
 Subject: [PATCH 08/20] contrib/flac: fix compilation with clang 5.0
@@ -47,5 +47,5 @@ index bf72caf..ee6c2b5 100644
  endif
  ifdef HAVE_ANDROID
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

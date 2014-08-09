@@ -1,4 +1,4 @@
-From 67773206df43b1a66dd42d1a921ea843b10f6356 Mon Sep 17 00:00:00 2001
+From 8f3a8df957416d6e4d1d12411a64fb32167f9d03 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:33 +0200
 Subject: [PATCH 13/20] fix libtool
@@ -33,5 +33,5 @@ index 3bb8cdb..542abaa 100644
  SOURCES_transform = transform.c
  SOURCES_invert = invert.c
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

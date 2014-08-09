@@ -1,4 +1,4 @@
-From c651cfc2743486e5f51771364953dd7c08e4c74f Mon Sep 17 00:00:00 2001
+From eccc9db9235cb5a57443686e3787d07da4a18364 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
 Subject: [PATCH 20/20] libvlc: add preliminary code path to modify quartztext
@@ -67,10 +67,10 @@ index c0c66dd..7810ed7 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index f04e6dc..801c130 100644
+index 968a0e8..5c88620 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -464,6 +464,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -560,6 +560,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -139,7 +139,7 @@ index c8b3711..cda3c35 100644
 +    return get_string( p_mi, "quartztext", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
-index f0b5b67..aecb7b9 100644
+index ceb97a6..4cce93f 100644
 --- a/modules/text_renderer/quartztext.c
 +++ b/modules/text_renderer/quartztext.c
 @@ -65,6 +65,10 @@
@@ -234,7 +234,7 @@ index f0b5b67..aecb7b9 100644
      free(p_sys);
  }
  
-@@ -949,12 +972,12 @@ static int GetFontSize(filter_t *p_filter)
+@@ -957,12 +980,12 @@ static int GetFontSize(filter_t *p_filter)
  {
      int i_size = 0;
  
@@ -250,7 +250,7 @@ index f0b5b67..aecb7b9 100644
          msg_Warn( p_filter, "invalid fontsize, using 12" );
          i_size = 12;
      }
-@@ -1041,3 +1064,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
+@@ -1048,3 +1071,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
  
      return VLC_SUCCESS;
  }
@@ -275,5 +275,5 @@ index f0b5b67..aecb7b9 100644
 +    return VLC_SUCCESS;
 +}
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

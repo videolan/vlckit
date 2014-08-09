@@ -1,4 +1,4 @@
-From c2a220795002ead5df2f728b3fce2d249a8f5349 Mon Sep 17 00:00:00 2001
+From ac023003c175db578175371524f4cfdafafcc641 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 16:26:40 +0100
 Subject: [PATCH 09/20] lib/media_player: inherit deinterlace and vbi variables
@@ -9,10 +9,10 @@ Subject: [PATCH 09/20] lib/media_player: inherit deinterlace and vbi variables
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 5225079..f04e6dc 100644
+index 7201a78..968a0e8 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -435,10 +435,10 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -531,10 +531,10 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_SetFloat (mp, "scale", 1.);
      var_Create (mp, "aspect-ratio", VLC_VAR_STRING);
      var_Create (mp, "crop", VLC_VAR_STRING);
@@ -26,5 +26,5 @@ index 5225079..f04e6dc 100644
      var_Create (mp, "marq-marquee", VLC_VAR_STRING);
      var_Create (mp, "marq-color", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

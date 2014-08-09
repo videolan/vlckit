@@ -1,4 +1,4 @@
-From df32f0d8210940b910720fc2c872abe1bb91cf87 Mon Sep 17 00:00:00 2001
+From 23366a4675bad6bec658b63a46840e9d8b7c3438 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 29 May 2013 13:25:54 +0200
 Subject: [PATCH 05/20] libass: fix text rendering on iOS by providing a font
@@ -62,5 +62,5 @@ index aa38f1b..38961bc 100644
      const char *psz_font = NULL; /* We don't ship a default font with VLC */
      const char *psz_family = "Arial"; /* Use Arial if we can't find anything more suitable */
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 
