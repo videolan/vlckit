@@ -1,4 +1,4 @@
-From 8f14a6a4421bd5081f13796e8ec431ca9b64b156 Mon Sep 17 00:00:00 2001
+From 72710713f930854a4c29dfdfe6fd6cd061d213f5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:55:16 +0100
 Subject: [PATCH 14/20] freetype: added a fake font lookup mechanism for iOS to
@@ -11,10 +11,10 @@ Subject: [PATCH 14/20] freetype: added a fake font lookup mechanism for iOS to
  3 files changed, 45 insertions(+)
 
 diff --git a/modules/text_renderer/freetype.c b/modules/text_renderer/freetype.c
-index 55b85a5..8d78933 100644
+index f7fcd80..79bdfd4 100644
 --- a/modules/text_renderer/freetype.c
 +++ b/modules/text_renderer/freetype.c
-@@ -1963,6 +1963,8 @@ static int Create( vlc_object_t *p_this )
+@@ -1950,6 +1950,8 @@ static int Create( vlc_object_t *p_this )
  #elif defined( __APPLE__ )
  #if !TARGET_OS_IPHONE
      p_sys->pf_select = MacLegacy_Select;
@@ -96,5 +96,5 @@ index cff52b1..40b25fb 100644
  #endif
  
 -- 
-1.9.3 (Apple Git-50)
+1.8.5.2 (Apple Git-48)
 

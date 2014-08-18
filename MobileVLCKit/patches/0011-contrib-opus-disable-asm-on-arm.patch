@@ -1,4 +1,4 @@
-From 6bc2c93e9af43c9979846d5418b2356fe3a76b1c Mon Sep 17 00:00:00 2001
+From f28214b753e85f78cbe36fd0a86bcb0e1531f0f2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:26:46 +0100
 Subject: [PATCH 11/20] contrib/opus disable asm on arm
@@ -22,5 +22,5 @@ index d783648..f09a112 100644
  .opus: opus
  	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(OPUS_CONF)
 -- 
-1.9.3 (Apple Git-50)
+1.8.5.2 (Apple Git-48)
 

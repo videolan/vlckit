@@ -1,4 +1,4 @@
-From af17d754e0843347f72485d983e5391f2472df08 Mon Sep 17 00:00:00 2001
+From 54b3e2c48e7e821e0451085dfa5d662837854970 Mon Sep 17 00:00:00 2001
 From: David Geldreich <david.geldreich@free.fr>
 Date: Fri, 20 Apr 2012 16:41:19 +0200
 Subject: [PATCH 01/20] arm_neon: added function macro to handle the underscore
@@ -65,5 +65,5 @@ index 0000000..d853255
 +.endm
 +
 -- 
-1.9.3 (Apple Git-50)
+1.8.5.2 (Apple Git-48)
 

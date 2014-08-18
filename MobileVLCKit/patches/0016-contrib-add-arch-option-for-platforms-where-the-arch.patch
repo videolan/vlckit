@@ -1,4 +1,4 @@
-From d1be7338b1390ae1be96b635d8ae97ac6a2159b1 Mon Sep 17 00:00:00 2001
+From c4939003e042225979482d654d0b18734ce88d15 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:27:43 +0200
 Subject: [PATCH 16/20] contrib: add arch option for platforms where the arch
@@ -79,5 +79,5 @@ index dd2bd25..2b085ea 100644
  ifeq ($(ARCH)-$(HAVE_WIN32),x86_64-1)
  HAVE_WIN64 := 1
 -- 
-1.9.3 (Apple Git-50)
+1.8.5.2 (Apple Git-48)
 

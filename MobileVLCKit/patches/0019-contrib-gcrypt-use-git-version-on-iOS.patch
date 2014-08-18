@@ -1,4 +1,4 @@
-From 676fd11a579c6ed05728f82f478f82fe0f0f9434 Mon Sep 17 00:00:00 2001
+From e8ce7d24a9ddb056642f6b8147b785a590925b17 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
 Subject: [PATCH 19/20] contrib/gcrypt: use git version on iOS
@@ -137,5 +137,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-1.9.3 (Apple Git-50)
+1.8.5.2 (Apple Git-48)
 

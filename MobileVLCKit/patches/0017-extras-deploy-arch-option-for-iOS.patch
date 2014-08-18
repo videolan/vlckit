@@ -1,4 +1,4 @@
-From cca213ce0b98be2d785d4239c237c063af8e7bdd Mon Sep 17 00:00:00 2001
+From 630c8b9f2c32cfca56f2e43cd934dc8fbe3eeda4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:28:26 +0200
 Subject: [PATCH 17/20] extras: deploy arch option for iOS
@@ -21,5 +21,5 @@ index b5aa364..b3d4afe 100755
      --disable-sdl \
      --disable-SDL_image \
 -- 
-1.9.3 (Apple Git-50)
+1.8.5.2 (Apple Git-48)
 

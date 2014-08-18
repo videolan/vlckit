@@ -1,4 +1,4 @@
-From e08bb5b999f6743d3ee98b07369065061bf02f9a Mon Sep 17 00:00:00 2001
+From 8e80a72b504961fed95c9c3d8b45b6db7ab3c275 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
 Subject: [PATCH 07/20] contrib/speex: fix compilation for non-ARMv7 iOS
@@ -26,5 +26,5 @@ index 7d7cce9..e356bbc 100644
  .speex: speex
  	mkdir -p $</m4 && $(RECONF)
 -- 
-1.9.3 (Apple Git-50)
+1.8.5.2 (Apple Git-48)
 
