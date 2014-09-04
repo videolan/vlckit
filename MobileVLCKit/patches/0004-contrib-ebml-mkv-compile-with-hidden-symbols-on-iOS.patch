@@ -1,4 +1,4 @@
-From eac1c9f3cc0408dcb2d5158a3a39b8d930dd1585 Mon Sep 17 00:00:00 2001
+From cddc2ba0abafc5364f3970acc42a7a38eba5059e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 11 Aug 2012 13:29:25 +0200
 Subject: [PATCH 04/20] contrib/ebml+mkv: compile with hidden symbols on iOS
@@ -48,5 +48,5 @@ index 336e001..40dfb1e 100644
  	cd $< && $(MAKE) -C make/linux install_staticlib install_headers prefix="$(PREFIX)" $(HOSTVARS)
  	$(RANLIB) "$(PREFIX)/lib/libmatroska.a"
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

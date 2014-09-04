@@ -1,4 +1,4 @@
-From e8ce7d24a9ddb056642f6b8147b785a590925b17 Mon Sep 17 00:00:00 2001
+From d3477f08a3fff6784b008449384be9d650d32d7b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
 Subject: [PATCH 19/20] contrib/gcrypt: use git version on iOS
@@ -61,18 +61,18 @@ index 0000000..e63224e
 +1.8.3.4 (Apple Git-47)
 +
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index e0824ba..da17a41 100644
+index 7e67319..f2aae48 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -1,6 +1,7 @@
  # GCRYPT
- GCRYPT_VERSION := 1.6.1
+ GCRYPT_VERSION := 1.6.2
  GCRYPT_URL := ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-$(GCRYPT_VERSION).tar.bz2
 +GCRYPT_GITURL := git://git.gnupg.org/libgcrypt.git
  
  PKGS += gcrypt
  
-@@ -9,12 +10,24 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
+@@ -9,11 +10,23 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
  
  .sum-gcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2
  
@@ -82,7 +82,6 @@ index e0824ba..da17a41 100644
 +ifndef HAVE_IOS
  libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
  	$(UNPACK)
- 	$(APPLY) $(SRC)/gcrypt/gcrypt-fix-x86_64-codepath-on-Darwin.patch
  	$(APPLY) $(SRC)/gcrypt/fix-amd64-assembly-on-solaris.patch
  	$(APPLY) $(SRC)/gcrypt/0001-Fix-assembly-division-check.patch
  	$(MOVE)
@@ -97,7 +96,7 @@ index e0824ba..da17a41 100644
  
  DEPS_gcrypt = gpg-error
  
-@@ -48,6 +61,6 @@ endif
+@@ -47,6 +60,6 @@ endif
  
  .gcrypt: libgcrypt
  	$(RECONF)
@@ -137,5 +136,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

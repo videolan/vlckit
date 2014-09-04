@@ -1,4 +1,4 @@
-From 77fa69e4e6adaa7d9b2324b5a809076f58aabb53 Mon Sep 17 00:00:00 2001
+From 4ed922433141fd14b989151b793c3d824ab58dcd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 09:56:23 +0100
 Subject: [PATCH 12/20] contrib/gcrypt: disable asm on iOS
@@ -8,10 +8,10 @@ Subject: [PATCH 12/20] contrib/gcrypt: disable asm on iOS
  1 file changed, 3 insertions(+)
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index ced0f43..e0824ba 100644
+index 0cc1222..7e67319 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
-@@ -32,6 +32,9 @@ GCRYPT_EXTRA_CFLAGS =
+@@ -31,6 +31,9 @@ GCRYPT_EXTRA_CFLAGS =
  endif
  ifdef HAVE_MACOSX
  GCRYPT_CONF += --disable-aesni-support
@@ -22,5 +22,5 @@ index ced0f43..e0824ba 100644
  ifdef HAVE_BSD
  GCRYPT_CONF += --disable-asm --disable-aesni-support
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 

@@ -1,4 +1,4 @@
-From 915dae7cf822268cb640b46ad5105cfdcc0faacc Mon Sep 17 00:00:00 2001
+From db3069eed9e1a5ba61e231dbe0c99d12c280f3be Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:43:11 +0100
 Subject: [PATCH 10/20] contrib/avcodec: deploy libav
@@ -21,5 +21,5 @@ index 65d9cb8..107e104 100644
  
  ifdef USE_FFMPEG
 -- 
-1.8.5.2 (Apple Git-48)
+1.9.3 (Apple Git-50)
 
