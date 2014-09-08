@@ -1,13 +1,13 @@
-From d3477f08a3fff6784b008449384be9d650d32d7b Mon Sep 17 00:00:00 2001
+From 8d8c9533b789a544c30caab05c8c6907cf52e824 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
 Subject: [PATCH 19/20] contrib/gcrypt: use git version on iOS
 
 ---
  contrib/src/gcrypt/disable-doc-compilation.patch   | 43 ++++++++++++++++++++++
- contrib/src/gcrypt/rules.mak                       | 15 +++++++-
+ contrib/src/gcrypt/rules.mak                       | 14 ++++++-
  .../gcrypt/work-around-libtool-limitation.patch    | 25 +++++++++++++
- 3 files changed, 82 insertions(+), 1 deletion(-)
+ 3 files changed, 81 insertions(+), 1 deletion(-)
  create mode 100644 contrib/src/gcrypt/disable-doc-compilation.patch
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
@@ -61,7 +61,7 @@ index 0000000..e63224e
 +1.8.3.4 (Apple Git-47)
 +
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 7e67319..f2aae48 100644
+index 0cc1222..d635039 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -1,6 +1,7 @@
@@ -72,7 +72,7 @@ index 7e67319..f2aae48 100644
  
  PKGS += gcrypt
  
-@@ -9,11 +10,23 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
+@@ -9,11 +10,22 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
  
  .sum-gcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2
  
@@ -88,7 +88,6 @@ index 7e67319..f2aae48 100644
 +else
 +libgcrypt: libgcrypt-git.tar.xz
 +	$(UNPACK)
-+	$(APPLY) $(SRC)/gcrypt/gcrypt-fix-x86_64-codepath-on-Darwin.patch
 +	$(APPLY) $(SRC)/gcrypt/disable-doc-compilation.patch
 +	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
 +	$(MOVE)
@@ -96,7 +95,7 @@ index 7e67319..f2aae48 100644
  
  DEPS_gcrypt = gpg-error
  
-@@ -47,6 +60,6 @@ endif
+@@ -44,6 +56,6 @@ endif
  
  .gcrypt: libgcrypt
  	$(RECONF)
