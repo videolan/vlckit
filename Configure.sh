@@ -40,7 +40,8 @@ args="--enable-libass $args"
 args="--enable-macosx-audio $args"
 args="--enable-macosx-dialog-provider $args"
 args="--enable-macosx-eyetv $args"
-args="--enable-macosx-qtkit $args"
+args="--disable-macosx-qtkit $args"
+args="--disable-quicktime $args"
 args="--enable-macosx-vout $args"
 
 # disabled stuff
