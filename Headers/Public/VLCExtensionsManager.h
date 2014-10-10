@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: VLCExtensionsManager
  *****************************************************************************
- * Copyright (C) 2010-2012 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2014 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont
  *
@@ -25,15 +25,12 @@
 @class VLCExtension;
 @class VLCMediaPlayer;
 
-@interface VLCExtensionsManager : NSObject {
-    void *instance;
-    NSMutableArray *_extensions;
-    VLCMediaPlayer *_player;
-    void *_previousInput;
-}
+@interface VLCExtensionsManager : NSObject
+
 + (VLCExtensionsManager *)sharedManager;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *extensions;
 - (void)runExtension:(VLCExtension *)extension;
 
 @property (readwrite, strong) VLCMediaPlayer *mediaPlayer;
+
 @end

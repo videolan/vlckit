@@ -2,7 +2,7 @@
  * VLCStreamOutput.m: VLCKit.framework VLCStreamOutput implementation
  *****************************************************************************
  * Copyright (C) 2008 Pierre d'Herbemont
- * Copyright (C) 2008 VLC authors and VideoLAN
+ * Copyright (C) 2008, 2014 VLC authors and VideoLAN
  * Copyright (C) 2012 Brendon Justin
  * $Id$
  *
@@ -27,13 +27,18 @@
 #import "VLCStreamOutput.h"
 #import "VLCLibVLCBridging.h"
 
+@interface VLCStreamOutput ()
+{
+    NSMutableDictionary *_options;
+}
+@end
+
 @implementation VLCStreamOutput
 - (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary
 {
-    if( self = [super init] )
-    {
-        options = [dictionary mutableCopy];
-    }
+    if (self = [super init])
+        _options = [dictionary mutableCopy];
+
     return self;
 }
 - (NSString *)description
@@ -137,7 +142,7 @@
     NSString * representedOptions;
     NSMutableArray * subOptions = [NSMutableArray array];
     NSMutableArray * optionsAsArray = [NSMutableArray array];
-    NSDictionary * transcodingOptions = options[@"transcodingOptions"];
+    NSDictionary * transcodingOptions = _options[@"transcodingOptions"];
     if( transcodingOptions )
     {
         NSString * videoCodec = transcodingOptions[@"videoCodec"];
@@ -170,7 +175,7 @@
         [subOptions removeAllObjects];
     }
 
-    NSDictionary * outputOptions = options[@"outputOptions"];
+    NSDictionary * outputOptions = _options[@"outputOptions"];
     if( outputOptions )
     {
         NSString * muxer = outputOptions[@"muxer"];
@@ -189,7 +194,7 @@
         [subOptions removeAllObjects];
     }
 
-    NSDictionary * rtpOptions = options[@"rtpOptions"];
+    NSDictionary * rtpOptions = _options[@"rtpOptions"];
     if( rtpOptions )
     {
         NSString * muxer = rtpOptions[@"muxer"];

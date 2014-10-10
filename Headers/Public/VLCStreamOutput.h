@@ -2,7 +2,7 @@
  * VLCStreamOutput.h: VLCKit.framework VLCStreamOutput header
  *****************************************************************************
  * Copyright (C) 2008 Pierre d'Herbemont
- * Copyright (C) 2008 VLC authors and VideoLAN
+ * Copyright (C) 2008, 2014 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -26,9 +26,7 @@ extern NSString * VLCDefaultStreamOutputRTSP;
 extern NSString * VLCDefaultStreamOutputRTP;
 extern NSString * VLCDefaultStreamOutputRTP;
 
-@interface VLCStreamOutput : NSObject {
-    NSMutableDictionary * options;
-}
+@interface VLCStreamOutput : NSObject
 
 - (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
 + (instancetype)streamOutputWithOptionDictionary:(NSDictionary *)dictionary;

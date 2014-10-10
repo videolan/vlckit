@@ -2,7 +2,7 @@
  * VLCMediaDiscoverer.m: VLCKit.framework VLCMediaDiscoverer implementation
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007, 2014 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -28,6 +28,15 @@
 #import "VLCEventManager.h"
 
 #include <vlc/libvlc.h>
+
+@interface VLCMediaDiscoverer ()
+{
+    NSString * _localizedName;
+    VLCMediaList * _discoveredMedia;
+    void * _mdis;
+    BOOL _running;
+}
+@end
 
 static NSArray * availableMediaDiscoverer = nil;     // Global list of media discoverers
 
@@ -88,32 +97,32 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 - (instancetype)initWithName:(NSString *)aServiceName
 {
     if (self = [super init]) {
-        localizedName = nil;
-        discoveredMedia = nil;
+        _localizedName = nil;
+        _discoveredMedia = nil;
 
         _privateLibrary = [VLCLibrary sharedLibrary];
         libvlc_retain([_privateLibrary instance]);
 
-        mdis = libvlc_media_discoverer_new_from_name([_privateLibrary instance],
+        _mdis = libvlc_media_discoverer_new_from_name([_privateLibrary instance],
                                                      [aServiceName UTF8String]);
-        NSAssert(mdis, @"No such media discoverer");
-        libvlc_event_manager_t * p_em = libvlc_media_discoverer_event_manager(mdis);
+        NSAssert(_mdis, @"No such media discoverer");
+        libvlc_event_manager_t * p_em = libvlc_media_discoverer_event_manager(_mdis);
         libvlc_event_attach(p_em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
 
-        running = libvlc_media_discoverer_is_running(mdis);
+        _running = libvlc_media_discoverer_is_running(_mdis);
     }
     return self;
 }
 
 - (void)dealloc
 {
-    libvlc_event_manager_t *em = libvlc_media_list_event_manager(mdis);
+    libvlc_event_manager_t *em = libvlc_media_list_event_manager(_mdis);
     libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
     libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
-    libvlc_media_discoverer_release( mdis );
+    libvlc_media_discoverer_release( _mdis );
 
     libvlc_release(_privateLibrary.instance);
 
@@ -121,46 +130,46 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t * event, void * use
 
 - (VLCMediaList *) discoveredMedia
 {
-    if (discoveredMedia)
-        return discoveredMedia;
+    if (_discoveredMedia)
+        return _discoveredMedia;
 
-    libvlc_media_list_t * p_mlist = libvlc_media_discoverer_media_list( mdis );
+    libvlc_media_list_t * p_mlist = libvlc_media_discoverer_media_list( _mdis );
     VLCMediaList * ret = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
     libvlc_media_list_release( p_mlist );
 
-    discoveredMedia = ret;
-    return discoveredMedia;
+    _discoveredMedia = ret;
+    return _discoveredMedia;
 }
 
 - (NSString *)localizedName
 {
-    if (localizedName)
-        return localizedName;
+    if (_localizedName)
+        return _localizedName;
 
-    char * name = libvlc_media_discoverer_localized_name( mdis );
+    char * name = libvlc_media_discoverer_localized_name( _mdis );
     if (name) {
-        localizedName = @(name);
+        _localizedName = @(name);
         free( name );
     }
-    return localizedName;
+    return _localizedName;
 }
 
 - (BOOL)isRunning
 {
-    return running;
+    return _running;
 }
 
 - (void)_mediaDiscovererStarted
 {
     [self willChangeValueForKey:@"running"];
-    running = YES;
+    _running = YES;
     [self didChangeValueForKey:@"running"];
 }
 
 - (void)_mediaDiscovererEnded
 {
     [self willChangeValueForKey:@"running"];
-    running = NO;
+    _running = NO;
     [self didChangeValueForKey:@"running"];
 }
 @end

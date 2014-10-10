@@ -2,7 +2,7 @@
  * VLCMediaLibrary.m: VLCKit.framework VLCMediaLibrary implementation
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007, 2014 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -31,6 +31,10 @@
 
 @interface VLCMediaLibrary ()
 
+{
+    void *_mlib;
+}
+
 @property (nonatomic) dispatch_once_t once;
 @property (nonatomic, readwrite, strong) VLCMediaList * allMedia;
 
@@ -53,22 +57,22 @@
 - (instancetype)init
 {
     if (self = [super init]) {
-        mlib = libvlc_media_library_new( [VLCLibrary sharedInstance]);
-        libvlc_media_library_load( mlib );
+        _mlib = libvlc_media_library_new( [VLCLibrary sharedInstance]);
+        libvlc_media_library_load( _mlib );
     }
     return self;
 }
 
 - (void)dealloc
 {
-    libvlc_media_library_release(mlib);
-    mlib = nil;     // make sure that the pointer is dead
+    libvlc_media_library_release(_mlib);
+    _mlib = nil;     // make sure that the pointer is dead
 }
 
 - (VLCMediaList *)allMedia
 {
     dispatch_once(&_once, ^{
-        libvlc_media_list_t * p_mlist = libvlc_media_library_media_list( mlib );
+        libvlc_media_list_t * p_mlist = libvlc_media_library_media_list( _mlib );
         _allMedia = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
         libvlc_media_list_release(p_mlist);
     });

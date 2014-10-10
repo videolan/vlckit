@@ -2,7 +2,7 @@
  * VLCAudio.m: VLCKit.framework VLCAudio implementation
  *****************************************************************************
  * Copyright (C) 2007 Faustino E. Osuna
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007, 2014 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Faustino E. Osuna <enrique.osuna # gmail.com>
@@ -29,6 +29,12 @@
 #define VOLUME_MAX                 200
 #define VOLUME_MIN                 0
 
+@interface VLCAudio ()
+{
+    void *_instance;
+}
+@end
+
 /* Notification Messages */
 NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
 
@@ -42,7 +48,7 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
  */
 - (libvlc_media_player_t *)instance
 {
-    return instance;
+    return _instance;
 }
 
 - (instancetype)init
@@ -55,7 +61,7 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
     self = [super init];
     if (!self)
         return nil;
-    instance = [mediaPlayer libVLCMediaPlayer];
+    _instance = [mediaPlayer libVLCMediaPlayer];
     libvlc_media_player_retain([self instance]);
     return self;
 }

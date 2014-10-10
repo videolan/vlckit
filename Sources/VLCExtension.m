@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: VLCExtensions
  *****************************************************************************
- * Copyright (C) 2010-2012 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2012, 2014 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont
  *
@@ -22,6 +22,12 @@
 
 #import "VLCExtension.h"
 #import <vlc_extensions.h>
+
+@interface VLCExtension ()
+{
+    struct extension_t *_instance;
+}
+@end
 
 @implementation VLCExtension
 - (NSString *)description

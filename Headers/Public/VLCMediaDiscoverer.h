@@ -2,7 +2,7 @@
  * VLCMediaDiscoverer.h: VLCKit.framework VLCMediaDiscoverer header
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007, 2014 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -31,12 +31,6 @@
  * TODO: Documentation VLCMediaDiscoverer
  */
 @interface VLCMediaDiscoverer : NSObject
-{
-    NSString * localizedName;       //< TODO: Documentation VLCMediaDiscoverer.localizedName
-    VLCMediaList * discoveredMedia; //< TODO: Documentation VLCMediaDiscoverer.discoveredMedia
-    void * mdis;                    //< TODO: Documentation VLCMediaDiscoverer.mdis
-    BOOL running;                   //< TODO: Documentation VLCMediaDiscoverer.running
-}
 
 /**
  * Maintains a list of available media discoverers.  This list is populated as new media

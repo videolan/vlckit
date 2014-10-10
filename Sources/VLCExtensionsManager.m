@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: VLCExtensionsManager
  *****************************************************************************
- * Copyright (C) 2010-2012 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2012, 2014 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont
  *
@@ -56,6 +56,14 @@ static vlc_object_t *libvlc_get_vlc_instance(libvlc_instance_t *instance)
 
 #define _instance ((extensions_manager_t *)instance)
 
+@interface VLCExtensionsManager ()
+{
+    void *instance;
+    NSMutableArray *_extensions;
+    VLCMediaPlayer *_player;
+    void *_previousInput;
+}
+@end
 
 @implementation VLCExtensionsManager
 
