@@ -1,7 +1,7 @@
-From c0b4e5efa0f9d57bdfe81f4cf5b94877b22098e4 Mon Sep 17 00:00:00 2001
+From 37606de74ed865ea3a3d9818a87759cf46fc7144 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 20/20] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 20/22] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -67,10 +67,10 @@ index c0c66dd..7810ed7 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 867df26..8401b45 100644
+index 5691345..3ca1e10 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -464,6 +464,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -465,6 +465,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -84,10 +84,10 @@ index 867df26..8401b45 100644
      var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
      var_Create (mp, "mute", VLC_VAR_BOOL);
 diff --git a/lib/video.c b/lib/video.c
-index c8b3711..cda3c35 100644
+index 19065fb..8988069 100644
 --- a/lib/video.c
 +++ b/lib/video.c
-@@ -903,3 +903,50 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -934,3 +934,50 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  {
      return get_float( p_mi, "adjust", adjust_option_bynumber(option) );
  }

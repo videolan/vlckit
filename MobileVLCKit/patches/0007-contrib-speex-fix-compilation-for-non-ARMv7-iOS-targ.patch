@@ -1,7 +1,7 @@
-From 337dd3659bb709b818b9111de83f15f0dcac62b3 Mon Sep 17 00:00:00 2001
+From 783351fb3038cb5b339175884a6f74a35712d8c0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
-Subject: [PATCH 07/20] contrib/speex: fix compilation for non-ARMv7 iOS
+Subject: [PATCH 07/22] contrib/speex: fix compilation for non-ARMv7 iOS
  targets
 
 the neon code included in speex doesn't do ARMv8 yet
@@ -10,7 +10,7 @@ the neon code included in speex doesn't do ARMv8 yet
  1 file changed, 5 insertions(+)
 
 diff --git a/contrib/src/speex/rules.mak b/contrib/src/speex/rules.mak
-index 7d7cce9..e356bbc 100644
+index f9ff8d9..cd1794a 100644
 --- a/contrib/src/speex/rules.mak
 +++ b/contrib/src/speex/rules.mak
 @@ -34,6 +34,11 @@ ifeq ($(ARCH),arm)

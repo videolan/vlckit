@@ -1,14 +1,14 @@
-From e740c0309e6682026a19ec9d1260b4e40f0995ac Mon Sep 17 00:00:00 2001
+From 50119ae3f356845697ae9474d5426a5aff4d2111 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 15:19:43 +0100
-Subject: [PATCH 15/20] contrib/speexdsp: disable neon for AArch64
+Subject: [PATCH 15/22] contrib/speexdsp: disable neon for AArch64
 
 ---
  contrib/src/speexdsp/rules.mak | 5 +++++
  1 file changed, 5 insertions(+)
 
 diff --git a/contrib/src/speexdsp/rules.mak b/contrib/src/speexdsp/rules.mak
-index 7a2bc80..396af52 100644
+index 9b58675..050cb24 100644
 --- a/contrib/src/speexdsp/rules.mak
 +++ b/contrib/src/speexdsp/rules.mak
 @@ -29,6 +29,11 @@ ifeq ($(ARCH),arm)

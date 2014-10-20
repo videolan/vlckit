@@ -1,7 +1,7 @@
-From 193eb63cd14e09f5801375075bfdf4b9d0a87954 Mon Sep 17 00:00:00 2001
+From 8ad992247929f0b6d44337925f6c86319133d1be Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 7 Oct 2013 17:05:21 +0200
-Subject: [PATCH 08/20] contrib/flac: fix compilation with clang 5.0
+Subject: [PATCH 08/22] contrib/flac: fix compilation with clang 5.0
 
 ---
  contrib/src/flac/libFLAC-clang-5.0.patch | 19 +++++++++++++++++++
