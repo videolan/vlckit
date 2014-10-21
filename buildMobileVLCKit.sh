@@ -167,6 +167,9 @@ buildMobileKit() {
     if [ "$VERBOSE" = "yes" ]; then
         args="${args} -v"
     fi
+    if [ "$CONFIGURATION" = "Debug" ]; then
+        args="${args} -d"
+    fi
     if [ "$PLATFORM" = "iphonesimulator" ]; then
         args="${args} -s"
         ./build.sh -a i386 ${args} -k "${SDK}" && ./build.sh -a x86_64 ${args} -k "${SDK}"
