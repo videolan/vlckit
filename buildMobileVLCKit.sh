@@ -13,6 +13,7 @@ VERBOSE=no
 CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
+SCARY=yes
 
 TESTEDHASH=246889732
 
@@ -29,6 +30,7 @@ OPTIONS
    -d       Enable Debug
    -n       Skip script steps requiring network interaction
    -l       Skip libvlc compilation
+   -w       Build a limited stack of non-scary libraries only
 EOF
 }
 
@@ -65,7 +67,7 @@ buildxcodeproj()
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} > ${out}
 }
 
-while getopts "hvsfdnlk:" OPTION
+while getopts "hvwsfdnlk:" OPTION
 do
      case $OPTION in
          h)
@@ -86,6 +88,8 @@ do
              BUILD_FRAMEWORK=yes
              ;;
          d)  CONFIGURATION="Debug"
+             ;;
+         w)  SCARY="no"
              ;;
          n)
              NONETWORK=yes
@@ -169,6 +173,9 @@ buildMobileKit() {
     fi
     if [ "$CONFIGURATION" = "Debug" ]; then
         args="${args} -d"
+    fi
+    if [ "$SCARY" = "no" ]; then
+        args="${args} -w"
     fi
     if [ "$PLATFORM" = "iphonesimulator" ]; then
         args="${args} -s"
