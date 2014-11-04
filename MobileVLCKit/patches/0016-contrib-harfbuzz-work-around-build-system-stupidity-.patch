@@ -1,7 +1,7 @@
-From ea6c59004630f42b354cd9be9933bc6b582987d7 Mon Sep 17 00:00:00 2001
+From 2b1e9f251e5e0f1c11de212d3821514181283c95 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 12 Mar 2014 14:48:12 +0100
-Subject: [PATCH 18/22] contrib/harfbuzz: work-around build system stupidity
+Subject: [PATCH 16/19] contrib/harfbuzz: work-around build system stupidity
  breaking clang compilation
 
 ---

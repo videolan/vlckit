@@ -1,7 +1,7 @@
-From 039dc1023de906189857c02ebe6e9e9b4a75390b Mon Sep 17 00:00:00 2001
+From b82921549eb04a19c9afcc120121a3503b26ef99 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:55:16 +0100
-Subject: [PATCH 14/22] freetype: added a fake font lookup mechanism for iOS to
+Subject: [PATCH 13/19] freetype: added a fake font lookup mechanism for iOS to
  use the packaged demo fonts
 
 ---

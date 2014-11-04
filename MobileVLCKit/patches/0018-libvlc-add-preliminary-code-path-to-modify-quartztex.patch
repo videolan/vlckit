@@ -1,7 +1,7 @@
-From 37606de74ed865ea3a3d9818a87759cf46fc7144 Mon Sep 17 00:00:00 2001
+From c7e6e5308322a8e585047983f19937ac202dcc56 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 20/22] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 18/19] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -13,10 +13,10 @@ Subject: [PATCH 20/22] libvlc: add preliminary code path to modify quartztext
  5 files changed, 130 insertions(+), 9 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 4b2f449..59beb48 100644
+index 94bf7e8..c55e85d 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1382,6 +1382,27 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1383,6 +1383,27 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
