@@ -324,11 +324,14 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dropin-Player/Dropin-Player-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"",
+					"\"$(SRCROOT)/../../build/Release-iphoneos/include\"",
+				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../build/Release-iphonesos\"",
+					"\"$(SRCROOT)/../../build/Release-iphoneos\"",
 				);
 				PRODUCT_NAME = "Dropin-Player";
 				WRAPPER_EXTENSION = app;
@@ -340,11 +343,14 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dropin-Player/Dropin-Player-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"",
+					"\"$(SRCROOT)/../../build/Release-iphoneos/include\"",
+				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../build/Release-iphonesos\"",
+					"\"$(SRCROOT)/../../build/Release-iphoneos\"",
 				);
 				PRODUCT_NAME = "Dropin-Player";
 				WRAPPER_EXTENSION = app;
