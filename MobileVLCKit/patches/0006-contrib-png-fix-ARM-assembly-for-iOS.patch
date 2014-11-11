@@ -1,4 +1,4 @@
-From f53bed4a61f162f3b0afea49ab5736fa9ec5cfcd Mon Sep 17 00:00:00 2001
+From ae36ba388b2dfad83ab856e19f09c0d567d22d3c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20Ku=CC=88hne?= <fkuehne@videolan.org>
 Date: Sat, 20 Jul 2013 23:35:05 +0200
 Subject: [PATCH 06/19] contrib/png: fix ARM assembly for iOS
@@ -82,7 +82,7 @@ index 0000000..f4b8bc1
 +         ldr             r12, [r0, #4]           @ rowbytes
 +         vmov.i8         d3,  #0
 diff --git a/contrib/src/png/rules.mak b/contrib/src/png/rules.mak
-index 122c4b6..2b30a2e 100644
+index a63c4e6..fa65363 100644
 --- a/contrib/src/png/rules.mak
 +++ b/contrib/src/png/rules.mak
 @@ -7,6 +7,15 @@ ifeq ($(call need_pkg,"libpng"),)

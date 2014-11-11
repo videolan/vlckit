@@ -1,4 +1,4 @@
-From 0be1c7ef30fdba6508cc603f7e8c183f47bdd05f Mon Sep 17 00:00:00 2001
+From d26112e91e3ba08f07a7c59214fa04667392ba00 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:26:46 +0100
 Subject: [PATCH 10/19] contrib/opus disable asm on arm
