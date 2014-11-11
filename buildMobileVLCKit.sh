@@ -60,11 +60,17 @@ buildxcodeproj()
 
     info "Building $1 ($target, ${CONFIGURATION})"
 
+    local defs="$GCC_PREPROCESSOR_DEFINITIONS"
+    if [ "$SCARY" = "no" ]; then
+        defs="$defs NOSCARYCODECS"
+    fi
     xcodebuild -project "$1.xcodeproj" \
                -target "$target" \
                -sdk $PLATFORM$SDK \
                -configuration ${CONFIGURATION} \
-               IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} > ${out}
+               IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
+               GCC_PREPROCESSOR_DEFINITIONS="$defs" \
+               > ${out}
 }
 
 while getopts "hvwsfdnlk:" OPTION
