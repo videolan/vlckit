@@ -551,10 +551,10 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
                                            VLCMediaTracksInformationBitrate,
                                            nil];
         if (tracksInfo[i]->psz_language)
-            dictionary[VLCMediaTracksInformationLanguage] = [NSString stringWithFormat:@"%s",tracksInfo[i]->psz_language];
+            dictionary[VLCMediaTracksInformationLanguage] = [NSString stringWithUTF8String:tracksInfo[i]->psz_language];
 
         if (tracksInfo[i]->psz_description)
-            dictionary[VLCMediaTracksInformationDescription] = [NSString stringWithFormat:@"%s",tracksInfo[i]->psz_description];
+            dictionary[VLCMediaTracksInformationDescription] = [NSString stringWithUTF8String:tracksInfo[i]->psz_description];
 
         NSString *type;
         switch (tracksInfo[i]->i_type) {
@@ -575,7 +575,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
             case libvlc_track_text:
                 type = VLCMediaTracksInformationTypeText;
                 if (tracksInfo[i]->subtitle->psz_encoding)
-                    dictionary[VLCMediaTracksInformationTextEncoding] = [NSString stringWithFormat:@"%s", tracksInfo[i]->subtitle->psz_encoding];
+                    dictionary[VLCMediaTracksInformationTextEncoding] = [NSString stringWithUTF8String: tracksInfo[i]->subtitle->psz_encoding];
                 break;
             case libvlc_track_unknown:
             default:
