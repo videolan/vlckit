@@ -15,7 +15,7 @@ NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 
-TESTEDHASH=ee7783e6a
+TESTEDHASH=8d48e95e9
 
 usage()
 {
@@ -137,7 +137,7 @@ spushd MobileVLCKit/ImportedSources
 
 if [ "$NONETWORK" != "yes" ]; then
 if ! [ -e vlc ]; then
-git clone git://git.videolan.org/vlc/vlc-2.2.git vlc
+git clone git://git.videolan.org/vlc.git vlc
 info "Applying patches to vlc-2.2.git"
 cd vlc
 git checkout -B localBranch ${TESTEDHASH}
@@ -187,7 +187,7 @@ buildMobileKit() {
         args="${args} -s"
         ./build.sh -a i386 ${args} -k "${SDK}" && ./build.sh -a x86_64 ${args} -k "${SDK}"
     else
-        ./build.sh -a armv7 ${args} -k "${SDK}" && ./build.sh -a armv7s ${args} -k "${SDK}" && ./build.sh -a arm64 ${args} -k "${SDK}"
+        ./build.sh -a armv7 ${args} -k "${SDK}" && ./build.sh -a armv7s ${args} -k "${SDK}" && ./build.sh -a aarch64 ${args} -k "${SDK}"
     fi
 
     spopd

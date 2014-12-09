@@ -1,7 +1,7 @@
-From 5ff6995bbd1f4727fc5895a8b336e48e714ee497 Mon Sep 17 00:00:00 2001
+From 2305d7d2b7d5b30b9678fee25689020c59575b6f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:33 +0200
-Subject: [PATCH 12/19] fix libtool
+Subject: [PATCH 06/12] fix libtool
 
 ---
  modules/arm_neon/Makefile.am    | 4 ++++
@@ -21,7 +21,7 @@ index 4e73a4f..8631f76 100644
  
  libsimple_channel_mixer_neon_plugin_la_SOURCES = \
 diff --git a/modules/video_filter/Modules.am b/modules/video_filter/Modules.am
-index 3bb8cdb..542abaa 100644
+index b823e9d..6c1a3c0 100644
 --- a/modules/video_filter/Modules.am
 +++ b/modules/video_filter/Modules.am
 @@ -1,3 +1,7 @@

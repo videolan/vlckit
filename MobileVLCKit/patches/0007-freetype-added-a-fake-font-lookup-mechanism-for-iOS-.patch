@@ -1,7 +1,7 @@
-From 1e6c688206b1f70fb99d6fee28ef97f1d186cbb3 Mon Sep 17 00:00:00 2001
+From 9bde8f6104e9052c43f8fd44b0269f6f4477ef9d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:55:16 +0100
-Subject: [PATCH 13/19] freetype: added a fake font lookup mechanism for iOS to
+Subject: [PATCH 07/12] freetype: added a fake font lookup mechanism for iOS to
  use the packaged demo fonts
 
 ---
@@ -11,10 +11,10 @@ Subject: [PATCH 13/19] freetype: added a fake font lookup mechanism for iOS to
  3 files changed, 45 insertions(+)
 
 diff --git a/modules/text_renderer/freetype.c b/modules/text_renderer/freetype.c
-index f7fcd80..79bdfd4 100644
+index e562afc..378df0b 100644
 --- a/modules/text_renderer/freetype.c
 +++ b/modules/text_renderer/freetype.c
-@@ -1950,6 +1950,8 @@ static int Create( vlc_object_t *p_this )
+@@ -1972,6 +1972,8 @@ static int Create( vlc_object_t *p_this )
  #elif defined( __APPLE__ )
  #if !TARGET_OS_IPHONE
      p_sys->pf_select = MacLegacy_Select;
@@ -24,7 +24,7 @@ index f7fcd80..79bdfd4 100644
  #elif defined( _WIN32 ) && defined( HAVE_GET_FONT_BY_FAMILY_NAME )
      p_sys->pf_select = Win32_Select;
 diff --git a/modules/text_renderer/platform_fonts.c b/modules/text_renderer/platform_fonts.c
-index 7869dba..2ede6a0 100644
+index 7869dba..deeaa7d 100644
 --- a/modules/text_renderer/platform_fonts.c
 +++ b/modules/text_renderer/platform_fonts.c
 @@ -42,6 +42,9 @@
@@ -53,7 +53,7 @@ index 7869dba..2ede6a0 100644
 +    VLC_UNUSED(i_idx);
 +
 +    CFURLRef fileURL;
-+    fileURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), 
++    fileURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(),
 +                                      CFSTR("OpenSans-Regular.ttf"),
 +                                      NULL,
 +                                      NULL);

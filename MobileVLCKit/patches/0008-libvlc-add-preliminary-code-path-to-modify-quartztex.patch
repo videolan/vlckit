@@ -1,7 +1,7 @@
-From 389859bd70e47c210a6a23aabfebecf7299c56e6 Mon Sep 17 00:00:00 2001
+From 5fa1c83ca5425085af10645600ca332a3013eb08 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 18/19] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 08/12] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -9,11 +9,11 @@ Subject: [PATCH 18/19] libvlc: add preliminary code path to modify quartztext
  lib/libvlc.sym                     |  4 +++
  lib/media_player.c                 |  6 ++++
  lib/video.c                        | 47 +++++++++++++++++++++++++++++
- modules/text_renderer/quartztext.c | 61 ++++++++++++++++++++++++++++++++------
- 5 files changed, 130 insertions(+), 9 deletions(-)
+ modules/text_renderer/quartztext.c | 60 +++++++++++++++++++++++++++++++++-----
+ 5 files changed, 130 insertions(+), 8 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 94bf7e8..c55e85d 100644
+index 1c73cf2..68d0b3b 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
 @@ -1383,6 +1383,27 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
@@ -67,10 +67,10 @@ index c0c66dd..7810ed7 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 5691345..3ca1e10 100644
+index 0f4dda2..544908b 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -465,6 +465,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -555,6 +555,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -84,10 +84,10 @@ index 5691345..3ca1e10 100644
      var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
      var_Create (mp, "mute", VLC_VAR_BOOL);
 diff --git a/lib/video.c b/lib/video.c
-index 19065fb..8988069 100644
+index 4abe36e..f9d306a 100644
 --- a/lib/video.c
 +++ b/lib/video.c
-@@ -934,3 +934,50 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -908,3 +908,50 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  {
      return get_float( p_mi, "adjust", adjust_option_bynumber(option) );
  }
@@ -139,7 +139,7 @@ index 19065fb..8988069 100644
 +    return get_string( p_mi, "quartztext", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
-index 8de1081..112e952 100644
+index 3b8e6ca..d81b531 100644
 --- a/modules/text_renderer/quartztext.c
 +++ b/modules/text_renderer/quartztext.c
 @@ -65,6 +65,10 @@
@@ -153,7 +153,7 @@ index 8de1081..112e952 100644
  static int LoadFontsFromAttachments(filter_t *p_filter);
  
  static int RenderText(filter_t *, subpicture_region_t *,
-@@ -128,14 +132,17 @@ vlc_module_begin ()
+@@ -131,16 +135,20 @@ vlc_module_begin ()
  
      add_string("quartztext-font", DEFAULT_FONT, FONT_TEXT, FONT_LONGTEXT,
                false)
@@ -167,13 +167,15 @@ index 8de1081..112e952 100644
                   COLOR_LONGTEXT, false)
 +        change_safe()
          change_integer_list(pi_color_values, ppsz_color_descriptions)
+     add_bool("quartztext-outline", false, OUTLINE_TEXT, NULL, false)
+     add_bool("quartztext-shadow", true, SHADOW_TEXT, NULL, false)
      set_capability("text renderer", 50)
--    add_shortcut("text")
+     add_shortcut("text")
 +    add_shortcut("quartztext")
      set_callbacks(Create, Destroy)
  vlc_module_end ()
  
-@@ -177,7 +184,8 @@ struct offscreen_bitmap_t
+@@ -182,7 +190,8 @@ struct offscreen_bitmap_t
   *****************************************************************************/
  struct filter_sys_t
  {
@@ -183,7 +185,7 @@ index 8de1081..112e952 100644
      uint8_t        i_font_opacity;
      int            i_font_color;
      int            i_font_size;
-@@ -202,9 +210,9 @@ static int Create(vlc_object_t *p_this)
+@@ -209,9 +218,9 @@ static int Create(vlc_object_t *p_this)
      p_filter->p_sys = p_sys = malloc(sizeof(filter_sys_t));
      if (!p_sys)
          return VLC_ENOMEM;
@@ -192,10 +194,10 @@ index 8de1081..112e952 100644
      p_sys->i_font_opacity = 255;
 -    p_sys->i_font_color = VLC_CLIP(var_CreateGetInteger(p_this, "quartztext-color") , 0, 0xFFFFFF);
 +    p_sys->i_font_color = VLC_CLIP(var_CreateGetIntegerCommand(p_this, "quartztext-color") , 0, 0xFFFFFF);
+     p_sys->b_outline = var_InheritBool(p_this, "quartztext-outline");
+     p_sys->b_shadow = var_InheritBool(p_this, "quartztext-shadow");
      p_sys->i_font_size = GetFontSize(p_filter);
- 
-     p_filter->pf_render_text = RenderText;
-@@ -215,6 +223,11 @@ static int Create(vlc_object_t *p_this)
+@@ -224,6 +233,11 @@ static int Create(vlc_object_t *p_this)
      p_sys->i_fonts = 0;
  #endif
  
@@ -207,7 +209,7 @@ index 8de1081..112e952 100644
      LoadFontsFromAttachments(p_filter);
  
      return VLC_SUCCESS;
-@@ -229,6 +242,16 @@ static void Destroy(vlc_object_t *p_this)
+@@ -238,6 +252,16 @@ static void Destroy(vlc_object_t *p_this)
  {
      filter_t *p_filter = (filter_t *)p_this;
      filter_sys_t *p_sys = p_filter->p_sys;
@@ -224,7 +226,7 @@ index 8de1081..112e952 100644
  #ifndef TARGET_OS_IPHONE
      if (p_sys->p_fonts) {
          for (int k = 0; k < p_sys->i_fonts; k++) {
-@@ -236,8 +259,8 @@ static void Destroy(vlc_object_t *p_this)
+@@ -245,8 +269,8 @@ static void Destroy(vlc_object_t *p_this)
  
          free(p_sys->p_fonts);
      }
@@ -234,7 +236,7 @@ index 8de1081..112e952 100644
      free(p_sys);
  }
  
-@@ -949,12 +972,12 @@ static int GetFontSize(filter_t *p_filter)
+@@ -1001,12 +1025,12 @@ static int GetFontSize(filter_t *p_filter)
  {
      int i_size = 0;
  
@@ -250,7 +252,7 @@ index 8de1081..112e952 100644
          msg_Warn( p_filter, "invalid fontsize, using 12" );
          i_size = 12;
      }
-@@ -1041,3 +1064,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
+@@ -1092,3 +1116,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
  
      return VLC_SUCCESS;
  }
