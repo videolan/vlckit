@@ -10,13 +10,7 @@
 VLC_SRC_DIR=$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc
 VLC_PLATFORM[sdk=iphonesimulator*]=Simulator
 VLC_PLATFORM[sdk=iphoneos*]=OS
-
-if test $(CURRENT_ARCH) = "arm64"
-then
-VLC_INSTALL_DIR=$(VLC_SRC_DIR)/install-ios-$(VLC_PLATFORM)/aarch64
-else
 VLC_INSTALL_DIR=$(VLC_SRC_DIR)/install-ios-$(VLC_PLATFORM)/$(CURRENT_ARCH)
-fi
 
 //OTHER_CFLAGS= -ObjC -all_load
 #include "vlc-plugins.xcconfig"
