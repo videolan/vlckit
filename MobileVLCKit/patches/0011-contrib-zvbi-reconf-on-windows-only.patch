@@ -1,0 +1,26 @@
+From a083b2548c57bf85c51acef43a8945f106e19338 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Sun, 14 Dec 2014 15:50:45 +0100
+Subject: [PATCH 11/11] contrib/zvbi: reconf on windows only
+
+---
+ contrib/src/zvbi/rules.mak | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/contrib/src/zvbi/rules.mak b/contrib/src/zvbi/rules.mak
+index aac57f4..0c9b357 100644
+--- a/contrib/src/zvbi/rules.mak
++++ b/contrib/src/zvbi/rules.mak
+@@ -46,7 +46,9 @@ endif
+ 
+ .zvbi: zvbi
+ 	$(UPDATE_AUTOCONFIG)
++ifdef HAVE_WIN32
+ 	$(RECONF)
++endif
+ 	cd $< && $(HOSTVARS) CFLAGS="$(ZVBI_CFLAGS)" ./configure $(ZVBICONF)
+ 	cd $</src && $(MAKE) install
+ 	cd $< && $(MAKE) SUBDIRS=. install
+-- 
+1.9.3 (Apple Git-50)
+
