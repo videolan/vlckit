@@ -1,0 +1,25 @@
+From 27317e095618f166c8fd376bdcdab05ee3368d22 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Sat, 20 Dec 2014 14:59:47 +0100
+Subject: [PATCH 11/11] contrib: we always have an FPU on iOS
+
+---
+ contrib/bootstrap | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/bootstrap b/contrib/bootstrap
+index c15d84f..d803717 100755
+--- a/contrib/bootstrap
++++ b/contrib/bootstrap
+@@ -239,7 +239,7 @@ case "${OS}" in
+ 			add_make_enabled "HAVE_MACOSX" "HAVE_DARWIN_OS" "HAVE_BSD"
+ 		else
+ 			check_ios_sdk
+-			add_make_enabled "HAVE_IOS" "HAVE_DARWIN_OS" "HAVE_BSD"
++			add_make_enabled "HAVE_IOS" "HAVE_DARWIN_OS" "HAVE_BSD" "HAVE_FPU"
+ 
+ 			case "${HOST}" in
+ 				*arm*)
+-- 
+1.9.3 (Apple Git-50)
+

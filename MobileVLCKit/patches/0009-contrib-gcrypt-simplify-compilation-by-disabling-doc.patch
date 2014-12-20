@@ -1,7 +1,7 @@
-From bf7060f6af8eb5940c3af3c31b92a81e4f230055 Mon Sep 17 00:00:00 2001
+From 8cc9aa629810a2007d16aa43a06b33834e967b85 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 09/10] contrib/gcrypt: simplify compilation by disabling /doc
+Subject: [PATCH 09/11] contrib/gcrypt: simplify compilation by disabling /doc
  and work-around a libtool limitation
 
 ---

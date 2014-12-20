@@ -1,7 +1,7 @@
-From cc9df1a7de9af997e18294ab05c2c0baab007f96 Mon Sep 17 00:00:00 2001
+From 26b1df1443c3d9e4482f3b97a21ee0b81fa06257 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 9 Dec 2014 22:14:55 +0100
-Subject: [PATCH 10/10] lib/media player: inherit deinterlace variable to
+Subject: [PATCH 10/11] lib/media player: inherit deinterlace variable to
  achieve correct value on first use
 
 ---
