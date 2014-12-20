@@ -301,7 +301,10 @@
 			baseConfigurationReference = 7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+					armv7s,
+				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				DSTROOT = /tmp/MobileVLCKit.dst;
@@ -323,7 +326,10 @@
 			baseConfigurationReference = 7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = (
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+					armv7s,
+				);
 				CLANG_ENABLE_OBJC_ARC = YES;
 				DSTROOT = /tmp/MobileVLCKit.dst;
 				ENABLE_NS_ASSERTIONS = NO;
