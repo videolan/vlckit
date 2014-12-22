@@ -1,4 +1,4 @@
-From 852fbfaa3906fb44d0a7f4b15afb9bcaea95ed4f Mon Sep 17 00:00:00 2001
+From da23c0b70de9b29c981857697cff678fa3b969c8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 29 May 2013 13:25:54 +0200
 Subject: [PATCH 05/19] libass: fix text rendering on iOS by providing a font
@@ -9,7 +9,7 @@ Subject: [PATCH 05/19] libass: fix text rendering on iOS by providing a font
  1 file changed, 35 insertions(+)
 
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index 5590df1..fff51db 100644
+index dc247f4..dffe14e 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
 @@ -29,6 +29,13 @@

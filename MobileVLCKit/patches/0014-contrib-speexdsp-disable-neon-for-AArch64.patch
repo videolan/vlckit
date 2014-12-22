@@ -1,4 +1,4 @@
-From 407b787ae87531dc69baf3399cc566000e2bf415 Mon Sep 17 00:00:00 2001
+From 6e30980349205c7d241e3842722f8fe42a94d657 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 15:19:43 +0100
 Subject: [PATCH 14/19] contrib/speexdsp: disable neon for AArch64

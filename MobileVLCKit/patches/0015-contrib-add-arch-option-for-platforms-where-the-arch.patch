@@ -1,4 +1,4 @@
-From 6a1817276018208220de6eb87aacd413d02ebcd2 Mon Sep 17 00:00:00 2001
+From 3065caff36de2afc4c26833597b1e12ebbe3468a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:27:43 +0200
 Subject: [PATCH 15/19] contrib: add arch option for platforms where the arch
@@ -65,7 +65,7 @@ index b77a9d9..86d4b9e 100755
  		;;
  	*bsd*)
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
-index dd2bd25..2b085ea 100644
+index 79e8e57..dc06051 100644
 --- a/contrib/src/main.mak
 +++ b/contrib/src/main.mak
 @@ -35,7 +35,9 @@ PREFIX := $(abspath $(PREFIX))

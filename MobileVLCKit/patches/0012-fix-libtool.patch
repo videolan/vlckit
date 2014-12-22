@@ -1,4 +1,4 @@
-From 5ff6995bbd1f4727fc5895a8b336e48e714ee497 Mon Sep 17 00:00:00 2001
+From 44f9c4ed00edb4cf2001af8cb1cb99db889e0079 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:33 +0200
 Subject: [PATCH 12/19] fix libtool

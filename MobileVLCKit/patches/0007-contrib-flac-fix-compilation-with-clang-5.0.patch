@@ -1,41 +1,35 @@
-From a02ded8163ba002fd316a4bf4d53991dfe4f37bf Mon Sep 17 00:00:00 2001
+From 86432e82afb4a908e6de2a73f8a1ad27a596b680 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 7 Oct 2013 17:05:21 +0200
 Subject: [PATCH 07/19] contrib/flac: fix compilation with clang 5.0
 
 ---
- contrib/src/flac/libFLAC-clang-5.0.patch | 19 +++++++++++++++++++
+ contrib/src/flac/libFLAC-clang-5.0.patch | 13 +++++++++++++
  contrib/src/flac/rules.mak               |  1 +
- 2 files changed, 20 insertions(+)
+ 2 files changed, 14 insertions(+)
  create mode 100644 contrib/src/flac/libFLAC-clang-5.0.patch
 
 diff --git a/contrib/src/flac/libFLAC-clang-5.0.patch b/contrib/src/flac/libFLAC-clang-5.0.patch
 new file mode 100644
-index 0000000..9fcad0b
+index 0000000..164b8ab
 --- /dev/null
 +++ b/contrib/src/flac/libFLAC-clang-5.0.patch
-@@ -0,0 +1,19 @@
-+diff -ru flac/configure.ac flac-fixed/configure.ac
-+--- flac/configure.ac	2013-05-27 10:08:57.000000000 +0200
-++++ flac-fixed/configure.ac	2013-10-07 16:56:51.000000000 +0200
-+@@ -381,15 +381,9 @@
-+ 		CXXFLAGS="$CXXFLAGS -Wall -Wextra -Werror "
+@@ -0,0 +1,13 @@
++--- flac/configure.ac	2014-11-27 03:45:33.000000000 +0100
+++++ flac/configure.ac	2014-12-22 19:01:04.000000000 +0100
++@@ -381,10 +381,6 @@
++ 		CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
 + 		fi
 + 
-+-	if test "$GCC_MAJOR_VERSION" -ge 4 && test "$OBJ_FORMAT" = elf; then
-+ 		CPPFLAGS="$CPPFLAGS -DFLAC__USE_VISIBILITY_ATTR"
-+ 		CFLAGS="$CFLAGS -fvisibility=hidden"
-+ 		CXXFLAGS="$CXXFLAGS -fvisibility=hidden"
-+-		fi
-+-
 +-	if test "x$GCC_MAJOR_VERSION$GCC_MINOR_VERSION" = "x42" ; then
 +-		XIPH_ADD_CFLAGS([-fgnu89-inline])
 +-		fi
-+ 	fi
-+ 
-+ 
++-
++ 	if test "x$asm_optimisation$sse_os" = "xyesyes" ; then
++ 		XIPH_ADD_CFLAGS([-msse2])
++ 		fi
 diff --git a/contrib/src/flac/rules.mak b/contrib/src/flac/rules.mak
-index bf72caf..ee6c2b5 100644
+index 53393a4..1bcfd27 100644
 --- a/contrib/src/flac/rules.mak
 +++ b/contrib/src/flac/rules.mak
 @@ -17,6 +17,7 @@ flac: flac-$(FLAC_VERSION).tar.xz .sum-flac

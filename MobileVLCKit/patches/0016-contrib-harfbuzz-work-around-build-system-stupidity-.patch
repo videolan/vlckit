@@ -1,4 +1,4 @@
-From d665f7424cab347a425e7680618e5d3847df8f08 Mon Sep 17 00:00:00 2001
+From 337d88c04a118319df2d8f96c2ec1ca1ad8e44e5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 12 Mar 2014 14:48:12 +0100
 Subject: [PATCH 16/19] contrib/harfbuzz: work-around build system stupidity
@@ -33,7 +33,7 @@ index 0000000..59d1e06
 + 
 + AM_CONDITIONAL(HAVE_GCC, test "x$GCC" = "xyes")
 diff --git a/contrib/src/harfbuzz/rules.mak b/contrib/src/harfbuzz/rules.mak
-index a34ee2b..30e9a2b 100644
+index c6a84a6..e9ea233 100644
 --- a/contrib/src/harfbuzz/rules.mak
 +++ b/contrib/src/harfbuzz/rules.mak
 @@ -16,6 +16,7 @@ harfbuzz: harfbuzz-$(HARFBUZZ_VERSION).tar.bz2 .sum-harfbuzz

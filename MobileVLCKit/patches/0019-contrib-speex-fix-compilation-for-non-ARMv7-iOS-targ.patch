@@ -1,4 +1,4 @@
-From 259913e58d83b99bae60546010648f515b4e5d07 Mon Sep 17 00:00:00 2001
+From 582f2960bb97e390ac6de707a8eb9939ceca135e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
 Subject: [PATCH 19/19] contrib/speex: fix compilation for non-ARMv7 iOS
@@ -9,10 +9,10 @@ Subject: [PATCH 19/19] contrib/speex: fix compilation for non-ARMv7 iOS
  1 file changed, 5 insertions(+)
 
 diff --git a/contrib/src/speex/rules.mak b/contrib/src/speex/rules.mak
-index fd90cde..a3d9ea3 100644
+index 376dcbd..50709e5 100644
 --- a/contrib/src/speex/rules.mak
 +++ b/contrib/src/speex/rules.mak
-@@ -37,6 +37,11 @@ endif
+@@ -27,6 +27,11 @@ endif
  ifeq ($(ARCH),aarch64)
  SPEEX_CONF += --disable-neon
  endif

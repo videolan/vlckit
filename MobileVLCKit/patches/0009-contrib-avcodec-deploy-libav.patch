@@ -1,4 +1,4 @@
-From 954239e53d2615a2713fee71fa4923ca671b5eea Mon Sep 17 00:00:00 2001
+From 68859622aeec2e3c04f1daf146be2d3c342a0338 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:43:11 +0100
 Subject: [PATCH 09/19] contrib/avcodec: deploy libav
