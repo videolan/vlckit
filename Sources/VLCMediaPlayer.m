@@ -680,10 +680,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (NSArray *)titles
 {
+    NSUInteger count = [self countOfTitles];
+    if (count == 0)
+        return [NSArray array];
+
     libvlc_track_description_t *tracks = libvlc_video_get_title_description(_playerInstance);
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (NSInteger i = 0; i < [self countOfTitles] ; i++) {
-        [tempArray addObject:@(tracks->psz_name)];
+    for (NSInteger i = 0; i < count; i++) {
+        if (tracks->psz_name != nil)
+            [tempArray addObject:@(tracks->psz_name)];
         tracks = tracks->p_next;
     }
     libvlc_track_description_list_release(tracks);
