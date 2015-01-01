@@ -33,6 +33,7 @@ New APIs:
   - added delegate method mediaMetaDataDidChange
 - VLCMediaPlayer:
   - added equalizer
+  - added countOfTitles
 
 Modified API behavior:
 - VLCMediaPlayer:
