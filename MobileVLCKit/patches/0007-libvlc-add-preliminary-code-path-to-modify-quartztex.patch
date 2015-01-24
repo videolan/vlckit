@@ -1,7 +1,7 @@
-From 8b316a7a00877cec90f6fa4b392919acac3b6b03 Mon Sep 17 00:00:00 2001
+From 55e44b84ee349e19354a026548823958a1b29f4a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 08/11] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 07/10] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -45,10 +45,10 @@ index 1c73cf2..68d0b3b 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index c0c66dd..7810ed7 100644
+index 551e3b2..3ce91a0 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -217,6 +217,8 @@ libvlc_video_get_spu_count
+@@ -222,6 +222,8 @@ libvlc_video_get_spu_count
  libvlc_video_get_spu_delay
  libvlc_video_get_spu_description
  libvlc_video_get_teletext
@@ -57,7 +57,7 @@ index c0c66dd..7810ed7 100644
  libvlc_video_get_title_description
  libvlc_video_get_track
  libvlc_video_get_track_count
-@@ -241,6 +243,8 @@ libvlc_video_set_spu
+@@ -246,6 +248,8 @@ libvlc_video_set_spu
  libvlc_video_set_spu_delay
  libvlc_video_set_subtitle_file
  libvlc_video_set_teletext
@@ -67,10 +67,10 @@ index c0c66dd..7810ed7 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 0f4dda2..544908b 100644
+index cb6b604..2369a57 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -555,6 +555,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -556,6 +556,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
