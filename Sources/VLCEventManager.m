@@ -343,7 +343,8 @@ static void * EventDispatcherMainLoop(void * user_data)
     // Check that we were not cancelled
     if ([self markMessageHandledOnMainThreadIfExists:message]) {
         void (*method)(id, SEL, id) = (void (*)(id, SEL, id))[message.target methodForSelector: message.sel];
-        method(message.target, message.sel, message.object);
+        if (message.target && message.sel)
+            method(message.target, message.sel, message.object);
     }
 }
 
