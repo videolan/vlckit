@@ -1,3 +1,14 @@
+Version 3.0.0:
+--------------
+New APIs:
+- VLCMediaPlayer
+  - added properties: titleDescriptions, indexOfLongestTitle
+  - added selector: chaptersForTitleIndex:
+
+Deprecated APIs:
+- VLCMediaPlayer
+  - titles, chaptersForTitleIndex:
+
 Version 2.2.2:
 --------------
 New APIs:

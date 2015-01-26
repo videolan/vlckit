@@ -2,8 +2,8 @@
  * VLCMediaPlayer.m: VLCKit.framework VLCMediaPlayer implementation
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2014 VLC authors and VideoLAN
- * Partial Copyright (C) 2009-2014 Felix Paul Kühne
+ * Copyright (C) 2007-2015 VLC authors and VideoLAN
+ * Partial Copyright (C) 2009-2015 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -48,8 +48,18 @@
 #include <vlc/vlc.h>
 
 /* Notification Messages */
-NSString *const VLCMediaPlayerTimeChanged    = @"VLCMediaPlayerTimeChanged";
-NSString *const VLCMediaPlayerStateChanged   = @"VLCMediaPlayerStateChanged";
+NSString *const VLCMediaPlayerTimeChanged       = @"VLCMediaPlayerTimeChanged";
+NSString *const VLCMediaPlayerStateChanged      = @"VLCMediaPlayerStateChanged";
+
+/* title keys */
+NSString *const VLCTitleDescriptionName         = @"VLCTitleDescriptionName";
+NSString *const VLCTitleDescriptionDuration     = @"VLCTitleDescriptionDuration";
+NSString *const VLCTitleDescriptionIsMenu       = @"VLCTitleDescriptionIsMenu";
+
+/* chapter keys */
+NSString *const VLCChapterDescriptionName       = @"VLCChapterDescriptionName";
+NSString *const VLCChapterDescriptionTimeOffset = @"VLCChapterDescriptionTimeOffset";
+NSString *const VLCChapterDescriptionDuration   = @"VLCChapterDescriptionDuration";
 
 NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 {
@@ -709,6 +719,91 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     libvlc_track_description_list_release(tracks);
     return [NSArray arrayWithArray: tempArray];
+}
+
+- (NSArray *)titleDescriptions
+{
+    libvlc_title_description_t **titleInfo;
+    int numberOfTitleDescriptions = libvlc_media_player_get_full_title_descriptions(_playerInstance, &titleInfo);
+
+    if (numberOfTitleDescriptions < 0)
+        return [NSArray array];
+
+    if (numberOfTitleDescriptions == 0) {
+        libvlc_title_descriptions_release(titleInfo, numberOfTitleDescriptions);
+        return [NSArray array];
+    }
+
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:numberOfChapterDescriptions];
+
+    for (int i = 0; i < numberOfTitleDescriptions; i++) {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NSNumber numberWithLongLong:titleInfo[i]->i_duration],
+                                           VLCTitleDescriptionDuration,
+                                           @(titleInfo[i]->b_menu),
+                                           VLCTitleDescriptionIsMenu,
+                                           nil];
+        if (titleInfo[i]->psz_name != NULL)
+            dictionary[VLCTitleDescriptionName] = [NSString stringWithUTF8String:titleInfo[i]->psz_name];
+        [array addObject:[NSDictionary dictionaryWithDictionary:dictionary]];
+    }
+    libvlc_title_descriptions_release(titleInfo, numberOfTitleDescriptions);
+
+    return [NSArray arrayWithArray:array];
+}
+
+- (int)indexOfLongestTitle
+{
+    NSArray *titles = [self titleDescriptions];
+    NSUInteger titleCount = titles.count;
+
+    int currentlyFoundTitle = 0;
+    int64_t currentlySelectedDuration = 0;
+    int64_t randomTitleDuration = 0;
+
+    for (int x = 0; x < titleCount; x++) {
+        randomTitleDuration = [[titles[x] valueForKey:VLCTitleDescriptionDuration] longLongValue];
+        if (randomTitleDuration > currentlySelectedDuration) {
+            currentlySelectedDuration = randomTitleDuration;
+            currentlyFoundTitle = x;
+        }
+    }
+
+    return currentlyFoundTitle;
+}
+
+- (NSArray *)chapterDescriptionsOfTitle:(int)titleIndex
+{
+    libvlc_chapter_description_t **chapterDescriptions;
+    int numberOfChapterDescriptions = libvlc_media_player_get_full_chapter_descriptions(_playerInstance,
+                                                                                        titleIndex,
+                                                                                        &chapterDescriptions);
+
+    if (numberOfChapterDescriptions < 0)
+        return [NSArray array];
+
+    if (numberOfChapterDescriptions == 0) {
+        libvlc_chapter_descriptions_release(chapterDescriptions, numberOfChapterDescriptions);
+        return [NSArray array];
+    }
+
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:numberOfChapterDescriptions];
+
+    for (int i = 0; i < numberOfChapterDescriptions; i++) {
+        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           [NSNumber numberWithLongLong:chapterDescriptions[i]->i_duration],
+                                           VLCChapterDescriptionDuration,
+                                           [NSNumber numberWithLongLong:chapterDescriptions[i]->i_time_offset],
+                                           VLCChapterDescriptionTimeOffset,
+                                           nil];
+        if (chapterDescriptions[i]->psz_name != NULL)
+            dictionary[VLCChapterDescriptionName] = [NSString stringWithUTF8String:chapterDescriptions[i]->psz_name];
+        [array addObject:[NSDictionary dictionaryWithDictionary:dictionary]];
+    }
+
+    libvlc_chapter_descriptions_release(chapterDescriptions, numberOfChapterDescriptions);
+
+    return [NSArray arrayWithArray:array];
 }
 
 #pragma mark -

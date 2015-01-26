@@ -2,8 +2,8 @@
  * VLCMediaPlayer.h: VLCKit.framework VLCMediaPlayer header
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2014 VLC authors and VideoLAN
- * Copyright (C) 2009-2014 Felix Paul Kühne
+ * Copyright (C) 2007-2015 VLC authors and VideoLAN
+ * Copyright (C) 2009-2015 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -358,7 +358,20 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @property (readwrite) int currentChapterIndex;
 - (void)previousChapter;
 - (void)nextChapter;
-- (NSArray *)chaptersForTitleIndex:(int)titleIndex;
+- (NSArray *)chaptersForTitleIndex:(int)titleIndex __attribute__((deprecated));
+
+extern NSString *const VLCChapterDescriptionName;
+extern NSString *const VLCChapterDescriptionTimeOffset;
+extern NSString *const VLCChapterDescriptionDuration;
+
+/**
+ * chapter descriptions
+ * an array of all chapters of the given title including information about
+ * chapter name, time offset and duration
+ * \note if no title value is provided, information about the chapters of the current title is returned
+ * \return array describing the titles in details
+ */
+- (NSArray *)chapterDescriptionsOfTitle:(int)titleIndex;
 
 /**
  * Title selection and enumeration
@@ -366,7 +379,25 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property (readwrite) int currentTitleIndex;
 @property (readonly) NSUInteger countOfTitles;
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles __attribute__((deprecated));
+
+extern NSString *const VLCTitleDescriptionName;
+extern NSString *const VLCTitleDescriptionDuration;
+extern NSString *const VLCTitleDescriptionIsMenu;
+
+/**
+ * title descriptions
+ * an array of all titles of the current media including information
+ * of name, duration and potential menu state
+ * \return array describing the titles in details
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titleDescriptions;
+
+/**
+ * the title with the longest duration
+ * \return int matching the title index
+ */
+@property (readonly) int indexOfLongestTitle;
 
 /* Audio Options */
 
