@@ -1,7 +1,7 @@
-From 582f2960bb97e390ac6de707a8eb9939ceca135e Mon Sep 17 00:00:00 2001
+From cb73954924b6fc2ca5376e4f295eaaac42aa7ef7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
-Subject: [PATCH 19/19] contrib/speex: fix compilation for non-ARMv7 iOS
+Subject: [PATCH 16/16] contrib/speex: fix compilation for non-ARMv7 iOS
  targets
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 19/19] contrib/speex: fix compilation for non-ARMv7 iOS
  1 file changed, 5 insertions(+)
 
 diff --git a/contrib/src/speex/rules.mak b/contrib/src/speex/rules.mak
-index 376dcbd..50709e5 100644
+index a5f003c..916b0ea 100644
 --- a/contrib/src/speex/rules.mak
 +++ b/contrib/src/speex/rules.mak
 @@ -27,6 +27,11 @@ endif
@@ -23,7 +23,7 @@ index 376dcbd..50709e5 100644
 +endif
  
  .speex: speex
- 	mkdir -p $</m4 && $(RECONF)
+ 	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(SPEEX_CONF)
 -- 
 1.9.3 (Apple Git-50)
 
