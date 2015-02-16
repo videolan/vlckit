@@ -47,10 +47,10 @@ DEFINITION=""
 
 for file in $VLC_MODULES; do
   name=`echo $file | sed 's/.*\/lib//' | sed 's/_plugin\.a//'`
-  DEFINITION+="int vlc_entry__$name (int (*)(void *, void *, int, ...), void *);\n";
-  BUILTINS+=" vlc_entry__$name,\n"
+  symbol=`nm -g $file | grep _vlc_entry__|cut -d" " -f 3|sed 's/_vlc_entry/vlc_entry/'`
+  DEFINITION+="int $symbol (int (*)(void *, void *, int, ...), void *);\n";
+  BUILTINS+=" $symbol,\n"
   LDFLAGS+="\$(VLC_INSTALL_DIR)/lib/vlc/plugins/lib${name}_plugin.a "
-  echo $name
 done;
 
 BUILTINS="$BUILTINS NULL\n};\n"
