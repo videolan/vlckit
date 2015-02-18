@@ -1,7 +1,7 @@
-From 4177ee03f9ec6a4cf43cf3c76c6117c900568028 Mon Sep 17 00:00:00 2001
+From da41f6ce2a498eb04031fb5ee6dd80ac3fbe7f96 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:01:49 +0200
-Subject: [PATCH 2/8] arm_neon: use a macro to fix compilation for iOS
+Subject: [PATCH 2/9] arm_neon: use a macro to fix compilation for iOS
 
 ---
  modules/arm_neon/amplify.S              |  9 +++---
