@@ -1,4 +1,4 @@
-From 1b16716985dce6e5121cb08d428636a838ab6a1f Mon Sep 17 00:00:00 2001
+From 91c28a22624b6f353219098e68fa3e8d0c15ad33 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:07 +0200
 Subject: [PATCH 03/16] deinterlace/merge: use a macro to fix compilation for
@@ -82,5 +82,5 @@ index dd77902..03e5042 100644
  	b		1b
 +endfunc
 -- 
-1.9.3 (Apple Git-50)
+2.3.0
 
