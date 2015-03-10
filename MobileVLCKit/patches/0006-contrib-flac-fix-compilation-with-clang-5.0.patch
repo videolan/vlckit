@@ -1,4 +1,4 @@
-From f3807f351be31b6b96b227b82972547397b2592b Mon Sep 17 00:00:00 2001
+From 910e9e7432b5dbebe7956a43e7dbe8384eec9207 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 7 Oct 2013 17:05:21 +0200
 Subject: [PATCH 06/16] contrib/flac: fix compilation with clang 5.0
@@ -29,7 +29,7 @@ index 0000000..164b8ab
 + 		XIPH_ADD_CFLAGS([-msse2])
 + 		fi
 diff --git a/contrib/src/flac/rules.mak b/contrib/src/flac/rules.mak
-index 53393a4..1bcfd27 100644
+index bf72caf..ee6c2b5 100644
 --- a/contrib/src/flac/rules.mak
 +++ b/contrib/src/flac/rules.mak
 @@ -17,6 +17,7 @@ flac: flac-$(FLAC_VERSION).tar.xz .sum-flac
@@ -41,5 +41,5 @@ index 53393a4..1bcfd27 100644
  endif
  ifdef HAVE_ANDROID
 -- 
-2.3.0
+2.3.2
 
