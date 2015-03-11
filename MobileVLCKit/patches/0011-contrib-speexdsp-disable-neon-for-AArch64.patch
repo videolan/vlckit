@@ -1,7 +1,7 @@
-From ad6ebe2e5cda5d945aa83adcc042d1e8a6a92bfc Mon Sep 17 00:00:00 2001
+From df4089b6d3193a15a656a2e6f4376de37883fc41 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 15:19:43 +0100
-Subject: [PATCH 12/16] contrib/speexdsp: disable neon for AArch64
+Subject: [PATCH 11/15] contrib/speexdsp: disable neon for AArch64
 
 ---
  contrib/src/speexdsp/rules.mak | 5 +++++
