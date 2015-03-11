@@ -686,11 +686,18 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     libvlc_track_description_t *tracks = libvlc_video_get_title_description(_playerInstance);
     NSMutableArray *tempArray = [NSMutableArray array];
-    for (NSInteger i = 0; i < count; i++) {
+    if (!tracks)
+        return tempArray;
+
+    while (1) {
         if (tracks->psz_name != nil)
             [tempArray addObject:@(tracks->psz_name)];
-        tracks = tracks->p_next;
+        if (tracks->p_next)
+            tracks = tracks->p_next;
+        else
+            break;
     }
+
     libvlc_track_description_list_release(tracks);
     return [NSArray arrayWithArray: tempArray];
 }
