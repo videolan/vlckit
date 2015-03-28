@@ -1,4 +1,4 @@
-From d137174a240d8b0db2511983387f42302a02ee53 Mon Sep 17 00:00:00 2001
+From 2abccdbedc8b0bf802af7747fb240530509ec1b7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
 Subject: [PATCH 7/9] contrib/gcrypt: simplify compilation by disabling /doc
@@ -106,5 +106,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.3.0
+2.3.2
 
