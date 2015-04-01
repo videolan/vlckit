@@ -76,8 +76,20 @@
  * Initializes new object with specified name.
  * \param aServiceName Name of the service for this VLCMediaDiscoverer object.
  * \returns Newly created media discoverer.
+ * \note with VLCKit 3.0 and above, you need to start the discoverer explicitly after creation
  */
 - (instancetype)initWithName:(NSString *)aServiceName;
+
+/**
+ * start media discovery
+ * \returns -1 if start failed, otherwise 0
+ */
+- (int)startDiscoverer;
+
+/**
+ * stop media discovery
+ */
+- (void)stopDiscoverer;
 
 /**
  * a read-only property to retrieve the list of discovered media items

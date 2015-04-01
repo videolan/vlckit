@@ -111,21 +111,15 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
         libvlc_event_manager_t * p_em = libvlc_media_discoverer_event_manager(_mdis);
         libvlc_event_attach(p_em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
-
-        //FIXME: add more events
-        int returnValue = libvlc_media_discoverer_start(_mdis);
-        if (returnValue == -1) {
-            VKLog(@"media discovery start failed");
-            return NULL;
-        }
-
-        _running = libvlc_media_discoverer_is_running(_mdis);
     }
     return self;
 }
 
 - (void)dealloc
 {
+    if (_running)
+        [self stopDiscoverer];
+
     libvlc_event_manager_t *em = libvlc_media_list_event_manager(_mdis);
     libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
     libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
@@ -134,6 +128,23 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
     libvlc_media_discoverer_release(_mdis);
 
     libvlc_release(_privateLibrary.instance);
+}
+
+- (int)startDiscoverer
+{
+    int returnValue = libvlc_media_discoverer_start(_mdis);
+    if (returnValue == -1)
+        VKLog(@"media discovery start failed");
+
+    _running = libvlc_media_discoverer_is_running(_mdis);
+
+    return returnValue;
+}
+
+- (void)stopDiscoverer
+{
+    libvlc_media_discoverer_stop(_mdis);
+    _running = libvlc_media_discoverer_is_running(_mdis);
 }
 
 - (VLCMediaList *)discoveredMedia
