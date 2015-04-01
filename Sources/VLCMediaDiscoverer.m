@@ -172,6 +172,11 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
     [self willChangeValueForKey:@"running"];
     _running = YES;
     [self didChangeValueForKey:@"running"];
+
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(discovererStarted:)])
+            [self.delegate discovererStarted:self];
+    }
 }
 
 - (void)_mediaDiscovererEnded
@@ -179,5 +184,10 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
     [self willChangeValueForKey:@"running"];
     _running = NO;
     [self didChangeValueForKey:@"running"];
+
+    if (self.delegate) {
+        if ([self.delegate respondsToSelector:@selector(discovererStopped:)])
+            [self.delegate discovererStopped:self];
+    }
 }
 @end

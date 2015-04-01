@@ -26,11 +26,24 @@
 #import "VLCMediaList.h"
 
 @class VLCMediaList;
+@class VLCMediaDiscoverer;
 
 /**
  * TODO: Documentation VLCMediaDiscoverer
  */
+
+@protocol VLCMediaDiscovererDelegate <NSObject>
+
+@optional
+
+- (void)discovererStarted:(VLCMediaDiscoverer *)theDiscoverer;
+- (void)discovererStopped:(VLCMediaDiscoverer *)theDiscoverer;
+
+@end
+
 @interface VLCMediaDiscoverer : NSObject
+
+@property (weak, readwrite) id<VLCMediaDiscovererDelegate> delegate;
 
 /**
  * Maintains a list of available media discoverers.  This list is populated as new media
