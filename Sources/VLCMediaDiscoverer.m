@@ -59,7 +59,6 @@ static NSArray *availableMediaDiscoverer = nil;     // Global list of media disc
 static void HandleMediaDiscovererStarted(const libvlc_event_t *event, void *user_data)
 {
     @autoreleasepool {
-        NSLog(@"HandleMediaDiscovererStarted");
         id self = (__bridge id)(user_data);
         [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                      withMethod:@selector(_mediaDiscovererStarted)
@@ -70,7 +69,6 @@ static void HandleMediaDiscovererStarted(const libvlc_event_t *event, void *user
 static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_data)
 {
     @autoreleasepool {
-        NSLog(@"HandleMediaDiscovererEnded");
         id self = (__bridge id)(user_data);
         [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                      withMethod:@selector(_mediaDiscovererEnded)
