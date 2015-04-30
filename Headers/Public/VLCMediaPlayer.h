@@ -267,7 +267,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * Pass -1 to disable.
  */
-@property (readwrite) NSUInteger currentVideoTrackIndex;
+@property (readwrite) int currentVideoTrackIndex;
 
 /**
  * Returns the video track names, usually a language name or a description
