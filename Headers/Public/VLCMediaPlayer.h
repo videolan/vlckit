@@ -282,6 +282,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoTrackIndexes;
 
 /**
+ * returns the number of video tracks available in the current media
+ * \return number of tracks
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfVideoTracks;
+
+/**
  * Return the video tracks
  *
  * It includes the disabled fake track at index 0.
@@ -309,6 +315,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * those are needed to set the video subtitle index
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoSubTitlesIndexes;
+
+/**
+ * returns the number of SPU tracks available in the current media
+ * \return number of tracks
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfSubtitlesTracks;
 
 /**
  * Return the video subtitle tracks
@@ -379,6 +391,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * those are needed to set the video index
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *audioTrackIndexes;
+
+/**
+ * returns the number of audio tracks available in the current media
+ * \return number of tracks
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfAudioTracks;
 
 /**
  * Return the audio tracks
