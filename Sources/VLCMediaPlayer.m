@@ -341,6 +341,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return [NSArray arrayWithArray: tempArray];
 }
 
+- (int)numberOfVideoTracks
+{
+    return libvlc_video_get_track_count(_playerInstance);
+}
+
 #pragma mark -
 #pragma mark Subtitles
 
@@ -391,6 +396,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     }
     libvlc_track_description_list_release(currentTrack);
     return [NSArray arrayWithArray: tempArray];
+}
+
+- (int)numberOfSubtitlesTracks
+{
+    return libvlc_video_get_spu_count(_playerInstance);
 }
 
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path
@@ -767,6 +777,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_track_description_list_release(tracks);
 
     return [NSArray arrayWithArray: tempArray];
+}
+
+- (int)numberOfAudioTracks
+{
+    return libvlc_audio_get_track_count(_playerInstance);
 }
 
 - (void)setAudioChannel:(int)value

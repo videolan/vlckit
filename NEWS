@@ -1,3 +1,10 @@
+Version 2.2.2:
+--------------
+New APIs:
+- VLCMediaPlayer
+  - added properties: numberOfVideoTracks, numberOfSubtitlesTracks
+    numberOfAudioTracks
+
 Version 2.2.0:
 --------------
 
