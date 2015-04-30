@@ -276,19 +276,18 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 #pragma mark -
 #pragma mark Video Tracks
-- (void)setCurrentVideoTrackIndex:(NSUInteger)value
+- (void)setCurrentVideoTrackIndex:(int)value
 {
-    libvlc_video_set_track(_playerInstance, (int)value);
+    libvlc_video_set_track(_playerInstance, value);
 }
 
-- (NSUInteger)currentVideoTrackIndex
+- (int)currentVideoTrackIndex
 {
-    NSInteger count = libvlc_video_get_track_count(_playerInstance);
+    int count = libvlc_video_get_track_count(_playerInstance);
     if (count <= 0)
         return NSNotFound;
 
-    NSUInteger result = libvlc_video_get_track(_playerInstance);
-    return result;
+    return libvlc_video_get_track(_playerInstance);
 }
 
 - (NSArray *)videoTrackNames
