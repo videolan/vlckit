@@ -1,4 +1,4 @@
-From 304ea3a9f8ff7fd1593fa95f6bc7967749f3b308 Mon Sep 17 00:00:00 2001
+From 34f1dd5d0214205f25f6ec9ba43f17780c48151a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:27:43 +0200
 Subject: [PATCH 12/15] contrib: add arch option for platforms where the arch
@@ -79,5 +79,5 @@ index c9f409a..1ae11e9 100644
  ifeq ($(ARCH)-$(HAVE_WIN32),x86_64-1)
  HAVE_WIN64 := 1
 -- 
-2.3.2
+2.3.5
 

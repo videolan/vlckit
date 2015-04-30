@@ -1,4 +1,4 @@
-From 66ddb686d2be5b6dec1609dcf94ac6807ef72e2d Mon Sep 17 00:00:00 2001
+From 64988039503781a856705df67a09e209df5ddf2d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 16:26:40 +0100
 Subject: [PATCH 06/15] lib/media_player: inherit deinterlace and vbi variables
@@ -27,5 +27,5 @@ index b4a5f10..5691345 100644
      var_Create (mp, "marq-marquee", VLC_VAR_STRING);
      var_Create (mp, "marq-color", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
 -- 
-2.3.2
+2.3.5
 

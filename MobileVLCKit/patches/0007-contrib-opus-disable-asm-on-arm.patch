@@ -1,4 +1,4 @@
-From e5d0eb1cb4a11c1b832e7d940999eb8e5aacbcdf Mon Sep 17 00:00:00 2001
+From 5d0bd486cf2fde0ea3d4b9ea8222a78c238d075f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:26:46 +0100
 Subject: [PATCH 07/15] contrib/opus disable asm on arm
@@ -22,5 +22,5 @@ index 56f0933..273521f 100644
  .opus: opus
  	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(OPUS_CONF)
 -- 
-2.3.2
+2.3.5
 
