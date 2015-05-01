@@ -1,4 +1,4 @@
-From 34f1dd5d0214205f25f6ec9ba43f17780c48151a Mon Sep 17 00:00:00 2001
+From 50cf82c08ce9bcd06c14945f5ddd5d5dd98f2608 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:27:43 +0200
 Subject: [PATCH 12/15] contrib: add arch option for platforms where the arch

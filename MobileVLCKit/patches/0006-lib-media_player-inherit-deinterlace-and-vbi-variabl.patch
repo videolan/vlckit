@@ -1,4 +1,4 @@
-From 64988039503781a856705df67a09e209df5ddf2d Mon Sep 17 00:00:00 2001
+From 49cfba8915c88655f0609bc823f4a9c7a33d3c5a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 21 Nov 2013 16:26:40 +0100
 Subject: [PATCH 06/15] lib/media_player: inherit deinterlace and vbi variables
