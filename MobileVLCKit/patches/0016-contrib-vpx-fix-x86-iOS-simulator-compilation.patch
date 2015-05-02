@@ -1,0 +1,47 @@
+From cd465718524c4dd72569e1c9c2f0f238519d763b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Sat, 2 May 2015 13:34:05 +0200
+Subject: [PATCH 16/16] contrib/vpx: fix x86 iOS simulator compilation
+
+---
+ contrib/src/vpx/libvpx-ios.patch | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/src/vpx/libvpx-ios.patch b/contrib/src/vpx/libvpx-ios.patch
+index 852792d..ca3d721 100644
+--- a/contrib/src/vpx/libvpx-ios.patch
++++ b/contrib/src/vpx/libvpx-ios.patch
+@@ -1,6 +1,6 @@
+-diff -ru libvpx/build/make/configure.sh libvpx/build/make/configure.sh
+---- libvpx/build/make/configure.sh	2014-11-04 21:34:04.000000000 +0100
+-+++ libvpx/build/make/configure.sh	2014-11-04 21:36:12.000000000 +0100
++diff -ru libvpx/build/make/configure.sh libvpx-fi/build/make/configure.sh
++--- libvpx/build/make/configure.sh	2015-05-02 13:31:42.000000000 +0200
+++++ libvpx-fi/build/make/configure.sh	2015-05-02 13:31:26.000000000 +0200
+ @@ -714,59 +714,6 @@
+      # PIC is probably what we want when building shared libs
+      enabled shared && soft_enable pic
+@@ -61,7 +61,19 @@ diff -ru libvpx/build/make/configure.sh libvpx/build/make/configure.sh
+      # Handle Solaris variants. Solaris 10 needs -lposix4
+      case ${toolchain} in
+          sparc-solaris-*)
+-@@ -1070,7 +1017,13 @@
++@@ -1025,11 +972,6 @@
++     x86*)
++         bits=32
++         enabled x86_64 && bits=64
++-        check_cpp <<EOF && bits=x32
++-#ifndef __ILP32__
++-#error "not x32"
++-#endif
++-EOF
++ 
++         case  ${tgt_os} in
++             win*)
++@@ -1070,7 +1012,13 @@
+              ;;
+              gcc*)
+                  add_cflags -m${bits}
+-- 
+2.4.0
+
