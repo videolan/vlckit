@@ -1,0 +1,43 @@
+From 4393ef7d6a4af80c4d0cd92e784b293171196cec Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Tue, 12 May 2015 22:00:33 +0200
+Subject: [PATCH 16/16] contrib/vpx: fix iOS 32bit Intel simulator compilation
+
+---
+ contrib/src/vpx/libvpx-ios.patch | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/src/vpx/libvpx-ios.patch b/contrib/src/vpx/libvpx-ios.patch
+index 504860c..abc46d2 100644
+--- a/contrib/src/vpx/libvpx-ios.patch
++++ b/contrib/src/vpx/libvpx-ios.patch
+@@ -1,5 +1,6 @@
+---- libvpx-1.4.0/build/make/configure.sh.orig	2015-05-05 16:10:54.667129298 +0200
+-+++ libvpx-1.4.0/build/make/configure.sh	2015-05-05 16:13:53.650560142 +0200
++diff -ru libvpx-b/build/make/configure.sh libvpx/build/make/configure.sh
++--- libvpx-b/build/make/configure.sh	2015-05-12 21:59:04.000000000 +0200
+++++ libvpx/build/make/configure.sh	2015-05-12 21:59:53.000000000 +0200
+ @@ -745,58 +745,6 @@
+    # Minimum iOS version for all target platforms (darwin and iphonesimulator).
+    IOS_VERSION_MIN="6.0"
+@@ -59,7 +60,16 @@
+    # Handle Solaris variants. Solaris 10 needs -lposix4
+    case ${toolchain} in
+      sparc-solaris-*)
+-@@ -1149,6 +1097,13 @@
++@@ -1141,14 +1089,17 @@
++ 
++       bits=32
++       enabled x86_64 && bits=64
++-      check_cpp <<EOF && bits=x32
++-#if !defined(__ILP32__) || !defined(__x86_64__)
++-#error "not x32"
++-#endif
++-EOF
+++
+        case ${tgt_cc} in
+          gcc*)
+            add_cflags -m${bits}
+-- 
+2.4.0
+

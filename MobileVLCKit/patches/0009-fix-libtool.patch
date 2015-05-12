@@ -1,7 +1,7 @@
-From 32e44974f807b14c42f1526636cebd3f7a538979 Mon Sep 17 00:00:00 2001
+From bbeafa5b9343542e5b04dae87be78bf2069fff67 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:33 +0200
-Subject: [PATCH 09/15] fix libtool
+Subject: [PATCH 09/16] fix libtool
 
 ---
  modules/arm_neon/Makefile.am    | 4 ++++
@@ -33,5 +33,5 @@ index 3bb8cdb..542abaa 100644
  SOURCES_transform = transform.c
  SOURCES_invert = invert.c
 -- 
-2.3.5
+2.4.0
 

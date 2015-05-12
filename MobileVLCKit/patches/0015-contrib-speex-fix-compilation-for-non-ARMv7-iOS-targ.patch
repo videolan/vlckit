@@ -1,7 +1,7 @@
-From 0108c5707f02eb2babe98bbe88fa21508ad391a7 Mon Sep 17 00:00:00 2001
+From 78870f08f7b51031338825989e704416aaa5cb23 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
-Subject: [PATCH 15/15] contrib/speex: fix compilation for non-ARMv7 iOS
+Subject: [PATCH 15/16] contrib/speex: fix compilation for non-ARMv7 iOS
  targets
 
 ---
@@ -25,5 +25,5 @@ index a5f003c..916b0ea 100644
  .speex: speex
  	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(SPEEX_CONF)
 -- 
-2.3.5
+2.4.0
 
