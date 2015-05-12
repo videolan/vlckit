@@ -302,7 +302,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * Pass -1 to disable.
  */
-@property (readwrite) NSUInteger currentVideoSubTitleIndex;
+@property (readwrite) int currentVideoSubTitleIndex;
 
 /**
  * Returns the video subtitle track names, usually a language name or a description
@@ -378,7 +378,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * Pass -1 to disable.
  */
-@property (readwrite) NSUInteger currentAudioTrackIndex;
+@property (readwrite) int currentAudioTrackIndex;
 
 /**
  * Returns the audio track names, usually a language name or a description
