@@ -349,12 +349,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 #pragma mark -
 #pragma mark Subtitles
 
-- (void)setCurrentVideoSubTitleIndex:(NSUInteger)index
+- (void)setCurrentVideoSubTitleIndex:(int)index
 {
-    libvlc_video_set_spu(_playerInstance, (int)index);
+    libvlc_video_set_spu(_playerInstance, index);
 }
 
-- (NSUInteger)currentVideoSubTitleIndex
+- (int)currentVideoSubTitleIndex
 {
     NSInteger count = libvlc_video_get_spu_count(_playerInstance);
 
@@ -713,19 +713,18 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 #pragma mark -
 #pragma mark Audio tracks
-- (void)setCurrentAudioTrackIndex:(NSUInteger)value
+- (void)setCurrentAudioTrackIndex:(int)value
 {
-    libvlc_audio_set_track(_playerInstance, (int)value);
+    libvlc_audio_set_track(_playerInstance, value);
 }
 
-- (NSUInteger)currentAudioTrackIndex
+- (int)currentAudioTrackIndex
 {
     NSInteger count = libvlc_audio_get_track_count(_playerInstance);
     if (count <= 0)
         return NSNotFound;
 
-    NSUInteger result = libvlc_audio_get_track(_playerInstance);
-    return result;
+    return libvlc_audio_get_track(_playerInstance);
 }
 
 - (NSArray *)audioTrackNames
