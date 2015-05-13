@@ -1,0 +1,337 @@
+From da65cdb24158dbc58460dfbdf17d814f41607882 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Wed, 13 May 2015 13:00:49 +0200
+Subject: [PATCH 1/2] Revert "Contribs: update libvpx to 1.4.0"
+
+This reverts commit caa52414b9f47919c9c0a64ff077765b4ceb86a4.
+---
+ contrib/src/vpx/SHA512SUMS            |   2 +-
+ contrib/src/vpx/libvpx-ios.patch      | 159 ++++++++++++++++++----------------
+ contrib/src/vpx/libvpx-mac.patch      |  49 +++--------
+ contrib/src/vpx/libvpx-no-cross.patch |  16 ++--
+ contrib/src/vpx/libvpx-sysroot.patch  |  33 ++++---
+ contrib/src/vpx/rules.mak             |   4 +-
+ 6 files changed, 124 insertions(+), 139 deletions(-)
+
+diff --git a/contrib/src/vpx/SHA512SUMS b/contrib/src/vpx/SHA512SUMS
+index 7923cbc..84d2a30 100644
+--- a/contrib/src/vpx/SHA512SUMS
++++ b/contrib/src/vpx/SHA512SUMS
+@@ -1 +1 @@
+-70234220e0ed64db000689ec8bea02dadef938a4f4dea96e5781d361c15245456212c1b6aec2b698d32ed423e73917d2303009e49224a2237669cab416dd6984  libvpx-1.4.0.tar.bz2
++af26766a3336155c5bc7b8cce7c23228de054287b990f9cacdc35273384a7af4999c01bb623d12143f40107036308a8b3207081efe67936748503c30c985fd6b  libvpx-v1.3.0.tar.bz2
+diff --git a/contrib/src/vpx/libvpx-ios.patch b/contrib/src/vpx/libvpx-ios.patch
+index abc46d2..1bf5c4c 100644
+--- a/contrib/src/vpx/libvpx-ios.patch
++++ b/contrib/src/vpx/libvpx-ios.patch
+@@ -1,85 +1,90 @@
+-diff -ru libvpx-b/build/make/configure.sh libvpx/build/make/configure.sh
+---- libvpx-b/build/make/configure.sh	2015-05-12 21:59:04.000000000 +0200
+-+++ libvpx/build/make/configure.sh	2015-05-12 21:59:53.000000000 +0200
+-@@ -745,58 +745,6 @@
+-   # Minimum iOS version for all target platforms (darwin and iphonesimulator).
+-   IOS_VERSION_MIN="6.0"
++diff -ru libvpx-o/build/make/configure.sh libvpx/build/make/configure.sh
++--- libvpx-o/build/make/configure.sh	2015-05-13 13:02:07.000000000 +0200
+++++ libvpx/build/make/configure.sh	2015-05-13 13:03:56.000000000 +0200
++@@ -714,59 +714,6 @@
++     # PIC is probably what we want when building shared libs
++     enabled shared && soft_enable pic
+  
+--  # Handle darwin variants. Newer SDKs allow targeting older
+--  # platforms, so use the newest one available.
+--  case ${toolchain} in
+--    *-darwin*)
+--      osx_sdk_dir="$(show_darwin_sdk_path macosx)"
+--      if [ -d "${osx_sdk_dir}" ]; then
++-    # Handle darwin variants. Newer SDKs allow targeting older
++-    # platforms, so find the newest SDK available.
++-    case ${toolchain} in
++-        *-darwin*)
++-            if [ -z "${DEVELOPER_DIR}" ]; then
++-                DEVELOPER_DIR=`xcode-select -print-path 2> /dev/null`
++-                [ $? -ne 0 ] && OSX_SKIP_DIR_CHECK=1
++-            fi
++-            if [ -z "${OSX_SKIP_DIR_CHECK}" ]; then
++-                OSX_SDK_ROOTS="${DEVELOPER_DIR}/SDKs"
++-                OSX_SDK_VERSIONS="MacOSX10.4u.sdk MacOSX10.5.sdk MacOSX10.6.sdk"
++-                OSX_SDK_VERSIONS="${OSX_SDK_VERSIONS} MacOSX10.7.sdk"
++-                for v in ${OSX_SDK_VERSIONS}; do
++-                    if [ -d "${OSX_SDK_ROOTS}/${v}" ]; then
++-                        osx_sdk_dir="${OSX_SDK_ROOTS}/${v}"
++-                    fi
++-                done
++-            fi
++-            ;;
++-    esac
++-
++-    if [ -d "${osx_sdk_dir}" ]; then
+ -        add_cflags  "-isysroot ${osx_sdk_dir}"
+ -        add_ldflags "-isysroot ${osx_sdk_dir}"
+--      fi
+--      ;;
+--  esac
++-    fi
+ -
+--  case ${toolchain} in
+--    *-darwin8-*)
+--      add_cflags  "-mmacosx-version-min=10.4"
+--      add_ldflags "-mmacosx-version-min=10.4"
+--      ;;
+--    *-darwin9-*)
+--      add_cflags  "-mmacosx-version-min=10.5"
+--      add_ldflags "-mmacosx-version-min=10.5"
+--      ;;
+--    *-darwin10-*)
+--      add_cflags  "-mmacosx-version-min=10.6"
+--      add_ldflags "-mmacosx-version-min=10.6"
+--      ;;
+--    *-darwin11-*)
+--      add_cflags  "-mmacosx-version-min=10.7"
+--      add_ldflags "-mmacosx-version-min=10.7"
+--      ;;
+--    *-darwin12-*)
+--      add_cflags  "-mmacosx-version-min=10.8"
+--      add_ldflags "-mmacosx-version-min=10.8"
+--      ;;
+--    *-darwin13-*)
+--      add_cflags  "-mmacosx-version-min=10.9"
+--      add_ldflags "-mmacosx-version-min=10.9"
+--      ;;
+--    *-darwin14-*)
+--      add_cflags  "-mmacosx-version-min=10.10"
+--      add_ldflags "-mmacosx-version-min=10.10"
+--      ;;
+--    *-iphonesimulator-*)
+--      add_cflags  "-miphoneos-version-min=${IOS_VERSION_MIN}"
+--      add_ldflags "-miphoneos-version-min=${IOS_VERSION_MIN}"
+--      iossim_sdk_dir="$(show_darwin_sdk_path iphonesimulator)"
+--      if [ -d "${iossim_sdk_dir}" ]; then
+--        add_cflags  "-isysroot ${iossim_sdk_dir}"
+--        add_ldflags "-isysroot ${iossim_sdk_dir}"
+--      fi
+--      ;;
+--  esac
++-    case ${toolchain} in
++-        *-darwin8-*)
++-            add_cflags  "-mmacosx-version-min=10.4"
++-            add_ldflags "-mmacosx-version-min=10.4"
++-            ;;
++-        *-darwin9-*)
++-            add_cflags  "-mmacosx-version-min=10.5"
++-            add_ldflags "-mmacosx-version-min=10.5"
++-            ;;
++-        *-darwin10-*)
++-            add_cflags  "-mmacosx-version-min=10.6"
++-            add_ldflags "-mmacosx-version-min=10.6"
++-            ;;
++-        *-darwin11-*)
++-            add_cflags  "-mmacosx-version-min=10.7"
++-            add_ldflags "-mmacosx-version-min=10.7"
++-            ;;
++-        *-darwin12-*)
++-            add_cflags  "-mmacosx-version-min=10.8"
++-            add_ldflags "-mmacosx-version-min=10.8"
++-            ;;
++-        *-darwin13-*)
++-            add_cflags  "-mmacosx-version-min=10.9"
++-            add_ldflags "-mmacosx-version-min=10.9"
++-            ;;
++-    esac
+ -
+-   # Handle Solaris variants. Solaris 10 needs -lposix4
+-   case ${toolchain} in
+-     sparc-solaris-*)
+-@@ -1141,14 +1089,17 @@
+- 
+-       bits=32
+-       enabled x86_64 && bits=64
+--      check_cpp <<EOF && bits=x32
+--#if !defined(__ILP32__) || !defined(__x86_64__)
++     # Handle Solaris variants. Solaris 10 needs -lposix4
++     case ${toolchain} in
++         sparc-solaris-*)
++@@ -1025,11 +972,6 @@
++     x86*)
++         bits=32
++         enabled x86_64 && bits=64
++-        check_cpp <<EOF && bits=x32
++-#ifndef __ILP32__
+ -#error "not x32"
+ -#endif
+ -EOF
+-+
+-       case ${tgt_cc} in
+-         gcc*)
+-           add_cflags -m${bits}
+-+          case ${tgt_os} in
+-+              darwin*)
+-+              ;;
+-+              *)
+-+              add_ldflags -m${bits}
+-+              ;;
+-+          esac
+-           add_ldflags -m${bits}
+-           ;;
+-       esac
++ 
++         case  ${tgt_os} in
++             win*)
++@@ -1070,7 +1012,13 @@
++             ;;
++             gcc*)
++                 add_cflags -m${bits}
++-                add_ldflags -m${bits}
+++                case ${tgt_os} in
+++                   darwin*)
+++                   ;;
+++                   *)
+++                   add_ldflags -m${bits}
+++                   ;;
+++                esac
++                 link_with_cc=gcc
++                 tune_cflags="-march="
++                 setup_gnu_toolchain
+diff --git a/contrib/src/vpx/libvpx-mac.patch b/contrib/src/vpx/libvpx-mac.patch
+index 7e41283..ebb868a 100644
+--- a/contrib/src/vpx/libvpx-mac.patch
++++ b/contrib/src/vpx/libvpx-mac.patch
+@@ -1,43 +1,18 @@
+---- libvpx-1.4.0/build/make/configure.sh.orig	2015-05-05 16:03:00.504713016 +0200
+-+++ libvpx-1.4.0/build/make/configure.sh	2015-05-05 16:05:52.358003947 +0200
+-@@ -751,6 +751,12 @@
+-       ;;
+-   esac
+- 
+-+  if [ -d "${sdk_path}" ]; then
+-+      case "${sdk_path}" in
+-+         darwin*) osx_sdk_dir=${sdk_path} ;;
+-+      esac
+-+  fi
+-+
+-   case ${toolchain} in
+-     *-darwin8-*)
+-       add_cflags  "-mmacosx-version-min=10.4"
+---- libvpx-1.4.0/build/make/configure.sh.orig	2015-05-05 16:06:31.502087047 +0200
+-+++ libvpx-1.4.0/build/make/configure.sh	2015-05-05 16:09:41.525727635 +0200
+-@@ -651,6 +651,12 @@
+-         ;;
+-     esac
+- 
++libvpx's configure script hard-codes the SDK location of previous Xcode release in the /Developer folder. However, starting with Xcode 4.3, the SDKs moved to /Applications/Xcode.app/blabla
++VLC's contrib system is clever enough to detect this, but libvpx fails miserably. However, they are providing a work-around for iOS and Android, which is expanded by this patch.
++
++diff -ru libvpx/build/make/configure.sh libvpx/build/make/configure.sh
++--- libvpx/build/make/configure.sh	2012-06-08 10:26:47.000000000 +0200
+++++ libvpx-fixed/build/make/configure.sh	2012-06-08 10:26:07.000000000 +0200
++@@ -628,6 +628,11 @@
++     if [ -d "/Developer/SDKs/MacOSX10.7.sdk" ]; then
++         osx_sdk_dir="/Developer/SDKs/MacOSX10.7.sdk"
++     fi
+ +    if [ -d "${sdk_path}" ]; then
+ +        case "${sdk_path}" in
+ +           darwin*) osx_sdk_dir=${sdk_path} ;;
+ +        esac
+ +    fi
+-+
+-     # detect tgt_os
+-     case "$gcctarget" in
+-       *darwin8*)
+-@@ -751,12 +757,6 @@
+-       ;;
+-   esac
+  
+--  if [ -d "${sdk_path}" ]; then
+--      case "${sdk_path}" in
+--         darwin*) osx_sdk_dir=${sdk_path} ;;
+--      esac
+--  fi
+--
+-   case ${toolchain} in
+-     *-darwin8-*)
+-       add_cflags  "-mmacosx-version-min=10.4"
++     case ${toolchain} in
++         *-darwin8-*)
+diff --git a/contrib/src/vpx/libvpx-no-cross.patch b/contrib/src/vpx/libvpx-no-cross.patch
+index 9881624..e261dc7 100644
+--- a/contrib/src/vpx/libvpx-no-cross.patch
++++ b/contrib/src/vpx/libvpx-no-cross.patch
+@@ -1,10 +1,10 @@
+---- libvpx-1.4.0/build/make/configure.sh.orig	2015-05-05 16:00:58.682380921 +0200
+-+++ libvpx-1.4.0/build/make/configure.sh	2015-05-05 16:02:13.537147158 +0200
+-@@ -831,7 +831,6 @@
++--- libvpx-v1.0.0/build/make/configure.sh.orig	2012-01-29 04:59:36.976441000 -0500
+++++ libvpx-v1.0.0/build/make/configure.sh	2012-01-29 04:59:46.684441001 -0500
++@@ -680,7 +680,6 @@
+  
+-       case ${tgt_cc} in
++         case ${tgt_cc} in
+          gcc)
+--          CROSS=${CROSS:-arm-none-linux-gnueabi-}
+-           link_with_cc=gcc
+-           setup_gnu_toolchain
+-           arch_int=${tgt_isa##armv}
++-            CROSS=${CROSS:-arm-none-linux-gnueabi-}
++             link_with_cc=gcc
++             setup_gnu_toolchain
++             arch_int=${tgt_isa##armv}
+diff --git a/contrib/src/vpx/libvpx-sysroot.patch b/contrib/src/vpx/libvpx-sysroot.patch
+index 0ba43dc..9b84338 100644
+--- a/contrib/src/vpx/libvpx-sysroot.patch
++++ b/contrib/src/vpx/libvpx-sysroot.patch
+@@ -8,19 +8,24 @@ correct sysroot.
+ 
+ See also https://code.google.com/p/webm/issues/detail?id=809
+ 
+---- libvpx-1.4.0/build/make/configure.sh.orig	2015-05-05 15:57:26.568321902 +0200
+-+++ libvpx-1.4.0/build/make/configure.sh	2015-05-05 15:59:04.860202562 +0200
+-@@ -941,8 +941,11 @@
+-                 awk '{ print $1 }' | tail -1`
+-           fi
++diff --git a/build/make/configure.sh b/build/make/configure.sh
++index d4124c7..c420d25 100755
++--- a/build/make/configure.sh
+++++ b/build/make/configure.sh
++@@ -939,8 +939,11 @@ EOF
++                           awk '{ print $1 }' | tail -1`
++             fi
+  
+--          add_cflags "--sysroot=${alt_libc}"
+--          add_ldflags "--sysroot=${alt_libc}"
+-+          # this may happen if toolchain binaries are outside the ndk dir
+-+          if [ "${alt_libc}" ]; then
+-+              add_cflags "--sysroot=${alt_libc}"
+-+              add_ldflags "--sysroot=${alt_libc}"
+-+          fi
++-            add_cflags "--sysroot=${alt_libc}"
++-            add_ldflags "--sysroot=${alt_libc}"
+++            # this may happen if toolchain binaries are outside the ndk dir
+++            if [ "${alt_libc}" ]; then
+++                add_cflags "--sysroot=${alt_libc}"
+++                add_ldflags "--sysroot=${alt_libc}"
+++            fi
+  
+-           # linker flag that routes around a CPU bug in some
+-           # Cortex-A8 implementations (NDK Dev Guide)
++             # linker flag that routes around a CPU bug in some
++             # Cortex-A8 implementations (NDK Dev Guide)
++-- 
++1.8.3.2
++
+diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
+index ac3eace..b55199d 100644
+--- a/contrib/src/vpx/rules.mak
++++ b/contrib/src/vpx/rules.mak
+@@ -1,7 +1,7 @@
+ # libvpx
+ 
+-VPX_VERSION := 1.4.0
+-VPX_URL := http://storage.googleapis.com/downloads.webmproject.org/releases/webm/libvpx-$(VPX_VERSION).tar.bz2
++VPX_VERSION := v1.3.0
++VPX_URL := http://webm.googlecode.com/files/libvpx-$(VPX_VERSION).tar.bz2
+ 
+ $(TARBALLS)/libvpx-$(VPX_VERSION).tar.bz2:
+ 	$(call download,$(VPX_URL))
+-- 
+2.4.0
+
