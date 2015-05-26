@@ -1,7 +1,7 @@
-From 509e21254e7f00e95b0fb59f6e410e492393d175 Mon Sep 17 00:00:00 2001
+From d84d076da95734a440b1b6b69b0ed052fd20bd1f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
-Subject: [PATCH 13/16] contrib/gcrypt: use git version on iOS
+Subject: [PATCH 13/18] contrib/gcrypt: use git version on iOS
 
 ---
  contrib/src/gcrypt/disable-doc-compilation.patch   | 43 ++++++++++++++++++++++
@@ -135,5 +135,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.4.0
+2.4.1
 

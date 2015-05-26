@@ -1,7 +1,7 @@
-From bda43da18eb2a023273403639a1ad2b1d376b777 Mon Sep 17 00:00:00 2001
+From 7b9fc8eb2dd4da9415e7aa85396904147de4d69c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20Ku=CC=88hne?= <fkuehne@videolan.org>
 Date: Sat, 20 Jul 2013 23:35:05 +0200
-Subject: [PATCH 05/16] contrib/png: fix ARM assembly for iOS
+Subject: [PATCH 05/18] contrib/png: fix ARM assembly for iOS
 
 ---
  contrib/src/png/ios.patch | 66 +++++++++++++++++++++++++++++++++++++++++++++++
@@ -119,5 +119,5 @@ index c5a3fba..7649c4b 100644
  	cd $< && $(MAKE) install
  	touch $@
 -- 
-2.4.0
+2.4.1
 
