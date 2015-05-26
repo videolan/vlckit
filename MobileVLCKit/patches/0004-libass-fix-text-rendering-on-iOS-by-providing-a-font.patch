@@ -1,15 +1,15 @@
-From 4927e1c1755d5e37fb36bc3d377f3f55a668e5b9 Mon Sep 17 00:00:00 2001
+From 17ea3a20cabb373c35ef6722e3e02c9a217869ff Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 29 May 2013 13:25:54 +0200
-Subject: [PATCH 4/9] libass: fix text rendering on iOS by providing a font
+Subject: [PATCH 04/18] libass: fix text rendering on iOS by providing a font
  lookup mechanism for the font shipped with Aspen
 
 ---
- modules/codec/libass.c | 35 +++++++++++++++++++++++++++++++++++
- 1 file changed, 35 insertions(+)
+ modules/codec/libass.c | 38 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index 067ef6b..256ab21 100644
+index 8e32d64..7f20def 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
 @@ -29,6 +29,13 @@
@@ -26,7 +26,7 @@ index 067ef6b..256ab21 100644
  #include <string.h>
  #include <limits.h>
  #include <assert.h>
-@@ -213,6 +220,34 @@ static int Create( vlc_object_t *p_this )
+@@ -213,6 +220,37 @@ static int Create( vlc_object_t *p_this )
  #if defined( __ANDROID__ )
      const char *psz_font = "/system/fonts/DroidSans-Bold.ttf";
      const char *psz_family = "Droid Sans Bold";
@@ -39,6 +39,9 @@ index 067ef6b..256ab21 100644
 +    fileURL = CFBundleCopyResourceURL(CFBundleGetMainBundle(), CFSTR("OpenSans-Regular.ttf"),
 +                                      NULL,
 +                                      NULL);
++    if (!fileURL)
++        return VLC_EGENERIC;
++
 +    CFStringRef urlString = CFURLCopyFileSystemPath(fileURL, kCFURLPOSIXPathStyle);
 +    CFRelease(fileURL);
 +
@@ -62,5 +65,5 @@ index 067ef6b..256ab21 100644
      const char *psz_font = NULL; /* We don't ship a default font with VLC */
      const char *psz_family = "Arial"; /* Use Arial if we can't find anything more suitable */
 -- 
-2.3.2
+2.4.1
 
