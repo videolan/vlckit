@@ -1,7 +1,7 @@
-From 17ea3a20cabb373c35ef6722e3e02c9a217869ff Mon Sep 17 00:00:00 2001
+From 5c8095dc08a329c95f0c3f157f80b71668b9bffd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 29 May 2013 13:25:54 +0200
-Subject: [PATCH 04/18] libass: fix text rendering on iOS by providing a font
+Subject: [PATCH 4/9] libass: fix text rendering on iOS by providing a font
  lookup mechanism for the font shipped with Aspen
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 04/18] libass: fix text rendering on iOS by providing a font
  1 file changed, 38 insertions(+)
 
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index 8e32d64..7f20def 100644
+index 067ef6b..8460dad 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
 @@ -29,6 +29,13 @@
