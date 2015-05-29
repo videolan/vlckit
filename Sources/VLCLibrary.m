@@ -103,6 +103,7 @@ static VLCLibrary * sharedLibrary = nil;
                       @"--no-osd",
                       @"--no-video-title-show",
                       @"--no-stats",
+                      @"--no-snapshot-preview",
 #ifndef NOSCARYCODECS
                       @"--avcodec-fast",
 #endif
