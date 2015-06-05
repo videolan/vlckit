@@ -491,7 +491,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     int failure = libvlc_video_take_snapshot(_playerInstance, 0, [path UTF8String], width, height);
     if (failure)
-        [[NSException exceptionWithName:@"Can't take a video snapshot" reason:@"No video output" userInfo:nil] raise];
+        VKLog(@"Snapshotting failed because the media doesn't have a video track");
 }
 
 - (void)setDeinterlaceFilter:(NSString *)name
