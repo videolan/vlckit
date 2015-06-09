@@ -1,4 +1,4 @@
-From f5ddd5fcd853350b9a3cf2f253a7a48fc72a7f2c Mon Sep 17 00:00:00 2001
+From 3fae29ea48c88524f483ee047f11ac103202fbb4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 12 May 2015 22:00:33 +0200
 Subject: [PATCH 16/18] contrib/vpx: fix iOS 32bit Intel simulator compilation
@@ -39,5 +39,5 @@ index 504860c..abc46d2 100644
           gcc*)
             add_cflags -m${bits}
 -- 
-2.4.1
+2.4.3
 

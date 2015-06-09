@@ -1,4 +1,4 @@
-From 3d65f75fa53e81ed3b3f4d306be80e3044c22006 Mon Sep 17 00:00:00 2001
+From 65024030e2bba46fa8cd34d446f07e293e4bf6fd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 09:56:23 +0100
 Subject: [PATCH 08/18] contrib/gcrypt: disable asm on iOS
@@ -22,5 +22,5 @@ index 0cc1222..7e67319 100644
  ifdef HAVE_BSD
  GCRYPT_CONF += --disable-asm --disable-aesni-support
 -- 
-2.4.1
+2.4.3
 

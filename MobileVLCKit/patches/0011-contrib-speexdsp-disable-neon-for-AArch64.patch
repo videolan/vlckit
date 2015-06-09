@@ -1,4 +1,4 @@
-From f0f19c97409e450650f1994df14f3f6f1b27ae76 Mon Sep 17 00:00:00 2001
+From a65807ff6051740d706f7c3a42f2a93f9b38eb3a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 15:19:43 +0100
 Subject: [PATCH 11/18] contrib/speexdsp: disable neon for AArch64
@@ -24,5 +24,5 @@ index e82c6ba..658a72e 100644
  .speexdsp: speexdsp
  	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(SPEEXDSP_CONF)
 -- 
-2.4.1
+2.4.3
 

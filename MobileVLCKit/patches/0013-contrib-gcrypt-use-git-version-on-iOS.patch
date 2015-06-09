@@ -1,4 +1,4 @@
-From d84d076da95734a440b1b6b69b0ed052fd20bd1f Mon Sep 17 00:00:00 2001
+From d2e9638c2008cabbc7785660bb180c9a4db8152d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
 Subject: [PATCH 13/18] contrib/gcrypt: use git version on iOS
@@ -135,5 +135,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.4.1
+2.4.3
 
