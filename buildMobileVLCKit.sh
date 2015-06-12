@@ -8,14 +8,14 @@ BUILD_DEVICE=yes
 BUILD_SIMULATOR=no
 BUILD_FRAMEWORK=no
 SDK=`xcrun --sdk iphoneos --show-sdk-version`
-SDK_MIN=6.1
+SDK_MIN=7.0
 VERBOSE=no
 CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 
-TESTEDHASH=f5d5cb75768b
+TESTEDHASH=fe65f5106
 
 usage()
 {
@@ -138,7 +138,7 @@ spushd MobileVLCKit/ImportedSources
 if [ "$NONETWORK" != "yes" ]; then
 if ! [ -e vlc ]; then
 git clone git://git.videolan.org/vlc.git vlc
-info "Applying patches to vlc-2.2.git"
+info "Applying patches to vlc.git"
 cd vlc
 git checkout -B localBranch ${TESTEDHASH}
 git branch --set-upstream-to=origin/master localBranch
