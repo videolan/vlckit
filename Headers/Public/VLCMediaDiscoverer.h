@@ -27,6 +27,7 @@
 #import <Foundation/Foundation.h>
 #import "VLCMediaList.h"
 
+@class VLCLibrary;
 @class VLCMediaList;
 @class VLCMediaDiscoverer;
 
@@ -58,6 +59,8 @@
  */
 
 @interface VLCMediaDiscoverer : NSObject
+
+@property (nonatomic, readonly) VLCLibrary *libraryInstance;
 
 /**
  * delegate property to listen to start/stop events

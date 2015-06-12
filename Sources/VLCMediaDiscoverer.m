@@ -30,6 +30,7 @@
 #import "VLCEventManager.h"
 
 #include <vlc/libvlc.h>
+#include <vlc/libvlc_media_discoverer.h>
 
 @interface VLCMediaDiscoverer ()
 {
@@ -56,21 +57,19 @@
 static NSArray *availableMediaDiscoverer = nil;     // Global list of media discoverers
 
 /* libvlc event callback */
-static void HandleMediaDiscovererStarted(const libvlc_event_t *event, void *user_data)
+static void HandleMediaDiscovererStarted(const libvlc_event_t *event, void *self)
 {
     @autoreleasepool {
-        id self = (__bridge id)(user_data);
-        [[VLCEventManager sharedManager] callOnMainThreadObject:self
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(_mediaDiscovererStarted)
-                                           withArgumentAsObject:nil];
+                                           withArgumentAsObject:@(event->type)];
     }
 }
 
-static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_data)
+static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
 {
     @autoreleasepool {
-        id self = (__bridge id)(user_data);
-        [[VLCEventManager sharedManager] callOnMainThreadObject:self
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(_mediaDiscovererEnded)
                                            withArgumentAsObject:nil];
     }
@@ -78,6 +77,8 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
 
 
 @implementation VLCMediaDiscoverer
+@synthesize libraryInstance = _privateLibrary;
+
 + (NSArray *)availableMediaDiscoverer
 {
     if (!availableMediaDiscoverer) {
@@ -96,9 +97,9 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
         _discoveredMedia = nil;
 
         _privateLibrary = [VLCLibrary sharedLibrary];
-        libvlc_retain(_privateLibrary.instance);
+        libvlc_retain([_privateLibrary instance]);
 
-        _mdis = libvlc_media_discoverer_new(_privateLibrary.instance,
+        _mdis = libvlc_media_discoverer_new([_privateLibrary instance],
                                             [aServiceName UTF8String]);
 
         if (_mdis == NULL) {
@@ -106,9 +107,11 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
             return NULL;
         }
 
-        libvlc_event_manager_t * p_em = libvlc_media_discoverer_event_manager(_mdis);
-        libvlc_event_attach(p_em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
+        libvlc_event_manager_t *em = libvlc_media_discoverer_event_manager(_mdis);
+        if (em) {
+            libvlc_event_attach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
+            libvlc_event_attach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
+        }
     }
     return self;
 }
@@ -118,9 +121,11 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
     if (_running)
         [self stopDiscoverer];
 
-    libvlc_event_manager_t *em = libvlc_media_list_event_manager(_mdis);
-    libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
-    libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
+    libvlc_event_manager_t *em = libvlc_media_discoverer_event_manager(_mdis);
+    if (em) {
+        libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
+        libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
+    }
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     libvlc_media_discoverer_release(_mdis);
@@ -136,25 +141,28 @@ static void HandleMediaDiscovererEnded( const libvlc_event_t *event, void *user_
 
     _running = libvlc_media_discoverer_is_running(_mdis);
 
+    libvlc_media_list_t *p_mlist = libvlc_media_discoverer_media_list(_mdis);
+    VLCMediaList *ret = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
+    libvlc_media_list_release(p_mlist);
+
+    _discoveredMedia = ret;
+
     return returnValue;
 }
 
 - (void)stopDiscoverer
 {
+    if (!_mdis) {
+        _running = NO;
+        return;
+    }
+
     libvlc_media_discoverer_stop(_mdis);
     _running = libvlc_media_discoverer_is_running(_mdis);
 }
 
 - (VLCMediaList *)discoveredMedia
 {
-    if (_discoveredMedia)
-        return _discoveredMedia;
-
-    libvlc_media_list_t *p_mlist = libvlc_media_discoverer_media_list( _mdis );
-    VLCMediaList *ret = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
-    libvlc_media_list_release( p_mlist );
-
-    _discoveredMedia = ret;
     return _discoveredMedia;
 }
 
