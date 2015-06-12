@@ -257,6 +257,27 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     libvlc_media_release( p_md );
 }
 
+- (VLCMediaType)mediaType
+{
+    libvlc_media_type_t libmediatype = libvlc_media_get_type(p_md);
+
+    switch (libmediatype) {
+        case libvlc_media_type_file:
+            return VLCMediaTypeFile;
+        case libvlc_media_type_directory:
+            return VLCMediaTypeDirectory;
+        case libvlc_media_type_disc:
+            return VLCMediaTypeDisc;
+        case libvlc_media_type_stream:
+            return VLCMediaTypeStream;
+        case libvlc_media_type_playlist:
+            return VLCMediaTypePlaylist;
+
+        default:
+            return VLCMediaTypeUnknown;
+    }
+}
+
 - (NSString *)description
 {
     NSString * result = _metaDictionary[VLCMetaInformationTitle];

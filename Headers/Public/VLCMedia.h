@@ -188,6 +188,21 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  */
 - (instancetype)initAsNodeWithName:(NSString *)aName;
 
+typedef NS_ENUM(NSUInteger, VLCMediaType) {
+    VLCMediaTypeUnknown,
+    VLCMediaTypeFile,
+    VLCMediaTypeDirectory,
+    VLCMediaTypeDisc,
+    VLCMediaTypeStream,
+    VLCMediaTypePlaylist,
+};
+
+/**
+ * media type
+ * \return returns the type of a media (VLCMediaType)
+ */
+@property (readonly) VLCMediaType mediaType;
+
 /**
  * Returns an NSComparisonResult value that indicates the lexical ordering of
  * the receiver and a given meda.

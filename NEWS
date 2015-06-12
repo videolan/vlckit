@@ -10,7 +10,9 @@ New APIs:
                 VLCMetaInformationSeason, VLCMetaInformationEpisode,
                 VLCMetaInformationShowName, VLCMetaInformationActors,
                 VLCMetaInformationAlbumArtist, VLCMetaInformationDiscNumber
-  - new selector: codecNameForFourCC:trackType:
+  - added selectors: codecNameForFourCC:trackType:
+                     mediaType
+  - added enum: VLCMediaType
 
 Deprecated APIs:
 - VLCMediaPlayer
