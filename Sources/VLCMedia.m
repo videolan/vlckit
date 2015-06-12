@@ -51,6 +51,14 @@ NSString *const VLCMetaInformationEncodedBy      = @"encodedBy";
 NSString *const VLCMetaInformationArtworkURL     = @"artworkURL";
 NSString *const VLCMetaInformationArtwork        = @"artwork";
 NSString *const VLCMetaInformationTrackID        = @"trackID";
+NSString *const VLCMetaInformationTrackTotal     = @"trackTotal";
+NSString *const VLCMetaInformationDirector       = @"director";
+NSString *const VLCMetaInformationSeason         = @"season";
+NSString *const VLCMetaInformationEpisode        = @"episode";
+NSString *const VLCMetaInformationShowName       = @"showName";
+NSString *const VLCMetaInformationActors         = @"actors";
+NSString *const VLCMetaInformationAlbumArtist    = @"AlbumArtist";
+NSString *const VLCMetaInformationDiscNumber     = @"discNumber";
 
 /* Notification Messages */
 NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
@@ -706,6 +714,14 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
                 VLCStringToMeta(Publisher),
                 VLCStringToMeta(ArtworkURL),
                 VLCStringToMeta(TrackID),
+                VLCStringToMeta(TrackTotal),
+                VLCStringToMeta(Director),
+                VLCStringToMeta(Season),
+                VLCStringToMeta(Episode),
+                VLCStringToMeta(ShowName),
+                VLCStringToMeta(Actors),
+                VLCStringToMeta(AlbumArtist),
+                VLCStringToMeta(DiscNumber),
                 nil];
 #undef VLCStringToMeta
     }
@@ -732,6 +748,14 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     VLCMetaToString(Publisher, type);
     VLCMetaToString(ArtworkURL, type);
     VLCMetaToString(TrackID, type);
+    VLCMetaToString(TrackTotal, type);
+    VLCMetaToString(Director, type);
+    VLCMetaToString(Season, type);
+    VLCMetaToString(Episode, type);
+    VLCMetaToString(ShowName, type);
+    VLCMetaToString(Actors, type);
+    VLCMetaToString(AlbumArtist, type);
+    VLCMetaToString(DiscNumber, type);
 #undef VLCMetaToString
     return nil;
 }

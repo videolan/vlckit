@@ -50,6 +50,14 @@ extern NSString *const VLCMetaInformationEncodedBy;      /* NSString */
 extern NSString *const VLCMetaInformationArtworkURL;     /* NSString */
 extern NSString *const VLCMetaInformationArtwork;        /* NSImage  */
 extern NSString *const VLCMetaInformationTrackID;        /* NSString */
+extern NSString *const VLCMetaInformationTrackTotal;     /* NSString */
+extern NSString *const VLCMetaInformationDirector;       /* NSString */
+extern NSString *const VLCMetaInformationSeason;         /* NSString */
+extern NSString *const VLCMetaInformationEpisode;        /* NSString */
+extern NSString *const VLCMetaInformationShowName;       /* NSString */
+extern NSString *const VLCMetaInformationActors;         /* NSString */
+extern NSString *const VLCMetaInformationAlbumArtist;    /* NSString */
+extern NSString *const VLCMetaInformationDiscNumber;     /* NSString */
 
 /* Notification Messages */
 /**

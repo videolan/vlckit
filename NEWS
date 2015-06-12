@@ -5,6 +5,12 @@ New APIs:
   - added properties: titleDescriptions, indexOfLongestTitle
   - added selector: chaptersForTitleIndex:
 
+- VLCMedia
+  - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
+                VLCMetaInformationSeason, VLCMetaInformationEpisode,
+                VLCMetaInformationShowName, VLCMetaInformationActors,
+                VLCMetaInformationAlbumArtist, VLCMetaInformationDiscNumber
+
 Deprecated APIs:
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:
