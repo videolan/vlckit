@@ -1218,6 +1218,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     // Attach event observers into the media instance
     libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
+    if (!p_em)
+        return;
+
     libvlc_event_attach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
     libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
     libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
@@ -1234,6 +1237,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (void)unregisterObservers
 {
     libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
+    if (!p_em)
+        return;
+
     libvlc_event_detach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
