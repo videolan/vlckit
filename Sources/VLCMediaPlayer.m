@@ -664,7 +664,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     libvlc_track_description_t *tracks = libvlc_video_get_chapter_description(_playerInstance, title);
+#pragma clang diagnostic push
+
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSInteger i = 0; i < count ; i++) {
         [tempArray addObject:@(tracks->psz_name)];
@@ -703,10 +707,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count == 0)
         return [NSArray array];
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     libvlc_track_description_t *tracks = libvlc_video_get_title_description(_playerInstance);
-    NSMutableArray *tempArray = [NSMutableArray array];
+#pragma clang diagnostic pop
+
     if (!tracks)
-        return tempArray;
+        return [NSArray array];
+
+    NSMutableArray *tempArray = [NSMutableArray array];
 
     while (1) {
         if (tracks->psz_name != nil)
