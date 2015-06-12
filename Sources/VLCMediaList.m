@@ -111,8 +111,10 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (void)dealloc
 {
     libvlc_event_manager_t *em = libvlc_media_list_event_manager(p_mlist);
-    libvlc_event_detach(em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
-    libvlc_event_detach(em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
+    if (em) {
+        libvlc_event_detach(em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
+        libvlc_event_detach(em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
+    }
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     // Release allocated memory
@@ -250,9 +252,12 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (void)initInternalMediaList
 {
     // Add event callbacks
-    libvlc_event_manager_t * p_em = libvlc_media_list_event_manager(p_mlist);
-    libvlc_event_attach( p_em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
-    libvlc_event_attach( p_em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
+    libvlc_event_manager_t *em = libvlc_media_list_event_manager(p_mlist);
+    if (!em)
+        return;
+
+    libvlc_event_attach( em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
+    libvlc_event_attach( em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
 }
 
 - (void)mediaListItemAdded:(NSArray *)arrayOfArgs
