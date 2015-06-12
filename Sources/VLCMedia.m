@@ -176,6 +176,24 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
  */
 @implementation VLCMedia
 
++ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(NSString *)trackType
+{
+    libvlc_track_type_t track_type = libvlc_track_unknown;
+
+    if ([trackType isEqualToString:VLCMediaTracksInformationTypeAudio])
+        track_type = libvlc_track_audio;
+    else if ([trackType isEqualToString:VLCMediaTracksInformationTypeVideo])
+        track_type = libvlc_track_video;
+    else if ([trackType isEqualToString:VLCMediaTracksInformationTypeText])
+        track_type = libvlc_track_text;
+
+    const char *ret = libvlc_media_get_codec_description(track_type, fourcc);
+    if (ret)
+        return [NSString stringWithUTF8String:ret];
+
+    return @"";
+}
+
 + (instancetype)mediaWithURL:(NSURL *)anURL;
 {
     return [[VLCMedia alloc] initWithURL:anURL];

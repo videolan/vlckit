@@ -150,6 +150,14 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
 + (instancetype)mediaWithPath:(NSString *)aPath;
 
 /**
+ * convienience method to return a user-readable codec name for the given FourCC
+ * \param uint32_t the FourCC to process
+ * \param NSString a VLC track type if known to speed-up the name search
+ * \return a NSString containing the codec name if recognized, else an empty string
+ */
++ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(NSString *)trackType;
+
+/**
  * TODO
  * \param aName TODO
  * \return a new VLCMedia object, only if there were no errors.  This object
