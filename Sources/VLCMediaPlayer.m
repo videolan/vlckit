@@ -743,7 +743,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         return [NSArray array];
     }
 
-    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:numberOfChapterDescriptions];
+    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:numberOfTitleDescriptions];
 
     for (int i = 0; i < numberOfTitleDescriptions; i++) {
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
