@@ -344,6 +344,15 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         libvlc_media_parse(p_md);
 }
 
+- (int)parseWithOptions:(VLCMediaParsingOptions)options
+{
+    if (!p_md)
+        return -1;
+
+    return libvlc_media_parse_with_options(p_md,
+                                           options);
+}
+
 - (void)addOptions:(NSDictionary*)options
 {
     if (p_md) {

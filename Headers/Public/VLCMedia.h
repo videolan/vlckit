@@ -434,6 +434,27 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  */
 - (void)synchronousParse;
 
+
+enum {
+    VLCMediaParseLocal          = 0x00,
+    VLCMediaParseNetwork        = 0x01,
+    VLCMediaFetchLocal          = 0x02,
+    VLCMediaFetchNetwork        = 0x04,
+};
+typedef int VLCMediaParsingOptions;
+
+/**
+ * triggers an asynchronous parse of the media item
+ * using the given options
+ * \param the option mask based on VLCMediaParsingOptions
+ * \see VLCMediaParsingOptions
+ * \return an int. 0 on success, -1 in case of error
+ * \note listen to the "parsed" key value or the mediaDidFinishParsing:
+ * delegate method to be notified about parsing results. Those triggers
+ * will _NOT_ be raised if parsing fails and this method returns an error.
+ */
+- (int)parseWithOptions:(VLCMediaParsingOptions)options;
+
 /**
  * Add options to the media, that will be used to determine how
  * VLCMediaPlayer will read the media. This allow to use VLC advanced

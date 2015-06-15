@@ -12,7 +12,8 @@ New APIs:
                 VLCMetaInformationAlbumArtist, VLCMetaInformationDiscNumber
   - added selectors: codecNameForFourCC:trackType:
                      mediaType
-  - added enum: VLCMediaType
+                     parseWithOptions:
+  - added enums: VLCMediaType, VLCMediaParsingOptions
 
 Deprecated APIs:
 - VLCMediaPlayer
