@@ -94,8 +94,6 @@ static VLCLibrary * sharedLibrary = nil;
         paramNum++;
     }
     _instance = libvlc_new(count, lib_vlc_params);
-    if (_instance)
-        libvlc_retain(_instance);
 
     NSAssert(_instance, @"libvlc failed to initialize");
 }
