@@ -1,6 +1,9 @@
 Version 3.0.0:
 --------------
 New APIs:
+- VLCLibrary
+  - added properties: debugLogging, debugLoggingLevel
+
 - VLCMediaPlayer
   - added properties: titleDescriptions, indexOfLongestTitle
   - added selector: chaptersForTitleIndex:

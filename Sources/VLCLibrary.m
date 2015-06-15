@@ -36,6 +36,12 @@
 #include <vlc/vlc.h>
 #include <vlc/libvlc_structures.h>
 
+static void HandleMessage(void *,
+                          int,
+                          const libvlc_log_t *,
+                          const char *,
+                          va_list);
+
 static VLCLibrary * sharedLibrary = nil;
 
 @interface VLCLibrary()
@@ -50,7 +56,7 @@ static VLCLibrary * sharedLibrary = nil;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        sharedLibrary = [[self alloc] init];
+        sharedLibrary = [[VLCLibrary alloc] init];
     });
     return sharedLibrary;
 }
@@ -107,7 +113,6 @@ static VLCLibrary * sharedLibrary = nil;
 #ifndef NOSCARYCODECS
                       @"--avcodec-fast",
 #endif
-                      @"--verbose=0",
                       @"--text-renderer=quartztext",
                       @"--avi-index=3",
                       @"--extraintf=ios_dialog_provider"];
@@ -132,6 +137,18 @@ static VLCLibrary * sharedLibrary = nil;
 #endif
 
     return vlcParams;
+}
+
+- (void)setDebugLogging:(BOOL)debugLogging
+{
+    if (!_instance)
+        return;
+
+    if (debugLogging) {
+        libvlc_log_set(_instance, HandleMessage, (__bridge void *)(self));
+    } else {
+        libvlc_log_unset(_instance);
+    }
 }
 
 - (NSString *)version
@@ -168,3 +185,25 @@ static VLCLibrary * sharedLibrary = nil;
 }
 
 @end
+
+static void HandleMessage(void *data,
+                          int level,
+                          const libvlc_log_t *ctx,
+                          const char *fmt,
+                          va_list args)
+{
+    VLCLibrary *libraryInstance = (__bridge VLCLibrary *)data;
+
+    if (level < libraryInstance.debugLoggingLevel)
+        return;
+
+    char *str;
+    if (vasprintf(&str, fmt, args) == -1) {
+        return;
+    }
+
+    if (!str)
+        return;
+
+    VKLog(@"%@", [NSString stringWithUTF8String:str]);
+}
