@@ -71,7 +71,7 @@ static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(_mediaDiscovererEnded)
-                                           withArgumentAsObject:nil];
+                                           withArgumentAsObject:@(event->type)];
     }
 }
 
@@ -121,12 +121,13 @@ static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
     if (_running)
         [self stopDiscoverer];
 
+    [[VLCEventManager sharedManager] cancelCallToObject:self];
+
     libvlc_event_manager_t *em = libvlc_media_discoverer_event_manager(_mdis);
     if (em) {
         libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
         libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
     }
-    [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     libvlc_media_discoverer_release(_mdis);
 
