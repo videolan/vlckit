@@ -32,29 +32,6 @@
 @class VLCMediaDiscoverer;
 
 /**
- * VLCMediaDiscovererDelegate
- */
-
-@protocol VLCMediaDiscovererDelegate <NSObject>
-@optional
-
-/**
- * delegate method triggered when a discoverer was started
- *
- * \param the discoverer that was started
- */
-- (void)discovererStarted:(VLCMediaDiscoverer *)theDiscoverer;
-
-/**
- * delegate method triggered when a discoverer was stopped
- *
- * \param the discoverer that was stopped
- */
-- (void)discovererStopped:(VLCMediaDiscoverer *)theDiscoverer;
-
-@end
-
-/**
  * VLCMediaDiscoverer
  */
 
@@ -63,16 +40,9 @@
 @property (nonatomic, readonly) VLCLibrary *libraryInstance;
 
 /**
- * delegate property to listen to start/stop events
+ * \return returns an empty array, will be removed in subsequent releases
  */
-@property (weak, readwrite) id<VLCMediaDiscovererDelegate> delegate;
-
-/**
- * Maintains a list of available media discoverers.  This list is populated as new media
- * discoverers are created.
- * \return A list of available media discoverers.
- */
-+ (NSArray *)availableMediaDiscoverer;
++ (NSArray *)availableMediaDiscoverer __attribute__((deprecated));
 
 /* Initializers */
 /**

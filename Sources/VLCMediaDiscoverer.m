@@ -41,53 +41,14 @@
 
     VLCLibrary *_privateLibrary;
 }
-
-/**
- * libvlc told us that the discoverer is actually running
- */
-- (void)_mediaDiscovererStarted;
-
-/**
- * libvlc told us that the discoverer stopped running
- */
-- (void)_mediaDiscovererEnded;
-
 @end
-
-static NSArray *availableMediaDiscoverer = nil;     // Global list of media discoverers
-
-/* libvlc event callback */
-static void HandleMediaDiscovererStarted(const libvlc_event_t *event, void *self)
-{
-    @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(_mediaDiscovererStarted)
-                                           withArgumentAsObject:@(event->type)];
-    }
-}
-
-static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
-{
-    @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(_mediaDiscovererEnded)
-                                           withArgumentAsObject:@(event->type)];
-    }
-}
-
 
 @implementation VLCMediaDiscoverer
 @synthesize libraryInstance = _privateLibrary;
 
 + (NSArray *)availableMediaDiscoverer
 {
-    if (!availableMediaDiscoverer) {
-        availableMediaDiscoverer = @[[[VLCMediaDiscoverer alloc] initWithName:@"sap"],
-                                [[VLCMediaDiscoverer alloc] initWithName:@"upnp"],
-                                [[VLCMediaDiscoverer alloc] initWithName:@"freebox"],
-                                [[VLCMediaDiscoverer alloc] initWithName:@"video_dir"]];
-    }
-    return availableMediaDiscoverer;
+    return @[];
 }
 
 - (instancetype)initWithName:(NSString *)aServiceName
@@ -106,12 +67,6 @@ static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
             VKLog(@"media discovery initialization failed, maybe no such module?");
             return NULL;
         }
-
-        libvlc_event_manager_t *em = libvlc_media_discoverer_event_manager(_mdis);
-        if (em) {
-            libvlc_event_attach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
-            libvlc_event_attach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
-        }
     }
     return self;
 }
@@ -123,12 +78,6 @@ static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
 
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
-    libvlc_event_manager_t *em = libvlc_media_discoverer_event_manager(_mdis);
-    if (em) {
-        libvlc_event_detach(em, libvlc_MediaDiscovererStarted, HandleMediaDiscovererStarted, (__bridge void *)(self));
-        libvlc_event_detach(em, libvlc_MediaDiscovererEnded,   HandleMediaDiscovererEnded,   (__bridge void *)(self));
-    }
-
     libvlc_media_discoverer_release(_mdis);
 
     libvlc_release(_privateLibrary.instance);
@@ -137,8 +86,11 @@ static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
 - (int)startDiscoverer
 {
     int returnValue = libvlc_media_discoverer_start(_mdis);
-    if (returnValue == -1)
+    if (returnValue == -1) {
         VKLog(@"media discovery start failed");
+        _running = NO;
+        return returnValue;
+    }
 
     _running = libvlc_media_discoverer_is_running(_mdis);
 
@@ -185,27 +137,4 @@ static void HandleMediaDiscovererEnded(const libvlc_event_t *event, void *self)
     return _running;
 }
 
-- (void)_mediaDiscovererStarted
-{
-    [self willChangeValueForKey:@"running"];
-    _running = YES;
-    [self didChangeValueForKey:@"running"];
-
-    if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(discovererStarted:)])
-            [self.delegate discovererStarted:self];
-    }
-}
-
-- (void)_mediaDiscovererEnded
-{
-    [self willChangeValueForKey:@"running"];
-    _running = NO;
-    [self didChangeValueForKey:@"running"];
-
-    if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(discovererStopped:)])
-            [self.delegate discovererStopped:self];
-    }
-}
 @end
