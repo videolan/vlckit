@@ -947,7 +947,9 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationDate];
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationGenre];
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationTrackNumber];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationDiscNumber];
         [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationNowPlaying];
+        [self fetchMetaInformationFromLibVLCWithType: VLCMetaInformationLanguage];
     }
     if (!isArtURLFetched) {
         isArtURLFetched = YES;
