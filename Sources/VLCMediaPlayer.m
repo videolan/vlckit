@@ -695,6 +695,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return libvlc_media_player_get_title(_playerInstance);
 }
 
+- (int)numberOfTitles
+{
+    return libvlc_media_player_get_title_count(_playerInstance);
+}
+
 - (NSUInteger)countOfTitles
 {
     NSUInteger result = libvlc_media_player_get_title_count(_playerInstance);
@@ -779,6 +784,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     }
 
     return currentlyFoundTitle;
+}
+
+- (int)numberOfChaptersForTitle:(int)titleIndex
+{
+    return libvlc_media_player_get_chapter_count_for_title(_playerInstance, titleIndex);
 }
 
 - (NSArray *)chapterDescriptionsOfTitle:(int)titleIndex

@@ -358,6 +358,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @property (readwrite) int currentChapterIndex;
 - (void)previousChapter;
 - (void)nextChapter;
+- (int)numberOfChaptersForTitle:(int)titleIndex;
 - (NSArray *)chaptersForTitleIndex:(int)titleIndex __attribute__((deprecated));
 
 extern NSString *const VLCChapterDescriptionName;
@@ -378,7 +379,8 @@ extern NSString *const VLCChapterDescriptionDuration;
  * \return NSNotFound if none is set.
  */
 @property (readwrite) int currentTitleIndex;
-@property (readonly) NSUInteger countOfTitles;
+@property (readonly) int numberOfTitles;
+@property (readonly) NSUInteger countOfTitles __attribute__((deprecated));
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles __attribute__((deprecated));
 
 extern NSString *const VLCTitleDescriptionName;

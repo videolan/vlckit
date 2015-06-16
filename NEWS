@@ -5,8 +5,9 @@ New APIs:
   - added properties: debugLogging, debugLoggingLevel
 
 - VLCMediaPlayer
-  - added properties: titleDescriptions, indexOfLongestTitle
-  - added selector: chaptersForTitleIndex:
+  - added properties: titleDescriptions, indexOfLongestTitle, numberOfTitles
+  - added selectors: chaptersForTitleIndex:
+                     numberOfChaptersForTitle:
 
 - VLCMedia
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
@@ -20,7 +21,7 @@ New APIs:
 
 Deprecated APIs:
 - VLCMediaPlayer
-  - titles, chaptersForTitleIndex:
+  - titles, chaptersForTitleIndex:, countOfTitles
 
 Version 2.2.2:
 --------------
