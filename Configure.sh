@@ -26,7 +26,7 @@ args="--disable-nls $args"
 args="--disable-macosx $args" # Disable old gui/macosx
 args="--disable-macosx-vlc-app $args" # Don't build old vlc.app
 
-args="--with-macosx-version-min=10.6 $args"
+args="--with-macosx-version-min=10.7 $args"
 
 # optional modules
 args="--enable-merge-ffmpeg $args"
@@ -94,16 +94,9 @@ for arch in $ARCHS; do
         export CXXFLAGS="-m64 -arch x86_64 $optim"
         export OBJCFLAGS="-m64 -arch x86_64 $optim"
         export CPPFLAGS="-m64 -arch x86_64 $optim"
-        this_args="--build=x86_64-apple-darwin10 --with-contrib=$VLC_SRC_DIR/contrib/x86_64-apple-darwin10 $this_args"
-        export PATH=$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/x86_64-apple-darwin10/bin:$PATH
-        export PKG_CONFIG_PATH=$VLC_SRC_DIR/contrib/x86_64-apple-darwin10/lib/pkgconfig
-    fi
-    if test $arch = "i386"; then
-        export CFLAGS="-m32 -arch i386 $optim"
-        export CXXFLAGS="-m32 -arch i386 $optim"
-        export OBJCFLAGS="-m32 -arch i386 $optim"
-        export CPPFLAGS="-m32 -arch i386 $optim"
-        this_args="--build=i686-apple-darwin9 --with-contrib=$VLC_SRC_DIR/contrib/i686-apple-darwin9 $this_args"
+        this_args="--build=x86_64-apple-darwin11 --with-contrib=$VLC_SRC_DIR/contrib/x86_64-apple-darwin11 $this_args"
+        export PATH=$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/x86_64-apple-darwin11/bin:$PATH
+        export PKG_CONFIG_PATH=$VLC_SRC_DIR/contrib/x86_64-apple-darwin11/lib/pkgconfig
     fi
     echo "Running [$arch] configure $this_args"
 
