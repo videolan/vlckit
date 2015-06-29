@@ -1,0 +1,42 @@
+From 50a5d0ad39c707e2b4fcb5319fd85f30b37e9223 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Fri, 19 Jun 2015 15:26:06 +0200
+Subject: [PATCH 10/10] libvlc/media: re-parse if flags changed
+
+---
+ lib/media.c          | 6 ++++++
+ lib/media_internal.h | 1 +
+ 2 files changed, 7 insertions(+)
+
+diff --git a/lib/media.c b/lib/media.c
+index f5886ad..87a02d8 100644
+--- a/lib/media.c
++++ b/lib/media.c
+@@ -724,6 +724,12 @@ static int media_parse(libvlc_media_t *media, bool b_async,
+     vlc_mutex_lock(&media->parsed_lock);
+     needed = !media->has_asked_preparse;
+     media->has_asked_preparse = true;
++    if (!needed)
++    {
++        if (media->parse_flag != parse_flag)
++            needed = true;
++    }
++    media->parse_flag = parse_flag;
+     vlc_mutex_unlock(&media->parsed_lock);
+ 
+     if (needed)
+diff --git a/lib/media_internal.h b/lib/media_internal.h
+index 35f06a4..d28297e 100644
+--- a/lib/media_internal.h
++++ b/lib/media_internal.h
+@@ -47,6 +47,7 @@ struct libvlc_media_t
+ 
+     bool is_parsed;
+     bool has_asked_preparse;
++    libvlc_media_parse_flag_t parse_flag;
+ };
+ 
+ /* Media Descriptor */
+-- 
+2.4.4
+

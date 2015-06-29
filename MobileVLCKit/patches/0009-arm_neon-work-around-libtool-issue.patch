@@ -1,7 +1,7 @@
-From 17db4568d2eee67c59c1fbed39bda55a09d97d0e Mon Sep 17 00:00:00 2001
+From f2b955348c86405fddc697acec7bc531fcb92b41 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 18 Feb 2015 21:35:16 +0100
-Subject: [PATCH 9/9] arm_neon: work-around libtool issue
+Subject: [PATCH 09/10] arm_neon: work-around libtool issue
 
 ---
  modules/arm_neon/Makefile.am | 2 ++
@@ -18,5 +18,5 @@ index 4e73a4f..43ef527 100644
  
  libsimple_channel_mixer_neon_plugin_la_SOURCES = \
 -- 
-2.4.1
+2.4.4
 

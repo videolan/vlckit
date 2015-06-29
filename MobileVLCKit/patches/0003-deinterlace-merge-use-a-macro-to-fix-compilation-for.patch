@@ -1,7 +1,8 @@
-From 0666a80310b0a240d93b5d4af768d3389cd09988 Mon Sep 17 00:00:00 2001
+From c477ea16265a3bd28f8280eea80a92b65ed12d59 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:07 +0200
-Subject: [PATCH 3/9] deinterlace/merge: use a macro to fix compilation for iOS
+Subject: [PATCH 03/10] deinterlace/merge: use a macro to fix compilation for
+ iOS
 
 ---
  modules/video_filter/deinterlace/merge_arm.S | 26 ++++++++++----------------
@@ -81,5 +82,5 @@ index dd77902..03e5042 100644
  	b		1b
 +endfunc
 -- 
-2.4.1
+2.4.4
 
