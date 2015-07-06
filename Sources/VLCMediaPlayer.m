@@ -334,23 +334,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return [NSArray arrayWithArray: tempArray];
 }
 
-- (NSArray *)videoTracks
-{
-    NSInteger count = libvlc_video_get_track_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *tracks = libvlc_video_get_track_description(_playerInstance);
-    NSMutableArray *tempArray = [NSMutableArray array];
-    for (NSUInteger i = 0; i < count ; i++) {
-        [tempArray addObject:@(tracks->psz_name)];
-        tracks = tracks->p_next;
-    }
-    libvlc_track_description_list_release(tracks);
-
-    return [NSArray arrayWithArray: tempArray];
-}
-
 - (int)numberOfVideoTracks
 {
     return libvlc_video_get_track_count(_playerInstance);
@@ -416,19 +399,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path
 {
     return libvlc_video_set_subtitle_file(_playerInstance, [path UTF8String]);
-}
-
-- (NSArray *)videoSubTitles
-{
-    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(_playerInstance);
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    while (currentTrack) {
-        [tempArray addObject:@(currentTrack->psz_name)];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(currentTrack);
-    return [NSArray arrayWithArray: tempArray];
 }
 
 - (void)setCurrentVideoSubTitleDelay:(NSInteger)index
@@ -625,11 +595,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (VLCTime *)remainingTime
 {
     return _cachedRemainingTime;
-}
-
-- (NSUInteger)fps
-{
-    return libvlc_media_player_get_fps(_playerInstance);
 }
 
 #pragma mark -
@@ -872,23 +837,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(currentTrack);
-    return [NSArray arrayWithArray: tempArray];
-}
-
-- (NSArray *)audioTracks
-{
-    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *tracks = libvlc_audio_get_track_description(_playerInstance);
-    NSMutableArray *tempArray = [NSMutableArray array];
-    for (NSUInteger i = 0; i < count ; i++) {
-        [tempArray addObject:@(tracks->psz_name)];
-        tracks = tracks->p_next;
-    }
-    libvlc_track_description_list_release(tracks);
-
     return [NSArray arrayWithArray: tempArray];
 }
 

@@ -23,6 +23,15 @@ Deprecated APIs:
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:, countOfTitles
 
+Removed APIs:
+- VLCMedia:
+  - fps
+  - media:metaValueChangedFrom:forKey:
+- VLCMediaPlayer
+  - audioTracks
+  - videoTracks
+  - videoSubTitles
+
 Version 2.2.2:
 --------------
 New APIs:

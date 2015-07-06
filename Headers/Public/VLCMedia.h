@@ -101,14 +101,6 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
 @optional
 
 /**
- * Delegate method called whenever the meta has changed for the receiver.
- * \param aMedia The media resource whose meta data has been changed.
- * \param oldValue The old meta data value.
- * \param key The key of the value that was changed.
- */
-- (void)media:(VLCMedia *)aMedia metaValueChangedFrom:(id)oldValue forKey:(NSString *)key __attribute__((deprecated));
-
-/**
  * Delegate method called whenever the media's meta data was changed for whatever reason
  * \note this is called more often than mediaDidFinishParsing, so it may be less efficient
  * \param aMedia The media resource whose meta data has been changed.

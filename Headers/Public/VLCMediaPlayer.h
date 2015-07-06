@@ -249,20 +249,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 @property (nonatomic, readonly, weak) VLCTime *remainingTime;
 
-/**
- * Frames per second
- * \note this property is deprecated. use (float)fps instead.
- * \return current media's frames per second value
- */
-@property (readonly) NSUInteger fps __attribute__((deprecated));
-
 #pragma mark -
 #pragma mark ES track handling
 
 /**
  * Return the current video track index
- * Note that the handled values do not match the videoTracks array indexes
- * but refer to videoSubTitlesIndexes.
+ *
  * \return 0 if none is set.
  *
  * Pass -1 to disable.
@@ -288,16 +280,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @property (NS_NONATOMIC_IOSONLY, readonly) int numberOfVideoTracks;
 
 /**
- * Return the video tracks
- *
- * It includes the disabled fake track at index 0.
- */
-- (NSArray *)videoTracks __attribute__((deprecated));
-
-/**
  * Return the current video subtitle index
- * Note that the handled values do not match the videoSubTitles array indexes
- * but refer to videoSubTitlesIndexes
+ *
  * \return 0 if none is set.
  *
  * Pass -1 to disable.
@@ -321,13 +305,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return number of tracks
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) int numberOfSubtitlesTracks;
-
-/**
- * Return the video subtitle tracks
- * \note this property is deprecated. use (NSArray *)videoSubtitleNames instead.
- * It includes the disabled fake track at index 0.
- */
-- (NSArray *)videoSubTitles __attribute__((deprecated));
 
 /**
  * Load and set a specific video subtitle, from a file.
@@ -405,8 +382,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * Return the current audio track index
- * Note that the handled values do not match the audioTracks array indexes
- * but refer to audioTrackIndexes.
+ *
  * \return 0 if none is set.
  *
  * Pass -1 to disable.
@@ -430,13 +406,6 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \return number of tracks
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) int numberOfAudioTracks;
-
-/**
- * Return the audio tracks
- *
- * It includes the "Disable" fake track at index 0.
- */
-- (NSArray *)audioTracks __attribute__((deprecated));
 
 #pragma mark -
 #pragma mark audio functionality
