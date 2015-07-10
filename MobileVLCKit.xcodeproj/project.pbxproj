@@ -6,20 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		7A5ECAF911DE917B00F66AF3 /* Aggregate static plugins */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = 7A5ECB1011DE919F00F66AF3 /* Build configuration list for PBXAggregateTarget "Aggregate static plugins" */;
-			buildPhases = (
-				7A5ECAF811DE917B00F66AF3 /* Aggregate static plugins script */,
-			);
-			dependencies = (
-			);
-			name = "Aggregate static plugins";
-			productName = "Aggregate static plugins";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		6360B0E211E7F0C000EAD790 /* VLCMediaDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */; };
 		6360B10611E7F27300EAD790 /* VLCMediaDiscoverer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */; };
@@ -43,16 +29,6 @@
 		7D5F800C185B733800C2CD75 /* VLCMediaListPlayer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		CCD5C82E15947E6B00AED565 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7A5ECAF911DE917B00F66AF3;
-			remoteInfo = "Aggregate static plugins";
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		7A5ECB6211DE961B00F66AF3 /* Copy Headers */ = {
@@ -97,12 +73,11 @@
 		7A5ECAD911DE8FAB00F66AF3 /* VLCAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCAudio.h; path = Headers/Public/VLCAudio.h; sourceTree = "<group>"; };
 		7A5ECAE411DE8FEF00F66AF3 /* VLCLibVLCBridging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCLibVLCBridging.h; path = Headers/Internal/VLCLibVLCBridging.h; sourceTree = "<group>"; };
 		7A5ECAE511DE8FEF00F66AF3 /* VLCEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEventManager.h; path = Headers/Internal/VLCEventManager.h; sourceTree = "<group>"; };
-		7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = MobileVLCKit.xcconfig; path = MobileVLCKit/MobileVLCKit.xcconfig; sourceTree = "<group>"; };
 		7A5ECB3411DE94D600F66AF3 /* vlc-plugins.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins.h"; path = "MobileVLCKit/vlc-plugins.h"; sourceTree = "<group>"; };
 		7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobileVLCKit.h; path = Headers/Public/MobileVLCKit.h; sourceTree = "<group>"; };
-		7A5ECBAC11DE987400F66AF3 /* AggregateStaticPlugins.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; name = AggregateStaticPlugins.sh; path = MobileVLCKit/AggregateStaticPlugins.sh; sourceTree = "<group>"; };
 		7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaListPlayer.m; path = Sources/VLCMediaListPlayer.m; sourceTree = "<group>"; };
 		7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaListPlayer.h; path = Headers/Public/VLCMediaListPlayer.h; sourceTree = "<group>"; };
+		7D8938951B500042008F2B14 /* vlc-plugins.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "vlc-plugins.xcconfig"; path = "MobileVLCKit/vlc-plugins.xcconfig"; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* MobileVLCKit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileVLCKit_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libMobileVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,8 +143,7 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				7A5ECBAC11DE987400F66AF3 /* AggregateStaticPlugins.sh */,
-				7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */,
+				7D8938951B500042008F2B14 /* vlc-plugins.xcconfig */,
 				AA747D9E0F9514B9006C5449 /* MobileVLCKit_Prefix.pch */,
 			);
 			name = "Other Sources";
@@ -217,7 +191,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				CCD5C82F15947E6B00AED565 /* PBXTargetDependency */,
 			);
 			name = MobileVLCKit;
 			productName = MobileVLCKit;
@@ -245,27 +218,9 @@
 			projectRoot = "";
 			targets = (
 				D2AAC07D0554694100DB518D /* MobileVLCKit */,
-				7A5ECAF911DE917B00F66AF3 /* Aggregate static plugins */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		7A5ECAF811DE917B00F66AF3 /* Aggregate static plugins script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Aggregate static plugins script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh ${SRCROOT}/MobileVLCKit/AggregateStaticPlugins.sh\nexit 0\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D2AAC07B0554694100DB518D /* Sources */ = {
@@ -287,45 +242,10 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		CCD5C82F15947E6B00AED565 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7A5ECAF911DE917B00F66AF3 /* Aggregate static plugins */;
-			targetProxy = CCD5C82E15947E6B00AED565 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin XCBuildConfiguration section */
-		1DEB921F08733DC00010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
-					armv7s,
-				);
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/MobileVLCKit.dst;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
-				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				PRODUCT_NAME = MobileVLCKit;
-				VLC_SRC_DIR = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc";
-			};
-			name = Debug;
-		};
 		1DEB922008733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A5ECB3311DE948C00F66AF3 /* MobileVLCKit.xcconfig */;
+			baseConfigurationReference = 7D8938951B500042008F2B14 /* vlc-plugins.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
@@ -342,26 +262,11 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libcompat.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
-				VLC_SRC_DIR = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc";
 			};
 			name = Release;
-		};
-		1DEB922308733DC00010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				OTHER_LDFLAGS = "-ObjC";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
 		};
 		1DEB922408733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -370,36 +275,51 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
-		7A5ECAFA11DE917B00F66AF3 /* Debug */ = {
+		7D8938931B500013008F2B14 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				PRODUCT_NAME = "Aggregate static plugins";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		7A5ECAFB11DE917B00F66AF3 /* Release */ = {
+		7D8938941B500013008F2B14 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7D8938951B500042008F2B14 /* vlc-plugins.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1.1;
-				PRODUCT_NAME = "Aggregate static plugins";
-				ZERO_LINK = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD_INCLUDING_64_BIT)",
+					armv7s,
+				);
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				DSTROOT = /tmp/MobileVLCKit.dst;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MobileVLCKit_Prefix.pch;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
+				INSTALL_PATH = /usr/local/lib;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libcompat.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				PRODUCT_NAME = MobileVLCKit;
 			};
-			name = Release;
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
@@ -407,8 +327,8 @@
 		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "MobileVLCKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB921F08733DC00010E9CD /* Debug */,
 				1DEB922008733DC00010E9CD /* Release */,
+				7D8938941B500013008F2B14 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -416,17 +336,8 @@
 		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "MobileVLCKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1DEB922308733DC00010E9CD /* Debug */,
 				1DEB922408733DC00010E9CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7A5ECB1011DE919F00F66AF3 /* Build configuration list for PBXAggregateTarget "Aggregate static plugins" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7A5ECAFA11DE917B00F66AF3 /* Debug */,
-				7A5ECAFB11DE917B00F66AF3 /* Release */,
+				7D8938931B500013008F2B14 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
