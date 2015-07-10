@@ -6,7 +6,7 @@ set -e
 
 BUILD_DEVICE=yes
 BUILD_SIMULATOR=yes
-BUILD_FRAMEWORK=no
+BUILD_STATIC_FRAMEWORK=no
 SDK=`xcrun --sdk iphoneos --show-sdk-version`
 SDK_MIN=7.0
 VERBOSE=no
@@ -55,11 +55,16 @@ info()
 buildxcodeproj()
 {
     local target="$2"
-    if [ "x$target" = "x" ]; then
-        target="$1"
-    fi
+    local PLATFORM="$3"
 
-    info "Building $1 ($target, ${CONFIGURATION})"
+    info "Building $1 ($target, ${CONFIGURATION}, $PLATFORM)"
+
+    local architectures=""
+    if [ "$PLATFORM" = "iphonesimulator" ]; then
+        architectures="i386 x86_64"
+    else
+        architectures="armv7 armv7s arm64"
+    fi
 
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
     if [ "$SCARY" = "no" ]; then
@@ -69,6 +74,7 @@ buildxcodeproj()
                -target "$target" \
                -sdk $PLATFORM$SDK \
                -configuration ${CONFIGURATION} \
+               ARCHS="${architectures}" \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
                GCC_PREPROCESSOR_DEFINITIONS="$defs" \
                > ${out}
@@ -87,12 +93,12 @@ do
          s)
              BUILD_DEVICE=no
              BUILD_SIMULATOR=yes
-             BUILD_FRAMEWORK=no
+             BUILD_STATIC_FRAMEWORK=no
              ;;
          f)
              BUILD_DEVICE=yes
              BUILD_SIMULATOR=yes
-             BUILD_FRAMEWORK=yes
+             BUILD_STATIC_FRAMEWORK=yes
              ;;
          d)  CONFIGURATION="Debug"
              ;;
@@ -392,8 +398,11 @@ spopd # vlc
 
 info "all done"
 
-if [ "$BUILD_FRAMEWORK" != "no" ]; then
-    info "Building MobileVLCKit.framework"
+if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
+    info "Building static MobileVLCKit.framework"
+
+    buildxcodeproj MobileVLCKit "MobileVLCKit" iphoneos
+    buildxcodeproj MobileVLCKit "MobileVLCKit" iphonesimulator
 
     # Assumes both platforms were built currently
     spushd build
@@ -406,5 +415,5 @@ if [ "$BUILD_FRAMEWORK" != "no" ]; then
     cp -pr Release-iphoneos/include/MobileVLCKit MobileVLCKit.framework/Headers
     spopd # build
 
-    info "Build of MobileVLCKit.framework completed"
+    info "Build of static MobileVLCKit.framework completed"
 fi
