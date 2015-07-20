@@ -167,9 +167,11 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     VLCMediaPlayerState _cachedState;    //< Cached state of the media being played
     float _position;                     //< The position of the media being played
     id _drawable;                        //< The drawable associated to this media player
-    VLCAudio *_audio;
     libvlc_equalizer_t *_equalizerInstance;
     BOOL _equalizerEnabled;
+#if !TARGET_OS_IPHONE
+    VLCAudio *_audio;
+#endif
 }
 @end
 
@@ -277,12 +279,14 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return (__bridge id)(libvlc_media_player_get_nsobject(_playerInstance));
 }
 
+#if !TARGET_OS_IPHONE
 - (VLCAudio *)audio
 {
     if (!_audio)
         _audio = [[VLCAudio alloc] initWithMediaPlayer:self];
     return _audio;
 }
+#endif
 
 #pragma mark -
 #pragma mark Video Tracks

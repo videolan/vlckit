@@ -21,7 +21,6 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import <MobileVLCKit/VLCAudio.h>
 #import <MobileVLCKit/VLCLibrary.h>
 #import <MobileVLCKit/VLCMedia.h>
 #import <MobileVLCKit/VLCMediaDiscoverer.h>

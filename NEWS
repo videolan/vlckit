@@ -24,6 +24,8 @@ Deprecated APIs:
   - titles, chaptersForTitleIndex:, countOfTitles
 
 Removed APIs:
+- VLCAudio:
+  - the entire object is no longer part of the MobileVLCKit distribution
 - VLCMedia:
   - fps
   - media:metaValueChangedFrom:forKey:
