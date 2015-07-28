@@ -70,7 +70,7 @@
 		7A5ECB6211DE961B00F66AF3 /* Copy Headers */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = include/MobileVLCKit;
+			dstPath = MobileVLCKit;
 			dstSubfolderSpec = 16;
 			files = (
 				7A5ECB9E11DE975A00F66AF3 /* MobileVLCKit.h in Copy Headers */,

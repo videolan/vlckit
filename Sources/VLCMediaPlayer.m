@@ -299,7 +299,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     int count = libvlc_video_get_track_count(_playerInstance);
     if (count <= 0)
-        return NSNotFound;
+        return INT_MAX;
 
     return libvlc_video_get_track(_playerInstance);
 }
@@ -356,7 +356,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     NSInteger count = libvlc_video_get_spu_count(_playerInstance);
 
     if (count <= 0)
-        return NSNotFound;
+        return INT_MAX;
 
     return libvlc_video_get_spu(_playerInstance);
 }
@@ -612,7 +612,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     int count = libvlc_media_player_get_chapter_count(_playerInstance);
     if (count <= 0)
-        return NSNotFound;
+        return INT_MAX;
     int result = libvlc_media_player_get_chapter(_playerInstance);
     return result;
 }
@@ -659,7 +659,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_media_player_get_title_count(_playerInstance);
     if (count <= 0)
-        return NSNotFound;
+        return INT_MAX;
 
     return libvlc_media_player_get_title(_playerInstance);
 }
@@ -805,7 +805,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 {
     NSInteger count = libvlc_audio_get_track_count(_playerInstance);
     if (count <= 0)
-        return NSNotFound;
+        return INT_MAX;
 
     return libvlc_audio_get_track(_playerInstance);
 }
