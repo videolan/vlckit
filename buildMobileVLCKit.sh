@@ -275,6 +275,8 @@ PROJECT_DIR=`pwd`
 # remove old module list
 rm -f $PROJECT_DIR/MobileVLCKit/vlc-plugins.h
 rm -f $PROJECT_DIR/MobileVLCKit/vlc-plugins.xcconfig
+touch $PROJECT_DIR/MobileVLCKit/vlc-plugins.h
+touch $PROJECT_DIR/MobileVLCKit/vlc-plugins.xcconfig
 
 spushd MobileVLCKit/ImportedSources/vlc
 rm -rf install-ios
