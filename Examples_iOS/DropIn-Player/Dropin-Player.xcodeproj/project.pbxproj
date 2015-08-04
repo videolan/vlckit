@@ -13,7 +13,7 @@
 		7D7B6C4B1B70C41700E879CF /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C4A1B70C41700E879CF /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7D7B6C4D1B70C41D00E879CF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C4C1B70C41D00E879CF /* CoreMedia.framework */; };
 		7D7B6C4F1B70C43200E879CF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */; };
-		7D8745B5183BA8F900FD09E0 /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */; };
+		7D7B6C7D1B70D0BA00E879CF /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */; };
 		7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */; };
 		7D8745BB183BABEE00FD09E0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */; };
 		7D8745BD183BAC0D00FD09E0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BC183BAC0D00FD09E0 /* CFNetwork.framework */; };
@@ -46,6 +46,7 @@
 		7D7B6C4A1B70C41700E879CF /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		7D7B6C4C1B70C41D00E879CF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobileVLCKit.a; path = "../../build/Debug-iphoneos/libMobileVLCKit.a"; sourceTree = "<group>"; };
 		7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobileVLCKit.a; path = "../../build/Release-iphonesimulator/libMobileVLCKit.a"; sourceTree = "<group>"; };
 		7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7D8745B7183BABE800FD09E0 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
@@ -80,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D7B6C7D1B70D0BA00E879CF /* libMobileVLCKit.a in Frameworks */,
 				7D7B6C4F1B70C43200E879CF /* CoreVideo.framework in Frameworks */,
 				7D7B6C4D1B70C41D00E879CF /* CoreMedia.framework in Frameworks */,
 				7D7B6C4B1B70C41700E879CF /* VideoToolbox.framework in Frameworks */,
@@ -97,7 +99,6 @@
 				7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */,
 				7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */,
 				7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */,
-				7D8745B5183BA8F900FD09E0 /* libMobileVLCKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -124,6 +125,7 @@
 		7D11B368183BA71600FF0D25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */,
 				7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */,
 				7D7B6C4C1B70C41D00E879CF /* CoreMedia.framework */,
 				7D7B6C4A1B70C41700E879CF /* VideoToolbox.framework */,
@@ -337,8 +339,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dropin-Player/Dropin-Player-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos/include\"",
+					"$(inherited)",
+					"$(CONFIGURATION_BUILD_DIR)",
 				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
@@ -356,8 +358,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Dropin-Player/Dropin-Player-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos/include\"",
+					"$(inherited)",
+					"$(CONFIGURATION_BUILD_DIR)",
 				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
 				LIBRARY_SEARCH_PATHS = (

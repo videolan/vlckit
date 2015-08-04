@@ -1,8 +1,8 @@
 !Makefile
 *.mode*
 *.pbxuser
-*.xcworkspace
 xcuserdata
+project.xcworkspace
 MobileVLCKit/vlc-plugins.xcconfig
 MobileVLCKit/vlc-plugins.h
 .DS_Store
