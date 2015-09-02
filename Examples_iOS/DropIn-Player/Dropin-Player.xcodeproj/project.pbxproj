@@ -345,10 +345,6 @@
 					"$(CONFIGURATION_BUILD_DIR)",
 				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos\"",
-				);
 				PRODUCT_NAME = "Dropin-Player";
 				WRAPPER_EXTENSION = app;
 			};
@@ -364,10 +360,6 @@
 					"$(CONFIGURATION_BUILD_DIR)",
 				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos\"",
-				);
 				PRODUCT_NAME = "Dropin-Player";
 				WRAPPER_EXTENSION = app;
 			};
