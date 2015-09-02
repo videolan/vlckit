@@ -1,23 +1,23 @@
-From 3c15be854de4b1e2e84d72babbd5ba8b29066fe5 Mon Sep 17 00:00:00 2001
+From c2686297ba6b8360d61c4d87dce79f7d36b4d596 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Jul 2015 19:57:18 +0200
-Subject: [PATCH 10/11] disable neon volume plugin
+Subject: [PATCH 09/10] disable neon volume plugin
 
 ---
  modules/arm_neon/Makefile.am | 1 -
  1 file changed, 1 deletion(-)
 
 diff --git a/modules/arm_neon/Makefile.am b/modules/arm_neon/Makefile.am
-index 43ef527..db81e3e 100644
+index e67e07e..6909752 100644
 --- a/modules/arm_neon/Makefile.am
 +++ b/modules/arm_neon/Makefile.am
-@@ -34,6 +34,5 @@ if HAVE_NEON
+@@ -27,6 +27,5 @@ libyuv_rgb_neon_plugin_LIBTOOLFLAGS = --tag=CC
+ if HAVE_NEON
  neon_LTLIBRARIES = \
- 	libsimple_channel_mixer_neon_plugin.la \
  	libchroma_yuv_neon_plugin.la \
 -	libvolume_neon_plugin.la \
  	libyuv_rgb_neon_plugin.la
  endif
 -- 
-2.4.6
+2.5.1
 

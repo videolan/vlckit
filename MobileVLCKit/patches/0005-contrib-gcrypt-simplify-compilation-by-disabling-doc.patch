@@ -1,7 +1,7 @@
-From 24d2fec8b470585ae2a375af7ebf2f7409b287d4 Mon Sep 17 00:00:00 2001
+From f318ca18e3480b84979f6917c186bb66ea7f69ed Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 06/11] contrib/gcrypt: simplify compilation by disabling /doc
+Subject: [PATCH 05/10] contrib/gcrypt: simplify compilation by disabling /doc
  and work-around a libtool limitation
 
 ---
@@ -106,5 +106,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.4.6
+2.5.1
 
