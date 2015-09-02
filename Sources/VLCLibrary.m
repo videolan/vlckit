@@ -197,6 +197,8 @@ static void HandleMessage(void *data,
 
     char *str;
     if (vasprintf(&str, fmt, args) == -1) {
+        if (str)
+            free(str);
         return;
     }
 
@@ -204,4 +206,5 @@ static void HandleMessage(void *data,
         return;
 
     VKLog(@"%@", [NSString stringWithUTF8String:str]);
+    free(str);
 }
