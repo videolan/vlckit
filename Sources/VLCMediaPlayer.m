@@ -296,14 +296,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
         [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(currentTrack);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -313,14 +314,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
         [tempArray addObject:@(currentTrack->i_id)];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(currentTrack);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -330,13 +332,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *tracks = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < count ; i++) {
-        [tempArray addObject:@(tracks->psz_name)];
-        tracks = tracks->p_next;
+        [tempArray addObject:@(currentTrack->psz_name)];
+        currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(tracks);
+    libvlc_track_description_list_release(firstTrack);
 
     return [NSArray arrayWithArray: tempArray];
 }
@@ -370,14 +374,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
         [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(currentTrack);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -387,14 +392,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
         [tempArray addObject:@(currentTrack->i_id)];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(currentTrack);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -410,14 +416,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
 - (NSArray *)videoSubTitles
 {
-    libvlc_track_description_t *currentTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
         [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(currentTrack);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -654,13 +661,18 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *tracks = libvlc_video_get_chapter_description(_playerInstance, title);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_chapter_description(_playerInstance, title);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    if (!currentTrack)
+        return [NSArray array];
+
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSInteger i = 0; i < count ; i++) {
-        [tempArray addObject:@(tracks->psz_name)];
-        tracks = tracks->p_next;
+        [tempArray addObject:@(currentTrack->psz_name)];
+        currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(tracks);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray:tempArray];
 }
 
@@ -693,21 +705,26 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count == 0)
         return [NSArray array];
 
-    libvlc_track_description_t *tracks = libvlc_video_get_title_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_video_get_title_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    if (!currentTrack)
+        return [NSArray array];
+
     NSMutableArray *tempArray = [NSMutableArray array];
     if (!tracks)
         return tempArray;
 
     while (1) {
-        if (tracks->psz_name != nil)
-            [tempArray addObject:@(tracks->psz_name)];
-        if (tracks->p_next)
-            tracks = tracks->p_next;
+        if (currentTrack->psz_name != nil)
+            [tempArray addObject:@(currentTrack->psz_name)];
+        if (currentTrack->p_next)
+            currentTrack = currentTrack->p_next;
         else
             break;
     }
 
-    libvlc_track_description_list_release(tracks);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -733,14 +750,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
         [tempArray addObject:@(currentTrack->psz_name)];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(currentTrack);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -750,14 +768,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *currentTrack = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
         [tempArray addObject:@(currentTrack->i_id)];
         currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(currentTrack);
+    libvlc_track_description_list_release(firstTrack);
     return [NSArray arrayWithArray: tempArray];
 }
 
@@ -767,13 +786,15 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     if (count <= 0)
         return @[];
 
-    libvlc_track_description_t *tracks = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *firstTrack = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
     NSMutableArray *tempArray = [NSMutableArray array];
     for (NSUInteger i = 0; i < count ; i++) {
-        [tempArray addObject:@(tracks->psz_name)];
-        tracks = tracks->p_next;
+        [tempArray addObject:@(currentTrack->psz_name)];
+        currentTrack = currentTrack->p_next;
     }
-    libvlc_track_description_list_release(tracks);
+    libvlc_track_description_list_release(firstTrack);
 
     return [NSArray arrayWithArray: tempArray];
 }
