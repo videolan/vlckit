@@ -712,8 +712,6 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         return [NSArray array];
 
     NSMutableArray *tempArray = [NSMutableArray array];
-    if (!tracks)
-        return tempArray;
 
     while (1) {
         if (currentTrack->psz_name != nil)
