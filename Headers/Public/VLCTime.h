@@ -48,5 +48,7 @@
 
 /* Comparators */
 - (NSComparisonResult)compare:(VLCTime *)aTime;
+- (BOOL)isEqual:(id)object;
+- (NSUInteger)hash;
 
 @end

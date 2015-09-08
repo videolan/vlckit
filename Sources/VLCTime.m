@@ -145,4 +145,17 @@
             NSOrderedSame;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[VLCTime class]])
+        return NO;
+
+    return [[self description] isEqual:[object description]];
+}
+
+- (NSUInteger)hash
+{
+    return [[self description] hash];
+}
+
 @end

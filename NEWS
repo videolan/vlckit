@@ -19,6 +19,10 @@ New APIs:
                      parseWithOptions:
   - added enums: VLCMediaType, VLCMediaParsingOptions
 
+- VLCTime
+  - added selectors: isEqual:
+                     hash
+
 Deprecated APIs:
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:, countOfTitles
