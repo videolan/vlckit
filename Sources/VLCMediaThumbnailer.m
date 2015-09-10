@@ -205,6 +205,7 @@ void unlock(void *opaque, void *picture, void *const *p_pixels)
     _mp = libvlc_media_player_new(self.libVLCinstance);
 
     libvlc_media_add_option([_media libVLCMediaDescriptor], "no-audio");
+    libvlc_media_add_option([_media libVLCMediaDescriptor], "no-videotoolbox-zero-copy");
 
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
