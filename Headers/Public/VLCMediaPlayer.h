@@ -101,6 +101,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (instancetype)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
 - (instancetype)initWithOptions:(NSArray *)options;
+- (instancetype)initWithLibVLCInstance:(void *)playerInstance andLibrary:(VLCLibrary *)library;
 
 /* Video View Options */
 // TODO: Should be it's own object?

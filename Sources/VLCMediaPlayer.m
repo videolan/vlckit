@@ -147,7 +147,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 // TODO: Documentation
 @interface VLCMediaPlayer (Private)
 
-- (id)initWithDrawable:(id)aDrawable options:(NSArray *)options;
+- (instancetype)initWithDrawable:(id)aDrawable options:(NSArray *)options;
 
 - (void)registerObservers;
 - (void)unregisterObservers;
@@ -201,6 +201,25 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (instancetype)init
 {
     return [self initWithDrawable:nil options:nil];
+}
+
+- (instancetype)initWithLibVLCInstance:(void *)playerInstance andLibrary:(VLCLibrary *)library
+{
+    if (self = [super init]) {
+        _cachedTime = [VLCTime nullTime];
+        _cachedRemainingTime = [VLCTime nullTime];
+        _position = 0.0f;
+        _cachedState = VLCMediaPlayerStateStopped;
+
+        _privateLibrary = library;
+        libvlc_retain([_privateLibrary instance]);
+
+        _playerInstance = playerInstance;
+        libvlc_media_player_retain(_playerInstance);
+
+        [self registerObservers];
+    }
+    return self;
 }
 
 #if !TARGET_OS_IPHONE
@@ -1155,7 +1174,7 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 @end
 
 @implementation VLCMediaPlayer (Private)
-- (id)initWithDrawable:(id)aDrawable options:(NSArray *)options
+- (instancetype)initWithDrawable:(id)aDrawable options:(NSArray *)options
 {
     if (self = [super init]) {
         _cachedTime = [VLCTime nullTime];

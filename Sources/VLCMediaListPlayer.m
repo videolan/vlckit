@@ -29,6 +29,7 @@
 #import "VLCMediaPlayer.h"
 #import "VLCMediaList.h"
 #import "VLCLibVLCBridging.h"
+#import "VLCLibrary.h"
 
 @interface VLCMediaListPlayer () {
     void *instance;
@@ -43,14 +44,17 @@
 
 - (instancetype)initWithOptions:(NSArray *)options
 {
-        if (self = [super init]) {
-            _mediaPlayer = [[VLCMediaPlayer alloc] initWithOptions:options];
+    if (self = [super init]) {
+        VLCLibrary *library;
+        if (options != nil) {
+            library = [[VLCLibrary alloc] initWithOptions:options];
+        } else
+            library = [VLCLibrary sharedLibrary];
 
-            instance = libvlc_media_list_player_new([_mediaPlayer.libraryInstance instance]);
-            libvlc_media_list_player_set_media_player(instance, [_mediaPlayer libVLCMediaPlayer]);
-        }
-        return self;
-
+        instance = libvlc_media_list_player_new([library instance]);
+        _mediaPlayer = [[VLCMediaPlayer alloc] initWithLibVLCInstance:libvlc_media_list_player_get_media_player(instance) andLibrary:library];
+    }
+    return self;
 }
 
 - (instancetype)init
