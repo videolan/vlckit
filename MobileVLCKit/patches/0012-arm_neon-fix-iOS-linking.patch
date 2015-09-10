@@ -1,0 +1,198 @@
+From f5cebbdbdcbda90664b2daf3fbf727f060a1cca3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Thu, 10 Sep 2015 14:04:52 +0200
+Subject: [PATCH 12/13] arm_neon: fix iOS linking
+
+---
+ modules/arm_neon/amplify.S              |  7 ++---
+ modules/arm_neon/simple_channel_mixer.S | 46 +++++++++++++--------------------
+ 2 files changed, 22 insertions(+), 31 deletions(-)
+
+diff --git a/modules/arm_neon/amplify.S b/modules/arm_neon/amplify.S
+index 5938118..42f0d00 100644
+--- a/modules/arm_neon/amplify.S
++++ b/modules/arm_neon/amplify.S
+@@ -18,6 +18,8 @@
+  @ Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
+  @****************************************************************************/
+ 
++#include "asm.S"
++
+ 	.syntax	unified
+ 	.arm
+ 	.fpu	neon
+@@ -27,9 +29,7 @@
+ #define	SRC	r1
+ #define	SIZE	r2
+ 	.align 2
+-	.global amplify_float_arm_neon
+-	.type	amplify_float_arm_neon, %function
+-amplify_float_arm_neon:
++function amplify_float_arm_neon, export=1
+ 	cmp		SIZE,	#0
+ 	bxeq		lr
+ #ifdef __ARM_PCS
+@@ -79,3 +79,4 @@ amplify_float_arm_neon:
+ 4:	vst1.f32	{d20-d21},	[DST,:128]!
+ 5:	vst1.f32	{d16-d17},	[DST,:128]!
+ 	bx		lr
++endfunc
+diff --git a/modules/arm_neon/simple_channel_mixer.S b/modules/arm_neon/simple_channel_mixer.S
+index a94ae85..54b43a7 100644
+--- a/modules/arm_neon/simple_channel_mixer.S
++++ b/modules/arm_neon/simple_channel_mixer.S
+@@ -19,6 +19,8 @@
+  @ Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
+  @****************************************************************************/
+ 
++#include "asm.S"
++
+ 	.fpu neon
+ 	.text
+ 	.align 2
+@@ -34,9 +36,7 @@ coeff_7to2:
+ 	.float 0.5
+ 	.float 0.25
+ 	.float 0.25
+-	.global convert_7_x_to_2_0_neon_asm
+-	.type	convert_7_x_to_2_0_neon_asm, %function
+-convert_7_x_to_2_0_neon_asm:
++function convert_7_x_to_2_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_7to2
+@@ -63,6 +63,7 @@ convert_7_x_to_2_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
++endfunc
+ 
+ 
+ coeff_5to2:
+@@ -70,9 +71,7 @@ coeff_5to2:
+ 	.float 0.5
+ 	.float 0.33
+ 	.float 0.33
+-	.global convert_5_x_to_2_0_neon_asm
+-	.type	convert_5_x_to_2_0_neon_asm, %function
+-convert_5_x_to_2_0_neon_asm:
++function convert_5_x_to_2_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_5to2
+@@ -95,14 +94,13 @@ convert_5_x_to_2_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
++endfunc
+ 
+ 
+ coeff_4to2:
+ 	.float 0.5
+ 	.float 0.5
+-	.global convert_4_0_to_2_0_neon_asm
+-	.type	convert_4_0_to_2_0_neon_asm, %function
+-convert_4_0_to_2_0_neon_asm:
++function convert_4_0_to_2_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_4to2
+@@ -119,14 +117,12 @@ convert_4_0_to_2_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
+-
++endfunc
+ 
+ coeff_3to2:
+ 	.float 0.5
+ 	.float 0.5
+-	.global convert_3_x_to_2_0_neon_asm
+-	.type	convert_3_x_to_2_0_neon_asm, %function
+-convert_3_x_to_2_0_neon_asm:
++function convert_3_x_to_2_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_3to2
+@@ -147,16 +143,14 @@ convert_3_x_to_2_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
+-
++endfunc
+ 
+ coeff_7to1:
+ 	.float 0.25
+ 	.float 0.25
+ 	.float 0.125
+ 	.float 0.125
+-	.global convert_7_x_to_1_0_neon_asm
+-	.type	convert_7_x_to_1_0_neon_asm, %function
+-convert_7_x_to_1_0_neon_asm:
++function convert_7_x_to_1_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_7to1
+@@ -181,6 +175,7 @@ convert_7_x_to_1_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
++endfunc
+ 
+ 
+ coeff_5to1:
+@@ -188,9 +183,7 @@ coeff_5to1:
+ 	.float 0.25
+ 	.float 0.16666667
+ 	.float 0.16666667
+-	.global convert_5_x_to_1_0_neon_asm
+-	.type	convert_5_x_to_1_0_neon_asm, %function
+-convert_5_x_to_1_0_neon_asm:
++function convert_5_x_to_1_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_5to1
+@@ -212,16 +205,14 @@ convert_5_x_to_1_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
+-
++endfunc
+ 
+ coeff_7to4:
+ 	.float 0.5
+ 	.float 0.5
+ 	.float 0.16666667
+ 	.float 0.16666667
+-	.global convert_7_x_to_4_0_neon_asm
+-	.type	convert_7_x_to_4_0_neon_asm, %function
+-convert_7_x_to_4_0_neon_asm:
++function convert_7_x_to_4_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_7to4
+@@ -247,14 +238,12 @@ convert_7_x_to_4_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
+-
++endfunc
+ 
+ coeff_5to4:
+ 	.float 0.5
+ 	.float 0.5
+-	.global convert_5_x_to_4_0_neon_asm
+-	.type	convert_5_x_to_4_0_neon_asm, %function
+-convert_5_x_to_4_0_neon_asm:
++function convert_5_x_to_4_0_neon_asm, export=1
+ 	push {r4,lr}
+ 
+ 	adr COEFF, coeff_5to4
+@@ -277,3 +266,4 @@ convert_5_x_to_4_0_neon_asm:
+ 	bne 0b
+ 
+ 	pop {r4,pc}
++endfunc
+-- 
+2.5.1
+

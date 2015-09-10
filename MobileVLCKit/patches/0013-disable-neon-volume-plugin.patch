@@ -1,7 +1,7 @@
-From c2686297ba6b8360d61c4d87dce79f7d36b4d596 Mon Sep 17 00:00:00 2001
+From 397f6aead4e316e64f1ca220f407da274ddb6faf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Jul 2015 19:57:18 +0200
-Subject: [PATCH 09/10] disable neon volume plugin
+Subject: [PATCH 13/13] disable neon volume plugin
 
 ---
  modules/arm_neon/Makefile.am | 1 -

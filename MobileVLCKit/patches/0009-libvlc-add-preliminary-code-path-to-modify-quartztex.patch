@@ -1,7 +1,7 @@
-From d683acbcd14fc59cdcbebd5b7ef90c13b3e7b202 Mon Sep 17 00:00:00 2001
+From b61af62ad15909d14676d5a2262a2d65b391e8e2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 10/10] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 09/13] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -67,10 +67,10 @@ index 487fcba..06c9826 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 83d7a6d..f15986d 100644
+index fc5a82f..b9e8f42 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -626,6 +626,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -625,6 +625,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
