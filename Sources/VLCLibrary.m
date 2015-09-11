@@ -25,8 +25,10 @@
 #import "VLCLibrary.h"
 #import "VLCLibVLCBridging.h"
 
-#if TARGET_OS_IPHONE
-# include "vlc-plugins.h"
+#if TARGET_OS_TV
+# include "vlc-plugins-AppleTV.h"
+#elif TARGET_OS_IPHONE
+# include "vlc-plugins-iPhone.h"
 #endif
 
 #ifdef HAVE_CONFIG_H

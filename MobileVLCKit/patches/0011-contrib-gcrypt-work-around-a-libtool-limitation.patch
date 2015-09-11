@@ -1,0 +1,57 @@
+From d2f5bfff8e390590f9acd2f7a7714b844e16f394 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Sun, 7 Dec 2014 20:02:18 +0100
+Subject: [PATCH 11/13] contrib/gcrypt: work-around a libtool limitation
+
+---
+ contrib/src/gcrypt/rules.mak                       |  1 +
+ .../gcrypt/work-around-libtool-limitation.patch    | 25 ++++++++++++++++++++++
+ 2 files changed, 26 insertions(+)
+ create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
+
+diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
+index 55c9f4c..be97991 100644
+--- a/contrib/src/gcrypt/rules.mak
++++ b/contrib/src/gcrypt/rules.mak
+@@ -15,6 +15,7 @@ libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
+ 	$(APPLY) $(SRC)/gcrypt/0001-Fix-assembly-division-check.patch
+ 	$(APPLY) $(SRC)/gcrypt/disable-doc-compilation.patch
+ 	$(APPLY) $(SRC)/gcrypt/disable-tests-compilation.patch
++	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
+ 	$(MOVE)
+ 
+ DEPS_gcrypt = gpg-error
+diff --git a/contrib/src/gcrypt/work-around-libtool-limitation.patch b/contrib/src/gcrypt/work-around-libtool-limitation.patch
+new file mode 100644
+index 0000000..df97ffb
+--- /dev/null
++++ b/contrib/src/gcrypt/work-around-libtool-limitation.patch
+@@ -0,0 +1,25 @@
++diff -ru libgcrypt-broken/cipher/Makefile.am libgcrypt/cipher/Makefile.am
++--- libgcrypt-broken/cipher/Makefile.am	2013-11-06 23:05:24.000000000 +0100
+++++ libgcrypt/cipher/Makefile.am	2013-11-06 23:21:25.000000000 +0100
++@@ -19,6 +19,8 @@
++ 
++ # Process this file with automake to produce Makefile.in
++ 
+++LIBTOOL=@LIBTOOL@ --tag=CC
+++
++ EXTRA_DIST = Manifest
++ 
++ # Need to include ../src in addition to top_srcdir because gcrypt.h is
++diff -ru libgcrypt-broken/mpi/Makefile.am libgcrypt/mpi/Makefile.am
++--- libgcrypt-broken/mpi/Makefile.am	2013-11-06 23:05:24.000000000 +0100
+++++ libgcrypt/mpi/Makefile.am	2013-11-06 23:22:04.000000000 +0100
++@@ -23,6 +23,9 @@
++ 
++ # Need to include ../src in addition to top_srcdir because gcrypt.h is
++ # a built header.
+++
+++LIBTOOL=@LIBTOOL@ --tag=CC
+++
++ AM_CPPFLAGS = -I../src -I$(top_srcdir)/src
++ AM_CFLAGS = $(GPG_ERROR_CFLAGS)
++ 
+-- 
+2.5.1
+

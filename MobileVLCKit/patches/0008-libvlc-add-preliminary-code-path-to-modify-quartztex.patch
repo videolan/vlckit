@@ -1,7 +1,7 @@
-From b61af62ad15909d14676d5a2262a2d65b391e8e2 Mon Sep 17 00:00:00 2001
+From 642d87c7a95a3192b272ffba4c6c5e69caac3503 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 09/13] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 08/13] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -45,10 +45,10 @@ index 0c7351b..b0b4208 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 487fcba..06c9826 100644
+index a7e814b..97b153b 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -226,6 +226,8 @@ libvlc_video_get_spu_count
+@@ -227,6 +227,8 @@ libvlc_video_get_spu_count
  libvlc_video_get_spu_delay
  libvlc_video_get_spu_description
  libvlc_video_get_teletext
@@ -57,7 +57,7 @@ index 487fcba..06c9826 100644
  libvlc_video_get_title_description
  libvlc_video_get_track
  libvlc_video_get_track_count
-@@ -250,6 +252,8 @@ libvlc_video_set_spu
+@@ -251,6 +253,8 @@ libvlc_video_set_spu
  libvlc_video_set_spu_delay
  libvlc_video_set_subtitle_file
  libvlc_video_set_teletext
