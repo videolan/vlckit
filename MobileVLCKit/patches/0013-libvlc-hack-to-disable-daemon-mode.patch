@@ -15,7 +15,7 @@ index 34824da..3bb0ec1 100644
          return VLC_ENOMOD;
      }
  
-+#ifdef __APPLE
++#ifdef __APPLE__
 +#undef HAVE_DAEMON
 +#endif
 +
