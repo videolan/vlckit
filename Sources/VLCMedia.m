@@ -849,12 +849,14 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     free(psz_value);
 
     if (newValue != oldValue && !(oldValue && newValue && [oldValue compare:newValue] == NSOrderedSame)) {
+#if !TARGET_OS_IPHONE
         // Only fetch the art if needed. (ie, create the NSImage, if it was requested before)
         if (isArtFetched && [metaType isEqualToString:VLCMetaInformationArtworkURL]) {
             [NSThread detachNewThreadSelector:@selector(fetchMetaInformationForArtWorkWithURL:)
                                          toTarget:self
                                        withObject:newValue];
         }
+#endif
 
         [_metaDictionary setValue:newValue forKeyPath:metaType];
     }
