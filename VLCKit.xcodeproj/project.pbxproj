@@ -677,7 +677,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "NUMBER_OF_CORES=`sysctl hw.ncpu | cut -d\" \" -f2`\n\nfor arch in $ARCHS; do\n\techo \"Make [$arch]\"\n\tcd  $VLC_BUILD_DIR/$arch\n\tmake -j$NUMBER_OF_CORES\ndone";
+			shellScript = "NUMBER_OF_CORES=`sysctl hw.ncpu | cut -d\" \" -f2`\nexport PATH=$VLC_SRC_DIR/extras/tools/build/bin:$PATH\n\nfor arch in $ARCHS; do\n\techo \"Make [$arch]\"\nexport PATH=$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/$arch-apple-darwin11/bin:$PATH\n\tcd  $VLC_BUILD_DIR/$arch\n\tmake -j$NUMBER_OF_CORES\ndone";
 		};
 		633754D310ED0D330072A0D9 /* install */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -726,7 +726,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo $ARCHS\nsh $SOURCE_ROOT/Configure.sh";
+			shellScript = "echo $ARCHS\nsh $SOURCE_ROOT/Configure.sh --disable-lua";
 		};
 		CC1EA79915938D7E00C40EF9 /* make */ = {
 			isa = PBXShellScriptBuildPhase;
