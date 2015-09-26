@@ -38,8 +38,10 @@ if test "${ACTION}" = "clean"; then
 fi
 
 if test "${ACTION}" != "build"; then
+if test "${ACTION}" != "install"; then
     echo "This script is supposed to run from xcodebuild or Xcode"
     exit 1
+fi
 fi
 
 lib="lib"
