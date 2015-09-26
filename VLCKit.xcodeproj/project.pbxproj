@@ -154,6 +154,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		7D1D2CB51BB6A2340022FFD4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6337547910ED090A0072A0D9;
+			remoteInfo = "Make VLC";
+		};
 		7DD828391B32FA3F00929830 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
@@ -565,6 +572,7 @@
 			);
 			comments = "-lvlc -lvlc-control -dylib_file @loader_path/../lib/vlc_libintl.dylib:$(TARGET_BUILD_DIR)/$(PROJECT_NAME).framework/lib/vlc_libintl.dylib -dylib_file @loader_path/../lib/libvlc.dylib:$(TARGET_BUILD_DIR)/$(PROJECT_NAME).framework/lib/libvlc.dylib";
 			dependencies = (
+				7D1D2CB61BB6A2340022FFD4 /* PBXTargetDependency */,
 			);
 			name = "Build just VLCKit";
 			productInstallPath = "$(HOME)/Library/Frameworks";
@@ -826,6 +834,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		7D1D2CB61BB6A2340022FFD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6337547910ED090A0072A0D9 /* Make VLC */;
+			targetProxy = 7D1D2CB51BB6A2340022FFD4 /* PBXContainerItemProxy */;
+		};
 		7DD8283A1B32FA3F00929830 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CC1EA79815938D7E00C40EF9 /* Fetch libvlc */;
@@ -908,6 +921,7 @@
 				PRODUCT_NAME = VLCKit;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -945,6 +959,7 @@
 				PRODUCT_NAME = VLCKit;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -953,10 +968,7 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
@@ -965,7 +977,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
@@ -974,10 +986,7 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_VERSION = "";
@@ -986,7 +995,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
@@ -995,10 +1004,12 @@
 		6337547C10ED090B0072A0D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = VLC;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Debug;
@@ -1006,10 +1017,12 @@
 		6337547D10ED090B0072A0D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = VLC;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Release;
@@ -1017,6 +1030,7 @@
 		633BD6E50D2ADF030012A314 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1024,6 +1038,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "vlc-contrib";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Debug;
@@ -1031,12 +1046,14 @@
 		633BD6E60D2ADF030012A314 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "vlc-contrib";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				ZERO_LINK = NO;
 			};
@@ -1045,6 +1062,7 @@
 		63FFDBD00D2AE2AE0092FC96 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CC = "xcrun clang";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -1055,7 +1073,7 @@
 				OBJC = "xcrun clang";
 				PRODUCT_NAME = "vlc-bootstrap";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Debug;
@@ -1063,6 +1081,7 @@
 		63FFDBD10D2AE2AE0092FC96 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CC = "xcrun clang";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
@@ -1072,7 +1091,7 @@
 				OBJC = "xcrun clang";
 				PRODUCT_NAME = "vlc-bootstrap";
 				SDKROOT = macosx;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				ZERO_LINK = NO;
 			};
@@ -1081,6 +1100,7 @@
 		CC1EA79B15938D7E00C40EF9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1088,6 +1108,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "Setup VLC contribs copy";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Debug;
@@ -1095,12 +1116,14 @@
 		CC1EA79C15938D7E00C40EF9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "Setup VLC contribs copy";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				ZERO_LINK = NO;
 			};
@@ -1109,6 +1132,7 @@
 		CC4C593D13F53EA400FB0EFC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEFINES_MODULE = YES;
@@ -1138,6 +1162,7 @@
 				PRODUCT_NAME = VLCKit;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -1146,6 +1171,7 @@
 		CC4C593E13F53EA400FB0EFC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1173,6 +1199,7 @@
 				PRODUCT_NAME = VLCKit;
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -1181,6 +1208,7 @@
 		CC61094D112F4AB600FAFD22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1188,6 +1216,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "Make VLC and VLCKit";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
 			name = Debug;
@@ -1195,12 +1224,14 @@
 		CC61094E112F4AB600FAFD22 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				PRODUCT_NAME = "Make VLC and VLCKit";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 				ZERO_LINK = NO;
 			};

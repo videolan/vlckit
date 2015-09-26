@@ -1,5 +1,9 @@
 Version 3.0.0:
 --------------
+Generic changes:
+- Added support for tvOS
+- Removed support for the 32bit OS X platform
+
 New APIs:
 - VLCLibrary
   - added properties: debugLogging, debugLoggingLevel
@@ -29,7 +33,7 @@ Deprecated APIs:
 
 Removed APIs:
 - VLCAudio:
-  - the entire object is no longer part of the MobileVLCKit distribution
+  - the entire class is no longer part of the MobileVLCKit distribution
 - VLCMedia:
   - fps
   - media:metaValueChangedFrom:forKey:
