@@ -37,12 +37,10 @@ args="--enable-shout $args"
 args="--enable-twolame $args"
 args="--enable-realrtsp $args"
 args="--enable-libass $args"
-args="--enable-macosx-audio $args"
 args="--enable-macosx-dialog-provider $args"
 args="--enable-macosx-eyetv $args"
 args="--disable-macosx-qtkit $args"
 args="--disable-quicktime $args"
-args="--enable-macosx-vout $args"
 
 # disabled stuff
 args="--disable-growl $args"
@@ -51,13 +49,11 @@ args="--disable-ncurses $args"
 args="--disable-httpd $args"
 args="--disable-vlm $args"
 args="--disable-skins2 $args"
-args="--disable-glx $args"
 args="--disable-xvideo $args"
 args="--disable-xcb $args"
 args="--disable-sdl $args"
 args="--disable-sdl-image $args"
 args="--disable-samplerate $args"
-args="--disable-vda $args"
 
 if test "x$SDKROOT" != "x"
 then
@@ -89,13 +85,14 @@ for arch in $ARCHS; do
     mkdir -p $arch
     cd $arch
 
+    export PATH="$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/$arch-apple-darwin11/bin:$PATH"
+
     if test $arch = "x86_64"; then
         export CFLAGS="-m64 -arch x86_64 $optim"
         export CXXFLAGS="-m64 -arch x86_64 $optim"
         export OBJCFLAGS="-m64 -arch x86_64 $optim"
         export CPPFLAGS="-m64 -arch x86_64 $optim"
         this_args="--build=x86_64-apple-darwin11 --with-contrib=$VLC_SRC_DIR/contrib/x86_64-apple-darwin11 $this_args"
-        export PATH=$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/x86_64-apple-darwin11/bin:$PATH
         export PKG_CONFIG_PATH=$VLC_SRC_DIR/contrib/x86_64-apple-darwin11/lib/pkgconfig
     fi
     echo "Running [$arch] configure $this_args"
