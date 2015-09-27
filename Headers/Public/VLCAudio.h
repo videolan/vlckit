@@ -38,9 +38,7 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 @interface VLCAudio : NSObject
 
 /* Properties */
-- (void)setMute:(BOOL)value;
-
-@property (setter=setMute:) BOOL isMuted;
+@property (getter=isMuted) BOOL muted;
 @property (assign) int volume;
 
 - (void)volumeDown;
