@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0EFDF2D073A77BC2CB2CF6173E0F3A830E66F8AF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "3CF509C42B2F608C19CBF7B35F7A8AA417E84E3E" : 0,
+    "0EFDF2D073A77BC2CB2CF6173E0F3A830E66F8AF" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "9C3C93D8-79B8-4B4B-8BB0-2C123235023D",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "3CF509C42B2F608C19CBF7B35F7A8AA417E84E3E" : "..",
+    "0EFDF2D073A77BC2CB2CF6173E0F3A830E66F8AF" : "VLCKit\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "GLEssentials",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Examples_iOS\/GLEssentials\/GLEssentials.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/code.videolan.org\/videolan\/VLCKit.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0EFDF2D073A77BC2CB2CF6173E0F3A830E66F8AF"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "code.videolan.org:videolan\/VLC-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3CF509C42B2F608C19CBF7B35F7A8AA417E84E3E"
+    }
+  ]
+}

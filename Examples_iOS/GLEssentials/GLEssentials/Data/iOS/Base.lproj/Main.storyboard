@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9052" systemVersion="15B22c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9040"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zso-lA-uTf">
+                                <rect key="frame" x="0.0" y="318" width="600" height="282"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VPw-f9-1pU" customClass="EAGLView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="321"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="VPw-f9-1pU" firstAttribute="leading" secondItem="Zso-lA-uTf" secondAttribute="leading" id="5tU-9g-Wzq"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="VPw-f9-1pU" secondAttribute="bottom" constant="279" id="6ye-Lt-ZAf"/>
+                            <constraint firstItem="Zso-lA-uTf" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="Dvu-AQ-4cb"/>
+                            <constraint firstAttribute="trailing" secondItem="VPw-f9-1pU" secondAttribute="trailing" id="FI9-BX-E0u"/>
+                            <constraint firstItem="Zso-lA-uTf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="298" id="UES-io-taL"/>
+                            <constraint firstItem="VPw-f9-1pU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Zwb-Vq-hoD"/>
+                            <constraint firstItem="VPw-f9-1pU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="b3z-fx-k7H"/>
+                            <constraint firstItem="VPw-f9-1pU" firstAttribute="trailing" secondItem="Zso-lA-uTf" secondAttribute="trailing" id="ybG-oP-DHd"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="glView" destination="VPw-f9-1pU" id="faZ-13-ATI"/>
+                        <outlet property="videoView" destination="Zso-lA-uTf" id="5yb-LY-JTs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="285" y="399"/>
+        </scene>
+    </scenes>
+</document>
