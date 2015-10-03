@@ -1,14 +1,14 @@
-From 968ff57dd5830d9962d429e5757737274305e12f Mon Sep 17 00:00:00 2001
+From 2510feb5f1c792ad5f00d067437e170ef1102f08 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 11 Sep 2015 18:34:26 +0200
-Subject: [PATCH 13/13] libvlc: hack to disable daemon mode
+Subject: [PATCH 13/15] libvlc: hack to disable daemon mode
 
 ---
  src/libvlc.c | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/src/libvlc.c b/src/libvlc.c
-index 34824da..3bb0ec1 100644
+index 34824da..6bad336 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
 @@ -199,6 +199,10 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,

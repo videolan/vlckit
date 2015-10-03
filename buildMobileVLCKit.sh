@@ -16,7 +16,7 @@ SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 TVOS=no
 
-TESTEDHASH=a6305ff5
+TESTEDHASH=7ce48b0d
 
 usage()
 {
@@ -180,8 +180,6 @@ spopd
 buildMobileKit() {
     PLATFORM="$1"
 
-    info "Building for $PLATFORM"
-
     spushd MobileVLCKit/ImportedSources
 
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
@@ -217,8 +215,6 @@ buildMobileKit() {
     fi
 
     spopd # MobileVLCKit/ImportedSources
-
-    info "Build for $PLATFORM completed"
 }
 
 if [ "$BUILD_DEVICE" != "no" ]; then
