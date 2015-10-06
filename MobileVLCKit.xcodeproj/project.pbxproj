@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B09CED21BC463B100695566 /* VLCAudio.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 4B49C5FD1BC3D7960052D40C /* VLCAudio.h */; };
 		4B49C5FC1BC3D7870052D40C /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; settings = {ASSET_TAGS = (); }; };
 		6360B0E211E7F0C000EAD790 /* VLCMediaDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */; };
 		6360B10611E7F27300EAD790 /* VLCMediaDiscoverer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */; };
@@ -93,6 +94,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				7A5ECB9E11DE975A00F66AF3 /* MobileVLCKit.h in Copy Headers */,
+				4B09CED21BC463B100695566 /* VLCAudio.h in Copy Headers */,
 				7A5ECB5511DE961700F66AF3 /* VLCLibrary.h in Copy Headers */,
 				7A5ECB5611DE961700F66AF3 /* VLCMedia.h in Copy Headers */,
 				636E979111EBC97C002FE8A9 /* VLCMediaThumbnailer.h in Copy Headers */,
