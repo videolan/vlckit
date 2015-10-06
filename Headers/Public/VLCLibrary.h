@@ -23,8 +23,11 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
+#import "VLCAudio.h"
 #import "VLCMediaList.h"
 #import "VLCMedia.h"
+
+@class VLCAudio;
 
 /**
  * The VLCLibrary is the base library of the VLCKit.framework.  This object provides a shared instance that exposes the

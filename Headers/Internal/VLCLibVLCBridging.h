@@ -121,7 +121,6 @@
 @property (readonly) void * instance;
 @end
 
-#if !TARGET_OS_IPHONE
 /**
  * Bridges functionality between VLCLibrary and VLCAudio.
  */
@@ -146,7 +145,6 @@
  */
 - (id)initWithMediaPlayer:(VLCMediaPlayer *)mediaPlayer;
 @end
-#endif
 
 /**
  * TODO: Documentation

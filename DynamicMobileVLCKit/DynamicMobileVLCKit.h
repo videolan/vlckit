@@ -16,6 +16,7 @@ FOUNDATION_EXPORT const unsigned char DynamicMobileVLCKitVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <DynamicMobileVLCKit/PublicHeader.h>
 
+#import <DynamicMobileVLCKit/VLCAudio.h>
 #import <DynamicMobileVLCKit/VLCLibrary.h>
 #import <DynamicMobileVLCKit/VLCMedia.h>
 #import <DynamicMobileVLCKit/VLCMediaDiscoverer.h>

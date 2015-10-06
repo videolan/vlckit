@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B49C5FC1BC3D7870052D40C /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; settings = {ASSET_TAGS = (); }; };
 		6360B0E211E7F0C000EAD790 /* VLCMediaDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */; };
 		6360B10611E7F27300EAD790 /* VLCMediaDiscoverer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */; };
 		636E975811EBC67A002FE8A9 /* VLCMediaThumbnailer.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E975711EBC67A002FE8A9 /* VLCMediaThumbnailer.m */; };
@@ -134,6 +135,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4B49C5FB1BC3D7870052D40C /* VLCAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCAudio.m; path = Sources/VLCAudio.m; sourceTree = "<group>"; };
+		4B49C5FD1BC3D7960052D40C /* VLCAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCAudio.h; path = Headers/Public/VLCAudio.h; sourceTree = "<group>"; };
 		6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaDiscoverer.m; path = Sources/VLCMediaDiscoverer.m; sourceTree = "<group>"; };
 		6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaDiscoverer.h; path = Headers/Public/VLCMediaDiscoverer.h; sourceTree = "<group>"; };
 		636E975711EBC67A002FE8A9 /* VLCMediaThumbnailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaThumbnailer.m; path = Sources/VLCMediaThumbnailer.m; sourceTree = "<group>"; };
@@ -289,6 +292,7 @@
 		08FB77AEFE84172EC02AAC07 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4B49C5FB1BC3D7870052D40C /* VLCAudio.m */,
 				7A5ECAC411DE8F7300F66AF3 /* VLCEventManager.m */,
 				7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */,
 				7A5ECAC611DE8F7300F66AF3 /* VLCMedia.m */,
@@ -317,6 +321,7 @@
 			children = (
 				7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */,
 				7A5ECAE311DE8FDF00F66AF3 /* Internal */,
+				4B49C5FD1BC3D7960052D40C /* VLCAudio.h */,
 				7A5ECAD411DE8FAB00F66AF3 /* VLCLibrary.h */,
 				7A5ECAD511DE8FAB00F66AF3 /* VLCMedia.h */,
 				636E979011EBC96D002FE8A9 /* VLCMediaThumbnailer.h */,
@@ -584,6 +589,7 @@
 				7A5ECACF11DE8F7300F66AF3 /* VLCMediaPlayer.m in Sources */,
 				7A5ECAD011DE8F7300F66AF3 /* VLCTime.m in Sources */,
 				6360B0E211E7F0C000EAD790 /* VLCMediaDiscoverer.m in Sources */,
+				4B49C5FC1BC3D7870052D40C /* VLCAudio.m in Sources */,
 				636E975811EBC67A002FE8A9 /* VLCMediaThumbnailer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

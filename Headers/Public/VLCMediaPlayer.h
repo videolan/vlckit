@@ -30,10 +30,9 @@
 #endif
 #import "VLCMedia.h"
 #import "VLCTime.h"
-
-#if !TARGET_OS_IPHONE
 #import "VLCAudio.h"
 
+#if !TARGET_OS_IPHONE
 @class VLCVideoView;
 @class VLCVideoLayer;
 #endif
@@ -212,9 +211,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property (nonatomic)  float rate;
 
-#if !TARGET_OS_IPHONE
 @property (nonatomic, readonly, weak) VLCAudio * audio;
-#endif
 
 /* Video Information */
 /**
