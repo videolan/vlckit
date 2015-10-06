@@ -3,6 +3,7 @@ Version 3.0.0:
 Generic changes:
 - Added support for tvOS
 - Removed support for the 32bit OS X platform
+- Added support for audio muting on iOS and tvOS
 
 New APIs:
 - VLCLibrary
@@ -32,8 +33,6 @@ Deprecated APIs:
   - titles, chaptersForTitleIndex:, countOfTitles
 
 Removed APIs:
-- VLCAudio:
-  - the entire class is no longer part of the MobileVLCKit distribution
 - VLCMedia:
   - fps
   - media:metaValueChangedFrom:forKey:
