@@ -438,11 +438,11 @@ if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
     spushd build
     rm -rf MobileVLCKit.framework && \
     mkdir MobileVLCKit.framework && \
-    lipo -create Release-iphoneos/libMobileVLCKit.a \
-                 Release-iphonesimulator/libMobileVLCKit.a \
+    lipo -create ${CONFIGURATION}-iphoneos/libMobileVLCKit.a \
+                 ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a \
               -o MobileVLCKit.framework/MobileVLCKit && \
     chmod a+x MobileVLCKit.framework/MobileVLCKit && \
-    cp -pr Release-iphoneos/include/MobileVLCKit MobileVLCKit.framework/Headers
+    cp -pr ${CONFIGURATION}-iphoneos/MobileVLCKit MobileVLCKit.framework/Headers
     spopd # build
 
     info "Build of static MobileVLCKit.framework completed"
