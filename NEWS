@@ -28,9 +28,14 @@ New APIs:
   - added selectors: isEqual:
                      hash
 
+- VLCAudio
+  - setMuted:
+
 Deprecated APIs:
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:, countOfTitles
+- VLCAudio
+  - setMute:
 
 Removed APIs:
 - VLCMedia:

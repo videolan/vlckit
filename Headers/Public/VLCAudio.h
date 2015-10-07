@@ -41,6 +41,8 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 @property (getter=isMuted) BOOL muted;
 @property (assign) int volume;
 
+- (void)setMute:(BOOL)value __attribute__((deprecated));
+
 - (void)volumeDown;
 - (void)volumeUp;
 @end

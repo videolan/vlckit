@@ -76,6 +76,11 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
     libvlc_audio_set_mute([self instance], value);
 }
 
+- (void)setMute:(BOOL)value
+{
+    [self setMuted:value];
+}
+
 - (BOOL)isMuted
 {
     return libvlc_audio_get_mute([self instance]);
