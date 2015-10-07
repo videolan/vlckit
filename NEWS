@@ -10,7 +10,8 @@ New APIs:
   - added properties: debugLogging, debugLoggingLevel
 
 - VLCMediaPlayer
-  - added properties: titleDescriptions, indexOfLongestTitle, numberOfTitles
+  - added properties: titleDescriptions, indexOfLongestTitle, numberOfTitles,
+                      snapshots, lastSnapshot
   - added selectors: chaptersForTitleIndex:
                      numberOfChaptersForTitle:
 
