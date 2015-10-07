@@ -613,4 +613,15 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL canPause;
 
+#if TARGET_OS_IPHONE
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *snapshots;
+
+/**
+ * Get last snapshot available.
+ * \return an UIImage with the last snapshot available.
+ * \note return value is nil if there is no snapshot
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) UIImage *lastSnapshot;
+#endif
+
 @end

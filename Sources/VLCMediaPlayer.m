@@ -143,6 +143,18 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     }
 }
 
+#if TARGET_OS_IPHONE
+static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        if (event->u.media_player_snapshot_taken.psz_filename != NULL) {
+            [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                         withMethod:@selector(mediaPlayerSnapshot:)
+                                               withArgumentAsObject:[NSString stringWithUTF8String:event->u.media_player_snapshot_taken.psz_filename]];
+        }
+    }
+}
+#endif
 
 // TODO: Documentation
 @interface VLCMediaPlayer (Private)
@@ -167,6 +179,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     VLCMediaPlayerState _cachedState;    //< Cached state of the media being played
     float _position;                     //< The position of the media being played
     id _drawable;                        //< The drawable associated to this media player
+#if TARGET_OS_IPHONE
+    NSMutableArray *_snapshots;          //< Array with snapshot file names
+#endif
     VLCAudio *_audio;
     libvlc_equalizer_t *_equalizerInstance;
     BOOL _equalizerEnabled;
@@ -208,6 +223,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
         _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
+#if TARGET_OS_IPHONE
+        _snapshots = [NSMutableArray array];
+#endif
 
         _privateLibrary = library;
         libvlc_retain([_privateLibrary instance]);
@@ -1163,6 +1181,26 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     return libvlc_media_player_can_pause(_playerInstance);
 }
 
+#if TARGET_OS_IPHONE
+- (NSArray *)snapshots
+{
+    return [_snapshots copy];
+}
+
+- (UIImage *)getLastSnapshot {
+    if (_snapshots == nil) {
+        return nil;
+    }
+
+    @synchronized(_snapshots) {
+        if (_snapshots.count == 0)
+            return nil;
+
+        return [UIImage imageWithContentsOfFile:[_snapshots lastObject]];
+    }
+}
+#endif
+
 - (void *)libVLCMediaPlayer
 {
     return _playerInstance;
@@ -1217,6 +1255,10 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_event_attach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
     libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
     libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
+
+#if TARGET_OS_IPHONE
+    libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
+#endif
 }
 
 - (void)unregisterObservers
@@ -1236,6 +1278,10 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     libvlc_event_detach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
+
+#if TARGET_OS_IPHONE
+    libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
+#endif
 }
 
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime
@@ -1293,5 +1339,18 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 
     [self didChangeValueForKey:@"media"];
 }
+
+#if TARGET_OS_IPHONE
+- (void)mediaPlayerSnapshot:(NSString *)fileName
+{
+    @synchronized(_snapshots) {
+        if (!_snapshots) {
+            _snapshots = [NSMutableArray array];
+        }
+
+        [_snapshots addObject:fileName];
+    }
+}
+#endif
 
 @end
