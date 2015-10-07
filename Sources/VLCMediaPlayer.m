@@ -223,9 +223,6 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
-#if TARGET_OS_IPHONE
-        _snapshots = [NSMutableArray array];
-#endif
 
         _privateLibrary = library;
         libvlc_retain([_privateLibrary instance]);
