@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E159EC41BC6B2890015BA7C /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
+		0E159EC51BC6B2930015BA7C /* VLCAudio.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B49C5FD1BC3D7960052D40C /* VLCAudio.h */; };
 		4B09CED21BC463B100695566 /* VLCAudio.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 4B49C5FD1BC3D7960052D40C /* VLCAudio.h */; };
-		4B49C5FC1BC3D7870052D40C /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; settings = {ASSET_TAGS = (); }; };
+		4B49C5FC1BC3D7870052D40C /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
 		6360B0E211E7F0C000EAD790 /* VLCMediaDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */; };
 		6360B10611E7F27300EAD790 /* VLCMediaDiscoverer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */; };
 		636E975811EBC67A002FE8A9 /* VLCMediaThumbnailer.m in Sources */ = {isa = PBXBuildFile; fileRef = 636E975711EBC67A002FE8A9 /* VLCMediaThumbnailer.m */; };
@@ -113,6 +115,7 @@
 			dstPath = "$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				0E159EC51BC6B2930015BA7C /* VLCAudio.h in CopyFiles */,
 				7D13295C1BA304D900BE647E /* TVVLCKit.h in CopyFiles */,
 				7D13296B1BA3057D00BE647E /* VLCLibrary.h in CopyFiles */,
 				7D13296C1BA3057D00BE647E /* VLCMedia.h in CopyFiles */,
@@ -543,6 +546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0E159EC41BC6B2890015BA7C /* VLCAudio.m in Sources */,
 				7D1329621BA3056800BE647E /* VLCEventManager.m in Sources */,
 				7D1329631BA3056800BE647E /* VLCLibrary.m in Sources */,
 				7D1329641BA3056800BE647E /* VLCMedia.m in Sources */,
