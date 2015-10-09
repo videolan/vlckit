@@ -167,6 +167,9 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 - (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
 - (void)mediaPlayerStateChanged:(NSNumber *)newState;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
+#if TARGET_OS_IPHONE
+- (void)mediaPlayerSnapshot:(NSString *)fileName;
+#endif
 @end
 
 @interface VLCMediaPlayer ()
@@ -1184,7 +1187,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     return [_snapshots copy];
 }
 
-- (UIImage *)getLastSnapshot {
+- (UIImage *)lastSnapshot {
     if (_snapshots == nil) {
         return nil;
     }
