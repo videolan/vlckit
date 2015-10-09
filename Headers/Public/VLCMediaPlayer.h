@@ -85,6 +85,15 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)mediaPlayerTimeChanged:(NSNotification *)aNotification;
 
+#if TARGET_OS_PHONE
+/**
+ * Sent by the default notification center whenever a new snapshot is taken.
+ * \details Discussion The value of aNotification is always an VLCMediaPlayerSnapshotTaken notification. You can retrieve
+ * the VLCMediaPlayer object in question by sending object to aNotification.
+ */
+- (void)mediaPlayerSnapshot:(NSNotification *)aNotification;
+#endif
+
 @end
 
 

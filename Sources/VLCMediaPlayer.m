@@ -50,6 +50,7 @@
 /* Notification Messages */
 NSString *const VLCMediaPlayerTimeChanged       = @"VLCMediaPlayerTimeChanged";
 NSString *const VLCMediaPlayerStateChanged      = @"VLCMediaPlayerStateChanged";
+NSString *const VLCMediaPlayerSnapshotTaken     = @"VLCMediaPlayerSnapshotTaken";
 
 /* title keys */
 NSString *const VLCTitleDescriptionName         = @"VLCTitleDescriptionName";
@@ -151,6 +152,10 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
             [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                          withMethod:@selector(mediaPlayerSnapshot:)
                                                withArgumentAsObject:[NSString stringWithUTF8String:event->u.media_player_snapshot_taken.psz_filename]];
+
+            [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
+                                                           withDelegateMethod:@selector(mediaPlayerSnapshot:)
+                                                         withNotificationName:VLCMediaPlayerSnapshotTaken];
         }
     }
 }
