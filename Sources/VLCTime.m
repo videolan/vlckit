@@ -100,24 +100,30 @@
 
 - (NSString *)verboseStringValue
 {
-    if (_value) {
-        long long duration = [_value longLongValue] / 1000;
-        long long positiveDuration = llabs(duration);
-        long hours = (long)(positiveDuration / 3600);
-        long mins = (long)((positiveDuration / 60) % 60);
-        long seconds = (long)(positiveDuration % 60);
-        const char * remaining = duration < 0 ? " remaining" : "";
-        if (hours > 0)
-            return [NSString stringWithFormat:@"%ld hours %ld minutes%s", hours, mins, remaining];
-        if (mins > 5)
-            return [NSString stringWithFormat:@"%ld minutes%s", mins, remaining];
-        if (mins > 0)
-            return [NSString stringWithFormat:@"%ld minutes %ld seconds%s", mins, seconds, remaining];
-        return [NSString stringWithFormat:@"%ld seconds%s", seconds, remaining];
-    }
+    if (!_value)
+        return @"";
 
-    // Return a string that represents an undefined time.
-    return @"";
+    long long duration = [_value longLongValue] / 1000;
+    long long positiveDuration = llabs(duration);
+    long hours = (long)(positiveDuration / 3600);
+    long mins = (long)((positiveDuration / 60) % 60);
+    long seconds = (long)(positiveDuration % 60);
+    BOOL remaining = duration < 0;
+    NSString *format;
+    if (hours > 0) {
+        format = remaining ? NSLocalizedString(@"%ld hours %ld minutes remaining", nil) : NSLocalizedString(@"%ld hours %ld minutes", nil);
+        return [NSString stringWithFormat:format, hours, mins, remaining];
+    }
+    if (mins > 5) {
+        format = remaining ? NSLocalizedString(@"%ld minutes remaining", nil) : NSLocalizedString(@"%ld minutes", nil);
+        return [NSString stringWithFormat:format, mins, remaining];
+    }
+    if (mins > 0) {
+        format = remaining ? NSLocalizedString(@"%ld minutes %ld seconds remaining", nil) : NSLocalizedString(@"%ld minutes %ld seconds", nil);
+        return [NSString stringWithFormat:format, mins, seconds, remaining];
+    }
+    format = remaining ? NSLocalizedString(@"%ld seconds remaining", nil) : NSLocalizedString(@"%ld seconds", nil);
+    return [NSString stringWithFormat:format, seconds, remaining];
 }
 
 - (NSString *)minuteStringValue
