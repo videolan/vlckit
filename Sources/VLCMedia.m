@@ -220,7 +220,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         VLCLibrary *library = [VLCLibrary sharedLibrary];
         NSAssert(library.instance, @"no library instance when creating media");
 
-        p_md = libvlc_media_new_location(library.instance, [[anURL absoluteString] UTF8String]);
+        p_md = libvlc_media_new_location(library.instance, [[[anURL absoluteString] stringByRemovingPercentEncoding] UTF8String]);
 
         _metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
 
@@ -281,7 +281,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 - (NSString *)description
 {
     NSString * result = _metaDictionary[VLCMetaInformationTitle];
-    return [NSString stringWithFormat:@"<%@ %p> %@", [self class], self, (result ? result : [_url absoluteString])];
+    return [NSString stringWithFormat:@"<%@ %p> %@", [self class], self, (result ? result : [[_url absoluteString] stringByRemovingPercentEncoding])];
 }
 
 - (NSComparisonResult)compare:(VLCMedia *)media
@@ -814,9 +814,10 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (!p_url)
         return;
 
-    _url = [NSURL URLWithString:@(p_url)];
-    if (!_url) /* Attempt to interpret as a file path then */
+    _url = [NSURL URLWithString:[[NSString stringWithUTF8String:p_url] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    if (!_url) /* Attempt to interpret as a file path then */ {
         _url = [NSURL fileURLWithPath:@(p_url)];
+    }
     free(p_url);
 
     libvlc_media_set_user_data(p_md, (__bridge void*)self);
