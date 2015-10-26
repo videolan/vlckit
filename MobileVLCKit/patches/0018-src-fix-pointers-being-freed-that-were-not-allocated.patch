@@ -1,0 +1,69 @@
+From b8e72761c436c11aacf3f6b69d545b6bbab31326 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Mon, 26 Oct 2015 12:03:01 +0100
+Subject: [PATCH 18/18] src: fix pointers being freed that were not allocated
+
+---
+ modules/text_renderer/quartztext.c | 11 ++++-------
+ src/misc/text_style.c              |  4 ++--
+ 2 files changed, 6 insertions(+), 9 deletions(-)
+
+diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
+index ac0894e..c93d0b0 100644
+--- a/modules/text_renderer/quartztext.c
++++ b/modules/text_renderer/quartztext.c
+@@ -254,7 +254,7 @@ static int Create(vlc_object_t *p_this)
+ #endif
+ 
+     vlc_mutex_init( &p_sys->lock );
+-    var_AddCallback( p_filter, "quartztext-font", QuartztextCallback, p_sys );
++//    var_AddCallback( p_filter, "quartztext-font", QuartztextCallback, p_sys );
+     var_AddCallback( p_filter, "quartztext-fontsize", QuartztextCallback, p_sys );
+     var_AddCallback( p_filter, "quartztext-color", QuartztextCallback, p_sys );
+ 
+@@ -273,15 +273,13 @@ static void Destroy(vlc_object_t *p_this)
+     filter_t *p_filter = (filter_t *)p_this;
+     filter_sys_t *p_sys = p_filter->p_sys;
+ 
+-    var_DelCallback( p_filter, "quartztext-font", QuartztextCallback, p_sys );
++    text_style_Delete( p_sys->p_default_style );
++
++//    var_DelCallback( p_filter, "quartztext-font", QuartztextCallback, p_sys );
+     var_DelCallback( p_filter, "quartztext-fontsize", QuartztextCallback, p_sys );
+     var_DelCallback( p_filter, "quartztext-color", QuartztextCallback, p_sys );
+     vlc_mutex_destroy( &p_sys->lock );
+ 
+-    var_Destroy( p_filter, "quartztext-font" ) ;
+-    var_Destroy( p_filter, "quartztext-fontsize" );
+-    var_Destroy( p_filter, "quartztext-color" );
+-
+ #ifndef TARGET_OS_IPHONE
+     if (p_sys->p_fonts) {
+         for (int k = 0; k < p_sys->i_fonts; k++)
+@@ -290,7 +288,6 @@ static void Destroy(vlc_object_t *p_this)
+         free(p_sys->p_fonts);
+     }
+ #endif
+-    text_style_Delete( p_sys->p_default_style );
+     free(p_sys);
+ }
+ 
+diff --git a/src/misc/text_style.c b/src/misc/text_style.c
+index 76ab4a9..215f70d 100644
+--- a/src/misc/text_style.c
++++ b/src/misc/text_style.c
+@@ -147,9 +147,9 @@ text_style_t *text_style_Duplicate( const text_style_t *p_src )
+ 
+ void text_style_Delete( text_style_t *p_style )
+ {
+-    if( p_style )
++    if( p_style->psz_fontname != NULL )
+         free( p_style->psz_fontname );
+-    if( p_style )
++    if( p_style->psz_monofontname != NULL )
+         free( p_style->psz_monofontname );
+     free( p_style );
+ }
+-- 
+2.6.1
+

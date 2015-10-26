@@ -1,0 +1,25 @@
+From acbb9afa0655a67f987d41e7f0477587b166d277 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Mon, 26 Oct 2015 10:47:56 +0100
+Subject: [PATCH 13/18] disable videotoolbox
+
+---
+ extras/package/ios/build.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
+index c2a1462..90a338b 100755
+--- a/extras/package/ios/build.sh
++++ b/extras/package/ios/build.sh
+@@ -481,6 +481,8 @@ output_http
+ output_livehttp
+ libmux
+ stream_out
++videotoolbox
++cvpx_i420
+ "
+ 
+ if [ "$SCARY" = "no" ]; then
+-- 
+2.6.1
+
