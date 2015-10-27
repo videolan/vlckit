@@ -34,7 +34,7 @@ New APIs:
 
 Deprecated APIs:
 - VLCMediaPlayer
-  - titles, chaptersForTitleIndex:, countOfTitles
+  - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond
 - VLCAudio
   - setMute:
 
