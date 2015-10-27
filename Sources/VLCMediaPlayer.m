@@ -623,7 +623,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (float)framesPerSecond
 {
-    return libvlc_media_player_get_fps(_playerInstance);
+    return .0;
 }
 
 - (void)setTime:(VLCTime *)value

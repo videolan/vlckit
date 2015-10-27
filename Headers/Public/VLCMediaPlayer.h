@@ -239,9 +239,11 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Frames per second
- * \return current media's frames per second value
+ * \note Deprecated, provided for API compatibility only
+ * \note To retrieve a media's FPS, use VLCMediaTracksInformationFrameRate.
+ * \returns 0
  */
-@property (NS_NONATOMIC_IOSONLY, readonly) float framesPerSecond;
+@property (NS_NONATOMIC_IOSONLY, readonly) float framesPerSecond __attribute__((deprecated));
 
 #pragma mark -
 #pragma mark time
