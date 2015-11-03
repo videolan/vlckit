@@ -217,10 +217,18 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 - (instancetype)initWithURL:(NSURL *)anURL
 {
     if (self = [super init]) {
+        const char *url;
         VLCLibrary *library = [VLCLibrary sharedLibrary];
         NSAssert(library.instance, @"no library instance when creating media");
 
-        p_md = libvlc_media_new_location(library.instance, [[[anURL absoluteString] stringByRemovingPercentEncoding] UTF8String]);
+        if (([[anURL absoluteString] hasPrefix:@"sftp://"]) ||
+            ([[anURL absoluteString] hasPrefix:@"smb://"])) {
+            url = [[[anURL absoluteString] stringByRemovingPercentEncoding] UTF8String];
+        } else {
+            url = [[anURL absoluteString] UTF8String];
+        }
+
+        p_md = libvlc_media_new_location(library.instance, url);
 
         _metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
 
