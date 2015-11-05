@@ -1,7 +1,7 @@
-From 862c7965ff53e8e99554965dfc03cbe445092f88 Mon Sep 17 00:00:00 2001
+From fea7a06ea8469259d53a7d31bb0dea2773cf9330 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 08/14] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 14/15] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
@@ -13,10 +13,10 @@ Subject: [PATCH 08/14] libvlc: add preliminary code path to modify quartztext
  5 files changed, 128 insertions(+), 6 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 0c7351b..b0b4208 100644
+index 6614340..9c17963 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1495,6 +1495,27 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1515,6 +1515,27 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
@@ -45,10 +45,10 @@ index 0c7351b..b0b4208 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index e7527bd..2f18a00 100644
+index 49207db..9ef430e 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -228,6 +228,8 @@ libvlc_video_get_spu_count
+@@ -229,6 +229,8 @@ libvlc_video_get_spu_count
  libvlc_video_get_spu_delay
  libvlc_video_get_spu_description
  libvlc_video_get_teletext
@@ -57,7 +57,7 @@ index e7527bd..2f18a00 100644
  libvlc_video_get_title_description
  libvlc_video_get_track
  libvlc_video_get_track_count
-@@ -252,6 +254,8 @@ libvlc_video_set_spu
+@@ -253,6 +255,8 @@ libvlc_video_set_spu
  libvlc_video_set_spu_delay
  libvlc_video_set_subtitle_file
  libvlc_video_set_teletext
@@ -67,10 +67,10 @@ index e7527bd..2f18a00 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index fc5a82f..b9e8f42 100644
+index eabbbf6..880bbe0 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -625,6 +625,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -628,6 +628,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -139,7 +139,7 @@ index b2c9b34..588aa1d 100644
 +    return get_string( p_mi, "quartztext", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
-index 8142155..1d05dcd 100644
+index 5e2cefe..ac0894e 100644
 --- a/modules/text_renderer/quartztext.c
 +++ b/modules/text_renderer/quartztext.c
 @@ -67,6 +67,10 @@
@@ -225,7 +225,7 @@ index 8142155..1d05dcd 100644
 +
  #ifndef TARGET_OS_IPHONE
      if (p_sys->p_fonts) {
-         for (int k = 0; k < p_sys->i_fonts; k++) {
+         for (int k = 0; k < p_sys->i_fonts; k++)
 @@ -635,12 +659,12 @@ static int GetFontSize(filter_t *p_filter)
  {
      int i_size = 0;
