@@ -79,7 +79,12 @@
 - (NSString *)stringValue
 {
     if (_value) {
-        long long duration = [_value longLongValue] / 1000;
+        long long duration = [_value longLongValue];
+        if (duration == INT_MAX || duration == INT_MIN) {
+            // Return a string that represents an undefined time.
+            return @"--:--";
+        }
+        duration = duration / 1000;
         long long positiveDuration = llabs(duration);
         if (positiveDuration > 3600)
             return [NSString stringWithFormat:@"%s%01ld:%02ld:%02ld",

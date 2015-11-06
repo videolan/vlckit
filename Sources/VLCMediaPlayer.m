@@ -1295,7 +1295,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     [self willChangeValueForKey:@"remainingTime"];
     _cachedTime = [VLCTime timeWithNumber:newTime];
     double currentTime = [[_cachedTime numberValue] doubleValue];
-    if (currentTime > 0) {
+    if (currentTime > 0 && _position > 0.) {
         double remaining = currentTime / _position * (1 - _position);
         _cachedRemainingTime = [VLCTime timeWithNumber:@(-remaining)];
     } else
