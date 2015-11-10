@@ -1,7 +1,7 @@
-From e34c3010e2c869b278f92ed4d025091bec525fb5 Mon Sep 17 00:00:00 2001
+From d8b0f4ab969d4b1bf088d0bd7ea8eb3d9d63c77b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 9 Dec 2014 22:14:55 +0100
-Subject: [PATCH 04/15] lib/media player: inherit deinterlace variable to
+Subject: [PATCH 04/14] lib/media player: inherit deinterlace variable to
  achieve correct value on first use
 
 ---
@@ -22,5 +22,5 @@ index d862926..eabbbf6 100644
  
      var_Create (mp, "vbi-page", VLC_VAR_INTEGER);
 -- 
-2.6.0
+2.6.3
 
