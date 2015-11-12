@@ -1,16 +1,16 @@
-From a6bf56e844051cd154a7b0b882c724620beda6ed Mon Sep 17 00:00:00 2001
+From 38b3cde3fcf9ae4099d399813c346c7e0b3e89ad Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 16/18] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 16/16] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---
  include/vlc/libvlc_media_player.h  | 21 ++++++++++++++
  lib/libvlc.sym                     |  4 +++
  lib/media_player.c                 |  6 ++++
- lib/video.c                        | 47 ++++++++++++++++++++++++++++++++
- modules/text_renderer/quartztext.c | 56 ++++++++++++++++++++++++++++++++++----
- 5 files changed, 128 insertions(+), 6 deletions(-)
+ lib/video.c                        | 47 +++++++++++++++++++++++++++++++
+ modules/text_renderer/quartztext.c | 57 ++++++++++++++++++++++++++++++++++----
+ 5 files changed, 129 insertions(+), 6 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
 index 6614340..9c17963 100644
@@ -139,7 +139,7 @@ index 167f76a..699605a 100644
 +    return get_string( p_mi, "quartztext", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
-index 5e2cefe..ac0894e 100644
+index 5e2cefe..4f546c3 100644
 --- a/modules/text_renderer/quartztext.c
 +++ b/modules/text_renderer/quartztext.c
 @@ -67,6 +67,10 @@
@@ -188,7 +188,7 @@ index 5e2cefe..ac0894e 100644
          return VLC_ENOMEM;
      }
 -    p_sys->p_default_style->psz_fontname = var_CreateGetString(p_this, "quartztext-font");;
-+    p_sys->p_default_style->psz_fontname = var_CreateGetStringCommand(p_this, "quartztext-font");;
++    p_sys->p_default_style->psz_fontname = strdup(var_CreateGetStringCommand(p_this, "quartztext-font"));
      p_sys->p_default_style->psz_monofontname = var_CreateGetString(p_this, "quartztext-monofont");
      p_sys->p_default_style->i_font_size = GetFontSize(p_filter);
  
@@ -242,7 +242,7 @@ index 5e2cefe..ac0894e 100644
          msg_Warn( p_filter, "invalid fontsize, using 12" );
          i_size = 12;
      }
-@@ -726,3 +750,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
+@@ -726,3 +750,24 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
  
      return VLC_SUCCESS;
  }
@@ -256,9 +256,10 @@ index 5e2cefe..ac0894e 100644
 +    filter_sys_t *p_sys = (filter_sys_t *)p_data;
 +
 +    vlc_mutex_lock( &p_sys->lock );
-+    if( !strcmp( psz_var, "quartztext-font" ) )
-+        p_sys->p_default_style->psz_fontname = newval.psz_string;
-+    else if( !strcmp( psz_var, "quartztext-fontsize" ) )
++    if( !strcmp( psz_var, "quartztext-font" ) ) {
++        FREENULL( p_sys->p_default_style->psz_fontname );
++        p_sys->p_default_style->psz_fontname = strdup( newval.psz_string );
++    } else  if( !strcmp( psz_var, "quartztext-fontsize" ) )
 +        p_sys->p_default_style->i_font_size = (int)p_filter->fmt_out.video.i_height / newval.i_int;
 +    else if( !strcmp( psz_var, "quartztext-color" ) )
 +        p_sys->p_default_style->i_font_color = VLC_CLIP(newval.i_int, 0, 0xFFFFFF);
@@ -267,5 +268,5 @@ index 5e2cefe..ac0894e 100644
 +    return VLC_SUCCESS;
 +}
 -- 
-2.6.1
+2.6.0
 
