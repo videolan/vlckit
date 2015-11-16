@@ -1,7 +1,7 @@
-From 450fa9d42de3fac7bb1217823ecbe1c78b076911 Mon Sep 17 00:00:00 2001
+From 1c16538a130b0502ffb8e10953e327743a108649 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 26 Oct 2015 10:47:56 +0100
-Subject: [PATCH 13/16] disable videotoolbox
+Subject: [PATCH 13/20] disable videotoolbox
 
 ---
  extras/package/ios/build.sh | 2 ++
@@ -21,5 +21,5 @@ index c2a1462..90a338b 100755
  
  if [ "$SCARY" = "no" ]; then
 -- 
-2.6.0
+2.6.3
 
