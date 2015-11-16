@@ -1,7 +1,7 @@
-From 1c16538a130b0502ffb8e10953e327743a108649 Mon Sep 17 00:00:00 2001
+From e0334e703e8f450f1a20389d333a0909064e4b6d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 26 Oct 2015 10:47:56 +0100
-Subject: [PATCH 13/20] disable videotoolbox
+Subject: [PATCH 13/16] disable videotoolbox
 
 ---
  extras/package/ios/build.sh | 2 ++

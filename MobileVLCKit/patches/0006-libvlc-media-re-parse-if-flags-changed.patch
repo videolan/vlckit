@@ -1,7 +1,7 @@
-From 7c9a0af7f1a402d52dc5d619c50b003589b3b6d4 Mon Sep 17 00:00:00 2001
+From 8e5d36f3ff23ebb0cd8281d5deb6e55524ba4650 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 19 Dec 2014 22:14:55 +0100
-Subject: [PATCH 06/20] libvlc/media: re-parse if flags changed
+Subject: [PATCH 06/16] libvlc/media: re-parse if flags changed
 
 ---
  lib/media.c          | 6 ++++++
@@ -9,10 +9,10 @@ Subject: [PATCH 06/20] libvlc/media: re-parse if flags changed
  2 files changed, 7 insertions(+)
 
 diff --git a/lib/media.c b/lib/media.c
-index 8919093..fc55b76 100644
+index 20266ae..fda7ba9 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -718,6 +718,12 @@ static int media_parse(libvlc_media_t *media, bool b_async,
+@@ -719,6 +719,12 @@ static int media_parse(libvlc_media_t *media, bool b_async,
      vlc_mutex_lock(&media->parsed_lock);
      needed = !media->has_asked_preparse;
      media->has_asked_preparse = true;
