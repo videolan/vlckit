@@ -1,12 +1,12 @@
-From 5245d9bd1825593c020136a54e8497a30683bcfb Mon Sep 17 00:00:00 2001
+From c9daccc8dad05de8dccbe6188997fc6659744946 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 20 Nov 2015 13:27:09 +0100
-Subject: [PATCH] contrib/lua: add tvOS support
+Subject: [PATCH 17/19] contrib/lua: add tvOS support
 
 ---
  contrib/src/lua/lua-tvos-support.patch | 26 ++++++++++++++++++++++++++
- contrib/src/lua/rules.mak              |  1 +
- 2 files changed, 27 insertions(+)
+ contrib/src/lua/rules.mak              |  4 ++++
+ 2 files changed, 30 insertions(+)
  create mode 100644 contrib/src/lua/lua-tvos-support.patch
 
 diff --git a/contrib/src/lua/lua-tvos-support.patch b/contrib/src/lua/lua-tvos-support.patch
@@ -42,7 +42,7 @@ index 0000000..c84dc34
 + 
 + 
 diff --git a/contrib/src/lua/rules.mak b/contrib/src/lua/rules.mak
-index 8be4af2..8becd05 100644
+index 8be4af2..d68e8b6 100644
 --- a/contrib/src/lua/rules.mak
 +++ b/contrib/src/lua/rules.mak
 @@ -45,6 +45,7 @@ lua: lua-$(LUA_VERSION).tar.gz .sum-lua
@@ -53,6 +53,14 @@ index 8be4af2..8becd05 100644
  ifdef HAVE_DARWIN_OS
  	(cd $(UNPACK_DIR) && \
  	sed -e 's%gcc%$(CC)%' \
+@@ -81,4 +82,7 @@ ifdef HAVE_CROSS_COMPILE
+ 	cd $</src && $(MAKE) clean && $(MAKE) liblua.a && ranlib liblua.a && $(MAKE) luac
+ 	cp $</src/luac $(PREFIX)/bin
+ endif
++ifdef HAVE_IOS
++	cd $(PREFIX)/bin && rm lua*
++endif
+ 	touch $@
 -- 
 2.6.3
 

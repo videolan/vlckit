@@ -1,7 +1,7 @@
-From 83524dfd937111f4a4d8ec5c07d5b4c8eb00b34d Mon Sep 17 00:00:00 2001
+From 37bb8086d622bb1c1582b1e47e7b5f5112a9d76d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 20 Nov 2015 14:46:23 +0100
-Subject: [PATCH 20/20] Enable lua for tvOS
+Subject: [PATCH 2/2] Enable lua for tvOS
 
 ---
  extras/package/ios/build.sh | 10 ++++------

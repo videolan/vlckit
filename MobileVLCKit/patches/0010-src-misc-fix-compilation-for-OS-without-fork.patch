@@ -1,7 +1,7 @@
-From 1105d21d33b3658c864fbc93dc2c0d0a2559c44c Mon Sep 17 00:00:00 2001
+From 6dfe6ad6cd3b416eec59ab8612b4f2450dab7861 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 10 Sep 2015 19:58:40 +0200
-Subject: [PATCH 10/20] src/misc: fix compilation for OS without fork()
+Subject: [PATCH 10/19] src/misc: fix compilation for OS without fork()
 
 ---
  src/misc/cpu.c | 2 +-
