@@ -1,7 +1,7 @@
-From 7b48434578b8341a7a2a2639c27e7cec381ba83f Mon Sep 17 00:00:00 2001
+From da875a19b889b47afa92fa736f754837c4981082 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
-Subject: [PATCH 16/16] libvlc: add preliminary code path to modify quartztext
+Subject: [PATCH 16/20] libvlc: add preliminary code path to modify quartztext
  variables on-the-fly
 
 ---

@@ -1,0 +1,31 @@
+From 3d0f40a3d072dd7b7a5dfa2ea51ec98b694f3c70 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Fri, 20 Nov 2015 13:18:50 +0100
+Subject: [PATCH 17/20] core/dirs: add support for iOS and tvOS
+
+---
+ src/darwin/dirs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/darwin/dirs.c b/src/darwin/dirs.c
+index 9c34cc5..0070d18 100644
+--- a/src/darwin/dirs.c
++++ b/src/darwin/dirs.c
+@@ -74,6 +74,14 @@ char *config_GetLibDir (void)
+         /* Do we end by "VLC-Plugin"? oh, we must be the NPAPI plugin */
+         if (len >= 10 && !strcmp( psz_img_name + len - 10, "VLC-Plugin"))
+             return strdup( dirname(psz_img_name) );
++
++        /* Do we end by "VLC for iOS"? so we are the iOS app */
++        if (len >= 11 && !strcmp( psz_img_name + len - 11, "VLC for iOS"))
++            return strdup( dirname(psz_img_name) );
++
++        /* Do we end by "VLC-TV"? so we are the tvOS app */
++        if (len >= 6 && !strcmp( psz_img_name + len - 6, "VLC-TV"))
++            return strdup( dirname(psz_img_name) );
+     }
+ 
+     /* we are not part of any Mac-style package but were installed
+-- 
+2.6.3
+

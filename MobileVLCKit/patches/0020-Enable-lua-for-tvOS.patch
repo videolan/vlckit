@@ -1,0 +1,56 @@
+From 83524dfd937111f4a4d8ec5c07d5b4c8eb00b34d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Fri, 20 Nov 2015 14:46:23 +0100
+Subject: [PATCH 20/20] Enable lua for tvOS
+
+---
+ extras/package/ios/build.sh | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
+index 90a338b..be82e5c 100755
+--- a/extras/package/ios/build.sh
++++ b/extras/package/ios/build.sh
+@@ -242,9 +242,9 @@ else
+ fi
+ 
+ if [ "$TVOS" = "yes" ]; then
+-	TVOSOPTIONS="--disable-libarchive"
++	TVOSOPTIONS="--disable-libarchive --enable-lua"
+ else
+-	TVOSOPTIONS=""
++	TVOSOPTIONS="--disable-lua"
+ fi
+ 
+ ../bootstrap --build=x86_64-apple-darwin11 --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
+@@ -276,7 +276,6 @@ fi
+     --enable-ass \
+     --disable-fontconfig \
+     --disable-gpg-error \
+-    --disable-lua \
+     --disable-protobuf \
+     --disable-aribb24 \
+     --disable-aribb25 \
+@@ -326,9 +325,9 @@ else
+ fi
+ 
+ if [ "$TVOS" = "yes" ]; then
+-	TVOSOPTIONS="--disable-neon"
++	TVOSOPTIONS="--disable-neon --enable-lua"
+ else
+-	TVOSOPTIONS="--enable-neon"
++	TVOSOPTIONS="--enable-neon --disable-lua"
+ fi
+ 
+ # Run configure only upon changes.
+@@ -354,7 +353,6 @@ ${VLCROOT}/configure \
+     --enable-mkv \
+     --enable-opus \
+     --disable-faad \
+-    --disable-lua \
+     --disable-a52 \
+     --enable-fribidi \
+     --disable-qt --disable-skins2 \
+-- 
+2.6.3
+

@@ -1,7 +1,7 @@
-From 4159e972570875b5704bb1389ce60d4fb6aa9563 Mon Sep 17 00:00:00 2001
+From a30af90702dc2cea90ad8b8b646d197651965760 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 26 Oct 2015 10:50:26 +0100
-Subject: [PATCH 14/16] Revert "libvlc: refactor sfilter enabling/disabling"
+Subject: [PATCH 14/20] Revert "libvlc: refactor sfilter enabling/disabling"
 
 This reverts commit 93900cd71aff74d4eec617d8f87be97427f83101.
 ---
