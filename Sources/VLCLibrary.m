@@ -113,7 +113,7 @@ static VLCLibrary * sharedLibrary = nil;
 #ifndef NOSCARYCODECS
                       @"--avcodec-fast",
 #endif
-                      @"--text-renderer=quartztext",
+                      @"--text-renderer=freetype",
                       @"--avi-index=3",
                       @"--extraintf=ios_dialog_provider"];
     }
@@ -126,7 +126,7 @@ static VLCLibrary * sharedLibrary = nil;
         [defaultParams addObject:@"--verbose=4"];                               // Let's not wreck the logs
         [defaultParams addObject:@"--no-sout-keep"];
         [defaultParams addObject:@"--vout=macosx"];                             // Select Mac OS X video output
-        [defaultParams addObject:@"--text-renderer=quartztext"];                // our CoreText-based renderer
+        [defaultParams addObject:@"--text-renderer=freetype"];
         [defaultParams addObject:@"--extraintf=macosx_dialog_provider"];        // Some extra dialog (login, progress) may come up from here
 
         [[NSUserDefaults standardUserDefaults] setObject:defaultParams forKey:@"VLCParams"];
@@ -204,7 +204,7 @@ static void HandleMessage(void *data,
         return;
     }
 
-    if (!str)
+    if (str == NULL)
         return;
 
     VKLog(@"%@", [NSString stringWithUTF8String:str]);
