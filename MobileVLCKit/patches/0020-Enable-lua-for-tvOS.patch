@@ -1,7 +1,7 @@
-From ab7336ee05c0389cedef003479d1daf8497f7fce Mon Sep 17 00:00:00 2001
+From 733adb8f315b62efe0956a763243616711601090 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 20 Nov 2015 14:46:23 +0100
-Subject: [PATCH 18/19] Enable lua for tvOS
+Subject: [PATCH 20/21] Enable lua for tvOS
 
 ---
  extras/package/ios/build.sh | 10 ++++------
@@ -52,5 +52,5 @@ index 90a338b..be82e5c 100755
      --enable-fribidi \
      --disable-qt --disable-skins2 \
 -- 
-2.6.3
+2.6.0
 

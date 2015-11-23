@@ -1,7 +1,7 @@
-From 452e6c4bf7b9a01b8f9a0b1b9486582c53f52b2a Mon Sep 17 00:00:00 2001
+From 19057fb7615b6d1ee79190eeb2ec18ba52623c2b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 20 Nov 2015 14:45:50 +0100
-Subject: [PATCH 19/19] configure: don't fail if there is no lua compiler, just
+Subject: [PATCH 21/21] configure: don't fail if there is no lua compiler, just
  don't compile lua
 
 ---
@@ -38,5 +38,5 @@ index 98f745f..77b4bf0 100644
  	lua/extensions/VLSub.luac \
  	lua/intf/cli.luac \
 -- 
-2.6.3
+2.6.0
 
