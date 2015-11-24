@@ -10,20 +10,24 @@ Subject: [PATCH 21/21] configure: don't fail if there is no lua compiler, just
  2 files changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/configure.ac b/configure.ac
-index 2a45941..18a238d 100644
+index 2a45941..696a5b7 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -1545,9 +1545,7 @@ then
+@@ -1545,13 +1545,11 @@ then
    fi
    AC_ARG_VAR([LUAC], [LUA byte compiler])
    AC_CHECK_PROGS(LUAC, [${LUAC} luac], [false])
 -  AS_IF([test "${LUAC}" = "false"], [
 -    AC_MSG_ERROR([Could not find the LUA byte compiler.])
 -  ])
-+  AM_CONDITIONAL(COMPILE_LUA_BYTECODE, [test "${LUAC}" = "true"])
    AS_IF([test -d "${CONTRIB_DIR}" -a -f "${CONTRIB_DIR}/lib/liblua.a" -a `echo|${LUAC} -o - -|od -j 8 -N 2 -t x2|head -n 1|tr -s ' '|cut -d' ' -f2` != 0404], [
      AC_MSG_ERROR([You need 32-bits luac when using using lua from contrib.])
    ])
+ fi
++AM_CONDITIONAL(COMPILE_LUA_BYTECODE, [test "${LUAC}" = "true"])
+ AM_CONDITIONAL(BUILD_LUA, [test "${have_lua}" = "yes"])
+ 
+ 
 diff --git a/share/Makefile.am b/share/Makefile.am
 index 98f745f..77b4bf0 100644
 --- a/share/Makefile.am
