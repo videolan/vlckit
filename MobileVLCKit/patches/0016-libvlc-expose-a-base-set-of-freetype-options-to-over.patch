@@ -1,16 +1,16 @@
-From 47508eb94f9e8d34420b29a5add15eca4c610e13 Mon Sep 17 00:00:00 2001
+From 099b9ae270a0242c2f9402723a6f3b9952a6e7be Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 17/21] libvlc: expose a base set of freetype options to
+Subject: [PATCH 16/20] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
- include/vlc/libvlc_media_player.h | 26 +++++++++++++++
- lib/libvlc.sym                    |  6 ++++
- lib/media_player.c                |  6 ++++
- lib/video.c                       | 67 ++++++++++++++++++++++++++++++++++++++-
- modules/text_renderer/freetype.c  | 58 +++++++++++++++++++++++++++++++--
- modules/text_renderer/freetype.h  |  2 ++
+ include/vlc/libvlc_media_player.h         | 26 ++++++++++++
+ lib/libvlc.sym                            |  6 +++
+ lib/media_player.c                        |  6 +++
+ lib/video.c                               | 67 ++++++++++++++++++++++++++++++-
+ modules/text_renderer/freetype/freetype.c | 58 ++++++++++++++++++++++++--
+ modules/text_renderer/freetype/freetype.h |  2 +
  6 files changed, 161 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
@@ -187,10 +187,10 @@ index 167f76a..5a2b1ac 100644
 +{
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
-diff --git a/modules/text_renderer/freetype.c b/modules/text_renderer/freetype.c
+diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
 index 040a691..6747781 100644
---- a/modules/text_renderer/freetype.c
-+++ b/modules/text_renderer/freetype.c
+--- a/modules/text_renderer/freetype/freetype.c
++++ b/modules/text_renderer/freetype/freetype.c
 @@ -78,6 +78,9 @@
   *****************************************************************************/
  static int  Create ( vlc_object_t * );
@@ -296,11 +296,11 @@ index 040a691..6747781 100644
 +
 +    return VLC_SUCCESS;
 +}
-diff --git a/modules/text_renderer/freetype.h b/modules/text_renderer/freetype.h
-index f6d80e1..405471a 100644
---- a/modules/text_renderer/freetype.h
-+++ b/modules/text_renderer/freetype.h
-@@ -135,6 +135,8 @@ struct filter_sys_t
+diff --git a/modules/text_renderer/freetype/freetype.h b/modules/text_renderer/freetype/freetype.h
+index 44b2731..7f1abec 100644
+--- a/modules/text_renderer/freetype/freetype.h
++++ b/modules/text_renderer/freetype/freetype.h
+@@ -137,6 +137,8 @@ struct filter_sys_t
       */
      vlc_family_t * (*pf_get_fallbacks) ( filter_t *p_filter, const char *psz_family,
                                           uni_char_t codepoint );

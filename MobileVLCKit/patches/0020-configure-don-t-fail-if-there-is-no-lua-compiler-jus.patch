@@ -1,7 +1,7 @@
-From 19057fb7615b6d1ee79190eeb2ec18ba52623c2b Mon Sep 17 00:00:00 2001
+From 664bd9b276febf357bfe51d2aa837caacac13ae5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 20 Nov 2015 14:45:50 +0100
-Subject: [PATCH 21/21] configure: don't fail if there is no lua compiler, just
+Subject: [PATCH 20/20] configure: don't fail if there is no lua compiler, just
  don't compile lua
 
 ---
