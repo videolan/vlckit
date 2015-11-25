@@ -50,6 +50,8 @@
 /* Notification Messages */
 NSString *const VLCMediaPlayerTimeChanged       = @"VLCMediaPlayerTimeChanged";
 NSString *const VLCMediaPlayerStateChanged      = @"VLCMediaPlayerStateChanged";
+NSString *const VLCMediaPlayerTitleChanged       = @"VLCMediaPlayerTitleChanged";
+NSString *const VLCMediaPlayerChapterChanged      = @"VLCMediaPlayerChapterChanged";
 NSString *const VLCMediaPlayerSnapshotTaken     = @"VLCMediaPlayerSnapshotTaken";
 
 /* title keys */
@@ -144,6 +146,24 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     }
 }
 
+static void HandleMediaTitleChanged(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
+                                                       withDelegateMethod:@selector(mediaPlayerTimeChanged:)
+                                                     withNotificationName:VLCMediaPlayerTitleChanged];
+    }
+}
+
+static void HandleMediaChapterChanged(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
+                                                       withDelegateMethod:@selector(mediaPlayerChapterChanged:)
+                                                     withNotificationName:VLCMediaPlayerChapterChanged];
+    }
+}
+
 #if TARGET_OS_IPHONE
 static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
@@ -172,6 +192,9 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 - (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
 - (void)mediaPlayerStateChanged:(NSNumber *)newState;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
+- (void)mediaPlayerTitleChanged:(NSNumber *)newTitle;
+- (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
+
 #if TARGET_OS_IPHONE
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
 #endif
@@ -1262,6 +1285,9 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
     libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
 
+    libvlc_event_attach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
+    libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
+
 #if TARGET_OS_IPHONE
     libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
 #endif
@@ -1284,6 +1310,9 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     libvlc_event_detach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
+
+    libvlc_event_detach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
 #if TARGET_OS_IPHONE
     libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));

@@ -42,6 +42,8 @@
 /* Notification Messages */
 extern NSString *const VLCMediaPlayerTimeChanged;
 extern NSString *const VLCMediaPlayerStateChanged;
+extern NSString *const VLCMediaPlayerTitleChanged;
+extern NSString *const VLCMediaPlayerChapterChanged;
 
 /**
  * VLCMediaPlayerState describes the state of the media player.
@@ -84,6 +86,21 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * the VLCMediaPlayer object in question by sending object to aNotification.
  */
 - (void)mediaPlayerTimeChanged:(NSNotification *)aNotification;
+
+/**
+ * Sent by the default notification center whenever the player's title has changed (if any).
+ * \details Discussion The value of aNotification is always an VLCMediaPlayerTitleChanged notification. You can retrieve
+ * the VLCMediaPlayer object in question by sending object to aNotification.
+ * \note this is about a title in the navigation sense, not about metadata
+ */
+- (void)mediaPlayerTitleChanged:(NSNotification *)aNotification;
+
+/**
+ * Sent by the default notification center whenever the player's chapter has changed (if any).
+ * \details Discussion The value of aNotification is always an VLCMediaPlayerChapterChanged notification. You can retrieve
+ * the VLCMediaPlayer object in question by sending object to aNotification.
+ */
+- (void)mediaPlayerChapterChanged:(NSNotification *)aNotification;
 
 #if TARGET_OS_PHONE
 /**

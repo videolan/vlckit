@@ -14,6 +14,7 @@ New APIs:
                       snapshots, lastSnapshot
   - added selectors: chaptersForTitleIndex:
                      numberOfChaptersForTitle:
+  - added notifications: VLCMediaPlayerTitleChanged, VLCMediaPlayerChapterChanged
 
 - VLCMedia
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
