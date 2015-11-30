@@ -933,7 +933,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -979,7 +979,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
