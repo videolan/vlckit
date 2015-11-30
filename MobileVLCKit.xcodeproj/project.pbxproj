@@ -48,6 +48,7 @@
 		7D1329741BA305A200BE647E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D1329731BA305A200BE647E /* Foundation.framework */; };
 		7D5F800A185B72EB00C2CD75 /* VLCMediaListPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */; };
 		7D5F800C185B733800C2CD75 /* VLCMediaListPlayer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */; };
+		7D6C89201C0CA81F00321894 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6C891F1C0CA81F00321894 /* AVFoundation.framework */; };
 		7D89392C1B500D1C008F2B14 /* DynamicMobileVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D89392B1B500D1C008F2B14 /* DynamicMobileVLCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D8939401B500D50008F2B14 /* VLCEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ECAC411DE8F7300F66AF3 /* VLCEventManager.m */; };
 		7D8939411B500D50008F2B14 /* VLCLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */; };
@@ -169,6 +170,7 @@
 		7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "vlc-plugins-iPhone.xcconfig"; path = "MobileVLCKit/vlc-plugins-iPhone.xcconfig"; sourceTree = "<group>"; };
 		7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaListPlayer.m; path = Sources/VLCMediaListPlayer.m; sourceTree = "<group>"; };
 		7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaListPlayer.h; path = Headers/Public/VLCMediaListPlayer.h; sourceTree = "<group>"; };
+		7D6C891F1C0CA81F00321894 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7D8938BB1B5008E9008F2B14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D8938E81B500984008F2B14 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7D8938EA1B50098C008F2B14 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -207,6 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D6C89201C0CA81F00321894 /* AVFoundation.framework in Frameworks */,
 				7D8939651B500F13008F2B14 /* libStaticLibVLC.a in Frameworks */,
 				7D8939661B500F38008F2B14 /* libiconv.dylib in Frameworks */,
 				7D8939671B500F38008F2B14 /* CoreFoundation.framework in Frameworks */,
@@ -274,6 +277,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7D6C891F1C0CA81F00321894 /* AVFoundation.framework */,
 				7D1329731BA305A200BE647E /* Foundation.framework */,
 				7D8939031B5009E2008F2B14 /* libiconv.dylib */,
 				7D8939011B5009DD008F2B14 /* CoreFoundation.framework */,
