@@ -49,6 +49,7 @@
 		7D5F800A185B72EB00C2CD75 /* VLCMediaListPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */; };
 		7D5F800C185B733800C2CD75 /* VLCMediaListPlayer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */; };
 		7D6C89201C0CA81F00321894 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6C891F1C0CA81F00321894 /* AVFoundation.framework */; };
+		7D6C89211C0CA90000321894 /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
 		7D89392C1B500D1C008F2B14 /* DynamicMobileVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D89392B1B500D1C008F2B14 /* DynamicMobileVLCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D8939401B500D50008F2B14 /* VLCEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ECAC411DE8F7300F66AF3 /* VLCEventManager.m */; };
 		7D8939411B500D50008F2B14 /* VLCLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */; };
@@ -567,6 +568,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D6C89211C0CA90000321894 /* VLCAudio.m in Sources */,
 				7D8939401B500D50008F2B14 /* VLCEventManager.m in Sources */,
 				7D8939411B500D50008F2B14 /* VLCLibrary.m in Sources */,
 				7D8939421B500D50008F2B14 /* VLCMedia.m in Sources */,
