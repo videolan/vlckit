@@ -1,7 +1,7 @@
-From d972a9cdc466d4e0dfbfcb4883499ab8a44c6d7b Mon Sep 17 00:00:00 2001
+From 730eefed8be9bc079070ff4795789a712c8ee0db Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 20 Nov 2015 13:27:09 +0100
-Subject: [PATCH 18/20] contrib/lua: add tvOS support
+Subject: [PATCH 17/19] contrib/lua: add tvOS support
 
 ---
  contrib/src/lua/lua-tvos-support.patch | 26 ++++++++++++++++++++++++++

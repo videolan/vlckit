@@ -1,7 +1,7 @@
-From 099b9ae270a0242c2f9402723a6f3b9952a6e7be Mon Sep 17 00:00:00 2001
+From 4782cb6028f64999615ec26a5a4a194b9de7bb5b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 16/20] libvlc: expose a base set of freetype options to
+Subject: [PATCH 15/19] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
@@ -75,10 +75,10 @@ index 49207db..88d2478 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index eabbbf6..41a3773 100644
+index 3ff4b8a..dca0ffc 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -628,6 +628,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -640,6 +640,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -188,10 +188,10 @@ index 167f76a..5a2b1ac 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 040a691..6747781 100644
+index 3409460..f4f2f00 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
-@@ -78,6 +78,9 @@
+@@ -77,6 +77,9 @@
   *****************************************************************************/
  static int  Create ( vlc_object_t * );
  static void Destroy( vlc_object_t * );
@@ -201,7 +201,7 @@ index 040a691..6747781 100644
  
  #define FONT_TEXT N_("Font")
  #define MONOSPACE_FONT_TEXT N_("Monospace Font")
-@@ -930,12 +933,14 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -929,12 +932,14 @@ static void FillDefaultStyles( filter_t *p_filter )
  {
      filter_sys_t *p_sys = p_filter->p_sys;
  
@@ -217,7 +217,7 @@ index 040a691..6747781 100644
      p_sys->p_default_style->i_outline_alpha = var_InheritInteger( p_filter, "freetype-outline-opacity" );
      p_sys->p_default_style->i_outline_alpha = VLC_CLIP( p_sys->p_default_style->i_outline_alpha, 0, 255 );
      p_sys->p_default_style->i_outline_color = var_InheritInteger( p_filter, "freetype-outline-color" );
-@@ -951,11 +956,11 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -950,11 +955,11 @@ static void FillDefaultStyles( filter_t *p_filter )
      p_sys->p_default_style->i_features |= STYLE_HAS_FLAGS;
  
      p_sys->p_forced_style->i_font_size = var_InheritInteger( p_filter, "freetype-fontsize" );
@@ -231,7 +231,7 @@ index 040a691..6747781 100644
      {
          p_sys->p_forced_style->i_style_flags |= STYLE_BOLD;
          p_sys->p_forced_style->i_features |= STYLE_HAS_FLAGS;
-@@ -963,6 +968,12 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -962,6 +967,12 @@ static void FillDefaultStyles( filter_t *p_filter )
  
      /* Apply forced styles to defaults, if any */
      text_style_Merge( p_sys->p_default_style, p_sys->p_forced_style, true );
@@ -244,25 +244,25 @@ index 040a691..6747781 100644
  }
  
  static void FreeStylesArray( text_style_t **pp_styles, size_t i_styles )
-@@ -1334,6 +1345,17 @@ static void Destroy( vlc_object_t *p_this )
+@@ -1324,6 +1335,17 @@ static void Destroy( vlc_object_t *p_this )
      DumpDictionary( p_filter, &p_sys->fallback_map, true, -1 );
  #endif
  
 +    var_DelCallback( p_filter, "freetype-font", DefaultFontStyleCallback, p_sys );
-+    var_DelCallback( p_filter, "freetype-fontsize", DefaultFontStyleCallback, p_sys );
++    var_DelCallback( p_filter, "freetype-rel-fontsize", DefaultFontStyleCallback, p_sys );
 +    var_DelCallback( p_filter, "freetype-color", DefaultFontStyleCallback, p_sys );
 +    var_DelCallback( p_filter, "freetype-bold", DefaultFontStyleCallback, p_sys );
 +    vlc_mutex_destroy( &p_sys->lock );
 +
 +    var_Destroy( p_filter, "freetype-font" ) ;
-+    var_Destroy( p_filter, "freetype-fontsize" );
++    var_Destroy( p_filter, "freetype-rel-fontsize" );
 +    var_Destroy( p_filter, "freetype-color" );
 +    var_Destroy( p_filter, "freetype-bold" );
 +
      /* Attachments */
      if( p_sys->pp_font_attachments )
      {
-@@ -1363,3 +1385,33 @@ static void Destroy( vlc_object_t *p_this )
+@@ -1353,3 +1375,33 @@ static void Destroy( vlc_object_t *p_this )
      free( p_sys );
  }
  
