@@ -1091,7 +1091,6 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 - (void)gotoNextFrame
 {
     libvlc_media_player_next_frame(_playerInstance);
-
 }
 
 - (void)fastForward
