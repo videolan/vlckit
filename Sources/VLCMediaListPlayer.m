@@ -115,21 +115,37 @@
 
 - (void)playMedia:(VLCMedia *)media
 {
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(playMedia:) withObject:media];
+        return;
+    }
     libvlc_media_list_player_play_item(instance, [media libVLCMediaDescriptor]);
 }
 
 - (void)play
 {
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(play) withObject:nil];
+        return;
+    }
     libvlc_media_list_player_play(instance);
 }
 
 - (void)pause
 {
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(pause) withObject:nil];
+        return;
+    }
     libvlc_media_list_player_pause(instance);
 }
 
 - (void)stop
 {
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(stop) withObject:nil];
+        return;
+    }
     libvlc_media_list_player_stop(instance);
 }
 
