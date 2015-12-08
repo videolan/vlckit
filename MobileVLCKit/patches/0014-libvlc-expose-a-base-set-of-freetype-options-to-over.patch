@@ -1,17 +1,17 @@
-From 4782cb6028f64999615ec26a5a4a194b9de7bb5b Mon Sep 17 00:00:00 2001
+From 5d1874d24159c8ad4541d5e00ec7319c86cd896a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 15/19] libvlc: expose a base set of freetype options to
+Subject: [PATCH 14/14] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
  include/vlc/libvlc_media_player.h         | 26 ++++++++++++
  lib/libvlc.sym                            |  6 +++
  lib/media_player.c                        |  6 +++
- lib/video.c                               | 67 ++++++++++++++++++++++++++++++-
- modules/text_renderer/freetype/freetype.c | 58 ++++++++++++++++++++++++--
+ lib/video.c                               | 66 +++++++++++++++++++++++++++++++
+ modules/text_renderer/freetype/freetype.c | 58 +++++++++++++++++++++++++--
  modules/text_renderer/freetype/freetype.h |  2 +
- 6 files changed, 161 insertions(+), 4 deletions(-)
+ 6 files changed, 161 insertions(+), 3 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
 index 6614340..ef5c54c 100644
@@ -92,18 +92,10 @@ index 3ff4b8a..dca0ffc 100644
      var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
      var_Create (mp, "audio-device", VLC_VAR_STRING);
 diff --git a/lib/video.c b/lib/video.c
-index 167f76a..5a2b1ac 100644
+index b2c9b34..a18d711 100644
 --- a/lib/video.c
 +++ b/lib/video.c
-@@ -639,7 +639,6 @@ typedef const struct {
-     unsigned type;
- } opt_t;
- 
--
- static void
- set_int( libvlc_media_player_t *p_mi, const char *restrict name,
-          const opt_t *restrict opt, int value )
-@@ -665,6 +664,9 @@ set_int( libvlc_media_player_t *p_mi, const char *restrict name,
+@@ -664,6 +664,9 @@ set_int( libvlc_media_player_t *p_mi, const char *restrict name,
          case VLC_VAR_FLOAT:
              var_SetFloat( p_mi, opt->name, value );
              break;
@@ -113,7 +105,7 @@ index 167f76a..5a2b1ac 100644
          default:
              libvlc_printerr( "Invalid argument to %s in %s", name, "set int" );
              return;
-@@ -698,6 +700,8 @@ get_int( libvlc_media_player_t *p_mi, const char *restrict name,
+@@ -687,6 +690,8 @@ get_int( libvlc_media_player_t *p_mi, const char *restrict name,
          return var_GetInteger(p_mi, opt->name);
      case VLC_VAR_FLOAT:
          return lroundf(var_GetFloat(p_mi, opt->name));
@@ -122,7 +114,7 @@ index 167f76a..5a2b1ac 100644
      default:
          libvlc_printerr( "Invalid argument to %s in %s", name, "get int" );
          return 0;
-@@ -945,3 +949,64 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -910,3 +915,64 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  {
      return get_float( p_mi, "adjust", adjust_option_bynumber(option) );
  }
@@ -188,7 +180,7 @@ index 167f76a..5a2b1ac 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 3409460..f4f2f00 100644
+index 3409460..acb8c08 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -77,6 +77,9 @@
@@ -310,5 +302,5 @@ index 44b2731..7f1abec 100644
  
  /**
 -- 
-2.6.0
+2.6.3
 

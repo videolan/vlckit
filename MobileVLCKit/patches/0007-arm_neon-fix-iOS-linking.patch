@@ -1,7 +1,7 @@
-From 48f2bcf02f918c7f9d3282d6f426d3dbe73a38f7 Mon Sep 17 00:00:00 2001
+From 795dc7fd5444c5cceda5caf664940fdf727cbdea Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
-Subject: [PATCH 07/19] arm_neon: fix iOS linking
+Subject: [PATCH 07/14] arm_neon: fix iOS linking
 
 ---
  modules/arm_neon/amplify.S              |  7 ++---
@@ -194,5 +194,5 @@ index a94ae85..54b43a7 100644
  	pop {r4,pc}
 +endfunc
 -- 
-2.6.0
+2.6.3
 
