@@ -27,6 +27,7 @@
 #import <Foundation/Foundation.h>
 #if TARGET_OS_IPHONE
 # import <CoreGraphics/CoreGraphics.h>
+# import <UIKit/UIKit.h>
 #endif
 #import "VLCMedia.h"
 #import "VLCTime.h"
