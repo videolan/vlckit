@@ -1053,10 +1053,9 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 #pragma mark -
 #pragma mark playback
 
-- (BOOL)play
+- (void)play
 {
     libvlc_media_player_play(_playerInstance);
-    return YES;
 }
 
 - (void)pause
