@@ -15,6 +15,7 @@ New APIs:
   - added selectors: chaptersForTitleIndex:
                      numberOfChaptersForTitle:
   - added notifications: VLCMediaPlayerTitleChanged, VLCMediaPlayerChapterChanged
+  - Note: play's return type was changed from BOOL to void
 
 - VLCMedia
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,

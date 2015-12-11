@@ -515,9 +515,8 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * Plays a media resource using the currently selected media controller (or
  * default controller.  If feed was paused then the feed resumes at the position
  * it was paused in.
- * \return A Boolean determining whether the stream was played or not.
  */
--(BOOL)play;
+- (void)play;
 
 /**
  * Toggle's the pause state of the feed.
