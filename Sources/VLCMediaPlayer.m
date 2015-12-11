@@ -1055,6 +1055,15 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (void)play
 {
+    if ([NSThread isMainThread]) {
+        /* Hack because we create a dead lock here, when the vout is created
+         * and tries to recontact us on the main thread */
+        /* FIXME: to do this properly we need to do some locking. We may want
+         * to move that to libvlc */
+        [self performSelectorInBackground:@selector(play) withObject:nil];
+        return;
+    }
+
     libvlc_media_player_play(_playerInstance);
 }
 
