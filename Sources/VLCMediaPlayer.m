@@ -78,6 +78,25 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
     return stateToStrings[state];
 }
 
+// TODO: Documentation
+@interface VLCMediaPlayer (Private)
+
+- (instancetype)initWithDrawable:(id)aDrawable options:(NSArray *)options;
+
+- (void)registerObservers;
+- (void)unregisterObservers;
+- (void)mediaPlayerTimeChanged:(NSNumber *)newTime;
+- (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
+- (void)mediaPlayerStateChanged:(NSNumber *)newState;
+- (void)mediaPlayerMediaChanged:(VLCMedia *)media;
+- (void)mediaPlayerTitleChanged:(NSNumber *)newTitle;
+- (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
+
+#if TARGET_OS_IPHONE
+- (void)mediaPlayerSnapshot:(NSString *)fileName;
+#endif
+@end
+
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
@@ -180,25 +199,6 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     }
 }
 #endif
-
-// TODO: Documentation
-@interface VLCMediaPlayer (Private)
-
-- (instancetype)initWithDrawable:(id)aDrawable options:(NSArray *)options;
-
-- (void)registerObservers;
-- (void)unregisterObservers;
-- (void)mediaPlayerTimeChanged:(NSNumber *)newTime;
-- (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
-- (void)mediaPlayerStateChanged:(NSNumber *)newState;
-- (void)mediaPlayerMediaChanged:(VLCMedia *)media;
-- (void)mediaPlayerTitleChanged:(NSNumber *)newTitle;
-- (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
-
-#if TARGET_OS_IPHONE
-- (void)mediaPlayerSnapshot:(NSString *)fileName;
-#endif
-@end
 
 @interface VLCMediaPlayer ()
 {
