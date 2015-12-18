@@ -119,7 +119,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @interface VLCMediaPlayer : NSObject
 
 @property (nonatomic, readonly) VLCLibrary *libraryInstance;
-@property (weak) id<VLCMediaPlayerDelegate> delegate;
+@property (weak, nonatomic) id<VLCMediaPlayerDelegate> delegate;
 
 #if !TARGET_OS_IPHONE
 /* Initializers */

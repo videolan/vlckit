@@ -126,7 +126,7 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * delegate property to listen to addition/removal events
  */
-@property (weak) id delegate;
+@property (weak, nonatomic) id delegate;
 
 /**
  * read-only property to check if the media list is writable or not

@@ -48,8 +48,8 @@
 - (void)notifyDelegate;
 - (void)fetchThumbnail;
 - (void)startFetchingThumbnail;
-@property (readonly, assign) void *dataPointer;
-@property (readonly, assign) BOOL shouldRejectFrames;
+@property (readonly, assign, nonatomic) void *dataPointer;
+@property (readonly, assign, nonatomic) BOOL shouldRejectFrames;
 @end
 
 static void *lock(void *opaque, void **pixels)

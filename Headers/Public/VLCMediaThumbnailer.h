@@ -35,9 +35,9 @@
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library;
 - (void)fetchThumbnail;
 
-@property (readwrite, weak) id<VLCMediaThumbnailerDelegate> delegate;
-@property (readwrite) VLCMedia *media;
-@property (readwrite, assign) CGImageRef thumbnail;
+@property (readwrite, weak, nonatomic) id<VLCMediaThumbnailerDelegate> delegate;
+@property (readwrite, nonatomic) VLCMedia *media;
+@property (readwrite, assign, nonatomic) CGImageRef thumbnail;
 @property (readwrite) void * libVLCinstance;
 
 /**
@@ -46,7 +46,7 @@
  * has been called.
  * @return thumbnail height. Default value 240.
  */
-@property (readwrite, assign) CGFloat thumbnailHeight;
+@property (readwrite, assign, nonatomic) CGFloat thumbnailHeight;
 
 /**
  * Thumbnail Width
@@ -54,7 +54,7 @@
  * has been called.
  * @return thumbnail height. Default value 320
  */
-@property (readwrite, assign) CGFloat thumbnailWidth;
+@property (readwrite, assign, nonatomic) CGFloat thumbnailWidth;
 
 /**
  * Snapshot Position
@@ -62,7 +62,7 @@
  * has been called.
  * @return snapshot position. Default value 0.5
  */
-@property (readwrite, assign) float snapshotPosition;
+@property (readwrite, assign, nonatomic) float snapshotPosition;
 @end
 
 @protocol VLCMediaThumbnailerDelegate

@@ -201,12 +201,14 @@ static void HandleMessage(void *data,
     if (vasprintf(&str, fmt, args) == -1) {
         if (str)
             free(str);
+        str = NULL;
         return;
     }
 
     if (str == NULL)
         return;
 
-    VKLog(@"%@", [NSString stringWithUTF8String:str]);
+    VKLog(@"%s", str);
     free(str);
+    str = NULL;
 }

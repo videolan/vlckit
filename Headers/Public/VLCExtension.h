@@ -22,7 +22,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-
 @interface VLCExtension : NSObject
 
 - (instancetype)initWithInstance:(struct extension_t *)instance NS_DESIGNATED_INITIALIZER; // FIXME: Should be internal
