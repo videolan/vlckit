@@ -169,7 +169,7 @@ static void HandleMediaTitleChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                       withDelegateMethod:@selector(mediaPlayerTimeChanged:)
+                                                       withDelegateMethod:@selector(mediaPlayerTitleChanged:)
                                                      withNotificationName:VLCMediaPlayerTitleChanged];
     }
 }
@@ -1372,6 +1372,18 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         _media = newMedia;
 
     [self didChangeValueForKey:@"media"];
+}
+
+- (void)mediaPlayerTitleChanged:(NSNumber *)newTitle
+{
+    [self willChangeValueForKey:@"currentTitleIndex"];
+    [self didChangeValueForKey:@"currentTitleIndex"];
+}
+
+- (void)mediaPlayerChapterChanged:(NSNumber *)newChapter
+{
+    [self willChangeValueForKey:@"currentChapterIndex"];
+    [self didChangeValueForKey:@"currentChapterIndex"];
 }
 
 #if TARGET_OS_IPHONE
