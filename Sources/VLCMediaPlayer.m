@@ -791,7 +791,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                            [NSNumber numberWithLongLong:titleInfo[i]->i_duration],
                                            VLCTitleDescriptionDuration,
-                                           @(titleInfo[i]->b_menu),
+                                           @(titleInfo[i]->i_flags & libvlc_title_menu),
                                            VLCTitleDescriptionIsMenu,
                                            nil];
         if (titleInfo[i]->psz_name != NULL)
