@@ -1,7 +1,7 @@
-From 4782cb6028f64999615ec26a5a4a194b9de7bb5b Mon Sep 17 00:00:00 2001
+From ba6603dab3015259b991a2b67b94b4d676ef0bda Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 15/19] libvlc: expose a base set of freetype options to
+Subject: [PATCH 15/16] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
@@ -14,10 +14,10 @@ Subject: [PATCH 15/19] libvlc: expose a base set of freetype options to
  6 files changed, 161 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 6614340..ef5c54c 100644
+index 76443c1..23a0183 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1515,6 +1515,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1521,6 +1521,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
@@ -75,7 +75,7 @@ index 49207db..88d2478 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 3ff4b8a..dca0ffc 100644
+index 533988f..7ab8954 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -640,6 +640,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -188,7 +188,7 @@ index 167f76a..5a2b1ac 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 3409460..f4f2f00 100644
+index 3409460..acb8c08 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -77,6 +77,9 @@

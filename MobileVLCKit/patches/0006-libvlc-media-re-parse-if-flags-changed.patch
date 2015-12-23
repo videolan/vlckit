@@ -1,7 +1,7 @@
-From 7728ca5c568be20e5b2f5f097ad51f891215eaac Mon Sep 17 00:00:00 2001
+From 3dbb16a1bbe361fc7f28d9d456c67fca4548b774 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 19 Dec 2014 22:14:55 +0100
-Subject: [PATCH 06/19] libvlc/media: re-parse if flags changed
+Subject: [PATCH 06/16] libvlc/media: re-parse if flags changed
 
 ---
  lib/media.c          | 6 ++++++
