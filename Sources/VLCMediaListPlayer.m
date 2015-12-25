@@ -42,7 +42,7 @@
 
 @implementation VLCMediaListPlayer
 
-- (instancetype)initWithOptions:(NSArray *)options
+- (instancetype)initWithOptions:(NSArray *)options andDrawable:(id)drawable
 {
     if (self = [super init]) {
         VLCLibrary *library;
@@ -52,14 +52,27 @@
             library = [VLCLibrary sharedLibrary];
 
         instance = libvlc_media_list_player_new([library instance]);
+
         _mediaPlayer = [[VLCMediaPlayer alloc] initWithLibVLCInstance:libvlc_media_list_player_get_media_player(instance) andLibrary:library];
+        if (drawable != nil)
+            [_mediaPlayer setDrawable:drawable];
     }
     return self;
 }
 
+- (instancetype)initWithOptions:(NSArray *)options
+{
+    return [self initWithOptions:options andDrawable:nil];
+}
+
 - (instancetype)init
 {
-    return [self initWithOptions:nil];
+    return [self initWithOptions:nil andDrawable:nil];
+}
+
+- (instancetype)initWithDrawable:(id)drawable
+{
+    return [self initWithOptions:nil andDrawable:drawable];
 }
 
 - (void)dealloc

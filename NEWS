@@ -17,6 +17,10 @@ New APIs:
   - added notifications: VLCMediaPlayerTitleChanged, VLCMediaPlayerChapterChanged
   - Note: play's return type was changed from BOOL to void
 
+- VLCMediaListPlayer
+  - added selectors: initWithDrawable:
+                     initWithOptions:andDrawable:
+
 - VLCMedia
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
                 VLCMetaInformationSeason, VLCMetaInformationEpisode,
