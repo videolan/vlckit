@@ -1,7 +1,7 @@
-From d815f5cb6f529cb8c27cbfef7229df4a561897d8 Mon Sep 17 00:00:00 2001
+From 574b4faf9293000e96feafaa37df22684af1b96a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 11 Sep 2015 18:34:26 +0200
-Subject: [PATCH 11/16] libvlc: hack to disable daemon mode
+Subject: [PATCH 11/17] libvlc: hack to disable daemon mode
 
 ---
  src/libvlc.c | 4 ++++
@@ -23,5 +23,5 @@ index a7d9a69..c8b5c7a 100644
      /* Check for daemon mode */
      if( var_InheritBool( p_libvlc, "daemon" ) )
 -- 
-2.6.0
+2.6.4
 
