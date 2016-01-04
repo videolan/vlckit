@@ -827,9 +827,11 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 		return;
 	}
 
-    _url = [NSURL URLWithString:[urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    _url = [NSURL URLWithString:urlString];
     if (!_url) /* Attempt to interpret as a file path then */ {
-        _url = [NSURL fileURLWithPath:_url];
+        _url = [NSURL fileURLWithPath:urlString];
     }
     free(p_url);
 
