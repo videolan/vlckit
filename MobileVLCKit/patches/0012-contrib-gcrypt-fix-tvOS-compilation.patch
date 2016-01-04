@@ -1,4 +1,4 @@
-From bb53ff3ebe6045b9c3d6869d89820add803fbb52 Mon Sep 17 00:00:00 2001
+From b3eb14a2ddea8e8e17a12ce688ffd66355719be9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
 Subject: [PATCH 12/17] contrib/gcrypt: fix tvOS compilation
@@ -56,5 +56,5 @@ index 0471522..ac20d02 100644
  GCRYPT_CONF += --disable-aesni-support
  else
 -- 
-2.6.4
+2.6.0
 

@@ -1,4 +1,4 @@
-From a880757d14a8faaada03298d3b4393b6e59f6c73 Mon Sep 17 00:00:00 2001
+From 8d9cc6d98e8e5dddd668ae28becff73eb375afdd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 26 Oct 2015 10:50:26 +0100
 Subject: [PATCH 14/17] Revert "libvlc: refactor sfilter enabling/disabling"
@@ -185,5 +185,5 @@ index b2c9b34..167f76a 100644
  
  
 -- 
-2.6.4
+2.6.0
 

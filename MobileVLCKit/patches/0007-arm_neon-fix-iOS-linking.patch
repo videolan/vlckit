@@ -1,4 +1,4 @@
-From e8f2ad0dfc4cbc0a57b2fcd6df78bcde42448a1f Mon Sep 17 00:00:00 2001
+From ba9541c3c8be5a4d510d865d86599a408db4fcdb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
 Subject: [PATCH 07/17] arm_neon: fix iOS linking
@@ -194,5 +194,5 @@ index a94ae85..54b43a7 100644
  	pop {r4,pc}
 +endfunc
 -- 
-2.6.4
+2.6.0
 
