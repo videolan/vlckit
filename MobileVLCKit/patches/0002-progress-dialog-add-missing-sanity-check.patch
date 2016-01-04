@@ -1,4 +1,4 @@
-From cd86ac12173b4f4eb5dd817bb7be2ae11a6948a6 Mon Sep 17 00:00:00 2001
+From 2ffbd20ddbaa3438659d4fb66915c54c741dc953 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 17 Apr 2012 16:41:19 +0200
 Subject: [PATCH 02/17] progress dialog: add missing sanity check
@@ -25,5 +25,5 @@ index f90e7c8..dcfb5dd 100644
  }
  
 -- 
-2.6.0
+2.6.4
 

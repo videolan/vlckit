@@ -1,4 +1,4 @@
-From e88b14c735d533b10ae2600a7a0bfc5741aa2965 Mon Sep 17 00:00:00 2001
+From cb7ee2d092c09b1b11ed7d07f9d3866c6926cf37 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 10 Sep 2015 19:58:40 +0200
 Subject: [PATCH 10/17] src/misc: fix compilation for OS without fork()
@@ -21,5 +21,5 @@ index 4a5f2a0..79b28e4 100644
  {
      pid_t pid = fork();
 -- 
-2.6.0
+2.6.4
 

@@ -1,4 +1,4 @@
-From 8f09a02d733ef51032584409fd08fec9db8b7bec Mon Sep 17 00:00:00 2001
+From 9f87bb57ccea56615104c03da503b965e4e97c1d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 28 Dec 2015 15:10:18 +0100
 Subject: [PATCH 17/17] HACK to temporarily fix TS seeking
@@ -34,5 +34,5 @@ index ac739bd..e0e8c2f 100644
              }
          }
 -- 
-2.6.0
+2.6.4
 

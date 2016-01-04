@@ -1,4 +1,4 @@
-From 6661b3a651b494e8c92893204d61d4017902b4f6 Mon Sep 17 00:00:00 2001
+From dddbe74ff29231549be664ddd789b06dc1035d92 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 26 Oct 2015 10:47:56 +0100
 Subject: [PATCH 13/17] disable videotoolbox
@@ -21,5 +21,5 @@ index c2a1462..90a338b 100755
  
  if [ "$SCARY" = "no" ]; then
 -- 
-2.6.0
+2.6.4
 
