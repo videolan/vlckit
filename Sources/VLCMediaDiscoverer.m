@@ -105,6 +105,11 @@
 
 - (void)stopDiscoverer
 {
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(stopDiscoverer) withObject:nil];
+        return;
+    }
+
     if (!_mdis) {
         _running = NO;
         return;
