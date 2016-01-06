@@ -435,7 +435,8 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:@(currentTrack->psz_name)];
+        NSString *track = @(currentTrack->psz_name);
+        [tempArray addObject:track != nil ? track : @""];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(firstTrack);
@@ -889,7 +890,8 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
     NSMutableArray *tempArray = [NSMutableArray array];
     while (currentTrack) {
-        [tempArray addObject:@(currentTrack->psz_name)];
+        NSString *track = @(currentTrack->psz_name);
+        [tempArray addObject:track != nil ? track : @""];
         currentTrack = currentTrack->p_next;
     }
     libvlc_track_description_list_release(firstTrack);
