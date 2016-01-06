@@ -37,7 +37,6 @@
     NSString *_localizedName;
     VLCMediaList *_discoveredMedia;
     void *_mdis;
-    BOOL _running;
 
     VLCLibrary *_privateLibrary;
 }
@@ -73,12 +72,13 @@
 
 - (void)dealloc
 {
-    if (_running)
-        [self stopDiscoverer];
+    if (_mdis) {
+        if (libvlc_media_discoverer_is_running(_mdis))
+            libvlc_media_discoverer_stop(_mdis);
+        libvlc_media_discoverer_release(_mdis);
+    }
 
     [[VLCEventManager sharedManager] cancelCallToObject:self];
-
-    libvlc_media_discoverer_release(_mdis);
 
     libvlc_release(_privateLibrary.instance);
 }
@@ -88,11 +88,8 @@
     int returnValue = libvlc_media_discoverer_start(_mdis);
     if (returnValue == -1) {
         VKLog(@"media discovery start failed");
-        _running = NO;
         return returnValue;
     }
-
-    _running = libvlc_media_discoverer_is_running(_mdis);
 
     libvlc_media_list_t *p_mlist = libvlc_media_discoverer_media_list(_mdis);
     VLCMediaList *ret = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
@@ -110,13 +107,7 @@
         return;
     }
 
-    if (!_mdis) {
-        _running = NO;
-        return;
-    }
-
     libvlc_media_discoverer_stop(_mdis);
-    _running = libvlc_media_discoverer_is_running(_mdis);
 }
 
 - (VLCMediaList *)discoveredMedia
@@ -139,7 +130,7 @@
 
 - (BOOL)isRunning
 {
-    return _running;
+    return libvlc_media_discoverer_is_running(_mdis);;
 }
 
 @end
