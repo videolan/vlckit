@@ -1,4 +1,4 @@
-From d48a06a3b3e7fde746a32b084e0c71d4f532909c Mon Sep 17 00:00:00 2001
+From d4c1302cd87acc144509ca504127b7372e5efb30 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:07 +0200
 Subject: [PATCH 03/17] deinterlace/merge: use a macro to fix compilation for
@@ -82,5 +82,5 @@ index dd77902..03e5042 100644
  	b		1b
 +endfunc
 -- 
-2.6.4
+2.7.0
 
