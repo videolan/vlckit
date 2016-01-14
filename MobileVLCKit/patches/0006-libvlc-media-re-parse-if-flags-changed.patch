@@ -1,4 +1,4 @@
-From 3cb43dbeb71815062a4995f3edb7c5d0cfd561b9 Mon Sep 17 00:00:00 2001
+From 36b1c82b3e35347880b9b5a091be8f29859a75d5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 19 Dec 2014 22:14:55 +0100
 Subject: [PATCH 06/14] libvlc/media: re-parse if flags changed
@@ -38,5 +38,5 @@ index 35f06a4..d28297e 100644
  
  /* Media Descriptor */
 -- 
-2.6.3
+2.7.0
 

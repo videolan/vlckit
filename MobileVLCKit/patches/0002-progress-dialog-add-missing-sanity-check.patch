@@ -1,4 +1,4 @@
-From de93afd7c3cda1a71e7e16bbf26775c68ce590c1 Mon Sep 17 00:00:00 2001
+From a4343a11f961b1f08f7a92aead30d0e96cacdad3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 17 Apr 2012 16:41:19 +0200
 Subject: [PATCH 02/14] progress dialog: add missing sanity check
@@ -8,10 +8,10 @@ Subject: [PATCH 02/14] progress dialog: add missing sanity check
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/src/interface/dialog.c b/src/interface/dialog.c
-index f90e7c8..dcfb5dd 100644
+index 3a0a36e..a9ac2e5 100644
 --- a/src/interface/dialog.c
 +++ b/src/interface/dialog.c
-@@ -251,7 +251,11 @@ void dialog_ProgressDestroy (dialog_progress_bar_t *dialog)
+@@ -254,7 +254,11 @@ void dialog_ProgressDestroy (dialog_progress_bar_t *dialog)
  {
      assert (dialog);
  
@@ -25,5 +25,5 @@ index f90e7c8..dcfb5dd 100644
  }
  
 -- 
-2.6.3
+2.7.0
 
