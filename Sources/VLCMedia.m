@@ -836,7 +836,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
     _url = [NSURL URLWithString:urlString];
     if (!_url) /* Attempt to interpret as a file path then */ {
-         _url = [NSURL fileURLWithPath:_url];
+         _url = [NSURL fileURLWithPath:urlString];
          if(!_url) {
              free(p_url);
              return;
