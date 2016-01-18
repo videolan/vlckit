@@ -61,6 +61,18 @@ typedef NS_ENUM(NSInteger, VLCMediaPlayerState)
 };
 
 /**
+ * VLCMediaPlaybackNavigationAction describes actions which can be performed to navigate an interactive title
+ */
+typedef NS_ENUM(unsigned, VLCMediaPlaybackNavigationAction)
+{
+    VLCMediaPlaybackNavigationActionActivate = 0,
+    VLCMediaPlaybackNavigationActionUp,
+    VLCMediaPlaybackNavigationActionDown,
+    VLCMediaPlaybackNavigationActionLeft,
+    VLCMediaPlaybackNavigationActionRight
+};
+
+/**
  * Returns the name of the player state as a string.
  * \param state The player state.
  * \return A string containing the name of state. If state is not a valid state, returns nil.
@@ -606,6 +618,11 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * Jumps shortly forward in current stream if seeking is supported.
  */
 - (void)longJumpForward;
+
+/**
+ * performs navigation actions on interactive titles
+ */
+- (void)performNavigationAction:(VLCMediaPlaybackNavigationAction)action;
 
 #pragma mark -
 #pragma mark playback information
