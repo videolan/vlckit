@@ -1179,6 +1179,11 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     [self jumpForward:300];
 }
 
+- (void)performNavigationAction:(VLCMediaPlaybackNavigationAction)action
+{
+    libvlc_media_player_navigate(_playerInstance, action);
+}
+
 + (NSSet *)keyPathsForValuesAffectingIsPlaying
 {
     return [NSSet setWithObjects:@"state", nil];
