@@ -590,18 +590,20 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Brightness, f_value);
     }
 }
-- (int)hue
+
+- (float)hue
 {
     libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_int(_playerInstance, libvlc_adjust_Hue);
+    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Hue);
 }
-- (void)setHue:(int)i_value
+- (void)setHue:(float)f_value
 {
-    if (i_value <= 360 && i_value >= 0) {
+    if (f_value <= 180. && f_value >= -180.) {
         libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Hue, i_value);
+        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Hue, f_value);
     }
 }
+
 - (float)saturation
 {
     libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
