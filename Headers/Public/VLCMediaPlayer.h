@@ -223,9 +223,9 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Set/Get the adjust filter's hue value
  *
- * \param integer value (range: 0-360, default: 0)
+ * \param float value (range: -180-180, default: 0.)
  */
-@property (nonatomic)  int hue;
+@property (nonatomic)  float hue;
 /**
  * Set/Get the adjust filter's saturation value
  *
