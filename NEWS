@@ -15,7 +15,9 @@ New APIs:
   - added selectors: chaptersForTitleIndex:
                      numberOfChaptersForTitle:
   - added notifications: VLCMediaPlayerTitleChanged, VLCMediaPlayerChapterChanged
-  - Note: play's return type was changed from BOOL to void
+  - Note:
+    - play's return type was changed from BOOL to void
+    - hue is now a float instead of an integer
 
 - VLCMediaListPlayer
   - added selectors: initWithDrawable:
