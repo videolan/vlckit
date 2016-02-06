@@ -1,4 +1,4 @@
-From 84c6b30c061f21756ce1ba8ef1ff647a1d1abd4d Mon Sep 17 00:00:00 2001
+From ec9ee76f64b15bc53b15750840e5284c8c852473 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 29 May 2013 13:25:54 +0200
 Subject: [PATCH 04/18] libass: fix text rendering on iOS by providing a font
@@ -9,7 +9,7 @@ Subject: [PATCH 04/18] libass: fix text rendering on iOS by providing a font
  1 file changed, 38 insertions(+)
 
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index 8e32d64..77418e7 100644
+index a86f27a..d2f2d72 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
 @@ -29,6 +29,13 @@
@@ -65,5 +65,5 @@ index 8e32d64..77418e7 100644
      const char *psz_font = NULL; /* We don't ship a default font with VLC */
      const char *psz_family = "Arial"; /* Use Arial if we can't find anything more suitable */
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

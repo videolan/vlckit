@@ -1,4 +1,4 @@
-From f087abc2ac103eabccc324b4dea519bf8a51f5eb Mon Sep 17 00:00:00 2001
+From 90f1155d92ac24ea570f05fb39521abef2255eda Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 22 Jan 2014 13:37:59 +0100
 Subject: [PATCH 15/18] contrib/speex: fix compilation for non-ARMv7 iOS
@@ -25,5 +25,5 @@ index a5f003c..916b0ea 100644
  .speex: speex
  	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(SPEEX_CONF)
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

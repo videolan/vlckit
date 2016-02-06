@@ -1,4 +1,4 @@
-From 699a565be4e40d2ac68a49c9337615de3d93cee7 Mon Sep 17 00:00:00 2001
+From c7d40e281c8a398e71032e0f2672d9cd60613fc7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 3 Oct 2013 18:27:43 +0200
 Subject: [PATCH 12/18] contrib: add arch option for platforms where the arch
@@ -10,7 +10,7 @@ Subject: [PATCH 12/18] contrib: add arch option for platforms where the arch
  2 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/contrib/bootstrap b/contrib/bootstrap
-index b77a9d9..86d4b9e 100755
+index 4fa2474..376e3ea 100755
 --- a/contrib/bootstrap
 +++ b/contrib/bootstrap
 @@ -31,6 +31,7 @@ usage()
@@ -65,7 +65,7 @@ index b77a9d9..86d4b9e 100755
  		;;
  	*bsd*)
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
-index c9f409a..1ae11e9 100644
+index d3be485..01eef93 100644
 --- a/contrib/src/main.mak
 +++ b/contrib/src/main.mak
 @@ -35,7 +35,9 @@ PREFIX := $(abspath $(PREFIX))
@@ -79,5 +79,5 @@ index c9f409a..1ae11e9 100644
  ifeq ($(ARCH)-$(HAVE_WIN32),x86_64-1)
  HAVE_WIN64 := 1
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

@@ -1,4 +1,4 @@
-From 2ab08e418a4968e3abf4fee5aa3fd65d785c8d6f Mon Sep 17 00:00:00 2001
+From fbf58a2cf78f6501b26215ddd3c6dcf58a393710 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 31 Mar 2014 17:54:01 +0200
 Subject: [PATCH 14/18] libvlc: add preliminary code path to modify quartztext
@@ -67,10 +67,10 @@ index c0c66dd..7810ed7 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 5691345..3ca1e10 100644
+index 9729eec..a8a9d18 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -465,6 +465,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -528,6 +528,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -139,7 +139,7 @@ index 19065fb..8988069 100644
 +    return get_string( p_mi, "quartztext", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/quartztext.c b/modules/text_renderer/quartztext.c
-index 8de1081..112e952 100644
+index 69a31ed..2c3337f 100644
 --- a/modules/text_renderer/quartztext.c
 +++ b/modules/text_renderer/quartztext.c
 @@ -65,6 +65,10 @@
@@ -223,7 +223,7 @@ index 8de1081..112e952 100644
 +
  #ifndef TARGET_OS_IPHONE
      if (p_sys->p_fonts) {
-         for (int k = 0; k < p_sys->i_fonts; k++) {
+         for (int k = 0; k < p_sys->i_fonts; k++)
 @@ -236,8 +259,8 @@ static void Destroy(vlc_object_t *p_this)
  
          free(p_sys->p_fonts);
@@ -234,7 +234,7 @@ index 8de1081..112e952 100644
      free(p_sys);
  }
  
-@@ -949,12 +972,12 @@ static int GetFontSize(filter_t *p_filter)
+@@ -953,12 +976,12 @@ static int GetFontSize(filter_t *p_filter)
  {
      int i_size = 0;
  
@@ -250,7 +250,7 @@ index 8de1081..112e952 100644
          msg_Warn( p_filter, "invalid fontsize, using 12" );
          i_size = 12;
      }
-@@ -1041,3 +1064,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
+@@ -1045,3 +1068,23 @@ static int RenderYUVA(filter_t *p_filter, subpicture_region_t *p_region,
  
      return VLC_SUCCESS;
  }
@@ -275,5 +275,5 @@ index 8de1081..112e952 100644
 +    return VLC_SUCCESS;
 +}
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

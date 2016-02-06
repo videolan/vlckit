@@ -1,4 +1,4 @@
-From a00328f1162666553595232cae4f45132c7747d5 Mon Sep 17 00:00:00 2001
+From 17271ac3d7f551a6e29584a6be5973d3d4b44571 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 13 May 2015 13:00:49 +0200
 Subject: [PATCH 17/18] Revert "Contribs: update libvpx to 1.4.0"
@@ -333,5 +333,5 @@ index ac3eace..b55199d 100644
  $(TARBALLS)/libvpx-$(VPX_VERSION).tar.bz2:
  	$(call download,$(VPX_URL))
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

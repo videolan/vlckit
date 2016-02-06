@@ -1,4 +1,4 @@
-From 84fb4aac8388ca87ba2d67d560e39f7a4e0e9369 Mon Sep 17 00:00:00 2001
+From 78ea7702174cd2b8083bb98c6abf9ea62afb62d0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20Ku=CC=88hne?= <fkuehne@videolan.org>
 Date: Sat, 20 Jul 2013 23:35:05 +0200
 Subject: [PATCH 05/18] contrib/png: fix ARM assembly for iOS
@@ -82,7 +82,7 @@ index 0000000..f4b8bc1
 +         ldr             r12, [r0, #4]           @ rowbytes
 +         vmov.i8         d3,  #0
 diff --git a/contrib/src/png/rules.mak b/contrib/src/png/rules.mak
-index c5a3fba..7649c4b 100644
+index 61f835e..8e5f654 100644
 --- a/contrib/src/png/rules.mak
 +++ b/contrib/src/png/rules.mak
 @@ -7,6 +7,15 @@ ifeq ($(call need_pkg,"libpng"),)
@@ -119,5 +119,5 @@ index c5a3fba..7649c4b 100644
  	cd $< && $(MAKE) install
  	touch $@
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

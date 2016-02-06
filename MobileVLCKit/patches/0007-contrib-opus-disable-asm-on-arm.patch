@@ -1,4 +1,4 @@
-From 0a72aeb45c7b3aec98df1b2bde3fd08fd5634310 Mon Sep 17 00:00:00 2001
+From a0f79773d80884517fb058d556dc78c3783d46b2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 15 Jan 2014 15:26:46 +0100
 Subject: [PATCH 07/18] contrib/opus disable asm on arm
@@ -8,7 +8,7 @@ Subject: [PATCH 07/18] contrib/opus disable asm on arm
  1 file changed, 3 insertions(+)
 
 diff --git a/contrib/src/opus/rules.mak b/contrib/src/opus/rules.mak
-index 56f0933..273521f 100644
+index 0c002d2..4a8aca7 100644
 --- a/contrib/src/opus/rules.mak
 +++ b/contrib/src/opus/rules.mak
 @@ -23,6 +23,9 @@ OPUS_CONF= --disable-extra-programs --disable-doc
@@ -22,5 +22,5 @@ index 56f0933..273521f 100644
  .opus: opus
  	cd $< && $(HOSTVARS) ./configure $(HOSTCONF) $(OPUS_CONF)
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

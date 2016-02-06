@@ -1,4 +1,4 @@
-From d2e9638c2008cabbc7785660bb180c9a4db8152d Mon Sep 17 00:00:00 2001
+From ebc498d0c3a43286815e0f8cd326daf8b4f4c39c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 31 Oct 2013 20:42:59 +0100
 Subject: [PATCH 13/18] contrib/gcrypt: use git version on iOS
@@ -61,12 +61,12 @@ index 0000000..e63224e
 +1.8.3.4 (Apple Git-47)
 +
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 7e67319..8773aa1 100644
+index 6fa8b1e..ef297a1 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -1,6 +1,7 @@
  # GCRYPT
- GCRYPT_VERSION := 1.6.2
+ GCRYPT_VERSION := 1.6.4
  GCRYPT_URL := ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-$(GCRYPT_VERSION).tar.bz2
 +GCRYPT_GITURL := git://git.gnupg.org/libgcrypt.git
  
@@ -135,5 +135,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 

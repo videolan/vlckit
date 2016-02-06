@@ -1,4 +1,4 @@
-From 51b0f30008ecb018540faa9591c639d3b04b0bc4 Mon Sep 17 00:00:00 2001
+From f8b3bf066e3ff0ec66f0827eabf153929e67348a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 13 May 2015 13:06:05 +0200
 Subject: [PATCH 18/18] ebml: disable exceptions
@@ -8,7 +8,7 @@ Subject: [PATCH 18/18] ebml: disable exceptions
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/src/ebml/rules.mak b/contrib/src/ebml/rules.mak
-index 4a5ac16..c779726 100644
+index 0859b55..4793316 100644
 --- a/contrib/src/ebml/rules.mak
 +++ b/contrib/src/ebml/rules.mak
 @@ -14,7 +14,7 @@ libebml: libebml-$(EBML_VERSION).tar.bz2 .sum-ebml
@@ -21,5 +21,5 @@ index 4a5ac16..c779726 100644
  
  .ebml: libebml
 -- 
-2.4.3
+2.5.4 (Apple Git-61)
 
