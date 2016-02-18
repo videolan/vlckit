@@ -15,6 +15,7 @@ NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 TVOS=no
+BITCODE=no
 
 TESTEDHASH=1464d905
 
@@ -34,6 +35,7 @@ OPTIONS
    -t       Build for tvOS
    -w       Build a limited stack of non-scary libraries only
    -y       Build universal static libraries
+   -b       Enable bitcode
 EOF
 }
 
@@ -82,7 +84,7 @@ buildxcodeproj()
                > ${out}
 }
 
-while getopts "hvwsfdntlk:" OPTION
+while getopts "hvwsfbdntlk:" OPTION
 do
      case $OPTION in
          h)
@@ -115,8 +117,12 @@ do
          k)
              SDK=$OPTARG
              ;;
+         b)
+             BITCODE=yes
+             ;;
          t)
              TVOS=yes
+             BITCODE=yes
              SDK=`xcrun --sdk appletvos --show-sdk-version`
              ;;
          ?)
