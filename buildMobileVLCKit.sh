@@ -201,6 +201,9 @@ buildMobileKit() {
     if [ "$SCARY" = "no" ]; then
         args="${args} -w"
     fi
+    if [ "$BITCODE" = "yes" ]; then
+        args="${args} -b"
+    fi
     if [ "$TVOS" = "no" ]; then
 		if [ "$PLATFORM" = "iphonesimulator" ]; then
 			args="${args} -s"
