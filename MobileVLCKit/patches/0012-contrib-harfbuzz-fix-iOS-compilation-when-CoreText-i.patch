@@ -1,7 +1,7 @@
-From 245dcb464a0105c10e4f31b07ec655b6edc766e6 Mon Sep 17 00:00:00 2001
+From c05e4df144dc201bd855065af7046ad27aad71cf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:46:27 +0100
-Subject: [PATCH 13/14] contrib/harfbuzz: fix iOS compilation when CoreText is
+Subject: [PATCH 12/13] contrib/harfbuzz: fix iOS compilation when CoreText is
  enabled
 
 ---
@@ -61,5 +61,5 @@ index f21917c..2058b4a 100644
  
  DEPS_harfbuzz = freetype2 $(DEPS_freetype2)
 -- 
-2.7.0
+2.7.1
 
