@@ -501,6 +501,11 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     libvlc_video_set_textrenderer_bool(_playerInstance, libvlc_textrender_fontforcebold, [fontForceBold boolValue]);
 }
+
+- (void)setPassthroughAudio:(NSNumber *)passthroughEnabled
+{
+    libvlc_audio_set_spdif(_playerInstance, [passthroughEnabled boolValue]);
+}
 #endif
 
 #pragma mark -

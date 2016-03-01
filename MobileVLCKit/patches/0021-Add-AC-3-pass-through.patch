@@ -1,0 +1,167 @@
+From f264204fa31440f232322786796051b0216b864a Mon Sep 17 00:00:00 2001
+From: Aman Gupta <aman@tmm1.net>
+Date: Tue, 1 Mar 2016 16:31:13 +0100
+Subject: [PATCH] Add AC-3 pass-through
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
+---
+ extras/package/ios/build.sh          |  1 -
+ include/vlc/libvlc_media_player.h    | 10 +++++++++
+ lib/audio.c                          | 16 +++++++++++++++
+ lib/media_player.c                   |  1 +
+ modules/audio_output/audiounit_ios.m | 39 +++++++++++++++++++++++++++---------
+ modules/codec/a52.c                  |  2 +-
+ 6 files changed, 57 insertions(+), 12 deletions(-)
+
+diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
+index 90a338b..6eee47a 100755
+--- a/extras/package/ios/build.sh
++++ b/extras/package/ios/build.sh
+@@ -453,7 +453,6 @@ speex_resampler
+ remoteosd
+ magnify
+ gradient
+-tospdif
+ dtstofloat32
+ logger
+ visual
+diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
+index 23a0183..9ea9528 100644
+--- a/include/vlc/libvlc_media_player.h
++++ b/include/vlc/libvlc_media_player.h
+@@ -1896,6 +1896,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
+ LIBVLC_API int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay );
+ 
+ /**
++ * Set audio spdif mode.
++ *
++ * \param p_mi media player
++ * \param enabled the spdif state
++ * \return 0 on success, -1 on error
++ * \version LibVLC 2.x.x or later
++ */
++LIBVLC_API int libvlc_audio_set_spdif( libvlc_media_player_t *p_mi, bool enabled );
++
++/**
+  * Get the number of equalizer presets.
+  *
+  * \return number of presets
+diff --git a/lib/audio.c b/lib/audio.c
+index 7901c64..3877311 100644
+--- a/lib/audio.c
++++ b/lib/audio.c
+@@ -472,6 +472,22 @@ int libvlc_audio_set_channel( libvlc_media_player_t *mp, int channel )
+ }
+ 
+ /*****************************************************************************
++ * libvlc_audio_set_spdif : Enable/disable spdif mode
++ *****************************************************************************/
++int libvlc_audio_set_spdif( libvlc_media_player_t *p_mi, bool enabled )
++{
++    int ret = 0;
++
++    if( var_SetBool( p_mi, "spdif", enabled ) < 0 )
++    {
++        libvlc_printerr( "Error setting 'spdif'" );
++        ret = -1;
++    }
++
++    return ret;
++}
++
++/*****************************************************************************
+  * libvlc_audio_get_delay : Get the current audio delay
+  *****************************************************************************/
+ int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
+diff --git a/lib/media_player.c b/lib/media_player.c
+index 7ab8954..45392db 100644
+--- a/lib/media_player.c
++++ b/lib/media_player.c
+@@ -610,6 +610,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+     var_Create (mp, "zoom", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
+     var_Create (mp, "aspect-ratio", VLC_VAR_STRING);
+     var_Create (mp, "crop", VLC_VAR_STRING);
++    var_Create (mp, "spdif", VLC_VAR_BOOL | VLC_VAR_DOINHERIT);
+     var_Create (mp, "deinterlace", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
+     var_Create (mp, "deinterlace-mode", VLC_VAR_STRING);
+ 
+diff --git a/modules/audio_output/audiounit_ios.m b/modules/audio_output/audiounit_ios.m
+index cee8eab..0aa9dee 100644
+--- a/modules/audio_output/audiounit_ios.m
++++ b/modules/audio_output/audiounit_ios.m
+@@ -201,16 +201,34 @@ static int StartAnalog(audio_output_t *p_aout, audio_sample_format_t *fmt)
+     if (status != noErr)
+         msg_Warn(p_aout, "failed to set IO mode (%i)", (int)status);
+ 
++    AVAudioSession *instance = [AVAudioSession sharedInstance];
++
+     /* Get the current format */
+     AudioStreamBasicDescription streamDescription;
+     streamDescription.mSampleRate = fmt->i_rate;
+-    fmt->i_format = VLC_CODEC_FL32;
+-    fmt->i_physical_channels = fmt->i_original_channels = AOUT_CHANS_STEREO;
+     streamDescription.mFormatID = kAudioFormatLinearPCM;
+-    streamDescription.mFormatFlags = kAudioFormatFlagsNativeFloatPacked; // FL32
+-    streamDescription.mChannelsPerFrame = aout_FormatNbChannels(fmt);
+-    streamDescription.mFramesPerPacket = 1;
+-    streamDescription.mBitsPerChannel = 32;
++
++    if (AOUT_FMT_SPDIF(fmt) && var_InheritBool(p_aout, "spdif")) {
++        // request spdif
++        fmt->i_format = VLC_CODEC_SPDIFL;
++        fmt->i_bytes_per_frame = AOUT_SPDIF_SIZE;
++        fmt->i_frame_length = A52_FRAME_NB;
++
++        streamDescription.mFormatFlags = kLinearPCMFormatFlagIsSignedInteger | kLinearPCMFormatFlagIsPacked; // S16LE
++        streamDescription.mChannelsPerFrame = 2;
++        streamDescription.mFramesPerPacket = 1;
++        streamDescription.mBitsPerChannel = 16;
++    } else {
++        // request fl32 pcm
++        fmt->i_format = VLC_CODEC_FL32;
++        fmt->i_physical_channels = fmt->i_original_channels = AOUT_CHANS_STEREO;
++
++        streamDescription.mFormatFlags = kAudioFormatFlagsNativeFloatPacked; // FL32
++        streamDescription.mChannelsPerFrame = aout_FormatNbChannels(fmt);
++        streamDescription.mFramesPerPacket = 1;
++        streamDescription.mBitsPerChannel = 32;
++    }
++
+     streamDescription.mBytesPerFrame = streamDescription.mBitsPerChannel * streamDescription.mChannelsPerFrame / 8;
+     streamDescription.mBytesPerPacket = streamDescription.mBytesPerFrame * streamDescription.mFramesPerPacket;
+     i_param_size = sizeof(streamDescription);
+@@ -265,10 +283,11 @@ static int StartAnalog(audio_output_t *p_aout, audio_sample_format_t *fmt)
+     }
+ 
+     /* setup circular buffer */
+-    TPCircularBufferInit(&p_sys->circular_buffer, AUDIO_BUFFER_SIZE_IN_SECONDS * fmt->i_rate * fmt->i_bytes_per_frame);
+-
+-    /* start audio session so playback continues if mute switch is on */
+-    AVAudioSession *instance = [AVAudioSession sharedInstance];
++    if (fmt->i_format == VLC_CODEC_SPDIFL) {
++        TPCircularBufferInit(&p_sys->circular_buffer, 200 * AOUT_SPDIF_SIZE);
++    } else {
++        TPCircularBufferInit(&p_sys->circular_buffer, AUDIO_BUFFER_SIZE_IN_SECONDS * fmt->i_rate * fmt->i_bytes_per_frame);
++    }
+ 
+     /* Set audio session to mediaplayback */
+     NSError *error = nil;
+diff --git a/modules/codec/a52.c b/modules/codec/a52.c
+index 044905b..355f14f 100644
+--- a/modules/codec/a52.c
++++ b/modules/codec/a52.c
+@@ -152,7 +152,7 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
+ static int OpenDecoder( vlc_object_t *p_this )
+ {
+     /* HACK: Don't use this codec if we don't have an a52 audio filter */
+-    if( !module_exists( "a52tofloat32" ) )
++    if( !module_exists( "a52tofloat32" ) && !(module_exists("a52tospdif") && var_InheritBool(p_this, "spdif")) )
+         return VLC_EGENERIC;
+     return OpenCommon( p_this, false );
+ }
+-- 
+2.7.1
+
