@@ -1212,8 +1212,19 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 - (void)mediaPlayerMediaChanged:(VLCMedia *)newMedia
 {
     [self willChangeValueForKey:@"media"];
-    if (_media != newMedia)
+    if (_media != newMedia) {
         _media = newMedia;
+
+        [self willChangeValueForKey:@"time"];
+        [self willChangeValueForKey:@"remainingTime"];
+        [self willChangeValueForKey:@"position"];
+        _cachedTime = [VLCTime nullTime];
+        _cachedRemainingTime = [VLCTime nullTime];
+        _position = 0.0f;
+        [self didChangeValueForKey:@"position"];
+        [self didChangeValueForKey:@"remainingTime"];
+        [self didChangeValueForKey:@"time"];
+    }
 
     [self didChangeValueForKey:@"media"];
 }
