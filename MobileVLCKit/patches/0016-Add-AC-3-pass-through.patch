@@ -1,7 +1,7 @@
-From f264204fa31440f232322786796051b0216b864a Mon Sep 17 00:00:00 2001
+From 0058e07d89cbf424f14dd63a950ea582df7ade7f Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH] Add AC-3 pass-through
+Subject: [PATCH 16/16] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -17,10 +17,10 @@ Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
  6 files changed, 57 insertions(+), 12 deletions(-)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index 90a338b..6eee47a 100755
+index c480171..85d73dd 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
-@@ -453,7 +453,6 @@ speex_resampler
+@@ -458,7 +458,6 @@ speex_resampler
  remoteosd
  magnify
  gradient
@@ -29,10 +29,10 @@ index 90a338b..6eee47a 100755
  logger
  visual
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 23a0183..9ea9528 100644
+index c87b437..b8a0144 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1896,6 +1896,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
+@@ -1894,6 +1894,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
  LIBVLC_API int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay );
  
  /**
@@ -77,10 +77,10 @@ index 7901c64..3877311 100644
   *****************************************************************************/
  int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 7ab8954..45392db 100644
+index 50ef3e6..22a5032 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -610,6 +610,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -609,6 +609,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "zoom", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "aspect-ratio", VLC_VAR_STRING);
      var_Create (mp, "crop", VLC_VAR_STRING);
@@ -163,5 +163,5 @@ index 044905b..355f14f 100644
      return OpenCommon( p_this, false );
  }
 -- 
-2.7.1
+2.7.2
 

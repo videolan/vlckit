@@ -1,7 +1,7 @@
-From d24a20bf5039b330a5dcc615ed3eb9eac55311fd Mon Sep 17 00:00:00 2001
+From 20bbb0e09f0b0f8831ab75b25c5d8f1657930b8d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 15/17] libvlc: expose a base set of freetype options to
+Subject: [PATCH 14/16] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
@@ -14,10 +14,10 @@ Subject: [PATCH 15/17] libvlc: expose a base set of freetype options to
  6 files changed, 163 insertions(+), 5 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 76443c1..23a0183 100644
+index 970bdf1..c87b437 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1521,6 +1521,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1519,6 +1519,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
@@ -51,10 +51,10 @@ index 76443c1..23a0183 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 49207db..15fa384 100644
+index 03e9a5e..ec2ca4a 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -229,6 +229,9 @@ libvlc_video_get_spu_count
+@@ -237,6 +237,9 @@ libvlc_video_get_spu_count
  libvlc_video_get_spu_delay
  libvlc_video_get_spu_description
  libvlc_video_get_teletext
@@ -64,7 +64,7 @@ index 49207db..15fa384 100644
  libvlc_video_get_title_description
  libvlc_video_get_track
  libvlc_video_get_track_count
-@@ -253,6 +256,9 @@ libvlc_video_set_spu
+@@ -261,6 +264,9 @@ libvlc_video_set_spu
  libvlc_video_set_spu_delay
  libvlc_video_set_subtitle_file
  libvlc_video_set_teletext
@@ -75,10 +75,10 @@ index 49207db..15fa384 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 533988f..7ab8954 100644
+index a2b02f4..50ef3e6 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -640,6 +640,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -639,6 +639,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -193,7 +193,7 @@ index 167f76a..ae10a18 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 3409460..4e3da96 100644
+index 135b411..24b51d5 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -77,6 +77,9 @@
@@ -316,5 +316,5 @@ index 44b2731..7f1abec 100644
  
  /**
 -- 
-2.7.0
+2.7.2
 
