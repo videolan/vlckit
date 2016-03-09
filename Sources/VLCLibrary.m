@@ -46,12 +46,6 @@ static void HandleMessage(void *,
 
 static VLCLibrary * sharedLibrary = nil;
 
-@interface VLCLibrary()
-
-@property (nonatomic, assign) void *instance;
-
-@end
-
 @implementation VLCLibrary
 
 + (VLCLibrary *)sharedLibrary

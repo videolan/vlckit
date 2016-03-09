@@ -38,6 +38,9 @@ New APIs:
 - VLCAudio
   - setMuted:
 
+- VLCDialogProvider
+  - new class to handle user interaction with VLC events
+
 Deprecated APIs:
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond

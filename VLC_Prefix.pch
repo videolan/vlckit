@@ -33,3 +33,7 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 #endif
+
+NSString *toNSStr(const char *str) {
+    return str != NULL ? [NSString stringWithUTF8String:str] : @"";
+}
