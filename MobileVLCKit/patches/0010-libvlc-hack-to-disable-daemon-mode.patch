@@ -1,4 +1,4 @@
-From bdd7ce9ce9c143599b2d1d5ad0723620a936d0b8 Mon Sep 17 00:00:00 2001
+From c572e4b0c0517361e1a38c5cf74a4bec95ddf846 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 11 Sep 2015 18:34:26 +0200
 Subject: [PATCH 10/16] libvlc: hack to disable daemon mode
