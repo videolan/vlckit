@@ -107,4 +107,6 @@
  */
 - (void)setApplicationIdentifier:(NSString *)identifier withVersion:(NSString *)version andApplicationIconName:(NSString *)icon;
 
+@property (nonatomic, assign) void *instance;
+
 @end
