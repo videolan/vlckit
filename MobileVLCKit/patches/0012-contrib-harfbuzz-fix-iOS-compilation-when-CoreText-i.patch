@@ -1,4 +1,4 @@
-From f57ba9a78968ed079b6f6c3c353d7a2e7d0d6565 Mon Sep 17 00:00:00 2001
+From 260e34059dac613c47ba884aa521d9f86c8ac9f6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:46:27 +0100
 Subject: [PATCH 12/13] contrib/harfbuzz: fix iOS compilation when CoreText is

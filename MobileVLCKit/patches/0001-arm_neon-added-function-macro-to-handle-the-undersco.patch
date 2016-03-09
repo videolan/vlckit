@@ -1,4 +1,4 @@
-From 1db5e83895244c54c38312c8171589f84f45e7d2 Mon Sep 17 00:00:00 2001
+From ca7145d5bfa3de0409b01a50843e3f3255fae1ee Mon Sep 17 00:00:00 2001
 From: David Geldreich <david.geldreich@free.fr>
 Date: Fri, 20 Apr 2012 16:41:19 +0200
 Subject: [PATCH 01/13] arm_neon: added function macro to handle the underscore

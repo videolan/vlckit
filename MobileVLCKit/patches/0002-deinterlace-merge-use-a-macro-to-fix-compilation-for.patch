@@ -1,4 +1,4 @@
-From 4a6fbabaf021c2efa29191977928d73824e54c20 Mon Sep 17 00:00:00 2001
+From 6978af68d4ffc4cbb429f5a7462d73b9aac326e0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:07 +0200
 Subject: [PATCH 02/13] deinterlace/merge: use a macro to fix compilation for
