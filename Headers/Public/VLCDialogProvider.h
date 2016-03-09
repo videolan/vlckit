@@ -114,8 +114,8 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
  * \note if library param is NULL, [VLCLibrary sharedLibrary] will be used
  * \return the dialog provider instance, can be NULL on malloc failures
  */
-- (instancetype __nullable)initWithLibrary:(VLCLibrary * __nullable)library
-                                  customUI:(BOOL)customUI;
+- (instancetype _Nullable)initWithLibrary:(VLCLibrary * _Nullable)library
+                                 customUI:(BOOL)customUI;
 
 /**
  * initializer method to run the dialog provider instance on a specific library instance

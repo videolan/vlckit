@@ -35,6 +35,6 @@
  * \note if param is NULL, [VLCLibrary sharedLibrary] will be used
  * \return the dialog provider instance, can be NULL on malloc failures
  */
-- (instancetype __nullable)initWithLibrary:(VLCLibrary * __nullable)library;
+- (instancetype _Nullable)initWithLibrary:(VLCLibrary * _Nullable)library;
 
 @end
