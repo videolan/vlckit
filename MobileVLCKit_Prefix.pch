@@ -7,17 +7,13 @@
     #import <UIKit/UIKit.h>
 #endif
 #import <vlc/vlc.h>
+#import "VLCHelperCode.h"
 
 #ifndef NDEBUG
 #define VKLog(format, ...) NSLog(format, ## __VA_ARGS__)
 #else
 #define VKLog(format, ...)
 #endif
-
-
-NSString *toNSStr(const char *str) {
-    return str != NULL ? [NSString stringWithUTF8String:str] : @"";
-}
 
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[UIDevice currentDevice] systemVersion].floatValue >= [v floatValue])
 
