@@ -1,7 +1,7 @@
 /*****************************************************************************
- * StaticLibVLC.m: I'm a hack. I live here to make stuff link to something
+ * VLCHelperCode.h: generic helper code
  *****************************************************************************
- * Copyright (C) 2015 VideoLabs SAS
+ * Copyright (C) 2016 VideoLabs SAS
  * $Id$
  *
  * Authors: Felix Paul Kühne <fkuehne # videolan.org>
@@ -23,10 +23,4 @@
 
 #import <Foundation/Foundation.h>
 
-@interface StaticLibVLC : NSObject
-
-@end
-
-@implementation StaticLibVLC
-
-@end
+NSString *toNSStr(const char *str);
