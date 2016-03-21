@@ -54,6 +54,12 @@
 - (instancetype)initWithName:(NSString *)aServiceName;
 
 /**
+ * same as above but with a custom VLCLibrary instance
+ * \note Using this mode can lead to a significant performance impact - use only if you know what you are doing
+ */
+- (instancetype)initWithName:(NSString *)aServiceName libraryInstance:(VLCLibrary *)libraryInstance;
+
+/**
  * start media discovery
  * \returns -1 if start failed, otherwise 0
  */

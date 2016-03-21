@@ -52,11 +52,20 @@
 
 - (instancetype)initWithName:(NSString *)aServiceName
 {
+    return [self initWithName:aServiceName libraryInstance:nil];
+}
+
+- (instancetype)initWithName:(NSString *)aServiceName libraryInstance:(VLCLibrary *)libraryInstance
+{
     if (self = [super init]) {
         _localizedName = nil;
         _discoveredMedia = nil;
 
-        _privateLibrary = [VLCLibrary sharedLibrary];
+        if (libraryInstance != nil) {
+            _privateLibrary = libraryInstance;
+        } else {
+            _privateLibrary = [VLCLibrary sharedLibrary];
+        }
         libvlc_retain([_privateLibrary instance]);
 
         _mdis = libvlc_media_discoverer_new([_privateLibrary instance],
