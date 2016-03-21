@@ -108,8 +108,7 @@ static VLCLibrary * sharedLibrary = nil;
                       @"--avcodec-fast",
 #endif
                       @"--text-renderer=freetype",
-                      @"--avi-index=3",
-                      @"--extraintf=ios_dialog_provider"];
+                      @"--avi-index=3"];
     }
 #else
     if (!vlcParams) {
