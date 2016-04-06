@@ -1,7 +1,7 @@
-From e9b87c64a1a548feaba600f46c92a5d51a83e6fb Mon Sep 17 00:00:00 2001
+From f7a362b9e3e3940c0e25378f24e0bbf82ae61aea Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 16/16] Add AC-3 pass-through
+Subject: [PATCH 16/17] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -29,10 +29,10 @@ index c480171..85d73dd 100755
  logger
  visual
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index c87b437..b8a0144 100644
+index 17b0450..1099dd2 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1894,6 +1894,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
+@@ -1934,6 +1934,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
  LIBVLC_API int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay );
  
  /**
@@ -77,7 +77,7 @@ index 7901c64..3877311 100644
   *****************************************************************************/
  int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 50ef3e6..22a5032 100644
+index 29623db..ef66391 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -609,6 +609,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -163,5 +163,5 @@ index 044905b..355f14f 100644
      return OpenCommon( p_this, false );
  }
 -- 
-2.7.2
+2.8.1
 
