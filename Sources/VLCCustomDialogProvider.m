@@ -208,9 +208,14 @@ static void updateProgressCallback(libvlc_dialog_id *p_id,
 
 - (void)postUsername:(NSString *)username andPassword:(NSString *)password forDialogReference:(NSValue *)dialogReference store:(BOOL)store
 {
+    if (username == nil || password == nil) {
+        libvlc_dialog_dismiss([dialogReference pointerValue]);
+        return;
+    }
+
     libvlc_dialog_post_login([dialogReference pointerValue],
-                             username != nil ? [username UTF8String] : NULL,
-                             password != nil ? [password UTF8String] : NULL,
+                             [username UTF8String],
+                             [password UTF8String],
                              store);
 }
 

@@ -33,24 +33,20 @@
 - (instancetype)initWithLibrary:(VLCLibrary *)library customUI:(BOOL)customUI
 {
 #if TARGET_OS_IPHONE
-    #if( __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_8_0)
+    #if !TARGET_OS_TV
         if (customUI)
             return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
 
-        return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
-    #else
-        #if !TARGET_OS_TV
-            if (customUI)
-                return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
-
-            if (SYSTEM_RUNS_IOS8_OR_LATER) {
-                return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
-            } else {
-                return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
-            }
-        #else
+        if (!SYSTEM_RUNS_IOS8_OR_LATER) {
             return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
-        #endif
+        } else {
+            return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
+        }
+    #else
+        if (customUI)
+            return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
+
+        return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
     #endif
 #else
     if (customUI)
