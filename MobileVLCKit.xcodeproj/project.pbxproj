@@ -51,6 +51,7 @@
 		7D34F5541C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */; };
 		7D5F800A185B72EB00C2CD75 /* VLCMediaListPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */; };
 		7D5F800C185B733800C2CD75 /* VLCMediaListPlayer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */; };
+		7D6695301CB5574C00F79C08 /* VLCDialogProvider.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 7D803EB71C8F21EF00864A9C /* VLCDialogProvider.h */; };
 		7D6C89201C0CA81F00321894 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6C891F1C0CA81F00321894 /* AVFoundation.framework */; };
 		7D6C89211C0CA90000321894 /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
 		7D803EB61C8F21D200864A9C /* VLCDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D803EB51C8F21D200864A9C /* VLCDialogProvider.m */; };
@@ -164,6 +165,7 @@
 			dstPath = MobileVLCKit;
 			dstSubfolderSpec = 16;
 			files = (
+				7D6695301CB5574C00F79C08 /* VLCDialogProvider.h in Copy Headers */,
 				7A5ECB9E11DE975A00F66AF3 /* MobileVLCKit.h in Copy Headers */,
 				4B09CED21BC463B100695566 /* VLCAudio.h in Copy Headers */,
 				7A5ECB5511DE961700F66AF3 /* VLCLibrary.h in Copy Headers */,
