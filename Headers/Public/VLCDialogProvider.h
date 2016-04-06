@@ -132,8 +132,8 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
  * \param reference to the dialog you respond to
  * \param shall VLC store the login securely?
  * \note This method does not have any effect if you don't use custom UI mode */
-- (void)postUsername:(NSString * _Nullable)username
-         andPassword:(NSString * _Nullable)password
+- (void)postUsername:(NSString * _Nonnull)username
+         andPassword:(NSString * _Nonnull)password
   forDialogReference:(NSValue * _Nonnull)dialogReference
                store:(BOOL)store;
 
