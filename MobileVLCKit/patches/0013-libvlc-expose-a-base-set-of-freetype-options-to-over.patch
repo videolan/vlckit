@@ -1,4 +1,4 @@
-From 5c623a7e1333212b5ecc7f43ed657db6ec72f940 Mon Sep 17 00:00:00 2001
+From 99a39c97fd6607a8ed1f5431a267554d9ac0910b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
 Subject: [PATCH 13/13] libvlc: expose a base set of freetype options to
@@ -14,10 +14,10 @@ Subject: [PATCH 13/13] libvlc: expose a base set of freetype options to
  6 files changed, 163 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 970bdf1..c87b437 100644
+index 73562b8..17b0450 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1519,6 +1519,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1559,6 +1559,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
@@ -75,7 +75,7 @@ index 03e9a5e..ec2ca4a 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index a2b02f4..50ef3e6 100644
+index f1da39b..29623db 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -639,6 +639,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -312,5 +312,5 @@ index 44b2731..7f1abec 100644
  
  /**
 -- 
-2.7.2
+2.8.1
 

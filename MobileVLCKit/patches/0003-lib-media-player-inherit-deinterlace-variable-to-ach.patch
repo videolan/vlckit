@@ -1,4 +1,4 @@
-From 9e64238117b9bb982fc6ec004eec431459dbb0c6 Mon Sep 17 00:00:00 2001
+From 59cd7645d66887ceaf28ea625f5e1a39b08437cb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 9 Dec 2014 22:14:55 +0100
 Subject: [PATCH 03/13] lib/media player: inherit deinterlace variable to
@@ -9,7 +9,7 @@ Subject: [PATCH 03/13] lib/media player: inherit deinterlace variable to
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lib/media_player.c b/lib/media_player.c
-index b278c6f..a2b02f4 100644
+index 2a8eb5f..f1da39b 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -609,7 +609,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -22,5 +22,5 @@ index b278c6f..a2b02f4 100644
  
      var_Create (mp, "vbi-page", VLC_VAR_INTEGER);
 -- 
-2.7.2
+2.8.1
 
