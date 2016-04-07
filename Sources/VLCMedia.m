@@ -597,7 +597,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (NSArray *)tracksInformation
 {
-    [self synchronousParse];
+    if (!self.isParsed)
+        [self synchronousParse];
 
     libvlc_media_track_t **tracksInfo;
     unsigned int count = libvlc_media_tracks_get(p_md, &tracksInfo);
