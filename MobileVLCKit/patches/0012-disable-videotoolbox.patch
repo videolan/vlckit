@@ -1,17 +1,17 @@
-From 9c79b7617b58f68dc977e282b8bc560a9855e1ac Mon Sep 17 00:00:00 2001
+From 2cc54c7fdcc38617cb852013c1adfad07956fa4c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 26 Oct 2015 10:47:56 +0100
-Subject: [PATCH 12/17] disable videotoolbox
+Subject: [PATCH 12/16] disable videotoolbox
 
 ---
  extras/package/ios/build.sh | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index 6789738..c480171 100755
+index 6c264bc..47cb1d8 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
-@@ -486,6 +486,8 @@ output_http
+@@ -488,6 +488,8 @@ output_http
  output_livehttp
  libmux
  stream_out

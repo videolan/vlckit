@@ -1,7 +1,7 @@
-From b6a1367e77f040b2a9b0eb4d7cdf2f532e8ff829 Mon Sep 17 00:00:00 2001
+From f0bf3bc989e2ed4e86d5294ed0a102d29adfc39b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 14/17] libvlc: expose a base set of freetype options to
+Subject: [PATCH 14/16] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
@@ -75,7 +75,7 @@ index 03e9a5e..ec2ca4a 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index f1da39b..29623db 100644
+index 24d0c71..b10bee1 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -639,6 +639,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
