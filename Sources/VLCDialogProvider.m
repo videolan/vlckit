@@ -37,7 +37,7 @@
         if (customUI)
             return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
 
-        if (!SYSTEM_RUNS_IOS8_OR_LATER) {
+        if (SYSTEM_RUNS_IOS8_OR_LATER) {
             return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
         } else {
             return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
