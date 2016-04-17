@@ -72,7 +72,6 @@ NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
     BOOL                    isArtFetched;      //< Value used to determine of the artwork has been parsed
     BOOL                    areOthersMetaFetched; //< Value used to determine of the other meta has been parsed
     BOOL                    isArtURLFetched;   //< Value used to determine of the other meta has been preparsed
-    BOOL                    isParsed;
     NSMutableDictionary     *_metaDictionary;
 }
 
@@ -337,7 +336,14 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (BOOL)isParsed
 {
-    return isParsed;
+    VLCMediaParseStatus status = [self parseStatus];
+    return VLCMediaParseStatusFailed || VLCMediaParseStatusDone;
+}
+
+- (VLCMediaParseStatus)parseStatus
+{
+    libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
+    return status;
 }
 
 - (void)parse
@@ -597,7 +603,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (NSArray *)tracksInformation
 {
-    if (!self.isParsed)
+    VLCMediaParseStatus parseStatus = [self parseStatus];
+    if (parseStatus == VLCMediaParseStatusSkipped || parseStatus == VLCMediaParseStatusInit)
         [self synchronousParse];
 
     libvlc_media_track_t **tracksInfo;
@@ -660,7 +667,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 {
 #if TARGET_OS_IPHONE
     // Trigger parsing if needed
-    if (![self isParsed])
+    VLCMediaParseStatus parseStatus = [self parseStatus];
+    if (parseStatus == VLCMediaParseStatusSkipped || parseStatus == VLCMediaParseStatusInit)
         [self synchronousParse];
 
     NSUInteger biggestWidth = 0;
@@ -713,7 +721,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (!p_md)
         return nil;
 
-    if (![self isParsed])
+    VLCMediaParseStatus parseStatus = [self parseStatus];
+    if (parseStatus == VLCMediaParseStatusSkipped || parseStatus == VLCMediaParseStatusInit)
         [self synchronousParse];
 
     char *returnValue = libvlc_media_get_meta(p_md, [VLCMedia stringToMetaType:key]);
@@ -853,7 +862,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         libvlc_event_attach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaParsedStatus,    HandleMediaParsedChanged,   (__bridge void *)(self));
     }
 
     libvlc_media_list_t * p_mlist = libvlc_media_subitems( p_md );
@@ -863,7 +872,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         libvlc_media_list_release( p_mlist );
     }
 
-    isParsed = libvlc_media_is_parsed(p_md) != 0;
     self.state = LibVLCStateToMediaState(libvlc_media_get_state( p_md ));
 }
 
@@ -918,7 +926,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (void)parseIfNeeded
 {
-    if (![self isParsed])
+    VLCMediaParseStatus parseStatus = [self parseStatus];
+    if (parseStatus == VLCMediaParseStatusSkipped || parseStatus == VLCMediaParseStatusInit)
         [self parseWithOptions:VLCMediaParseLocal | VLCMediaFetchLocal];
 }
 
@@ -946,12 +955,15 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (void)parsedChanged:(NSNumber *)isParsedAsNumber
 {
-    [self willChangeValueForKey:@"parsed"];
-    isParsed = [isParsedAsNumber boolValue];
-    [self didChangeValueForKey:@"parsed"];
+    VLCMediaParseStatus parseStatus = [self parseStatus];
 
-    // FIXME: Probably don't even call this if there is no delegate.
-    if (!_delegate || !isParsed)
+    [self willChangeValueForKey:@"parseStatus"];
+    [self didChangeValueForKey:@"parseStatus"];
+
+    if (parseStatus == VLCMediaParseStatusInit || parseStatus == VLCMediaParseStatusSkipped)
+        return;
+
+    if (!_delegate)
         return;
 
     if ([_delegate respondsToSelector:@selector(mediaDidFinishParsing:)])
