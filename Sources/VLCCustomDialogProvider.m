@@ -40,9 +40,9 @@
 
 @end
 
-static void displayErrorCallback(const char *psz_title,
-                                 const char *psz_text,
-                                 void *p_data)
+static void displayErrorCallback(void *p_data,
+                                 const char *psz_title,
+                                 const char *psz_text)
 {
     @autoreleasepool {
         VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
@@ -53,12 +53,12 @@ static void displayErrorCallback(const char *psz_title,
     }
 }
 
-static void displayLoginCallback(libvlc_dialog_id *p_id,
+static void displayLoginCallback(void *p_data,
+                                 libvlc_dialog_id *p_id,
                                  const char *psz_title,
                                  const char *psz_text,
                                  const char *psz_default_username,
-                                 bool b_ask_store,
-                                 void *p_data)
+                                 bool b_ask_store)
 {
     @autoreleasepool {
         VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
@@ -72,14 +72,14 @@ static void displayLoginCallback(libvlc_dialog_id *p_id,
     }
 }
 
-static void displayQuestionCallback(libvlc_dialog_id *p_id,
+static void displayQuestionCallback(void *p_data,
+                                    libvlc_dialog_id *p_id,
                                     const char *psz_title,
                                     const char *psz_text,
                                     libvlc_dialog_question_type i_type,
                                     const char *psz_cancel,
                                     const char *psz_action1,
-                                    const char *psz_action2,
-                                    void *p_data)
+                                    const char *psz_action2)
 {
     @autoreleasepool {
         VLCCustomDialogProvider *dialogProvider = (__bridge  VLCCustomDialogProvider *)p_data;
@@ -95,13 +95,13 @@ static void displayQuestionCallback(libvlc_dialog_id *p_id,
     }
 }
 
-static void displayProgressCallback(libvlc_dialog_id *p_id,
+static void displayProgressCallback(void *p_data,
+                                    libvlc_dialog_id *p_id,
                                     const char *psz_title,
                                     const char *psz_text,
                                     bool b_indeterminate,
                                     float f_position,
-                                    const char *psz_cancel,
-                                    void *p_data)
+                                    const char *psz_cancel)
 {
     @autoreleasepool {
         VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
@@ -116,8 +116,8 @@ static void displayProgressCallback(libvlc_dialog_id *p_id,
     }
 }
 
-static void cancelCallback(libvlc_dialog_id *p_id,
-                           void *p_data)
+static void cancelCallback(void *p_data,
+                           libvlc_dialog_id *p_id)
 {
     @autoreleasepool {
         VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
@@ -127,16 +127,16 @@ static void cancelCallback(libvlc_dialog_id *p_id,
     }
 }
 
-static void updateProgressCallback(libvlc_dialog_id *p_id,
-                                   float f_value,
-                                   const char *psz_text,
-                                   void *p_data)
+static void updateProgressCallback(void *p_data,
+                                   libvlc_dialog_id *p_id,
+                                   float f_position,
+                                   const char *psz_text)
 {
     @autoreleasepool {
         VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
         [dialogProvider performSelectorOnMainThread:@selector(updateDisplayedProgressDialog:)
                                          withObject:@[[NSValue valueWithPointer:p_id],
-                                                      @(f_value),
+                                                      @(f_position),
                                                       toNSStr(psz_text)]
                                       waitUntilDone:NO];
     }
