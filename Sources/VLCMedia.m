@@ -919,7 +919,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 - (void)parseIfNeeded
 {
     if (![self isParsed])
-        [self parse];
+        [self parseWithOptions:VLCMediaParseLocal | VLCMediaFetchLocal];
 }
 
 - (void)metaChanged:(NSString *)metaType

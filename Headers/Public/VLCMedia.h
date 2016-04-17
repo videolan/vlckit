@@ -417,8 +417,9 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  * is called.
  *
  * \see -[VLCMediaDelegate mediaDidFinishParsing:]
+ * \note Use parseWithOptions: instead
  */
-- (void)parse;
+- (void)parse __attribute__((deprecated));
 
 /**
  * Trigger a synchronous parsing of the media

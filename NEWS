@@ -6,8 +6,22 @@ Generic changes:
 - Added support for audio muting on iOS and tvOS
 
 New APIs:
+- VLCAudio
+  - setMuted:
+
+- VLCDialogProvider
+  - new class to handle user interaction with VLC events
+
 - VLCLibrary
   - added properties: debugLogging, debugLoggingLevel
+
+- VLCMediaDiscoverer
+  - added selector: availableMediaDiscovererForCategoryType:
+  - added enum: VLCMediaDiscovererCategoryType
+
+- VLCMediaListPlayer
+  - added selectors: initWithDrawable:
+                     initWithOptions:andDrawable:
 
 - VLCMediaPlayer
   - added properties: titleDescriptions, indexOfLongestTitle, numberOfTitles,
@@ -18,10 +32,6 @@ New APIs:
   - Note:
     - play's return type was changed from BOOL to void
     - hue is now a float instead of an integer
-
-- VLCMediaListPlayer
-  - added selectors: initWithDrawable:
-                     initWithOptions:andDrawable:
 
 - VLCMedia
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
@@ -37,22 +47,15 @@ New APIs:
   - added selectors: isEqual:
                      hash
 
-- VLCAudio
-  - setMuted:
-
-- VLCDialogProvider
-  - new class to handle user interaction with VLC events
-
-- VLCMediaDiscoverer
-  - added selector: availableMediaDiscovererForCategoryType:
-
 Deprecated APIs:
-- VLCMediaPlayer
-  - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond
 - VLCAudio
   - setMute:
+- VLCMedia
+  - parse
 - VLCMediaDiscoverer
   - availableMediaDiscoverer
+- VLCMediaPlayer
+  - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond
 
 Removed APIs:
 - VLCMedia:
