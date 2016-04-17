@@ -1,7 +1,7 @@
-From f7a362b9e3e3940c0e25378f24e0bbf82ae61aea Mon Sep 17 00:00:00 2001
+From fb3f59d1e533f04e5f9d48dee53c7c61c4eeefda Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 16/17] Add AC-3 pass-through
+Subject: [PATCH 13/13] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -17,10 +17,10 @@ Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
  6 files changed, 57 insertions(+), 12 deletions(-)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index c480171..85d73dd 100755
+index 6c264bc..b0901ae 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
-@@ -458,7 +458,6 @@ speex_resampler
+@@ -460,7 +460,6 @@ speex_resampler
  remoteosd
  magnify
  gradient
@@ -77,7 +77,7 @@ index 7901c64..3877311 100644
   *****************************************************************************/
  int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 29623db..ef66391 100644
+index b10bee1..b4c23a4 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -609,6 +609,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )

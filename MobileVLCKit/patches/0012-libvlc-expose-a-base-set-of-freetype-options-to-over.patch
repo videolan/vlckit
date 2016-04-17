@@ -1,7 +1,7 @@
-From 99a39c97fd6607a8ed1f5431a267554d9ac0910b Mon Sep 17 00:00:00 2001
+From 54f50cdaea744f515c8c75abb1e935f1336deb73 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 13/13] libvlc: expose a base set of freetype options to
+Subject: [PATCH 12/13] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
@@ -51,10 +51,10 @@ index 73562b8..17b0450 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 03e9a5e..ec2ca4a 100644
+index c134fef..b74c313 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -237,6 +237,9 @@ libvlc_video_get_spu_count
+@@ -238,6 +238,9 @@ libvlc_video_get_spu_count
  libvlc_video_get_spu_delay
  libvlc_video_get_spu_description
  libvlc_video_get_teletext
@@ -64,7 +64,7 @@ index 03e9a5e..ec2ca4a 100644
  libvlc_video_get_title_description
  libvlc_video_get_track
  libvlc_video_get_track_count
-@@ -261,6 +264,9 @@ libvlc_video_set_spu
+@@ -262,6 +265,9 @@ libvlc_video_set_spu
  libvlc_video_set_spu_delay
  libvlc_video_set_subtitle_file
  libvlc_video_set_teletext
@@ -75,7 +75,7 @@ index 03e9a5e..ec2ca4a 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index f1da39b..29623db 100644
+index 24d0c71..b10bee1 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -639,6 +639,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
