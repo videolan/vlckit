@@ -43,11 +43,16 @@ New APIs:
 - VLCDialogProvider
   - new class to handle user interaction with VLC events
 
+- VLCMediaDiscoverer
+  - added selector: availableMediaDiscovererForCategoryType:
+
 Deprecated APIs:
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond
 - VLCAudio
   - setMute:
+- VLCMediaDiscoverer
+  - availableMediaDiscoverer
 
 Removed APIs:
 - VLCMedia:

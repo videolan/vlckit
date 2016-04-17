@@ -31,6 +31,20 @@
 @class VLCMediaList;
 @class VLCMediaDiscoverer;
 
+
+typedef NS_ENUM(unsigned, VLCMediaDiscovererCategoryType)
+{
+    VLCMediaDiscovererCategoryTypeDevices = 0,
+    VLCMediaDiscovererCategoryTypeLAN,
+    VLCMediaDiscovererCategoryTypePodcasts,
+    VLCMediaDiscovererCategoryTypeLocalDirectories
+};
+
+/* discoverer keys */
+extern NSString *const VLCMediaDiscovererName;
+extern NSString *const VLCMediaDiscovererLongName;
+extern NSString *const VLCMediaDiscovererCategory;
+
 /**
  * VLCMediaDiscoverer
  */
@@ -43,6 +57,12 @@
  * \return returns an empty array, will be removed in subsequent releases
  */
 + (NSArray *)availableMediaDiscoverer __attribute__((deprecated));
+
+/**
+ * \param The VLCMediaDiscovererCategory you are looking for
+ * \return returns an array of dictionaries describing the available discoverers for the requested type
+ */
++ (NSArray *)availableMediaDiscovererForCategoryType:(VLCMediaDiscovererCategoryType)categoryType;
 
 /* Initializers */
 /**

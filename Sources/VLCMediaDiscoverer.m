@@ -32,6 +32,10 @@
 #include <vlc/libvlc.h>
 #include <vlc/libvlc_media_discoverer.h>
 
+NSString *const VLCMediaDiscovererName = @"VLCMediaDiscovererName";
+NSString *const VLCMediaDiscovererLongName = @"VLCMediaDiscovererLongName";
+NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
+
 @interface VLCMediaDiscoverer ()
 {
     NSString *_localizedName;
@@ -48,6 +52,33 @@
 + (NSArray *)availableMediaDiscoverer
 {
     return @[];
+}
+
++ (NSArray *)availableMediaDiscovererForCategoryType:(VLCMediaDiscovererCategoryType)categoryType
+{
+    libvlc_media_discoverer_description **discoverers;
+    unsigned numberOfDiscoverers = libvlc_media_discoverer_list_get([VLCLibrary sharedInstance], categoryType, &discoverers);
+
+    if (numberOfDiscoverers == 0) {
+        libvlc_media_discoverer_list_release(discoverers, numberOfDiscoverers);
+        return @[];
+    }
+
+    NSMutableArray *mutArray = [NSMutableArray arrayWithCapacity:numberOfDiscoverers];
+    for (unsigned u = 0; u < numberOfDiscoverers; u++) {
+        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:
+                              discoverers[u]->psz_name ? [NSString stringWithUTF8String:discoverers[u]->psz_name] : @"",
+                              VLCMediaDiscovererName,
+                              discoverers[u]->psz_longname ? [NSString stringWithUTF8String:discoverers[u]->psz_longname] : @"",
+                              VLCMediaDiscovererLongName,
+                              @(discoverers[u]->i_cat),
+                              VLCMediaDiscovererCategory,
+                              nil];
+        [mutArray addObject:dict];
+    }
+
+    libvlc_media_discoverer_list_release(discoverers, numberOfDiscoverers);
+    return [mutArray copy];
 }
 
 - (instancetype)initWithName:(NSString *)aServiceName
