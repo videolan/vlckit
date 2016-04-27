@@ -1,4 +1,4 @@
-From fb3f59d1e533f04e5f9d48dee53c7c61c4eeefda Mon Sep 17 00:00:00 2001
+From 4347f84a676c42d5678a802a77e642a4c5062aa5 Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
 Subject: [PATCH 13/13] Add AC-3 pass-through
@@ -29,10 +29,10 @@ index 6c264bc..b0901ae 100755
  logger
  visual
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 17b0450..1099dd2 100644
+index 3a9aa85..bbc89e8 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1934,6 +1934,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
+@@ -1818,6 +1818,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
  LIBVLC_API int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay );
  
  /**

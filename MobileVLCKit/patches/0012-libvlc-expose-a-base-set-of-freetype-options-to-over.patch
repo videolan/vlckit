@@ -1,4 +1,4 @@
-From 54f50cdaea744f515c8c75abb1e935f1336deb73 Mon Sep 17 00:00:00 2001
+From 732449d65e0e31ca753f5bb577159dcecf625a9d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
 Subject: [PATCH 12/13] libvlc: expose a base set of freetype options to
@@ -14,10 +14,10 @@ Subject: [PATCH 12/13] libvlc: expose a base set of freetype options to
  6 files changed, 163 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 73562b8..17b0450 100644
+index 456e99e..3a9aa85 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1559,6 +1559,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1483,6 +1483,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
