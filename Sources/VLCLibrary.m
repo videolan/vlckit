@@ -36,7 +36,6 @@
 #endif
 
 #include <vlc/vlc.h>
-#include <vlc/libvlc_structures.h>
 
 static void HandleMessage(void *,
                           int,
