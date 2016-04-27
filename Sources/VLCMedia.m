@@ -256,7 +256,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         libvlc_event_detach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
         libvlc_event_detach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
         libvlc_event_detach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
-        libvlc_event_detach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   (__bridge void *)(self));
+        libvlc_event_detach(p_em, libvlc_MediaParsedStatus,    HandleMediaParsedChanged,   (__bridge void *)(self));
     }
 
     [[VLCEventManager sharedManager] cancelCallToObject:self];
