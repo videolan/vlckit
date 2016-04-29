@@ -321,8 +321,11 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         [self parseIfNeeded];
 
         // wait until we are preparsed
-        while (!_length && !libvlc_media_is_parsed(p_md) && [aDate timeIntervalSinceNow] > 0)
-            usleep( thread_sleep );
+       libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
+       while (!_length && !(status == VLCMediaParseStatusFailed || status == VLCMediaParseStatusDone) && [aDate timeIntervalSinceNow] > 0) {
+          usleep( thread_sleep );
+          status = libvlc_media_get_parsed_status(p_md);
+       }
 
         // So we're done waiting, but sometimes we trap the fact that the parsing
         // was done before the length gets assigned, so lets go ahead and assign
@@ -336,14 +339,16 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (BOOL)isParsed
 {
-    VLCMediaParseStatus status = [self parseStatus];
-    return VLCMediaParseStatusFailed || VLCMediaParseStatusDone;
+   VLCMediaParseStatus status = [self parseStatus];
+   return (status == VLCMediaParseStatusFailed || status == VLCMediaParseStatusDone) ? YES:NO;
 }
 
 - (VLCMediaParseStatus)parseStatus
 {
-    libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
-    return status;
+   if ( !p_md )
+      return VLCMediaParseStatusFailed;
+   libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
+   return (VLCMediaParseStatus)status;
 }
 
 - (void)parse
