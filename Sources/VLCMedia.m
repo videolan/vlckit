@@ -960,9 +960,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     [self willChangeValueForKey:@"parseStatus"];
     [self didChangeValueForKey:@"parseStatus"];
 
-    if (parseStatus == VLCMediaParseStatusInit || parseStatus == VLCMediaParseStatusSkipped)
-        return;
-
     if (!_delegate)
         return;
 
