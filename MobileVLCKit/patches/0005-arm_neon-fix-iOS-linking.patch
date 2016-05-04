@@ -1,7 +1,7 @@
 From b27d6414005031bbb09b493100cc955cf227abf6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
-Subject: [PATCH 05/13] arm_neon: fix iOS linking
+Subject: [PATCH 05/14] arm_neon: fix iOS linking
 
 ---
  modules/arm_neon/amplify.S              |  7 ++---
