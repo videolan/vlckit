@@ -1,7 +1,7 @@
-From f0bf3bc989e2ed4e86d5294ed0a102d29adfc39b Mon Sep 17 00:00:00 2001
+From 8c646dcb7f037b7a27689284beae8b0f63354901 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 14/16] libvlc: expose a base set of freetype options to
+Subject: [PATCH 14/17] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
