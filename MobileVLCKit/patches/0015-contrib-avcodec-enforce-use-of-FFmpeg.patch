@@ -1,17 +1,17 @@
-From c7bb59bc4d92e963cbccb2e67ecd23fe2f8b8221 Mon Sep 17 00:00:00 2001
+From 4b066d277423e085c8ac230c578f4080e6f4599d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 9 May 2016 11:49:20 +0200
 Subject: [PATCH 15/15] contrib/avcodec: enforce use of FFmpeg
 
 ---
- contrib/src/ffmpeg/rules.mak | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ contrib/src/ffmpeg/rules.mak | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 6c166a0..f043a7f 100644
+index aab4657..b2caa35 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -2,7 +2,7 @@
+@@ -2,10 +2,10 @@
  
  #Uncomment the one you want
  #USE_LIBAV ?= 1
@@ -19,7 +19,11 @@ index 6c166a0..f043a7f 100644
 +USE_FFMPEG ?= 1
  
  ifdef USE_FFMPEG
- HASH=HEAD
+-HASH=HEAD
++HASH=68b8505d
+ FFMPEG_SNAPURL := http://git.videolan.org/?p=ffmpeg.git;a=snapshot;h=$(HASH);sf=tgz
+ FFMPEG_GITURL := git://git.videolan.org/ffmpeg.git
+ else
 -- 
-2.7.4 (Apple Git-66)
+2.8.1
 
