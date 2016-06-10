@@ -57,7 +57,7 @@ Deprecated APIs:
 - VLCMedia
   - parse, isParsed
 - VLCMediaDiscoverer
-  - availableMediaDiscoverer
+  - availableMediaDiscoverer, localizedName
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond, openVideoSubTitlesFromFile:
 

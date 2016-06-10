@@ -40,7 +40,7 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 {
     NSString *_localizedName;
     VLCMediaList *_discoveredMedia;
-    void *_mdis;
+    libvlc_media_discoverer_t *_mdis;
 
     VLCLibrary *_privateLibrary;
 }
@@ -157,6 +157,8 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 
 - (NSString *)localizedName
 {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated"
     if (_localizedName)
         return _localizedName;
 
@@ -166,6 +168,7 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
         free(name);
     }
     return _localizedName;
+#pragma clang diagnostic pop
 }
 
 - (BOOL)isRunning

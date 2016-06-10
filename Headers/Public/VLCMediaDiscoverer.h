@@ -98,7 +98,7 @@ extern NSString *const VLCMediaDiscovererCategory;
 /**
  * returns the localized name of the discovery module if available, otherwise in US English
  */
-@property (readonly, copy) NSString *localizedName;
+@property (readonly, copy) NSString *localizedName __attribute__((deprecated));
 
 /**
  * read-only property to check if the discovery service is active
