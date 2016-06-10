@@ -474,6 +474,17 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
                                          TRUE);
 }
 
+- (int)addPlaybackSlave:(NSURL *)slaveURL type:(VLCMediaPlaybackSlaveType)slaveType enforce:(BOOL)enforceSelection
+{
+    if (!slaveURL)
+        return -1;
+
+    return libvlc_media_player_add_slave(_playerInstance,
+                                         slaveType,
+                                         [[slaveURL absoluteString] UTF8String],
+                                         enforceSelection);
+}
+
 - (void)setCurrentVideoSubTitleDelay:(NSInteger)index
 {
     libvlc_video_set_spu_delay(_playerInstance, index);

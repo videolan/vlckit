@@ -28,7 +28,9 @@ New APIs:
                       snapshots, lastSnapshot
   - added selectors: chaptersForTitleIndex:
                      numberOfChaptersForTitle:
+                     addPlaybackSlave:type:enforce:
   - added notifications: VLCMediaPlayerTitleChanged, VLCMediaPlayerChapterChanged
+  - added enum: VLCMediaPlaybackSlaveType
   - Note:
     - play's return type was changed from BOOL to void
     - hue is now a float instead of an integer

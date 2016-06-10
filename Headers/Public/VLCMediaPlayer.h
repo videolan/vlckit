@@ -358,6 +358,25 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path __attribute__((deprecated));
 
 /**
+ * VLCMediaPlaybackNavigationAction describes actions which can be performed to navigate an interactive title
+ */
+typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
+{
+    VLCMediaPlaybackSlaveTypeSubtitle = 0,
+    VLCMediaPlaybackSlaveTypeAudio
+};
+
+/**
+ * Add additional input sources to a playing media item
+ * This way, you can add subtitles or audio files to an existing input stream
+ * For the user, it will appear as if they were part of the existing stream
+ * \param URL of the content to be added
+ * \param content type
+ * \param switch to the added accessory content
+ */
+- (int)addPlaybackSlave:(NSURL *)slaveURL type:(VLCMediaPlaybackSlaveType)slaveType enforce:(BOOL)enforceSelection;
+
+/**
  * Get the current subtitle delay. Positive values means subtitles are being
  * displayed later, negative values earlier.
  *
