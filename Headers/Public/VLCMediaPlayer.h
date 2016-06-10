@@ -352,8 +352,10 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Load and set a specific video subtitle, from a file.
  * \param path to a file
  * \return if the call succeed..
+ *
+ * \note use addPlaybackSlave:type:enforce: instead
  */
-- (BOOL)openVideoSubTitlesFromFile:(NSString *)path;
+- (BOOL)openVideoSubTitlesFromFile:(NSString *)path __attribute__((deprecated));
 
 /**
  * Get the current subtitle delay. Positive values means subtitles are being

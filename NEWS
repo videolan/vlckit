@@ -57,7 +57,7 @@ Deprecated APIs:
 - VLCMediaDiscoverer
   - availableMediaDiscoverer
 - VLCMediaPlayer
-  - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond
+  - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond, openVideoSubTitlesFromFile:
 
 Removed APIs:
 - VLCMedia:

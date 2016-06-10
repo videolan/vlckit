@@ -468,7 +468,10 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path
 {
-    return libvlc_video_set_subtitle_file(_playerInstance, [path UTF8String]);
+    return libvlc_media_player_add_slave(_playerInstance,
+                                         libvlc_media_slave_type_subtitle,
+                                         [path UTF8String],
+                                         TRUE);
 }
 
 - (void)setCurrentVideoSubTitleDelay:(NSInteger)index
