@@ -17,7 +17,7 @@ SCARY=yes
 TVOS=no
 BITCODE=no
 
-TESTEDHASH=09f8d87f
+TESTEDHASH=9fab6639
 
 usage()
 {

@@ -1,4 +1,4 @@
-From 2ca98a76d24d6d1d2798da77ddbaad60a7f329ea Mon Sep 17 00:00:00 2001
+From e8a1f2adbedbe5ccf874cd76568e3ab1617b0eee Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
 Subject: [PATCH 11/15] Add AC-3 pass-through
