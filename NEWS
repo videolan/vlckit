@@ -41,8 +41,9 @@ New APIs:
   - added selectors: codecNameForFourCC:trackType:
                      mediaType
                      parseWithOptions:
-                     parseStatus
-  - added enums: VLCMediaType, VLCMediaParsingOptions, VLCMediaParseStatus
+                     parseWithOptions:Timeout:
+                     parsedStatus
+  - added enums: VLCMediaType, VLCMediaParsingOptions, VLCMediaParsedStatus
 
 - VLCTime
   - added selectors: isEqual:

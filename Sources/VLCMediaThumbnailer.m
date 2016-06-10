@@ -143,8 +143,8 @@ static void display(void *opaque, void *picture)
 {
     NSAssert(!_data, @"We are already fetching a thumbnail");
 
-   VLCMediaParseStatus parseStatus = [_media parseStatus];
-   if (!(parseStatus == VLCMediaParseStatusFailed || parseStatus == VLCMediaParseStatusDone)) {
+   VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
+   if (!(parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone)) {
         [_media addObserver:self forKeyPath:@"parsed" options:0 context:NULL];
         [_media parseWithOptions:VLCMediaParseLocal];
         NSAssert(!_parsingTimeoutTimer, @"We already have a timer around");
@@ -243,8 +243,8 @@ static void display(void *opaque, void *picture)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == _media && [keyPath isEqualToString:@"parsed"]) {
-       VLCMediaParseStatus parseStatus = [_media parseStatus];
-       if (parseStatus == VLCMediaParseStatusFailed || parseStatus == VLCMediaParseStatusDone) {
+       VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
+       if (parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone) {
             [_parsingTimeoutTimer invalidate];
             _parsingTimeoutTimer = nil;
             [_media removeObserver:self forKeyPath:@"parsed"];

@@ -235,17 +235,17 @@ typedef NS_ENUM(NSUInteger, VLCMediaType) {
  */
 @property (nonatomic, readonly) BOOL isParsed __attribute__((deprecated));
 
-typedef NS_ENUM(unsigned, VLCMediaParseStatus)
+typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 {
-    VLCMediaParseStatusInit = 0,
-    VLCMediaParseStatusSkipped,
-    VLCMediaParseStatusFailed,
-    VLCMediaParseStatusDone
+    VLCMediaParsedStatusInit = 0,
+    VLCMediaParsedStatusSkipped,
+    VLCMediaParsedStatusFailed,
+    VLCMediaParsedStatusDone
 };
 /**
  * \return Returns the parse status of the media
  */
-@property (nonatomic, readonly) VLCMediaParseStatus parseStatus;
+@property (nonatomic, readonly) VLCMediaParsedStatus parsedStatus;
 
 /**
  * The URL for the receiver's media resource.
@@ -460,6 +460,19 @@ typedef int VLCMediaParsingOptions;
  * will _NOT_ be raised if parsing fails and this method returns an error.
  */
 - (int)parseWithOptions:(VLCMediaParsingOptions)options;
+
+/**
+ * triggers an asynchronous parse of the media item
+ * using the given options
+ * \param the option mask based on VLCMediaParsingOptions
+ * \param a time-out value in milliseconds (-1 for default, 0 for infinite)
+ * \see VLCMediaParsingOptions
+ * \return an int. 0 on success, -1 in case of error
+ * \note listen to the "parsed" key value or the mediaDidFinishParsing:
+ * delegate method to be notified about parsing results. Those triggers
+ * will _NOT_ be raised if parsing fails and this method returns an error.
+ */
+- (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue;
 
 /**
  * Add options to the media, that will be used to determine how
