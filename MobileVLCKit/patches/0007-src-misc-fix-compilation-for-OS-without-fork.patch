@@ -1,14 +1,14 @@
-From 95165618d2e4c0524d38b3aa00ba42b4233ce857 Mon Sep 17 00:00:00 2001
+From ecae0a8e9bbe6a49afffe0da679d8f9b5b7570d4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 10 Sep 2015 19:58:40 +0200
-Subject: [PATCH 08/15] src/misc: fix compilation for OS without fork()
+Subject: [PATCH 07/15] src/misc: fix compilation for OS without fork()
 
 ---
  src/misc/cpu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/misc/cpu.c b/src/misc/cpu.c
-index 4a5f2a0..79b28e4 100644
+index 28f127a..bacf842 100644
 --- a/src/misc/cpu.c
 +++ b/src/misc/cpu.c
 @@ -63,7 +63,7 @@ static uint32_t cpu_flags;
@@ -21,5 +21,5 @@ index 4a5f2a0..79b28e4 100644
  {
      pid_t pid = fork();
 -- 
-2.7.4 (Apple Git-66)
+2.8.3
 

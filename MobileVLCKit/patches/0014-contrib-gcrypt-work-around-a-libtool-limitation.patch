@@ -1,7 +1,7 @@
-From 062a583387a95e32797b9175e48ce9a339e4beb8 Mon Sep 17 00:00:00 2001
+From e04f7c05fbe07fcbd255a5d4083415f0cb75d399 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 07/15] contrib/gcrypt: work-around a libtool limitation
+Subject: [PATCH 14/15] contrib/gcrypt: work-around a libtool limitation
 
 ---
  contrib/src/gcrypt/rules.mak                       |  1 +
@@ -10,7 +10,7 @@ Subject: [PATCH 07/15] contrib/gcrypt: work-around a libtool limitation
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 2fed2cd..0471522 100644
+index 3bb2c80..26725cc 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -15,6 +15,7 @@ libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
@@ -18,9 +18,9 @@ index 2fed2cd..0471522 100644
  	$(APPLY) $(SRC)/gcrypt/disable-doc-compilation.patch
  	$(APPLY) $(SRC)/gcrypt/disable-tests-compilation.patch
 +	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
- 	$(MOVE)
- 
- DEPS_gcrypt = gpg-error
+ ifdef HAVE_WINSTORE
+ 	$(APPLY) $(SRC)/gcrypt/winrt.patch
+ endif
 diff --git a/contrib/src/gcrypt/work-around-libtool-limitation.patch b/contrib/src/gcrypt/work-around-libtool-limitation.patch
 new file mode 100644
 index 0000000..df97ffb
@@ -53,5 +53,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.7.4 (Apple Git-66)
+2.8.3
 

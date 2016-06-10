@@ -1,7 +1,7 @@
-From f4f0c2d40e3208298c6055dc1c7032999ec45b76 Mon Sep 17 00:00:00 2001
+From bc65c068477672ab0a0d18882ced89a8b3e7390f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
-Subject: [PATCH 10/15] contrib/gcrypt: fix tvOS compilation
+Subject: [PATCH 15/15] contrib/gcrypt: fix tvOS compilation
 
 ---
  contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch | 16 ++++++++++++++++
@@ -32,7 +32,7 @@ index 0000000..f1d3ccc
 +    *	%rdi: ctx, CTX
 +    *	%rsi: data (64 bytes)
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 0471522..ac20d02 100644
+index 26725cc..ffb159e 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -16,6 +16,7 @@ libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
@@ -40,10 +40,10 @@ index 0471522..ac20d02 100644
  	$(APPLY) $(SRC)/gcrypt/disable-tests-compilation.patch
  	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
 +	$(APPLY) $(SRC)/gcrypt/fix-sha1-ssse3-for-clang.patch
- 	$(MOVE)
- 
- DEPS_gcrypt = gpg-error
-@@ -32,6 +33,11 @@ GCRYPT_EXTRA_CFLAGS = -fheinous-gnu-extensions
+ ifdef HAVE_WINSTORE
+ 	$(APPLY) $(SRC)/gcrypt/winrt.patch
+ endif
+@@ -36,6 +37,11 @@ GCRYPT_EXTRA_CFLAGS = -fheinous-gnu-extensions
  else
  GCRYPT_EXTRA_CFLAGS =
  endif
@@ -56,5 +56,5 @@ index 0471522..ac20d02 100644
  GCRYPT_CONF += --disable-aesni-support
  else
 -- 
-2.7.4 (Apple Git-66)
+2.8.3
 

@@ -1,17 +1,17 @@
-From 9c6c331f40c9b5423fbf6b0d2b87e74cf7b80b96 Mon Sep 17 00:00:00 2001
+From 4595a588bc8952edb96f7cd409869b84b6967d49 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 4 May 2016 16:00:40 +0200
-Subject: [PATCH 14/15] libvlc: create VT-zero-copy variable
+Subject: [PATCH 12/15] libvlc: create VT-zero-copy variable
 
 ---
  lib/media_player.c | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/lib/media_player.c b/lib/media_player.c
-index b4c23a4..c3d9421 100644
+index 9e2f137..a587d85 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -591,6 +591,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -622,6 +622,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
  #endif
  #ifdef __APPLE__
      var_Create (mp, "drawable-nsobject", VLC_VAR_ADDRESS);
@@ -20,5 +20,5 @@ index b4c23a4..c3d9421 100644
  #ifdef __ANDROID__
      var_Create (mp, "drawable-androidwindow", VLC_VAR_ADDRESS);
 -- 
-2.7.4 (Apple Git-66)
+2.8.3
 
