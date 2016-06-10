@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name      = 'MobileVLCKit-unstable'
-  s.version   = '3.0.0a4'
+  s.version   = '3.0.0a7'
   s.summary   = "MobileVLCKit is an Objective-C wrapper for libvlc's external interface on iOS."
   s.homepage  = 'https://code.videolan.org/videolan/VLCKit'
   s.license   = {
@@ -10,9 +10,10 @@ Pod::Spec.new do |s|
   s.platform  = :ios
   s.authors   = 'Pierre d\'Herbemont', { 'Felix Paul Kühne' => 'fkuehne@videolan.org' }
   s.source    = {
-    :http => 'http://people.videolan.org/~feepk/MobileVLCKit-unstable/MobileVLCKit-unstable-3.0.0a4.zip'
+    :http => 'http://download.videolan.org/pub/cocoapods/unstable/MobileVLCKit-unstable-3.0.0a7.zip'
   }
   s.ios.vendored_framework = 'MobileVLCKit-binary/MobileVLCKit.framework'
+  s.source_files = 'MobileVLCKit-binary/MobileVLCKit.framework/Headers/*.h'
   s.public_header_files = 'MobileVLCKit-binary/MobileVLCKit.framework/Headers/*.h'
   s.ios.deployment_target = '7.0'
   s.frameworks = 'QuartzCore', 'CoreText', 'AVFoundation', 'Security', 'CFNetwork', 'AudioToolbox', 'OpenGLES', 'CoreGraphics', 'VideoToolbox', 'CoreMedia'
