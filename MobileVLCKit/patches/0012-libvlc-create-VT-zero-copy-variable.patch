@@ -1,7 +1,7 @@
-From 07a474025b48260c578f9cbb43cf3baa8fc3959e Mon Sep 17 00:00:00 2001
+From 879316ecde3c946332f06cc17e718cce37d46dfe Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 4 May 2016 16:00:40 +0200
-Subject: [PATCH 12/15] libvlc: create VT-zero-copy variable
+Subject: [PATCH 12/17] libvlc: create VT-zero-copy variable
 
 ---
  lib/media_player.c | 1 +
@@ -20,5 +20,5 @@ index 9e2f137..a587d85 100644
  #ifdef __ANDROID__
      var_Create (mp, "drawable-androidwindow", VLC_VAR_ADDRESS);
 -- 
-2.8.3
+2.8.4
 
