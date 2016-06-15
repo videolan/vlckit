@@ -251,7 +251,7 @@ static void updateProgressCallback(void *p_data,
     if ([self.customRenderer respondsToSelector:@selector(showProgressWithTitle:message:isIndeterminate:position:cancelString:withReference:)]) {
         [self.customRenderer showProgressWithTitle:dialogData[1]
                                            message:dialogData[2]
-                                   isIndeterminate:dialogData[3]
+                                   isIndeterminate:[dialogData[3] boolValue]
                                           position:[dialogData[4] floatValue]
                                       cancelString:[dialogData[5] isEqualToString:@""] ? NULL : dialogData[5]
                                      withReference:dialogData[0]];
