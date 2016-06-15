@@ -31,6 +31,14 @@
 {
     VLCLibrary *_libraryInstance;
 }
+
+- (instancetype)initWithLibrary:(VLCLibrary *)library;
+- (void)displayError:(NSArray * _Nonnull)dialogData;
+- (void)displayLoginDialog:(NSArray * _Nonnull)dialogData;
+- (void)displayQuestion:(NSArray * _Nonnull)dialogData;
+- (void)displayProgressDialog:(NSArray * _Nonnull)dialogData;
+- (void)updateDisplayedProgressDialog:(NSArray * _Nonnull)dialogData;
+
 @end
 
 @interface VLCBlockingAlertView : UIAlertView <UIAlertViewDelegate>
