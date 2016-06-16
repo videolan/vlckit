@@ -46,6 +46,8 @@ New APIs:
                      parseWithOptions:Timeout:
                      parsedStatus
   - added enums: VLCMediaType, VLCMediaParsingOptions, VLCMediaParsedStatus
+  - changed behavior: media will no longer be parsed automatically if meta
+      data is requested prior to concluded parsing
 
 - VLCTime
   - added selectors: isEqual:

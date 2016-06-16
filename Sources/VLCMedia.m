@@ -345,10 +345,10 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (VLCMediaParsedStatus)parsedStatus
 {
-   if ( !p_md )
-      return VLCMediaParsedStatusFailed;
-   libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
-   return (VLCMediaParsedStatus)status;
+    if (!p_md)
+        return VLCMediaParsedStatusFailed;
+    libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
+    return (VLCMediaParsedStatus)status;
 }
 
 - (void)parse
@@ -738,10 +738,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 {
     if (!p_md)
         return nil;
-
-    VLCMediaParsedStatus parsedStatus = [self parsedStatus];
-    if (parsedStatus == VLCMediaParsedStatusSkipped || parsedStatus == VLCMediaParsedStatusInit)
-        [self synchronousParse];
 
     char *returnValue = libvlc_media_get_meta(p_md, [VLCMedia stringToMetaType:key]);
 
