@@ -105,7 +105,9 @@ static VLCLibrary * sharedLibrary = nil;
                       @"--no-stats",
                       @"--no-snapshot-preview",
 #ifndef NOSCARYCODECS
+#ifndef __LP64__
                       @"--avcodec-fast",
+#endif
 #endif
                       @"--text-renderer=freetype",
                       @"--avi-index=3"];
