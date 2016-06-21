@@ -277,8 +277,9 @@ echo "Building share folder..."
 echo ${VLC_BUILD_DIR}
 pbxcp="cp -R -L"
 mkdir -p ${target_share}
-if test "$use_archs" = "no"; then
+if test -d ${VLC_BUILD_DIR}/share/lua; then
     $pbxcp ${VLC_BUILD_DIR}/share/lua ${target_share}
-else
+fi
+if test -d ${main_build_dir}/share/lua; then
     $pbxcp ${main_build_dir}/share/lua ${target_share}
 fi
