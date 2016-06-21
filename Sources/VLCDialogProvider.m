@@ -22,9 +22,12 @@
  *****************************************************************************/
 
 #import "VLCDialogProvider.h"
+#import "VLCCustomDialogProvider.h"
+
+#if TARGET_OS_IPHONE
 #import "VLCiOSLegacyDialogProvider.h"
 #import "VLCEmbeddedDialogProvider.h"
-#import "VLCCustomDialogProvider.h"
+#endif
 
 /* We are the root of a class cluster, not much to see */
 
