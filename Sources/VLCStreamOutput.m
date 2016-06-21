@@ -34,6 +34,12 @@
 @end
 
 @implementation VLCStreamOutput
+
+- (instancetype)init
+{
+    return [self initWithOptionDictionary:nil];
+}
+
 - (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary
 {
     if (self = [super init])

@@ -66,7 +66,7 @@
     [super stop];
 }
 
-- (BOOL)play
+- (void)play
 {
     NSString * libvlcArgs;
     if( self.drawable )
@@ -85,7 +85,6 @@
         [super setMedia: self.media];
     }
     [super play];
-    return YES;
 }
 
 + (NSSet *)keyPathsForValuesAffectingDescription
