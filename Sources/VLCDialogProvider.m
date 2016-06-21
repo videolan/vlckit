@@ -51,8 +51,10 @@
 #else
     if (customUI)
         return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
-    else
+    else {
         NSLog(@"YOU NEED TO IMPLEMENT YOUR UI YOURSELF ON THE MAC");
+        return nil;
+    }
 #endif
 }
 
