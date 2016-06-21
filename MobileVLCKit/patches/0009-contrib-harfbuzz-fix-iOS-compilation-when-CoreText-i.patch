@@ -1,4 +1,4 @@
-From 853a3bbbae62cda2631613882f0c98f56c7577f3 Mon Sep 17 00:00:00 2001
+From 4cfa54bc26797762c7a02ea5e7aba4c9a7a5283a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:46:27 +0100
 Subject: [PATCH 09/17] contrib/harfbuzz: fix iOS compilation when CoreText is
@@ -49,7 +49,7 @@ index 0000000..555e851
 + 			AC_SUBST(CORETEXT_LIBS)
 + 		fi
 diff --git a/contrib/src/harfbuzz/rules.mak b/contrib/src/harfbuzz/rules.mak
-index f21917c..2058b4a 100644
+index 36bcb31..4c9bcf2 100644
 --- a/contrib/src/harfbuzz/rules.mak
 +++ b/contrib/src/harfbuzz/rules.mak
 @@ -23,6 +23,7 @@ harfbuzz: harfbuzz-$(HARFBUZZ_VERSION).tar.bz2 .sum-harfbuzz

@@ -1,4 +1,4 @@
-From 2902eabd89f4a1ce4c7db74a9123dcce21416404 Mon Sep 17 00:00:00 2001
+From 387945dc05a59c7139112cd6a9a2b579591b04ca Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 26 Oct 2015 10:47:56 +0100
 Subject: [PATCH 16/17] disable videotoolbox

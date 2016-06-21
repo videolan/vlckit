@@ -1,4 +1,4 @@
-From a379f35abf7b8d9da3b2b35782b01d273de39f45 Mon Sep 17 00:00:00 2001
+From 93d87326edb419cdc342632ed139adcc960259f7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
 Subject: [PATCH 10/17] libvlc: expose a base set of freetype options to
@@ -75,7 +75,7 @@ index 733a4dd..f297970 100644
  libvlc_video_take_snapshot
  libvlc_vlm_add_broadcast
 diff --git a/lib/media_player.c b/lib/media_player.c
-index b2ac614..0c54b63 100644
+index f2e9d03..8d54c93 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -670,6 +670,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )

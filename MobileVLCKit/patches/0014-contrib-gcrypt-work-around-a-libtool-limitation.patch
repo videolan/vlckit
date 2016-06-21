@@ -1,4 +1,4 @@
-From 62e3ebee8db935bdb261ffd9650e151d017aedc2 Mon Sep 17 00:00:00 2001
+From c3ac6d30b294f3bd67b63316d80892d142cd52f0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
 Subject: [PATCH 14/17] contrib/gcrypt: work-around a libtool limitation
@@ -10,7 +10,7 @@ Subject: [PATCH 14/17] contrib/gcrypt: work-around a libtool limitation
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 3bb2c80..26725cc 100644
+index e528e57..4d2604c 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -15,6 +15,7 @@ libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
