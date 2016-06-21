@@ -21,7 +21,6 @@
  *****************************************************************************/
 
 #import "VLCExtension.h"
-#import <vlc_extensions.h>
 
 @interface VLCExtension ()
 {
@@ -33,6 +32,11 @@
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"VLC Extension %@", [self name]];
+}
+
+- (instancetype)init
+{
+    return [self initWithInstance:NULL];
 }
 
 - (instancetype)initWithInstance:(struct extension_t *)instance

@@ -21,6 +21,7 @@
  *****************************************************************************/
 
 #import <Cocoa/Cocoa.h>
+#import <vlc_extensions.h>
 
 @interface VLCExtension : NSObject
 
