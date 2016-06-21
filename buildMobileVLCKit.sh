@@ -64,10 +64,18 @@ buildxcodeproj()
     info "Building $1 ($target, ${CONFIGURATION}, $PLATFORM)"
 
     local architectures=""
-    if [ "$PLATFORM" = "iphonesimulator" ]; then
-        architectures="i386 x86_64"
+    if [ "$TVOS" != "yes" ]; then
+        if [ "$PLATFORM" = "iphonesimulator" ]; then
+            architectures="i386 x86_64"
+        else
+            architectures="armv7 armv7s arm64"
+        fi
     else
-        architectures="armv7 armv7s arm64"
+        if [ "$PLATFORM" = "appletvsimulator" ]; then
+            architectures="x86_64"
+        else
+            architectures="arm64"
+        fi
     fi
 
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
@@ -124,6 +132,7 @@ do
              TVOS=yes
              BITCODE=yes
              SDK=`xcrun --sdk appletvos --show-sdk-version`
+             SDK_MIN=9.0
              ;;
          ?)
              usage
@@ -438,6 +447,7 @@ fi
 info "all done"
 
 if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
+if [ "$TVOS" != "yes" ]; then
     info "Building static MobileVLCKit.framework"
 
     buildxcodeproj MobileVLCKit "MobileVLCKit" iphoneos
@@ -455,4 +465,23 @@ if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
     spopd # build
 
     info "Build of static MobileVLCKit.framework completed"
+else
+    info "Building static TVVLCKit.framework"
+
+    buildxcodeproj MobileVLCKit "TVVLCKit" appletvos
+    buildxcodeproj MobileVLCKit "TVVLCKit" appletvsimulator
+
+    # Assumes both platforms were built currently
+    spushd build
+    rm -rf TVVLCKit.framework && \
+    mkdir TVVLCKit.framework && \
+    lipo -create ${CONFIGURATION}-appletvos/libTVVLCKit.a \
+                 ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a \
+              -o TVVLCKit.framework/TVVLCKit && \
+    chmod a+x TVVLCKit.framework/TVVLCKit && \
+    cp -pr ${CONFIGURATION}-appletvos/TVVLCKit TVVLCKit.framework/Headers
+    spopd # build
+
+    info "Build of static TVVLCKit.framework completed"
+fi
 fi

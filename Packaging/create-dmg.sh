@@ -19,6 +19,7 @@ spopd()
 }
 
 MOBILE=no
+TV=no
 VERBOSE=no
 USEZIP=no
 
@@ -33,12 +34,13 @@ OPTIONS:
    -h            Show some help
    -v            Be verbose
    -m            Package MobileVLCKit
+   -t            Package TVVLCKit
    -z            Use zip file format
 EOF
 
 }
 
-while getopts "hvmz" OPTION
+while getopts "hvmtz" OPTION
 do
      case $OPTION in
          h)
@@ -50,6 +52,10 @@ do
              ;;
          m)
              MOBILE=yes
+             ;;
+         t)
+             MOBILE=yes
+             TV=yes
              ;;
          z)
              USEZIP=yes
@@ -73,32 +79,49 @@ root=`dirname $0`/../
 DMGFOLDERNAME="VLCKit - binary package"
 DMGITEMNAME="VLCKit-REPLACEWITHVERSION"
 
-if [ "$MOBILE" = "yes" ]; then
-if [ "$USEZIP" = "yes" ]; then
-    DMGFOLDERNAME="MobileVLCKit-binary"
+if [ "TV" = "yes" ]; then
+    if [ "$USEZIP" = "yes" ]; then
+        DMGFOLDERNAME="TVVLCKit-binary"
+    else
+        DMGFOLDERNAME="TVVLCKit - binary package"
+    fi
+    DMGITEMNAME="TVVLCKit-REPLACEWITHVERSION"
 else
-    DMGFOLDERNAME="MobileVLCKit - binary package"
+    if [ "$MOBILE" = "yes" ]; then
+        if [ "$USEZIP" = "yes" ]; then
+            DMGFOLDERNAME="MobileVLCKit-binary"
+        else
+            DMGFOLDERNAME="MobileVLCKit - binary package"
+        fi
+        DMGITEMNAME="MobileVLCKit-REPLACEWITHVERSION"
+    fi
 fi
-    DMGITEMNAME="MobileVLCKit-REPLACEWITHVERSION"
-fi
+
 
 info "checking for distributable binary package"
 
 spushd ${root}
 if [ "$MOBILE" = "no" ]; then
-if [ ! -e "VLCKit" ]; then
-    info "VLCKit not found for distribution, creating..."
-    if [ "$VERBOSE" = "yes" ]; then
-        make VLCKit V=1
-    else
-        make VLCKit
+    if [ ! -e "VLCKit" ]; then
+        info "VLCKit not found for distribution, creating..."
+        if [ "$VERBOSE" = "yes" ]; then
+            make VLCKit V=1
+        else
+            make VLCKit
+        fi
     fi
-fi
 else
-if [ ! -e "build/MobileVLCKit.framework" ]; then
-    info "MobileVLCKit not found for distribution, creating... this will take long"
-    ./buildMobileVLCKit.sh -f
-fi
+    if [ "$TV" = "yes" ]; then
+        if [ ! -e "build/TVVLCKit.framework" ]; then
+            info "TVVLCKit not found for distribution, creating... this will take long"
+            ./buildMobileVLCKit.sh -f -t
+        fi
+    else
+        if [ ! -e "build/MobileVLCKit.framework" ]; then
+            info "MobileVLCKit not found for distribution, creating... this will take long"
+            ./buildMobileVLCKit.sh -f
+        fi
+    fi
 fi
 
 if [ ! -e "${DMGFOLDERNAME}" ]; then
@@ -106,12 +129,16 @@ info "Collecting items"
 mkdir -p "${DMGFOLDERNAME}"
 mkdir -p "${DMGFOLDERNAME}/Sample Code"
 if [ "$MOBILE" = "no" ]; then
-cp -R VLCKit/* "${DMGFOLDERNAME}"
-cp -R Examples_OSX/* "${DMGFOLDERNAME}/Sample Code"
+    cp -R VLCKit/* "${DMGFOLDERNAME}"
+    cp -R Examples_OSX/* "${DMGFOLDERNAME}/Sample Code"
 else
-cp -R build/MobileVLCKit.framework "${DMGFOLDERNAME}"
-cp -R Examples_iOS/* "${DMGFOLDERNAME}/Sample Code"
-cp COPYING "${DMGFOLDERNAME}"
+    if [ "$TV" = "yes" ]; then
+        cp -R build/TVVLCKit.framework "${DMGFOLDERNAME}"
+    else
+        cp -R build/MobileVLCKit.framework "${DMGFOLDERNAME}"
+        cp -R Examples_iOS/* "${DMGFOLDERNAME}/Sample Code"
+    fi
+    cp COPYING "${DMGFOLDERNAME}"
 fi
 cp NEWS "${DMGFOLDERNAME}"
 spushd "${DMGFOLDERNAME}"
@@ -131,7 +158,9 @@ hdiutil attach -readwrite -noverify -noautoopen -mountRoot ./mount ${DMGITEMNAME
 if [ "$MOBILE" = "no" ]; then
 osascript Packaging/dmg_setup.scpt "${DMGFOLDERNAME}"
 else
-osascript Packaging/mobile_dmg_setup.scpt "${DMGFOLDERNAME}"
+    if [ "$TV" = "no" ]; then
+        osascript Packaging/mobile_dmg_setup.scpt "${DMGFOLDERNAME}"
+    fi
 fi
 hdiutil detach ./mount/"${DMGFOLDERNAME}"
 
