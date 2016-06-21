@@ -79,24 +79,22 @@ root=`dirname $0`/../
 DMGFOLDERNAME="VLCKit - binary package"
 DMGITEMNAME="VLCKit-REPLACEWITHVERSION"
 
-if [ "TV" = "yes" ]; then
+if [ "$MOBILE" = "yes" ]; then
+    if [ "$USEZIP" = "yes" ]; then
+        DMGFOLDERNAME="MobileVLCKit-binary"
+    else
+        DMGFOLDERNAME="MobileVLCKit - binary package"
+    fi
+    DMGITEMNAME="MobileVLCKit-REPLACEWITHVERSION"
+fi
+if [ "$TV" = "yes" ]; then
     if [ "$USEZIP" = "yes" ]; then
         DMGFOLDERNAME="TVVLCKit-binary"
     else
         DMGFOLDERNAME="TVVLCKit - binary package"
     fi
     DMGITEMNAME="TVVLCKit-REPLACEWITHVERSION"
-else
-    if [ "$MOBILE" = "yes" ]; then
-        if [ "$USEZIP" = "yes" ]; then
-            DMGFOLDERNAME="MobileVLCKit-binary"
-        else
-            DMGFOLDERNAME="MobileVLCKit - binary package"
-        fi
-        DMGITEMNAME="MobileVLCKit-REPLACEWITHVERSION"
-    fi
 fi
-
 
 info "checking for distributable binary package"
 
