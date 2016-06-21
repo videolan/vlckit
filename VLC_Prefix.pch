@@ -5,6 +5,7 @@
 
 #ifdef __OBJC__
 #  import <Cocoa/Cocoa.h>
+#  import "VLCHelperCode.h"
 #endif
 
 #ifdef HAVE_CONFIG_H
@@ -12,7 +13,6 @@
 #endif
 
 #include <vlc/vlc.h>
-#include <vlc/libvlc_structures.h>
 #include <vlc/libvlc.h>
 
 #ifndef NDEBUG
@@ -33,7 +33,3 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 #endif
-
-NSString *toNSStr(const char *str) {
-    return str != NULL ? [NSString stringWithUTF8String:str] : @"";
-}
