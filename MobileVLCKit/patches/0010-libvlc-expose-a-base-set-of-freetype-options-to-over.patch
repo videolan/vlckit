@@ -1,7 +1,7 @@
-From 93d87326edb419cdc342632ed139adcc960259f7 Mon Sep 17 00:00:00 2001
+From 1074cace5e1951650e2f61b0753c9fdcbaeac34a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 10/17] libvlc: expose a base set of freetype options to
+Subject: [PATCH 10/15] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
@@ -189,7 +189,7 @@ index b2c9b34..6af4e1c 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 135b411..24b51d5 100644
+index c75770a..66a4b62 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -77,6 +77,9 @@
@@ -202,7 +202,7 @@ index 135b411..24b51d5 100644
  
  #define FONT_TEXT N_("Font")
  #define MONOSPACE_FONT_TEXT N_("Monospace Font")
-@@ -929,12 +932,14 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -929,7 +932,7 @@ static void FillDefaultStyles( filter_t *p_filter )
  {
      filter_sys_t *p_sys = p_filter->p_sys;
  
@@ -211,14 +211,16 @@ index 135b411..24b51d5 100644
      p_sys->p_default_style->psz_monofontname = var_InheritString( p_filter, "freetype-monofont" );
  
      p_sys->p_default_style->i_font_alpha = var_InheritInteger( p_filter,"freetype-opacity" );
-     p_sys->p_default_style->i_font_alpha = VLC_CLIP( p_sys->p_default_style->i_font_alpha, 0, 255 );
+@@ -937,6 +940,8 @@ static void FillDefaultStyles( filter_t *p_filter )
+     p_sys->p_default_style->i_font_color = var_InheritInteger( p_filter,"freetype-color" );
+     p_sys->p_default_style->i_font_color = VLC_CLIP( p_sys->p_default_style->i_font_color, 0, 0xFFFFFF );
  
 +    p_sys->p_default_style->i_font_color = VLC_CLIP(var_CreateGetIntegerCommand( p_filter, "freetype-color") , 0, 0xFFFFFF);
 +
      p_sys->p_default_style->i_outline_alpha = var_InheritInteger( p_filter, "freetype-outline-opacity" );
      p_sys->p_default_style->i_outline_alpha = VLC_CLIP( p_sys->p_default_style->i_outline_alpha, 0, 255 );
      p_sys->p_default_style->i_outline_color = var_InheritInteger( p_filter, "freetype-outline-color" );
-@@ -950,11 +955,11 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -952,11 +957,11 @@ static void FillDefaultStyles( filter_t *p_filter )
      p_sys->p_default_style->i_features |= STYLE_HAS_FLAGS;
  
      p_sys->p_forced_style->i_font_size = var_InheritInteger( p_filter, "freetype-fontsize" );
@@ -232,7 +234,7 @@ index 135b411..24b51d5 100644
      {
          p_sys->p_forced_style->i_style_flags |= STYLE_BOLD;
          p_sys->p_forced_style->i_features |= STYLE_HAS_FLAGS;
-@@ -962,6 +967,12 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -964,6 +969,12 @@ static void FillDefaultStyles( filter_t *p_filter )
  
      /* Apply forced styles to defaults, if any */
      text_style_Merge( p_sys->p_default_style, p_sys->p_forced_style, true );
@@ -245,7 +247,7 @@ index 135b411..24b51d5 100644
  }
  
  static void FreeStylesArray( text_style_t **pp_styles, size_t i_styles )
-@@ -1324,6 +1335,17 @@ static void Destroy( vlc_object_t *p_this )
+@@ -1326,6 +1337,17 @@ static void Destroy( vlc_object_t *p_this )
      DumpDictionary( p_filter, &p_sys->fallback_map, true, -1 );
  #endif
  
@@ -263,7 +265,7 @@ index 135b411..24b51d5 100644
      /* Attachments */
      if( p_sys->pp_font_attachments )
      {
-@@ -1353,3 +1375,34 @@ static void Destroy( vlc_object_t *p_this )
+@@ -1355,3 +1377,34 @@ static void Destroy( vlc_object_t *p_this )
      free( p_sys );
  }
  
