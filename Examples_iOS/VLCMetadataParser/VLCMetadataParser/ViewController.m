@@ -45,6 +45,8 @@
 
     _textView = [[UITextView alloc] initWithFrame:self.view.frame];
     _textView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    _textView.backgroundColor = [UIColor clearColor];
+    _textView.textColor = [UIColor whiteColor];
     [self.view addSubview:_textView];
 
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -76,9 +78,7 @@
 {
     [_timeOutTimer invalidate];
 
-    NSLog(@"Parsed %@ - %lu tracks", _media, (unsigned long)[[_media tracksInformation] count]);
-
-    NSMutableString *parsingOutput = [[NSMutableString alloc] initWithString:@"\n\n"];
+    NSMutableString *parsingOutput = [[NSMutableString alloc] initWithFormat:@"\n\nParsed: %@\nNumber of tracks: %lu\n", _media, (unsigned long)[[_media tracksInformation] count]];
 
     _media.delegate = nil;
     NSArray *tracks = [_media tracksInformation];
@@ -113,9 +113,10 @@
     if (!mediaHasVideo) {
         NSDictionary *audioContentInfo = [_media metaDictionary];
         if (audioContentInfo && audioContentInfo.count > 0) {
-            [parsingOutput appendFormat:@"\nContent Info:\nTitle: %@\nArtist: %@\nAlbum name: %@\nRelease Year: %@\nGenre: %@\nTrack number: %@\nDisc number: %@",
+            [parsingOutput appendFormat:@"\nContent Info:\nTitle: %@\nArtist: %@\nAlbum Artist: %@\nAlbum name: %@\nRelease Year: %@\nGenre: %@\nTrack number: %@\nDisc number: %@",
              audioContentInfo[VLCMetaInformationTitle],
              audioContentInfo[VLCMetaInformationArtist],
+             audioContentInfo[VLCMetaInformationAlbumArtist],
              audioContentInfo[VLCMetaInformationAlbum],
              audioContentInfo[VLCMetaInformationDate],
              audioContentInfo[VLCMetaInformationGenre],
@@ -126,11 +127,14 @@
                                                                     Artist:audioContentInfo[VLCMetaInformationArtist]
                                                               andAlbumName:audioContentInfo[VLCMetaInformationAlbum]];
             if (artworkPath) {
-                [parsingOutput appendFormat:@"Artwork path: %@", artworkPath];
+                [parsingOutput appendFormat:@"\nArtwork path: %@", artworkPath];
             }
         }
     }
 
+    NSLog(@"%@", parsingOutput);
+
+    [_activityIndicatorView stopAnimating];
     _textView.text = parsingOutput;
 }
 
