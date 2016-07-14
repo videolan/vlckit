@@ -143,10 +143,10 @@ static void display(void *opaque, void *picture)
 {
     NSAssert(!_data, @"We are already fetching a thumbnail");
 
-   VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
-   if (!(parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone)) {
+    VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
+    if (!(parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone)) {
         [_media addObserver:self forKeyPath:@"parsed" options:0 context:NULL];
-        [_media parseWithOptions:VLCMediaParseLocal];
+        [_media parseWithOptions:VLCMediaParseLocal | VLCMediaParseNetwork];
         NSAssert(!_parsingTimeoutTimer, @"We already have a timer around");
         _parsingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaParsingTimedOut) userInfo:nil repeats:NO];
         return;
@@ -243,8 +243,8 @@ static void display(void *opaque, void *picture)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (object == _media && [keyPath isEqualToString:@"parsed"]) {
-       VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
-       if (parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone) {
+        VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
+        if (parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone) {
             [_parsingTimeoutTimer invalidate];
             _parsingTimeoutTimer = nil;
             [_media removeObserver:self forKeyPath:@"parsed"];
@@ -290,12 +290,12 @@ static void display(void *opaque, void *picture)
     const CGFloat height = _effectiveThumbnailHeight;
     const CGFloat pitch = 4 * width;
     CGContextRef bitmap = CGBitmapContextCreate(_data,
-                                 width,
-                                 height,
-                                 8,
-                                 pitch,
-                                 colorSpace,
-                                 kCGImageAlphaNoneSkipLast);
+                                                width,
+                                                height,
+                                                8,
+                                                pitch,
+                                                colorSpace,
+                                                kCGImageAlphaNoneSkipLast);
 
     CGColorSpaceRelease(colorSpace);
     NSAssert(bitmap, @"Can't create bitmap");
@@ -345,7 +345,6 @@ static void display(void *opaque, void *picture)
 
     // Call delegate
     [_delegate mediaThumbnailer:self didFinishThumbnail:_thumbnail];
-
 }
 
 - (void)mediaThumbnailingTimedOut
