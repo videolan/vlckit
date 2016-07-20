@@ -47,6 +47,7 @@
     _textView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     _textView.backgroundColor = [UIColor clearColor];
     _textView.textColor = [UIColor whiteColor];
+    _textView.editable = NO;
     [self.view addSubview:_textView];
 
     _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
