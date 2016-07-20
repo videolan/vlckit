@@ -28,7 +28,7 @@
 
 @interface VLCMediaThumbnailer ()
 {
-    id<VLCMediaThumbnailerDelegate> __weak _delegate;
+    NSObject<VLCMediaThumbnailerDelegate>* __weak _thumbnailingDelegate;
     VLCMedia *_media;
     void *_mp;
     CGImageRef _thumbnail;
@@ -87,7 +87,7 @@ static void display(void *opaque, void *picture)
 
 @implementation VLCMediaThumbnailer
 @synthesize media=_media;
-@synthesize delegate=_delegate;
+@synthesize delegate=_thumbnailingDelegate;
 @synthesize thumbnail=_thumbnail;
 @synthesize dataPointer=_data;
 @synthesize thumbnailWidth=_thumbnailWidth;
@@ -145,7 +145,7 @@ static void display(void *opaque, void *picture)
 
     VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
     if (!(parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone)) {
-        [_media addObserver:self forKeyPath:@"parsed" options:0 context:NULL];
+        [_media addObserver:self forKeyPath:@"parsedStatus" options:0 context:NULL];
         [_media parseWithOptions:VLCMediaParseLocal | VLCMediaParseNetwork];
         NSAssert(!_parsingTimeoutTimer, @"We already have a timer around");
         _parsingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaParsingTimedOut) userInfo:nil repeats:NO];
@@ -228,28 +228,33 @@ static void display(void *opaque, void *picture)
     }
     libvlc_media_player_play(_mp);
 
+    NSURL *url = _media.url;
+    NSTimeInterval timeoutDuration = 10;
+    if (![url.scheme isEqualToString:@"file"]) {
+        VKLog(@"media is remote, will wait longer");
+        timeoutDuration = 45;
+    }
+
     NSAssert(!_thumbnailingTimeoutTimer, @"We already have a timer around");
-    _thumbnailingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:10 target:self selector:@selector(mediaThumbnailingTimedOut) userInfo:nil repeats:NO];
+    _thumbnailingTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:timeoutDuration target:self selector:@selector(mediaThumbnailingTimedOut) userInfo:nil repeats:NO];
 }
 
 - (void)mediaParsingTimedOut
 {
     VKLog(@"WARNING: media thumbnailer media parsing timed out");
-    [_media removeObserver:self forKeyPath:@"parsed"];
+    [_media removeObserver:self forKeyPath:@"parsedStatus"];
 
     [self startFetchingThumbnail];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (object == _media && [keyPath isEqualToString:@"parsed"]) {
-        VLCMediaParsedStatus parsedStatus = [_media parsedStatus];
-        if (parsedStatus == VLCMediaParsedStatusFailed || parsedStatus == VLCMediaParsedStatusDone) {
-            [_parsingTimeoutTimer invalidate];
-            _parsingTimeoutTimer = nil;
-            [_media removeObserver:self forKeyPath:@"parsed"];
-            [self startFetchingThumbnail];
-        }
+    if (object == _media && [keyPath isEqualToString:@"parsedStatus"]) {
+        [_parsingTimeoutTimer invalidate];
+        _parsingTimeoutTimer = nil;
+        [_media removeObserver:self forKeyPath:@"parsedStatus"];
+        [self startFetchingThumbnail];
+
         return;
     }
     return [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -281,8 +286,9 @@ static void display(void *opaque, void *picture)
         return;
     }
     // it isn't always best what comes first
-    if (_numberOfReceivedFrames < 4)
+    if (_numberOfReceivedFrames < 4) {
         return;
+    }
 
     NSAssert(_data, @"We have no data");
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -344,7 +350,7 @@ static void display(void *opaque, void *picture)
     [self endThumbnailing];
 
     // Call delegate
-    [_delegate mediaThumbnailer:self didFinishThumbnail:_thumbnail];
+    [_thumbnailingDelegate mediaThumbnailer:self didFinishThumbnail:_thumbnail];
 }
 
 - (void)mediaThumbnailingTimedOut
@@ -353,6 +359,6 @@ static void display(void *opaque, void *picture)
     [self endThumbnailing];
 
     // Call delegate
-    [_delegate mediaThumbnailerDidTimeOut:self];
+    [_thumbnailingDelegate mediaThumbnailerDidTimeOut:self];
 }
 @end
