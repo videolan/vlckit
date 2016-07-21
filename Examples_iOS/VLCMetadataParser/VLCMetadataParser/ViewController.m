@@ -73,6 +73,8 @@
 - (void)parsingTimeout:(NSTimer *)timer
 {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSMutableString *parsingOutput = [[NSMutableString alloc] initWithFormat:@"\n\nParsing of the following media reached its timeout: %@\n", _media];
+    _textView.text = parsingOutput;
 }
 
 - (void)mediaDidFinishParsing:(VLCMedia *)media
