@@ -57,7 +57,7 @@ Deprecated APIs:
 - VLCAudio
   - setMute:
 - VLCMedia
-  - parse, isParsed
+  - parse, isParsed, synchronousParse
 - VLCMediaDiscoverer
   - availableMediaDiscoverer, localizedName
 - VLCMediaPlayer

@@ -437,8 +437,10 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
 /**
  * Trigger a synchronous parsing of the media
  * the selector won't return until parsing finished
+ *
+ * \note Use parseWithOptions: instead
  */
-- (void)synchronousParse;
+- (void)synchronousParse __attribute__((deprecated));
 
 
 enum {
