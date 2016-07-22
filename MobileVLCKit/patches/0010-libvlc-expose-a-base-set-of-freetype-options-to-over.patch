@@ -1,7 +1,7 @@
-From 1074cace5e1951650e2f61b0753c9fdcbaeac34a Mon Sep 17 00:00:00 2001
+From f57c7ab8c891c1ca696bab79607f3e3354bf9d2b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
-Subject: [PATCH 10/15] libvlc: expose a base set of freetype options to
+Subject: [PATCH 10/16] libvlc: expose a base set of freetype options to
  overwrite the default font
 
 ---
@@ -14,7 +14,7 @@ Subject: [PATCH 10/15] libvlc: expose a base set of freetype options to
  6 files changed, 163 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 2323b4d..5a54cb7 100644
+index 79a0b1f..3a37d3b 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
 @@ -1496,6 +1496,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
@@ -314,5 +314,5 @@ index 44b2731..7f1abec 100644
  
  /**
 -- 
-2.8.4
+2.9.2
 
