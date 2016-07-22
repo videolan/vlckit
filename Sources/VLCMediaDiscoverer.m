@@ -56,8 +56,8 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 
 + (NSArray *)availableMediaDiscovererForCategoryType:(VLCMediaDiscovererCategoryType)categoryType
 {
-    libvlc_media_discoverer_description **discoverers;
-    unsigned numberOfDiscoverers = libvlc_media_discoverer_list_get([VLCLibrary sharedInstance], (libvlc_media_discoverer_category)categoryType, &discoverers);
+    libvlc_media_discoverer_description_t **discoverers;
+    unsigned numberOfDiscoverers = libvlc_media_discoverer_list_get([VLCLibrary sharedInstance], (libvlc_media_discoverer_category_t)categoryType, &discoverers);
 
     if (numberOfDiscoverers == 0) {
         libvlc_media_discoverer_list_release(discoverers, numberOfDiscoverers);
