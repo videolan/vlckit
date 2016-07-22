@@ -720,7 +720,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "top_srcdir=`pwd`/vlc-unstable\n\nif test \"$ACTION\" = \"clean\"\nthen\n    exit 0\nfi\n\nif test \"$arch\" = \"x86_64\"; then\n    export PATH=$top_srcdir/contrib/x86_64-apple-darwin11/bin:$PATH\nfi\n\nexport PATH=$top_srcdir/extras/tools/build/bin:/usr/local/bin:$PATH\n\necho $PATH\n\nif ! [ -e $top_srcdir/configure ]; then\n  cd \"$top_srcdir\" && ./bootstrap\nfi";
+			shellScript = "top_srcdir=`pwd`/vlc-unstable\n\nif test \"$ACTION\" = \"clean\"\nthen\n    exit 0\nfi\n\nif test \"$arch\" = \"x86_64\"; then\n    export PATH=$top_srcdir/contrib/x86_64-apple-darwin15/bin:$PATH\nfi\n\nexport PATH=$top_srcdir/extras/tools/build/bin:/usr/local/bin:$PATH\n\necho $PATH\n\nif ! [ -e $top_srcdir/configure ]; then\n  cd \"$top_srcdir\" && ./bootstrap\nfi";
 			showEnvVarsInLog = 0;
 		};
 		6337548010ED091D0072A0D9 /* make */ = {
@@ -735,7 +735,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "NUMBER_OF_CORES=`sysctl hw.ncpu | cut -d\" \" -f2`\nexport PATH=$VLC_SRC_DIR/extras/tools/build/bin:$PATH\n\nfor arch in $ARCHS; do\n\techo \"Make [$arch]\"\nexport PATH=$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/$arch-apple-darwin11/bin:$PATH\n\tcd  $VLC_BUILD_DIR/$arch\n\tmake -j$NUMBER_OF_CORES\ndone";
+			shellScript = "NUMBER_OF_CORES=`sysctl hw.ncpu | cut -d\" \" -f2`\nexport PATH=$VLC_SRC_DIR/extras/tools/build/bin:$PATH\n\nfor arch in $ARCHS; do\n\techo \"Make [$arch]\"\nexport PATH=$VLC_SRC_DIR/extras/tools/build/bin:$VLC_SRC_DIR/contrib/$arch-apple-darwin15/bin:$PATH\n\tcd  $VLC_BUILD_DIR/$arch\n\tmake -j$NUMBER_OF_CORES\ndone";
 		};
 		633754D310ED0D330072A0D9 /* install */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -769,7 +769,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if test $ACTION = \"clean\"\nthen\nmake clean\nexit 0\nfi\n\necho \"Building tools\"\necho \"\"\ncd $SOURCE_ROOT/vlc-unstable/extras/tools\n./bootstrap\nmake\n\necho \"Building a set of contribs for $ARCHS...\"\necho \"\"\n\nexport PATH=$SOURCE_ROOT/vlc-unstable/extras/tools/build/bin:$PATH\n\nfor arch in $ARCHS; do\n\tcd $SOURCE_ROOT/vlc-unstable/contrib\n\techo \"Making contribs for $arch\"\n\trm -rf vlckit-$arch\t\n\tmkdir vlckit-$arch\n\tcd vlckit-$arch\n    export OSX_VERSION=10.7\n    export TRIPLET=x86_64-apple-darwin11\n\trm -rf $TRIPLET\n\t../bootstrap --build=$TRIPLET --host=$TRIPLET\n\tmake prebuilt\ndone\n";
+			shellScript = "if test $ACTION = \"clean\"\nthen\nmake clean\nexit 0\nfi\n\necho \"Building tools\"\necho \"\"\ncd $SOURCE_ROOT/vlc-unstable/extras/tools\n./bootstrap\nmake\n\necho \"Building a set of contribs for $ARCHS...\"\necho \"\"\n\nexport PATH=$SOURCE_ROOT/vlc-unstable/extras/tools/build/bin:$PATH\n\nfor arch in $ARCHS; do\n\tcd $SOURCE_ROOT/vlc-unstable/contrib\n\techo \"Making contribs for $arch\"\n\trm -rf vlckit-$arch\t\n\tmkdir vlckit-$arch\n\tcd vlckit-$arch\n    export OSX_VERSION=10.7\n    export TRIPLET=x86_64-apple-darwin15\n\trm -rf $TRIPLET\n\t../bootstrap --build=$TRIPLET --host=$TRIPLET\n\tmake prebuilt\ndone\n";
 			showEnvVarsInLog = 0;
 		};
 		63FFDBCD0D2AE2AE0092FC96 /* configure */ = {
@@ -784,7 +784,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo $ARCHS\nsh $SOURCE_ROOT/Configure.sh --disable-lua";
+			shellScript = "echo $ARCHS\nsh $SOURCE_ROOT/Configure.sh --build=x86_64-apple-darwin15";
 		};
 		CC1EA79915938D7E00C40EF9 /* make */ = {
 			isa = PBXShellScriptBuildPhase;
