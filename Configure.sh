@@ -37,13 +37,10 @@ args="--enable-shout $args"
 args="--enable-twolame $args"
 args="--enable-realrtsp $args"
 args="--enable-libass $args"
-args="--enable-macosx-dialog-provider $args"
 args="--enable-macosx-eyetv $args"
 args="--disable-macosx-qtkit $args"
-args="--disable-quicktime $args"
 
 # disabled stuff
-args="--disable-growl $args"
 args="--disable-caca $args"
 args="--disable-ncurses $args"
 args="--disable-httpd $args"
@@ -92,7 +89,7 @@ for arch in $ARCHS; do
         export CXXFLAGS="-m64 -arch x86_64 $optim"
         export OBJCFLAGS="-m64 -arch x86_64 $optim"
         export CPPFLAGS="-m64 -arch x86_64 $optim"
-        this_args="--build=x86_64-apple-darwin11 --with-contrib=$VLC_SRC_DIR/contrib/x86_64-apple-darwin11 $this_args"
+        this_args="--build=x86_64-apple-darwin15 --with-contrib=$VLC_SRC_DIR/contrib/x86_64-apple-darwin15 $this_args"
         export PKG_CONFIG_PATH=$VLC_SRC_DIR/contrib/x86_64-apple-darwin11/lib/pkgconfig
     fi
     echo "Running [$arch] configure $this_args"
