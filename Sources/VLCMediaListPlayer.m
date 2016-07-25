@@ -177,6 +177,16 @@
     return libvlc_media_list_player_play_item_at_index(instance, index) == 0 ? YES : NO;
 }
 
+- (void)playItemAtNumber:(NSNumber *)index
+{
+    if ([NSThread isMainThread]) {
+        [self performSelectorInBackground:@selector(playItemAtNumber:) withObject:index];
+        return;
+    }
+
+    libvlc_media_list_player_play_item_at_index(instance, [index intValue]);
+}
+
 - (void)setRepeatMode:(VLCRepeatMode)repeatMode
 {
     libvlc_playback_mode_t mode;

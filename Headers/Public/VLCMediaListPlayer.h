@@ -65,7 +65,17 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL next;
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL previous;
-- (BOOL)playItemAtIndex:(int)index;
+
+/**
+ * play an item at at a given index in the media list attached to the player
+ * \note This method is not thread safe and is deprecated. Use playItemAtNumber: instead
+ */
+- (BOOL)playItemAtIndex:(int)index  __attribute__((deprecated));
+
+/**
+ * play an item at a given index in the media list attached to the player
+ */
+- (void)playItemAtNumber:(NSNumber *)index;
 
 /**
  * Playmode selection (don't repeat anything, repeat one, repeat all)

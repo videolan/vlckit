@@ -22,6 +22,7 @@ New APIs:
 - VLCMediaListPlayer
   - added selectors: initWithDrawable:
                      initWithOptions:andDrawable:
+                     playItemAtNumber:
 
 - VLCMediaPlayer
   - added properties: titleDescriptions, indexOfLongestTitle, numberOfTitles,
@@ -62,6 +63,8 @@ Deprecated APIs:
   - availableMediaDiscoverer, localizedName
 - VLCMediaPlayer
   - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond, openVideoSubTitlesFromFile:
+- VLCMediaListPlayer
+  - playItemAtIndex
 
 Removed APIs:
 - VLCMedia:
