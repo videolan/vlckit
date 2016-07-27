@@ -51,6 +51,7 @@ args="--disable-xcb $args"
 args="--disable-sdl $args"
 args="--disable-sdl-image $args"
 args="--disable-samplerate $args"
+args="--disable-vnc $args"
 
 if test "x$SDKROOT" != "x"
 then
