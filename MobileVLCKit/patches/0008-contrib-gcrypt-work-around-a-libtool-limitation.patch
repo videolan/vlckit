@@ -1,7 +1,7 @@
-From 42ed1568c546071126dec77dcad922996fc40852 Mon Sep 17 00:00:00 2001
+From 7ec64a02772516c1d62239f3e5230d2d8c95b5d8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 08/17] contrib/gcrypt: work-around a libtool limitation
+Subject: [PATCH 08/18] contrib/gcrypt: work-around a libtool limitation
 
 ---
  contrib/src/gcrypt/rules.mak                       |  1 +
@@ -53,5 +53,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.8.1
+2.9.2
 
