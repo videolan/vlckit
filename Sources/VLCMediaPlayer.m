@@ -202,20 +202,20 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 @interface VLCMediaPlayer ()
 {
-    VLCLibrary *_privateLibrary;
-    void * _playerInstance;              //  Internal
-    VLCMedia * _media;                   //< Current media being played
-    VLCTime * _cachedTime;               //< Cached time of the media being played
-    VLCTime * _cachedRemainingTime;      //< Cached remaining time of the media being played
-    VLCMediaPlayerState _cachedState;    //< Cached state of the media being played
-    float _position;                     //< The position of the media being played
-    id _drawable;                        //< The drawable associated to this media player
+    VLCLibrary *_privateLibrary;                ///< Internal
+    void * _playerInstance;                     ///< Internal
+    VLCMedia * _media;                          ///< Current media being played
+    VLCTime * _cachedTime;                      ///< Cached time of the media being played
+    VLCTime * _cachedRemainingTime;             ///< Cached remaining time of the media being played
+    VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
+    float _position;                            ///< The position of the media being played
+    id _drawable;                               ///< The drawable associated to this media player
 #if TARGET_OS_IPHONE
-    NSMutableArray *_snapshots;          //< Array with snapshot file names
+    NSMutableArray *_snapshots;                 ///< Array with snapshot file names
 #endif
-    VLCAudio *_audio;
-    libvlc_equalizer_t *_equalizerInstance;
-    BOOL _equalizerEnabled;
+    VLCAudio *_audio;                           ///< The audio controller
+    libvlc_equalizer_t *_equalizerInstance;     ///< The equalizer controller
+    BOOL _equalizerEnabled;                     ///< Equalizer state
 }
 @end
 

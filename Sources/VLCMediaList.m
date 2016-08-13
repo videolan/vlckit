@@ -74,10 +74,10 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
 @interface VLCMediaList()
 {
-    void * p_mlist;                                 //< Internal instance of media list
-    id <VLCMediaListDelegate,NSObject> __weak delegate;    //< Delegate object
+    void * p_mlist;                                 ///< Internal instance of media list
+    id <VLCMediaListDelegate,NSObject> __weak delegate;    ///< Delegate object
     /* We need that private copy because of Cocoa Bindings, that need to be working on first thread */
-    NSMutableArray * cachedMedia;                   //< Private copy of media objects.
+    NSMutableArray * cachedMedia;                   ///< Private copy of media objects.
 }
 @end
 

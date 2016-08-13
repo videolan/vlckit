@@ -59,8 +59,8 @@ extern NSString *const VLCMediaDiscovererCategory;
 + (NSArray *)availableMediaDiscoverer __attribute__((deprecated));
 
 /**
- * \param The VLCMediaDiscovererCategory you are looking for
- * \return returns an array of dictionaries describing the available discoverers for the requested type
+ * \param categoryType VLCMediaDiscovererCategory you are looking for
+ * \return an array of dictionaries describing the available discoverers for the requested type
  */
 + (NSArray *)availableMediaDiscovererForCategoryType:(VLCMediaDiscovererCategoryType)categoryType;
 

@@ -51,7 +51,7 @@
 - (id)initWithLibVLCMediaList:(void *)p_new_mlist;
 
 /* Properties */
-@property (readonly) void * libVLCMediaList;    //< LibVLC media list pointer.
+@property (readonly) void * libVLCMediaList;    ///< LibVLC media list pointer.
 @end
 
 /**
@@ -89,7 +89,7 @@
 @interface VLCMediaPlayer (LibVLCBridging)
 
 /* Properties */
-@property (readonly) void * libVLCMediaPlayer;    //< LibVLC media list pointer.
+@property (readonly) void * libVLCMediaPlayer;    ///< LibVLC media list pointer.
 @end
 
 /**
@@ -99,7 +99,7 @@
 /**
  * Set's the length of the media object.  This value becomes available once the
  * media object is being played.
- * \param value
+ * \param value the length value
  */
 - (void)setLength:(VLCTime *)value;
 @end

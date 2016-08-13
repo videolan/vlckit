@@ -63,17 +63,17 @@ extern NSString *const VLCMetaInformationDiscNumber;     /* NSString */
 /**
  * Available notification messages.
  */
-extern NSString *const VLCMediaMetaChanged;  //< Notification message for when the media's meta data has changed
+extern NSString *const VLCMediaMetaChanged;  ///< Notification message for when the media's meta data has changed
 
 // Forward declarations, supresses compiler error messages
 @class VLCMediaList;
 @class VLCMedia;
 
 typedef NS_ENUM(NSInteger, VLCMediaState) {
-    VLCMediaStateNothingSpecial,        //< Nothing
-    VLCMediaStateBuffering,             //< Stream is buffering
-    VLCMediaStatePlaying,               //< Stream is playing
-    VLCMediaStateError,                 //< Can't be played because an error occurred
+    VLCMediaStateNothingSpecial,        ///< Nothing
+    VLCMediaStateBuffering,             ///< Stream is buffering
+    VLCMediaStatePlaying,               ///< Stream is playing
+    VLCMediaStateError,                 ///< Can't be played because an error occurred
 };
 
 /**
@@ -143,8 +143,8 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
 
 /**
  * convienience method to return a user-readable codec name for the given FourCC
- * \param uint32_t the FourCC to process
- * \param NSString a VLC track type if known to speed-up the name search
+ * \param fourcc the FourCC to process
+ * \param trackType a VLC track type if known to speed-up the name search
  * \return a NSString containing the codec name if recognized, else an empty string
  */
 + (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(NSString *)trackType;
@@ -161,7 +161,7 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
 /* Initializers */
 /**
  * Initializes a new VLCMedia object to use the specified URL.
- * \param aPath Path to media to be accessed.
+ * \param anURL the URL to media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
 - (instancetype)initWithURL:(NSURL *)anURL;
@@ -267,8 +267,8 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 
 /**
  * set meta property for key
- * \param metadata to set as NSString
- * \param metadata key
+ * \param data the metadata to set as NSString
+ * \param key the metadata key
  * \see dictionary keys above
  */
 - (void)setMetadata:(NSString *)data forKey:(NSString *)key;
@@ -299,16 +299,19 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
  */
 
 /**
- * \returns a NSNumber
+ * Codec information
+ * \note returns a NSNumber
  */
 extern NSString *const VLCMediaTracksInformationCodec;
 
 /**
- * \returns a NSNumber
+ * tracks information ID
+ * \note returns a NSNumber
  */
 extern NSString *const VLCMediaTracksInformationId;
 /**
- * \returns a NSString
+ * track information type
+ * \note returns a NSString
  * \see VLCMediaTracksInformationTypeAudio
  * \see VLCMediaTracksInformationTypeVideo
  * \see VLCMediaTracksInformationTypeText
@@ -317,65 +320,79 @@ extern NSString *const VLCMediaTracksInformationId;
 extern NSString *const VLCMediaTracksInformationType;
 
 /**
- * \returns a NSNumber
+ * codec profile
+ * \note returns a NSNumber
  */
 extern NSString *const VLCMediaTracksInformationCodecProfile;
 /**
- * \returns a NSNumber
+ * codec level
+ * \note returns a NSNumber
  */
 extern NSString *const VLCMediaTracksInformationCodecLevel;
 
 /**
- * \returns the bitrate as NSNumber
+ * track bitrate
+ * \note returns the bitrate as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationBitrate;
 /**
- * \returns the language as NSString
+ * track language
+ * \note returns the language as NSString
  */
 extern NSString *const VLCMediaTracksInformationLanguage;
 /**
- * \returns the description as NSString
+ * track description
+ * \note returns the description as NSString
  */
 extern NSString *const VLCMediaTracksInformationDescription;
 
 /**
- * \returns the audio channel number as NSNumber
+ * number of audio channels of a given track
+ * \note returns the audio channel number as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationAudioChannelsNumber;
 /**
- * \returns the audio rate as NSNumber
+ * audio rate
+ * \note returns the audio rate as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationAudioRate;
 
 /**
- * \returns the height as NSNumber
+ * video track height
+ * \note returns the height as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationVideoHeight;
 /**
- * \returns the width as NSNumber
+ * video track width
+ * \note the width as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationVideoWidth;
 
 /**
- * \returns the source aspect ratio as NSNumber
+ * source aspect ratio
+ * \note returns the source aspect ratio as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationSourceAspectRatio;
 /**
- * \returns the source aspect ratio denominator as NSNumber
+ * source aspect ratio denominator
+ * \note returns the source aspect ratio denominator as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationSourceAspectRatioDenominator;
 
 /**
- * \returns the frame rate as NSNumber
+ * frame rate
+ * \note returns the frame rate as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationFrameRate;
 /**
- * \returns the frame rate denominator as NSNumber
+ * frame rate denominator
+ * \note returns the frame rate denominator as NSNumber
  */
 extern NSString *const VLCMediaTracksInformationFrameRateDenominator;
 
 /**
- * \returns the text encoding as NSString
+ * text encoding
+ * \note returns the text encoding as NSString
  */
 extern NSString *const VLCMediaTracksInformationTextEncoding;
 
@@ -454,7 +471,7 @@ typedef int VLCMediaParsingOptions;
 /**
  * triggers an asynchronous parse of the media item
  * using the given options
- * \param the option mask based on VLCMediaParsingOptions
+ * \param options the option mask based on VLCMediaParsingOptions
  * \see VLCMediaParsingOptions
  * \return an int. 0 on success, -1 in case of error
  * \note listen to the "parsed" key value or the mediaDidFinishParsing:
@@ -466,8 +483,8 @@ typedef int VLCMediaParsingOptions;
 /**
  * triggers an asynchronous parse of the media item
  * using the given options
- * \param the option mask based on VLCMediaParsingOptions
- * \param a time-out value in milliseconds (-1 for default, 0 for infinite)
+ * \param options the option mask based on VLCMediaParsingOptions
+ * \param timeoutValue a time-out value in milliseconds (-1 for default, 0 for infinite)
  * \see VLCMediaParsingOptions
  * \return an int. 0 on success, -1 in case of error
  * \note listen to the "parsed" key value or the mediaDidFinishParsing:

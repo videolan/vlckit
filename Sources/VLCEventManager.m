@@ -30,9 +30,9 @@
  */
 typedef enum
 {
-    VLCNotification,                //< Standard NSNotification.
-    VLCObjectMethodWithObjectArg,   //< Method with an object argument.
-    VLCObjectMethodWithArrayArg     //< Method with an array argument.
+    VLCNotification,                ///< Standard NSNotification.
+    VLCObjectMethodWithObjectArg,   ///< Method with an object argument.
+    VLCObjectMethodWithArrayArg     ///< Method with an array argument.
 } message_type_t;
 
 /**
@@ -40,11 +40,11 @@ typedef enum
  */
 @interface message_t : NSObject
 
-@property (nonatomic, strong) id target;    //< Target object that should receive the message (retained until method is called).
-@property (nonatomic) SEL sel;      //< A selector that identifies the message to be sent to the target.
-@property (nonatomic, copy) NSString * name;           //< Name to be used for NSNotification
-@property (nonatomic, strong) id object;                  //< Object argument to pass to the target via the selector.
-@property (nonatomic) message_type_t type;            //< Type of queued message.
+@property (nonatomic, strong) id target;        ///< Target object that should receive the message (retained until method is called).
+@property (nonatomic) SEL sel;                  ///< A selector that identifies the message to be sent to the target.
+@property (nonatomic, copy) NSString * name;    ///< Name to be used for NSNotification
+@property (nonatomic, strong) id object;        ///< Object argument to pass to the target via the selector.
+@property (nonatomic) message_type_t type;      ///< Type of queued message.
 
 @end
 
@@ -70,12 +70,12 @@ typedef enum
 
 @interface VLCEventManager ()
 {
-    NSMutableArray *_messageQueue;      //< Holds a queue of messages.
-    NSMutableArray *_pendingMessagesOnMainThread;   //< Holds the message that are being posted on main thread.
+    NSMutableArray *_messageQueue;                  ///< Holds a queue of messages.
+    NSMutableArray *_pendingMessagesOnMainThread;   ///< Holds the message that are being posted on main thread.
     NSLock          *_pendingMessagesLock;
-    pthread_t        _dispatcherThread;  //< Thread responsible for dispatching messages.
-    pthread_mutex_t  _queueLock;         //< Queue lock.
-    pthread_cond_t   _signalData;        //< Data lock.
+    pthread_t        _dispatcherThread;             ///< Thread responsible for dispatching messages.
+    pthread_mutex_t  _queueLock;                    ///< Queue lock.
+    pthread_cond_t   _signalData;                   ///< Data lock.
 }
 
 - (void)startEventLoop;
@@ -194,7 +194,7 @@ static void * EventDispatcherMainLoop(void * user_data)
                         [newArg addObjectsFromArray:message_newer.object];
                         [_messageQueue removeObjectAtIndex:(NSUInteger) i];
                     }
-                    /* It shouldn be a good idea not to collapse event with other kind of event in-between.
+                    /* It shouldn't be a good idea not to collapse event with other kind of event in-between.
                      * This could be particulary problematic when the same object receive two related events
                      * (for instance Added and Removed).
                      * Ignore for now only if target is the same */

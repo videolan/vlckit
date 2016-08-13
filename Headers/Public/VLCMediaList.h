@@ -41,17 +41,17 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * delegate method triggered when a media was added to the list
  *
- * \param the media list
- * \param the media object that was added
- * \param the index the media object was added at
+ * \param aMediaList the media list
+ * \param media the media object that was added
+ * \param index the index the media object was added at
  */
 - (void)mediaList:(VLCMediaList *)aMediaList mediaAdded:(VLCMedia *)media atIndex:(NSInteger)index;
 
 /**
  * delegate method triggered when a media was removed from the list
  *
- * \param the media list
- * \param the index a media item was deleted at
+ * \param aMediaList the media list
+ * \param index the index a media item was deleted at
  */
 - (void)mediaList:(VLCMediaList *)aMediaList mediaRemovedAtIndex:(NSInteger)index;
 @end
@@ -77,7 +77,7 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * add a media to a read-write list
  *
- * \param the media object to add
+ * \param media the media object to add
  * \return the index of the newly added media
  * \note this function silently fails if the list is read-only
  */
@@ -86,8 +86,8 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * add a media to a read-write list at a given position
  *
- * \param the media object to add
- * \param the index where to add the given media
+ * \param media the media object to add
+ * \param index the index where to add the given media
  * \note this function silently fails if the list is read-only
  */
 - (void)insertMedia:(VLCMedia *)media atIndex:(NSInteger)index;
@@ -95,7 +95,7 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * remove a media from a given position
  *
- * \param the index of the media to remove
+ * \param index the index of the media to remove
  * \note this function silently fails if the list is read-only
  */
 - (void)removeMediaAtIndex:(NSInteger)index;
@@ -103,7 +103,7 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * retrieve a media from a given position
  *
- * \param the index of the media you want
+ * \param index the index of the media you want
  * \return the media object
  */
 - (VLCMedia *)mediaAtIndex:(NSInteger)index;
@@ -111,14 +111,14 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * retrieve the position of a media item
  *
- * \param the media object to search for
+ * \param media the media object to search for
  * \return the index position of the media in the list or -1 if not found
  */
 - (NSInteger)indexOfMedia:(VLCMedia *)media;
 
 /* Properties */
 /**
- * number of media items in the list
+ * count number of media items in the list
  * \return the number of media objects
  */
 @property (readonly) NSInteger count;

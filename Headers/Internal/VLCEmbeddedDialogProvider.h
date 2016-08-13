@@ -28,7 +28,7 @@
 /**
  * initializer method to run the dialog provider instance on a specific library instance
  *
- * \param the library instance
+ * \param library instance
  * \note if param is NULL, [VLCLibrary sharedLibrary] will be used
  * \return the dialog provider instance, can be NULL on malloc failures
  */

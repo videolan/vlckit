@@ -50,8 +50,7 @@
  * have a significant return value and should take a single argument of type NSNotification,
  * or no arguments.
  *
- * See ‚ÄúSelectors‚Äù for a description of the SEL type.
- * \param aNotificiationName The name of the notification that should be sent to the
+ * \param aNotificationName The name of the notification that should be sent to the
  * distributed notification center.
  */
 - (void)callOnMainThreadDelegateOfObject:(id)aTarget

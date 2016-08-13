@@ -49,14 +49,14 @@
 
 /**
  * returns an individual instance which can be customized with options
- * \param a NSArray with NSString instance containing the options
+ * \param options a NSArray with NSString instance containing the options
  * \return the individual library instance
  */
  - (instancetype)initWithOptions:(NSArray*)options;
 
 /**
  * enables/disables debug logging
- * \param BOOL value to enable/disable
+ * param: debugLogging BOOL value to enable/disable
  * \note we will always log using NSLog
  * \return debug logging state
  */
@@ -64,7 +64,7 @@
 
 /**
  * gets/sets the debug logging level
- * \param int set level from 0 (all) to 4 (just error messages)
+ * param: debugLoggingLevel set level from 0 (all) to 4 (just error messages)
  * \return int debug level
 */
 @property (readwrite, nonatomic) int debugLoggingLevel;

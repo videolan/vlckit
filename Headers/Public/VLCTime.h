@@ -2,7 +2,7 @@
  * VLCTime.h: VLCKit.framework VLCTime header
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007-2016 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -39,7 +39,7 @@
 - (instancetype)initWithInt:(int)aInt;
 
 /* Properties */
-@property (nonatomic, readonly) NSNumber * value;	//< Holds, in milliseconds, the VLCTime value
+@property (nonatomic, readonly) NSNumber * value;	///< Holds, in milliseconds, the VLCTime value
 @property (readonly) NSNumber * numberValue;		// here for backwards compatibility
 @property (readonly) NSString * stringValue;
 @property (readonly) NSString * verboseStringValue;

@@ -51,13 +51,13 @@ extern NSString *const VLCMediaPlayerChapterChanged;
  */
 typedef NS_ENUM(NSInteger, VLCMediaPlayerState)
 {
-    VLCMediaPlayerStateStopped,        //< Player has stopped
-    VLCMediaPlayerStateOpening,        //< Stream is opening
-    VLCMediaPlayerStateBuffering,      //< Stream is buffering
-    VLCMediaPlayerStateEnded,          //< Stream has ended
-    VLCMediaPlayerStateError,          //< Player has generated an error
-    VLCMediaPlayerStatePlaying,        //< Stream is playing
-    VLCMediaPlayerStatePaused          //< Stream is paused
+    VLCMediaPlayerStateStopped,        ///< Player has stopped
+    VLCMediaPlayerStateOpening,        ///< Stream is opening
+    VLCMediaPlayerStateBuffering,      ///< Stream is buffering
+    VLCMediaPlayerStateEnded,          ///< Stream has ended
+    VLCMediaPlayerStateError,          ///< Player has generated an error
+    VLCMediaPlayerStatePlaying,        ///< Stream is playing
+    VLCMediaPlayerStatePaused          ///< Stream is paused
 };
 
 /**
@@ -157,7 +157,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Set/Get current video aspect ratio.
  *
- * \param psz_aspect new video aspect-ratio or NULL to reset to default
+ * param: psz_aspect new video aspect-ratio or NULL to reset to default
  * \note Invalid aspect ratios are ignored.
  * \return the video aspect ratio or NULL if unspecified
  * (the result must be released with free()).
@@ -167,7 +167,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Set/Get current crop filter geometry.
  *
- * \param psz_geometry new crop filter geometry (NULL to unset)
+ * param: psz_geometry new crop filter geometry (NULL to unset)
  * \return the crop filter geometry or NULL if unset
  */
 @property (NS_NONATOMIC_IOSONLY) char *videoCropGeometry;
@@ -179,7 +179,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * dimension. Zero is a special value; it will adjust the video to the output
  * window/drawable (in windowed mode) or the entire screen.
  *
- * \param relative scale factor as float
+ * param: relative scale factor as float
  */
 @property (nonatomic) float scaleFactor;
 
@@ -193,7 +193,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \param width the snapshot's width
  * \param height the snapshot's height
  */
-- (void)saveVideoSnapshotAt: (NSString *)path withWidth:(int)width andHeight:(int)height;
+- (void)saveVideoSnapshotAt:(NSString *)path withWidth:(int)width andHeight:(int)height;
 
 /**
  * Enable or disable deinterlace filter
@@ -205,50 +205,49 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Enable or disable adjust video filter (contrast, brightness, hue, saturation, gamma)
  *
- * \param bool value
+ * \return bool value
  */
 @property (nonatomic) BOOL adjustFilterEnabled;
 /**
  * Set/Get the adjust filter's contrast value
  *
- * \param float value (range: 0-2, default: 1.0)
+ * \return float value (range: 0-2, default: 1.0)
  */
 @property (nonatomic) float contrast;
 /**
  * Set/Get the adjust filter's brightness value
  *
- * \param float value (range: 0-2, default: 1.0)
+ * \return float value (range: 0-2, default: 1.0)
  */
-@property (nonatomic)  float brightness;
+@property (nonatomic) float brightness;
 /**
  * Set/Get the adjust filter's hue value
  *
- * \param float value (range: -180-180, default: 0.)
+ * \return float value (range: -180-180, default: 0.)
  */
-@property (nonatomic)  float hue;
+@property (nonatomic) float hue;
 /**
  * Set/Get the adjust filter's saturation value
  *
- * \param float value (range: 0-3, default: 1.0)
+ * \return float value (range: 0-3, default: 1.0)
  */
-@property (nonatomic)  float saturation;
+@property (nonatomic) float saturation;
 /**
  * Set/Get the adjust filter's gamma value
  *
- * \param float value (range: 0-10, default: 1.0)
+ * \return float value (range: 0-10, default: 1.0)
  */
-@property (nonatomic)  float gamma;
+@property (nonatomic) float gamma;
 
 /**
  * Get the requested movie play rate.
  * @warning Depending on the underlying media, the requested rate may be
  * different from the real playback rate. Due to limitations of some protocols
  * this option may not be taken into account at all, if set.
- * \param rate movie play rate to set
  *
  * \return movie play rate
  */
-@property (nonatomic)  float rate;
+@property (nonatomic) float rate;
 
 @property (nonatomic, readonly, weak) VLCAudio * audio;
 
@@ -370,9 +369,9 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
  * Add additional input sources to a playing media item
  * This way, you can add subtitles or audio files to an existing input stream
  * For the user, it will appear as if they were part of the existing stream
- * \param URL of the content to be added
- * \param content type
- * \param switch to the added accessory content
+ * \param slaveURL of the content to be added
+ * \param slaveType content type
+ * \param enforceSelection switch to the added accessory content
  */
 - (int)addPlaybackSlave:(NSURL *)slaveURL type:(VLCMediaPlaybackSlaveType)slaveType enforce:(BOOL)enforceSelection;
 
@@ -503,13 +502,13 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * Toggle equalizer state
- * \param bool value to enable/disable the equalizer
+ * param: bool value to enable/disable the equalizer
  * \return current state */
 @property (readwrite) BOOL equalizerEnabled;
 
 /**
  * Set amplification level
- * \param The supplied amplification value will be clamped to the -20.0 to +20.0 range.
+ * param: The supplied amplification value will be clamped to the -20.0 to +20.0 range.
  * \note this will create and enabled an Equalizer instance if not present
  * \return current amplification level */
 @property (readwrite) CGFloat preAmplification;
@@ -521,6 +520,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * frequency of equalizer band
+ * \param index the band index
  * \return frequency of the requested equalizer band */
 - (CGFloat)frequencyOfBandAtIndex:(unsigned)index;
 
@@ -546,7 +546,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 #pragma mark playback operations
 /**
  * Plays a media resource using the currently selected media controller (or
- * default controller.  If feed was paused then the feed resumes at the position
+ * default controller. If feed was paused then the feed resumes at the position
  * it was paused in.
  */
 - (void)play;
@@ -670,11 +670,11 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \return movie position as percentage between 0.0 and 1.0.
  */
 @property (NS_NONATOMIC_IOSONLY) float position;
+
 /**
  * Set movie position. This has no effect if playback is not enabled.
- * \param movie position as percentage between 0.0 and 1.0.
+ * \note movie position as percentage between 0.0 and 1.0.
  */
-
 @property (NS_NONATOMIC_IOSONLY, getter=isSeekable, readonly) BOOL seekable;
 
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL canPause;

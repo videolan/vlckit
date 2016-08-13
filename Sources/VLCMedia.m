@@ -68,11 +68,11 @@ NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
  */
 @interface VLCMedia()
 {
-    void *                  p_md;              //< Internal media descriptor instance
-    BOOL                    isArtFetched;      //< Value used to determine of the artwork has been parsed
-    BOOL                    areOthersMetaFetched; //< Value used to determine of the other meta has been parsed
-    BOOL                    isArtURLFetched;   //< Value used to determine of the other meta has been preparsed
-    NSMutableDictionary     *_metaDictionary;
+    void *                  p_md;                   ///< Internal media descriptor instance
+    BOOL                    isArtFetched;           ///< Value used to determine of the artwork has been parsed
+    BOOL                    areOthersMetaFetched;   ///< Value used to determine of the other meta has been parsed
+    BOOL                    isArtURLFetched;        ///< Value used to determine of the other meta has been preparsed
+    NSMutableDictionary     *_metaDictionary;       ///< Dictionary to cache metadata read from libvlc
 }
 
 /* Make our properties internally readwrite */

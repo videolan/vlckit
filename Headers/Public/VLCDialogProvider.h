@@ -33,8 +33,8 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 
 /**
  * called when VLC wants to show an error
- * \param the dialog title
- * \param the error message
+ * \param error the dialog title
+ * \param message the error message
  */
 - (void)showErrorWithTitle:(NSString * _Nonnull)error
       message:(NSString * _Nonnull)message;
@@ -42,10 +42,10 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 /**
  * called when user logs in to something
  * If VLC includes a keychain module for your platform, a user can store stuff
- * \param login title
- * \param an explaining message
- * \param a default username within context
- * \param indicator whether storing is even a possibility
+ * \param title login dialog title
+ * \param message an explaining message
+ * \param username a default username within context
+ * \param askingForStorage indicator whether storing is even a possibility
  * \param reference you need to send the results to
  */
 - (void)showLoginWithTitle:(NSString * _Nonnull)title
@@ -56,12 +56,12 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 
 /**
  * called when VLC needs the user to decide something
- * \param the dialog title
- * \param an explaining message text
- * \param a question type
- * \param cancel button text
- * \param action 1 text
- * \param action 2 text
+ * \param title the dialog title
+ * \param message an explaining message text
+ * \param questionType a question type
+ * \param cancelString cancel button text
+ * \param action1String action 1 text
+ * \param action2String action 2 text
  * \param reference you need to send the action to
  */
 - (void)showQuestionWithTitle:(NSString * _Nonnull)title
@@ -74,11 +74,11 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 
 /**
  * called when VLC wants to show some progress
- * \param the dialog title
- * \param an explaining message
- * \param indicator whether progress indeterminate
- * \param initial progress position
- * \param optional string for cancel button if operation is cancellable
+ * \param title the dialog title
+ * \param message an explaining message
+ * \param isIndeterminate indicator whether progress indeterminate
+ * \param position initial progress position
+ * \param cancelString optional string for cancel button if operation is cancellable
  * \param reference VLC will include in updates
  */
 - (void)showProgressWithTitle:(NSString * _Nonnull)title
@@ -90,8 +90,8 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 
 /** called when VLC wants to update an existing progress dialog
  * \param reference to the existing progress dialog
- * \param updated message
- * \param current position
+ * \param message updated message
+ * \param position current position
  */
 - (void)updateProgressWithReference:(NSValue * _Nonnull)reference
                             message:(NSString * _Nullable)message
@@ -109,8 +109,8 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 /**
  * initializer method to run the dialog provider instance on a specific library instance
  *
- * \param the library instance
- * \param enable custom UI mode
+ * \param library the VLCLibrary instance
+ * \param customUI enable custom UI mode
  * \note if library param is NULL, [VLCLibrary sharedLibrary] will be used
  * \return the dialog provider instance, can be NULL on malloc failures
  */
@@ -120,7 +120,6 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 /**
  * initializer method to run the dialog provider instance on a specific library instance
  *
- * \param an object implementing the custom dialog rendering API
  * \return the object set
  */
 @property (weak, readwrite, nonatomic, nullable) id<VLCCustomDialogRendererProtocol> customRenderer;
@@ -129,8 +128,8 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
  * if you requested custom UI mode for dialogs, use this method respond to a login dialog
  * \param username or NULL if cancelled
  * \param password or NULL if cancelled
- * \param reference to the dialog you respond to
- * \param shall VLC store the login securely?
+ * \param dialogReference reference to the dialog you respond to
+ * \param store shall VLC store the login securely?
  * \note This method does not have any effect if you don't use custom UI mode */
 - (void)postUsername:(NSString * _Nonnull)username
          andPassword:(NSString * _Nonnull)password
@@ -139,15 +138,15 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 
 /**
  * if you requested custom UI mode for dialogs, use this method respond to a question dialog
- * \param the button number the user pressed, use 3 if s/he cancelled, otherwise respectively 1 or 2 depending on the selected action
- * \param reference to the dialog you respond to
+ * \param buttonNumber the button number the user pressed, use 3 if s/he cancelled, otherwise respectively 1 or 2 depending on the selected action
+ * \param dialogReference reference to the dialog you respond to
  * \note This method does not have any effect if you don't use custom UI mode */
 - (void)postAction:(int)buttonNumber
 forDialogReference:(NSValue * _Nonnull)dialogReference;
 
 /**
  * if you requested custom UI mode for dialogs, use this method to cancel a progress dialog
- * \param reference to the dialog you want to cancel
+ * \param dialogReference reference to the dialog you want to cancel
  * \note This method does not have any effect if you don't use custom UI mode */
 - (void)dismissDialogWithReference:(NSValue * _Nonnull)dialogReference;
 
