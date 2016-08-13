@@ -1,33 +1,33 @@
-From f153e11077a517389cfa364e87e2de94e11df490 Mon Sep 17 00:00:00 2001
+From e8dac1564e09125dfb73862f71f26a69944c4881 Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 11/16] Add AC-3 pass-through
+Subject: [PATCH 15/15] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
 ---
- extras/package/ios/build.sh          |  1 -
+ extras/package/ios/build.sh          |  2 --
  include/vlc/libvlc_media_player.h    | 10 +++++++++
  lib/audio.c                          | 16 +++++++++++++++
  lib/media_player.c                   |  1 +
  modules/audio_output/audiounit_ios.m | 39 +++++++++++++++++++++++++++---------
- modules/codec/a52.c                  |  2 +-
- 6 files changed, 57 insertions(+), 12 deletions(-)
+ 5 files changed, 56 insertions(+), 12 deletions(-)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index 6c264bc..b0901ae 100755
+index 8ea32c4..af7933a 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
-@@ -460,7 +460,6 @@ speex_resampler
+@@ -461,8 +461,6 @@ speex_resampler
  remoteosd
  magnify
  gradient
 -tospdif
- dtstofloat32
+-dtstofloat32
  logger
  visual
+ fb
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
 index 3a37d3b..90a27af 100644
 --- a/include/vlc/libvlc_media_player.h
@@ -77,10 +77,10 @@ index 7901c64..3877311 100644
   *****************************************************************************/
  int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 8d54c93..d047874 100644
+index 143e240..ac30787 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -640,6 +640,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "zoom", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "aspect-ratio", VLC_VAR_STRING);
      var_Create (mp, "crop", VLC_VAR_STRING);
@@ -149,19 +149,6 @@ index cee8eab..0aa9dee 100644
  
      /* Set audio session to mediaplayback */
      NSError *error = nil;
-diff --git a/modules/codec/a52.c b/modules/codec/a52.c
-index 044905b..355f14f 100644
---- a/modules/codec/a52.c
-+++ b/modules/codec/a52.c
-@@ -152,7 +152,7 @@ static int OpenCommon( vlc_object_t *p_this, bool b_packetizer )
- static int OpenDecoder( vlc_object_t *p_this )
- {
-     /* HACK: Don't use this codec if we don't have an a52 audio filter */
--    if( !module_exists( "a52tofloat32" ) )
-+    if( !module_exists( "a52tofloat32" ) && !(module_exists("a52tospdif") && var_InheritBool(p_this, "spdif")) )
-         return VLC_EGENERIC;
-     return OpenCommon( p_this, false );
- }
 -- 
 2.9.2
 
