@@ -30,19 +30,32 @@
  */
 extern NSString *const VLCMediaPlayerVolumeChanged;
 
-@class VLCMediaPlayer;
-
-/**
- * TODO: Documentation VLCAudio
- */
 @interface VLCAudio : NSObject
 
-/* Properties */
+/**
+ * Property to mute the current audio output
+ * \note decoding continues when muted, so consider disabling the audio track if you don't want audio for a long time
+ */
 @property (getter=isMuted) BOOL muted;
+
+/**
+ * control the current audio output volume
+ * \note This is a NO-OP on iOS and tvOS */
 @property (assign) int volume;
 
+/**
+ * Mute the current audio output.
+ * \note This selector is deprecated and will be removed in the next release */
 - (void)setMute:(BOOL)value __attribute__((deprecated));
 
+/**
+ * lower the current audio output volume
+ * \note This is a NO-OP on iOS and tvOS */
 - (void)volumeDown;
+
+/**
+ * higher the current audio output volume
+ * \note This is a NO-OP on iOS and tvOS */
 - (void)volumeUp;
+
 @end
