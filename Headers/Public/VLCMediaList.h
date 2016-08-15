@@ -26,8 +26,13 @@
 #import <Foundation/Foundation.h>
 #import "VLCMedia.h"
 
-/* Notification Messages */
+/**
+ * notification name if a list item was added
+ */
 extern NSString *const VLCMediaListItemAdded;
+/**
+ * notification name if a list item was deleted
+ */
 extern NSString *const VLCMediaListItemDeleted;
 
 @class VLCMedia;
@@ -61,6 +66,12 @@ extern NSString *const VLCMediaListItemDeleted;
  */
 @interface VLCMediaList : NSObject
 
+/**
+ * initializer with a set of VLCMedia instances
+ * \param array the NSArray of VLCMedia instances
+ * \return instance of VLCMediaList equipped with the VLCMedia instances
+ * \see VLCMedia
+ */
 - (instancetype)initWithArray:(NSArray *)array;
 
 /* Operations */

@@ -30,10 +30,25 @@
  */
 @interface VLCExtensionsManager : NSObject
 
+/**
+ * singleton manager instance
+ */
 + (VLCExtensionsManager *)sharedManager;
+
+/**
+ * list of available extensions
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *extensions;
+
+/**
+ * start execution of a given extension instance
+ * \param extension the extension to run
+ */
 - (void)runExtension:(VLCExtension *)extension;
 
+/**
+ * player instance to use with the extensions
+ */
 @property (readwrite, strong) VLCMediaPlayer *mediaPlayer;
 
 @end

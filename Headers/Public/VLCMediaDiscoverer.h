@@ -51,6 +51,10 @@ extern NSString *const VLCMediaDiscovererCategory;
 
 @interface VLCMediaDiscoverer : NSObject
 
+/**
+ * The library instance used by the discoverers
+ * \note unless for debug, you are wrong if you want to use this selector
+ */
 @property (nonatomic, readonly) VLCLibrary *libraryInstance;
 
 /**

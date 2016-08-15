@@ -34,13 +34,44 @@
  */
 @interface VLCMediaThumbnailer : NSObject
 
+/**
+ * initializer
+ * \param media the media item to thumbnail
+ * \param delegate the delegate implementing the required protocol
+ * \return the thumbnailer instance
+ * \note This will use the default shared library instance
+ */
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media andDelegate:(id<VLCMediaThumbnailerDelegate>)delegate;
+/**
+ * initializer
+ * \param media the media item to thumbnail
+ * \param delegate the delegate implementing the required protocol
+ * \param library a library instance, potentially configured by you in a special way
+ * \return the thumbnailer instance
+ */
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library;
+
+/**
+ * Starts the thumbnailing process
+ */
 - (void)fetchThumbnail;
 
+/**
+ * delegate object associated with the thumbnailer instance implementing the required protocol
+ */
 @property (readwrite, weak, nonatomic) id<VLCMediaThumbnailerDelegate> delegate;
+/**
+ * the media object that is being thumbnailed
+ */
 @property (readwrite, nonatomic) VLCMedia *media;
+/**
+ * The thumbnail created for the media object
+ */
 @property (readwrite, assign, nonatomic) CGImageRef thumbnail;
+/**
+ * the libvlc instance used for thumbnailing
+ * \note Whatever you do, using this instance is most likely wrong
+ */
 @property (readwrite) void * libVLCinstance;
 
 /**
@@ -73,6 +104,16 @@
  */
 @protocol VLCMediaThumbnailerDelegate
 @required
+/**
+ * called when the thumbnailing process timed-out
+ * \param mediaThumbnailer the thumbnailer instance that timed out
+ * \note The time-out duration depends on various factors outside your control and will not be the same for different media
+ */
 - (void)mediaThumbnailerDidTimeOut:(VLCMediaThumbnailer *)mediaThumbnailer;
+/**
+ * called when the thumbnailer did successfully created a thumbnail
+ * \param mediaThumbnailer the thumbnailer instance that was successful
+ * \param thumbnail the thumbnail that was created
+ */
 - (void)mediaThumbnailer:(VLCMediaThumbnailer *)mediaThumbnailer didFinishThumbnail:(CGImageRef)thumbnail;
 @end

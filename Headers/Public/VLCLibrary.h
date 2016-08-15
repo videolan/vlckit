@@ -107,6 +107,10 @@
  */
 - (void)setApplicationIdentifier:(NSString *)identifier withVersion:(NSString *)version andApplicationIconName:(NSString *)icon;
 
+/**
+ * the libvlc instance wrapped by the VLCLibrary instance
+ * \note if you want to use it, you are most likely wrong (or want to add a proper ObjC API)
+ */
 @property (nonatomic, assign) void *instance;
 
 @end

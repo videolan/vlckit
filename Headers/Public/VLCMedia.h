@@ -81,22 +81,6 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  * trapped.
  */
 @protocol VLCMediaDelegate <NSObject>
-// TODO: SubItemAdded/SubItemRemoved implementation.  Not sure if we really want to implement this.
-///**
-// * Delegate method called whenever a sub item has been added to the specified VLCMedia.
-// * \param aMedia The media resource that has received the new sub item.
-// * \param childMedia The new sub item added.
-// * \param index Location of the new subitem in the aMedia's sublist.
-// */
-// - (void)media:(VLCMedia *)media addedSubItem:(VLCMedia *)childMedia atIndex:(int)index;
-
-///**
-// * Delegate method called whenever a sub item has been removed from the specified VLCMedia.
-// * \param aMedia The media resource that has had a sub item removed from.
-// * \param childMedia The sub item removed.
-// * \param index The previous location of the recently removed sub item.
-// */
-// - (void)media:(VLCMedia *)aMedia removedSubItem:(VLCMedia *)childMedia atIndex:(int)index;
 
 @optional
 
@@ -180,6 +164,9 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  */
 - (instancetype)initAsNodeWithName:(NSString *)aName;
 
+/**
+ * list of possible media types that could be returned by "mediaType"
+ */
 typedef NS_ENUM(NSUInteger, VLCMediaType) {
     VLCMediaTypeUnknown,
     VLCMediaTypeFile,
@@ -235,6 +222,9 @@ typedef NS_ENUM(NSUInteger, VLCMediaType) {
  */
 @property (nonatomic, readonly) BOOL isParsed __attribute__((deprecated));
 
+/**
+ * list of possible parsed states returnable by parsedStatus
+ */
 typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 {
     VLCMediaParsedStatusInit = 0,
@@ -397,12 +387,20 @@ extern NSString *const VLCMediaTracksInformationFrameRateDenominator;
 extern NSString *const VLCMediaTracksInformationTextEncoding;
 
 /**
- * Tracks information NSDictionary values for
- * VLCMediaTracksInformationType
+ * audio track information NSDictionary value for VLCMediaTracksInformationType
  */
 extern NSString *const VLCMediaTracksInformationTypeAudio;
+/**
+ * video track information NSDictionary value for VLCMediaTracksInformationType
+ */
 extern NSString *const VLCMediaTracksInformationTypeVideo;
+/**
+ * text / subtitles track information NSDictionary value for VLCMediaTracksInformationType
+ */
 extern NSString *const VLCMediaTracksInformationTypeText;
+/**
+ * unknown track information NSDictionary value for VLCMediaTracksInformationType
+ */
 extern NSString *const VLCMediaTracksInformationTypeUnknown;
 
 /**
@@ -466,6 +464,10 @@ enum {
     VLCMediaFetchLocal          = 0x02,
     VLCMediaFetchNetwork        = 0x04,
 };
+/**
+ * enum of available options for use with parseWithOptions
+ * \note you may pipe multiple values for the single parameter
+ */
 typedef int VLCMediaParsingOptions;
 
 /**

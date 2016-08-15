@@ -31,9 +31,20 @@
 @interface VLCVideoView : NSView
 
 /* Properties */
-@property (nonatomic, weak) id delegate;
+/**
+* NSColor to set as the view background if no video is being rendered
+*/
 @property (nonatomic, copy) NSColor *backColor;
 
-@property BOOL fillScreen;
+/**
+ * Is a video being rendered in this layer?
+ * \return the BOOL value
+ */
 @property (nonatomic, readonly) BOOL hasVideo;
+/**
+ * Should the video fill the screen by adding letterboxing or stretching?
+ * \return the BOOL value
+ */
+@property (nonatomic) BOOL fillScreen;
+
 @end

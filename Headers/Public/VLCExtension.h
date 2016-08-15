@@ -28,10 +28,25 @@
  */
 @interface VLCExtension : NSObject
 
+/**
+ * initializer for wrapper class
+ * \param instance the extension_t instance to init the wrapper with
+ */
 - (instancetype)initWithInstance:(struct extension_t *)instance NS_DESIGNATED_INITIALIZER; // FIXME: Should be internal
+
+/**
+ * the extension instance used to init the wrapper with
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly) struct extension_t *instance; // FIXME: Should be internal
 
+/**
+ * technical name of the extension
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *name;
+
+/**
+ * user-visible name of the extension
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *title;
 
 @end

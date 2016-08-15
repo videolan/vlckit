@@ -27,14 +27,18 @@
 @class VLCMediaList;
 
 /**
- * TODO: Documentation
+ * media library stub
  */
 @interface VLCMediaLibrary : NSObject
 
-/* Factories */
+/**
+* library singleton
+*/
 + (VLCMediaLibrary*)sharedMediaLibrary;
 
-/* Properties */
+/**
+ * list of all media
+ */
 @property (nonatomic, readonly, strong) VLCMediaList * allMedia;
 
 @end

@@ -29,7 +29,15 @@
  */
 @interface VLCVideoLayer : CALayer
 
+/**
+ * Is a video being rendered in this layer?
+ * \return the BOOL value
+ */
 @property (nonatomic, readonly) BOOL hasVideo;
+/**
+ * Should the video fill the screen by adding letterboxing or stretching?
+ * \return the BOOL value
+ */
 @property (nonatomic) BOOL fillScreen;
 
 @end

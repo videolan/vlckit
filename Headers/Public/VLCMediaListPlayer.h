@@ -37,10 +37,14 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
 };
 
 /**
- * A media list player, which eases the use of playlists */ 
+ * A media list player, which eases the use of playlists
  */
 @interface VLCMediaListPlayer : NSObject
 
+/**
+ * setter/getter for mediaList to play within the player
+ * \note This list is erased when setting a rootMedia on the list player instance
+ */
 @property (readwrite) VLCMediaList *mediaList;
 
 /**
@@ -49,24 +53,51 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
  * Setting mediaList will erase rootMedia.
  */
 @property (readwrite) VLCMedia *rootMedia;
+
+/**
+ * the media player instance used for playback by the list player
+ */
 @property (readonly) VLCMediaPlayer *mediaPlayer;
 
+/**
+ * initializer with a certain drawable
+ * \note drawable can also be set later
+ */
 - (instancetype)initWithDrawable:(id)drawable;
+/**
+ * initializer with a custom options
+ * \note This is will initialize a new VLCLibrary instance, which WILL have a major memory impact
+ */
 - (instancetype)initWithOptions:(NSArray *)options;
+/**
+ * initializer with a certain drawable and options
+ * \see initWithDrawable
+ * \see initWithOptions
+ */
 - (instancetype)initWithOptions:(NSArray *)options andDrawable:(id)drawable;
 
 /**
- * Basic play, pause and stop are here. For other methods, use the mediaPlayer.
+ * start playback
  */
 - (void)play;
+/**
+ * pause playback
+ */
 - (void)pause;
+/**
+ * stop playback
+ */
 - (void)stop;
 
 /**
- * previous, next, play item at index
+ * play next item
  * \returns YES on success, NO if there is no such item
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL next;
+/**
+ * play previous item
+ * \returns YES on success, NO if there is no such item
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL previous;
 
 /**
@@ -84,7 +115,6 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
  * Playmode selection (don't repeat anything, repeat one, repeat all)
  * See VLCRepeatMode.
  */
-
 @property (readwrite) VLCRepeatMode repeatMode;
 
 /**

@@ -132,15 +132,42 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @interface VLCMediaPlayer : NSObject
 
+/**
+ * the library instance in use by the player instance
+ */
 @property (nonatomic, readonly) VLCLibrary *libraryInstance;
+/**
+ * the delegate object implementing the optional protocol
+ */
 @property (weak, nonatomic) id<VLCMediaPlayerDelegate> delegate;
 
 #if !TARGET_OS_IPHONE
 /* Initializers */
+/**
+ * initialize player with a given video view
+ * \param aVideoView an instance of VLCVideoView
+ * \note This initializer is for macOS only
+ */
 - (instancetype)initWithVideoView:(VLCVideoView *)aVideoView;
+/**
+ * initialize player with a given video layer
+ * \param aVideoLayer an instance of VLCVideoLayer
+ * \note This initializer is for macOS only
+ */
 - (instancetype)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
+/**
+ * initialize player with a given set of options
+ * \param options an array of private options
+ * \note This will allocate a new libvlc and VLCLibrary instance, which will have a memory impact
+ */
 - (instancetype)initWithOptions:(NSArray *)options;
+/**
+ * initialize player with a certain libvlc instance and VLCLibrary
+ * \param playerInstance the libvlc instance
+ * \param library the library instance
+ * \note This is an advanced initializer for very specialized environments
+ */
 - (instancetype)initWithLibVLCInstance:(void *)playerInstance andLibrary:(VLCLibrary *)library;
 
 /* Video View Options */
@@ -150,10 +177,24 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 #pragma mark video functionality
 
 #if !TARGET_OS_IPHONE
+/**
+ * set a video view for rendering
+ * \param aVideoView instance of VLCVideoView
+ * \note This setter is macOS only
+ */
 - (void)setVideoView:(VLCVideoView *)aVideoView;
+/**
+ * set a video layer for rendering
+ * \param aVideoLayer instance of VLCVideoLayer
+ * \note This setter is macOS only
+ */
 - (void)setVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
 
+/**
+ * set/retrieve a video view for rendering
+ * This can be any UIView or NSView or instances of VLCVideoView / VLCVideoLayer if running on macOS
+ */
 @property (strong) id drawable; /* The videoView or videoLayer */
 
 /**
@@ -251,6 +292,10 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property (nonatomic) float rate;
 
+/**
+ * an audio controller object
+ * \return instance of VLCAudio
+ */
 @property (nonatomic, readonly, weak) VLCAudio * audio;
 
 /* Video Information */
@@ -285,10 +330,15 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Returns the current position (or time) of the feed.
- * \return VLCTIme object with current time.
+ * \return VLCTime object with current time.
  */
 @property (NS_NONATOMIC_IOSONLY, strong) VLCTime *time;
 
+/**
+ * Returns the current position (or time) of the feed, inversed if a duration is available
+ * \return VLCTime object with requested time
+ * \note VLCTime will be a nullTime if no duration can be calculated for the current input
+ */
 @property (nonatomic, readonly, weak) VLCTime *remainingTime;
 
 #pragma mark -
@@ -390,14 +440,22 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
  */
 
 /**
- * Return the current video subtitle index, or
+ * Return the current chapter index, or
  * \return NSNotFound if none is set.
- *
- * To disable subtitle pass NSNotFound.
  */
 @property (readwrite) int currentChapterIndex;
+/**
+ * switch to the previous chapter
+ */
 - (void)previousChapter;
+/**
+ * switch to the next chapter
+ */
 - (void)nextChapter;
+/**
+ * returns the number of chapters for a given title
+ * \param titleIndex the index of the title you are requesting the chapters for
+ */
 - (int)numberOfChaptersForTitle:(int)titleIndex;
 
 /**
@@ -406,8 +464,17 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
  */
 - (NSArray *)chaptersForTitleIndex:(int)titleIndex __attribute__((deprecated));
 
+/**
+ * dictionary value for the user-facing chapter name
+ */
 extern NSString *const VLCChapterDescriptionName;
+/**
+ * dictionary value for the chapter's time offset
+ */
 extern NSString *const VLCChapterDescriptionTimeOffset;
+/**
+ * dictionary value for the chapter's duration
+ */
 extern NSString *const VLCChapterDescriptionDuration;
 
 /**
@@ -416,6 +483,9 @@ extern NSString *const VLCChapterDescriptionDuration;
  * chapter name, time offset and duration
  * \note if no title value is provided, information about the chapters of the current title is returned
  * \return array describing the titles in details
+ * \see VLCChapterDescriptionName
+ * \see VLCChapterDescriptionTimeOffset
+ * \see VLCChapterDescriptionDuration
  */
 - (NSArray *)chapterDescriptionsOfTitle:(int)titleIndex;
 
@@ -424,6 +494,10 @@ extern NSString *const VLCChapterDescriptionDuration;
  * \return NSNotFound if none is set.
  */
 @property (readwrite) int currentTitleIndex;
+/**
+ * number of titles available for the current media
+ * \return the number of titles
+ */
 @property (readonly) int numberOfTitles;
 
 /**
@@ -437,8 +511,17 @@ extern NSString *const VLCChapterDescriptionDuration;
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles __attribute__((deprecated));
 
+/**
+ * dictionary value for the user-facing title name
+ */
 extern NSString *const VLCTitleDescriptionName;
+/**
+ * dictionary value for the title's duration
+ */
 extern NSString *const VLCTitleDescriptionDuration;
+/**
+ * dictionary value whether the title is a menu or not
+ */
 extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
@@ -446,6 +529,9 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * an array of all titles of the current media including information
  * of name, duration and potential menu state
  * \return array describing the titles in details
+ * \see VLCTitleDescriptionName
+ * \see VLCTitleDescriptionDuration
+ * \see VLCTitleDescriptionIsMenu
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titleDescriptions;
 
@@ -487,6 +573,10 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 #pragma mark -
 #pragma mark audio functionality
 
+/**
+ * sets / returns the current audio channel
+ * \return the currently set audio channel
+ */
 @property (NS_NONATOMIC_IOSONLY) int audioChannel;
 
 /**
@@ -502,7 +592,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * Get a list of available equalizer profiles
- * \Note Current versions do not allow the addition of further profiles
+ * \note Current versions do not allow the addition of further profiles
  *       so you need to handle this in your app.
  *
  * \return array of equalizer profiles
@@ -511,7 +601,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * Re-set the equalizer to a profile retrieved from the list
- * \Note This doesn't enable the Equalizer automagically
+ * \note This doesn't enable the Equalizer automagically
  */
 - (void)resetEqualizerFromProfile:(unsigned)profile;
 
@@ -555,6 +645,9 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 #pragma mark media handling
 
 /* Media Options */
+/**
+ * The currently media instance set to play
+ */
 @property (NS_NONATOMIC_IOSONLY, strong) VLCMedia *media;
 
 #pragma mark -
@@ -692,15 +785,25 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  */
 @property (NS_NONATOMIC_IOSONLY, getter=isSeekable, readonly) BOOL seekable;
 
+/**
+ * property whether the currently playing media can be paused (or not)
+ * \return BOOL value
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL canPause;
 
 #if TARGET_OS_IPHONE
+/**
+ * Array of taken snapshots of the current video output
+ * \return a NSArray of UIImage instances
+ * \note This property is not available to macOS
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *snapshots;
 
 /**
  * Get last snapshot available.
  * \return an UIImage with the last snapshot available.
  * \note return value is nil if there is no snapshot
+ * \note This property is not available to macOS
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) UIImage *lastSnapshot;
 #endif
