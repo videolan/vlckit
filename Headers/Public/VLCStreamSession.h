@@ -26,7 +26,9 @@
 #import <VLCKit/VLCMediaPlayer.h>
 #import <VLCKit/VLCMedia.h>
 
-
+/**
+ * control class for streaming sessions
+ */
 @interface VLCStreamSession : VLCMediaPlayer
 
 + (instancetype)streamSession;

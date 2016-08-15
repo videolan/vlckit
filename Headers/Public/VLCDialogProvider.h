@@ -29,6 +29,9 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
     VLCDialogQuestionCritical,
 };
 
+/**
+ * the protocol to use if you decide to run a custom dialog appearance
+ */
 @protocol VLCCustomDialogRendererProtocol <NSObject>
 
 /**
@@ -104,6 +107,11 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 
 @end
 
+
+/**
+ * dialog provider base class
+ * \note For iOS and tvOS, there are useable implementations available which don't require the use of a custom renderer 
+ */
 @interface VLCDialogProvider : NSObject
 
 /**

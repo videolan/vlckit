@@ -23,6 +23,9 @@
 #import <Cocoa/Cocoa.h>
 #import <vlc_extensions.h>
 
+/**
+ * wrapper class for lua extensions within VLCKit
+ */
 @interface VLCExtension : NSObject
 
 - (instancetype)initWithInstance:(struct extension_t *)instance NS_DESIGNATED_INITIALIZER; // FIXME: Should be internal

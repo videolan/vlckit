@@ -25,7 +25,8 @@
 #import <VLC/VLCPlaylist.h>
 #import <VLC/VLCVideoView.h>
 
-/* This class can be used as a data source for an NSOutlineView
+/**
+ * This class can be used as a data source for an NSOutlineView
  * it will display the playlist content. If provided the videoView
  * will automatically be associated to the given playlist, and actions
  * in the outlineView will trigger the videoView, visual feedback of the

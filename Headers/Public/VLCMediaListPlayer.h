@@ -36,6 +36,9 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
     VLCRepeatAllItems
 };
 
+/**
+ * A media list player, which eases the use of playlists */ 
+ */
 @interface VLCMediaListPlayer : NSObject
 
 @property (readwrite) VLCMediaList *mediaList;

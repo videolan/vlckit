@@ -127,7 +127,9 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @end
 
 
-// TODO: Should we use medialist_player or our own flavor of media player?
+/**
+ * The player base class needed to do any playback
+ */
 @interface VLCMediaPlayer : NSObject
 
 @property (nonatomic, readonly) VLCLibrary *libraryInstance;

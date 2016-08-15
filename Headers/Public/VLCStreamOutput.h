@@ -26,6 +26,9 @@ extern NSString * VLCDefaultStreamOutputRTSP;
 extern NSString * VLCDefaultStreamOutputRTP;
 extern NSString * VLCDefaultStreamOutputRTP;
 
+/**
+ * a class allowing you to stream media based on predefined definitions
+ */
 @interface VLCStreamOutput : NSObject
 
 - (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;

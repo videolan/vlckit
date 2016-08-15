@@ -25,6 +25,9 @@
 @class VLCExtension;
 @class VLCMediaPlayer;
 
+/**
+ * manager class for lua extensions within VLC
+ */
 @interface VLCExtensionsManager : NSObject
 
 + (VLCExtensionsManager *)sharedManager;

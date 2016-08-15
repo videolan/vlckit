@@ -29,6 +29,9 @@
 @class VLCLibrary;
 @protocol VLCMediaThumbnailerDelegate;
 
+/**
+ * a facility allowing you to do thumbnails in an efficient manner
+ */
 @interface VLCMediaThumbnailer : NSObject
 
 + (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media andDelegate:(id<VLCMediaThumbnailerDelegate>)delegate;
@@ -65,6 +68,9 @@
 @property (readwrite, assign, nonatomic) float snapshotPosition;
 @end
 
+/**
+ * the required delegate protocol for VLCMediaThumbnailer
+ */
 @protocol VLCMediaThumbnailerDelegate
 @required
 - (void)mediaThumbnailerDidTimeOut:(VLCMediaThumbnailer *)mediaThumbnailer;

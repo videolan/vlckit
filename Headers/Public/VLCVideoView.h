@@ -25,6 +25,9 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
+/**
+ * a custom view suitable for video rendering in AppKit environments
+ */
 @interface VLCVideoView : NSView
 
 /* Properties */

@@ -24,6 +24,9 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+/**
+ * a custom layer for rendering video in a CoreAnimation environment
+ */
 @interface VLCVideoLayer : CALayer
 
 @property (nonatomic, readonly) BOOL hasVideo;
