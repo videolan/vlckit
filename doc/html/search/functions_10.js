@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['savevideosnapshotat_3awithwidth_3aandheight_3a',['saveVideoSnapshotAt:withWidth:andHeight:',['../interface_v_l_c_media_player.html#ac0e16c49e1746e74a35fd50f870c5e31',1,'VLCMediaPlayer']]],
+  ['setamplification_3aforband_3a',['setAmplification:forBand:',['../interface_v_l_c_media_player.html#ae61e529ff86b246ebe54cc29b0a96c0e',1,'VLCMediaPlayer']]],
+  ['setapplicationidentifier_3awithversion_3aandapplicationiconname_3a',['setApplicationIdentifier:withVersion:andApplicationIconName:',['../interface_v_l_c_library.html#afe1e5231b6bc4b9b12e0fd2c44862dbb',1,'VLCLibrary']]],
+  ['setdeinterlacefilter_3a',['setDeinterlaceFilter:',['../interface_v_l_c_media_player.html#a95abbbed4ddab2adb3fb5c4a8b8ae076',1,'VLCMediaPlayer']]],
+  ['sethumanreadablename_3awithhttpuseragent_3a',['setHumanReadableName:withHTTPUserAgent:',['../interface_v_l_c_library.html#ae91040ee78413a160918871e1e9475ff',1,'VLCLibrary']]],
+  ['setmetadata_3aforkey_3a',['setMetadata:forKey:',['../interface_v_l_c_media.html#ab1f738fbdeaa9efaf918223c0ed187e4',1,'VLCMedia']]],
+  ['setmute_3a',['setMute:',['../interface_v_l_c_audio.html#ab5c770cd553794ec294c77fd4e56668d',1,'VLCAudio']]],
+  ['setvideolayer_3a',['setVideoLayer:',['../interface_v_l_c_media_player.html#a76dc478bf25fae8e0f671e39d006ce25',1,'VLCMediaPlayer']]],
+  ['setvideoview_3a',['setVideoView:',['../interface_v_l_c_media_player.html#a1eb2229ede2d006bec1650e4d4b0fa02',1,'VLCMediaPlayer']]],
+  ['sharedlibrary',['sharedLibrary',['../interface_v_l_c_library.html#a7eddfd69ce66ffc5603bc68a5777187e',1,'VLCLibrary']]],
+  ['sharedmanager',['sharedManager',['../interface_v_l_c_extensions_manager.html#aa62fbb11494cece9f74b10661556afca',1,'VLCExtensionsManager']]],
+  ['sharedmedialibrary',['sharedMediaLibrary',['../interface_v_l_c_media_library.html#a98d1acbeb999cdd02922b9c6a486a90c',1,'VLCMediaLibrary']]],
+  ['shortjumpbackward',['shortJumpBackward',['../interface_v_l_c_media_player.html#a8a8548e2888bbcf9bf8ed5a35fc30cf4',1,'VLCMediaPlayer']]],
+  ['shortjumpforward',['shortJumpForward',['../interface_v_l_c_media_player.html#ab09028de82e23ba963e7b645949aa212',1,'VLCMediaPlayer']]],
+  ['showerrorwithtitle_3amessage_3a',['showErrorWithTitle:message:',['../protocol_v_l_c_custom_dialog_renderer_protocol-p.html#a55ed777080c858e89615b774bed8bd89',1,'VLCCustomDialogRendererProtocol-p']]],
+  ['showloginwithtitle_3amessage_3adefaultusername_3aaskingforstorage_3awithreference_3a',['showLoginWithTitle:message:defaultUsername:askingForStorage:withReference:',['../protocol_v_l_c_custom_dialog_renderer_protocol-p.html#ac2a775dcb6a40617feb1874ccea4de37',1,'VLCCustomDialogRendererProtocol-p']]],
+  ['showprogresswithtitle_3amessage_3aisindeterminate_3aposition_3acancelstring_3awithreference_3a',['showProgressWithTitle:message:isIndeterminate:position:cancelString:withReference:',['../protocol_v_l_c_custom_dialog_renderer_protocol-p.html#a9b752a12e5565ad7182ae7cc07c52a2e',1,'VLCCustomDialogRendererProtocol-p']]],
+  ['showquestionwithtitle_3amessage_3atype_3acancelstring_3aaction1string_3aaction2string_3awithreference_3a',['showQuestionWithTitle:message:type:cancelString:action1String:action2String:withReference:',['../protocol_v_l_c_custom_dialog_renderer_protocol-p.html#a1c2544adcc4dfbf22c7218c34f74c905',1,'VLCCustomDialogRendererProtocol-p']]],
+  ['startdiscoverer',['startDiscoverer',['../interface_v_l_c_media_discoverer.html#ae24d8b9250ccead549c829071f7cf184',1,'VLCMediaDiscoverer']]],
+  ['stop',['stop',['../interface_v_l_c_media_list_player.html#ab4473d33d43e75b4c73fd9ed1ec5cc2c',1,'VLCMediaListPlayer::stop()'],['../interface_v_l_c_media_player.html#ad7184261982c10d5d1307e37ed16fb52',1,'VLCMediaPlayer::stop()']]],
+  ['stopdiscoverer',['stopDiscoverer',['../interface_v_l_c_media_discoverer.html#aedebd3f4b61febe5ca436af1f1ea7508',1,'VLCMediaDiscoverer']]]
+];
