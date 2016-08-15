@@ -31,13 +31,31 @@
  */
 @interface VLCStreamSession : VLCMediaPlayer
 
-+ (instancetype)streamSession;
+/**
+ * \deprecated will be removed in the next release
+ */
++ (instancetype)streamSession __attribute__((deprecated));
 
-@property (nonatomic, strong) VLCStreamOutput * streamOutput;
-@property (nonatomic, readonly) BOOL isComplete;
-@property (nonatomic, readonly) NSUInteger reattemptedConnections;
+/**
+ * \deprecated will be removed in the next release
+ */
+@property (nonatomic, strong) VLCStreamOutput * streamOutput __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
+@property (nonatomic, readonly) BOOL isComplete __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
+@property (nonatomic, readonly) NSUInteger reattemptedConnections __attribute__((deprecated));
 
-- (void)startStreaming;
-- (void)stopStreaming;
+/**
+ * \deprecated will be removed in the next release
+ */
+- (void)startStreaming __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
+- (void)stopStreaming __attribute__((deprecated));
 
 @end

@@ -22,8 +22,17 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+/**
+ * \deprecated will be removed in the next release
+ */
 extern NSString * VLCDefaultStreamOutputRTSP;
+/**
+ * \deprecated will be removed in the next release
+ */
 extern NSString * VLCDefaultStreamOutputRTP;
+/**
+ * \deprecated will be removed in the next release
+ */
 extern NSString * VLCDefaultStreamOutputRTP;
 
 /**
@@ -31,14 +40,38 @@ extern NSString * VLCDefaultStreamOutputRTP;
  */
 @interface VLCStreamOutput : NSObject
 
-- (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER;
-+ (instancetype)streamOutputWithOptionDictionary:(NSDictionary *)dictionary;
+/**
+ * \deprecated will be removed in the next release
+ */
+- (instancetype)initWithOptionDictionary:(NSDictionary *)dictionary NS_DESIGNATED_INITIALIZER __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
++ (instancetype)streamOutputWithOptionDictionary:(NSDictionary *)dictionary __attribute__((deprecated));
 
-+ (id)rtpBroadcastStreamOutputWithSAPAnnounce:(NSString *)announceName;
-+ (id)rtpBroadcastStreamOutput;
-+ (id)ipodStreamOutputWithFilePath:(NSString *)filePath;
-+ (instancetype)streamOutputWithFilePath:(NSString *)filePath;
-+ (id)mpeg2StreamOutputWithFilePath:(NSString *)filePath;
-+ (id)mpeg4StreamOutputWithFilePath:(NSString *)filePath;
+/**
+ * \deprecated will be removed in the next release
+ */
++ (id)rtpBroadcastStreamOutputWithSAPAnnounce:(NSString *)announceName __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
++ (id)rtpBroadcastStreamOutput __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
++ (id)ipodStreamOutputWithFilePath:(NSString *)filePath __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
++ (instancetype)streamOutputWithFilePath:(NSString *)filePath __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
++ (id)mpeg2StreamOutputWithFilePath:(NSString *)filePath __attribute__((deprecated));
+/**
+ * \deprecated will be removed in the next release
+ */
++ (id)mpeg4StreamOutputWithFilePath:(NSString *)filePath __attribute__((deprecated));
 
 @end

@@ -65,6 +65,11 @@ Deprecated APIs:
   - titles, chaptersForTitleIndex:, countOfTitles, framesPerSecond, openVideoSubTitlesFromFile:
 - VLCMediaListPlayer
   - playItemAtIndex
+- VLCExtension
+- VLCExtensionsManager
+- VLCStreamSession
+- VLCStreamOutput
+- VLCMediaLibrary
 
 Removed APIs:
 - VLCMedia:
@@ -74,6 +79,7 @@ Removed APIs:
   - audioTracks
   - videoTracks
   - videoSubTitles
+- VLCServicesDiscoverer
 
 Version 2.2.2:
 --------------

@@ -32,23 +32,27 @@
 
 /**
  * singleton manager instance
+ * \deprecated will be removed in the next release
  */
-+ (VLCExtensionsManager *)sharedManager;
++ (VLCExtensionsManager *)sharedManager __attribute__((deprecated));
 
 /**
  * list of available extensions
+ * \deprecated will be removed in the next release
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *extensions;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *extensions __attribute__((deprecated));
 
 /**
  * start execution of a given extension instance
  * \param extension the extension to run
+ * \deprecated will be removed in the next release
  */
-- (void)runExtension:(VLCExtension *)extension;
+- (void)runExtension:(VLCExtension *)extension __attribute__((deprecated));
 
 /**
  * player instance to use with the extensions
+ * \deprecated will be removed in the next release
  */
-@property (readwrite, strong) VLCMediaPlayer *mediaPlayer;
+@property (readwrite, strong) VLCMediaPlayer *mediaPlayer __attribute__((deprecated));
 
 @end

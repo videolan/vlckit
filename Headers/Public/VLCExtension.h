@@ -31,22 +31,26 @@
 /**
  * initializer for wrapper class
  * \param instance the extension_t instance to init the wrapper with
+ * \deprecated will be removed in the next release
  */
-- (instancetype)initWithInstance:(struct extension_t *)instance NS_DESIGNATED_INITIALIZER; // FIXME: Should be internal
+- (instancetype)initWithInstance:(struct extension_t *)instance NS_DESIGNATED_INITIALIZER __attribute__((deprecated)); // FIXME: Should be internal
 
 /**
  * the extension instance used to init the wrapper with
+ * \deprecated will be removed in the next release
  */
-@property (NS_NONATOMIC_IOSONLY, readonly) struct extension_t *instance; // FIXME: Should be internal
+@property (NS_NONATOMIC_IOSONLY, readonly) struct extension_t *instance __attribute__((deprecated)); // FIXME: Should be internal
 
 /**
  * technical name of the extension
+ * \deprecated will be removed in the next release
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *name;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *name __attribute__((deprecated));
 
 /**
  * user-visible name of the extension
+ * \deprecated will be removed in the next release
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *title;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSString *title __attribute__((deprecated));
 
 @end

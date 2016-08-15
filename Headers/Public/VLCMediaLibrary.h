@@ -32,13 +32,15 @@
 @interface VLCMediaLibrary : NSObject
 
 /**
-* library singleton
+ * library singleton
+ * \deprecated will be removed in the next release
 */
-+ (VLCMediaLibrary*)sharedMediaLibrary;
++ (VLCMediaLibrary*)sharedMediaLibrary __attribute__((deprecated));
 
 /**
  * list of all media
+ * \deprecated will be removed in the next release
  */
-@property (nonatomic, readonly, strong) VLCMediaList * allMedia;
+@property (nonatomic, readonly, strong) VLCMediaList * allMedia __attribute__((deprecated));
 
 @end
