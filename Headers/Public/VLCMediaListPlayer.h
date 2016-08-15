@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
 
 /**
  * play an item at at a given index in the media list attached to the player
- * \note This method is not thread safe and is deprecated. Use playItemAtNumber: instead
+ * \deprecated This method is not thread safe. Use playItemAtNumber: instead
  */
 - (BOOL)playItemAtIndex:(int)index  __attribute__((deprecated));
 

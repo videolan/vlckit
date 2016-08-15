@@ -268,8 +268,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Frames per second
- * \note Deprecated, provided for API compatibility only
- * \note To retrieve a media's FPS, use VLCMediaTracksInformationFrameRate.
+ * \deprecated provided for API compatibility only, to retrieve a media's FPS, use VLCMediaTracksInformationFrameRate.
  * \returns 0
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) float framesPerSecond __attribute__((deprecated));
@@ -352,7 +351,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \param path to a file
  * \return if the call succeed..
  *
- * \note use addPlaybackSlave:type:enforce: instead
+ * \deprecated use addPlaybackSlave:type:enforce: instead
  */
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path __attribute__((deprecated));
 
@@ -398,6 +397,11 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
 - (void)previousChapter;
 - (void)nextChapter;
 - (int)numberOfChaptersForTitle:(int)titleIndex;
+
+/**
+ * Chapters of a given title index
+ * \deprecated Use chapterDescriptionsOfTitle instead
+ */
 - (NSArray *)chaptersForTitleIndex:(int)titleIndex __attribute__((deprecated));
 
 extern NSString *const VLCChapterDescriptionName;
@@ -419,7 +423,16 @@ extern NSString *const VLCChapterDescriptionDuration;
  */
 @property (readwrite) int currentTitleIndex;
 @property (readonly) int numberOfTitles;
+
+/**
+ * count of titles
+ * \deprecated Use numberOfTitles instead
+ */
 @property (readonly) NSUInteger countOfTitles __attribute__((deprecated));
+/**
+ * array of available titles
+ * \deprecated Use titleDescriptions instead
+ */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles __attribute__((deprecated));
 
 extern NSString *const VLCTitleDescriptionName;

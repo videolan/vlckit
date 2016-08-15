@@ -45,7 +45,7 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 
 /**
  * Mute the current audio output.
- * \note This selector is deprecated and will be removed in the next release */
+ * \deprecated This selector will be removed in the next release */
 - (void)setMute:(BOOL)value __attribute__((deprecated));
 
 /**

@@ -54,7 +54,9 @@ extern NSString *const VLCMediaDiscovererCategory;
 @property (nonatomic, readonly) VLCLibrary *libraryInstance;
 
 /**
- * \return returns an empty array, will be removed in subsequent releases
+ * The full list of available media discoverers
+ * \return returns an empty array for binary compatibility, will be removed in subsequent releases
+ * \deprecated use availableMediaDiscovererForCategoryType instead
  */
 + (NSArray *)availableMediaDiscoverer __attribute__((deprecated));
 
@@ -96,7 +98,8 @@ extern NSString *const VLCMediaDiscovererCategory;
 @property (weak, readonly) VLCMediaList *discoveredMedia;
 
 /**
- * returns the localized name of the discovery module if available, otherwise in US English
+ * localized name of the discovery module if available, otherwise in US English
+ * \deprecated Will be removed in the next major release, may return an empty string for binary compatibility
  */
 @property (readonly, copy) NSString *localizedName __attribute__((deprecated));
 
