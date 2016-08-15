@@ -1,7 +1,7 @@
-From e8dac1564e09125dfb73862f71f26a69944c4881 Mon Sep 17 00:00:00 2001
+From 636f785df8a518cc9a2233f7ed12704e4efd0842 Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 15/15] Add AC-3 pass-through
+Subject: [PATCH 15/16] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
