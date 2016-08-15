@@ -80,6 +80,7 @@ Removed APIs:
   - videoTracks
   - videoSubTitles
 - VLCServicesDiscoverer
+- VLCPlaylistDataSource
 
 Version 2.2.2:
 --------------
