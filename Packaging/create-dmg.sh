@@ -122,13 +122,16 @@ else
     fi
 fi
 
-if [ ! -e "${DMGFOLDERNAME}" ]; then
+info "Deleting previous data"
+rm -rf "${DMGFOLDERNAME}"
+
 info "Collecting items"
 mkdir -p "${DMGFOLDERNAME}"
 mkdir -p "${DMGFOLDERNAME}/Sample Code"
 if [ "$MOBILE" = "no" ]; then
     cp -R VLCKit/* "${DMGFOLDERNAME}"
     cp -R Examples_OSX/* "${DMGFOLDERNAME}/Sample Code"
+    cp -R doc "${DMGFOLDERNAME}"
 else
     if [ "$TV" = "yes" ]; then
         cp -R build/TVVLCKit.framework "${DMGFOLDERNAME}"
@@ -136,6 +139,7 @@ else
         cp -R build/MobileVLCKit.framework "${DMGFOLDERNAME}"
         cp -R Examples_iOS/* "${DMGFOLDERNAME}/Sample Code"
     fi
+    cp -R doc "${DMGFOLDERNAME}"
     cp COPYING "${DMGFOLDERNAME}"
 fi
 cp NEWS "${DMGFOLDERNAME}"
@@ -144,7 +148,6 @@ mv NEWS NEWS.txt
 mv COPYING COPYING.txt
 spopd
 rm -f ${DMGITEMNAME}-rw.dmg
-fi
 
 if [ "$USEZIP" = "no" ]; then
 info "Creating disk-image"
