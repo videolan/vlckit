@@ -170,13 +170,17 @@ buildLibVLC() {
     make ${args}
     spopd # vlckitbuild
     spopd # contrib
-    
-    ./bootstrap
-    
+
+    info "Bootstraping vlc"
+    info "VLCROOT = ${VLCROOT}"
+    if ! [ -e ${VLCROOT}/configure ]; then
+        ${VLCROOT}/bootstrap
+    fi
+
     mkdir -p vlckitbuild
 
     spushd vlckitbuild
-    ../extras/package/macosx/configure.sh --build=x86_64-apple-darwin15 --prefix="${PREFIX}"
+    ../extras/package/macosx/configure.sh --build=x86_64-apple-darwin15 --prefix="${PREFIX}" --disable-macosx-vlc-app --disable-macosx --enable-merge-ffmpeg --disable-sparkle
     make -j2 ${args}
     make install $(args)    
     spopd #vlckitbuild
