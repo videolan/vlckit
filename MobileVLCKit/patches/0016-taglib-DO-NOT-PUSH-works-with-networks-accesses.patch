@@ -1,7 +1,7 @@
-From ad7a603b2b79382fbe59144547e8b2676d1e334c Mon Sep 17 00:00:00 2001
+From 95c7630fbc49729a3a89137198b0ad9f928afa7d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 22 Jul 2016 11:20:24 +0200
-Subject: [PATCH 16/16] taglib: DO NOT PUSH: works with networks accesses
+Subject: [PATCH 16/18] taglib: DO NOT PUSH: works with networks accesses
 
 ---
  modules/meta_engine/taglib.cpp | 15 ++++-----------
@@ -48,5 +48,5 @@ index 4e5df57..cdae73c 100644
      if( psz_path == NULL )
          return VLC_EGENERIC;
 -- 
-2.9.2
+2.9.3
 

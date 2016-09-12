@@ -1,7 +1,7 @@
-From 0ce24cc168037ac7cf6c2b10146efb742798014d Mon Sep 17 00:00:00 2001
+From 96c73dc8a0bb7f78a39f177c024ae9fcb14008a8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 10 Sep 2015 19:58:40 +0200
-Subject: [PATCH 07/16] src/misc: fix compilation for OS without fork()
+Subject: [PATCH 07/18] src/misc: fix compilation for OS without fork()
 
 ---
  src/misc/cpu.c | 2 +-
@@ -21,5 +21,5 @@ index 28f127a..bacf842 100644
  {
      pid_t pid = fork();
 -- 
-2.9.2
+2.9.3
 

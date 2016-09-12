@@ -1,7 +1,7 @@
-From c5b868df5f557c2ea8bfe66b490dc69e73b4cd8a Mon Sep 17 00:00:00 2001
+From 51007d631b26f98020ba2b2056b4c5c2a9c3552d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 11/16] contrib/gcrypt: work-around a libtool limitation
+Subject: [PATCH 11/18] contrib/gcrypt: work-around a libtool limitation
 
 ---
  contrib/src/gcrypt/rules.mak                       |  1 +
@@ -10,12 +10,12 @@ Subject: [PATCH 11/16] contrib/gcrypt: work-around a libtool limitation
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index e528e57..4d2604c 100644
+index 291f0fc..1484e7a 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
-@@ -15,6 +15,7 @@ libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
- 	$(APPLY) $(SRC)/gcrypt/0001-Fix-assembly-division-check.patch
- 	$(APPLY) $(SRC)/gcrypt/disable-doc-compilation.patch
+@@ -12,6 +12,7 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
+ libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
+ 	$(UNPACK)
  	$(APPLY) $(SRC)/gcrypt/disable-tests-compilation.patch
 +	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
  ifdef HAVE_WINSTORE
@@ -53,5 +53,5 @@ index 0000000..df97ffb
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.9.2
+2.9.3
 

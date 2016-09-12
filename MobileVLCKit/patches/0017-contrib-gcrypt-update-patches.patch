@@ -1,0 +1,72 @@
+From df0ae416574fc7e036996b499948c7346d9cb471 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Mon, 12 Sep 2016 17:03:37 +0200
+Subject: [PATCH 17/18] contrib/gcrypt: update patches
+
+---
+ contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch       | 13 +++++++------
+ contrib/src/gcrypt/work-around-libtool-limitation.patch | 16 ++++++++--------
+ 2 files changed, 15 insertions(+), 14 deletions(-)
+
+diff --git a/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch b/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
+index f1d3ccc..9d946ed 100644
+--- a/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
++++ b/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
+@@ -1,16 +1,17 @@
+ diff -ru libgcrypt/cipher/sha1-ssse3-amd64.S libgcrypt/cipher/sha1-ssse3-amd64.S
+---- libgcrypt/cipher/sha1-ssse3-amd64.S	2014-08-21 14:50:39.000000000 +0200
+-+++ libgcrypt/cipher/sha1-ssse3-amd64.S	2015-10-03 22:40:21.000000000 +0200
+-@@ -217,10 +217,9 @@
+-  * _gcry_sha1_transform_amd64_ssse3 (void *ctx, const unsigned char *data)
++--- libgcrypt/cipher/sha1-ssse3-amd64.S	2016-03-23 12:59:34.000000000 +0100
+++++ libgcrypt/cipher/sha1-ssse3-amd64.S	2016-09-12 15:16:55.000000000 +0200
++@@ -227,10 +227,10 @@
++  *                                   size_t nblks)
+   */
+  .text
+ -.globl _gcry_sha1_transform_amd64_ssse3
+--.type _gcry_sha1_transform_amd64_ssse3,@function
++-ELF(.type _gcry_sha1_transform_amd64_ssse3,@function)
+ +.globl __gcry_sha1_transform_amd64_ssse3
+++ELF(.type __gcry_sha1_transform_amd64_ssse3,@function)
+  .align 16
+ -_gcry_sha1_transform_amd64_ssse3:
+ +__gcry_sha1_transform_amd64_ssse3:
+    /* input:
+     *	%rdi: ctx, CTX
+-    *	%rsi: data (64 bytes)
++    *	%rsi: data (64*nblks bytes)
+diff --git a/contrib/src/gcrypt/work-around-libtool-limitation.patch b/contrib/src/gcrypt/work-around-libtool-limitation.patch
+index df97ffb..957f268 100644
+--- a/contrib/src/gcrypt/work-around-libtool-limitation.patch
++++ b/contrib/src/gcrypt/work-around-libtool-limitation.patch
+@@ -1,18 +1,18 @@
+-diff -ru libgcrypt-broken/cipher/Makefile.am libgcrypt/cipher/Makefile.am
+---- libgcrypt-broken/cipher/Makefile.am	2013-11-06 23:05:24.000000000 +0100
+-+++ libgcrypt/cipher/Makefile.am	2013-11-06 23:21:25.000000000 +0100
++diff -ru libgcrypt/cipher/Makefile.am libgcrypt/cipher/Makefile.am
++--- libgcrypt/cipher/Makefile.am	2016-08-17 13:21:22.000000000 +0200
+++++ libgcrypt/cipher/Makefile.am	2016-09-12 15:13:54.000000000 +0200
+ @@ -19,6 +19,8 @@
+  
+  # Process this file with automake to produce Makefile.in
+  
+ +LIBTOOL=@LIBTOOL@ --tag=CC
+ +
+- EXTRA_DIST = Manifest
+- 
+  # Need to include ../src in addition to top_srcdir because gcrypt.h is
+-diff -ru libgcrypt-broken/mpi/Makefile.am libgcrypt/mpi/Makefile.am
+---- libgcrypt-broken/mpi/Makefile.am	2013-11-06 23:05:24.000000000 +0100
+-+++ libgcrypt/mpi/Makefile.am	2013-11-06 23:22:04.000000000 +0100
++ # a built header.
++ AM_CPPFLAGS = -I../src -I$(top_srcdir)/src
++diff -ru libgcrypt/mpi/Makefile.am libgcrypt-fixed/mpi/Makefile.am
++--- libgcrypt/mpi/Makefile.am	2016-03-23 12:59:34.000000000 +0100
+++++ libgcrypt/mpi/Makefile.am	2016-09-12 15:13:28.000000000 +0200
+ @@ -23,6 +23,9 @@
+  
+  # Need to include ../src in addition to top_srcdir because gcrypt.h is
+-- 
+2.9.3
+

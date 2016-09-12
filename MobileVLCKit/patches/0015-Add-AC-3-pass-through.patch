@@ -1,7 +1,7 @@
-From 636f785df8a518cc9a2233f7ed12704e4efd0842 Mon Sep 17 00:00:00 2001
+From 18c5badc3e4fb4b50b876da57f86b3962b2f516e Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 15/16] Add AC-3 pass-through
+Subject: [PATCH 15/18] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -16,10 +16,10 @@ Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
  5 files changed, 56 insertions(+), 12 deletions(-)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index 8ea32c4..af7933a 100755
+index 1528861..66077d5 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
-@@ -461,8 +461,6 @@ speex_resampler
+@@ -460,8 +460,6 @@ speex_resampler
  remoteosd
  magnify
  gradient
@@ -29,10 +29,10 @@ index 8ea32c4..af7933a 100755
  visual
  fb
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 3a37d3b..90a27af 100644
+index 0e00fa9..e949e32 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1831,6 +1831,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
+@@ -1822,6 +1822,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
  LIBVLC_API int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay );
  
  /**
@@ -150,5 +150,5 @@ index cee8eab..0aa9dee 100644
      /* Set audio session to mediaplayback */
      NSError *error = nil;
 -- 
-2.9.2
+2.9.3
 
