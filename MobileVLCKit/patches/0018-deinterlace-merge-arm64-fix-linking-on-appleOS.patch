@@ -1,4 +1,4 @@
-From 648dae663d74c71bdbb8c2d9e31185f81dd672a0 Mon Sep 17 00:00:00 2001
+From 0601de3b49cefb08632e34d0691f1a1ff4e113da Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:04:05 +0200
 Subject: [PATCH 18/18] deinterlace-merge-arm64: fix linking on appleOS
