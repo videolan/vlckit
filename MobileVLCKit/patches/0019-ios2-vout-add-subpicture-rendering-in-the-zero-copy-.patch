@@ -1,0 +1,482 @@
+From 6c787c63d5cacf5983b7a94e5bddff076a7cb48b Mon Sep 17 00:00:00 2001
+From: Adrien Maglo <magsoft@videolan.org>
+Date: Fri, 16 Sep 2016 14:00:21 +0200
+Subject: [PATCH 19/19] ios2 vout: add subpicture rendering in the zero copy
+ pipeline
+
+---
+ modules/video_output/ios2.m | 301 ++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 291 insertions(+), 10 deletions(-)
+
+diff --git a/modules/video_output/ios2.m b/modules/video_output/ios2.m
+index 5e56ca5..75d9f9c 100644
+--- a/modules/video_output/ios2.m
++++ b/modules/video_output/ios2.m
+@@ -46,6 +46,7 @@
+ #import <vlc_vout_display.h>
+ #import <vlc_opengl.h>
+ #import <vlc_dialog.h>
++#import <vlc_memory.h>
+ #import "opengl.h"
+ 
+ /**
+@@ -110,6 +111,19 @@ static NSString *const fragmentShaderString = @" \
+  } \
+ ";
+ 
++static NSString *const fragmentShaderRGBAString = @" \
++varying highp vec2 texCoordVarying; \
++precision mediump float; \
++\
++uniform sampler2D Texture; \
++\
++void main() \
++{ \
++    gl_FragColor = texture2D(Texture, texCoordVarying); \
++} \
++";
++
++
+ static NSString *const vertexShaderString = @" \
+  attribute vec4 position; \
+  attribute vec2 texCoord; \
+@@ -139,7 +153,7 @@ static void OpenglESSwap(vlc_gl_t *);
+ 
+ static picture_pool_t *ZeroCopyPicturePool(vout_display_t *, unsigned);
+ static void DestroyZeroCopyPoolPicture(picture_t *);
+-static void ZeroCopyClean(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture);
++static void ZeroCopyPrepare(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture);
+ static void ZeroCopyDisplay(vout_display_t *, picture_t *, subpicture_t *);
+ 
+ /**
+@@ -178,6 +192,7 @@ vlc_module_end ()
+ @property (readonly) EAGLContext* eaglContext;
+ @property (readonly) BOOL isAppActive;
+ @property GLuint shaderProgram;
++@property GLuint shaderProgramSub;
+ 
+ - (id)initWithFrame:(CGRect)frame zeroCopy:(bool)zero_copy voutDisplay:(vout_display_t *)vd;
+ 
+@@ -191,6 +206,24 @@ vlc_module_end ()
+ - (void)displayPixelBuffer:(CVPixelBufferRef)pixelBuffer;
+ @end
+ 
++typedef struct {
++    GLuint   texture;
++    unsigned format;
++    unsigned type;
++    unsigned width;
++    unsigned height;
++
++    float    alpha;
++
++    float    top;
++    float    left;
++    float    bottom;
++    float    right;
++
++    float    tex_width;
++    float    tex_height;
++} gl_region_t;
++
+ struct vout_display_sys_t
+ {
+     VLCOpenGLES2VideoView *glESView;
+@@ -205,8 +238,22 @@ struct vout_display_sys_t
+     bool zero_copy;
+ 
+     vout_display_place_t place;
++
++    // Subpicture
++    int region_count;
++    gl_region_t *region;
++
++    uint8_t *texture_temp_buf;
++    int      texture_temp_buf_size;
+ };
+ 
++static inline int GetAlignedSize(unsigned size)
++{
++    /* Return the smallest larger or equal power of 2 */
++    unsigned align = 1 << (8 * sizeof (unsigned) - clz(size));
++    return ((align >> 1) == size) ? size : align;
++}
++
+ static void *OurGetProcAddress(vlc_gl_t *gl, const char *name)
+ {
+     VLC_UNUSED(gl);
+@@ -281,7 +328,7 @@ static int Open(vlc_object_t *this)
+ 
+         if (sys->zero_copy) {
+             vd->pool = ZeroCopyPicturePool;
+-            vd->prepare = ZeroCopyClean;
++            vd->prepare = ZeroCopyPrepare;
+             vd->display = ZeroCopyDisplay;
+         } else {
+             vd->pool = PicturePool;
+@@ -325,6 +372,15 @@ void Close (vlc_object_t *this)
+     vout_display_sys_t *sys = vd->sys;
+ 
+     @autoreleasepool {
++        glDeleteProgram(sys->glESView.shaderProgram);
++        glDeleteProgram(sys->glESView.shaderProgramSub);
++
++        for (int i = 0; i < sys->region_count; i++) {
++            if (sys->region[i].texture)
++                glDeleteTextures(1, &sys->region[i].texture);
++        }
++        free(sys->region);
++
+         if (sys->tapRecognizer) {
+             [sys->tapRecognizer.view removeGestureRecognizer:sys->tapRecognizer];
+             [sys->tapRecognizer release];
+@@ -356,7 +412,8 @@ void Close (vlc_object_t *this)
+                 picture_pool_Release(sys->picturePool);
+             sys->picturePool = NULL;
+         }
+-        
++
++        free(sys->texture_temp_buf);
+         free(sys);
+     }
+ }
+@@ -548,11 +605,154 @@ static void DestroyZeroCopyPoolPicture(picture_t *picture)
+     free(picture);
+ }
+ 
+-static void ZeroCopyClean(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture)
++#define ALIGN(x, y) (((x) + ((y) - 1)) & ~((y) - 1))
++static void Upload(vout_display_sys_t *sys,
++                   int in_width, int in_height,
++                   int in_full_width, int in_full_height,
++                   int w_num, int w_den, int h_num, int h_den,
++                   int pitch, int pixel_pitch,
++                   int full_upload, const uint8_t *pixels,
++                   int tex_target, int tex_format, int tex_type)
++{
++    int width       =       in_width * w_num / w_den;
++    int full_width  =  in_full_width * w_num / w_den;
++    int height      =      in_height * h_num / h_den;
++    int full_height = in_full_height * h_num / h_den;
++    // This unpack alignment is the default, but setting it just in case.
++    glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
++
++    int dst_width = full_upload ? full_width : width;
++    int dst_pitch = ALIGN(dst_width * pixel_pitch, 4);
++    if ( pitch != dst_pitch )
++    {
++        int buf_size = dst_pitch * full_height * pixel_pitch;
++        const uint8_t *source = pixels;
++        uint8_t *destination;
++        if( !sys->texture_temp_buf || sys->texture_temp_buf_size < buf_size )
++        {
++            free( sys->texture_temp_buf );
++            sys->texture_temp_buf = xmalloc( buf_size );
++            sys->texture_temp_buf_size = buf_size;
++        }
++        destination = sys->texture_temp_buf;
++
++        for( int h = 0; h < height ; h++ )
++        {
++            memcpy( destination, source, width * pixel_pitch );
++            source += pitch;
++            destination += dst_pitch;
++        }
++        if (full_upload)
++            glTexImage2D( tex_target, 0, tex_format,
++                         full_width, full_height,
++                         0, tex_format, tex_type, sys->texture_temp_buf );
++        else
++            glTexSubImage2D( tex_target, 0,
++                            0, 0,
++                            width, height,
++                            tex_format, tex_type, sys->texture_temp_buf );
++    } else {
++            if (full_upload)
++                glTexImage2D(tex_target, 0, tex_format,
++                             full_width, full_height,
++                             0, tex_format, tex_type, pixels);
++            else
++                glTexSubImage2D(tex_target, 0,
++                                0, 0,
++                                width, height,
++                                tex_format, tex_type, pixels);
++    }
++}
++
++static void ZeroCopyPrepare(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture)
+ {
+     vout_display_sys_t *sys = vd->sys;
+     if (likely([sys->glESView isAppActive]))
+         [sys->glESView resetBuffers];
++
++    // Subpictures
++    int         last_count = sys->region_count;
++    gl_region_t *last = sys->region;
++
++    sys->region_count = 0;
++    sys->region       = NULL;
++
++    if (subpicture)
++    {
++        int count = 0;
++        for (subpicture_region_t *r = subpicture->p_region; r; r = r->p_next)
++            count++;
++
++        sys->region_count = count;
++        sys->region       = calloc(count, sizeof(*sys->region));
++
++        glActiveTexture(GL_TEXTURE0 + 0);
++
++        int i = 0;
++        for (subpicture_region_t *r = subpicture->p_region; r; r = r->p_next, i++) {
++            gl_region_t *glr = &sys->region[i];
++
++            glr->format = GL_RGBA;
++            glr->type   = GL_UNSIGNED_BYTE;
++            glr->width  = r->fmt.i_visible_width;
++            glr->height = r->fmt.i_visible_height;
++
++            glr->width  = GetAlignedSize(glr->width);
++            //glr->height  = GetAlignedSize(glr->height);
++
++            glr->tex_width  = (float) r->fmt.i_visible_width  / glr->width;
++            glr->tex_height = (float) r->fmt.i_visible_height / glr->height;
++
++            glr->alpha  = (float)subpicture->i_alpha * r->i_alpha / 255 / 255;
++            glr->left   =  2.0 * (r->i_x                          ) / subpicture->i_original_picture_width  - 1.0;
++            glr->top    = -2.0 * (r->i_y                          ) / subpicture->i_original_picture_height + 1.0;
++            glr->right  =  2.0 * (r->i_x + r->fmt.i_visible_width ) / subpicture->i_original_picture_width  - 1.0;
++            glr->bottom = -2.0 * (r->i_y + r->fmt.i_visible_height) / subpicture->i_original_picture_height + 1.0;
++
++            glr->texture = 0;
++            /* Try to recycle the textures allocated by the previous
++             call to this function. */
++            for (int j = 0; j < last_count; j++) {
++                if (last[j].texture &&
++                    last[j].width  == glr->width &&
++                    last[j].height == glr->height &&
++                    last[j].format == glr->format &&
++                    last[j].type   == glr->type) {
++                    glr->texture = last[j].texture;
++                    memset(&last[j], 0, sizeof(last[j]));
++                    break;
++                }
++            }
++
++            const int pixels_offset = r->fmt.i_y_offset * r->p_picture->p->i_pitch +
++            r->fmt.i_x_offset * r->p_picture->p->i_pixel_pitch;
++            if (glr->texture) {
++                /* A texture was successfully recycled, reuse it. */
++                glBindTexture(GL_TEXTURE_2D, glr->texture);
++                Upload(sys, r->fmt.i_visible_width, r->fmt.i_visible_height, glr->width, glr->height, 1, 1, 1, 1,
++                       r->p_picture->p->i_pitch, r->p_picture->p->i_pixel_pitch, 0,
++                       &r->p_picture->p->p_pixels[pixels_offset], GL_TEXTURE_2D, glr->format, glr->type);
++            } else {
++                /* Could not recycle a previous texture, generate a new one. */
++                glGenTextures(1, &glr->texture);
++                glBindTexture(GL_TEXTURE_2D, glr->texture);
++
++                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
++                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
++                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
++                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
++                Upload(sys, r->fmt.i_visible_width, r->fmt.i_visible_height, glr->width, glr->height, 1, 1, 1, 1,
++                       r->p_picture->p->i_pitch, r->p_picture->p->i_pixel_pitch, 1,
++                       &r->p_picture->p->p_pixels[pixels_offset], GL_TEXTURE_2D, glr->format, glr->type);
++            }
++        }
++    }
++
++    for (int i = 0; i < last_count; i++) {
++        if (last[i].texture)
++            glDeleteTextures(1, &last[i].texture);
++    }
++    free(last);
+ }
+ 
+ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture)
+@@ -961,6 +1161,8 @@ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *su
+ 
+     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+ 
++    [self drawSubpictures];
++
+     glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
+     [_eaglContext presentRenderbuffer:GL_RENDERBUFFER];
+ 
+@@ -971,6 +1173,54 @@ done:
+     [EAGLContext setCurrentContext:previousContext];
+ }
+ 
++- (void)drawSubpictures
++{
++    vout_display_sys_t *sys = _voutDisplay->sys;
++
++    /* Draw the subpictures */
++
++    glUseProgram(self.shaderProgramSub);
++
++    GLfloat transformMatrix[16];
++    orientationTransformMatrix(transformMatrix, _voutDisplay->fmt.orientation);
++    glUniformMatrix4fv(glGetUniformLocation(self.shaderProgramSub, "transformMatrix"), 1, GL_FALSE, transformMatrix);
++
++    glUniform1i(glGetUniformLocation(self.shaderProgramSub, "Texture"), 0);
++
++    glEnable(GL_BLEND);
++    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
++
++    glActiveTexture(GL_TEXTURE0 + 0);
++    for (int i = 0; i < sys->region_count; i++) {
++        gl_region_t *glr = &sys->region[i];
++        const GLfloat vertexCoord[] = {
++            glr->left,  glr->top,
++            glr->left,  glr->bottom,
++            glr->right, glr->top,
++            glr->right, glr->bottom,
++        };
++        const GLfloat textureCoord[] = {
++            0.0, 0.0,
++            0.0, glr->tex_height,
++            glr->tex_width, 0.0,
++            glr->tex_width, glr->tex_height,
++        };
++
++        glBindTexture(GL_TEXTURE_2D, glr->texture);
++        glUniform4f(glGetUniformLocation(self.shaderProgramSub, "FillColor"), 1.0f, 1.0f, 1.0f, glr->alpha);
++
++        glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, vertexCoord);
++        glEnableVertexAttribArray(ATTRIB_VERTEX);
++
++        glVertexAttribPointer(ATTRIB_TEXCOORD, 2, GL_FLOAT, 0, 0, textureCoord);
++        glEnableVertexAttribArray(ATTRIB_TEXCOORD);
++
++        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
++    }
++    glDisable(GL_BLEND);
++}
++
++
+ - (void)setupZeroCopyGL
+ {
+     EAGLContext *previousContext = [EAGLContext currentContext];
+@@ -1017,11 +1267,11 @@ done:
+ 
+ - (BOOL)loadShaders
+ {
+-    GLuint vertShader, fragShader;
+-    NSURL *vertShaderURL, *fragShaderURL;
++    GLuint vertShader, fragShader, fragShaderSub;
+ 
+     // Create the shader program.
+     self.shaderProgram = glCreateProgram();
++    self.shaderProgramSub = glCreateProgram();
+ 
+     // Create and compile the vertex shader.
+     if (![self compileShader:&vertShader type:GL_VERTEX_SHADER sourceString:vertexShaderString]) {
+@@ -1037,15 +1287,25 @@ done:
+         return NO;
+     }
+ 
++    if (![self compileShader:&fragShaderSub type:GL_FRAGMENT_SHADER sourceString:fragmentShaderRGBAString]) {
++        if (_voutDisplay)
++            msg_Err(_voutDisplay, "Failed to compile the RGB fragment shader");
++        return NO;
++    }
++
+     // Attach vertex shader to program.
+     glAttachShader(self.shaderProgram, vertShader);
++    glAttachShader(self.shaderProgramSub, vertShader);
+ 
+     // Attach fragment shader to program.
+     glAttachShader(self.shaderProgram, fragShader);
++    glAttachShader(self.shaderProgramSub, fragShaderSub);
+ 
+     // Bind attribute locations. This needs to be done prior to linking.
+     glBindAttribLocation(self.shaderProgram, ATTRIB_VERTEX, "position");
+     glBindAttribLocation(self.shaderProgram, ATTRIB_TEXCOORD, "texCoord");
++    glBindAttribLocation(self.shaderProgramSub, ATTRIB_VERTEX, "position");
++    glBindAttribLocation(self.shaderProgramSub, ATTRIB_TEXCOORD, "texCoord");
+ 
+     // Link the program.
+     if (![self linkProgram:self.shaderProgram]) {
+@@ -1068,6 +1328,26 @@ done:
+         return NO;
+     }
+ 
++    if (![self linkProgram:self.shaderProgramSub]) {
++        if (_voutDisplay)
++            msg_Err(_voutDisplay, "Failed to link program: %d", self.shaderProgramSub);
++
++        if (vertShader) {
++            glDeleteShader(vertShader);
++            vertShader = 0;
++        }
++        if (fragShaderSub) {
++            glDeleteShader(fragShaderSub);
++            fragShaderSub = 0;
++        }
++        if (self.shaderProgramSub) {
++            glDeleteProgram(self.shaderProgramSub);
++            self.shaderProgramSub = 0;
++        }
++
++        return NO;
++    }
++
+     // Get uniform locations.
+     uniforms[UNIFORM_Y] = glGetUniformLocation(self.shaderProgram, "SamplerY");
+     uniforms[UNIFORM_UV] = glGetUniformLocation(self.shaderProgram, "SamplerUV");
+@@ -1077,12 +1357,17 @@ done:
+     // Release vertex and fragment shaders.
+     if (vertShader) {
+         glDetachShader(self.shaderProgram, vertShader);
++        glDetachShader(self.shaderProgramSub, vertShader);
+         glDeleteShader(vertShader);
+     }
+     if (fragShader) {
+         glDetachShader(self.shaderProgram, fragShader);
+         glDeleteShader(fragShader);
+     }
++    if (fragShaderSub) {
++        glDetachShader(self.shaderProgramSub, fragShaderSub);
++        glDeleteShader(fragShaderSub);
++    }
+ 
+     return YES;
+ }
+@@ -1097,7 +1382,6 @@ done:
+     glShaderSource(*shader, 1, &source, NULL);
+     glCompileShader(*shader);
+ 
+-#ifndef NDEBUG
+     GLint logLength;
+     glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
+     if (logLength > 0) {
+@@ -1107,7 +1391,6 @@ done:
+             msg_Dbg(_voutDisplay, "Shader compile log:\n%s", log);
+         free(log);
+     }
+-#endif
+ 
+     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
+     if (status == 0) {
+@@ -1123,7 +1406,6 @@ done:
+     GLint status;
+     glLinkProgram(prog);
+ 
+-#ifndef NDEBUG
+     GLint logLength;
+     glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+     if (logLength > 0) {
+@@ -1133,7 +1415,6 @@ done:
+             msg_Dbg(_voutDisplay, "Program link log:\n%s", log);
+         free(log);
+     }
+-#endif
+ 
+     glGetProgramiv(prog, GL_LINK_STATUS, &status);
+     if (status == 0) {
+-- 
+2.9.3
+

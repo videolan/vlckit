@@ -1,7 +1,7 @@
-From 51007d631b26f98020ba2b2056b4c5c2a9c3552d Mon Sep 17 00:00:00 2001
+From 297f587954d7583082bb625a4ac936a8d306be37 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 11/18] contrib/gcrypt: work-around a libtool limitation
+Subject: [PATCH 11/19] contrib/gcrypt: work-around a libtool limitation
 
 ---
  contrib/src/gcrypt/rules.mak                       |  1 +
