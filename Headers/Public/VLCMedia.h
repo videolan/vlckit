@@ -28,6 +28,8 @@
 #import "VLCMediaList.h"
 #import "VLCTime.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Meta Dictionary Keys */
 /**
  * Standard dictionary keys for retreiving meta data.
@@ -503,14 +505,40 @@ typedef int VLCMediaParsingOptions;
  * The options are detailed in vlc --long-help, for instance "--sout-all"
  * And on the web: http://wiki.videolan.org/VLC_command-line_help
 */
-- (void) addOptions:(NSDictionary*) options;
+- (void)addOptions:(NSDictionary*)options;
+
+/**
+ * Parse a value of an incoming Set-Cookie header (see RFC 6265) and append the
+ * cookie to the stored cookies if appropriate. The "secure" attribute can be added
+ * to cookie to limit the scope of the cookie to secured channels (https).
+ *
+ * \note must be called before the first call of play() to
+ * take effect. The cookie storage is only used for http/https.
+ *
+ * \param cookie header field value of Set-Cookie: "name=value<;attributes>"
+ * \param host host to which the cookie will be sent
+ * \param path scope of the cookie
+ *
+ * \return 0 on success, -1 on error.
+ */
+- (int)storeCookie:(NSString * _Nonnull)cookie
+           forHost:(NSString * _Nonnull)host
+              path:(NSString * _Nonnull)path;
+
+/**
+ * Clear the stored cookies of a media.
+ *
+ * \note must be called before the first call of play() to
+ * take effect. The cookie jar is only used for http/https.
+ */
+- (void)clearStoredCookies;
 
 /**
  * Getter for statistics information
  * Returns a NSDictionary with NSNumbers for values.
  *
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSDictionary *stats;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy, nullable) NSDictionary *stats;
 
 #pragma mark - individual stats
 
@@ -598,3 +626,5 @@ typedef int VLCMediaParsingOptions;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDiscontinuties;
 
 @end
+
+NS_ASSUME_NONNULL_END

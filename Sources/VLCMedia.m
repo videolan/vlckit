@@ -397,7 +397,30 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     }
 }
 
-- (NSDictionary*) stats
+- (int)storeCookie:(NSString * _Nonnull)cookie
+           forHost:(NSString *_Nonnull)host
+              path:(NSString *_Nonnull)path
+{
+    if (!p_md || cookie == NULL || host == NULL || path == NULL) {
+        return -1;
+    }
+
+    return libvlc_media_cookie_jar_store(p_md,
+                                         [cookie UTF8String],
+                                         [host UTF8String],
+                                         [path UTF8String]);
+}
+
+- (void)clearStoredCookies
+{
+    if (!p_md) {
+        return;
+    }
+
+    libvlc_media_cookie_jar_clear(p_md);
+}
+
+- (NSDictionary *)stats
 {
     if (!p_md)
         return nil;
