@@ -1,0 +1,168 @@
+From fd5f77fbb997bfff3fa4de2e0a0cf5a9bfa12b92 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Fri, 16 Sep 2016 15:51:11 +0200
+Subject: [PATCH 20/21] libvlc_media: add cookie_jar API
+
+---
+ include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
+ lib/libvlc.sym             |  2 ++
+ lib/media.c                | 26 ++++++++++++++++++++++++++
+ lib/media_internal.h       |  2 ++
+ lib/media_player.c         |  7 +++++++
+ 5 files changed, 72 insertions(+)
+
+diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
+index 15933c5..beb1dd5 100644
+--- a/include/vlc/libvlc_media.h
++++ b/include/vlc/libvlc_media.h
+@@ -846,6 +846,41 @@ LIBVLC_API
+ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+                                   unsigned int i_count );
+ 
++/**
++ * Parse a value of an incoming Set-Cookie header (see RFC 6265) and append the
++ * cookie to the cookie jar if appropriate. The "secure" attribute can be added
++ * to psz_cookie to limit the scope of the cookie to secured channels (https).
++ *
++ * \note must be called before the first call of libvlc_media_player_play() to
++ * take effect. The cookie jar is only used for http/https accesses.
++ *
++ * \version LibVLC 3.0.0 and later.
++ *
++ * \param p_md media descriptor object
++ * \param psz_cookie header field value of Set-Cookie:
++ * "name=value<;attributes>" (must not be NULL)
++ * \param psz_host host to which the cookie will be sent (must not be NULL)
++ * \param psz_path scope of the cookie (must not be NULL)
++ *
++ * \return 0 on success, -1 on error.
++ */
++LIBVLC_API int
++libvlc_media_cookie_jar_store( libvlc_media_t *p_md, const char *psz_cookie,
++                               const char *psz_host, const char *psz_path );
++
++/**
++ * Clear the cookie jar of a media.
++ *
++ * \note must be called before the first call of libvlc_media_player_play() to
++ * take effect.
++ *
++ * \version LibVLC 3.0.0 and later.
++ *
++ * \param p_md media descriptor object
++ */
++LIBVLC_API void
++libvlc_media_cookie_jar_clear( libvlc_media_t *p_md );
++
+ /** @}*/
+ 
+ # ifdef __cplusplus
+diff --git a/lib/libvlc.sym b/lib/libvlc.sym
+index f297970..4dda39b 100644
+--- a/lib/libvlc.sym
++++ b/lib/libvlc.sym
+@@ -215,6 +215,8 @@ libvlc_media_set_user_data
+ libvlc_media_subitems
+ libvlc_media_tracks_get
+ libvlc_media_tracks_release
++libvlc_media_cookie_jar_store
++libvlc_media_cookie_jar_clear
+ libvlc_new
+ libvlc_playlist_play
+ libvlc_release
+diff --git a/lib/media.c b/lib/media.c
+index e01beed..0c56ca0 100644
+--- a/lib/media.c
++++ b/lib/media.c
+@@ -379,6 +379,8 @@ libvlc_media_t * libvlc_media_new_from_input_item(
+      * It can give a bunch of item to read. */
+     p_md->p_subitems        = NULL;
+ 
++    p_md->p_cookie_jar      = NULL;
++
+     p_md->p_event_manager = libvlc_event_manager_new( p_md );
+     if( unlikely(p_md->p_event_manager == NULL) )
+     {
+@@ -541,6 +543,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
+ 
+     vlc_gc_decref( p_md->p_input_item );
+ 
++    if( p_md->p_cookie_jar )
++        vlc_http_cookies_destroy( p_md->p_cookie_jar );
++
+     vlc_cond_destroy( &p_md->parsed_cond );
+     vlc_mutex_destroy( &p_md->parsed_lock );
+     vlc_mutex_destroy( &p_md->subitems_lock );
+@@ -1237,3 +1242,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+         free( pp_slaves );
+     }
+ }
++
++int
++libvlc_media_cookie_jar_store( libvlc_media_t *p_md, const char *psz_cookie,
++                               const char *psz_host, const char *psz_path )
++{
++    if( !p_md->p_cookie_jar )
++    {
++        p_md->p_cookie_jar = vlc_http_cookies_new();
++        if( !p_md->p_cookie_jar )
++            return -1;
++    }
++    return vlc_http_cookies_store( p_md->p_cookie_jar, psz_cookie, psz_host,
++                                   psz_path ) ? 0 : -1;
++}
++
++void
++libvlc_media_cookie_jar_clear( libvlc_media_t *p_md )
++{
++    if( p_md->p_cookie_jar )
++        vlc_http_cookies_clear( p_md->p_cookie_jar );
++}
+diff --git a/lib/media_internal.h b/lib/media_internal.h
+index f063ddb..17bbd84 100644
+--- a/lib/media_internal.h
++++ b/lib/media_internal.h
+@@ -30,6 +30,7 @@
+ 
+ #include <vlc_common.h>
+ #include <vlc_input.h>
++#include <vlc_http.h>
+ 
+ struct libvlc_media_t
+ {
+@@ -48,6 +49,7 @@ struct libvlc_media_t
+     libvlc_media_parsed_status_t parsed_status;
+     bool is_parsed;
+     bool has_asked_preparse;
++    vlc_http_cookie_jar_t *p_cookie_jar;
+ };
+ 
+ /* Media Descriptor */
+diff --git a/lib/media_player.c b/lib/media_player.c
+index ac30787..fdda68a 100644
+--- a/lib/media_player.c
++++ b/lib/media_player.c
+@@ -601,6 +601,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+ 
+     /* Input */
+     var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
++    var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
+ 
+     /* Video */
+     var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
+@@ -954,6 +955,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+         return -1;
+     }
+ 
++    if( p_mi->p_md->p_cookie_jar )
++    {
++        vlc_value_t cookies = { .p_address = p_mi->p_md->p_cookie_jar };
++        var_SetChecked( p_mi, "http-cookies", VLC_VAR_ADDRESS, cookies );
++    }
++
+     media_attach_preparsed_event( p_mi->p_md );
+ 
+     p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
+-- 
+2.9.3
+

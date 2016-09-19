@@ -1,15 +1,15 @@
-From 6c787c63d5cacf5983b7a94e5bddff076a7cb48b Mon Sep 17 00:00:00 2001
+From b446f7dfd3e2fbd981b8cbb075a255cf99a8984b Mon Sep 17 00:00:00 2001
 From: Adrien Maglo <magsoft@videolan.org>
 Date: Fri, 16 Sep 2016 14:00:21 +0200
-Subject: [PATCH 19/19] ios2 vout: add subpicture rendering in the zero copy
+Subject: [PATCH 19/21] ios2 vout: add subpicture rendering in the zero copy
  pipeline
 
 ---
- modules/video_output/ios2.m | 301 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 291 insertions(+), 10 deletions(-)
+ modules/video_output/ios2.m | 338 +++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 304 insertions(+), 34 deletions(-)
 
 diff --git a/modules/video_output/ios2.m b/modules/video_output/ios2.m
-index 5e56ca5..75d9f9c 100644
+index 5e56ca5..6d4f1f1 100644
 --- a/modules/video_output/ios2.m
 +++ b/modules/video_output/ios2.m
 @@ -46,6 +46,7 @@
@@ -20,7 +20,7 @@ index 5e56ca5..75d9f9c 100644
  #import "opengl.h"
  
  /**
-@@ -110,6 +111,19 @@ static NSString *const fragmentShaderString = @" \
+@@ -110,6 +111,20 @@ static NSString *const fragmentShaderString = @" \
   } \
  ";
  
@@ -29,10 +29,11 @@ index 5e56ca5..75d9f9c 100644
 +precision mediump float; \
 +\
 +uniform sampler2D Texture; \
++uniform vec4 FillColor; \
 +\
 +void main() \
 +{ \
-+    gl_FragColor = texture2D(Texture, texCoordVarying); \
++    gl_FragColor = texture2D(Texture, texCoordVarying) * FillColor; \
 +} \
 +";
 +
@@ -40,7 +41,7 @@ index 5e56ca5..75d9f9c 100644
  static NSString *const vertexShaderString = @" \
   attribute vec4 position; \
   attribute vec2 texCoord; \
-@@ -139,7 +153,7 @@ static void OpenglESSwap(vlc_gl_t *);
+@@ -139,7 +154,7 @@ static void OpenglESSwap(vlc_gl_t *);
  
  static picture_pool_t *ZeroCopyPicturePool(vout_display_t *, unsigned);
  static void DestroyZeroCopyPoolPicture(picture_t *);
@@ -49,15 +50,15 @@ index 5e56ca5..75d9f9c 100644
  static void ZeroCopyDisplay(vout_display_t *, picture_t *, subpicture_t *);
  
  /**
-@@ -178,6 +192,7 @@ vlc_module_end ()
+@@ -178,6 +193,7 @@ vlc_module_end ()
  @property (readonly) EAGLContext* eaglContext;
  @property (readonly) BOOL isAppActive;
  @property GLuint shaderProgram;
-+@property GLuint shaderProgramSub;
++@property GLuint shaderProgramSubpictures;
  
  - (id)initWithFrame:(CGRect)frame zeroCopy:(bool)zero_copy voutDisplay:(vout_display_t *)vd;
  
-@@ -191,6 +206,24 @@ vlc_module_end ()
+@@ -191,6 +207,24 @@ vlc_module_end ()
  - (void)displayPixelBuffer:(CVPixelBufferRef)pixelBuffer;
  @end
  
@@ -82,7 +83,7 @@ index 5e56ca5..75d9f9c 100644
  struct vout_display_sys_t
  {
      VLCOpenGLES2VideoView *glESView;
-@@ -205,8 +238,22 @@ struct vout_display_sys_t
+@@ -205,8 +239,22 @@ struct vout_display_sys_t
      bool zero_copy;
  
      vout_display_place_t place;
@@ -105,7 +106,7 @@ index 5e56ca5..75d9f9c 100644
  static void *OurGetProcAddress(vlc_gl_t *gl, const char *name)
  {
      VLC_UNUSED(gl);
-@@ -281,7 +328,7 @@ static int Open(vlc_object_t *this)
+@@ -281,7 +329,7 @@ static int Open(vlc_object_t *this)
  
          if (sys->zero_copy) {
              vd->pool = ZeroCopyPicturePool;
@@ -114,12 +115,12 @@ index 5e56ca5..75d9f9c 100644
              vd->display = ZeroCopyDisplay;
          } else {
              vd->pool = PicturePool;
-@@ -325,6 +372,15 @@ void Close (vlc_object_t *this)
+@@ -325,6 +373,15 @@ void Close (vlc_object_t *this)
      vout_display_sys_t *sys = vd->sys;
  
      @autoreleasepool {
 +        glDeleteProgram(sys->glESView.shaderProgram);
-+        glDeleteProgram(sys->glESView.shaderProgramSub);
++        glDeleteProgram(sys->glESView.shaderProgramSubpictures);
 +
 +        for (int i = 0; i < sys->region_count; i++) {
 +            if (sys->region[i].texture)
@@ -130,7 +131,7 @@ index 5e56ca5..75d9f9c 100644
          if (sys->tapRecognizer) {
              [sys->tapRecognizer.view removeGestureRecognizer:sys->tapRecognizer];
              [sys->tapRecognizer release];
-@@ -356,7 +412,8 @@ void Close (vlc_object_t *this)
+@@ -356,7 +413,8 @@ void Close (vlc_object_t *this)
                  picture_pool_Release(sys->picturePool);
              sys->picturePool = NULL;
          }
@@ -140,7 +141,7 @@ index 5e56ca5..75d9f9c 100644
          free(sys);
      }
  }
-@@ -548,11 +605,154 @@ static void DestroyZeroCopyPoolPicture(picture_t *picture)
+@@ -548,11 +606,154 @@ static void DestroyZeroCopyPoolPicture(picture_t *picture)
      free(picture);
  }
  
@@ -296,7 +297,7 @@ index 5e56ca5..75d9f9c 100644
  }
  
  static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture)
-@@ -961,6 +1161,8 @@ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *su
+@@ -961,6 +1162,8 @@ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *su
  
      glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
  
@@ -305,7 +306,7 @@ index 5e56ca5..75d9f9c 100644
      glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
      [_eaglContext presentRenderbuffer:GL_RENDERBUFFER];
  
-@@ -971,6 +1173,54 @@ done:
+@@ -971,6 +1174,54 @@ done:
      [EAGLContext setCurrentContext:previousContext];
  }
  
@@ -315,13 +316,13 @@ index 5e56ca5..75d9f9c 100644
 +
 +    /* Draw the subpictures */
 +
-+    glUseProgram(self.shaderProgramSub);
++    glUseProgram(self.shaderProgramSubpictures);
 +
 +    GLfloat transformMatrix[16];
 +    orientationTransformMatrix(transformMatrix, _voutDisplay->fmt.orientation);
-+    glUniformMatrix4fv(glGetUniformLocation(self.shaderProgramSub, "transformMatrix"), 1, GL_FALSE, transformMatrix);
++    glUniformMatrix4fv(glGetUniformLocation(self.shaderProgramSubpictures, "transformMatrix"), 1, GL_FALSE, transformMatrix);
 +
-+    glUniform1i(glGetUniformLocation(self.shaderProgramSub, "Texture"), 0);
++    glUniform1i(glGetUniformLocation(self.shaderProgramSubpictures, "Texture"), 0);
 +
 +    glEnable(GL_BLEND);
 +    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -343,7 +344,7 @@ index 5e56ca5..75d9f9c 100644
 +        };
 +
 +        glBindTexture(GL_TEXTURE_2D, glr->texture);
-+        glUniform4f(glGetUniformLocation(self.shaderProgramSub, "FillColor"), 1.0f, 1.0f, 1.0f, glr->alpha);
++        glUniform4f(glGetUniformLocation(self.shaderProgramSubpictures, "FillColor"), 1.0f, 1.0f, 1.0f, glr->alpha);
 +
 +        glVertexAttribPointer(ATTRIB_VERTEX, 2, GL_FLOAT, 0, 0, vertexCoord);
 +        glEnableVertexAttribArray(ATTRIB_VERTEX);
@@ -360,92 +361,129 @@ index 5e56ca5..75d9f9c 100644
  - (void)setupZeroCopyGL
  {
      EAGLContext *previousContext = [EAGLContext currentContext];
-@@ -1017,11 +1267,11 @@ done:
+@@ -1017,55 +1268,59 @@ done:
  
  - (BOOL)loadShaders
  {
 -    GLuint vertShader, fragShader;
 -    NSURL *vertShaderURL, *fragShaderURL;
-+    GLuint vertShader, fragShader, fragShaderSub;
++    GLuint vertShader = 0;
++    GLuint fragShader = 0;
++    GLuint fragShaderSub = 0;
  
      // Create the shader program.
      self.shaderProgram = glCreateProgram();
-+    self.shaderProgramSub = glCreateProgram();
++    self.shaderProgramSubpictures = glCreateProgram();
  
      // Create and compile the vertex shader.
      if (![self compileShader:&vertShader type:GL_VERTEX_SHADER sourceString:vertexShaderString]) {
-@@ -1037,15 +1287,25 @@ done:
-         return NO;
+         if (_voutDisplay)
+             msg_Err(_voutDisplay, "Failed to compile vertex shader");
+-        return NO;
++        goto error;
      }
  
-+    if (![self compileShader:&fragShaderSub type:GL_FRAGMENT_SHADER sourceString:fragmentShaderRGBAString]) {
-+        if (_voutDisplay)
-+            msg_Err(_voutDisplay, "Failed to compile the RGB fragment shader");
-+        return NO;
+     // Create and compile fragment shader.
+     if (![self compileShader:&fragShader type:GL_FRAGMENT_SHADER sourceString:fragmentShaderString]) {
+         if (_voutDisplay)
+             msg_Err(_voutDisplay, "Failed to compile fragment shader");
+-        return NO;
++        goto error;
 +    }
 +
++    if (![self compileShader:&fragShaderSub type:GL_FRAGMENT_SHADER sourceString:fragmentShaderRGBAString]) {
++        if (_voutDisplay)
++            msg_Err(_voutDisplay, "Failed to compile the RGBA fragment shader");
++        goto error;
+     }
+ 
      // Attach vertex shader to program.
      glAttachShader(self.shaderProgram, vertShader);
-+    glAttachShader(self.shaderProgramSub, vertShader);
++    glAttachShader(self.shaderProgramSubpictures, vertShader);
  
      // Attach fragment shader to program.
      glAttachShader(self.shaderProgram, fragShader);
-+    glAttachShader(self.shaderProgramSub, fragShaderSub);
++    glAttachShader(self.shaderProgramSubpictures, fragShaderSub);
  
      // Bind attribute locations. This needs to be done prior to linking.
      glBindAttribLocation(self.shaderProgram, ATTRIB_VERTEX, "position");
      glBindAttribLocation(self.shaderProgram, ATTRIB_TEXCOORD, "texCoord");
-+    glBindAttribLocation(self.shaderProgramSub, ATTRIB_VERTEX, "position");
-+    glBindAttribLocation(self.shaderProgramSub, ATTRIB_TEXCOORD, "texCoord");
++    glBindAttribLocation(self.shaderProgramSubpictures, ATTRIB_VERTEX, "position");
++    glBindAttribLocation(self.shaderProgramSubpictures, ATTRIB_TEXCOORD, "texCoord");
  
      // Link the program.
      if (![self linkProgram:self.shaderProgram]) {
-@@ -1068,6 +1328,26 @@ done:
-         return NO;
-     }
+         if (_voutDisplay)
+-            msg_Err(_voutDisplay, "Failed to link program: %d", self.shaderProgram);
+-
+-        if (vertShader) {
+-            glDeleteShader(vertShader);
+-            vertShader = 0;
+-        }
+-        if (fragShader) {
+-            glDeleteShader(fragShader);
+-            fragShader = 0;
+-        }
+-        if (self.shaderProgram) {
+-            glDeleteProgram(self.shaderProgram);
+-            self.shaderProgram = 0;
+-        }
++            msg_Err(_voutDisplay, "Failed to link program for main pictures: %d", self.shaderProgram);
++        goto error;
++    }
  
-+    if (![self linkProgram:self.shaderProgramSub]) {
+-        return NO;
++    if (![self linkProgram:self.shaderProgramSubpictures]) {
 +        if (_voutDisplay)
-+            msg_Err(_voutDisplay, "Failed to link program: %d", self.shaderProgramSub);
-+
-+        if (vertShader) {
-+            glDeleteShader(vertShader);
-+            vertShader = 0;
-+        }
-+        if (fragShaderSub) {
-+            glDeleteShader(fragShaderSub);
-+            fragShaderSub = 0;
-+        }
-+        if (self.shaderProgramSub) {
-+            glDeleteProgram(self.shaderProgramSub);
-+            self.shaderProgramSub = 0;
-+        }
-+
-+        return NO;
-+    }
-+
-     // Get uniform locations.
-     uniforms[UNIFORM_Y] = glGetUniformLocation(self.shaderProgram, "SamplerY");
-     uniforms[UNIFORM_UV] = glGetUniformLocation(self.shaderProgram, "SamplerUV");
-@@ -1077,12 +1357,17 @@ done:
-     // Release vertex and fragment shaders.
-     if (vertShader) {
-         glDetachShader(self.shaderProgram, vertShader);
-+        glDetachShader(self.shaderProgramSub, vertShader);
-         glDeleteShader(vertShader);
++            msg_Err(_voutDisplay, "Failed to link program for subpictures: %d", self.shaderProgramSubpictures);
++        goto error;
      }
-     if (fragShader) {
-         glDetachShader(self.shaderProgram, fragShader);
-         glDeleteShader(fragShader);
-     }
-+    if (fragShaderSub) {
-+        glDetachShader(self.shaderProgramSub, fragShaderSub);
-+        glDeleteShader(fragShaderSub);
-+    }
  
-     return YES;
+     // Get uniform locations.
+@@ -1075,16 +1330,35 @@ done:
+     uniforms[UNIFORM_TRANSFORM_MATRIX] = glGetUniformLocation(self.shaderProgram, "transformMatrix");
+ 
+     // Release vertex and fragment shaders.
+-    if (vertShader) {
+-        glDetachShader(self.shaderProgram, vertShader);
++    glDetachShader(self.shaderProgram, vertShader);
++    glDetachShader(self.shaderProgramSubpictures, vertShader);
++    glDeleteShader(vertShader);
++
++    glDetachShader(self.shaderProgram, fragShader);
++    glDeleteShader(fragShader);
++
++    glDetachShader(self.shaderProgramSubpictures, fragShaderSub);
++    glDeleteShader(fragShaderSub);
++
++    return YES;
++
++error:
++    if (vertShader)
+         glDeleteShader(vertShader);
+-    }
+-    if (fragShader) {
+-        glDetachShader(self.shaderProgram, fragShader);
++
++    if (fragShader)
+         glDeleteShader(fragShader);
+-    }
+ 
+-    return YES;
++    if (fragShaderSub)
++        glDeleteShader(fragShaderSub);
++
++    if (self.shaderProgram)
++        glDeleteProgram(self.shaderProgram);
++
++    if (self.shaderProgramSubpictures)
++        glDeleteProgram(self.shaderProgramSubpictures);
++
++    return NO;
  }
-@@ -1097,7 +1382,6 @@ done:
+ 
+ - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type sourceString:sourceString
+@@ -1097,7 +1371,6 @@ done:
      glShaderSource(*shader, 1, &source, NULL);
      glCompileShader(*shader);
  
@@ -453,7 +491,7 @@ index 5e56ca5..75d9f9c 100644
      GLint logLength;
      glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
      if (logLength > 0) {
-@@ -1107,7 +1391,6 @@ done:
+@@ -1107,7 +1380,6 @@ done:
              msg_Dbg(_voutDisplay, "Shader compile log:\n%s", log);
          free(log);
      }
@@ -461,7 +499,7 @@ index 5e56ca5..75d9f9c 100644
  
      glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
      if (status == 0) {
-@@ -1123,7 +1406,6 @@ done:
+@@ -1123,7 +1395,6 @@ done:
      GLint status;
      glLinkProgram(prog);
  
@@ -469,7 +507,7 @@ index 5e56ca5..75d9f9c 100644
      GLint logLength;
      glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
      if (logLength > 0) {
-@@ -1133,7 +1415,6 @@ done:
+@@ -1133,7 +1404,6 @@ done:
              msg_Dbg(_voutDisplay, "Program link log:\n%s", log);
          free(log);
      }

@@ -1,0 +1,68 @@
+From 70b8d428132968df8e40e4edb6741e03dcf78de3 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Fri, 16 Sep 2016 15:51:10 +0200
+Subject: [PATCH 21/21] http: add vlc_http_cookies_clear
+
+Clear all cookies without deleting the jar.
+---
+ include/vlc_http.h     |  1 +
+ src/libvlccore.sym     |  1 +
+ src/misc/httpcookies.c | 10 ++++++----
+ 3 files changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/include/vlc_http.h b/include/vlc_http.h
+index ed7e161..da1fe4e 100644
+--- a/include/vlc_http.h
++++ b/include/vlc_http.h
+@@ -71,6 +71,7 @@ VLC_API char *vlc_http_auth_FormatAuthorizationHeader
+ typedef struct vlc_http_cookie_jar_t vlc_http_cookie_jar_t;
+ 
+ VLC_API vlc_http_cookie_jar_t * vlc_http_cookies_new( void ) VLC_USED;
++VLC_API void vlc_http_cookies_clear( vlc_http_cookie_jar_t * p_jar );
+ VLC_API void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar );
+ 
+ /**
+diff --git a/src/libvlccore.sym b/src/libvlccore.sym
+index 5a7de9e..bbf6ff8 100644
+--- a/src/libvlccore.sym
++++ b/src/libvlccore.sym
+@@ -137,6 +137,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
+ vlc_http_auth_FormatAuthorizationHeader
+ vlc_http_cookies_new
+ vlc_http_cookies_destroy
++vlc_http_cookies_clear
+ vlc_http_cookies_store
+ vlc_http_cookies_fetch
+ httpd_ClientIP
+diff --git a/src/misc/httpcookies.c b/src/misc/httpcookies.c
+index b6d174b..2090f69 100644
+--- a/src/misc/httpcookies.c
++++ b/src/misc/httpcookies.c
+@@ -281,18 +281,20 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
+     return jar;
+ }
+ 
+-void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
++void vlc_http_cookies_clear( vlc_http_cookie_jar_t * p_jar )
+ {
+     if ( !p_jar )
+         return;
+ 
+-    int i;
+-    for( i = 0; i < vlc_array_count( &p_jar->cookies ); i++ )
++    for( int i = 0; i < vlc_array_count( &p_jar->cookies ); i++ )
+         cookie_destroy( vlc_array_item_at_index( &p_jar->cookies, i ) );
+ 
+     vlc_array_clear( &p_jar->cookies );
+-    vlc_mutex_destroy( &p_jar->lock );
++}
+ 
++void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
++{
++    vlc_http_cookies_clear( p_jar );
+     free( p_jar );
+ }
+ 
+-- 
+2.9.3
+
