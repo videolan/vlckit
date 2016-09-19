@@ -671,7 +671,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     // Time is managed in seconds, while duration is managed in microseconds
     // TODO: Redo VLCTime to provide value numberAsMilliseconds, numberAsMicroseconds, numberAsSeconds, numberAsMinutes, numberAsHours
-    libvlc_media_player_set_time(_playerInstance, value ? [[value numberValue] longLongValue] : 0);
+    libvlc_media_player_set_time(_playerInstance, value ? [[value value] longLongValue] : 0);
 }
 
 - (VLCTime *)time
