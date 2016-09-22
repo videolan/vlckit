@@ -1,7 +1,7 @@
-From afe7c3f18438fe0451bfd9f07b914ed1ba8b412a Mon Sep 17 00:00:00 2001
+From 001563c3b663f496dc9d8acb222a01f975ee6263 Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 15/21] Add AC-3 pass-through
+Subject: [PATCH 15/22] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -29,10 +29,10 @@ index 1528861..66077d5 100755
  visual
  fb
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index b873656..e5f1b5b 100644
+index b768844..17d2894 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1846,6 +1846,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
+@@ -1862,6 +1862,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
  LIBVLC_API int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay );
  
  /**
@@ -50,10 +50,10 @@ index b873656..e5f1b5b 100644
   *
   * \return number of presets
 diff --git a/lib/audio.c b/lib/audio.c
-index 7901c64..3877311 100644
+index 3aed6f5..094cc02 100644
 --- a/lib/audio.c
 +++ b/lib/audio.c
-@@ -472,6 +472,22 @@ int libvlc_audio_set_channel( libvlc_media_player_t *mp, int channel )
+@@ -473,6 +473,22 @@ int libvlc_audio_set_channel( libvlc_media_player_t *mp, int channel )
  }
  
  /*****************************************************************************
@@ -77,10 +77,10 @@ index 7901c64..3877311 100644
   *****************************************************************************/
  int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 143e240..ac30787 100644
+index fded5ed..1b87fd2 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -645,6 +645,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "zoom", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "aspect-ratio", VLC_VAR_STRING);
      var_Create (mp, "crop", VLC_VAR_STRING);

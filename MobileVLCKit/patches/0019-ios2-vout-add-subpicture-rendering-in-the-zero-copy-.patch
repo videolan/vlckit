@@ -1,7 +1,7 @@
-From b446f7dfd3e2fbd981b8cbb075a255cf99a8984b Mon Sep 17 00:00:00 2001
+From 32bf595d53a48e131f4d390d5b3eea5dca23f306 Mon Sep 17 00:00:00 2001
 From: Adrien Maglo <magsoft@videolan.org>
 Date: Fri, 16 Sep 2016 14:00:21 +0200
-Subject: [PATCH 19/21] ios2 vout: add subpicture rendering in the zero copy
+Subject: [PATCH 19/22] ios2 vout: add subpicture rendering in the zero copy
  pipeline
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 19/21] ios2 vout: add subpicture rendering in the zero copy
  1 file changed, 304 insertions(+), 34 deletions(-)
 
 diff --git a/modules/video_output/ios2.m b/modules/video_output/ios2.m
-index 5e56ca5..6d4f1f1 100644
+index 8fa4bc6..9362fc1 100644
 --- a/modules/video_output/ios2.m
 +++ b/modules/video_output/ios2.m
 @@ -46,6 +46,7 @@
@@ -106,7 +106,7 @@ index 5e56ca5..6d4f1f1 100644
  static void *OurGetProcAddress(vlc_gl_t *gl, const char *name)
  {
      VLC_UNUSED(gl);
-@@ -281,7 +329,7 @@ static int Open(vlc_object_t *this)
+@@ -284,7 +332,7 @@ static int Open(vlc_object_t *this)
  
          if (sys->zero_copy) {
              vd->pool = ZeroCopyPicturePool;
@@ -115,7 +115,7 @@ index 5e56ca5..6d4f1f1 100644
              vd->display = ZeroCopyDisplay;
          } else {
              vd->pool = PicturePool;
-@@ -325,6 +373,15 @@ void Close (vlc_object_t *this)
+@@ -328,6 +376,15 @@ void Close (vlc_object_t *this)
      vout_display_sys_t *sys = vd->sys;
  
      @autoreleasepool {
@@ -131,7 +131,7 @@ index 5e56ca5..6d4f1f1 100644
          if (sys->tapRecognizer) {
              [sys->tapRecognizer.view removeGestureRecognizer:sys->tapRecognizer];
              [sys->tapRecognizer release];
-@@ -356,7 +413,8 @@ void Close (vlc_object_t *this)
+@@ -359,7 +416,8 @@ void Close (vlc_object_t *this)
                  picture_pool_Release(sys->picturePool);
              sys->picturePool = NULL;
          }
@@ -141,7 +141,7 @@ index 5e56ca5..6d4f1f1 100644
          free(sys);
      }
  }
-@@ -548,11 +606,154 @@ static void DestroyZeroCopyPoolPicture(picture_t *picture)
+@@ -551,11 +609,154 @@ static void DestroyZeroCopyPoolPicture(picture_t *picture)
      free(picture);
  }
  
@@ -297,7 +297,7 @@ index 5e56ca5..6d4f1f1 100644
  }
  
  static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture)
-@@ -961,6 +1162,8 @@ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *su
+@@ -970,6 +1171,8 @@ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *su
  
      glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
  
@@ -306,7 +306,7 @@ index 5e56ca5..6d4f1f1 100644
      glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
      [_eaglContext presentRenderbuffer:GL_RENDERBUFFER];
  
-@@ -971,6 +1174,54 @@ done:
+@@ -980,6 +1183,54 @@ done:
      [EAGLContext setCurrentContext:previousContext];
  }
  
@@ -361,7 +361,7 @@ index 5e56ca5..6d4f1f1 100644
  - (void)setupZeroCopyGL
  {
      EAGLContext *previousContext = [EAGLContext currentContext];
-@@ -1017,55 +1268,59 @@ done:
+@@ -1026,55 +1277,59 @@ done:
  
  - (BOOL)loadShaders
  {
@@ -440,7 +440,7 @@ index 5e56ca5..6d4f1f1 100644
      }
  
      // Get uniform locations.
-@@ -1075,16 +1330,35 @@ done:
+@@ -1084,16 +1339,35 @@ done:
      uniforms[UNIFORM_TRANSFORM_MATRIX] = glGetUniformLocation(self.shaderProgram, "transformMatrix");
  
      // Release vertex and fragment shaders.
@@ -483,7 +483,7 @@ index 5e56ca5..6d4f1f1 100644
  }
  
  - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type sourceString:sourceString
-@@ -1097,7 +1371,6 @@ done:
+@@ -1106,7 +1380,6 @@ done:
      glShaderSource(*shader, 1, &source, NULL);
      glCompileShader(*shader);
  
@@ -491,7 +491,7 @@ index 5e56ca5..6d4f1f1 100644
      GLint logLength;
      glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
      if (logLength > 0) {
-@@ -1107,7 +1380,6 @@ done:
+@@ -1116,7 +1389,6 @@ done:
              msg_Dbg(_voutDisplay, "Shader compile log:\n%s", log);
          free(log);
      }
@@ -499,7 +499,7 @@ index 5e56ca5..6d4f1f1 100644
  
      glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
      if (status == 0) {
-@@ -1123,7 +1395,6 @@ done:
+@@ -1132,7 +1404,6 @@ done:
      GLint status;
      glLinkProgram(prog);
  
@@ -507,7 +507,7 @@ index 5e56ca5..6d4f1f1 100644
      GLint logLength;
      glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
      if (logLength > 0) {
-@@ -1133,7 +1404,6 @@ done:
+@@ -1142,7 +1413,6 @@ done:
              msg_Dbg(_voutDisplay, "Program link log:\n%s", log);
          free(log);
      }

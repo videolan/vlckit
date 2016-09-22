@@ -1,18 +1,18 @@
-From ea0a31fbafad8c098ba0328c6ed77cce241fc675 Mon Sep 17 00:00:00 2001
+From ee7b6789d81b9f9aff7b6769983316eb36f5e157 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 11 Sep 2015 18:34:26 +0200
-Subject: [PATCH 08/21] libvlc: hack to disable daemon mode
+Subject: [PATCH 08/22] libvlc: hack to disable daemon mode
 
 ---
  src/libvlc.c | 4 ++++
  1 file changed, 4 insertions(+)
 
 diff --git a/src/libvlc.c b/src/libvlc.c
-index 48c2b8c..3c9f879 100644
+index d3ce702..8cdc0bc 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
-@@ -200,6 +200,10 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
-         return VLC_ENOMOD;
+@@ -196,6 +196,10 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
+         goto error;
      }
  
 +#ifdef __APPLE__
