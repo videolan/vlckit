@@ -1,4 +1,4 @@
-From 41960674564c252876708e807f78e5de99c00dba Mon Sep 17 00:00:00 2001
+From abf868b5a10c854ab1b850649b9a3e9843c78243 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 22 Jul 2016 11:20:24 +0200
 Subject: [PATCH 16/22] taglib: DO NOT PUSH: works with networks accesses

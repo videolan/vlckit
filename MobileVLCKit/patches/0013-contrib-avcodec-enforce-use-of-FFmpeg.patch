@@ -1,4 +1,4 @@
-From d3f8f05a501733ce8e4f6b8610226f53095e7423 Mon Sep 17 00:00:00 2001
+From 06e9b29cd099676065eed2e582c49b46a758a0fc Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Tue, 12 Jul 2016 13:50:54 +0200
 Subject: [PATCH 13/22] contrib/avcodec: enforce use of FFmpeg

@@ -1,4 +1,4 @@
-From 32bf595d53a48e131f4d390d5b3eea5dca23f306 Mon Sep 17 00:00:00 2001
+From 9d63c46d361e3d19cd5a0b74805b1a4a3da4c00b Mon Sep 17 00:00:00 2001
 From: Adrien Maglo <magsoft@videolan.org>
 Date: Fri, 16 Sep 2016 14:00:21 +0200
 Subject: [PATCH 19/22] ios2 vout: add subpicture rendering in the zero copy
@@ -9,7 +9,7 @@ Subject: [PATCH 19/22] ios2 vout: add subpicture rendering in the zero copy
  1 file changed, 304 insertions(+), 34 deletions(-)
 
 diff --git a/modules/video_output/ios2.m b/modules/video_output/ios2.m
-index 8fa4bc6..9362fc1 100644
+index 797c615..6ca5caf 100644
 --- a/modules/video_output/ios2.m
 +++ b/modules/video_output/ios2.m
 @@ -46,6 +46,7 @@
@@ -297,7 +297,7 @@ index 8fa4bc6..9362fc1 100644
  }
  
  static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *subpicture)
-@@ -970,6 +1171,8 @@ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *su
+@@ -976,6 +1177,8 @@ static void ZeroCopyDisplay(vout_display_t *vd, picture_t *pic, subpicture_t *su
  
      glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
  
@@ -306,7 +306,7 @@ index 8fa4bc6..9362fc1 100644
      glBindRenderbuffer(GL_RENDERBUFFER, _renderBuffer);
      [_eaglContext presentRenderbuffer:GL_RENDERBUFFER];
  
-@@ -980,6 +1183,54 @@ done:
+@@ -986,6 +1189,54 @@ done:
      [EAGLContext setCurrentContext:previousContext];
  }
  
@@ -361,7 +361,7 @@ index 8fa4bc6..9362fc1 100644
  - (void)setupZeroCopyGL
  {
      EAGLContext *previousContext = [EAGLContext currentContext];
-@@ -1026,55 +1277,59 @@ done:
+@@ -1032,55 +1283,59 @@ done:
  
  - (BOOL)loadShaders
  {
@@ -440,7 +440,7 @@ index 8fa4bc6..9362fc1 100644
      }
  
      // Get uniform locations.
-@@ -1084,16 +1339,35 @@ done:
+@@ -1090,16 +1345,35 @@ done:
      uniforms[UNIFORM_TRANSFORM_MATRIX] = glGetUniformLocation(self.shaderProgram, "transformMatrix");
  
      // Release vertex and fragment shaders.
@@ -483,7 +483,7 @@ index 8fa4bc6..9362fc1 100644
  }
  
  - (BOOL)compileShader:(GLuint *)shader type:(GLenum)type sourceString:sourceString
-@@ -1106,7 +1380,6 @@ done:
+@@ -1112,7 +1386,6 @@ done:
      glShaderSource(*shader, 1, &source, NULL);
      glCompileShader(*shader);
  
@@ -491,7 +491,7 @@ index 8fa4bc6..9362fc1 100644
      GLint logLength;
      glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
      if (logLength > 0) {
-@@ -1116,7 +1389,6 @@ done:
+@@ -1122,7 +1395,6 @@ done:
              msg_Dbg(_voutDisplay, "Shader compile log:\n%s", log);
          free(log);
      }
@@ -499,7 +499,7 @@ index 8fa4bc6..9362fc1 100644
  
      glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
      if (status == 0) {
-@@ -1132,7 +1404,6 @@ done:
+@@ -1138,7 +1410,6 @@ done:
      GLint status;
      glLinkProgram(prog);
  
@@ -507,7 +507,7 @@ index 8fa4bc6..9362fc1 100644
      GLint logLength;
      glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
      if (logLength > 0) {
-@@ -1142,7 +1413,6 @@ done:
+@@ -1148,7 +1419,6 @@ done:
              msg_Dbg(_voutDisplay, "Program link log:\n%s", log);
          free(log);
      }

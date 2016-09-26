@@ -1,4 +1,4 @@
-From a5f45dd75e90383c0cb9df539d1489f7fed33185 Mon Sep 17 00:00:00 2001
+From d476acf6d4dd8094fc1b1a5e7e8309d86730a60b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 22 Sep 2016 13:03:17 +0200
 Subject: [PATCH 22/22] videotoolbox: temporarily disable H263 decoding on iOS

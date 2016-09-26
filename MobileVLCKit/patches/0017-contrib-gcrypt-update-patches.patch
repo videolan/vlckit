@@ -1,4 +1,4 @@
-From ddff4cfb3997c104a2bf95ddbba75c2c94e747ec Mon Sep 17 00:00:00 2001
+From 6d54b0ec683af255f8b4b302613d39e78a072060 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:03:37 +0200
 Subject: [PATCH 17/22] contrib/gcrypt: update patches

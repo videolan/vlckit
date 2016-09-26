@@ -1,4 +1,4 @@
-From 31a1240a7c78cf1ec7e0e06109f3bdd0ca07d2d1 Mon Sep 17 00:00:00 2001
+From 8fa1ef9dbb9a27617e59de4b13cabe30b2c53ebe Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
 Subject: [PATCH 09/22] libvlc: expose a base set of freetype options to
