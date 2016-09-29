@@ -128,7 +128,7 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
         newState = VLCMediaPlayerStatePlaying;
     else if (event->type == libvlc_MediaPlayerPaused)
         newState = VLCMediaPlayerStatePaused;
-    else if (event->type == libvlc_MediaPlayerEndReached || event->type == libvlc_MediaPlayerStopped)
+    else if (event->type == libvlc_MediaPlayerStopped)
         newState = VLCMediaPlayerStateStopped;
     else if (event->type == libvlc_MediaPlayerEncounteredError)
         newState = VLCMediaPlayerStateError;
@@ -136,6 +136,8 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
         newState = VLCMediaPlayerStateBuffering;
     else if (event->type == libvlc_MediaPlayerOpening)
         newState = VLCMediaPlayerStateOpening;
+    else if (event->type == libvlc_MediaPlayerEndReached)
+        newState = VLCMediaPlayerStateEnded;
     else {
         VKLog(@"%s: Unknown event", __FUNCTION__);
         return;
