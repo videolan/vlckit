@@ -404,11 +404,14 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     if (!p_md || cookie == NULL || host == NULL || path == NULL) {
         return -1;
     }
-
+#if TARGET_OS_IPHONE
     return libvlc_media_cookie_jar_store(p_md,
                                          [cookie UTF8String],
                                          [host UTF8String],
                                          [path UTF8String]);
+#else
+    return -1;
+#endif
 }
 
 - (void)clearStoredCookies
@@ -417,7 +420,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         return;
     }
 
+#if TARGET_OS_IPHONE
     libvlc_media_cookie_jar_clear(p_md);
+#endif
 }
 
 - (NSDictionary *)stats
