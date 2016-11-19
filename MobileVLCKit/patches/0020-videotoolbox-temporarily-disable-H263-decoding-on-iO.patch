@@ -1,14 +1,14 @@
-From d476acf6d4dd8094fc1b1a5e7e8309d86730a60b Mon Sep 17 00:00:00 2001
+From 5d6fb71f88712b0ca8619338939ce3c1ea00314d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 22 Sep 2016 13:03:17 +0200
-Subject: [PATCH 22/22] videotoolbox: temporarily disable H263 decoding on iOS
+Subject: [PATCH 20/20] videotoolbox: temporarily disable H263 decoding on iOS
 
 ---
  modules/codec/videotoolbox.m | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/modules/codec/videotoolbox.m b/modules/codec/videotoolbox.m
-index b21e0cc..f0ae37e 100644
+index f105f39..1768dd7 100644
 --- a/modules/codec/videotoolbox.m
 +++ b/modules/codec/videotoolbox.m
 @@ -198,11 +198,11 @@ static CMVideoCodecType CodecPrecheck(decoder_t *p_dec)
@@ -25,5 +25,5 @@ index b21e0cc..f0ae37e 100644
          case VLC_CODEC_PRORES:
              /* the VT decoder can't differenciate between the ProRes flavors, so we do it */
 -- 
-2.9.3
+2.9.2
 

@@ -1,7 +1,7 @@
-From 0e15b5e37fd75aac9bc1c2d8106c1f7e9499446f Mon Sep 17 00:00:00 2001
+From 85ed289f068d4cf143bbafee558039fece59815c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:04:05 +0200
-Subject: [PATCH 18/22] deinterlace-merge-arm64: fix linking on appleOS
+Subject: [PATCH 16/20] deinterlace-merge-arm64: fix linking on appleOS
 
 ---
  modules/arm_neon/asm64.S                       | 46 ++++++++++++++++++++++++++
@@ -62,7 +62,7 @@ index 0000000..d778163
 +.endm
 +
 diff --git a/modules/video_filter/deinterlace/merge_arm64.S b/modules/video_filter/deinterlace/merge_arm64.S
-index ad898a3..27b662d 100644
+index db19e54..63c04d3 100644
 --- a/modules/video_filter/deinterlace/merge_arm64.S
 +++ b/modules/video_filter/deinterlace/merge_arm64.S
 @@ -19,6 +19,8 @@
@@ -87,7 +87,7 @@ index ad898a3..27b662d 100644
  	ands		x5, SIZE, #~63
  	b.eq		2f
  	mov		x10, #64
-@@ -65,11 +64,9 @@ merge8_arm64_neon:
+@@ -64,11 +63,9 @@ merge8_arm64_neon:
  	st1		{v0.16b},  [DEST]
  4:
  	ret
@@ -101,11 +101,11 @@ index ad898a3..27b662d 100644
  	ands		x5, SIZE, #~63
  	b.eq		2f
  1:
-@@ -100,3 +97,4 @@ merge16_arm64_neon:
+@@ -99,3 +96,4 @@ merge16_arm64_neon:
  	st1		{v0.8h},  [DEST]
  4:
  	ret
 +endfunc
 -- 
-2.9.3
+2.9.2
 

@@ -1,14 +1,14 @@
-From abf868b5a10c854ab1b850649b9a3e9843c78243 Mon Sep 17 00:00:00 2001
+From d76b7a5622247128471fa3b88cf3e5a350c0e20c Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 22 Jul 2016 11:20:24 +0200
-Subject: [PATCH 16/22] taglib: DO NOT PUSH: works with networks accesses
+Subject: [PATCH 14/20] taglib: DO NOT PUSH: works with networks accesses
 
 ---
  modules/meta_engine/taglib.cpp | 15 ++++-----------
  1 file changed, 4 insertions(+), 11 deletions(-)
 
 diff --git a/modules/meta_engine/taglib.cpp b/modules/meta_engine/taglib.cpp
-index 4e5df57..cdae73c 100644
+index 6d051ba..ea3744d 100644
 --- a/modules/meta_engine/taglib.cpp
 +++ b/modules/meta_engine/taglib.cpp
 @@ -174,7 +174,7 @@ public:
@@ -20,7 +20,7 @@ index 4e5df57..cdae73c 100644
      }
  
      ByteVector readBlock(ulong length)
-@@ -826,16 +826,8 @@ static int ReadMeta( vlc_object_t* p_this)
+@@ -835,16 +835,8 @@ static int ReadMeta( vlc_object_t* p_this)
      if( unlikely(psz_uri == NULL) )
          return VLC_ENOMEM;
  
@@ -39,7 +39,7 @@ index 4e5df57..cdae73c 100644
      free( psz_uri );
      if( p_stream == NULL )
          return VLC_EGENERIC;
-@@ -843,6 +835,7 @@ static int ReadMeta( vlc_object_t* p_this)
+@@ -852,6 +844,7 @@ static int ReadMeta( vlc_object_t* p_this)
      VlcIostream s( p_stream );
      f = FileRef( &s );
  #else /* VLC_WINSTORE_APP */
@@ -48,5 +48,5 @@ index 4e5df57..cdae73c 100644
      if( psz_path == NULL )
          return VLC_EGENERIC;
 -- 
-2.9.3
+2.9.2
 

@@ -1,7 +1,7 @@
-From 52471fa7a441d46a7b49ec0bd7961cf52ffa98dc Mon Sep 17 00:00:00 2001
+From 3e82429d30dc343767574dd91a32452ae9147664 Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 15/22] Add AC-3 pass-through
+Subject: [PATCH 13/20] Add AC-3 pass-through
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -16,10 +16,10 @@ Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
  5 files changed, 56 insertions(+), 12 deletions(-)
 
 diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index 1528861..66077d5 100755
+index 7825e7d..c91add1 100755
 --- a/extras/package/ios/build.sh
 +++ b/extras/package/ios/build.sh
-@@ -460,8 +460,6 @@ speex_resampler
+@@ -466,8 +466,6 @@ speex_resampler
  remoteosd
  magnify
  gradient
@@ -29,10 +29,10 @@ index 1528861..66077d5 100755
  visual
  fb
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index b768844..17d2894 100644
+index 4835ffb..a8a9b6e 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1862,6 +1862,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
+@@ -1905,6 +1905,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
  LIBVLC_API int libvlc_audio_set_delay( libvlc_media_player_t *p_mi, int64_t i_delay );
  
  /**
@@ -77,7 +77,7 @@ index 3aed6f5..094cc02 100644
   *****************************************************************************/
  int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 diff --git a/lib/media_player.c b/lib/media_player.c
-index fded5ed..1b87fd2 100644
+index 930190c..52f7f77 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -645,6 +645,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -89,10 +89,10 @@ index fded5ed..1b87fd2 100644
      var_Create (mp, "deinterlace-mode", VLC_VAR_STRING);
  
 diff --git a/modules/audio_output/audiounit_ios.m b/modules/audio_output/audiounit_ios.m
-index cee8eab..0aa9dee 100644
+index 3f591ce..9ecd1dc 100644
 --- a/modules/audio_output/audiounit_ios.m
 +++ b/modules/audio_output/audiounit_ios.m
-@@ -201,16 +201,34 @@ static int StartAnalog(audio_output_t *p_aout, audio_sample_format_t *fmt)
+@@ -204,16 +204,34 @@ static int StartAnalog(audio_output_t *p_aout, audio_sample_format_t *fmt)
      if (status != noErr)
          msg_Warn(p_aout, "failed to set IO mode (%i)", (int)status);
  
@@ -133,7 +133,7 @@ index cee8eab..0aa9dee 100644
      streamDescription.mBytesPerFrame = streamDescription.mBitsPerChannel * streamDescription.mChannelsPerFrame / 8;
      streamDescription.mBytesPerPacket = streamDescription.mBytesPerFrame * streamDescription.mFramesPerPacket;
      i_param_size = sizeof(streamDescription);
-@@ -265,10 +283,11 @@ static int StartAnalog(audio_output_t *p_aout, audio_sample_format_t *fmt)
+@@ -268,10 +286,11 @@ static int StartAnalog(audio_output_t *p_aout, audio_sample_format_t *fmt)
      }
  
      /* setup circular buffer */
@@ -150,5 +150,5 @@ index cee8eab..0aa9dee 100644
      /* Set audio session to mediaplayback */
      NSError *error = nil;
 -- 
-2.9.3
+2.9.2
 
