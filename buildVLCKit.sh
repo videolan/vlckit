@@ -12,7 +12,8 @@ NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 
-TESTEDHASH=c79bc234
+CORE_COUNT=`sysctl -n machdep.cpu.core_count`
+let MAKE_JOBS=$CORE_COUNT+1
 
 usage()
 {
@@ -127,7 +128,6 @@ git clone git://git.videolan.org/vlc.git vlc
 else
 cd vlc
 git pull --rebase
-git reset --hard ${TESTEDHASH}
 cd ..
 fi
 fi
@@ -157,7 +157,7 @@ buildLibVLC() {
     info "Building tools"
     spushd extras/tools
     ./bootstrap
-    make ${args}
+    make -j$MAKE_JOBS ${args}
     spopd # extras/tools
 
     info "Building contrib"
@@ -165,9 +165,9 @@ buildLibVLC() {
     mkdir -p vlckitbuild
     spushd vlckitbuild
     ../bootstrap --build=x86_64-apple-darwin15 --disable-bluray --disable-growl --disable-sparkle --disable-SDL --disable-SDL_image --disable-microdns --disable-fontconfig --disable-bghudappkit
-    make fetch ${args}
+    make -j$MAKE_JOBS fetch ${args}
     make .gettext ${args}
-    make ${args}
+    make -j$MAKE_JOBS ${args}
     spopd # vlckitbuild
     spopd # contrib
 
@@ -181,7 +181,7 @@ buildLibVLC() {
 
     spushd vlckitbuild
     ../extras/package/macosx/configure.sh --build=x86_64-apple-darwin15 --prefix="${PREFIX}" --disable-macosx-vlc-app --disable-macosx --enable-merge-ffmpeg --disable-sparkle
-    make -j2 ${args}
+    make -j$MAKE_JOBS ${args}
     make install $(args)    
     spopd #vlckitbuild
 
