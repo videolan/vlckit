@@ -55,25 +55,7 @@
 		7DF2DC251D63145D00CDA90D /* VLCExtensionsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 6309994A110FC791005F46AE /* VLCExtensionsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DF2DC281D63145D00CDA90D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		7DF2DC291D63145D00CDA90D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6384FD070D0DBA20005EB1F7 /* QuartzCore.framework */; };
-		7DF2DC371D63155800CDA90D /* libvlc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF2DC351D63155800CDA90D /* libvlc.dylib */; };
-		7DF2DC381D63155800CDA90D /* libvlccore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF2DC361D63155800CDA90D /* libvlccore.dylib */; };
-		7DF2DC3A1D63157B00CDA90D /* libvlc.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DF2DC351D63155800CDA90D /* libvlc.dylib */; };
-		7DF2DC3B1D63157B00CDA90D /* libvlccore.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DF2DC361D63155800CDA90D /* libvlccore.dylib */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		7DF2DC391D63156500CDA90D /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = lib;
-			dstSubfolderSpec = 6;
-			files = (
-				7DF2DC3A1D63157B00CDA90D /* libvlc.dylib in CopyFiles */,
-				7DF2DC3B1D63157B00CDA90D /* libvlccore.dylib in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -118,7 +100,6 @@
 		7DF7A2041D197E8E0001FF69 /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHelperCode.m; sourceTree = "<group>"; };
 		A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoCommon.h; path = Internal/VLCVideoCommon.h; sourceTree = "<group>"; };
 		A7A0CEA30D2EF13000F2C039 /* VLCVideoCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCVideoCommon.m; sourceTree = "<group>"; };
-		CC4C594013F53EA400FB0EFC /* VLCKit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "VLCKit-Info.plist"; path = "/Users/dilaroga/dev/vlc_workspace/vlc/projects/macosx/framework/VLCKit-Info.plist"; sourceTree = "<absolute>"; };
 		CCEC5B73114D9BE800D34AAB /* deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deprecated.h; path = ../../../include/vlc/deprecated.h; sourceTree = SOURCE_ROOT; };
 		CCEC5B74114D9BE800D34AAB /* libvlc_events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_events.h; path = ../../../include/vlc/libvlc_events.h; sourceTree = SOURCE_ROOT; };
 		CCEC5B75114D9BE800D34AAB /* libvlc_media_discoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_discoverer.h; path = ../../../include/vlc/libvlc_media_discoverer.h; sourceTree = SOURCE_ROOT; };
@@ -160,9 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DF2DC281D63145D00CDA90D /* Cocoa.framework in Frameworks */,
-				7DF2DC371D63155800CDA90D /* libvlc.dylib in Frameworks */,
 				7DF2DC291D63145D00CDA90D /* QuartzCore.framework in Frameworks */,
-				7DF2DC381D63155800CDA90D /* libvlccore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,9 +165,6 @@
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				63D88C56124E9A5100F65FA0 /* Quartz.framework */,
-				63D88CA9124E9A8200F65FA0 /* ApplicationServices.framework */,
-				CC4C594013F53EA400FB0EFC /* VLCKit-Info.plist */,
 				7DF2DC2F1D6314FB00CDA90D /* Frameworks */,
 			);
 			name = VLC;
@@ -243,6 +219,8 @@
 		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63D88CA9124E9A8200F65FA0 /* ApplicationServices.framework */,
+				63D88C56124E9A5100F65FA0 /* Quartz.framework */,
 				6384FD070D0DBA20005EB1F7 /* QuartzCore.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 			);
@@ -430,11 +408,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7DF2DC2A1D63145D00CDA90D /* Build configuration list for PBXNativeTarget "VLCKit" */;
 			buildPhases = (
-				7DF2DBF61D63145D00CDA90D /* Sources */,
 				7DF2DC0C1D63145D00CDA90D /* Headers */,
-				7DF2DC271D63145D00CDA90D /* Frameworks */,
-				7DF2DC391D63156500CDA90D /* CopyFiles */,
 				7D1743F41D63247D00D8D053 /* ShellScript */,
+				7DF2DBF61D63145D00CDA90D /* Sources */,
+				7DF2DC271D63145D00CDA90D /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -582,11 +559,7 @@
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib",
-					"$(PROJECT_DIR)/libvlc/vlc/install-macos/lib/vlc",
-					"$(PROJECT_DIR)/libvlc/vlc/install-macos/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				OTHER_LDFLAGS = (
 					"-lvlccore",
 					"-single_module",
@@ -624,11 +597,7 @@
 				);
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib",
-					"$(PROJECT_DIR)/libvlc/vlc/install-macos/lib/vlc",
-					"$(PROJECT_DIR)/libvlc/vlc/install-macos/lib",
-				);
+				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				OTHER_LDFLAGS = (
 					"-lvlccore",
 					"-single_module",

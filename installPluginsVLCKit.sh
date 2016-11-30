@@ -140,6 +140,24 @@ if [ "$RELEASE_MAKEFILE" != "yes" ] ; then
 fi
 
 ##########################
+# Build the lib folder (Same as VLCKit.framework/lib in Makefile)
+echo "Building lib folder..."
+
+spushd ${VLC_SRC_DIR}/install-macos/lib
+
+vlc_install_object libvlccore.*.dylib ${target_lib} "library"
+vlc_install_object libvlc.*.dylib ${target_lib} "library"
+
+spopd # install-macos/lib
+
+spushd ${target_lib}
+
+ln -s libvlc.* libvlc.dylib
+ln -s libvlccore.* libvlccore.dylib
+
+spopd # ${target_lib}
+
+##########################
 # Build the plugins folder (Same as VLCKit.framework/plugins in Makefile)
 echo "Building plugins folder..."
 # Figure out what plugins are available to install
