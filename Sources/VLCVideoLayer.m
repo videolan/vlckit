@@ -57,12 +57,12 @@
 
 - (BOOL)fillScreen
 {
-    return [self.layoutManager fillScreenEntirely];
+    return [(VLCVideoLayoutManager *)self.layoutManager fillScreenEntirely];
 }
 
 - (void)setFillScreen:(BOOL)fillScreen
 {
-    [self.layoutManager setFillScreenEntirely:fillScreen];
+    [(VLCVideoLayoutManager*)self.layoutManager setFillScreenEntirely:fillScreen];
     [self setNeedsLayout];
 }
 
