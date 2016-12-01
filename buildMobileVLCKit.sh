@@ -281,15 +281,15 @@ doContribLipo() {
     for i in $DEVICEARCHS
     do
         if [ "$i" != "arm64" ]; then
-            files="contrib/$OSSTYLE-$i-apple-darwin11-$i/lib/$LIBNAME $files"
+            files="contrib/$OSSTYLE-$i-apple-darwin15-$i/lib/$LIBNAME $files"
         else
-            files="contrib/$OSSTYLE-aarch64-apple-darwin11-aarch64/lib/$LIBNAME $files"
+            files="contrib/$OSSTYLE-aarch64-apple-darwin15-aarch64/lib/$LIBNAME $files"
         fi
     done
 
     for i in $SIMULATORARCHS
     do
-        files="contrib/$OSSTYLE-$i-apple-darwin11-$i/lib/$LIBNAME $files"
+        files="contrib/$OSSTYLE-$i-apple-darwin15-$i/lib/$LIBNAME $files"
     done
 
     lipo $files -create -output install-ios-$OSSTYLE/contrib/$LIBNAME
@@ -366,12 +366,12 @@ build_universal_static_lib() {
 
 	# lipo contrib libraries
 	CONTRIBLIBS=""
-	spushd contrib/$OSSTYLE-aarch64-apple-darwin11-aarch64/lib
+	spushd contrib/$OSSTYLE-aarch64-apple-darwin15-aarch64/lib
 	for i in `ls *.a`
 	do
 		CONTRIBLIBS="$i $CONTRIBLIBS"
 	done
-	spopd # contrib/$OSSTYLE-aarch64-apple-darwin11-aarch64/lib
+	spopd # contrib/$OSSTYLE-aarch64-apple-darwin15-aarch64/lib
 	for i in $CONTRIBLIBS
 	do
 		doContribLipo $i $OSSTYLE
