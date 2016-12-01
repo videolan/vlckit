@@ -1,4 +1,4 @@
-From 3a1366f45f2f51ecc99edeb4975f32638dad10df Mon Sep 17 00:00:00 2001
+From 2eee3a5fdd791b705b2fb5c185a0827e07b4e58d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
 Subject: [PATCH 07/20] libvlc: expose a base set of freetype options to
@@ -14,10 +14,10 @@ Subject: [PATCH 07/20] libvlc: expose a base set of freetype options to
  6 files changed, 163 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 038e254..4835ffb 100644
+index b6e697e621..8cfb8a2663 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1570,6 +1570,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1569,6 +1569,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
@@ -51,7 +51,7 @@ index 038e254..4835ffb 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index caa5598..5262ebc 100644
+index caa55981bf..5262ebcc13 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
 @@ -257,6 +257,9 @@ libvlc_video_get_spu_count
@@ -75,7 +75,7 @@ index caa5598..5262ebc 100644
  libvlc_video_take_snapshot
  libvlc_video_new_viewpoint
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 74a4f85..3f95c27 100644
+index 74a4f85931..3f95c27c39 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -674,6 +674,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -92,10 +92,10 @@ index 74a4f85..3f95c27 100644
      var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
      var_Create (mp, "audio-device", VLC_VAR_STRING);
 diff --git a/lib/video.c b/lib/video.c
-index 0c5948f..8b02398 100644
+index 46f9935025..b7638b30fe 100644
 --- a/lib/video.c
 +++ b/lib/video.c
-@@ -678,7 +678,7 @@ static bool find_sub_source_by_name( libvlc_media_player_t *p_mi, const char *re
+@@ -676,7 +676,7 @@ static bool find_sub_source_by_name( libvlc_media_player_t *p_mi, const char *re
  }
  
  typedef const struct {
@@ -104,7 +104,7 @@ index 0c5948f..8b02398 100644
      unsigned type;
  } opt_t;
  
-@@ -707,6 +707,9 @@ set_int( libvlc_media_player_t *p_mi, const char *restrict name,
+@@ -705,6 +705,9 @@ set_int( libvlc_media_player_t *p_mi, const char *restrict name,
          case VLC_VAR_FLOAT:
              var_SetFloat( p_mi, opt->name, value );
              break;
@@ -114,7 +114,7 @@ index 0c5948f..8b02398 100644
          default:
              libvlc_printerr( "Invalid argument to %s in %s", name, "set int" );
              return;
-@@ -730,6 +733,8 @@ get_int( libvlc_media_player_t *p_mi, const char *restrict name,
+@@ -728,6 +731,8 @@ get_int( libvlc_media_player_t *p_mi, const char *restrict name,
          return var_GetInteger(p_mi, opt->name);
      case VLC_VAR_FLOAT:
          return lroundf(var_GetFloat(p_mi, opt->name));
@@ -123,7 +123,7 @@ index 0c5948f..8b02398 100644
      default:
          libvlc_printerr( "Invalid argument to %s in %s", name, "get int" );
          return 0;
-@@ -953,3 +958,64 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -951,3 +956,64 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  {
      return get_float( p_mi, "adjust", adjust_option_bynumber(option) );
  }
@@ -189,10 +189,10 @@ index 0c5948f..8b02398 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index c75770a..66a4b62 100644
+index 6baf45f91b..25c965067a 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
-@@ -77,6 +77,9 @@
+@@ -78,6 +78,9 @@
   *****************************************************************************/
  static int  Create ( vlc_object_t * );
  static void Destroy( vlc_object_t * );
@@ -202,7 +202,7 @@ index c75770a..66a4b62 100644
  
  #define FONT_TEXT N_("Font")
  #define MONOSPACE_FONT_TEXT N_("Monospace Font")
-@@ -929,7 +932,7 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -930,7 +933,7 @@ static void FillDefaultStyles( filter_t *p_filter )
  {
      filter_sys_t *p_sys = p_filter->p_sys;
  
@@ -211,7 +211,7 @@ index c75770a..66a4b62 100644
      p_sys->p_default_style->psz_monofontname = var_InheritString( p_filter, "freetype-monofont" );
  
      p_sys->p_default_style->i_font_alpha = var_InheritInteger( p_filter,"freetype-opacity" );
-@@ -937,6 +940,8 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -938,6 +941,8 @@ static void FillDefaultStyles( filter_t *p_filter )
      p_sys->p_default_style->i_font_color = var_InheritInteger( p_filter,"freetype-color" );
      p_sys->p_default_style->i_font_color = VLC_CLIP( p_sys->p_default_style->i_font_color, 0, 0xFFFFFF );
  
@@ -220,7 +220,7 @@ index c75770a..66a4b62 100644
      p_sys->p_default_style->i_outline_alpha = var_InheritInteger( p_filter, "freetype-outline-opacity" );
      p_sys->p_default_style->i_outline_alpha = VLC_CLIP( p_sys->p_default_style->i_outline_alpha, 0, 255 );
      p_sys->p_default_style->i_outline_color = var_InheritInteger( p_filter, "freetype-outline-color" );
-@@ -952,11 +957,11 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -953,11 +958,11 @@ static void FillDefaultStyles( filter_t *p_filter )
      p_sys->p_default_style->i_features |= STYLE_HAS_FLAGS;
  
      p_sys->p_forced_style->i_font_size = var_InheritInteger( p_filter, "freetype-fontsize" );
@@ -234,7 +234,7 @@ index c75770a..66a4b62 100644
      {
          p_sys->p_forced_style->i_style_flags |= STYLE_BOLD;
          p_sys->p_forced_style->i_features |= STYLE_HAS_FLAGS;
-@@ -964,6 +969,12 @@ static void FillDefaultStyles( filter_t *p_filter )
+@@ -965,6 +970,12 @@ static void FillDefaultStyles( filter_t *p_filter )
  
      /* Apply forced styles to defaults, if any */
      text_style_Merge( p_sys->p_default_style, p_sys->p_forced_style, true );
@@ -247,7 +247,7 @@ index c75770a..66a4b62 100644
  }
  
  static void FreeStylesArray( text_style_t **pp_styles, size_t i_styles )
-@@ -1326,6 +1337,17 @@ static void Destroy( vlc_object_t *p_this )
+@@ -1327,6 +1338,17 @@ static void Destroy( vlc_object_t *p_this )
      DumpDictionary( p_filter, &p_sys->fallback_map, true, -1 );
  #endif
  
@@ -265,7 +265,7 @@ index c75770a..66a4b62 100644
      /* Attachments */
      if( p_sys->pp_font_attachments )
      {
-@@ -1355,3 +1377,34 @@ static void Destroy( vlc_object_t *p_this )
+@@ -1356,3 +1378,34 @@ static void Destroy( vlc_object_t *p_this )
      free( p_sys );
  }
  
@@ -301,7 +301,7 @@ index c75770a..66a4b62 100644
 +    return VLC_SUCCESS;
 +}
 diff --git a/modules/text_renderer/freetype/freetype.h b/modules/text_renderer/freetype/freetype.h
-index 44b2731..7f1abec 100644
+index 44b2731c8c..7f1abeca04 100644
 --- a/modules/text_renderer/freetype/freetype.h
 +++ b/modules/text_renderer/freetype/freetype.h
 @@ -137,6 +137,8 @@ struct filter_sys_t
@@ -314,5 +314,5 @@ index 44b2731..7f1abec 100644
  
  /**
 -- 
-2.9.2
+2.11.0
 

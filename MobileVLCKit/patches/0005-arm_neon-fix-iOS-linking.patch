@@ -1,4 +1,4 @@
-From 137650b56dd6482ae66ed5ea8961e2a3f091c045 Mon Sep 17 00:00:00 2001
+From e29316915b36db46c54ad03559c76f8371e195aa Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
 Subject: [PATCH 05/20] arm_neon: fix iOS linking
@@ -9,7 +9,7 @@ Subject: [PATCH 05/20] arm_neon: fix iOS linking
  2 files changed, 22 insertions(+), 31 deletions(-)
 
 diff --git a/modules/arm_neon/amplify.S b/modules/arm_neon/amplify.S
-index 5938118..42f0d00 100644
+index 5938118378..42f0d004d8 100644
 --- a/modules/arm_neon/amplify.S
 +++ b/modules/arm_neon/amplify.S
 @@ -18,6 +18,8 @@
@@ -38,7 +38,7 @@ index 5938118..42f0d00 100644
  	bx		lr
 +endfunc
 diff --git a/modules/arm_neon/simple_channel_mixer.S b/modules/arm_neon/simple_channel_mixer.S
-index a94ae85..54b43a7 100644
+index a94ae8539f..54b43a79e3 100644
 --- a/modules/arm_neon/simple_channel_mixer.S
 +++ b/modules/arm_neon/simple_channel_mixer.S
 @@ -19,6 +19,8 @@
@@ -194,5 +194,5 @@ index a94ae85..54b43a7 100644
  	pop {r4,pc}
 +endfunc
 -- 
-2.9.2
+2.11.0
 

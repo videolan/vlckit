@@ -1,4 +1,4 @@
-From 672fc4120bf481fe70454980c8f085b647850619 Mon Sep 17 00:00:00 2001
+From 9ea1ec7836433363945401e18ec5fb46c5e0cb00 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:07 +0200
 Subject: [PATCH 02/20] deinterlace/merge: use a macro to fix compilation for
@@ -9,7 +9,7 @@ Subject: [PATCH 02/20] deinterlace/merge: use a macro to fix compilation for
  1 file changed, 10 insertions(+), 16 deletions(-)
 
 diff --git a/modules/video_filter/deinterlace/merge_arm.S b/modules/video_filter/deinterlace/merge_arm.S
-index dd77902..03e5042 100644
+index dd779029ae..03e5042b28 100644
 --- a/modules/video_filter/deinterlace/merge_arm.S
 +++ b/modules/video_filter/deinterlace/merge_arm.S
 @@ -18,6 +18,8 @@
@@ -82,5 +82,5 @@ index dd77902..03e5042 100644
  	b		1b
 +endfunc
 -- 
-2.9.2
+2.11.0
 
