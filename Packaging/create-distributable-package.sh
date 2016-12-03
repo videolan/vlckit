@@ -28,7 +28,11 @@ usage()
 cat << EOF
 usage: $0 [options]
 
-Build vlc in the current directory
+Package VLCKit
+
+  By default, VLCKit for macOS will be packaged as a disk-image.
+  You can use the options below to package a different flavor of VLCKit
+  or/and to store the binaries in a zip file instead.
 
 OPTIONS:
    -h            Show some help
