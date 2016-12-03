@@ -93,18 +93,18 @@
 		7DF7A2041D197E8E0001FF69 /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHelperCode.m; sourceTree = "<group>"; };
 		A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoCommon.h; path = Internal/VLCVideoCommon.h; sourceTree = "<group>"; };
 		A7A0CEA30D2EF13000F2C039 /* VLCVideoCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCVideoCommon.m; sourceTree = "<group>"; };
-		CCEC5B73114D9BE800D34AAB /* deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deprecated.h; path = ../../../include/vlc/deprecated.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B74114D9BE800D34AAB /* libvlc_events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_events.h; path = ../../../include/vlc/libvlc_events.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B75114D9BE800D34AAB /* libvlc_media_discoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_discoverer.h; path = ../../../include/vlc/libvlc_media_discoverer.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B76114D9BE800D34AAB /* libvlc_media_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_library.h; path = ../../../include/vlc/libvlc_media_library.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B77114D9BE800D34AAB /* libvlc_media_list_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_list_player.h; path = ../../../include/vlc/libvlc_media_list_player.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B78114D9BE800D34AAB /* libvlc_media_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_list.h; path = ../../../include/vlc/libvlc_media_list.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B79114D9BE800D34AAB /* libvlc_media_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_player.h; path = ../../../include/vlc/libvlc_media_player.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B7A114D9BE800D34AAB /* libvlc_media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media.h; path = ../../../include/vlc/libvlc_media.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B7B114D9BE800D34AAB /* libvlc_structures.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_structures.h; path = ../../../include/vlc/libvlc_structures.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_vlm.h; path = ../../../include/vlc/libvlc_vlm.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B7D114D9BE800D34AAB /* libvlc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc.h; path = ../../../include/vlc/libvlc.h; sourceTree = SOURCE_ROOT; };
-		CCEC5B7E114D9BE800D34AAB /* vlc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vlc.h; path = ../../../include/vlc/vlc.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B73114D9BE800D34AAB /* deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deprecated.h; path = libvlc/vlc/include/vlc/deprecated.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B74114D9BE800D34AAB /* libvlc_events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_events.h; path = libvlc/vlc/include/vlc/libvlc_events.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B75114D9BE800D34AAB /* libvlc_media_discoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_discoverer.h; path = libvlc/vlc/include/vlc/libvlc_media_discoverer.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B76114D9BE800D34AAB /* libvlc_media_library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_library.h; path = libvlc/vlc/include/vlc/libvlc_media_library.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B77114D9BE800D34AAB /* libvlc_media_list_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_list_player.h; path = libvlc/vlc/include/vlc/libvlc_media_list_player.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B78114D9BE800D34AAB /* libvlc_media_list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_list.h; path = libvlc/vlc/include/vlc/libvlc_media_list.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B79114D9BE800D34AAB /* libvlc_media_player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_player.h; path = libvlc/vlc/include/vlc/libvlc_media_player.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B7A114D9BE800D34AAB /* libvlc_media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media.h; path = libvlc/vlc/include/vlc/libvlc_media.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B7B114D9BE800D34AAB /* libvlc_renderer_discoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_renderer_discoverer.h; path = libvlc/vlc/include/vlc/libvlc_renderer_discoverer.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_vlm.h; path = libvlc/vlc/include/vlc/libvlc_vlm.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B7D114D9BE800D34AAB /* libvlc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc.h; path = libvlc/vlc/include/vlc/libvlc.h; sourceTree = SOURCE_ROOT; };
+		CCEC5B7E114D9BE800D34AAB /* vlc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vlc.h; path = libvlc/vlc/include/vlc/vlc.h; sourceTree = SOURCE_ROOT; };
 		EF73118E0CB5797B009473B4 /* VLCAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCAudio.h; path = Public/VLCAudio.h; sourceTree = "<group>"; };
 		EF73118F0CB5797B009473B4 /* VLCAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCAudio.m; sourceTree = "<group>"; };
 		EF78BD0D0CAEEEC300354E6E /* VLCEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEventManager.h; path = Internal/VLCEventManager.h; sourceTree = "<group>"; };
@@ -297,7 +297,7 @@
 				CCEC5B78114D9BE800D34AAB /* libvlc_media_list.h */,
 				CCEC5B79114D9BE800D34AAB /* libvlc_media_player.h */,
 				CCEC5B7A114D9BE800D34AAB /* libvlc_media.h */,
-				CCEC5B7B114D9BE800D34AAB /* libvlc_structures.h */,
+				CCEC5B7B114D9BE800D34AAB /* libvlc_renderer_discoverer.h */,
 				CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */,
 				CCEC5B7D114D9BE800D34AAB /* libvlc.h */,
 				CCEC5B7E114D9BE800D34AAB /* vlc.h */,
