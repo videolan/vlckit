@@ -61,7 +61,7 @@
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		32DBCF5E0370ADEE00C91783 /* VLC_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLC_Prefix.pch; path = VLCKit/VLC_Prefix.pch; sourceTree = "<group>"; };
+		32DBCF5E0370ADEE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = Headers/PCH/Prefix.pch; sourceTree = "<group>"; };
 		63014A781042ACE100534090 /* VLCMediaListPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaListPlayer.m; sourceTree = "<group>"; };
 		63014B7D1042E64A00534090 /* VLCMediaListPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaListPlayer.h; path = Public/VLCMediaListPlayer.h; sourceTree = "<group>"; };
 		63030CC70CCA652C0088ECD1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = Info.plist; path = VLCKit/Info.plist; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32DBCF5E0370ADEE00C91783 /* VLC_Prefix.pch */,
+				32DBCF5E0370ADEE00C91783 /* Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -559,7 +559,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = VLCKit/VLC_Prefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(VLC_SRC_DIR)/include",
 					"Headers/**",
@@ -598,7 +598,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = VLCKit/VLC_Prefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				HEADER_SEARCH_PATHS = (
 					"$(VLC_SRC_DIR)/include",
 					"Headers/**",
