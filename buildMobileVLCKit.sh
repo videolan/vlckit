@@ -1,23 +1,30 @@
 #!/bin/sh
 # Copyright (C) Pierre d'Herbemont, 2010
-# Copyright (C) Felix Paul Kühne, 2012-2015
+# Copyright (C) Felix Paul Kühne, 2012-2016
 
 set -e
 
 BUILD_DEVICE=yes
 BUILD_SIMULATOR=yes
 BUILD_STATIC_FRAMEWORK=no
-SDK=`xcrun --sdk iphoneos --show-sdk-version`
+SDK_VERSION=`xcrun --sdk iphoneos --show-sdk-version`
 SDK_MIN=7.0
 VERBOSE=no
+DEBUG=no
 CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 TVOS=no
 BITCODE=no
+OSVERSIONMINCFLAG=miphoneos-version-min
+OSVERSIONMINLDFLAG=ios_version_min
+ROOT_DIR=empty
 
 TESTEDHASH=41d21a66
+
+CORE_COUNT=`sysctl -n machdep.cpu.core_count`
+let MAKE_JOBS=$CORE_COUNT+1
 
 usage()
 {
@@ -38,6 +45,69 @@ OPTIONS
    -b       Enable bitcode
 EOF
 }
+
+while getopts "hvwsfbdntlk:" OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             exit 1
+             ;;
+         v)
+             VERBOSE=yes
+             ;;
+         s)
+             BUILD_DEVICE=no
+             BUILD_SIMULATOR=yes
+             BUILD_STATIC_FRAMEWORK=no
+             ;;
+         f)
+             BUILD_DEVICE=yes
+             BUILD_SIMULATOR=yes
+             BUILD_STATIC_FRAMEWORK=yes
+             ;;
+         d)  CONFIGURATION="Debug"
+             DEBUG=yes
+             ;;
+         w)  SCARY="no"
+             ;;
+         n)
+             NONETWORK=yes
+             ;;
+         l)
+             SKIPLIBVLCCOMPILATION=yes
+             ;;
+         k)
+             SDK=$OPTARG
+             ;;
+         b)
+             BITCODE=yes
+             ;;
+         t)
+             TVOS=yes
+             BITCODE=yes
+             SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
+             SDK_MIN=9.0
+             OSVERSIONMINCFLAG=mtvos-version-min
+             OSVERSIONMINLDFLAG=tvos_version_min
+             ;;
+         ?)
+             usage
+             exit 1
+             ;;
+     esac
+done
+shift $(($OPTIND - 1))
+
+out="/dev/null"
+if [ "$VERBOSE" = "yes" ]; then
+   out="/dev/stdout"
+fi
+
+if [ "x$1" != "x" ]; then
+    usage
+    exit 1
+fi
 
 spushd()
 {
@@ -92,76 +162,18 @@ buildxcodeproj()
                > ${out}
 }
 
-while getopts "hvwsfbdntlk:" OPTION
-do
-     case $OPTION in
-         h)
-             usage
-             exit 1
-             ;;
-         v)
-             VERBOSE=yes
-             ;;
-         s)
-             BUILD_DEVICE=no
-             BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=no
-             ;;
-         f)
-             BUILD_DEVICE=yes
-             BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=yes
-             ;;
-         d)  CONFIGURATION="Debug"
-             ;;
-         w)  SCARY="no"
-             ;;
-         n)
-             NONETWORK=yes
-             ;;
-         l)
-             SKIPLIBVLCCOMPILATION=yes
-             ;;
-         k)
-             SDK=$OPTARG
-             ;;
-         b)
-             BITCODE=yes
-             ;;
-         t)
-             TVOS=yes
-             BITCODE=yes
-             SDK=`xcrun --sdk appletvos --show-sdk-version`
-             SDK_MIN=9.0
-             ;;
-         ?)
-             usage
-             exit 1
-             ;;
-     esac
-done
-shift $(($OPTIND - 1))
-
-out="/dev/null"
-if [ "$VERBOSE" = "yes" ]; then
-   out="/dev/stdout"
-fi
-
-if [ "x$1" != "x" ]; then
-    usage
-    exit 1
-fi
-
 # Get root dir
 spushd .
-aspen_root_dir=`pwd`
+ROOT_DIR=`pwd`
 spopd
 
 info "Preparing build dirs"
 
-mkdir -p MobileVLCKit/ImportedSources
+mkdir -p libvlc
 
-spushd MobileVLCKit/ImportedSources
+spushd libvlc
+
+echo `pwd`
 
 if [ "$NONETWORK" != "yes" ]; then
 if ! [ -e vlc ]; then
@@ -170,7 +182,7 @@ info "Applying patches to vlc.git"
 cd vlc
 git checkout -B localBranch ${TESTEDHASH}
 git branch --set-upstream-to=origin/master localBranch
-git am ../../patches/*.patch
+git am ${ROOT_DIR}/MobileVLCKit/patches/*.patch
 if [ $? -ne 0 ]; then
 git am --abort
 info "Applying the patches failed, aborting git-am"
@@ -181,7 +193,7 @@ else
 cd vlc
 git pull --rebase
 git reset --hard ${TESTEDHASH}
-git am ../../patches/*.patch
+git am ${ROOT_DIR}/MobileVLCKit/patches/*.patch
 cd ..
 fi
 fi
@@ -192,47 +204,448 @@ spopd
 # Build time
 #
 
+out="/dev/null"
+if [ "$VERBOSE" = "yes" ]; then
+   out="/dev/stdout"
+fi
+
+if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
+    info "Building tools"
+    spushd ${ROOT_DIR}/libvlc/vlc/extras/tools
+    ./bootstrap
+    make
+    make .gas
+    spopd #libvlc/vlc/extras/tools
+fi
+
+buildLibVLC() {
+    VERBOSE="$1"
+    DEBUG="$2"
+    SCARY="$3"
+    BITCODE="$4"
+    ARCH="$5"
+    TVOS="$6"
+    SDK_VERSION="$7"
+    PLATFORM="$8"
+    OSSTYLE=iPhone
+    VLCROOT=${ROOT_DIR}/libvlc/vlc
+
+    if [ "$DEBUG" = "yes" ]; then
+        OPTIM="-O0 -g"
+    else
+        OPTIM="-O3 -g"
+    fi
+
+    if [ "$TVOS" = "yes" ]; then
+        OSSTYLE=AppleTV
+    fi
+
+    if [ "$ARCH" = "aarch64" ]; then
+        ACTUAL_ARCH="arm64"
+    else
+        ACTUAL_ARCH="$ARCH"
+    fi
+
+    info "Compiling ${ARCH} with SDK version ${SDK_VERSION}, platform ${PLATFORM}"
+
+    SDKROOT=`xcode-select -print-path`/Platforms/${OSSTYLE}${PLATFORM}.platform/Developer/SDKs/${OSSTYLE}${PLATFORM}${SDK_VERSION}.sdk
+
+    if [ ! -d "${SDKROOT}" ]
+    then
+        echo "*** ${SDKROOT} does not exist, please install required SDK, or set SDKROOT manually. ***"
+        exit 1
+    fi
+
+    BUILDDIR="${VLCROOT}/build-${OSSTYLE}${PLATFORM}/${ACTUAL_ARCH}"
+    PREFIX="${VLCROOT}/install-${OSSTYLE}${PLATFORM}/${ACTUAL_ARCH}"
+    TARGET="${ARCH}-apple-darwin14"
+
+    # clean the environment
+    export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin"
+    export CFLAGS=""
+    export CPPFLAGS=""
+    export CXXFLAGS=""
+    export OBJCFLAGS=""
+    export LDFLAGS=""
+
+    export PLATFORM=$PLATFORM
+    export SDK_VERSION=$SDK_VERSION
+    export VLCSDKROOT=$SDKROOT
+
+    CFLAGS="-isysroot ${SDKROOT} -arch ${ACTUAL_ARCH} ${OPTIM}"
+    OBJCFLAGS="${OPTIM}"
+
+    if [ "$PLATFORM" = "OS" ]; then
+    if [ "$ARCH" != "aarch64" ]; then
+    CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    else
+    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    fi
+    else
+    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    fi
+
+    if [ "$BITCODE" = "yes" ]; then
+    CFLAGS+=" -fembed-bitcode"
+    fi
+
+    export CFLAGS="${CFLAGS}"
+    export CXXFLAGS="${CFLAGS}"
+    export CPPFLAGS="${CFLAGS}"
+    export OBJCFLAGS="${OBJCFLAGS}"
+
+    if [ "$PLATFORM" = "Simulator" ]; then
+        # Use the new ABI on simulator, else we can't build
+        export OBJCFLAGS="-fobjc-abi-version=2 -fobjc-legacy-dispatch ${OBJCFLAGS}"
+    fi
+
+    export LDFLAGS="-isysroot ${SDKROOT} -L${SDKROOT}/usr/lib -arch ${ACTUAL_ARCH}"
+
+    if [ "$PLATFORM" = "OS" ]; then
+        EXTRA_CFLAGS="-arch ${ACTUAL_ARCH}"
+        EXTRA_LDFLAGS="-arch ${ACTUAL_ARCH}"
+    if [ "$ARCH" != "aarch64" ]; then
+        EXTRA_CFLAGS+=" -mcpu=cortex-a8"
+        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+        EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+        export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+    else
+        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+        EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+        export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+    fi
+    else
+        EXTRA_CFLAGS="-arch ${ARCH}"
+        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+        EXTRA_LDFLAGS=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+        export LDFLAGS="${LDFLAGS} -v -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+    fi
+
+    spushd ${VLCROOT}/contrib
+
+    info "Compiling third-party libraries"
+
+    mkdir -p "${VLCROOT}/contrib/${OSSTYLE}${PLATFORM}-${ARCH}"
+    cd "${VLCROOT}/contrib/${OSSTYLE}${PLATFORM}-${ARCH}"
+
+    if [ "$PLATFORM" = "OS" ]; then
+        export AS="gas-preprocessor.pl ${CC}"
+        export ASCPP="gas-preprocessor.pl ${CC}"
+        export CCAS="gas-preprocessor.pl ${CC}"
+        if [ "$ARCH" = "aarch64" ]; then
+            export GASPP_FIX_XCODE5=1
+        fi
+    else
+        export ASCPP="xcrun as"
+    fi
+
+    if [ "$TVOS" = "yes" ]; then
+        TVOSOPTIONS="--disable-libarchive"
+    else
+        TVOSOPTIONS=""
+    fi
+
+    ../bootstrap --build=x86_64-apple-darwin14 --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
+        --disable-disc --disable-sout \
+        --disable-sdl \
+        --disable-SDL_image \
+        --disable-iconv \
+        --enable-zvbi \
+        --disable-kate \
+        --disable-caca \
+        --disable-gettext \
+        --disable-mpcdec \
+        --disable-upnp \
+        --disable-gme \
+        --disable-tremor \
+        --enable-vorbis \
+        --disable-sidplay2 \
+        --disable-samplerate \
+        --disable-goom \
+        --disable-vncserver \
+        --disable-orc \
+        --disable-schroedinger \
+        --disable-libmpeg2 \
+        --disable-chromaprint \
+        --disable-mad \
+        --enable-fribidi \
+        --enable-libxml2 \
+        --enable-freetype2 \
+        --enable-ass \
+        --disable-fontconfig \
+        --disable-gpg-error \
+        --disable-vncclient \
+        --disable-gnutls \
+        --disable-lua \
+        --disable-luac \
+        --disable-protobuf \
+        --disable-aribb24 \
+        --disable-aribb25 \
+        --enable-vpx \
+        --enable-libdsm \
+        ${TVOSOPTIONS} \
+        --enable-taglib > ${out}
+
+    echo "EXTRA_CFLAGS += ${EXTRA_CFLAGS}" >> config.mak
+    echo "EXTRA_LDFLAGS += ${EXTRA_LDFLAGS}" >> config.mak
+    make fetch -j$MAKE_JOBS
+    make -j$MAKE_JOBS > ${out}
+
+    spopd # ${VLCROOT}/contrib
+
+    if ! [ -e ${VLCROOT}/configure ]; then
+        info "Bootstraping vlc"
+        ${VLCROOT}/bootstrap  > ${out}
+    fi
+
+    mkdir -p ${BUILDDIR}
+    spushd ${BUILDDIR}
+
+    if [ "$DEBUG" = "yes" ]; then
+        DEBUGFLAG="--enable-debug"
+    else
+        DEBUGFLAG="--disable-debug"
+    fi
+
+    if [ "$SCARY" = "yes" ]; then
+        SCARYFLAG="--enable-dvbpsi --enable-avcodec --disable-vpx"
+    else
+        SCARYFLAG="--disable-dca --disable-dvbpsi --disable-avcodec --disable-avformat --disable-zvbi --enable-vpx"
+    fi
+
+    if [ "$TVOS" = "yes" ]; then
+        TVOSOPTIONS="--disable-neon"
+    else
+        TVOSOPTIONS="--enable-neon"
+    fi
+
+    # Available but not authorized
+    export ac_cv_func_daemon=no
+    export ac_cv_func_fork=no
+
+    if [ "${VLCROOT}/configure" -nt config.log -o \
+         "${THIS_SCRIPT_PATH}" -nt config.log ]; then
+         info "Configuring vlc"
+
+    ${VLCROOT}/configure \
+        --prefix="${PREFIX}" \
+        --host="${TARGET}" \
+        --with-contrib="${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH}" \
+        --enable-static \
+        ${DEBUGFLAG} \
+        ${SCARYFLAG} \
+        ${TVOSOPTIONS} \
+        --disable-macosx \
+        --disable-macosx-qtkit \
+        --disable-macosx-eyetv \
+        --disable-macosx-vlc-app \
+        --disable-macosx-avfoundation \
+        --disable-audioqueue \
+        --disable-shared \
+        --enable-mkv \
+        --enable-opus \
+        --disable-faad \
+        --disable-lua \
+        --disable-a52 \
+        --enable-fribidi \
+        --disable-qt --disable-skins2 \
+        --disable-vcd \
+        --disable-vlc \
+        --disable-vlm \
+        --disable-httpd \
+        --disable-nls \
+        --disable-sse \
+        --disable-notify \
+        --enable-live555 \
+        --enable-realrtsp \
+        --enable-swscale \
+        --disable-projectm \
+        --enable-libass \
+        --enable-libxml2 \
+        --disable-goom \
+        --disable-dvdread \
+        --disable-dvdnav \
+        --disable-bluray \
+        --disable-linsys \
+        --disable-libva \
+        --disable-gme \
+        --disable-tremor \
+        --enable-vorbis \
+        --disable-fluidsynth \
+        --disable-jack \
+        --disable-pulse \
+        --disable-mtp \
+        --enable-ogg \
+        --enable-speex \
+        --enable-theora \
+        --enable-flac \
+        --disable-screen \
+        --enable-freetype \
+        --enable-taglib \
+        --disable-mmx \
+        --disable-addonmanagermodules \
+        --disable-mad > ${out}
+    fi
+
+    info "Building libvlc"
+    make -j$MAKE_JOBS > ${out}
+
+    info "Installing libvlc"
+    make install > ${out}
+
+    find ${PREFIX}/lib/vlc/plugins -name *.a -type f -exec cp '{}' ${PREFIX}/lib/vlc/plugins \;
+    rm -rf "${PREFIX}/contribs"
+    cp -R "${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH}" "${PREFIX}/contribs"
+
+    info "Removing unneeded modules"
+    blacklist="
+    stats
+    access_bd
+    shm
+    access_imem
+    oldrc
+    real
+    hotkeys
+    gestures
+    dynamicoverlay
+    rss
+    ball
+    marq
+    magnify
+    audiobargraph_
+    clone
+    mosaic
+    osdmenu
+    puzzle
+    mediadirs
+    t140
+    ripple
+    motion
+    sharpen
+    grain
+    posterize
+    mirror
+    wall
+    scene
+    blendbench
+    psychedelic
+    alphamask
+    netsync
+    audioscrobbler
+    motiondetect
+    motionblur
+    export
+    smf
+    podcast
+    bluescreen
+    erase
+    stream_filter_record
+    speex_resampler
+    remoteosd
+    magnify
+    gradient
+    tospdif
+    dtstofloat32
+    logger
+    visual
+    fb
+    aout_file
+    dummy
+    invert
+    sepia
+    wave
+    hqdn3d
+    headphone_channel_mixer
+    gaussianblur
+    gradfun
+    extract
+    colorthres
+    antiflicker
+    anaglyph
+    remap
+    oldmovie
+    vhs
+    demuxdump
+    fingerprinter
+    output_udp
+    output_http
+    output_livehttp
+    libmux
+    stream_out
+    "
+
+    if [ "$SCARY" = "no" ]; then
+    blacklist="${blacklist}
+    dts
+    dvbsub
+    svcd
+    hevc
+    packetizer_mlp
+    a52
+    vc1
+    uleaddvaudio
+    librar
+    libvoc
+    avio
+    chorus_flanger
+    smooth
+    cvdsub
+    libmod
+    libdash
+    libmpgv
+    dolby_surround
+    mpegaudio"
+    fi
+
+    echo ${blacklist}
+
+    for i in ${blacklist}
+    do
+        find ${PREFIX}/lib/vlc/plugins -name *$i* -type f -exec rm '{}' \;
+    done
+
+    spopd
+}
+
 buildMobileKit() {
     PLATFORM="$1"
 
-    spushd MobileVLCKit/ImportedSources
-
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
-    spushd vlc/extras/package/ios
-    info "Building vlc"
-    args=""
-    if [ "$VERBOSE" = "yes" ]; then
-        args="${args} -v"
-    fi
-    if [ "$CONFIGURATION" = "Debug" ]; then
-        args="${args} -d"
-    fi
-    if [ "$SCARY" = "no" ]; then
-        args="${args} -w"
-    fi
-    if [ "$BITCODE" = "yes" ]; then
-        args="${args} -b"
-    fi
-    if [ "$TVOS" = "no" ]; then
-		if [ "$PLATFORM" = "iphonesimulator" ]; then
-			args="${args} -s"
-			./build.sh -a i386 ${args} -k "${SDK}" && ./build.sh -a x86_64 ${args} -k "${SDK}"
-		else
-			./build.sh -a armv7 ${args} -k "${SDK}" && ./build.sh -a armv7s ${args} -k "${SDK}" && ./build.sh -a aarch64 ${args} -k "${SDK}"
-		fi
-	else
-		if [ "$PLATFORM" = "iphonesimulator" ]; then
-			args="${args} -s"
-			./build.sh -a x86_64 -t ${args} -k "${SDK}"
-		else
-			./build.sh -a aarch64 -t ${args} -k "${SDK}"
-		fi
-	fi
+        if [ "$TVOS" = "yes" ]; then
+            export BUILDFORTVOS="yes"
+            info "Building libvlc for tvOS"
+        else
+            info "Building libvlc for iOS"
+        fi
+        export BUILDFORIOS="yes"
 
-    spopd
-    fi
+        export AR="xcrun ar"
+        export RANLIB="xcrun ranlib"
+        export CC="xcrun clang"
+        export OBJC="xcrun clang"
+        export CXX="xcrun clang++"
+        export LD="xcrun ld"
+        export STRIP="xcrun strip"
+        export CPP="xcrun cc -E"
+        export CXXCPP="xcrun c++ -E"
 
-    spopd # MobileVLCKit/ImportedSources
+        if [ "$TVOS" = "yes" ]; then
+            if [ "$PLATFORM" = "iphonesimulator" ]; then
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
+            else
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
+            fi
+        else
+            if [ "$PLATFORM" = "iphonesimulator" ]; then
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $SDK_VERSION $PLATFORM
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION $PLATFORM
+            else
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $SDK_VERSION $PLATFORM
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $SDK_VERSION $PLATFORM
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION $PLATFORM
+            fi
+        fi
+    fi
 }
 
 if [ "$BUILD_DEVICE" != "no" ]; then
@@ -256,18 +669,18 @@ doVLCLipo() {
 
     for i in $DEVICEARCHS
     do
-        files="install-ios-"$OSSTYLE"OS/$i/lib/$FILEPATH$FILE $files"
+        files="install-"$OSSTYLE"OS/$i/lib/$FILEPATH$FILE $files"
     done
 
     for i in $SIMULATORARCHS
     do
-        files="install-ios-"$OSSTYLE"Simulator/$i/lib/$FILEPATH$FILE $files"
+        files="install-"$OSSTYLE"Simulator/$i/lib/$FILEPATH$FILE $files"
     done
 
     if [ "$PLUGIN" != "no" ]; then
-        lipo $files -create -output install-ios-$OSSTYLE/plugins/$FILE
+        lipo $files -create -output install-$OSSTYLE/plugins/$FILE
     else
-        lipo $files -create -output install-ios-$OSSTYLE/core/$FILE
+        lipo $files -create -output install-$OSSTYLE/core/$FILE
     fi
 }
 
@@ -281,18 +694,18 @@ doContribLipo() {
     for i in $DEVICEARCHS
     do
         if [ "$i" != "arm64" ]; then
-            files="contrib/$OSSTYLE-$i-apple-darwin15-$i/lib/$LIBNAME $files"
+            files="contrib/$OSSTYLE-$i-apple-darwin14-$i/lib/$LIBNAME $files"
         else
-            files="contrib/$OSSTYLE-aarch64-apple-darwin15-aarch64/lib/$LIBNAME $files"
+            files="contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib/$LIBNAME $files"
         fi
     done
 
     for i in $SIMULATORARCHS
     do
-        files="contrib/$OSSTYLE-$i-apple-darwin15-$i/lib/$LIBNAME $files"
+        files="contrib/$OSSTYLE-$i-apple-darwin14-$i/lib/$LIBNAME $files"
     done
 
-    lipo $files -create -output install-ios-$OSSTYLE/contrib/$LIBNAME
+    lipo $files -create -output install-$OSSTYLE/contrib/$LIBNAME
 }
 
 get_symbol()
@@ -311,49 +724,49 @@ build_universal_static_lib() {
 	touch $PROJECT_DIR/MobileVLCKit/vlc-plugins-$OSSTYLE.h
 	touch $PROJECT_DIR/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-	spushd MobileVLCKit/ImportedSources/vlc
-	rm -rf install-ios-$OSSTYLE
-	mkdir install-ios-$OSSTYLE
-	mkdir install-ios-$OSSTYLE/core
-	mkdir install-ios-$OSSTYLE/contrib
-	mkdir install-ios-$OSSTYLE/plugins
+	spushd libvlc/vlc
+	rm -rf install-$OSSTYLE
+	mkdir install-$OSSTYLE
+	mkdir install-$OSSTYLE/core
+	mkdir install-$OSSTYLE/contrib
+	mkdir install-$OSSTYLE/plugins
 	spopd # vlc
 
-	spushd MobileVLCKit/ImportedSources/vlc/install-ios-"$OSSTYLE"OS
+	spushd libvlc/vlc/install-"$OSSTYLE"OS
 	for i in `ls .`
 	do
 		DEVICEARCHS="$DEVICEARCHS $i"
 	done
-	spopd # vlc-install-ios-"$OSSTYLE"OS
+	spopd # vlc-install-"$OSSTYLE"OS
 
-	spushd MobileVLCKit/ImportedSources/vlc/install-ios-"$OSSTYLE"Simulator
+	spushd libvlc/vlc/install-"$OSSTYLE"Simulator
 	for i in `ls .`
 	do
 		SIMULATORARCHS="$SIMULATORARCHS $i"
 	done
-	spopd # vlc-install-ios-"$OSSTYLE"Simulator
+	spopd # vlc-install-"$OSSTYLE"Simulator
 
 	# arm64 got the lowest number of modules
 	VLCMODULES=""
-	spushd MobileVLCKit/ImportedSources/vlc/install-ios-"$OSSTYLE"OS/arm64/lib/vlc/plugins
+	spushd libvlc/vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
 	for i in `ls *.a`
 	do
 		VLCMODULES="$i $VLCMODULES"
 	done
-	spopd # vlc/install-ios-"$OSSTYLE"OS/arm64/lib/vlc/plugins
+	spopd # vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
 
 	if [ "$OSSTYLE" != "AppleTV" ]; then
 		# collect ARMv7/s specific neon modules
 		VLCNEONMODULES=""
-		spushd MobileVLCKit/ImportedSources/vlc/install-ios-"$OSSTYLE"OS/armv7/lib/vlc/plugins
+		spushd libvlc/vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
 		for i in `ls *.a | grep neon`
 		do
 			VLCNEONMODULES="$i $VLCNEONMODULES"
 		done
-		spopd # vlc/install-ios-"$OSSTYLE"OS/armv7/lib/vlc/plugins
+		spopd # vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
 	fi
 
-	spushd MobileVLCKit/ImportedSources/vlc
+	spushd libvlc/vlc
 
 	# lipo all the vlc libraries and its plugins
 	doVLCLipo "" "libvlc.a" "no" $OSSTYLE
@@ -366,12 +779,12 @@ build_universal_static_lib() {
 
 	# lipo contrib libraries
 	CONTRIBLIBS=""
-	spushd contrib/$OSSTYLE-aarch64-apple-darwin15-aarch64/lib
+	spushd contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
 	for i in `ls *.a`
 	do
 		CONTRIBLIBS="$i $CONTRIBLIBS"
 	done
-	spopd # contrib/$OSSTYLE-aarch64-apple-darwin15-aarch64/lib
+	spopd # contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
 	for i in $CONTRIBLIBS
 	do
 		doContribLipo $i $OSSTYLE
@@ -401,16 +814,16 @@ build_universal_static_lib() {
 	# add contrib libraries to LDFLAGS
 	for file in $CONTRIBLIBS
 	do
-		LDFLAGS+="\$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-"$OSSTYLE"/contrib/$file "
+		LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/contrib/$file "
 	done
 
 	for file in $VLCMODULES
 	do
-		symbols=$(nm -g -arch arm64 install-ios-$OSSTYLE/plugins/$file)
+		symbols=$(nm -g -arch arm64 install-$OSSTYLE/plugins/$file)
 		entryname=$(get_symbol "$symbols" _)
 		DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
 		BUILTINS+=" $entryname,\n"
-		LDFLAGS+="\$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-"$OSSTYLE"/plugins/$file "
+		LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
 		info "...$entryname"
 	done;
 
@@ -419,11 +832,11 @@ build_universal_static_lib() {
 		DEFINITIONS+="#ifdef __arm__\n"
 		for file in $VLCNEONMODULES
 		do
-			symbols=$(nm -g -arch armv7 install-ios-$OSSTYLE/plugins/$file)
+			symbols=$(nm -g -arch armv7 install-$OSSTYLE/plugins/$file)
 			entryname=$(get_symbol "$symbols" _)
 			DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
 			BUILTINS+=" $entryname,\n"
-			LDFLAGS+="\$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-"$OSSTYLE"/plugins/$file "
+			LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
 			info "...$entryname"
 		done;
 		BUILTINS+="#endif\n"
