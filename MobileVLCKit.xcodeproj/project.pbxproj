@@ -226,7 +226,7 @@
 		7A5ECAE511DE8FEF00F66AF3 /* VLCEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEventManager.h; path = Headers/Internal/VLCEventManager.h; sourceTree = "<group>"; };
 		7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobileVLCKit.h; path = Headers/Public/MobileVLCKit.h; sourceTree = "<group>"; };
 		7D1329591BA304D900BE647E /* libTVVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTVVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D13295B1BA304D900BE647E /* TVVLCKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TVVLCKit.h; sourceTree = "<group>"; };
+		7D13295B1BA304D900BE647E /* TVVLCKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVVLCKit.h; path = Headers/Public/TVVLCKit.h; sourceTree = "<group>"; };
 		7D1329751BA305D600BE647E /* vlc-plugins-AppleTV.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "vlc-plugins-AppleTV.xcconfig"; path = "MobileVLCKit/vlc-plugins-AppleTV.xcconfig"; sourceTree = "<group>"; };
 		7D1329761BA306DE00BE647E /* vlc-plugins-iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-iPhone.h"; path = "MobileVLCKit/vlc-plugins-iPhone.h"; sourceTree = "<group>"; };
 		7D1329771BA306E600BE647E /* vlc-plugins-AppleTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-AppleTV.h"; path = "MobileVLCKit/vlc-plugins-AppleTV.h"; sourceTree = "<group>"; };
@@ -255,13 +255,13 @@
 		7D8938FD1B5009D2008F2B14 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		7D8939011B5009DD008F2B14 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7D8939271B500D1C008F2B14 /* DynamicMobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DynamicMobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D89392A1B500D1C008F2B14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		7D89392B1B500D1C008F2B14 /* DynamicMobileVLCKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicMobileVLCKit.h; sourceTree = "<group>"; };
+		7D89392A1B500D1C008F2B14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/DynamicMobileVLCKit/Info.plist; sourceTree = "<group>"; };
+		7D89392B1B500D1C008F2B14 /* DynamicMobileVLCKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DynamicMobileVLCKit.h; path = Headers/Public/DynamicMobileVLCKit.h; sourceTree = "<group>"; };
 		7D89394E1B500DBC008F2B14 /* libStaticLibVLC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLibVLC.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D8939521B500DBC008F2B14 /* StaticLibVLC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StaticLibVLC.m; sourceTree = "<group>"; };
+		7D8939521B500DBC008F2B14 /* StaticLibVLC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = StaticLibVLC.m; path = Sources/StaticLibVLC.m; sourceTree = "<group>"; };
 		7DB6837F1C995D39000C70BE /* DynamicTVVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DynamicTVVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7DB683811C995D39000C70BE /* DynamicTVVLCKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DynamicTVVLCKit.h; sourceTree = "<group>"; };
-		7DB683831C995D39000C70BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7DB683811C995D39000C70BE /* DynamicTVVLCKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DynamicTVVLCKit.h; path = Headers/Public/DynamicTVVLCKit.h; sourceTree = "<group>"; };
+		7DB683831C995D39000C70BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/DynamicTVVLCKit/Info.plist; sourceTree = "<group>"; };
 		7DB683C61C995E9A000C70BE /* libStaticTVLibvlc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticTVLibvlc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB683D31C996187000C70BE /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCHelperCode.m; path = Sources/VLCHelperCode.m; sourceTree = "<group>"; };
 		7DB683D91C9961BA000C70BE /* VLCHelperCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCHelperCode.h; path = Headers/Internal/VLCHelperCode.h; sourceTree = "<group>"; };
@@ -1049,7 +1049,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = DynamicMobileVLCKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicMobileVLCKit/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1117,7 +1117,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = DynamicMobileVLCKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicMobileVLCKit/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1264,7 +1264,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = DynamicTVVLCKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicTVVLCKit/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -1327,7 +1327,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = DynamicTVVLCKit/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicTVVLCKit/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;

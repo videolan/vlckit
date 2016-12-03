@@ -64,7 +64,7 @@
 		32DBCF5E0370ADEE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = Headers/PCH/Prefix.pch; sourceTree = "<group>"; };
 		63014A781042ACE100534090 /* VLCMediaListPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaListPlayer.m; sourceTree = "<group>"; };
 		63014B7D1042E64A00534090 /* VLCMediaListPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaListPlayer.h; path = Public/VLCMediaListPlayer.h; sourceTree = "<group>"; };
-		63030CC70CCA652C0088ECD1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = Info.plist; path = VLCKit/Info.plist; sourceTree = "<group>"; };
+		63030CC70CCA652C0088ECD1 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/VLCKit/Info.plist; sourceTree = "<group>"; };
 		63098FDA110E7159005F46AE /* VLCExtensionsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCExtensionsManager.m; sourceTree = "<group>"; };
 		63099114110F0EC3005F46AE /* VLCExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCExtension.m; sourceTree = "<group>"; };
 		63099949110FC791005F46AE /* VLCExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCExtension.h; path = Public/VLCExtension.h; sourceTree = "<group>"; };
@@ -438,7 +438,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "sh $SOURCE_ROOT/installPluginsVLCKit.sh";
+			shellScript = "sh $SOURCE_ROOT/Resources/VLCKit/installPluginsVLCKit.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -564,7 +564,7 @@
 					"$(VLC_SRC_DIR)/include",
 					"Headers/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/VLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				OTHER_LDFLAGS = (
@@ -603,7 +603,7 @@
 					"$(VLC_SRC_DIR)/include",
 					"Headers/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/VLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				OTHER_LDFLAGS = (
