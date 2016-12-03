@@ -852,10 +852,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libcompat.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
 			name = Release;
@@ -906,10 +906,10 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libcompat.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -956,11 +956,11 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libcompat.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -999,10 +999,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/MobileVLCKit/ImportedSources/vlc/include";
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libcompat.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
 			name = Debug;
@@ -1047,7 +1047,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/include",
+					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
 				INFOPLIST_FILE = DynamicMobileVLCKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1115,7 +1115,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/include",
+					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
 				INFOPLIST_FILE = DynamicMobileVLCKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1170,7 +1170,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -1217,7 +1217,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1262,7 +1262,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/include",
+					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
 				INFOPLIST_FILE = DynamicTVVLCKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1325,7 +1325,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/include",
+					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
 				INFOPLIST_FILE = DynamicTVVLCKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1377,7 +1377,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -1427,7 +1427,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlc.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libvlccore.a $(PROJECT_DIR)/MobileVLCKit/ImportedSources/vlc/install-ios-AppleTV/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
