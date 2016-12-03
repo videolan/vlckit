@@ -637,12 +637,12 @@ buildMobileKit() {
             fi
         else
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $SDK_VERSION $PLATFORM
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION $PLATFORM
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $SDK_VERSION "Simulator"
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
             else
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $SDK_VERSION $PLATFORM
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $SDK_VERSION $PLATFORM
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION $PLATFORM
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $SDK_VERSION "OS"
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $SDK_VERSION "OS"
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
             fi
         fi
     fi
