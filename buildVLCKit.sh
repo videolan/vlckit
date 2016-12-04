@@ -5,12 +5,13 @@
 set -e
 
 SDK=`xcrun --sdk macosx --show-sdk-version`
-SDK_MIN=10.7
+SDK_MIN=10.9
 VERBOSE=no
 CONFIGURATION="Release"
 NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
+DEBUG="no"
 
 CORE_COUNT=`sysctl -n machdep.cpu.core_count`
 let MAKE_JOBS=$CORE_COUNT+1
@@ -81,6 +82,7 @@ do
              VERBOSE=yes
              ;;
          d)  CONFIGURATION="Debug"
+             DEBUG="yes"
              ;;
          w)  SCARY="no"
              ;;
@@ -160,11 +162,51 @@ buildLibVLC() {
     make -j$MAKE_JOBS ${args}
     spopd # extras/tools
 
+#    export CFLAGS="-Werror=partial-availability"
+
+    SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
+    SDKROOT=`xcode-select -print-path`/Platforms/MacOSX.platform/Developer/SDKs/MacOSX${SDK_VERSION}.sdk
+    ARCH=x86_64
+    TARGET=${ARCH}-apple-darwin15
+
+    if [ ! -d "${SDKROOT}" ]
+    then
+        echo "*** ${SDKROOT} does not exist, please install required SDK, or set SDKROOT manually. ***"
+        exit 1
+    fi
+
+    if [ "$DEBUG" = "yes" ]; then
+        OPTIM="-O0 -g"
+    else
+        OPTIM="-O3 -g"
+    fi
+
+    # clean the environment
+    export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin"
+    export CFLAGS=""
+    export CPPFLAGS=""
+    export CXXFLAGS=""
+    export OBJCFLAGS=""
+    export LDFLAGS=""
+
+    CFLAGS="-isysroot ${SDKROOT} -arch ${ARCH} ${OPTIM} -mmacosx-version-min=${SDK_MIN} -march=core2 -mtune=core2"
+    LDFLAGS="-isysroot ${SDKROOT} -L${SDKROOT}/usr/lib -arch ${ARCH} -Wl,-macosx_version_min,${SDK_MIN}"
+
+    export CFLAGS="${CFLAGS}"
+    export CXXFLAGS="${CFLAGS}"
+    export CPPFLAGS="${CFLAGS}"
+    export OBJCFLAGS="${CFLAGS}"
+    export LDFLAGS="${LDFLAGS}"
+
     info "Building contrib"
     spushd contrib
     mkdir -p vlckitbuild
     spushd vlckitbuild
-    ../bootstrap --build=x86_64-apple-darwin15 --disable-bluray --disable-growl --disable-sparkle --disable-SDL --disable-SDL_image --disable-microdns --disable-fontconfig --disable-bghudappkit
+    ../bootstrap --build=${TARGET} --disable-bluray --disable-growl --disable-sparkle --disable-SDL --disable-SDL_image --disable-microdns --disable-fontconfig --disable-bghudappkit
+
+    echo "EXTRA_CFLAGS += ${CFLAGS}" >> config.mak
+    echo "EXTRA_LDFLAGS += ${LDFLAGS}" >> config.mak
+
     make -j$MAKE_JOBS fetch ${args}
     make .gettext ${args}
     make -j$MAKE_JOBS ${args}
@@ -180,7 +222,35 @@ buildLibVLC() {
     mkdir -p vlckitbuild
 
     spushd vlckitbuild
-    ../extras/package/macosx/configure.sh --build=x86_64-apple-darwin15 --prefix="${PREFIX}" --disable-macosx-vlc-app --disable-macosx --enable-merge-ffmpeg --disable-sparkle
+
+    export CC="xcrun clang"
+    export CXX="xcrun clang++"
+    export OBJC="xcrun clang"
+
+    ../configure --build=${TARGET} --prefix="${PREFIX}" \
+        --disable-macosx-vlc-app \
+        --disable-macosx \
+        --enable-merge-ffmpeg \
+        --disable-sparkle \
+        --enable-osx-notifications \
+        --enable-faad \
+        --enable-flac \
+        --enable-theora \
+        --enable-shout \
+        --enable-ncurses \
+        --enable-twolame \
+        --enable-realrtsp \
+        --enable-libass \
+        --enable-macosx-qtkit \
+        --enable-macosx-avfoundation \
+        --disable-skins2 \
+        --disable-qt \
+        --disable-xcb \
+        --disable-caca \
+        --disable-pulse \
+        --disable-sdl \
+        --disable-gnutls \
+        --disable-vnc
     make -j$MAKE_JOBS ${args}
     make install $(args)    
     spopd #vlckitbuild
