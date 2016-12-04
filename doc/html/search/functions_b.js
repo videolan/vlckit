@@ -16,5 +16,7 @@ var searchData=
   ['mediawithurl_3a',['mediaWithURL:',['../interface_v_l_c_media.html#a38e5fb8f18d50b6de684a7e56c1611fa',1,'VLCMedia']]],
   ['mediumjumpbackward',['mediumJumpBackward',['../interface_v_l_c_media_player.html#ae010feb668404c839ca683ecef6ee7a2',1,'VLCMediaPlayer']]],
   ['mediumjumpforward',['mediumJumpForward',['../interface_v_l_c_media_player.html#ae87c31a4ebc3274b2b275bc5ac42f24c',1,'VLCMediaPlayer']]],
-  ['metadataforkey_3a',['metadataForKey:',['../interface_v_l_c_media.html#af495ec3452fdcdcd89aa2a13695ba6dd',1,'VLCMedia']]]
+  ['metadataforkey_3a',['metadataForKey:',['../interface_v_l_c_media.html#af495ec3452fdcdcd89aa2a13695ba6dd',1,'VLCMedia']]],
+  ['mpeg2streamoutputwithfilepath_3a',['mpeg2StreamOutputWithFilePath:',['../interface_v_l_c_stream_output.html#a1c1586457352350d81adbe686729eb92',1,'VLCStreamOutput']]],
+  ['mpeg4streamoutputwithfilepath_3a',['mpeg4StreamOutputWithFilePath:',['../interface_v_l_c_stream_output.html#a5c5ec3624e9cc31e1de8630e42430c40',1,'VLCStreamOutput']]]
 ];

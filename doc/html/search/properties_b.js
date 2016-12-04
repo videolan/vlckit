@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['name',['name',['../interface_v_l_c_extension.html#a97df1338490ed1d7bcc59fb5eb9733c6',1,'VLCExtension']]],
   ['next',['next',['../interface_v_l_c_media_list_player.html#a9443120446a79cd785b1e2b71882f199',1,'VLCMediaListPlayer']]],
   ['numberofaudiotracks',['numberOfAudioTracks',['../interface_v_l_c_media_player.html#a932d093bc73aea01f953a1b96023f401',1,'VLCMediaPlayer']]],
   ['numberofbands',['numberOfBands',['../interface_v_l_c_media_player.html#abfda4f0fc83029e50e631d2fbe1c8c48',1,'VLCMediaPlayer']]],

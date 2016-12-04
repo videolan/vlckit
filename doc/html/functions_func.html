@@ -120,10 +120,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index__"></a>- _ -</h3><ul>
 <li>__attribute__
-: <a class="el" href="interface_v_l_c_media_discoverer.html#a57b40dcdb0b650aea2feed95fdd30d83">VLCMediaDiscoverer</a>
-, <a class="el" href="interface_v_l_c_media.html#ac32a90c64851638af38108040b37e454">VLCMedia</a>
+: <a class="el" href="interface_v_l_c_extensions_manager.html#a7062873fb7e27aedc33791663783045a">VLCExtensionsManager</a>
+, <a class="el" href="interface_v_l_c_media_discoverer.html#a57b40dcdb0b650aea2feed95fdd30d83">VLCMediaDiscoverer</a>
+, <a class="el" href="interface_v_l_c_media_library.html#afbb02ac470223ee5bebba45220326675">VLCMediaLibrary</a>
+, <a class="el" href="interface_v_l_c_stream_output.html#aa573b7c97a017789e58ab392812e3032">VLCStreamOutput</a>
+, <a class="el" href="interface_v_l_c_stream_session.html#a462740188cf07ef740c1669dcfd34c2b">VLCStreamSession</a>
+, <a class="el" href="interface_v_l_c_extension.html#a186e9fcd44b717766171932b81cb2c31">VLCExtension</a>
+, <a class="el" href="interface_v_l_c_extensions_manager.html#a7cf94669829921ac28efd0bc78881d9d">VLCExtensionsManager</a>
+, <a class="el" href="interface_v_l_c_media.html#a28c23c5d427727732476f86c6d0645ee">VLCMedia</a>
 , <a class="el" href="interface_v_l_c_media_discoverer.html#abefec909660b69a00410cab13c2d9a5b">VLCMediaDiscoverer</a>
-, <a class="el" href="interface_v_l_c_media_player.html#ab59f33aa946850a6387d87630c2cca16">VLCMediaPlayer</a>
+, <a class="el" href="interface_v_l_c_media_library.html#ab7a54a9b8754b31a7f19b6bbf2b65df5">VLCMediaLibrary</a>
+, <a class="el" href="interface_v_l_c_media_player.html#aae0b500274a748ac5c035c2a3c46c366">VLCMediaPlayer</a>
+, <a class="el" href="interface_v_l_c_stream_session.html#a462740188cf07ef740c1669dcfd34c2b">VLCStreamSession</a>
 , <a class="el" href="interface_v_l_c_time.html#a4614e337e6304712ddd9182861e347ed">VLCTime</a>
 </li>
 </ul>
@@ -157,6 +165,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>chaptersForTitleIndex:
 : <a class="el" href="interface_v_l_c_media_player.html#a59fbfd5a29004a32b9f64328ad6b57a4">VLCMediaPlayer</a>
+</li>
+<li>clearStoredCookies
+: <a class="el" href="interface_v_l_c_media.html#a51bdb09726b9f4d72072e144ea7314cc">VLCMedia</a>
 </li>
 <li>codecNameForFourCC:trackType:
 : <a class="el" href="interface_v_l_c_media.html#a98f23cb39854168dc79df832cecb7ff2">VLCMedia</a>
@@ -229,7 +240,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="interface_v_l_c_media_list_player.html#a39e3151a069ead5d9bdc4bd1d8b0e815">VLCMediaListPlayer</a>
 </li>
 <li>initWithInstance:
-: <a class="el" href="interface_v_l_c_extension.html#a11832237a10c2313427d475559a41dd1">VLCExtension</a>
+: <a class="el" href="interface_v_l_c_extension.html#acecb4294998ecfa4c50c972fe48f3142">VLCExtension</a>
 </li>
 <li>initWithInt:
 : <a class="el" href="interface_v_l_c_time.html#ac9717d5978ab18fa6547cde44904cfad">VLCTime</a>
@@ -248,6 +259,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>initWithNumber:
 : <a class="el" href="interface_v_l_c_time.html#a4681ebad8d27e7243ebf6d83679e8a24">VLCTime</a>
+</li>
+<li>initWithOptionDictionary:
+: <a class="el" href="interface_v_l_c_stream_output.html#a11c02ad55e225c5afa473aeb15db13e0">VLCStreamOutput</a>
 </li>
 <li>initWithOptions:
 : <a class="el" href="interface_v_l_c_library.html#ab029c774c0b133dc9c15b9f4446de8c5">VLCLibrary</a>
@@ -271,6 +285,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>insertMedia:atIndex:
 : <a class="el" href="interface_v_l_c_media_list.html#a74c524b2bef9533785d289f17775c580">VLCMediaList</a>
+</li>
+<li>ipodStreamOutputWithFilePath:
+: <a class="el" href="interface_v_l_c_stream_output.html#a518d4dd8d9b9733acd58dce332f8d004">VLCStreamOutput</a>
 </li>
 <li>isEqual:
 : <a class="el" href="interface_v_l_c_time.html#a02ff06b1610b86d9bb1770a93837be42">VLCTime</a>
@@ -356,6 +373,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>metadataForKey:
 : <a class="el" href="interface_v_l_c_media.html#af495ec3452fdcdcd89aa2a13695ba6dd">VLCMedia</a>
 </li>
+<li>mpeg2StreamOutputWithFilePath:
+: <a class="el" href="interface_v_l_c_stream_output.html#a1c1586457352350d81adbe686729eb92">VLCStreamOutput</a>
+</li>
+<li>mpeg4StreamOutputWithFilePath:
+: <a class="el" href="interface_v_l_c_stream_output.html#a5c5ec3624e9cc31e1de8630e42430c40">VLCStreamOutput</a>
+</li>
 </ul>
 
 
@@ -435,8 +458,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>rewindAtRate:
 : <a class="el" href="interface_v_l_c_media_player.html#ade646072ef74f61b84e4afdc260a0f36">VLCMediaPlayer</a>
 </li>
+<li>rtpBroadcastStreamOutputWithSAPAnnounce:
+: <a class="el" href="interface_v_l_c_stream_output.html#a37d21584a752b9ddaecd248d171bdf59">VLCStreamOutput</a>
+</li>
 <li>runExtension:
-: <a class="el" href="interface_v_l_c_extensions_manager.html#ae8b8abc7fc156c89afcef5337b623db9">VLCExtensionsManager</a>
+: <a class="el" href="interface_v_l_c_extensions_manager.html#af5cb92dc2f89e98a2e9c4633f77bff0b">VLCExtensionsManager</a>
 </li>
 </ul>
 
@@ -472,12 +498,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>sharedLibrary
 : <a class="el" href="interface_v_l_c_library.html#a7eddfd69ce66ffc5603bc68a5777187e">VLCLibrary</a>
 </li>
-<li>sharedManager
-: <a class="el" href="interface_v_l_c_extensions_manager.html#aa62fbb11494cece9f74b10661556afca">VLCExtensionsManager</a>
-</li>
-<li>sharedMediaLibrary
-: <a class="el" href="interface_v_l_c_media_library.html#a98d1acbeb999cdd02922b9c6a486a90c">VLCMediaLibrary</a>
-</li>
 <li>shortJumpBackward
 : <a class="el" href="interface_v_l_c_media_player.html#a8a8548e2888bbcf9bf8ed5a35fc30cf4">VLCMediaPlayer</a>
 </li>
@@ -505,6 +525,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>stopDiscoverer
 : <a class="el" href="interface_v_l_c_media_discoverer.html#aedebd3f4b61febe5ca436af1f1ea7508">VLCMediaDiscoverer</a>
+</li>
+<li>storeCookie:forHost:path:
+: <a class="el" href="interface_v_l_c_media.html#ac04b45047fa221e26ac0c589e28fc5ff">VLCMedia</a>
+</li>
+<li>streamOutputWithFilePath:
+: <a class="el" href="interface_v_l_c_stream_output.html#abacda1a7636077fc336abde914fb4877">VLCStreamOutput</a>
+</li>
+<li>streamOutputWithOptionDictionary:
+: <a class="el" href="interface_v_l_c_stream_output.html#ae31bb946515ad904af62b14ad4c0174c">VLCStreamOutput</a>
 </li>
 </ul>
 

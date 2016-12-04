@@ -148,6 +148,10 @@ Instance Methods</h2></td></tr>
 <tr class="separator:ac00685e5d9a33652413b298c43423b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ef68cc558ac4af2180acbad69c07289"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_v_l_c_media.html#a4ef68cc558ac4af2180acbad69c07289">addOptions:</a></td></tr>
 <tr class="separator:a4ef68cc558ac4af2180acbad69c07289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac04b45047fa221e26ac0c589e28fc5ff"><td class="memItemLeft" align="right" valign="top">(int)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_v_l_c_media.html#ac04b45047fa221e26ac0c589e28fc5ff">storeCookie:forHost:path:</a></td></tr>
+<tr class="separator:ac04b45047fa221e26ac0c589e28fc5ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51bdb09726b9f4d72072e144ea7314cc"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_v_l_c_media.html#a51bdb09726b9f4d72072e144ea7314cc">clearStoredCookies</a></td></tr>
+<tr class="separator:a51bdb09726b9f4d72072e144ea7314cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Class Methods</h2></td></tr>
@@ -294,7 +298,7 @@ Properties</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Determines if the media has already been preparsed. </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000002">Deprecated:</a></b></dt><dd>use parseStatus instead </dd></dl>
+<p>Determines if the media has already been preparsed. </p><dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000010">Deprecated:</a></b></dt><dd>use parseStatus instead </dd></dl>
 
 </div>
 </div>
@@ -311,7 +315,7 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Trigger a synchronous parsing of the media the selector won't return until parsing finished</p>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000004">Deprecated:</a></b></dt><dd>Use parseWithOptions: instead </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000012">Deprecated:</a></b></dt><dd>Use parseWithOptions: instead </dd></dl>
 
 </div>
 </div>
@@ -330,7 +334,7 @@ Properties</h2></td></tr>
 <p>Start asynchronously to parse the media. This will attempt to fetch the meta data and tracks information.</p>
 <p>This is automatically done when an accessor requiring parsing is called.</p>
 <dl class="section see"><dt>See also</dt><dd>-[<a class="el" href="protocol_v_l_c_media_delegate-p.html">VLCMediaDelegate</a> mediaDidFinishParsing:] </dd></dl>
-<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000003">Deprecated:</a></b></dt><dd>Use parseWithOptions: instead </dd></dl>
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000011">Deprecated:</a></b></dt><dd>Use parseWithOptions: instead </dd></dl>
 
 </div>
 </div>
@@ -349,6 +353,24 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 <p>Add options to the media, that will be used to determine how <a class="el" href="interface_v_l_c_media_player.html">VLCMediaPlayer</a> will read the media. This allow to use VLC advanced reading/streaming options in a per-media basis</p>
 <p>The options are detailed in vlc &ndash;long-help, for instance "--sout-all" And on the web: <a href="http://wiki.videolan.org/VLC_command-line_help">http://wiki.videolan.org/VLC_command-line_help</a> </p>
+
+</div>
+</div>
+<a class="anchor" id="a51bdb09726b9f4d72072e144ea7314cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (void) clearStoredCookies </td>
+          <td></td>
+          <td class="paramname"></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Clear the stored cookies of a media.</p>
+<dl class="section note"><dt>Note</dt><dd>must be called before the first call of play() to take effect. The cookie jar is only used for http/https. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This method will never succeed on macOS, but requires iOS or tvOS </dd></dl>
 
 </div>
 </div>
@@ -739,6 +761,50 @@ dictionary keys above </dd></dl>
   </dd>
 </dl>
 <dl class="section see"><dt>See also</dt><dd>dictionary keys above </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ac04b45047fa221e26ac0c589e28fc5ff"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (int) storeCookie: </td>
+          <td></td>
+          <td class="paramtype">(NSString *_Nonnull)&#160;</td>
+          <td class="paramname"><em>cookie</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">forHost:</td>
+          <td></td>
+          <td class="paramtype">(NSString *_Nonnull)&#160;</td>
+          <td class="paramname"><em>host</em></td>
+        </tr>
+        <tr>
+          <td class="paramkey">path:</td>
+          <td></td>
+          <td class="paramtype">(NSString *_Nonnull)&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parse a value of an incoming Set-Cookie header (see RFC 6265) and append the cookie to the stored cookies if appropriate. The "secure" attribute can be added to cookie to limit the scope of the cookie to secured channels (https).</p>
+<dl class="section note"><dt>Note</dt><dd>must be called before the first call of play() to take effect. The cookie storage is only used for http/https. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>This method will never succeed on macOS, but requires iOS or tvOS</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cookie</td><td>header field value of Set-Cookie: "name=value&lt;;attributes&gt;" </td></tr>
+    <tr><td class="paramname">host</td><td>host to which the cookie will be sent </td></tr>
+    <tr><td class="paramname">path</td><td>scope of the cookie</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>0 on success, -1 on error. </dd></dl>
 
 </div>
 </div>

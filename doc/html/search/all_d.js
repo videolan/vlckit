@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['name',['name',['../interface_v_l_c_extension.html#a97df1338490ed1d7bcc59fb5eb9733c6',1,'VLCExtension']]],
   ['next',['next',['../interface_v_l_c_media_list_player.html#a9443120446a79cd785b1e2b71882f199',1,'VLCMediaListPlayer']]],
   ['nextchapter',['nextChapter',['../interface_v_l_c_media_player.html#acfaac1c1cf8ae35bd40d80afa42bf1f0',1,'VLCMediaPlayer']]],
   ['ns_5fenum',['NS_ENUM',['../interface_v_l_c_media.html#a353de8b3f3676f9f422630ed595fdfcc',1,'VLCMedia::NS_ENUM(NSUInteger, VLCMediaType)'],['../interface_v_l_c_media.html#a4ad7dacc361919932777b2bf5a141023',1,'VLCMedia::NS_ENUM(unsigned, VLCMediaParsedStatus)'],['../interface_v_l_c_media_player.html#a7eb2b3aeb06985b3b655c1c76609924f',1,'VLCMediaPlayer::NS_ENUM()']]],

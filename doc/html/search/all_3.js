@@ -5,6 +5,7 @@ var searchData=
   ['changeset',['changeset',['../interface_v_l_c_library.html#a9201c5f4b1ee745e31e3875835914124',1,'VLCLibrary']]],
   ['chapterdescriptionsoftitle_3a',['chapterDescriptionsOfTitle:',['../interface_v_l_c_media_player.html#a637f12081f1748693c9234b33c752640',1,'VLCMediaPlayer']]],
   ['chaptersfortitleindex_3a',['chaptersForTitleIndex:',['../interface_v_l_c_media_player.html#a59fbfd5a29004a32b9f64328ad6b57a4',1,'VLCMediaPlayer']]],
+  ['clearstoredcookies',['clearStoredCookies',['../interface_v_l_c_media.html#a51bdb09726b9f4d72072e144ea7314cc',1,'VLCMedia']]],
   ['codecnameforfourcc_3atracktype_3a',['codecNameForFourCC:trackType:',['../interface_v_l_c_media.html#a98f23cb39854168dc79df832cecb7ff2',1,'VLCMedia']]],
   ['compare_3a',['compare:',['../interface_v_l_c_media.html#ac0b967f4529a5c2a23972cca9fd2a800',1,'VLCMedia::compare:()'],['../interface_v_l_c_time.html#a4bde16fb3441c6e7ff40a75e2f206148',1,'VLCTime::compare:()']]],
   ['compiler',['compiler',['../interface_v_l_c_library.html#a91485a448eb7b18c7b5c36bba4c56184',1,'VLCLibrary']]],

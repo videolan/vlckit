@@ -8,7 +8,7 @@ var searchData=
   ['medialist_3amediaadded_3aatindex_3a',['mediaList:mediaAdded:atIndex:',['../protocol_v_l_c_media_list_delegate-p.html#ae683ddfddeb113cf4d8245e91874b195',1,'VLCMediaListDelegate-p']]],
   ['medialist_3amediaremovedatindex_3a',['mediaList:mediaRemovedAtIndex:',['../protocol_v_l_c_media_list_delegate-p.html#ab8a85ff1ee6bc0a84aa7f931b8b27024',1,'VLCMediaListDelegate-p']]],
   ['mediametadatadidchange_3a',['mediaMetaDataDidChange:',['../protocol_v_l_c_media_delegate-p.html#acf9db32d94f11f07d9660587d4b8b0b5',1,'VLCMediaDelegate-p']]],
-  ['mediaplayer',['mediaPlayer',['../interface_v_l_c_extensions_manager.html#aed4feac650e292483c80d082d0075fbb',1,'VLCExtensionsManager::mediaPlayer()'],['../interface_v_l_c_media_list_player.html#a77a18025616fa5fa2d06a539f6eea9f3',1,'VLCMediaListPlayer::mediaPlayer()']]],
+  ['mediaplayer',['mediaPlayer',['../interface_v_l_c_media_list_player.html#a77a18025616fa5fa2d06a539f6eea9f3',1,'VLCMediaListPlayer']]],
   ['mediaplayerchapterchanged_3a',['mediaPlayerChapterChanged:',['../protocol_v_l_c_media_player_delegate-p.html#aa0cba7a31646e3b6dbb7b994776eaf4b',1,'VLCMediaPlayerDelegate-p']]],
   ['mediaplayerstatechanged_3a',['mediaPlayerStateChanged:',['../protocol_v_l_c_media_player_delegate-p.html#afd15a9281d2a0d4c03b1b67ff0041ba8',1,'VLCMediaPlayerDelegate-p']]],
   ['mediaplayertimechanged_3a',['mediaPlayerTimeChanged:',['../protocol_v_l_c_media_player_delegate-p.html#a5c1d64150f362598808f444b66046f7a',1,'VLCMediaPlayerDelegate-p']]],
@@ -24,5 +24,7 @@ var searchData=
   ['metadataforkey_3a',['metadataForKey:',['../interface_v_l_c_media.html#af495ec3452fdcdcd89aa2a13695ba6dd',1,'VLCMedia']]],
   ['metadictionary',['metaDictionary',['../interface_v_l_c_media.html#ac61f729efe7481e86d26e7e92fff0dd2',1,'VLCMedia']]],
   ['minutestringvalue',['minuteStringValue',['../interface_v_l_c_time.html#aa6d4bce56be3df94a0896763f1769921',1,'VLCTime']]],
+  ['mpeg2streamoutputwithfilepath_3a',['mpeg2StreamOutputWithFilePath:',['../interface_v_l_c_stream_output.html#a1c1586457352350d81adbe686729eb92',1,'VLCStreamOutput']]],
+  ['mpeg4streamoutputwithfilepath_3a',['mpeg4StreamOutputWithFilePath:',['../interface_v_l_c_stream_output.html#a5c5ec3624e9cc31e1de8630e42430c40',1,'VLCStreamOutput']]],
   ['muted',['muted',['../interface_v_l_c_audio.html#aa2739a3d1ec35d69a9920e4a9588ef8c',1,'VLCAudio']]]
 ];

@@ -8,5 +8,6 @@ var searchData=
   ['rewind',['rewind',['../interface_v_l_c_media_player.html#ac03553439681974c0da7014c44b104d6',1,'VLCMediaPlayer']]],
   ['rewindatrate_3a',['rewindAtRate:',['../interface_v_l_c_media_player.html#ade646072ef74f61b84e4afdc260a0f36',1,'VLCMediaPlayer']]],
   ['rootmedia',['rootMedia',['../interface_v_l_c_media_list_player.html#ac1a1b1d304efb4e1c62026f9ed321e9d',1,'VLCMediaListPlayer']]],
-  ['runextension_3a',['runExtension:',['../interface_v_l_c_extensions_manager.html#ae8b8abc7fc156c89afcef5337b623db9',1,'VLCExtensionsManager']]]
+  ['rtpbroadcaststreamoutputwithsapannounce_3a',['rtpBroadcastStreamOutputWithSAPAnnounce:',['../interface_v_l_c_stream_output.html#a37d21584a752b9ddaecd248d171bdf59',1,'VLCStreamOutput']]],
+  ['runextension_3a',['runExtension:',['../interface_v_l_c_extensions_manager.html#af5cb92dc2f89e98a2e9c4633f77bff0b',1,'VLCExtensionsManager']]]
 ];
