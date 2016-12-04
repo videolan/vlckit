@@ -437,12 +437,10 @@ buildLibVLC() {
         ${TVOSOPTIONS} \
         --disable-macosx \
         --disable-macosx-qtkit \
-        --disable-macosx-eyetv \
         --disable-macosx-vlc-app \
         --disable-macosx-avfoundation \
         --disable-audioqueue \
         --disable-shared \
-        --enable-mkv \
         --enable-opus \
         --disable-faad \
         --disable-lua \
