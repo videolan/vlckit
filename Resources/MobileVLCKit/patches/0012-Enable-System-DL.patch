@@ -1,4 +1,4 @@
-From 482a63a267812ba6421cc94a610de9d295cbbbf5 Mon Sep 17 00:00:00 2001
+From 630accc5503268dffe35de63e88844d0b3e69abb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 12/20] Enable System DL
@@ -11,7 +11,7 @@ Subject: [PATCH 12/20] Enable System DL
 
 diff --git a/contrib/src/ffmpeg/patch-as-patch-can.patch b/contrib/src/ffmpeg/patch-as-patch-can.patch
 new file mode 100644
-index 0000000000..2d60cf7140
+index 0000000..2d60cf7
 --- /dev/null
 +++ b/contrib/src/ffmpeg/patch-as-patch-can.patch
 @@ -0,0 +1,20 @@
@@ -36,7 +36,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index e23727e2c9..ae32c97616 100644
+index e23727e..ae32c97 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -22,6 +22,9 @@ FFMPEGCONF = \
@@ -58,5 +58,5 @@ index e23727e2c9..ae32c97616 100644
  
  .ffmpeg: ffmpeg
 -- 
-2.11.0
+2.9.3
 

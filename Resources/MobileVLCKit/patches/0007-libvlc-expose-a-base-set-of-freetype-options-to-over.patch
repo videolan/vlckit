@@ -1,4 +1,4 @@
-From 2eee3a5fdd791b705b2fb5c185a0827e07b4e58d Mon Sep 17 00:00:00 2001
+From 2cff9f0db83a1f0fbde9e4ac73cc05e5b700944b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 23 Nov 2015 16:09:24 +0100
 Subject: [PATCH 07/20] libvlc: expose a base set of freetype options to
@@ -14,7 +14,7 @@ Subject: [PATCH 07/20] libvlc: expose a base set of freetype options to
  6 files changed, 163 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index b6e697e621..8cfb8a2663 100644
+index b6e697e..8cfb8a2 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
 @@ -1569,6 +1569,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
@@ -51,7 +51,7 @@ index b6e697e621..8cfb8a2663 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index caa55981bf..5262ebcc13 100644
+index caa5598..5262ebc 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
 @@ -257,6 +257,9 @@ libvlc_video_get_spu_count
@@ -75,7 +75,7 @@ index caa55981bf..5262ebcc13 100644
  libvlc_video_take_snapshot
  libvlc_video_new_viewpoint
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 74a4f85931..3f95c27c39 100644
+index 74a4f85..3f95c27 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -674,6 +674,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -92,7 +92,7 @@ index 74a4f85931..3f95c27c39 100644
      var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
      var_Create (mp, "audio-device", VLC_VAR_STRING);
 diff --git a/lib/video.c b/lib/video.c
-index 46f9935025..b7638b30fe 100644
+index 46f9935..b7638b3 100644
 --- a/lib/video.c
 +++ b/lib/video.c
 @@ -676,7 +676,7 @@ static bool find_sub_source_by_name( libvlc_media_player_t *p_mi, const char *re
@@ -189,7 +189,7 @@ index 46f9935025..b7638b30fe 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 6baf45f91b..25c965067a 100644
+index 6baf45f..25c9650 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -78,6 +78,9 @@
@@ -301,7 +301,7 @@ index 6baf45f91b..25c965067a 100644
 +    return VLC_SUCCESS;
 +}
 diff --git a/modules/text_renderer/freetype/freetype.h b/modules/text_renderer/freetype/freetype.h
-index 44b2731c8c..7f1abeca04 100644
+index 44b2731..7f1abec 100644
 --- a/modules/text_renderer/freetype/freetype.h
 +++ b/modules/text_renderer/freetype/freetype.h
 @@ -137,6 +137,8 @@ struct filter_sys_t
@@ -314,5 +314,5 @@ index 44b2731c8c..7f1abeca04 100644
  
  /**
 -- 
-2.11.0
+2.9.3
 

@@ -1,4 +1,4 @@
-From 3baf211bf3ebf096047f090074ae8262c10fc426 Mon Sep 17 00:00:00 2001
+From c0a6f13a5d0f8f789f0e422747f3132e669fb419 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
 Subject: [PATCH 09/20] contrib/gcrypt: work-around a libtool limitation
@@ -10,7 +10,7 @@ Subject: [PATCH 09/20] contrib/gcrypt: work-around a libtool limitation
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 291f0fc1b5..1484e7ab82 100644
+index 291f0fc..1484e7a 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -12,6 +12,7 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
@@ -23,7 +23,7 @@ index 291f0fc1b5..1484e7ab82 100644
  endif
 diff --git a/contrib/src/gcrypt/work-around-libtool-limitation.patch b/contrib/src/gcrypt/work-around-libtool-limitation.patch
 new file mode 100644
-index 0000000000..df97ffb488
+index 0000000..df97ffb
 --- /dev/null
 +++ b/contrib/src/gcrypt/work-around-libtool-limitation.patch
 @@ -0,0 +1,25 @@
@@ -53,5 +53,5 @@ index 0000000000..df97ffb488
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.11.0
+2.9.3
 

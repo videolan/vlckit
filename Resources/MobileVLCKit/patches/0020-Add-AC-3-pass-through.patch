@@ -1,35 +1,17 @@
-From fb01c554826a50e09433d058186c600163231e23 Mon Sep 17 00:00:00 2001
+From d5f5f6d528d3e6bcc24bd682b483a6334200b303 Mon Sep 17 00:00:00 2001
 From: Aman Gupta <aman@tmm1.net>
 Date: Tue, 1 Mar 2016 16:31:13 +0100
-Subject: [PATCH 13/20] Add AC-3 pass-through
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCH 20/20] Add AC-3 pass-through
 
-Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
 ---
- extras/package/ios/build.sh          |  2 --
  include/vlc/libvlc_media_player.h    | 10 +++++++++
  lib/audio.c                          | 16 +++++++++++++++
  lib/media_player.c                   |  1 +
  modules/audio_output/audiounit_ios.m | 39 +++++++++++++++++++++++++++---------
- 5 files changed, 56 insertions(+), 12 deletions(-)
+ 4 files changed, 56 insertions(+), 10 deletions(-)
 
-diff --git a/extras/package/ios/build.sh b/extras/package/ios/build.sh
-index b680033529..7485eb539c 100755
---- a/extras/package/ios/build.sh
-+++ b/extras/package/ios/build.sh
-@@ -466,8 +466,6 @@ speex_resampler
- remoteosd
- magnify
- gradient
--tospdif
--dtstofloat32
- logger
- visual
- fb
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 8cfb8a2663..3da63bfe27 100644
+index 8cfb8a2..3da63bf 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
 @@ -1904,6 +1904,16 @@ LIBVLC_API int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi );
@@ -50,7 +32,7 @@ index 8cfb8a2663..3da63bfe27 100644
   *
   * \return number of presets
 diff --git a/lib/audio.c b/lib/audio.c
-index 3aed6f5ff3..094cc023d8 100644
+index 3aed6f5..094cc02 100644
 --- a/lib/audio.c
 +++ b/lib/audio.c
 @@ -473,6 +473,22 @@ int libvlc_audio_set_channel( libvlc_media_player_t *mp, int channel )
@@ -77,10 +59,10 @@ index 3aed6f5ff3..094cc023d8 100644
   *****************************************************************************/
  int64_t libvlc_audio_get_delay( libvlc_media_player_t *p_mi )
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 930190cd55..52f7f777b4 100644
+index ed2a150..754ecc4 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -645,6 +645,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -646,6 +646,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "zoom", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "aspect-ratio", VLC_VAR_STRING);
      var_Create (mp, "crop", VLC_VAR_STRING);
@@ -89,7 +71,7 @@ index 930190cd55..52f7f777b4 100644
      var_Create (mp, "deinterlace-mode", VLC_VAR_STRING);
  
 diff --git a/modules/audio_output/audiounit_ios.m b/modules/audio_output/audiounit_ios.m
-index 3f591ce2ee..9ecd1dc603 100644
+index 2ec53a8..0461a32 100644
 --- a/modules/audio_output/audiounit_ios.m
 +++ b/modules/audio_output/audiounit_ios.m
 @@ -204,16 +204,34 @@ static int StartAnalog(audio_output_t *p_aout, audio_sample_format_t *fmt)
@@ -150,5 +132,5 @@ index 3f591ce2ee..9ecd1dc603 100644
      /* Set audio session to mediaplayback */
      NSError *error = nil;
 -- 
-2.11.0
+2.9.3
 

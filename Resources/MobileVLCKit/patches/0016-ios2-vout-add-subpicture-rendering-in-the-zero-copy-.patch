@@ -1,7 +1,7 @@
-From f9251ea08de5c4d1442e6283f0938953e5c417de Mon Sep 17 00:00:00 2001
+From d9ef45d56d22bfef27ec8dc6895d4701b41cfa0b Mon Sep 17 00:00:00 2001
 From: Adrien Maglo <magsoft@videolan.org>
 Date: Fri, 16 Sep 2016 14:00:21 +0200
-Subject: [PATCH 17/20] ios2 vout: add subpicture rendering in the zero copy
+Subject: [PATCH 16/20] ios2 vout: add subpicture rendering in the zero copy
  pipeline
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 17/20] ios2 vout: add subpicture rendering in the zero copy
  1 file changed, 304 insertions(+), 34 deletions(-)
 
 diff --git a/modules/video_output/ios2.m b/modules/video_output/ios2.m
-index d99b91d8bc..e235c6146c 100644
+index e91c624..6a8c4f5 100644
 --- a/modules/video_output/ios2.m
 +++ b/modules/video_output/ios2.m
 @@ -46,6 +46,7 @@
@@ -516,5 +516,5 @@ index d99b91d8bc..e235c6146c 100644
      glGetProgramiv(prog, GL_LINK_STATUS, &status);
      if (status == 0) {
 -- 
-2.11.0
+2.9.3
 
