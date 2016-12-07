@@ -202,7 +202,7 @@ buildLibVLC() {
     spushd contrib
     mkdir -p vlckitbuild
     spushd vlckitbuild
-    ../bootstrap --build=${TARGET} --disable-bluray --disable-growl --disable-sparkle --disable-SDL --disable-SDL_image --disable-microdns --disable-fontconfig --disable-bghudappkit
+    ../bootstrap --build=${TARGET} --disable-bluray --disable-growl --disable-sparkle --disable-SDL --disable-SDL_image --disable-microdns --disable-fontconfig --disable-bghudappkit --disable-protobuf
 
     echo "EXTRA_CFLAGS += ${CFLAGS}" >> config.mak
     echo "EXTRA_LDFLAGS += ${LDFLAGS}" >> config.mak
@@ -244,6 +244,7 @@ buildLibVLC() {
         --enable-macosx-qtkit \
         --enable-macosx-avfoundation \
         --disable-skins2 \
+        --disable-chromecast \
         --disable-qt \
         --disable-xcb \
         --disable-caca \
