@@ -35,8 +35,6 @@
 #import <VLCKit/VLCStreamSession.h>
 #import <VLCKit/VLCStreamOutput.h>
 #import <VLCKit/VLCMediaThumbnailer.h>
-#import <VLCKit/VLCExtension.h>
-#import <VLCKit/VLCExtensionsManager.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;

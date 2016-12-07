@@ -5,7 +5,6 @@ var searchData=
   ['initasnodewithname_3a',['initAsNodeWithName:',['../interface_v_l_c_media.html#af9a048525b9aeb4919c47e1148962638',1,'VLCMedia']]],
   ['initwitharray_3a',['initWithArray:',['../interface_v_l_c_media_list.html#a29976e5d1b3eae05b6b052d2765f5090',1,'VLCMediaList']]],
   ['initwithdrawable_3a',['initWithDrawable:',['../interface_v_l_c_media_list_player.html#a39e3151a069ead5d9bdc4bd1d8b0e815',1,'VLCMediaListPlayer']]],
-  ['initwithinstance_3a',['initWithInstance:',['../interface_v_l_c_extension.html#acecb4294998ecfa4c50c972fe48f3142',1,'VLCExtension']]],
   ['initwithint_3a',['initWithInt:',['../interface_v_l_c_time.html#ac9717d5978ab18fa6547cde44904cfad',1,'VLCTime']]],
   ['initwithlibrary_3acustomui_3a',['initWithLibrary:customUI:',['../interface_v_l_c_dialog_provider.html#a51bf3d3c491d976761a78ac431f9e986',1,'VLCDialogProvider']]],
   ['initwithlibvlcinstance_3aandlibrary_3a',['initWithLibVLCInstance:andLibrary:',['../interface_v_l_c_media_player.html#a91e1bad6eaedb58cbfe097f633c50ebd',1,'VLCMediaPlayer']]],
