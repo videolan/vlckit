@@ -1,14 +1,14 @@
-From 235b41c105c36a878c16df03c4a2596141170aaf Mon Sep 17 00:00:00 2001
+From d07d0d03f37befc233320f8b525d1406c363d712 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 22 Jul 2016 11:20:24 +0200
-Subject: [PATCH 13/20] taglib: DO NOT PUSH: works with networks accesses
+Subject: [PATCH 12/18] taglib: DO NOT PUSH: works with networks accesses
 
 ---
  modules/meta_engine/taglib.cpp | 15 ++++-----------
  1 file changed, 4 insertions(+), 11 deletions(-)
 
 diff --git a/modules/meta_engine/taglib.cpp b/modules/meta_engine/taglib.cpp
-index 6d051ba..ea3744d 100644
+index 6d051ba1ea..ea3744da29 100644
 --- a/modules/meta_engine/taglib.cpp
 +++ b/modules/meta_engine/taglib.cpp
 @@ -174,7 +174,7 @@ public:
@@ -35,7 +35,7 @@ index 6d051ba..ea3744d 100644
 -
 -    stream_t *p_stream = vlc_access_NewMRL( p_this, psz_uri );
 +#if TAGLIB_VERSION >= TAGLIB_VERSION_1_11
-+    stream_t *p_stream = vlc_stream_NewMRL( p_this, psz_uri );
++    stream_t *p_stream = vlc_stream_NewURL( p_this, psz_uri );
      free( psz_uri );
      if( p_stream == NULL )
          return VLC_EGENERIC;
@@ -48,5 +48,5 @@ index 6d051ba..ea3744d 100644
      if( psz_path == NULL )
          return VLC_EGENERIC;
 -- 
-2.9.3
+2.11.0
 

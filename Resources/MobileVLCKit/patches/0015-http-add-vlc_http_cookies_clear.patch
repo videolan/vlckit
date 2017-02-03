@@ -1,7 +1,7 @@
-From 6e5087b16018730fe0360729346aaa03a15cfd11 Mon Sep 17 00:00:00 2001
+From 386845e5d0d706621a7b892df1f3099f036c5dd1 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
-Subject: [PATCH 18/20] http: add vlc_http_cookies_clear
+Subject: [PATCH 15/18] http: add vlc_http_cookies_clear
 
 Clear all cookies without deleting the jar.
 ---
@@ -11,7 +11,7 @@ Clear all cookies without deleting the jar.
  3 files changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/include/vlc_http.h b/include/vlc_http.h
-index ed7e161..da1fe4e 100644
+index ed7e1613da..da1fe4ef1a 100644
 --- a/include/vlc_http.h
 +++ b/include/vlc_http.h
 @@ -71,6 +71,7 @@ VLC_API char *vlc_http_auth_FormatAuthorizationHeader
@@ -23,7 +23,7 @@ index ed7e161..da1fe4e 100644
  
  /**
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index d967523..71623f3 100644
+index 7b9657a4b1..ec8f04c534 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
 @@ -136,6 +136,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
@@ -35,7 +35,7 @@ index d967523..71623f3 100644
  vlc_http_cookies_fetch
  httpd_ClientIP
 diff --git a/src/misc/httpcookies.c b/src/misc/httpcookies.c
-index b6d174b..2090f69 100644
+index b6d174b3da..2090f697fb 100644
 --- a/src/misc/httpcookies.c
 +++ b/src/misc/httpcookies.c
 @@ -281,18 +281,20 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
@@ -64,5 +64,5 @@ index b6d174b..2090f69 100644
  }
  
 -- 
-2.9.3
+2.11.0
 

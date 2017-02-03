@@ -1,7 +1,7 @@
-From 5ebc4cdb39eee4935187daa636b6f4665598f6dd Mon Sep 17 00:00:00 2001
+From 34eaa903fb769554f715336c4a3a3714dafefc76 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:03:37 +0200
-Subject: [PATCH 14/20] contrib/gcrypt: update patches
+Subject: [PATCH 13/18] contrib/gcrypt: update patches
 
 ---
  contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch  | 308 ++++++++++++++++++++-
@@ -9,7 +9,7 @@ Subject: [PATCH 14/20] contrib/gcrypt: update patches
  2 files changed, 310 insertions(+), 14 deletions(-)
 
 diff --git a/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch b/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
-index f1d3ccc..21d7a30 100644
+index f1d3ccc71f..21d7a30c8d 100644
 --- a/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
 +++ b/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
 @@ -1,16 +1,312 @@
@@ -332,7 +332,7 @@ index f1d3ccc..21d7a30 100644
 -    *	%rsi: data (64 bytes)
 +    *	%rsi: data (64*nblks bytes)
 diff --git a/contrib/src/gcrypt/work-around-libtool-limitation.patch b/contrib/src/gcrypt/work-around-libtool-limitation.patch
-index df97ffb..957f268 100644
+index df97ffb488..957f268ad2 100644
 --- a/contrib/src/gcrypt/work-around-libtool-limitation.patch
 +++ b/contrib/src/gcrypt/work-around-libtool-limitation.patch
 @@ -1,18 +1,18 @@
@@ -363,5 +363,5 @@ index df97ffb..957f268 100644
   
   # Need to include ../src in addition to top_srcdir because gcrypt.h is
 -- 
-2.9.3
+2.11.0
 

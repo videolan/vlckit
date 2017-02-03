@@ -1,14 +1,14 @@
-From 8e9175d91ef79c36e7dfc4f4dfe87bb76feb70f6 Mon Sep 17 00:00:00 2001
+From 5d5d9e312506476d339f6e4341487622c932ea53 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 18 Dec 2014 22:14:55 +0100
-Subject: [PATCH 04/20] arm_neon: work-around libtool issue
+Subject: [PATCH 04/18] arm_neon: work-around libtool issue
 
 ---
  modules/arm_neon/Makefile.am | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/modules/arm_neon/Makefile.am b/modules/arm_neon/Makefile.am
-index db81ec0..e67e07e 100644
+index db81ec0b84..e67e07e61c 100644
 --- a/modules/arm_neon/Makefile.am
 +++ b/modules/arm_neon/Makefile.am
 @@ -1,3 +1,5 @@
@@ -18,5 +18,5 @@ index db81ec0..e67e07e 100644
  
  libchroma_yuv_neon_plugin_la_SOURCES = \
 -- 
-2.9.3
+2.11.0
 

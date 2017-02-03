@@ -1,7 +1,7 @@
-From 6efbf5badf7f56b888d1e465eb426acfdc58660c Mon Sep 17 00:00:00 2001
+From 0a9deab18b1af76f92cdf35c07f2f2ead11ce1ab Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 17/20] libvlc_media: add cookie_jar API
+Subject: [PATCH 18/18] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -12,7 +12,7 @@ Subject: [PATCH 17/20] libvlc_media: add cookie_jar API
  5 files changed, 72 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index 01e571c..5ca39f5 100644
+index 01e571c519..5ca39f51a3 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
 @@ -876,6 +876,41 @@ LIBVLC_API
@@ -58,7 +58,7 @@ index 01e571c..5ca39f5 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 5262ebc..5abea21 100644
+index caa55981bf..c0d5754abf 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
 @@ -216,6 +216,8 @@ libvlc_media_set_user_data
@@ -71,7 +71,7 @@ index 5262ebc..5abea21 100644
  libvlc_playlist_play
  libvlc_release
 diff --git a/lib/media.c b/lib/media.c
-index fdd2445..e97e56d 100644
+index f3be2c93db..9789ef7405 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -396,6 +396,8 @@ libvlc_media_t * libvlc_media_new_from_input_item(
@@ -93,9 +93,9 @@ index fdd2445..e97e56d 100644
      vlc_cond_destroy( &p_md->parsed_cond );
      vlc_mutex_destroy( &p_md->parsed_lock );
      vlc_mutex_destroy( &p_md->subitems_lock );
-@@ -1273,3 +1278,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
-         free( pp_slaves );
+@@ -1274,3 +1279,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
+     free( pp_slaves );
  }
 +
 +int
@@ -119,7 +119,7 @@ index fdd2445..e97e56d 100644
 +        vlc_http_cookies_clear( p_md->p_cookie_jar );
 +}
 diff --git a/lib/media_internal.h b/lib/media_internal.h
-index f063ddb..17bbd84 100644
+index f063ddb5fa..17bbd84fac 100644
 --- a/lib/media_internal.h
 +++ b/lib/media_internal.h
 @@ -30,6 +30,7 @@
@@ -139,7 +139,7 @@ index f063ddb..17bbd84 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 930190c..ed2a150 100644
+index 08a900194b..d8483d3f02 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -605,6 +605,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -150,7 +150,7 @@ index 930190c..ed2a150 100644
  
      /* Video */
      var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
-@@ -961,6 +962,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -956,6 +957,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
          return -1;
      }
  
@@ -164,5 +164,5 @@ index 930190c..ed2a150 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.9.3
+2.11.0
 
