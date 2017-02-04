@@ -80,6 +80,7 @@ do
              ;;
          v)
              VERBOSE=yes
+             MAKE_JOBS=1
              ;;
          d)  CONFIGURATION="Debug"
              DEBUG="yes"

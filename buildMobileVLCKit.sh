@@ -55,6 +55,7 @@ do
              ;;
          v)
              VERBOSE=yes
+             MAKE_JOBS=1
              ;;
          s)
              BUILD_DEVICE=no
