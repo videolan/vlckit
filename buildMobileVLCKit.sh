@@ -625,8 +625,8 @@ buildMobileKit() {
         export STRIP="xcrun strip"
         export CPP="xcrun cc -E"
         export CXXCPP="xcrun c++ -E"
-        export AS="xcrun as"
-        export CCAS=""
+        unset AS
+        unset CCAS
 
         if [ "$TVOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
