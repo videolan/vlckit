@@ -346,7 +346,12 @@ buildLibVLC() {
         TVOSOPTIONS=""
     fi
 
-    ../bootstrap --build=x86_64-apple-darwin14 --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
+    if [ "${TARGET}" = "x86_64-apple-darwin14" ];then
+        BUILD=""
+    else
+        BUILD="--build=x86_64-apple-darwin14"
+    fi
+    ../bootstrap ${BUILD} --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
         --disable-disc --disable-sout \
         --disable-sdl \
         --disable-SDL_image \
