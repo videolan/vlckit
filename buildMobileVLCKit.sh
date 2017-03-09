@@ -262,7 +262,7 @@ buildLibVLC() {
     TARGET="${ARCH}-apple-darwin14"
 
     # clean the environment
-    export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin"
+    export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin:${PATH}"
     export CFLAGS=""
     export CPPFLAGS=""
     export CXXFLAGS=""
