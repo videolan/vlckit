@@ -1,7 +1,7 @@
-From bf9ea5d948f1d22ccdfdb9ba0e40e13d032fdfd9 Mon Sep 17 00:00:00 2001
+From d02332c5904c15cdfdd0f73c7549df3cb2af5f06 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 11/18] Enable System DL
+Subject: [PATCH 10/15] Enable System DL
 
 ---
  contrib/src/ffmpeg/patch-as-patch-can.patch | 20 ++++++++++++++++++++
@@ -36,10 +36,10 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index e23727e2c9..ae32c97616 100644
+index 803a18a040..2db0a0b836 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -22,6 +22,9 @@ FFMPEGCONF = \
+@@ -24,6 +24,9 @@ FFMPEGCONF = \
  	--disable-decoder=opus \
  	--enable-libgsm \
  	--enable-libopenjpeg \
@@ -49,10 +49,10 @@ index e23727e2c9..ae32c97616 100644
  	--disable-debug \
  	--disable-avdevice \
  	--disable-devices \
-@@ -221,6 +224,7 @@ ffmpeg: ffmpeg-$(FFMPEG_HASH).tar.xz .sum-ffmpeg
- 	rm -Rf $@ $@-$(FFMPEG_HASH)
- 	mkdir -p $@-$(FFMPEG_HASH)
- 	$(XZCAT) "$<" | (cd $@-$(FFMPEG_HASH) && tar xv --strip-components=1)
+@@ -228,6 +231,7 @@ ffmpeg: ffmpeg-$(FFMPEG_BASENAME).tar.xz .sum-ffmpeg
+ 	rm -Rf $@ $@-$(FFMPEG_BASENAME)
+ 	mkdir -p $@-$(FFMPEG_BASENAME)
+ 	tar xvJf "$<" --strip-components=1 -C $@-$(FFMPEG_BASENAME)
 +	$(APPLY) $(SRC)/ffmpeg/patch-as-patch-can.patch
  	$(MOVE)
  

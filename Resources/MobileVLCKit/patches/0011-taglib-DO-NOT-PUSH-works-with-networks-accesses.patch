@@ -1,14 +1,14 @@
-From d07d0d03f37befc233320f8b525d1406c363d712 Mon Sep 17 00:00:00 2001
+From 28132ec22bbfb245440a707650411629a5ab245d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 22 Jul 2016 11:20:24 +0200
-Subject: [PATCH 12/18] taglib: DO NOT PUSH: works with networks accesses
+Subject: [PATCH 11/15] taglib: DO NOT PUSH: works with networks accesses
 
 ---
  modules/meta_engine/taglib.cpp | 15 ++++-----------
  1 file changed, 4 insertions(+), 11 deletions(-)
 
 diff --git a/modules/meta_engine/taglib.cpp b/modules/meta_engine/taglib.cpp
-index 6d051ba1ea..ea3744da29 100644
+index 6d051ba1ea..afc81312e6 100644
 --- a/modules/meta_engine/taglib.cpp
 +++ b/modules/meta_engine/taglib.cpp
 @@ -174,7 +174,7 @@ public:

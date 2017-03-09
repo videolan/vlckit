@@ -1,14 +1,14 @@
-From 386845e5d0d706621a7b892df1f3099f036c5dd1 Mon Sep 17 00:00:00 2001
+From 603acedfd2defc005958bb93aa4ff9a133b00941 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
-Subject: [PATCH 15/18] http: add vlc_http_cookies_clear
+Subject: [PATCH 14/15] http: add vlc_http_cookies_clear
 
 Clear all cookies without deleting the jar.
 ---
- include/vlc_http.h     |  1 +
- src/libvlccore.sym     |  1 +
- src/misc/httpcookies.c | 10 ++++++----
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ include/vlc_http.h     | 1 +
+ src/libvlccore.sym     | 1 +
+ src/misc/httpcookies.c | 7 +++++--
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/include/vlc_http.h b/include/vlc_http.h
 index ed7e1613da..da1fe4ef1a 100644
@@ -23,10 +23,10 @@ index ed7e1613da..da1fe4ef1a 100644
  
  /**
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index 7b9657a4b1..ec8f04c534 100644
+index 57c83495a3..3352b848d6 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -136,6 +136,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
+@@ -135,6 +135,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
  vlc_http_auth_FormatAuthorizationHeader
  vlc_http_cookies_new
  vlc_http_cookies_destroy
@@ -35,10 +35,10 @@ index 7b9657a4b1..ec8f04c534 100644
  vlc_http_cookies_fetch
  httpd_ClientIP
 diff --git a/src/misc/httpcookies.c b/src/misc/httpcookies.c
-index b6d174b3da..2090f697fb 100644
+index 2e4d3a8663..0929758f62 100644
 --- a/src/misc/httpcookies.c
 +++ b/src/misc/httpcookies.c
-@@ -281,18 +281,20 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
+@@ -281,7 +281,7 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
      return jar;
  }
  
@@ -47,10 +47,7 @@ index b6d174b3da..2090f697fb 100644
  {
      if ( !p_jar )
          return;
- 
--    int i;
--    for( i = 0; i < vlc_array_count( &p_jar->cookies ); i++ )
-+    for( int i = 0; i < vlc_array_count( &p_jar->cookies ); i++ )
+@@ -290,8 +290,11 @@ void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
          cookie_destroy( vlc_array_item_at_index( &p_jar->cookies, i ) );
  
      vlc_array_clear( &p_jar->cookies );
