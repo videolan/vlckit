@@ -9,6 +9,7 @@
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Faustion Osuna <enrique.osuna # gmail.com>
  *          Felix Paul Kühne <fkuehne # videolan.org>
+ *          Soomin Lee <TheHungryBu # gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -218,6 +219,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     VLCAudio *_audio;                           ///< The audio controller
     libvlc_equalizer_t *_equalizerInstance;     ///< The equalizer controller
     BOOL _equalizerEnabled;                     ///< Equalizer state
+    libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
 }
 @end
 
@@ -315,6 +317,9 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_media_player_set_equalizer(_playerInstance, NULL);
         libvlc_audio_equalizer_release(_equalizerInstance);
     }
+
+    if (_viewpoint)
+        libvlc_free(_viewpoint);
 
     libvlc_media_player_release(_playerInstance);
     if (_privateLibrary != [VLCLibrary sharedLibrary])
@@ -1114,6 +1119,22 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     }
 
     libvlc_media_player_stop(_playerInstance);
+}
+
+- (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute
+{
+    if (_viewpoint == NULL) {
+        _viewpoint = libvlc_video_new_viewpoint();
+        if (_viewpoint == NULL)
+            return NO;
+    }
+
+    _viewpoint->f_yaw = yaw;
+    _viewpoint->f_pitch = pitch;
+    _viewpoint->f_roll = roll;
+    _viewpoint->f_field_of_view = fov;
+
+    return libvlc_video_update_viewpoint(_playerInstance, _viewpoint, absolute) == 0 ? YES : NO;
 }
 
 - (void)gotoNextFrame

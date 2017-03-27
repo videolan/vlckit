@@ -8,6 +8,7 @@
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org>
+ *          Soomin Lee <TheHungryBu # gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -752,6 +753,18 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * performs navigation actions on interactive titles
  */
 - (void)performNavigationAction:(VLCMediaPlaybackNavigationAction)action;
+
+/**
+ * Updates viewpoint with given values.
+ * \param yaw new yaw.
+ * \param pitch new pitch.
+ * \param roll new roll.
+ * \param fov new field of view.
+ * \param absolute if true replace the old viewpoint with the new one. If
+ * false, increase/decrease it.
+ * \note This will create a viewpoint instance if not present.
+ */
+- (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute;
 
 #pragma mark -
 #pragma mark playback information
