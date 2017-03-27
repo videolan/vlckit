@@ -649,12 +649,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (NSArray *)tracksInformation
 {
-    VLCMediaParsedStatus parsedStatus = [self parsedStatus];
-    if (parsedStatus == VLCMediaParsedStatusSkipped || parsedStatus == VLCMediaParsedStatusInit) {
-        [self parseWithOptions:VLCMediaParseLocal|VLCMediaParseNetwork];
-        return @[];
-    }
-
     libvlc_media_track_t **tracksInfo;
     unsigned int count = libvlc_media_tracks_get(p_md, &tracksInfo);
     NSMutableArray *array = [NSMutableArray array];
