@@ -8,6 +8,7 @@
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org>
+ *          Soomin Lee <TheHungryBu # gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -165,6 +166,29 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  * \return A new VLCMedia object, only if there were no errors.
  */
 - (instancetype)initAsNodeWithName:(NSString *)aName;
+
+/**
+ * list of possible media orientation.
+ */
+typedef NS_ENUM(NSUInteger, VLCMediaOrientation) {
+	VLCMediaOrientationTopLeft,
+	VLCMediaOrientationTopRight,
+	VLCMediaOrientationBottomLeft,
+	VLCMediaOrientationBottomRight,
+	VLCMediaOrientationLeftTop,
+	VLCMediaOrientationLeftBottom,
+	VLCMediaOrientationRightTop,
+	VLCMediaOrientationRightBottom
+};
+
+/**
+ * list of possible media projection.
+ */
+typedef NS_ENUM(NSUInteger, VLCMediaProjection) {
+	VLCMediaProjectionRectangular,
+	VLCMediaProjectionEquiRectangular,
+	VLCMediaProjectionCubemapLayoutStandard = 0x100
+};
 
 /**
  * list of possible media types that could be returned by "mediaType"
@@ -361,6 +385,17 @@ extern NSString *const VLCMediaTracksInformationVideoHeight;
 extern NSString *const VLCMediaTracksInformationVideoWidth;
 
 /**
+ * video track orientation
+ * \note returns the orientation as NSNumber
+ */
+extern NSString *const VLCMediaTracksInformationVideoOrientation;
+/**
+ * video track projection
+ * \note the projection as NSNumber
+ */
+extern NSString *const VLCMediaTracksInformationVideoProjection;
+
+/**
  * source aspect ratio
  * \note returns the source aspect ratio as NSNumber
  */
@@ -427,6 +462,8 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  *
  * \see VLCMediaTracksInformationVideoHeight
  * \see VLCMediaTracksInformationVideoWidth
+ * \see VLCMediaTracksInformationVideoOrientation
+ * \see VLCMediaTracksInformationVideoProjection
  *
  * \see VLCMediaTracksInformationSourceAspectRatio
  * \see VLCMediaTracksInformationSourceAspectDenominator

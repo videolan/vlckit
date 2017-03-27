@@ -8,6 +8,7 @@
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul K√ºhne <fkuehne # videolan.org>
+ *          Soomin Lee <TheHungryBu # gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -638,6 +639,8 @@ NSString *const VLCMediaTracksInformationAudioRate           = @"rate";         
 
 NSString *const VLCMediaTracksInformationVideoHeight = @"height"; // NSNumber
 NSString *const VLCMediaTracksInformationVideoWidth  = @"width";  // NSNumber
+NSString *const VLCMediaTracksInformationVideoOrientation = @"orientation"; // NSNumber
+NSString *const VLCMediaTracksInformationVideoProjection = @"projection";   // NSNumber
 
 NSString *const VLCMediaTracksInformationSourceAspectRatio        = @"sar_num"; // NSNumber
 NSString *const VLCMediaTracksInformationSourceAspectDenominator  = @"sar_den";  // NSNumber
@@ -682,6 +685,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
                 type = VLCMediaTracksInformationTypeVideo;
                 dictionary[VLCMediaTracksInformationVideoWidth] = @(tracksInfo[i]->video->i_width);
                 dictionary[VLCMediaTracksInformationVideoHeight] = @(tracksInfo[i]->video->i_height);
+                dictionary[VLCMediaTracksInformationVideoOrientation] = @(tracksInfo[i]->video->i_orientation);
+                dictionary[VLCMediaTracksInformationVideoProjection] = @(tracksInfo[i]->video->i_projection);
                 dictionary[VLCMediaTracksInformationSourceAspectRatio] = @(tracksInfo[i]->video->i_sar_num);
                 dictionary[VLCMediaTracksInformationSourceAspectDenominator] = @(tracksInfo[i]->video->i_sar_den);
                 dictionary[VLCMediaTracksInformationFrameRate] = @(tracksInfo[i]->video->i_frame_rate_num);
