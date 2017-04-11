@@ -205,12 +205,12 @@ static void display(void *opaque, void *picture)
     _mp = libvlc_media_player_new(self.libVLCinstance);
 
     libvlc_media_add_option([_media libVLCMediaDescriptor], "no-audio");
-    libvlc_media_add_option([_media libVLCMediaDescriptor], "no-videotoolbox-zero-copy");
     libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-threads=1");
     libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-skip-idct=4");
     libvlc_media_add_option([_media libVLCMediaDescriptor], "avcodec-skiploopfilter=3");
     libvlc_media_add_option([_media libVLCMediaDescriptor], "deinterlace=-1");
     libvlc_media_add_option([_media libVLCMediaDescriptor], "avi-index=3");
+    libvlc_media_add_option([_media libVLCMediaDescriptor], "codec=avcodec,none");
 
     libvlc_media_player_set_media(_mp, [_media libVLCMediaDescriptor]);
     libvlc_video_set_format(_mp, "RGBA", imageWidth, imageHeight, 4 * imageWidth);
