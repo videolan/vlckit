@@ -1,7 +1,7 @@
-From af89b95b7a7144801f39b86be35504d7c62d319e Mon Sep 17 00:00:00 2001
+From 3fbe401079ef24a8f91456655508be81069c9a0b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
-Subject: [PATCH 08/15] contrib/gcrypt: fix tvOS compilation
+Subject: [PATCH 08/16] contrib/gcrypt: fix tvOS compilation
 
 ---
  contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch | 16 ++++++++++++++++
@@ -32,7 +32,7 @@ index 0000000000..f1d3ccc71f
 +    *	%rdi: ctx, CTX
 +    *	%rsi: data (64 bytes)
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 1484e7ab82..200a98e828 100644
+index f9ead8e357..d1c421a8b8 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -13,6 +13,7 @@ libgcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt

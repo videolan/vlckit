@@ -1,7 +1,7 @@
-From 47f3f623506fe1695773ef326c7e2f02ffe34100 Mon Sep 17 00:00:00 2001
+From 1c2d8162df070df6395d66b3c23c833e4f2d6879 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 15/15] libvlc_media: add cookie_jar API
+Subject: [PATCH 14/16] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -12,7 +12,7 @@ Subject: [PATCH 15/15] libvlc_media: add cookie_jar API
  5 files changed, 72 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index 01e571c..5ca39f5 100644
+index 01e571c519..5ca39f51a3 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
 @@ -876,6 +876,41 @@ LIBVLC_API
@@ -58,7 +58,7 @@ index 01e571c..5ca39f5 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index caa5598..c0d5754 100644
+index caa55981bf..c0d5754abf 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
 @@ -216,6 +216,8 @@ libvlc_media_set_user_data
@@ -71,7 +71,7 @@ index caa5598..c0d5754 100644
  libvlc_playlist_play
  libvlc_release
 diff --git a/lib/media.c b/lib/media.c
-index 4c95c94..86a42cd 100644
+index 4c95c94c8e..86a42cdf88 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -396,6 +396,8 @@ libvlc_media_t * libvlc_media_new_from_input_item(
@@ -119,7 +119,7 @@ index 4c95c94..86a42cd 100644
 +        vlc_http_cookies_clear( p_md->p_cookie_jar );
 +}
 diff --git a/lib/media_internal.h b/lib/media_internal.h
-index f063ddb..17bbd84 100644
+index f063ddb5fa..17bbd84fac 100644
 --- a/lib/media_internal.h
 +++ b/lib/media_internal.h
 @@ -30,6 +30,7 @@
@@ -139,7 +139,7 @@ index f063ddb..17bbd84 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index f5ec04a..9326fb8 100644
+index adf450d99e..e0cf0ee20e 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -620,6 +620,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -150,7 +150,7 @@ index f5ec04a..9326fb8 100644
  
      /* Video */
      var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
-@@ -970,6 +971,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -971,6 +972,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
      for( size_t i = 0; i < ARRAY_SIZE( p_mi->selected_es ); ++i )
          p_mi->selected_es[i] = ES_INIT;
  
@@ -164,5 +164,5 @@ index f5ec04a..9326fb8 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.10.1
+2.11.0
 

@@ -1,14 +1,14 @@
-From 1fa30ef90c3f6992c6b6b26cd3e5bba7c03f5062 Mon Sep 17 00:00:00 2001
+From 2032d63f799351c0a1607f767563daa9c8c2950d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=83=C2=BChne?= <fkuehne@videolan.org>
 Date: Tue, 12 Jul 2016 13:50:54 +0200
-Subject: [PATCH 09/15] contrib/avcodec: enforce use of FFmpeg
+Subject: [PATCH 09/16] contrib/avcodec: enforce use of FFmpeg
 
 ---
  contrib/src/ffmpeg/rules.mak | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 2b4778c826..842a61b9d7 100644
+index 5725e8f11e..5ee8a6896a 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -2,10 +2,10 @@
