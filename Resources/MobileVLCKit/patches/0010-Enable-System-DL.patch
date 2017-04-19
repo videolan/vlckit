@@ -43,7 +43,7 @@ index 842a61b9d7..b950b027dd 100644
  	--disable-decoder=opus \
  	--enable-libgsm \
  	--enable-libopenjpeg \
-+	--disable-decoder=ac3,ac3_fixed,eac3,mlp \
++	--disable-decoder=mlp \
 +	--disable-demuxer=mlp \
 +	--disable-parser=mlp \
  	--disable-debug \
