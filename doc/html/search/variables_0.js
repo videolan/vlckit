@@ -23,6 +23,8 @@ var searchData=
   ['vlcmediatracksinformationtypeunknown',['VLCMediaTracksInformationTypeUnknown',['../interface_v_l_c_media.html#a2b91c4e456c6ce07682477d41772adc2',1,'VLCMedia']]],
   ['vlcmediatracksinformationtypevideo',['VLCMediaTracksInformationTypeVideo',['../interface_v_l_c_media.html#a2ac631a7a8c7416ac9a13b914efeb22e',1,'VLCMedia']]],
   ['vlcmediatracksinformationvideoheight',['VLCMediaTracksInformationVideoHeight',['../interface_v_l_c_media.html#a52414aa5aff9e0e929d6b3dad0461dd2',1,'VLCMedia']]],
+  ['vlcmediatracksinformationvideoorientation',['VLCMediaTracksInformationVideoOrientation',['../interface_v_l_c_media.html#a32e842b07314f6b7a965fd8d5770bf8d',1,'VLCMedia']]],
+  ['vlcmediatracksinformationvideoprojection',['VLCMediaTracksInformationVideoProjection',['../interface_v_l_c_media.html#ac28eab6679f8761ce13ea02d61562d21',1,'VLCMedia']]],
   ['vlcmediatracksinformationvideowidth',['VLCMediaTracksInformationVideoWidth',['../interface_v_l_c_media.html#a29ca0a5036cfa556f5d7098c44030123',1,'VLCMedia']]],
   ['vlctitledescriptionduration',['VLCTitleDescriptionDuration',['../interface_v_l_c_media_player.html#ac4bd07aad0599f2f61cbac7281981df7',1,'VLCMediaPlayer']]],
   ['vlctitledescriptionismenu',['VLCTitleDescriptionIsMenu',['../interface_v_l_c_media_player.html#a1cfbed633aa7783841c153d48088ba70',1,'VLCMediaPlayer']]]

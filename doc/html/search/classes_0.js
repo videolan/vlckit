@@ -1,11 +1,11 @@
 var searchData=
 [
   ['vlcaudio',['VLCAudio',['../interface_v_l_c_audio.html',1,'']]],
-  ['vlccustomdialogrendererprotocol_2dp',['VLCCustomDialogRendererProtocol-p',['../protocol_v_l_c_custom_dialog_renderer_protocol-p.html',1,'']]],
+  ['vlccustomdialogrendererprotocol_20_2dp',['VLCCustomDialogRendererProtocol -p',['../protocol_v_l_c_custom_dialog_renderer_protocol_01-p.html',1,'']]],
   ['vlcdialogprovider',['VLCDialogProvider',['../interface_v_l_c_dialog_provider.html',1,'']]],
   ['vlclibrary',['VLCLibrary',['../interface_v_l_c_library.html',1,'']]],
   ['vlcmedia',['VLCMedia',['../interface_v_l_c_media.html',1,'']]],
-  ['vlcmediadelegate_2dp',['VLCMediaDelegate-p',['../protocol_v_l_c_media_delegate-p.html',1,'']]],
+  ['vlcmediadelegate_20_2dp',['VLCMediaDelegate -p',['../protocol_v_l_c_media_delegate_01-p.html',1,'']]],
   ['vlcmediadiscoverer',['VLCMediaDiscoverer',['../interface_v_l_c_media_discoverer.html',1,'']]],
   ['vlcmedialibrary',['VLCMediaLibrary',['../interface_v_l_c_media_library.html',1,'']]],
   ['vlcmedialist',['VLCMediaList',['../interface_v_l_c_media_list.html',1,'']]],
