@@ -30,6 +30,7 @@ New APIs:
   - added selectors: chaptersForTitleIndex:
                      numberOfChaptersForTitle:
                      addPlaybackSlave:type:enforce:
+                     updateViewpoint:pitch:roll:fov:absolute:
   - added notifications: VLCMediaPlayerTitleChanged, VLCMediaPlayerChapterChanged
   - added enum: VLCMediaPlaybackSlaveType
   - Note:
@@ -40,7 +41,9 @@ New APIs:
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
                 VLCMetaInformationSeason, VLCMetaInformationEpisode,
                 VLCMetaInformationShowName, VLCMetaInformationActors,
-                VLCMetaInformationAlbumArtist, VLCMetaInformationDiscNumber
+                VLCMetaInformationAlbumArtist, VLCMetaInformationDiscNumber,
+                VLCMediaTracksInformationVideoOrientation,
+                VLCMediaTracksInformationVideoProjection
   - added selectors: codecNameForFourCC:trackType:
                      mediaType
                      parseWithOptions:
@@ -48,7 +51,8 @@ New APIs:
                      parsedStatus
                      storeCookie:forHost:path:
                      clearStoredCookies
-  - added enums: VLCMediaType, VLCMediaParsingOptions, VLCMediaParsedStatus
+  - added enums: VLCMediaType, VLCMediaParsingOptions, VLCMediaParsedStatus,
+                 VLCMediaOrientation, VLCMediaProjection
   - changed behavior: media will no longer be parsed automatically if meta
       data is requested prior to concluded parsing
 
