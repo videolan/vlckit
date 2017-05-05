@@ -1,7 +1,7 @@
-From f652d5bdff7152bdad58a37b36e1f9460a03fac4 Mon Sep 17 00:00:00 2001
+From 42a8f55a8dc85644d5a161414e8c537f5a894938 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
-Subject: [PATCH 16/16] build: rename exported symbols by module
+Subject: [PATCH 13/16] build: rename exported symbols by module
 
 This is quite ugly and temporary. Ideally we should rename symbols in binaries
 like the Android script do.
@@ -31,7 +31,7 @@ index cb9b4b6066..69b6ee9d2c 100644
  
  vlc_module_end ()
 diff --git a/modules/codec/ttml/ttml.h b/modules/codec/ttml/ttml.h
-index 94263eda2d..cac43528b6 100644
+index 51f41126f9..5781a92a34 100644
 --- a/modules/codec/ttml/ttml.h
 +++ b/modules/codec/ttml/ttml.h
 @@ -18,8 +18,8 @@
@@ -89,7 +89,7 @@ index 5105dd1efd..7c97fc842a 100644
  #define MUX_TEXT N_("Avformat mux")
  #define MUX_LONGTEXT N_("Force use of a specific avformat muxer.")
 diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
-index 453e7247fd..e4d804a74e 100644
+index 833a39d19b..d734774716 100644
 --- a/modules/demux/avformat/demux.c
 +++ b/modules/demux/avformat/demux.c
 @@ -152,7 +152,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
@@ -147,7 +147,7 @@ index 453e7247fd..e4d804a74e 100644
      demux_t     *p_demux = (demux_t*)p_this;
      demux_sys_t *p_sys = p_demux->p_sys;
 diff --git a/modules/demux/avformat/mux.c b/modules/demux/avformat/mux.c
-index 821860dcf0..504d491f54 100644
+index 59a423525c..152ac2983d 100644
 --- a/modules/demux/avformat/mux.c
 +++ b/modules/demux/avformat/mux.c
 @@ -84,7 +84,7 @@ static int IOWriteTyped(void *opaque, uint8_t *buf, int buf_size,
@@ -169,10 +169,10 @@ index 821860dcf0..504d491f54 100644
      sout_mux_t *p_mux = (sout_mux_t*)p_this;
      sout_mux_sys_t *p_sys = p_mux->p_sys;
 diff --git a/modules/demux/ttml.c b/modules/demux/ttml.c
-index f51569b7bb..f1bcbb0ac2 100644
+index 6c81292bc4..0731e2139d 100644
 --- a/modules/demux/ttml.c
 +++ b/modules/demux/ttml.c
-@@ -390,7 +390,7 @@ static int Demux( demux_t* p_demux )
+@@ -391,7 +391,7 @@ static int Demux( demux_t* p_demux )
      return VLC_DEMUXER_SUCCESS;
  }
  
@@ -181,7 +181,7 @@ index f51569b7bb..f1bcbb0ac2 100644
  {
      demux_t     *p_demux = (demux_t*)p_this;
      demux_sys_t *p_sys;
-@@ -479,12 +479,12 @@ int OpenDemux( vlc_object_t* p_this )
+@@ -522,12 +522,12 @@ int OpenDemux( vlc_object_t* p_this )
      return VLC_SUCCESS;
  
  error:
@@ -320,5 +320,5 @@ index 618db45e7c..669f62ff34 100644
   * frames, each algorithm is responsible for setting the offset correctly.
   * (The default is 0, so if that is correct, there's no need to do anything.)
 -- 
-2.11.0
+2.12.2
 

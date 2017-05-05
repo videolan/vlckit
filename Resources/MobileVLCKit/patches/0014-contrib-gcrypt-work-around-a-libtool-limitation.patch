@@ -1,7 +1,7 @@
-From 44a1b08c0d8cad4df6dca685d271211a9e62b6d6 Mon Sep 17 00:00:00 2001
+From a4e30c8ea91de8937201b87cd3bf357e00369482 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 07/16] contrib/gcrypt: work-around a libtool limitation
+Subject: [PATCH 14/16] contrib/gcrypt: work-around a libtool limitation
 
 ---
  contrib/src/gcrypt/rules.mak                       |  1 +
@@ -10,7 +10,7 @@ Subject: [PATCH 07/16] contrib/gcrypt: work-around a libtool limitation
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 141b32d6b4..f9ead8e357 100644
+index a7cbd8a3bd..bfb8e4e341 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -12,6 +12,7 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
@@ -18,9 +18,9 @@ index 141b32d6b4..f9ead8e357 100644
  	$(UNPACK)
  	$(APPLY) $(SRC)/gcrypt/disable-tests-compilation.patch
 +	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
+ 	$(APPLY) $(SRC)/gcrypt/fix-pthread-detection.patch
  ifdef HAVE_WINSTORE
  	$(APPLY) $(SRC)/gcrypt/winrt.patch
- endif
 diff --git a/contrib/src/gcrypt/work-around-libtool-limitation.patch b/contrib/src/gcrypt/work-around-libtool-limitation.patch
 new file mode 100644
 index 0000000000..df97ffb488
@@ -53,5 +53,5 @@ index 0000000000..df97ffb488
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.11.0
+2.12.2
 

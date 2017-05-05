@@ -1,7 +1,7 @@
-From 24755de58771622a4937109d6dc59e61ecd714c6 Mon Sep 17 00:00:00 2001
+From a98f54d9f426ebdaaa705075daef1127c5c27587 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 10/16] Enable System DL
+Subject: [PATCH 08/16] Enable System DL
 
 ---
  contrib/src/ffmpeg/patch-as-patch-can.patch | 20 ++++++++++++++++++++
@@ -36,7 +36,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 5ee8a6896a..e99e3ef68f 100644
+index 5ee8a6896a..453e4566b8 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -24,6 +24,9 @@ FFMPEGCONF = \
@@ -58,5 +58,5 @@ index 5ee8a6896a..e99e3ef68f 100644
  
  .ffmpeg: ffmpeg
 -- 
-2.11.0
+2.12.2
 

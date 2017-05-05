@@ -21,7 +21,7 @@ OSVERSIONMINCFLAG=miphoneos-version-min
 OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
 
-TESTEDHASH=1fe24f3
+TESTEDHASH=6bc7a637
 
 CORE_COUNT=`sysctl -n machdep.cpu.core_count`
 let MAKE_JOBS=$CORE_COUNT+1
