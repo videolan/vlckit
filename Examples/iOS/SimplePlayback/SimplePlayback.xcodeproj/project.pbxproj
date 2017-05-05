@@ -30,6 +30,7 @@
 		7D8745C3183BAC2700FD09E0 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C2183BAC2700FD09E0 /* libiconv.dylib */; };
 		7D8745C7183BACAE00FD09E0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */; };
 		7D8745C8183BACBF00FD09E0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */; };
+		7DF6A7211EBA61B600B9E46E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF6A7201EBA61B600B9E46E /* AVFoundation.framework */; };
 		D4771D95189849C80087441B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4771D94189849C80087441B /* Security.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,7 +55,7 @@
 		7D7B6C521B70C45B00E879CF /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
 		7D7B6C541B70C45F00E879CF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		7D7B6C561B70C46400E879CF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobileVLCKit.a; path = "../../build/Release-iphonesimulator/libMobileVLCKit.a"; sourceTree = "<group>"; };
+		7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobileVLCKit.a; path = "../../../build/Release-iphoneos/libMobileVLCKit.a"; sourceTree = "<group>"; };
 		7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7D8745B7183BABE800FD09E0 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -63,6 +64,7 @@
 		7D8745C0183BAC2300FD09E0 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 		7D8745C2183BAC2700FD09E0 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7DF6A7201EBA61B600B9E46E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D4771D94189849C80087441B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -71,6 +73,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DF6A7211EBA61B600B9E46E /* AVFoundation.framework in Frameworks */,
+				7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */,
 				7D7B6C571B70C46400E879CF /* CoreMedia.framework in Frameworks */,
 				7D7B6C551B70C45F00E879CF /* CoreVideo.framework in Frameworks */,
 				7D7B6C531B70C45B00E879CF /* VideoToolbox.framework in Frameworks */,
@@ -83,7 +87,6 @@
 				7D8745BF183BAC1200FD09E0 /* CoreText.framework in Frameworks */,
 				7D8745BD183BAC0D00FD09E0 /* CFNetwork.framework in Frameworks */,
 				7D8745BB183BABEE00FD09E0 /* OpenGLES.framework in Frameworks */,
-				7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */,
 				7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */,
 				7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */,
 				7D8745B5183BA8F900FD09E0 /* libMobileVLCKit.a in Frameworks */,
@@ -113,6 +116,7 @@
 		7D11B368183BA71600FF0D25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DF6A7201EBA61B600B9E46E /* AVFoundation.framework */,
 				7D7B6C561B70C46400E879CF /* CoreMedia.framework */,
 				7D7B6C541B70C45F00E879CF /* CoreVideo.framework */,
 				7D7B6C521B70C45B00E879CF /* VideoToolbox.framework */,
@@ -315,16 +319,18 @@
 		7D11B38A183BA71600FF0D25 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 75GAHG3SZQ;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimplePlayback/SimplePlayback-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos/include\"",
+					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
+					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
 				);
 				INFOPLIST_FILE = "SimplePlayback/SimplePlayback-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos\"",
+					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
+					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -334,16 +340,18 @@
 		7D11B38B183BA71600FF0D25 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEVELOPMENT_TEAM = 75GAHG3SZQ;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimplePlayback/SimplePlayback-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator/include\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos/include\"",
+					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
+					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
 				);
 				INFOPLIST_FILE = "SimplePlayback/SimplePlayback-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../build/Release-iphoneos\"",
+					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
+					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
