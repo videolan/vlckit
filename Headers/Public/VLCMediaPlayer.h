@@ -401,8 +401,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Load and set a specific video subtitle, from a file.
- * \param path to a file
- * \return if the call succeed..
  *
  * \deprecated use addPlaybackSlave:type:enforce: instead
  */
