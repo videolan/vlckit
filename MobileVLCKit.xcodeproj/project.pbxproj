@@ -44,6 +44,9 @@
 		7D1329701BA3057E00BE647E /* VLCMediaListPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */; };
 		7D1329711BA3057E00BE647E /* VLCMediaDiscoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */; };
 		7D1329721BA3057E00BE647E /* VLCTime.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7A5ECAD811DE8FAB00F66AF3 /* VLCTime.h */; };
+		7D24C2B61EC0A3390047E700 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B51EC0A3390047E700 /* libbz2.tbd */; };
+		7D24C2B81EC0A3400047E700 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B71EC0A3400047E700 /* VideoToolbox.framework */; };
+		7D24C2BA1EC0A3460047E700 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B91EC0A3460047E700 /* libbz2.tbd */; };
 		7D34F5521C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */; };
 		7D34F5531C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */; };
 		7D34F5541C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */; };
@@ -237,6 +240,9 @@
 		7D1329761BA306DE00BE647E /* vlc-plugins-iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-iPhone.h"; path = "Resources/MobileVLCKit/vlc-plugins-iPhone.h"; sourceTree = "<group>"; };
 		7D1329771BA306E600BE647E /* vlc-plugins-AppleTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-AppleTV.h"; path = "Resources/MobileVLCKit/vlc-plugins-AppleTV.h"; sourceTree = "<group>"; };
 		7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "vlc-plugins-iPhone.xcconfig"; path = "Resources/MobileVLCKit/vlc-plugins-iPhone.xcconfig"; sourceTree = "<group>"; };
+		7D24C2B51EC0A3390047E700 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		7D24C2B71EC0A3400047E700 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		7D24C2B91EC0A3460047E700 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
 		7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCCustomDialogProvider.m; path = Sources/VLCCustomDialogProvider.m; sourceTree = "<group>"; };
 		7D34F5551C909DF6008A39F0 /* VLCCustomDialogProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCCustomDialogProvider.h; path = Headers/Internal/VLCCustomDialogProvider.h; sourceTree = "<group>"; };
 		7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaListPlayer.m; path = Sources/VLCMediaListPlayer.m; sourceTree = "<group>"; };
@@ -296,6 +302,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D24C2B61EC0A3390047E700 /* libbz2.tbd in Frameworks */,
 				7D797FC61DF41F9500AD93ED /* libiconv.tbd in Frameworks */,
 				7D797FC41DF41F9100AD93ED /* libc++.tbd in Frameworks */,
 				7D6C89201C0CA81F00321894 /* AVFoundation.framework in Frameworks */,
@@ -327,6 +334,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D24C2BA1EC0A3460047E700 /* libbz2.tbd in Frameworks */,
+				7D24C2B81EC0A3400047E700 /* VideoToolbox.framework in Frameworks */,
 				7D797FC01DF41F2000AD93ED /* libz.tbd in Frameworks */,
 				7D797FBE1DF41F1B00AD93ED /* libiconv.tbd in Frameworks */,
 				7D797FBC1DF41F0300AD93ED /* libc++.tbd in Frameworks */,
@@ -386,6 +395,9 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7D24C2B91EC0A3460047E700 /* libbz2.tbd */,
+				7D24C2B71EC0A3400047E700 /* VideoToolbox.framework */,
+				7D24C2B51EC0A3390047E700 /* libbz2.tbd */,
 				7D797FC51DF41F9500AD93ED /* libiconv.tbd */,
 				7D797FC31DF41F9100AD93ED /* libc++.tbd */,
 				7D797FBF1DF41F2000AD93ED /* libz.tbd */,
