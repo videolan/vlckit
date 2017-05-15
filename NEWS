@@ -36,6 +36,14 @@ New APIs:
   - Note:
     - play's return type was changed from BOOL to void
     - hue is now a float instead of an integer
+  - WARNING:
+    - Return value of the following methods changed from INT_MAX to -1
+      (int)currentVideoTrackIndex
+      (int)currentVideoSubTitleIndex
+      (int)currentChapterIndex
+      (int)currentTitleIndex
+      (int)currentAudioTrackIndex
+
 
 - VLCMedia
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
