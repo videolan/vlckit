@@ -619,15 +619,15 @@ buildMobileKit() {
         fi
         export BUILDFORIOS="yes"
 
-        export AR="xcrun ar"
-        export RANLIB="xcrun ranlib"
-        export CC="xcrun clang"
-        export OBJC="xcrun clang"
-        export CXX="xcrun clang++"
-        export LD="xcrun ld"
-        export STRIP="xcrun strip"
-        export CPP="xcrun cc -E"
-        export CXXCPP="xcrun c++ -E"
+        export AR=`xcrun -f ar`
+        export RANLIB=`xcrun -f ranlib`
+        export CC=`xcrun -f clang`
+        export OBJC=`xcrun -f clang`
+        export CXX=`xcrun -f clang++`
+        export LD=`xcrun -f ld`
+        export STRIP=`xcrun -f strip`
+        export CPPFLAGS=-E
+        export CXXCPPFLAGS=-E
         unset AS
         unset CCAS
 
