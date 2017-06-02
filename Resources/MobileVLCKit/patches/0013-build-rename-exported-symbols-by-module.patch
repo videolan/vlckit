@@ -1,7 +1,7 @@
-From 42a8f55a8dc85644d5a161414e8c537f5a894938 Mon Sep 17 00:00:00 2001
+From a17dc67ea2f8bc9e85192b1298b9c6dd28820d4c Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
-Subject: [PATCH 13/16] build: rename exported symbols by module
+Subject: [PATCH 13/17] build: rename exported symbols by module
 
 This is quite ugly and temporary. Ideally we should rename symbols in binaries
 like the Android script do.
@@ -89,7 +89,7 @@ index 5105dd1efd..7c97fc842a 100644
  #define MUX_TEXT N_("Avformat mux")
  #define MUX_LONGTEXT N_("Force use of a specific avformat muxer.")
 diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
-index 833a39d19b..d734774716 100644
+index 1dd0976ee3..ae01aa5711 100644
 --- a/modules/demux/avformat/demux.c
 +++ b/modules/demux/avformat/demux.c
 @@ -152,7 +152,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
@@ -169,7 +169,7 @@ index 59a423525c..152ac2983d 100644
      sout_mux_t *p_mux = (sout_mux_t*)p_this;
      sout_mux_sys_t *p_sys = p_mux->p_sys;
 diff --git a/modules/demux/ttml.c b/modules/demux/ttml.c
-index 6c81292bc4..0731e2139d 100644
+index 146d129ff8..fa480e4cf9 100644
 --- a/modules/demux/ttml.c
 +++ b/modules/demux/ttml.c
 @@ -391,7 +391,7 @@ static int Demux( demux_t* p_demux )
@@ -181,7 +181,7 @@ index 6c81292bc4..0731e2139d 100644
  {
      demux_t     *p_demux = (demux_t*)p_this;
      demux_sys_t *p_sys;
-@@ -522,12 +522,12 @@ int OpenDemux( vlc_object_t* p_this )
+@@ -530,12 +530,12 @@ int OpenDemux( vlc_object_t* p_this )
      return VLC_SUCCESS;
  
  error:
@@ -320,5 +320,5 @@ index 618db45e7c..669f62ff34 100644
   * frames, each algorithm is responsible for setting the offset correctly.
   * (The default is 0, so if that is correct, there's no need to do anything.)
 -- 
-2.12.2
+2.11.0
 
