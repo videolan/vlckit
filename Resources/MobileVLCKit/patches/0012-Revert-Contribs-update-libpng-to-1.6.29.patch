@@ -1,4 +1,4 @@
-From 5b2e134ecf5df7dcae1316fdc8ebb0d4534daf31 Mon Sep 17 00:00:00 2001
+From a27ff1b88e446d12ba718479aa60cf0863c3675a Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 18 Apr 2017 17:24:03 +0200
 Subject: [PATCH 12/17] Revert "Contribs: update libpng to 1.6.29"

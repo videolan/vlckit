@@ -1,4 +1,4 @@
-From 2050c7be9fae67690b3c89ca5790e88177e9132f Mon Sep 17 00:00:00 2001
+From 0414fa99437e71a13114446848d087e60cd92a38 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 4 May 2016 16:00:40 +0200
 Subject: [PATCH 06/17] libvlc: create VT-zero-copy variable
