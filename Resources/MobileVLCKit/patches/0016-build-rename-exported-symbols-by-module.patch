@@ -1,10 +1,9 @@
-From b7e264ca4871ab48b6c53ea7e73bda27cda5aa46 Mon Sep 17 00:00:00 2001
+From 2bf1a280c10db4aa4199e404285622946b603eae Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
-Subject: [PATCH 13/17] build: rename exported symbols by module
+Subject: [PATCH 16/19] build: rename exported symbols by module
 
-This is quite ugly and temporary. Ideally we should rename symbols in binaries
-like the Android script do.
+This is quite ugly and temporary. Ideally we should rename symbols in binaries like the Android script do.
 ---
  modules/codec/ttml/ttml.c                      |  2 +-
  modules/codec/ttml/ttml.h                      |  4 ++--
@@ -18,7 +17,7 @@ like the Android script do.
  9 files changed, 34 insertions(+), 34 deletions(-)
 
 diff --git a/modules/codec/ttml/ttml.c b/modules/codec/ttml/ttml.c
-index cb9b4b6066..69b6ee9d2c 100644
+index 4727b28cbf..97631276e5 100644
 --- a/modules/codec/ttml/ttml.c
 +++ b/modules/codec/ttml/ttml.c
 @@ -54,7 +54,7 @@ vlc_module_begin ()
@@ -46,7 +45,7 @@ index 51f41126f9..5781a92a34 100644
  int  OpenDecoder   ( vlc_object_t * );
  void CloseDecoder  ( vlc_object_t * );
 diff --git a/modules/demux/avformat/avformat.c b/modules/demux/avformat/avformat.c
-index 616c670ca8..a7822a4a61 100644
+index 28c5a7df76..29cd5b144f 100644
 --- a/modules/demux/avformat/avformat.c
 +++ b/modules/demux/avformat/avformat.c
 @@ -41,7 +41,7 @@ vlc_module_begin ()
@@ -58,7 +57,7 @@ index 616c670ca8..a7822a4a61 100644
      set_section( N_("Demuxer"), NULL )
      add_string( "avformat-format", NULL, FORMAT_TEXT, FORMAT_LONGTEXT, true )
      add_obsolete_string("ffmpeg-format") /* removed since 2.1.0 */
-@@ -59,7 +59,7 @@ vlc_module_begin ()
+@@ -57,7 +57,7 @@ vlc_module_begin ()
      add_string( "sout-avformat-mux", NULL, MUX_TEXT, MUX_LONGTEXT, true )
      add_obsolete_string("ffmpeg-mux") /* removed since 2.1.0 */
      add_string( "sout-avformat-options", NULL, AV_OPTIONS_TEXT, AV_OPTIONS_LONGTEXT, true )
@@ -89,11 +88,11 @@ index 5105dd1efd..7c97fc842a 100644
  #define MUX_TEXT N_("Avformat mux")
  #define MUX_LONGTEXT N_("Force use of a specific avformat muxer.")
 diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
-index 1dd0976ee3..ae01aa5711 100644
+index 0d299a93d8..fa14e532bb 100644
 --- a/modules/demux/avformat/demux.c
 +++ b/modules/demux/avformat/demux.c
-@@ -152,7 +152,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
- #endif
+@@ -143,7 +143,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
+     }
  }
  
 -int OpenDemux( vlc_object_t *p_this )
@@ -101,9 +100,18 @@ index 1dd0976ee3..ae01aa5711 100644
  {
      demux_t       *p_demux = (demux_t*)p_this;
      demux_sys_t   *p_sys;
-@@ -290,7 +290,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -280,7 +280,7 @@ int OpenDemux( vlc_object_t *p_this )
      if( !p_io_buffer )
      {
+         free( psz_url );
+-        CloseDemux( p_this );
++        CloseDemux__avformat( p_this );
+         return VLC_ENOMEM;
+     }
+ 
+@@ -289,7 +289,7 @@ int OpenDemux( vlc_object_t *p_this )
+     {
+         av_free( p_io_buffer );
          free( psz_url );
 -        CloseDemux( p_this );
 +        CloseDemux__avformat( p_this );
@@ -119,16 +127,7 @@ index 1dd0976ee3..ae01aa5711 100644
          return VLC_ENOMEM;
      }
  
-@@ -309,7 +309,7 @@ int OpenDemux( vlc_object_t *p_this )
-     {
-         av_free( p_io_buffer );
-         free( psz_url );
--        CloseDemux( p_this );
-+        CloseDemux__avformat( p_this );
-         return VLC_ENOMEM;
-     }
- 
-@@ -324,7 +324,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -314,7 +314,7 @@ int OpenDemux( vlc_object_t *p_this )
          av_free( pb );
          p_sys->ic = NULL;
          free( psz_url );
@@ -137,7 +136,7 @@ index 1dd0976ee3..ae01aa5711 100644
          return VLC_EGENERIC;
      }
      free( psz_url );
-@@ -688,7 +688,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -665,7 +665,7 @@ int OpenDemux( vlc_object_t *p_this )
  /*****************************************************************************
   * Close
   *****************************************************************************/
@@ -147,7 +146,7 @@ index 1dd0976ee3..ae01aa5711 100644
      demux_t     *p_demux = (demux_t*)p_this;
      demux_sys_t *p_sys = p_demux->p_sys;
 diff --git a/modules/demux/avformat/mux.c b/modules/demux/avformat/mux.c
-index 59a423525c..152ac2983d 100644
+index f339af312c..52d0baf16a 100644
 --- a/modules/demux/avformat/mux.c
 +++ b/modules/demux/avformat/mux.c
 @@ -84,7 +84,7 @@ static int IOWriteTyped(void *opaque, uint8_t *buf, int buf_size,
@@ -197,7 +196,7 @@ index 146d129ff8..fa480e4cf9 100644
      demux_sys_t* p_sys = p_demux->p_sys;
  
 diff --git a/modules/video_filter/deinterlace/deinterlace.c b/modules/video_filter/deinterlace/deinterlace.c
-index 5e56eb88e0..2d76ced861 100644
+index 1397aed9b8..31103f3631 100644
 --- a/modules/video_filter/deinterlace/deinterlace.c
 +++ b/modules/video_filter/deinterlace/deinterlace.c
 @@ -113,7 +113,7 @@ vlc_module_begin ()
@@ -218,16 +217,16 @@ index 5e56eb88e0..2d76ced861 100644
   */
  static const char *const ppsz_filter_options[] = {
      "mode", "phosphor-chroma", "phosphor-dimmer",
-@@ -275,7 +275,7 @@ static void GetOutputFormat( filter_t *p_filter,
- 
- #define DEINTERLACE_DST_SIZE 3
+@@ -239,7 +239,7 @@ static void GetOutputFormat( filter_t *p_filter,
+  * video filter functions
+  *****************************************************************************/
  
 -/* This is the filter function. See Open(). */
 +/* This is the filter function. See Open__deinterlace(). */
  picture_t *Deinterlace( filter_t *p_filter, picture_t *p_pic )
  {
-     filter_sys_t *p_sys = p_filter->p_sys;
-@@ -596,10 +596,10 @@ int Mouse( filter_t *p_filter,
+     return DoDeinterlacing( p_filter, &p_filter->p_sys->context, p_pic );
+@@ -273,10 +273,10 @@ int Mouse( filter_t *p_filter,
  
  
  /*****************************************************************************
@@ -241,10 +240,10 @@ index 5e56eb88e0..2d76ced861 100644
      filter_t *p_filter = (filter_t*)p_this;
      filter_sys_t *p_sys;
 diff --git a/modules/video_filter/deinterlace/deinterlace.h b/modules/video_filter/deinterlace/deinterlace.h
-index 618db45e7c..669f62ff34 100644
+index ecc26e0d60..0c71cda6d2 100644
 --- a/modules/video_filter/deinterlace/deinterlace.h
 +++ b/modules/video_filter/deinterlace/deinterlace.h
-@@ -130,7 +130,7 @@ struct filter_sys_t
+@@ -92,7 +92,7 @@ struct filter_sys_t
  /**
   * Top-level filtering method.
   *
@@ -253,7 +252,7 @@ index 618db45e7c..669f62ff34 100644
   * in the filter structure.
   *
   * Note that there is no guarantee that the returned picture directly
-@@ -164,7 +164,7 @@ struct filter_sys_t
+@@ -126,7 +126,7 @@ struct filter_sys_t
   * @param p_filter The filter instance.
   * @param p_pic The latest input picture.
   * @return Deinterlaced picture(s). Linked list of picture_t's or NULL.
@@ -262,7 +261,7 @@ index 618db45e7c..669f62ff34 100644
   * @see filter_t
   * @see filter_sys_t
   */
-@@ -180,7 +180,7 @@ picture_t *Deinterlace( filter_t *p_filter, picture_t *p_pic );
+@@ -142,7 +142,7 @@ picture_t *Deinterlace( filter_t *p_filter, picture_t *p_pic );
   *    wants to convert the output to a format different
   *    from the input. See SetFilterMethod().
   *
@@ -271,7 +270,7 @@ index 618db45e7c..669f62ff34 100644
   * is left as it was before the call to this function.
   *
   * @param p_this The filter instance as vlc_object_t.
-@@ -191,17 +191,17 @@ picture_t *Deinterlace( filter_t *p_filter, picture_t *p_pic );
+@@ -153,17 +153,17 @@ picture_t *Deinterlace( filter_t *p_filter, picture_t *p_pic );
   * @see IsChromaSupported()
   * @see SetFilterMethod()
   */
@@ -292,7 +291,7 @@ index 618db45e7c..669f62ff34 100644
   * @see filter_t
   * @see filter_sys_t
   * @see metadata_history_t
-@@ -213,7 +213,7 @@ void Flush( filter_t *p_filter );
+@@ -175,7 +175,7 @@ void Flush( filter_t *p_filter );
  /**
   * Mouse callback for the deinterlace filter.
   *
@@ -301,7 +300,7 @@ index 618db45e7c..669f62ff34 100644
   * in the filter structure.
   *
   * Currently, this handles the scaling of the y coordinate for algorithms
-@@ -225,7 +225,7 @@ void Flush( filter_t *p_filter );
+@@ -187,7 +187,7 @@ void Flush( filter_t *p_filter );
   * @param[in] p_new Latest mouse position data.
   * @return VLC error code; currently always VLC_SUCCESS.
   * @retval VLC_SUCCESS All ok.
@@ -310,7 +309,7 @@ index 618db45e7c..669f62ff34 100644
   * @see filter_t
   * @see vlc_mouse_t
   */
-@@ -276,7 +276,7 @@ void Close( vlc_object_t *p_this );
+@@ -238,7 +238,7 @@ void Close( vlc_object_t *p_this );
   * but the new value will only take effect upon the next call to Deinterlace()
   * (i.e. at the next incoming frame).
   *
@@ -320,5 +319,5 @@ index 618db45e7c..669f62ff34 100644
   * frames, each algorithm is responsible for setting the offset correctly.
   * (The default is 0, so if that is correct, there's no need to do anything.)
 -- 
-2.11.0
+2.13.2
 

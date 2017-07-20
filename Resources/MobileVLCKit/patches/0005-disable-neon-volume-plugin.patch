@@ -1,7 +1,7 @@
-From a0019d3e79fb4fe453156aa376e440f629a953d7 Mon Sep 17 00:00:00 2001
+From 4dd37452c0a8d9894e78b31999251bb9f80c3642 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
-Subject: [PATCH 05/17] disable neon volume plugin
+Subject: [PATCH 05/19] disable neon volume plugin
 
 ---
  modules/arm_neon/Makefile.am | 1 -
@@ -19,5 +19,5 @@ index e67e07e61c..690975235f 100644
  	libyuv_rgb_neon_plugin.la
  endif
 -- 
-2.11.0
+2.13.2
 
