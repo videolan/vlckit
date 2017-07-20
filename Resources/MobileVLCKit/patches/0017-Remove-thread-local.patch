@@ -1,7 +1,7 @@
-From 9e4426bba569c34b6f0de0e0fd815fe537df2c0b Mon Sep 17 00:00:00 2001
+From a0abeb095f644192b94822dd5b1e9da523e84ed7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 17/19] Remove thread local
+Subject: [PATCH 17/17] Remove thread local
 
 ---
  src/misc/interrupt.c | 2 +-
