@@ -1,0 +1,29 @@
+From d49bc57895110ccccce751fdf0c8c5a68b983057 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Mon, 24 Jul 2017 20:07:21 +0200
+Subject: [PATCH 18/18] fix missing.c
+
+---
+ src/missing.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/missing.c b/src/missing.c
+index c76e99a4bc..c8b8ceca8f 100644
+--- a/src/missing.c
++++ b/src/missing.c
+@@ -165,10 +165,10 @@ int httpd_StreamSend (httpd_stream_t *stream, const block_t *p_block)
+ }
+ 
+ int httpd_StreamSetHTTPHeaders (httpd_stream_t * stream,
+-                                httpd_header * headers,
++                                const httpd_header * header,
+                                 size_t i_headers)
+ {
+-    (void) stream; (void) headers; (void) i_headers;
++    (void) stream; (void) header; (void) i_headers;
+     vlc_assert_unreachable ();
+ }
+ 
+-- 
+2.13.2
+
