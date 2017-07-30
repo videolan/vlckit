@@ -1,7 +1,7 @@
-From 5d1374c722596e8f1463f45973f9dbfa8c754dcf Mon Sep 17 00:00:00 2001
+From 5c7fc9948c27c22a5b3abfe5d8f26601f3b3d17c Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 10/18] libvlc_media: add cookie_jar API
+Subject: [PATCH 10/17] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -12,10 +12,10 @@ Subject: [PATCH 10/18] libvlc_media: add cookie_jar API
  5 files changed, 71 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index 01e571c519..5ca39f51a3 100644
+index 383f366b69..2a5666688d 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -876,6 +876,41 @@ LIBVLC_API
+@@ -884,6 +884,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -71,7 +71,7 @@ index caa55981bf..c0d5754abf 100644
  libvlc_playlist_play
  libvlc_release
 diff --git a/lib/media.c b/lib/media.c
-index 0ca4627da7..c348df26b7 100644
+index 30e5bd55f4..1b31b948a0 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -406,6 +406,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(
@@ -163,5 +163,5 @@ index dde84ab7c6..c99fabf940 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.13.2
+2.13.3
 

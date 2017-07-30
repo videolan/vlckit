@@ -1,7 +1,7 @@
-From 74c54ed19cf03e8f8b11266163d08f0026228b73 Mon Sep 17 00:00:00 2001
+From 8d7aa7b3285b07ae9a0cc8e782adbcf92b3f87c4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 17/18] Remove thread local
+Subject: [PATCH 17/17] Remove thread local
 
 ---
  src/misc/interrupt.c | 2 +-
@@ -22,7 +22,7 @@ index 3fafaa4183..02e1049c4b 100644
  /**
   * Initializes an interruption context.
 diff --git a/src/misc/variables.c b/src/misc/variables.c
-index d441684c06..c1544836b2 100644
+index 4457fe747d..f06a755226 100644
 --- a/src/misc/variables.c
 +++ b/src/misc/variables.c
 @@ -1378,7 +1378,7 @@ void DumpVariables(vlc_object_t *obj)
@@ -35,5 +35,5 @@ index d441684c06..c1544836b2 100644
  static void TwalkGetNames(const void *data, const VISIT which, const int depth)
  {
 -- 
-2.13.2
+2.13.3
 
