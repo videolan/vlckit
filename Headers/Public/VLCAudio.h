@@ -47,6 +47,11 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 @property (assign) int volume;
 
 /**
+ * enable passthrough mode for the current audio device
+ * \note There is no warrenty that it succeeds as it depends on the capabilities of the hardware audio decoder / receiver attached by the user */
+@property (readwrite) BOOL passthrough;
+
+/**
  * Mute the current audio output.
  * \deprecated This selector will be removed in the next release */
 - (void)setMute:(BOOL)value __attribute__((deprecated));

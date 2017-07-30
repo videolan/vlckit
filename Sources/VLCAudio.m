@@ -86,6 +86,28 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
     return libvlc_audio_get_mute([self instance]);
 }
 
+- (void)setPassthrough:(BOOL)passthrough
+{
+    if (passthrough) {
+        libvlc_audio_output_device_set([self instance], NULL, "encoded");
+    } else {
+        libvlc_audio_output_device_set([self instance], NULL, "pcm");
+    }
+}
+
+- (BOOL)passthrough
+{
+    char *deviceIdentifier = libvlc_audio_output_device_get([self instance]);
+    if (deviceIdentifier != NULL) {
+        if (!strcmp(deviceIdentifier, "encoded")) {
+            return YES;
+        }
+        free(deviceIdentifier);
+    }
+
+    return NO;
+}
+
 - (void)setVolume:(int)value
 {
     if (value < VOLUME_MIN)

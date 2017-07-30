@@ -44,7 +44,6 @@ New APIs:
       (int)currentTitleIndex
       (int)currentAudioTrackIndex
 
-
 - VLCMedia
   - added keys: VLCMetaInformationTrackTotal, VLCMetaInformationDirector,
                 VLCMetaInformationSeason, VLCMetaInformationEpisode,
@@ -67,6 +66,9 @@ New APIs:
 - VLCTime
   - added selectors: isEqual:
                      hash
+
+- VLCAudio
+  - added property: passthrough
 
 Deprecated APIs:
 - VLCAudio
