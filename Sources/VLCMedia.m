@@ -643,7 +643,7 @@ NSString *const VLCMediaTracksInformationVideoOrientation = @"orientation"; // N
 NSString *const VLCMediaTracksInformationVideoProjection = @"projection";   // NSNumber
 
 NSString *const VLCMediaTracksInformationSourceAspectRatio        = @"sar_num"; // NSNumber
-NSString *const VLCMediaTracksInformationSourceAspectDenominator  = @"sar_den";  // NSNumber
+NSString *const VLCMediaTracksInformationSourceAspectRatioDenominator  = @"sar_den";  // NSNumber
 
 NSString *const VLCMediaTracksInformationFrameRate             = @"frame_rate_num"; // NSNumber
 NSString *const VLCMediaTracksInformationFrameRateDenominator  = @"frame_rate_den";  // NSNumber
@@ -688,7 +688,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
                 dictionary[VLCMediaTracksInformationVideoOrientation] = @(tracksInfo[i]->video->i_orientation);
                 dictionary[VLCMediaTracksInformationVideoProjection] = @(tracksInfo[i]->video->i_projection);
                 dictionary[VLCMediaTracksInformationSourceAspectRatio] = @(tracksInfo[i]->video->i_sar_num);
-                dictionary[VLCMediaTracksInformationSourceAspectDenominator] = @(tracksInfo[i]->video->i_sar_den);
+                dictionary[VLCMediaTracksInformationSourceAspectRatioDenominator] = @(tracksInfo[i]->video->i_sar_den);
                 dictionary[VLCMediaTracksInformationFrameRate] = @(tracksInfo[i]->video->i_frame_rate_num);
                 dictionary[VLCMediaTracksInformationFrameRateDenominator] = @(tracksInfo[i]->video->i_frame_rate_den);
                 break;

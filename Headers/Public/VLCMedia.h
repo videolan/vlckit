@@ -466,7 +466,7 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  * \see VLCMediaTracksInformationVideoProjection
  *
  * \see VLCMediaTracksInformationSourceAspectRatio
- * \see VLCMediaTracksInformationSourceAspectDenominator
+ * \see VLCMediaTracksInformationSourceAspectRatioDenominator
  *
  * \see VLCMediaTracksInformationFrameRate
  * \see VLCMediaTracksInformationFrameRateDenominator
