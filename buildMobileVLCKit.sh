@@ -149,6 +149,11 @@ buildxcodeproj()
         fi
     fi
 
+    local bitcodeflag=""
+    if [ "$BITCODE" = "yes" ]; then
+        bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
+    fi
+
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
     if [ "$SCARY" = "no" ]; then
         defs="$defs NOSCARYCODECS"
@@ -160,6 +165,7 @@ buildxcodeproj()
                ARCHS="${architectures}" \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
                GCC_PREPROCESSOR_DEFINITIONS="$defs" \
+               ${bitcodeflag} \
                > ${out}
 }
 
