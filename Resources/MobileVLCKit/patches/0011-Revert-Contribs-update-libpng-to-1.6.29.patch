@@ -1,4 +1,4 @@
-From 6d6cc85e81bcfcb1da22901be379f1bfc1643b34 Mon Sep 17 00:00:00 2001
+From 76962f59854be1bf1f6baac681100c4f6cb374c5 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 18 Apr 2017 17:24:03 +0200
 Subject: [PATCH 11/17] Revert "Contribs: update libpng to 1.6.29"
@@ -58,5 +58,5 @@ index 9a05170afc..c18cfdf214 100644
  
  PKGS += png
 -- 
-2.13.3
+2.14.0
 

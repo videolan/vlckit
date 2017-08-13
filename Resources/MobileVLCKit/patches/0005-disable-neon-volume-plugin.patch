@@ -1,4 +1,4 @@
-From a8418f65d1e29f586c9ffbeb3ceda6760413afd8 Mon Sep 17 00:00:00 2001
+From d1191a1401ec7de796a2bcd45dbca390f95a2aa1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
 Subject: [PATCH 05/17] disable neon volume plugin
@@ -19,5 +19,5 @@ index e67e07e61c..690975235f 100644
  	libyuv_rgb_neon_plugin.la
  endif
 -- 
-2.13.3
+2.14.0
 
