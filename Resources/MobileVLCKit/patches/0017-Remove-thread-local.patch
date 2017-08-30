@@ -1,4 +1,4 @@
-From 8968e4b5508684d40ffffcca99fcdf8d14165aec Mon Sep 17 00:00:00 2001
+From 523c9afde12b982425e107f004d26b027fd1a158 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
 Subject: [PATCH 17/17] Remove thread local
@@ -35,5 +35,5 @@ index 87a9c27478..014904e83c 100644
  static void TwalkGetNames(const void *data, const VISIT which, const int depth)
  {
 -- 
-2.14.0
+2.14.1
 

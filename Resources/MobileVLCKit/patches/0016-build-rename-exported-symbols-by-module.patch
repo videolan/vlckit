@@ -1,4 +1,4 @@
-From b377cb1eec28c96ed779219bfd5e1bd798d78b3e Mon Sep 17 00:00:00 2001
+From 3a2c702d67fed258968aa80f18412dc39eafae31 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
 Subject: [PATCH 16/17] build: rename exported symbols by module
@@ -88,7 +88,7 @@ index 5105dd1efd..7c97fc842a 100644
  #define MUX_TEXT N_("Avformat mux")
  #define MUX_LONGTEXT N_("Force use of a specific avformat muxer.")
 diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
-index 22fa9aae5a..81a81ac241 100644
+index c46ecb5d23..88144a038f 100644
 --- a/modules/demux/avformat/demux.c
 +++ b/modules/demux/avformat/demux.c
 @@ -143,7 +143,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
@@ -319,5 +319,5 @@ index ecc26e0d60..0c71cda6d2 100644
   * frames, each algorithm is responsible for setting the offset correctly.
   * (The default is 0, so if that is correct, there's no need to do anything.)
 -- 
-2.14.0
+2.14.1
 

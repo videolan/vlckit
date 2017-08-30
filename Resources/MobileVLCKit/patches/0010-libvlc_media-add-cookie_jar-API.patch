@@ -1,4 +1,4 @@
-From a306e25c1a4f43a97a905a4c90eabd31c2606252 Mon Sep 17 00:00:00 2001
+From d7cadd36253d9a1010a60b7f93fc35420b848b9f Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
 Subject: [PATCH 10/17] libvlc_media: add cookie_jar API
@@ -163,5 +163,5 @@ index 5cebbd700f..af612c7d74 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.14.0
+2.14.1
 
