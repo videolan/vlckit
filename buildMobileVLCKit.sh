@@ -357,6 +357,19 @@ buildLibVLC() {
     else
         BUILD="--build=x86_64-apple-darwin14"
     fi
+
+    # The following symbols do not exist on the minimal iOS version (7.0), so they are disabled
+    # here. This allows compilation also with newer iOS SDKs
+    # Added symbols between 7.x and 10.x
+    export ac_cv_func_basename_r=no
+    export ac_cv_func_clock_getres=no
+    export ac_cv_func_clock_gettime=no
+    export ac_cv_func_clock_settime=no
+    export ac_cv_func_dirname_r=no
+    export ac_cv_func_getentropy=no
+    export ac_cv_func_mkostemp=no
+    export ac_cv_func_mkostemps=no
+
     ../bootstrap ${BUILD} --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
         --disable-disc --disable-sout \
         --disable-sdl \
