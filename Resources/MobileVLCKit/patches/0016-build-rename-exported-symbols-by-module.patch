@@ -1,7 +1,7 @@
-From 3a2c702d67fed258968aa80f18412dc39eafae31 Mon Sep 17 00:00:00 2001
+From 6d1b289a6a34b16479cb66d81022a6ec46b51fc8 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
-Subject: [PATCH 16/17] build: rename exported symbols by module
+Subject: [PATCH 16/19] build: rename exported symbols by module
 
 This is quite ugly and temporary. Ideally we should rename symbols in binaries like the Android script do.
 ---

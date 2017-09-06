@@ -1,7 +1,7 @@
-From e1adf49e7540fa54649923cb905cf536f1953c04 Mon Sep 17 00:00:00 2001
+From 6d2901cc0bc327284302114d3aa26791f9136428 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
-Subject: [PATCH 09/17] http: add vlc_http_cookies_clear
+Subject: [PATCH 09/19] http: add vlc_http_cookies_clear
 
 Clear all cookies without deleting the jar.
 ---
@@ -23,10 +23,10 @@ index ed7e1613da..da1fe4ef1a 100644
  
  /**
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index f9a82d7a51..63fa306977 100644
+index 929a6dcc1f..d8bac07a97 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -130,6 +130,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
+@@ -131,6 +131,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
  vlc_http_auth_FormatAuthorizationHeader
  vlc_http_cookies_new
  vlc_http_cookies_destroy
