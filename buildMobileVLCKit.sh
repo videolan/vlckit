@@ -183,26 +183,26 @@ spushd libvlc
 echo `pwd`
 
 if [ "$NONETWORK" != "yes" ]; then
-if ! [ -e vlc ]; then
-git clone git://git.videolan.org/vlc.git vlc
-info "Applying patches to vlc.git"
-cd vlc
-git checkout -B localBranch ${TESTEDHASH}
-git branch --set-upstream-to=origin/master localBranch
-git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
-if [ $? -ne 0 ]; then
-git am --abort
-info "Applying the patches failed, aborting git-am"
-exit 1
-fi
-cd ..
-else
-cd vlc
-git pull --rebase
-git reset --hard ${TESTEDHASH}
-git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
-cd ..
-fi
+    if ! [ -e vlc ]; then
+        git clone git://git.videolan.org/vlc.git vlc
+        info "Applying patches to vlc.git"
+        cd vlc
+        git checkout -B localBranch ${TESTEDHASH}
+        git branch --set-upstream-to=origin/master localBranch
+        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+        if [ $? -ne 0 ]; then
+            git am --abort
+            info "Applying the patches failed, aborting git-am"
+            exit 1
+        fi
+        cd ..
+    else
+        cd vlc
+        git pull --rebase
+        git reset --hard ${TESTEDHASH}
+        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+        cd ..
+    fi
 fi
 
 spopd
@@ -733,141 +733,141 @@ get_symbol()
 }
 
 build_universal_static_lib() {
-	PROJECT_DIR=`pwd`
-	OSSTYLE="$1"
-	info "building universal static libs for OS style $OSSTYLE"
+    PROJECT_DIR=`pwd`
+    OSSTYLE="$1"
+    info "building universal static libs for OS style $OSSTYLE"
 
-	# remove old module list
-	rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-	rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
-	touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-	touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
+    # remove old module list
+    rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
+    touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-	spushd libvlc/vlc
-	rm -rf install-$OSSTYLE
-	mkdir install-$OSSTYLE
-	mkdir install-$OSSTYLE/core
-	mkdir install-$OSSTYLE/contrib
-	mkdir install-$OSSTYLE/plugins
-	spopd # vlc
+    spushd libvlc/vlc
+    rm -rf install-$OSSTYLE
+    mkdir install-$OSSTYLE
+    mkdir install-$OSSTYLE/core
+    mkdir install-$OSSTYLE/contrib
+    mkdir install-$OSSTYLE/plugins
+    spopd # vlc
 
-	spushd libvlc/vlc/install-"$OSSTYLE"OS
-	for i in `ls .`
-	do
-		DEVICEARCHS="$DEVICEARCHS $i"
-	done
-	spopd # vlc-install-"$OSSTYLE"OS
+    spushd libvlc/vlc/install-"$OSSTYLE"OS
+    for i in `ls .`
+    do
+        DEVICEARCHS="$DEVICEARCHS $i"
+    done
+    spopd # vlc-install-"$OSSTYLE"OS
 
-	spushd libvlc/vlc/install-"$OSSTYLE"Simulator
-	for i in `ls .`
-	do
-		SIMULATORARCHS="$SIMULATORARCHS $i"
-	done
-	spopd # vlc-install-"$OSSTYLE"Simulator
+    spushd libvlc/vlc/install-"$OSSTYLE"Simulator
+    for i in `ls .`
+    do
+        SIMULATORARCHS="$SIMULATORARCHS $i"
+    done
+    spopd # vlc-install-"$OSSTYLE"Simulator
 
-	# arm64 got the lowest number of modules
-	VLCMODULES=""
-	spushd libvlc/vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
-	for i in `ls *.a`
-	do
-		VLCMODULES="$i $VLCMODULES"
-	done
-	spopd # vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
+    # arm64 got the lowest number of modules
+    VLCMODULES=""
+    spushd libvlc/vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
+    for i in `ls *.a`
+    do
+        VLCMODULES="$i $VLCMODULES"
+    done
+    spopd # vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
 
-	if [ "$OSSTYLE" != "AppleTV" ]; then
-		# collect ARMv7/s specific neon modules
-		VLCNEONMODULES=""
-		spushd libvlc/vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
-		for i in `ls *.a | grep neon`
-		do
-			VLCNEONMODULES="$i $VLCNEONMODULES"
-		done
-		spopd # vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
-	fi
+    if [ "$OSSTYLE" != "AppleTV" ]; then
+        # collect ARMv7/s specific neon modules
+        VLCNEONMODULES=""
+        spushd libvlc/vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
+        for i in `ls *.a | grep neon`
+        do
+            VLCNEONMODULES="$i $VLCNEONMODULES"
+        done
+        spopd # vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
+    fi
 
-	spushd libvlc/vlc
+    spushd libvlc/vlc
 
-	# lipo all the vlc libraries and its plugins
-	doVLCLipo "" "libvlc.a" "no" $OSSTYLE
-	doVLCLipo "" "libvlccore.a" "no" $OSSTYLE
-	doVLCLipo "vlc/" "libcompat.a" "no" $OSSTYLE
-	for i in $VLCMODULES
-	do
-		doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
-	done
+    # lipo all the vlc libraries and its plugins
+    doVLCLipo "" "libvlc.a" "no" $OSSTYLE
+    doVLCLipo "" "libvlccore.a" "no" $OSSTYLE
+    doVLCLipo "vlc/" "libcompat.a" "no" $OSSTYLE
+    for i in $VLCMODULES
+    do
+        doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
+    done
 
-	# lipo contrib libraries
-	CONTRIBLIBS=""
-	spushd contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
-	for i in `ls *.a`
-	do
-		CONTRIBLIBS="$i $CONTRIBLIBS"
-	done
-	spopd # contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
-	for i in $CONTRIBLIBS
-	do
-		doContribLipo $i $OSSTYLE
-	done
+    # lipo contrib libraries
+    CONTRIBLIBS=""
+    spushd contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
+    for i in `ls *.a`
+    do
+        CONTRIBLIBS="$i $CONTRIBLIBS"
+    done
+    spopd # contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
+    for i in $CONTRIBLIBS
+    do
+        doContribLipo $i $OSSTYLE
+    done
 
-	if [ "$OSSTYLE" != "AppleTV" ]; then
-		# lipo the remaining NEON plugins
-		DEVICEARCHS="armv7 armv7s"
-		SIMULATORARCHS=""
-		for i in $VLCNEONMODULES
-		do
-			doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
-		done
-	fi
+    if [ "$OSSTYLE" != "AppleTV" ]; then
+        # lipo the remaining NEON plugins
+        DEVICEARCHS="armv7 armv7s"
+        SIMULATORARCHS=""
+        for i in $VLCNEONMODULES
+        do
+            doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
+        done
+    fi
 
-	# create module list
-	info "creating module list"
-	echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-	echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
+    # create module list
+    info "creating module list"
+    echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-	# arm64 got the lowest number of modules
-	BUILTINS="const void *vlc_static_modules[] = {\n"; \
+    # arm64 got the lowest number of modules
+    BUILTINS="const void *vlc_static_modules[] = {\n"; \
 
-	LDFLAGS=""
-	DEFINITIONS=""
+    LDFLAGS=""
+    DEFINITIONS=""
 
-	# add contrib libraries to LDFLAGS
-	for file in $CONTRIBLIBS
-	do
-		LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/contrib/$file "
-	done
+    # add contrib libraries to LDFLAGS
+    for file in $CONTRIBLIBS
+    do
+        LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/contrib/$file "
+    done
 
-	for file in $VLCMODULES
-	do
-		symbols=$(nm -g -arch arm64 install-$OSSTYLE/plugins/$file)
-		entryname=$(get_symbol "$symbols" _)
-		DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
-		BUILTINS+=" $entryname,\n"
-		LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
-		info "...$entryname"
-	done;
+    for file in $VLCMODULES
+    do
+        symbols=$(nm -g -arch arm64 install-$OSSTYLE/plugins/$file)
+        entryname=$(get_symbol "$symbols" _)
+        DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
+        BUILTINS+=" $entryname,\n"
+        LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
+        info "...$entryname"
+    done;
 
-	if [ "$OSSTYLE" != "AppleTV" ]; then
-		BUILTINS+="#ifdef __arm__\n"
-		DEFINITIONS+="#ifdef __arm__\n"
-		for file in $VLCNEONMODULES
-		do
-			symbols=$(nm -g -arch armv7 install-$OSSTYLE/plugins/$file)
-			entryname=$(get_symbol "$symbols" _)
-			DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
-			BUILTINS+=" $entryname,\n"
-			LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
-			info "...$entryname"
-		done;
-		BUILTINS+="#endif\n"
-		DEFINITIONS+="#endif\n"
-	fi
+    if [ "$OSSTYLE" != "AppleTV" ]; then
+        BUILTINS+="#ifdef __arm__\n"
+        DEFINITIONS+="#ifdef __arm__\n"
+        for file in $VLCNEONMODULES
+        do
+            symbols=$(nm -g -arch armv7 install-$OSSTYLE/plugins/$file)
+            entryname=$(get_symbol "$symbols" _)
+            DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
+            BUILTINS+=" $entryname,\n"
+            LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
+            info "...$entryname"
+        done;
+        BUILTINS+="#endif\n"
+        DEFINITIONS+="#endif\n"
+    fi
 
-	BUILTINS="$BUILTINS NULL\n};\n"
+    BUILTINS="$BUILTINS NULL\n};\n"
 
-	echo "$DEFINITIONS\n$BUILTINS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-	echo "VLC_PLUGINS_LDFLAGS=$LDFLAGS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
+    echo "$DEFINITIONS\n$BUILTINS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    echo "VLC_PLUGINS_LDFLAGS=$LDFLAGS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-	spopd # vlc
+    spopd # vlc
 }
 
 if [ "$TVOS" != "yes" ]; then
