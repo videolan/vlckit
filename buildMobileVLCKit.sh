@@ -20,6 +20,7 @@ BITCODE=no
 OSVERSIONMINCFLAG=miphoneos-version-min
 OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
+FARCH="all"
 
 TESTEDHASH=7cffecf52
 
@@ -43,10 +44,11 @@ OPTIONS
    -w       Build a limited stack of non-scary libraries only
    -y       Build universal static libraries
    -b       Enable bitcode
+   -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
 EOF
 }
 
-while getopts "hvwsfbdntlk:" OPTION
+while getopts "hvwsfbdntlk:a:" OPTION
 do
      case $OPTION in
          h)
@@ -81,6 +83,12 @@ do
          k)
              SDK=$OPTARG
              ;;
+         a)
+             BUILD_DEVICE=yes
+             BUILD_SIMULATOR=yes
+             BUILD_STATIC_FRAMEWORK=yes
+             FARCH=$OPTARG
+             ;;
          b)
              BITCODE=yes
              ;;
@@ -110,6 +118,22 @@ if [ "x$1" != "x" ]; then
     exit 1
 fi
 
+get_actual_arch() {
+    if [ "$1" = "aarch64" ]; then
+        echo "arm64"
+    else
+        echo "$1"
+    fi
+}
+
+get_arch() {
+    if [ "$1" = "arm64" ]; then
+        echo "aarch64"
+    else
+        echo "$1"
+    fi
+}
+
 spushd()
 {
      pushd "$1" 2>&1> /dev/null
@@ -135,18 +159,22 @@ buildxcodeproj()
     info "Building $1 ($target, ${CONFIGURATION}, $PLATFORM)"
 
     local architectures=""
-    if [ "$TVOS" != "yes" ]; then
-        if [ "$PLATFORM" = "iphonesimulator" ]; then
-            architectures="i386 x86_64"
+    if [ "$FARCH" = "all" ];then
+        if [ "$TVOS" != "yes" ]; then
+            if [ "$PLATFORM" = "iphonesimulator" ]; then
+                architectures="i386 x86_64"
+            else
+                architectures="armv7 armv7s arm64"
+            fi
         else
-            architectures="armv7 armv7s arm64"
+            if [ "$PLATFORM" = "appletvsimulator" ]; then
+                architectures="x86_64"
+            else
+                architectures="arm64"
+            fi
         fi
     else
-        if [ "$PLATFORM" = "appletvsimulator" ]; then
-            architectures="x86_64"
-        else
-            architectures="arm64"
-        fi
+        architectures=`get_actual_arch $FARCH`
     fi
 
     local bitcodeflag=""
@@ -247,11 +275,7 @@ buildLibVLC() {
         OSSTYLE=AppleTV
     fi
 
-    if [ "$ARCH" = "aarch64" ]; then
-        ACTUAL_ARCH="arm64"
-    else
-        ACTUAL_ARCH="$ARCH"
-    fi
+    ACTUAL_ARCH=`get_actual_arch $ARCH`
 
     info "Compiling ${ARCH} with SDK version ${SDK_VERSION}, platform ${PLATFORM}"
 
@@ -648,20 +672,42 @@ buildMobileKit() {
         unset AS
         unset CCAS
 
-        if [ "$TVOS" = "yes" ]; then
-            if [ "$PLATFORM" = "iphonesimulator" ]; then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
+        if [ "$FARCH" = "all" ];then
+            if [ "$TVOS" = "yes" ]; then
+                if [ "$PLATFORM" = "iphonesimulator" ]; then
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
+                else
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
+                fi
             else
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
+                if [ "$PLATFORM" = "iphonesimulator" ]; then
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $SDK_VERSION "Simulator"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
+                else
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $SDK_VERSION "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $SDK_VERSION "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
+                fi
             fi
         else
+            if [ "$FARCH" != "x86_64" -a "$FARCH" != "aarch64" -a "$FARCH" != "i386" \
+              -a "$FARCH" != "armv7" -a "$FARCH" != "armv7s" ];then
+                echo "*** Framework ARCH: ${FARCH} is invalid ***"
+                exit 1
+            fi
+
+            local buildPlatform=""
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $SDK_VERSION "Simulator"
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
+                if [ "$FARCH" == "x86_64" -o "$FARCH" == "i386" ];then
+                    buildPlatform="Simulator"
+                fi
             else
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $SDK_VERSION "OS"
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $SDK_VERSION "OS"
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
+                if [ "$FARCH" == "armv7" -o "$FARCH" == "armv7s" -o "$FARCH" == "aarch64" ];then
+                    buildPlatform="OS"
+                fi
+            fi
+            if [ ! -z "$buildPlatform" ];then
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE $FARCH $TVOS $SDK_VERSION $buildPlatform
             fi
         fi
     fi
@@ -688,12 +734,14 @@ doVLCLipo() {
 
     for i in $DEVICEARCHS
     do
-        files="install-"$OSSTYLE"OS/$i/lib/$FILEPATH$FILE $files"
+        actual_arch=`get_actual_arch $i`
+        files="install-"$OSSTYLE"OS/$actual_arch/lib/$FILEPATH$FILE $files"
     done
 
     for i in $SIMULATORARCHS
     do
-        files="install-"$OSSTYLE"Simulator/$i/lib/$FILEPATH$FILE $files"
+        actual_arch=`get_actual_arch $i`
+        files="install-"$OSSTYLE"Simulator/$actual_arch/lib/$FILEPATH$FILE $files"
     done
 
     if [ "$PLUGIN" != "no" ]; then
@@ -710,16 +758,7 @@ doContribLipo() {
 
     info "...$LIBNAME"
 
-    for i in $DEVICEARCHS
-    do
-        if [ "$i" != "arm64" ]; then
-            files="contrib/$OSSTYLE-$i-apple-darwin14-$i/lib/$LIBNAME $files"
-        else
-            files="contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib/$LIBNAME $files"
-        fi
-    done
-
-    for i in $SIMULATORARCHS
+    for i in $DEVICEARCHS $SIMULATORARCHS
     do
         files="contrib/$OSSTYLE-$i-apple-darwin14-$i/lib/$LIBNAME $files"
     done
@@ -751,38 +790,59 @@ build_universal_static_lib() {
     mkdir install-$OSSTYLE/plugins
     spopd # vlc
 
-    spushd libvlc/vlc/install-"$OSSTYLE"OS
-    for i in `ls .`
-    do
-        DEVICEARCHS="$DEVICEARCHS $i"
-    done
-    spopd # vlc-install-"$OSSTYLE"OS
-
-    spushd libvlc/vlc/install-"$OSSTYLE"Simulator
-    for i in `ls .`
-    do
-        SIMULATORARCHS="$SIMULATORARCHS $i"
-    done
-    spopd # vlc-install-"$OSSTYLE"Simulator
+    VLCMODULES=""
+    VLCNEONMODULES=""
+    SIMULATORARCHS=""
+    CONTRIBLIBS=""
+    DEVICEARCHS=""
 
     # arm64 got the lowest number of modules
-    VLCMODULES=""
-    spushd libvlc/vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
-    for i in `ls *.a`
-    do
-        VLCMODULES="$i $VLCMODULES"
-    done
-    spopd # vlc/install-"$OSSTYLE"OS/arm64/lib/vlc/plugins
+    arch="aarch64"
+    if [ "$FARCH" != "all" ];then
+        arch="$FARCH"
+    fi
+    actual_arch=`get_actual_arch $arch`
 
-    if [ "$OSSTYLE" != "AppleTV" ]; then
-        # collect ARMv7/s specific neon modules
-        VLCNEONMODULES=""
-        spushd libvlc/vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
-        for i in `ls *.a | grep neon`
+    if [ -d libvlc/vlc/install-"$OSSTYLE"OS ];then
+        spushd libvlc/vlc/install-"$OSSTYLE"OS
+        for i in `ls .`
         do
-            VLCNEONMODULES="$i $VLCNEONMODULES"
+            local iarch="`get_arch $i`"
+            if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
+                DEVICEARCHS="$DEVICEARCHS $iarch"
+            fi
         done
-        spopd # vlc/install-"$OSSTYLE"OS/armv7/lib/vlc/plugins
+
+        spushd $actual_arch/lib/vlc/plugins
+        for i in `ls *.a`
+        do
+            VLCMODULES="$i $VLCMODULES"
+        done
+        spopd # $actual_arch/lib/vlc/plugins
+
+        if [ "$OSSTYLE" != "AppleTV" -a \
+            \( "$FARCH" = "all" -o "$FARCH" = "armv7" -o "$FARCH" = "armv7s" \) ]; then
+            # collect ARMv7/s specific neon modules
+            spushd armv7/lib/vlc/plugins
+            for i in `ls *.a | grep neon`
+            do
+                VLCNEONMODULES="$i $VLCNEONMODULES"
+            done
+            spopd # armv7/lib/vlc/plugins
+        fi
+        spopd # vlc-install-"$OSSTYLE"OS
+    fi
+
+    if [ -d libvlc/vlc/install-"$OSSTYLE"Simulator ];then
+        spushd libvlc/vlc/install-"$OSSTYLE"Simulator
+        for i in `ls .`
+        do
+            local iarch="`get_arch $i`"
+            if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
+                SIMULATORARCHS="$SIMULATORARCHS $iarch"
+            fi
+        done
+        spopd # vlc-install-"$OSSTYLE"Simulator
     fi
 
     spushd libvlc/vlc
@@ -797,13 +857,13 @@ build_universal_static_lib() {
     done
 
     # lipo contrib libraries
-    CONTRIBLIBS=""
-    spushd contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
+    spushd contrib/$OSSTYLE-$arch-apple-darwin14-$arch/lib
     for i in `ls *.a`
     do
         CONTRIBLIBS="$i $CONTRIBLIBS"
     done
-    spopd # contrib/$OSSTYLE-aarch64-apple-darwin14-aarch64/lib
+    spopd # contrib/$OSSTYLE-$arch-apple-darwin14-$arch/lib
+
     for i in $CONTRIBLIBS
     do
         doContribLipo $i $OSSTYLE
@@ -811,7 +871,13 @@ build_universal_static_lib() {
 
     if [ "$OSSTYLE" != "AppleTV" ]; then
         # lipo the remaining NEON plugins
-        DEVICEARCHS="armv7 armv7s"
+        DEVICEARCHS=""
+        for i in armv7 armv7s; do
+            local iarch="`get_arch $i`"
+            if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
+                DEVICEARCHS="$DEVICEARCHS $iarch"
+            fi
+        done
         SIMULATORARCHS=""
         for i in $VLCNEONMODULES
         do
@@ -838,7 +904,7 @@ build_universal_static_lib() {
 
     for file in $VLCMODULES
     do
-        symbols=$(nm -g -arch arm64 install-$OSSTYLE/plugins/$file)
+        symbols=$(nm -g -arch $actual_arch install-$OSSTYLE/plugins/$file)
         entryname=$(get_symbol "$symbols" _)
         DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
         BUILTINS+=" $entryname,\n"
@@ -882,16 +948,21 @@ if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
 if [ "$TVOS" != "yes" ]; then
     info "Building static MobileVLCKit.framework"
 
-    buildxcodeproj MobileVLCKit "MobileVLCKit" iphoneos
-    buildxcodeproj MobileVLCKit "MobileVLCKit" iphonesimulator
+    lipo_libs=""
+    if [ -d libvlc/vlc/install-iPhoneOS ];then
+        buildxcodeproj MobileVLCKit "MobileVLCKit" iphoneos
+        lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
+    fi
+    if [ -d libvlc/vlc/install-iPhoneSimulator ];then
+        buildxcodeproj MobileVLCKit "MobileVLCKit" iphonesimulator
+        lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
+    fi
 
     # Assumes both platforms were built currently
     spushd build
     rm -rf MobileVLCKit.framework && \
     mkdir MobileVLCKit.framework && \
-    lipo -create ${CONFIGURATION}-iphoneos/libMobileVLCKit.a \
-                 ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a \
-              -o MobileVLCKit.framework/MobileVLCKit && \
+    lipo -create ${lipo_libs} -o MobileVLCKit.framework/MobileVLCKit && \
     chmod a+x MobileVLCKit.framework/MobileVLCKit && \
     cp -pr ${CONFIGURATION}-iphoneos/MobileVLCKit MobileVLCKit.framework/Headers
     spopd # build
@@ -900,16 +971,21 @@ if [ "$TVOS" != "yes" ]; then
 else
     info "Building static TVVLCKit.framework"
 
-    buildxcodeproj MobileVLCKit "TVVLCKit" appletvos
-    buildxcodeproj MobileVLCKit "TVVLCKit" appletvsimulator
+    lipo_libs=""
+    if [ -d libvlc/vlc/install-AppleTVOS ];then
+        buildxcodeproj MobileVLCKit "TVVLCKit" appletvos
+        lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
+    fi
+    if [ -d libvlc/vlc/install-AppleTVSimulator ];then
+        buildxcodeproj MobileVLCKit "TVVLCKit" appletvsimulator
+        lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
+    fi
 
     # Assumes both platforms were built currently
     spushd build
     rm -rf TVVLCKit.framework && \
     mkdir TVVLCKit.framework && \
-    lipo -create ${CONFIGURATION}-appletvos/libTVVLCKit.a \
-                 ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a \
-              -o TVVLCKit.framework/TVVLCKit && \
+    lipo -create ${lipo_libs} -o TVVLCKit.framework/TVVLCKit && \
     chmod a+x TVVLCKit.framework/TVVLCKit && \
     cp -pr ${CONFIGURATION}-appletvos/TVVLCKit TVVLCKit.framework/Headers
     spopd # build
