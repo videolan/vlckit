@@ -73,8 +73,11 @@
 {
     dispatch_once(&_once, ^{
         libvlc_media_list_t * p_mlist = libvlc_media_library_media_list( _mlib );
-        _allMedia = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
-        libvlc_media_list_release(p_mlist);
+        if (p_mlist != NULL)
+        {
+            _allMedia = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
+            libvlc_media_list_release(p_mlist);
+        }
     });
     return _allMedia;
 }
