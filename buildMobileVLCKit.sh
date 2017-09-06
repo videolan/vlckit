@@ -268,7 +268,7 @@ buildLibVLC() {
     if [ "$DEBUG" = "yes" ]; then
         OPTIM="-O0 -g"
     else
-        OPTIM="-O3"
+        OPTIM="-O3 -g"
     fi
 
     if [ "$TVOS" = "yes" ]; then
@@ -452,6 +452,8 @@ buildLibVLC() {
 
     if [ "$DEBUG" = "yes" ]; then
         DEBUGFLAG="--enable-debug"
+    else
+        export CFLAGS="${CFLAGS} -DNDEBUG"
     fi
 
     if [ "$SCARY" = "yes" ]; then
