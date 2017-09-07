@@ -2,6 +2,14 @@
 
 VLCKit is a generic library for any audio or video playback needs on OS X, iOS and tvOS. It also supports active streaming and media to file conversations on the Mac. It is open-source software licensed under LGPLv2.1 or later, available in source code and binary form from the [VideoLAN website]. You can also integrate MobileVLCKit easily via [CocoaPods].
 
+### Build with your own VLC repository
+1. Put a vlc repository inside libvlc/vlc
+`mkdir libvlc && cd libvlc && ln -s ${MYVLCGIT}`
+2. Apply VLC patches needed for VLCKit
+`cd vlc`
+`git am ../../Resources/MobileVLCKit/patches/* `
+3. run `buildMobileVLCKit.sh` with the `-n` option
+
 ## Use-case
 
 When do you need VLCKit? Frankly always when you need to play media not supported by QuickTime / AVFoundation or if you require more flexibility. You want to play something else besides H264/AAC files or HLS streams? You need subtitles beyond QuickTime’s basic support for Closed Captions? Your media source is not your mobile device and not a basic HTTP server either, but perhaps a live stream hailing from some weird media server or even a raw DVB signal broadcasted on a local network? Then, VLCKit is for you.
