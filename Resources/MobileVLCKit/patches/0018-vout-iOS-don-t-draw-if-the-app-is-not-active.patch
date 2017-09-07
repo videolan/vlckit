@@ -1,7 +1,7 @@
-From f57d23b3edd828b5cd180bbf1b85e038dca9508d Mon Sep 17 00:00:00 2001
+From eec11b618242a496b66e6a7512e7bc1bc8e26f91 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@serioese.gmbh>
 Date: Wed, 6 Sep 2017 17:38:35 +0200
-Subject: [PATCH 18/19] vout iOS: don't draw if the app is not active
+Subject: [PATCH 18/18] vout iOS: don't draw if the app is not active
 
 ---
  modules/video_output/ios.m | 5 ++++-
