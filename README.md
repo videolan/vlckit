@@ -21,7 +21,7 @@ You can also integrate VLCKit and its mobile version MobileVLCKit easily via [Co
     
     `git am ../../Resources/MobileVLCKit/patches/* `
 
-3. run `buildMobileVLCKit.sh` with the `-n` option
+3. run `buildMobileVLCKit.sh` with the `-n` and the `-a ${ARCH}` option 
 
 ## Use-case
 
