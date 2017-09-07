@@ -22,7 +22,7 @@ OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH=74f4568aa
+TESTEDHASH=dd26ae7ed
 
 CORE_COUNT=`sysctl -n machdep.cpu.core_count`
 let MAKE_JOBS=$CORE_COUNT+1
