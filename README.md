@@ -4,10 +4,15 @@ VLCKit is a generic library for any audio or video playback needs on OS X, iOS a
 
 ### Build with your own VLC repository
 1. Put a vlc repository inside libvlc/vlc
-`mkdir libvlc && cd libvlc && ln -s ${MYVLCGIT}`
+     
+    `mkdir libvlc && cd libvlc && ln -s ${MYVLCGIT}`
+
 2. Apply VLC patches needed for VLCKit
-`cd vlc`
-`git am ../../Resources/MobileVLCKit/patches/* `
+     
+    `cd vlc`
+    
+    `git am ../../Resources/MobileVLCKit/patches/* `
+
 3. run `buildMobileVLCKit.sh` with the `-n` option
 
 ## Use-case
