@@ -1,8 +1,8 @@
 # VLCKit
 
-VLCKit is a generic multimedia library for any audio or video playback needs on macOS, iOS and tvOS.
+**VLCKit** is a generic multimedia library for any audio or video playback needs on macOS, iOS and tvOS.
 
-It is based on libVLC, the engine of the popular media player VLC.
+It is based on **libVLC**, the engine of the popular media player *VLC*.
 
 It supports playback, but also  active streaming and media to file conversations on the Mac.
 
@@ -10,18 +10,6 @@ It is open-source software licensed under LGPLv2.1 or later, available in source
 
 You can also integrate VLCKit and its mobile version MobileVLCKit easily via [CocoaPods].
 
-### Build with your own VLC repository
-1. Put a vlc repository inside libvlc/vlc
-     
-    `mkdir libvlc && cd libvlc && ln -s ${MYVLCGIT}`
-
-2. Apply VLC patches needed for VLCKit
-     
-    `cd vlc`
-    
-    `git am ../../Resources/MobileVLCKit/patches/* `
-
-3. run `buildMobileVLCKit.sh` with the `-n` and the `-a ${ARCH}` option 
 
 ## Use-case
 
@@ -37,7 +25,24 @@ Then again, this must not be the case for your software. The [LGPLv2.1] allows o
 
 As VLCKit is an open-source project hosted by VideoLAN, we happily welcome all kinds of contributions to it.
 
-For detailed information on the development process, please read our wiki page on [how to send patches].
+For detailed information on the development process, please read below and our wiki page on [how to send patches].
+
+### Build
+
+Run `buildMobileVLCKit.sh` with the `-a ${ARCH}` option
+
+### Build with your own VLC repository
+1. Put a vlc repository inside libvlc/vlc
+     
+    `mkdir libvlc && cd libvlc && ln -s ${MYVLCGIT}`
+
+2. Apply VLC patches needed for VLCKit
+     
+    `cd vlc`
+    
+    `git am ../../Resources/MobileVLCKit/patches/* `
+
+3. run `buildMobileVLCKit.sh` with the `-n` and the `-a ${ARCH}` option 
 
 ## Get in touch!
 
