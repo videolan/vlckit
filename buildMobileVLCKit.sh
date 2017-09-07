@@ -460,10 +460,10 @@ buildLibVLC() {
         SCARYFLAG="--disable-dca --disable-dvbpsi --disable-avcodec --disable-avformat --disable-zvbi --enable-vpx"
     fi
 
-    if [ "$TVOS" = "yes" ]; then
-        TVOSOPTIONS="--disable-neon"
+    if [ "$TVOS" != "yes" -a \( "$ARCH" = "armv7" -o "$ARCH" = "armv7s" \) ];then
+        export ac_cv_arm_neon=yes
     else
-        TVOSOPTIONS="--enable-neon"
+        export ac_cv_arm_neon=no
     fi
 
     # Available but not authorized
@@ -481,7 +481,6 @@ buildLibVLC() {
         --enable-static \
         ${DEBUGFLAG} \
         ${SCARYFLAG} \
-        ${TVOSOPTIONS} \
         --disable-macosx \
         --disable-macosx-qtkit \
         --disable-macosx-avfoundation \
