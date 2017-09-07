@@ -1,6 +1,14 @@
 # VLCKit
 
-VLCKit is a generic library for any audio or video playback needs on OS X, iOS and tvOS. It also supports active streaming and media to file conversations on the Mac. It is open-source software licensed under LGPLv2.1 or later, available in source code and binary form from the [VideoLAN website]. You can also integrate MobileVLCKit easily via [CocoaPods].
+VLCKit is a generic multimedia library for any audio or video playback needs on macOS, iOS and tvOS.
+
+It is based on libVLC, the engine of the popular media player VLC.
+
+It supports playback, but also  active streaming and media to file conversations on the Mac.
+
+It is open-source software licensed under LGPLv2.1 or later, available in source code and binary form from the [VideoLAN website].
+
+You can also integrate VLCKit and its mobile version MobileVLCKit easily via [CocoaPods].
 
 ### Build with your own VLC repository
 1. Put a vlc repository inside libvlc/vlc
@@ -27,11 +35,14 @@ Then again, this must not be the case for your software. The [LGPLv2.1] allows o
 
 ## Contribute!
 
-As VLCKit is an open-source project hosted by VideoLAN, we happily welcome all kinds of contributions to it. For detailed information on the development process, please read our wiki page on [how to send patches].
+As VLCKit is an open-source project hosted by VideoLAN, we happily welcome all kinds of contributions to it.
+
+For detailed information on the development process, please read our wiki page on [how to send patches].
 
 ## Get in touch!
 
 We happily provide guidance on VLCKit. The [web forum] is always there for you.
+
 If you prefer live interaction, reach out to us via our IRC channel on the [freenode] Network (irc.freenode.org, #videolan). Use the [Freenode Web] interface, if you don't have an IRC client at hand.
 
 ## Further reading
