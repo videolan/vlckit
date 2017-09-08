@@ -1,7 +1,7 @@
-From d3283887be250cf8592aa749c94fd9f5a8dac086 Mon Sep 17 00:00:00 2001
+From 9e6c29c3fe7c03d4bdfa24058e749fbcf40c91d8 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
-Subject: [PATCH 16/18] build: rename exported symbols by module
+Subject: [PATCH 16/17] build: rename exported symbols by module
 
 This is quite ugly and temporary. Ideally we should rename symbols in binaries like the Android script do.
 ---
@@ -146,7 +146,7 @@ index 783220df78..b712fa16a1 100644
      demux_t     *p_demux = (demux_t*)p_this;
      demux_sys_t *p_sys = p_demux->p_sys;
 diff --git a/modules/demux/avformat/mux.c b/modules/demux/avformat/mux.c
-index f339af312c..52d0baf16a 100644
+index 1c01253184..b256f3d2d5 100644
 --- a/modules/demux/avformat/mux.c
 +++ b/modules/demux/avformat/mux.c
 @@ -84,7 +84,7 @@ static int IOWriteTyped(void *opaque, uint8_t *buf, int buf_size,
