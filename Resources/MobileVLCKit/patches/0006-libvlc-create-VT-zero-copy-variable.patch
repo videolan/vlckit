@@ -1,4 +1,4 @@
-From 12ac703ec9d2bc3b80fca8b7f302821dca655b54 Mon Sep 17 00:00:00 2001
+From 4cd08f868cc3db212715dfdfbdd434900a0c48f8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 4 May 2016 16:00:40 +0200
 Subject: [PATCH 06/17] libvlc: create VT-zero-copy variable
@@ -8,7 +8,7 @@ Subject: [PATCH 06/17] libvlc: create VT-zero-copy variable
  1 file changed, 1 insertion(+)
 
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 65632952c2..5cebbd700f 100644
+index f369b96755..ea560b37ac 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )

@@ -1,4 +1,4 @@
-From 9e6c29c3fe7c03d4bdfa24058e749fbcf40c91d8 Mon Sep 17 00:00:00 2001
+From 307236e3336cd0a959537fde826c16f4121a23fa Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
 Subject: [PATCH 16/17] build: rename exported symbols by module

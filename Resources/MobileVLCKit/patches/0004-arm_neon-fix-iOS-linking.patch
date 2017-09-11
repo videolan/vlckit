@@ -1,4 +1,4 @@
-From 3a8849b15f7e4b275e273e328dd339dc924f136d Mon Sep 17 00:00:00 2001
+From 4a52078f846f33f65fe670aecf06e3b97da65510 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
 Subject: [PATCH 04/17] arm_neon: fix iOS linking
