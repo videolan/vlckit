@@ -134,6 +134,14 @@ get_arch() {
     fi
 }
 
+is_simulator_arch() {
+    if [ "$1" = "i386" -o "$1" = "x86_64" ];then
+        return 0
+    else
+        return 1
+    fi
+}
+
 spushd()
 {
      pushd "$1" 2>&1> /dev/null
@@ -814,12 +822,15 @@ build_universal_static_lib() {
             fi
         done
 
-        spushd $actual_arch/lib/vlc/plugins
-        for i in `ls *.a`
-        do
-            VLCMODULES="$i $VLCMODULES"
-        done
-        spopd # $actual_arch/lib/vlc/plugins
+        if (! is_simulator_arch $arch);then
+            echo "IPHONE OS: $arch"
+            spushd $actual_arch/lib/vlc/plugins
+            for i in `ls *.a`
+            do
+                VLCMODULES="$i $VLCMODULES"
+            done
+            spopd # $actual_arch/lib/vlc/plugins
+        fi
 
         if [ "$OSSTYLE" != "AppleTV" -a \
             \( "$FARCH" = "all" -o "$FARCH" = "armv7" -o "$FARCH" = "armv7s" \) ]; then
@@ -836,6 +847,16 @@ build_universal_static_lib() {
 
     if [ -d libvlc/vlc/install-"$OSSTYLE"Simulator ];then
         spushd libvlc/vlc/install-"$OSSTYLE"Simulator
+
+        if (is_simulator_arch $arch);then
+            echo "SIMU OS: $arch"
+            spushd $actual_arch/lib/vlc/plugins
+            for i in `ls *.a`
+            do
+                VLCMODULES="$i $VLCMODULES"
+            done
+            spopd # $actual_arch/lib/vlc/plugins
+        fi
         for i in `ls .`
         do
             local iarch="`get_arch $i`"
@@ -950,11 +971,11 @@ if [ "$TVOS" != "yes" ]; then
     info "Building static MobileVLCKit.framework"
 
     lipo_libs=""
-    if [ -d libvlc/vlc/install-iPhoneOS ];then
+    if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         buildxcodeproj MobileVLCKit "MobileVLCKit" iphoneos
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
     fi
-    if [ -d libvlc/vlc/install-iPhoneSimulator ];then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         buildxcodeproj MobileVLCKit "MobileVLCKit" iphonesimulator
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
     fi
