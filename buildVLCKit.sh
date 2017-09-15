@@ -210,7 +210,7 @@ buildLibVLC() {
     echo "EXTRA_LDFLAGS += ${LDFLAGS}" >> config.mak
 
     make -j$MAKE_JOBS fetch ${args}
-    make .gettext ${args}
+    make -j$MAKE_JOBS .gettext ${args}
     make -j$MAKE_JOBS ${args}
     spopd # vlckitbuild
     spopd # contrib
