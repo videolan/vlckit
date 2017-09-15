@@ -24,8 +24,10 @@ FARCH="all"
 
 TESTEDHASH=4d3db1203
 
-CORE_COUNT=`sysctl -n machdep.cpu.core_count`
-let MAKE_JOBS=$CORE_COUNT+1
+if [ -z "$MAKE_JOBS" ]; then
+    CORE_COUNT=`sysctl -n machdep.cpu.core_count`
+    let MAKE_JOBS=$CORE_COUNT+1
+fi
 
 usage()
 {
@@ -57,7 +59,6 @@ do
              ;;
          v)
              VERBOSE=yes
-             MAKE_JOBS=1
              ;;
          s)
              BUILD_DEVICE=no

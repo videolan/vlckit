@@ -13,8 +13,10 @@ SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 DEBUG="no"
 
-CORE_COUNT=`sysctl -n machdep.cpu.core_count`
-let MAKE_JOBS=$CORE_COUNT+1
+if [ -z "$MAKE_JOBS" ]; then
+    CORE_COUNT=`sysctl -n machdep.cpu.core_count`
+    let MAKE_JOBS=$CORE_COUNT+1
+fi
 
 usage()
 {
@@ -80,7 +82,6 @@ do
              ;;
          v)
              VERBOSE=yes
-             MAKE_JOBS=1
              ;;
          d)  CONFIGURATION="Debug"
              DEBUG="yes"
