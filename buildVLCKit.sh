@@ -143,6 +143,10 @@ spopd
 #
 
 buildLibVLC() {
+    export CC=`xcrun clang`
+    export CXX=`xcrun clang++`
+    export OBJC=`xcrun clang`
+
     args=""
     if [ "$VERBOSE" = "yes" ]; then
         args="${args} V=1"
@@ -224,10 +228,6 @@ buildLibVLC() {
     mkdir -p vlckitbuild
 
     spushd vlckitbuild
-
-    export CC="xcrun clang"
-    export CXX="xcrun clang++"
-    export OBJC="xcrun clang"
 
     ../configure --build=${TARGET} --prefix="${PREFIX}" \
         --disable-macosx-vlc-app \
