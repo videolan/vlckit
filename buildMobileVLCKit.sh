@@ -836,7 +836,11 @@ build_universal_static_lib() {
         if [ "$OSSTYLE" != "AppleTV" -a \
             \( "$FARCH" = "all" -o "$FARCH" = "armv7" -o "$FARCH" = "armv7s" \) ]; then
             # collect ARMv7/s specific neon modules
-            spushd armv7/lib/vlc/plugins
+            if [ "$FARCH" = "all" ];then
+                spushd armv7/lib/vlc/plugins
+            else
+                spushd $FARCH/lib/vlc/plugins
+            fi
             for i in `ls *.a | grep neon`
             do
                 VLCNEONMODULES="$i $VLCNEONMODULES"
@@ -940,7 +944,7 @@ build_universal_static_lib() {
         DEFINITIONS+="#ifdef __arm__\n"
         for file in $VLCNEONMODULES
         do
-            symbols=$(nm -g -arch armv7 install-$OSSTYLE/plugins/$file)
+            symbols=$(nm -g -arch $actual_arch install-$OSSTYLE/plugins/$file)
             entryname=$(get_symbol "$symbols" _)
             DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
             BUILTINS+=" $entryname,\n"
