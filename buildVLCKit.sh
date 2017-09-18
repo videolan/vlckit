@@ -143,9 +143,9 @@ spopd
 #
 
 buildLibVLC() {
-    export CC=`xcrun clang`
-    export CXX=`xcrun clang++`
-    export OBJC=`xcrun clang`
+    export CC=`xcrun -f clang`
+    export CXX=`xcrun -f clang++`
+    export OBJC=`xcrun -f clang`
 
     args=""
     if [ "$VERBOSE" = "yes" ]; then
