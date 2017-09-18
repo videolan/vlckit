@@ -663,10 +663,12 @@ buildMobileKit() {
 
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
         if [ "$TVOS" = "yes" ]; then
+            export BUILDFORTVOS="yes"
             info "Building libvlc for tvOS"
         else
             info "Building libvlc for iOS"
         fi
+        export BUILDFORIOS="yes"
 
         export AR=`xcrun -f ar`
         export RANLIB=`xcrun -f ranlib`
