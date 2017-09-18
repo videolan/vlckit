@@ -230,7 +230,6 @@ buildLibVLC() {
     spushd vlckitbuild
 
     ../configure --build=${TARGET} --prefix="${PREFIX}" \
-        --disable-macosx-vlc-app \
         --disable-macosx \
         --enable-merge-ffmpeg \
         --disable-sparkle \
@@ -251,7 +250,6 @@ buildLibVLC() {
         --disable-xcb \
         --disable-caca \
         --disable-pulse \
-        --disable-sdl \
         --disable-gnutls \
         --disable-vnc
     make -j$MAKE_JOBS ${args}
