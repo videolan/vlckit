@@ -5,6 +5,6 @@
       location = "group:GLEssentials.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../../MobileVLCKit.xcodeproj">
+      location = "group:../../../MobileVLCKit.xcodeproj">
    </FileRef>
 </Workspace>
