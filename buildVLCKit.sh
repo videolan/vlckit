@@ -194,6 +194,7 @@ buildLibVLC() {
     spushd contrib
     mkdir -p vlckitbuild
     spushd vlckitbuild
+    export USE_FFMPEG=1
     ../bootstrap --build=${TARGET} --disable-bluray --disable-growl --disable-sparkle --disable-SDL --disable-SDL_image --disable-microdns --disable-fontconfig --disable-bghudappkit --disable-protobuf
 
     make -j$MAKE_JOBS fetch ${args}

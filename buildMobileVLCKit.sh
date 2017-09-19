@@ -403,6 +403,7 @@ buildLibVLC() {
     export ac_cv_func_mkostemp=no
     export ac_cv_func_mkostemps=no
 
+    export USE_FFMPEG=1
     ../bootstrap ${BUILD} --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
         --disable-disc --disable-sout \
         --disable-sdl \
