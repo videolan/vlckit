@@ -92,6 +92,8 @@ Properties</h2></td></tr>
 <tr class="separator:aa2739a3d1ec35d69a9920e4a9588ef8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a553194cab2c141b89804db92e1a43f87"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_v_l_c_audio.html#a553194cab2c141b89804db92e1a43f87">volume</a></td></tr>
 <tr class="separator:a553194cab2c141b89804db92e1a43f87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac37223907edb0cafcee6f609edc28782"><td class="memItemLeft" align="right" valign="top">BOOL&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="interface_v_l_c_audio.html#ac37223907edb0cafcee6f609edc28782">passthrough</a></td></tr>
+<tr class="separator:ac37223907edb0cafcee6f609edc28782"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>basic class to control audio output </p>
@@ -172,6 +174,29 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Property to mute the current audio output </p><dl class="section note"><dt>Note</dt><dd>decoding continues when muted, so consider disabling the audio track if you don't want audio for a long time </dd></dl>
+
+</div>
+</div>
+<a id="ac37223907edb0cafcee6f609edc28782"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac37223907edb0cafcee6f609edc28782">&#9670;&nbsp;</a></span>passthrough</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (BOOL) passthrough</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">read</span><span class="mlabel">write</span><span class="mlabel">atomic</span><span class="mlabel">assign</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>enable passthrough mode for the current audio device </p><dl class="section note"><dt>Note</dt><dd>There is no warrenty that it succeeds as it depends on the capabilities of the hardware audio decoder / receiver attached by the user </dd></dl>
 
 </div>
 </div>
