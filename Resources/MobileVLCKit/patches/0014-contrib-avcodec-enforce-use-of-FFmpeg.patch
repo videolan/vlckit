@@ -1,7 +1,7 @@
-From 74d699dbdca0481359bc9446793ea072c2254918 Mon Sep 17 00:00:00 2001
+From f59fad2b8635a7f4fe1eaf658155286281bcff55 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 17 Jul 2017 17:05:51 +0200
-Subject: [PATCH 15/17] contrib/avcodec: enforce use of FFmpeg
+Subject: [PATCH 14/16] contrib/avcodec: enforce use of FFmpeg
 
 ---
  contrib/src/ffmpeg/rules.mak | 2 +-
@@ -21,5 +21,5 @@ index 3e5f910e99..6acb5da740 100644
  ifdef USE_FFMPEG
  FFMPEG_HASH=a82468514048fb87d9bf38689866bc3b9aaccd02
 -- 
-2.14.1
+2.11.0
 

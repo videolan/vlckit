@@ -1,7 +1,7 @@
-From dd7bb5498f8c8724569d38c1a70d8dfe7fa50453 Mon Sep 17 00:00:00 2001
+From d26b80e6ed88694c7d72af4013b283f050d97e53 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 10/17] libvlc_media: add cookie_jar API
+Subject: [PATCH 10/16] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -138,7 +138,7 @@ index 5a67e9ff60..0f0341e260 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index ea560b37ac..5b822329eb 100644
+index ebe711e310..34b539f370 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -620,6 +620,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -163,5 +163,5 @@ index ea560b37ac..5b822329eb 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.14.1
+2.11.0
 

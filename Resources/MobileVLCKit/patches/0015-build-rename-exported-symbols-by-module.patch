@@ -1,7 +1,7 @@
-From e45cc37fcd98f2c8f7d8a3ba616dd5b94378a245 Mon Sep 17 00:00:00 2001
+From 8ad8964668fbee7fa99fd74facb24f70b33b5af6 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
-Subject: [PATCH 16/17] build: rename exported symbols by module
+Subject: [PATCH 15/16] build: rename exported symbols by module
 
 This is quite ugly and temporary. Ideally we should rename symbols in binaries like the Android script do.
 ---
@@ -319,5 +319,5 @@ index ecc26e0d60..0c71cda6d2 100644
   * frames, each algorithm is responsible for setting the offset correctly.
   * (The default is 0, so if that is correct, there's no need to do anything.)
 -- 
-2.14.1
+2.11.0
 
