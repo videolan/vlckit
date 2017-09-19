@@ -189,29 +189,12 @@ buildLibVLC() {
 
     # clean the environment
     export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin"
-    export CFLAGS=""
-    export CPPFLAGS=""
-    export CXXFLAGS=""
-    export OBJCFLAGS=""
-    export LDFLAGS=""
-
-    CFLAGS="-isysroot ${SDKROOT} -arch ${ARCH} ${OPTIM} -mmacosx-version-min=${SDK_MIN} -march=core2 -mtune=core2"
-    LDFLAGS="-isysroot ${SDKROOT} -L${SDKROOT}/usr/lib -arch ${ARCH} -Wl,-macosx_version_min,${SDK_MIN}"
-
-    export CFLAGS="${CFLAGS}"
-    export CXXFLAGS="${CFLAGS}"
-    export CPPFLAGS="${CFLAGS}"
-    export OBJCFLAGS="${CFLAGS}"
-    export LDFLAGS="${LDFLAGS}"
 
     info "Building contrib"
     spushd contrib
     mkdir -p vlckitbuild
     spushd vlckitbuild
     ../bootstrap --build=${TARGET} --disable-bluray --disable-growl --disable-sparkle --disable-SDL --disable-SDL_image --disable-microdns --disable-fontconfig --disable-bghudappkit --disable-protobuf
-
-    echo "EXTRA_CFLAGS += ${CFLAGS}" >> config.mak
-    echo "EXTRA_LDFLAGS += ${LDFLAGS}" >> config.mak
 
     make -j$MAKE_JOBS fetch ${args}
     make -j$MAKE_JOBS .gettext ${args}
