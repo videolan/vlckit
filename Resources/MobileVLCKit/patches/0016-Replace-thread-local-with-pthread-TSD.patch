@@ -1,22 +1,28 @@
-From c7f8367e0e5fef23db8f9a0498cbc5834fc57af2 Mon Sep 17 00:00:00 2001
+From 41518beee68b6fe0b5070edd99dd559d49f0fc9b Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
 Subject: [PATCH 16/16] Replace thread local with pthread TSD
 
 ---
- src/misc/interrupt.c | 34 ++++++++++++++++++++--------------
- src/misc/variables.c | 13 ++++++++++---
- 2 files changed, 30 insertions(+), 17 deletions(-)
+ src/misc/interrupt.c | 63 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ src/misc/variables.c | 23 +++++++++++++++++++
+ 2 files changed, 86 insertions(+)
 
 diff --git a/src/misc/interrupt.c b/src/misc/interrupt.c
-index 3fafaa4183..7fdc7b8b96 100644
+index 3fafaa4183..fc7b84fd64 100644
 --- a/src/misc/interrupt.c
 +++ b/src/misc/interrupt.c
-@@ -43,13 +43,20 @@
+@@ -43,13 +43,30 @@
  #include "interrupt.h"
  #include "libvlc.h"
  
--static thread_local vlc_interrupt_t *vlc_interrupt_var;
++#ifdef __x86_64__
++#define I_CAN_HAZ_TSD
++#endif
++
++#ifdef I_CAN_HAZ_TSD
+ static thread_local vlc_interrupt_t *vlc_interrupt_var;
++#else
 +#include <pthread.h>
 +static pthread_key_t vlc_interrupt_var_key;
 +static pthread_once_t vlc_interrupt_var_key_once = PTHREAD_ONCE_INIT;
@@ -24,126 +30,169 @@ index 3fafaa4183..7fdc7b8b96 100644
 +{
 +    pthread_key_create(&vlc_interrupt_var_key, NULL);
 +}
++#endif
  
  /**
   * Initializes an interruption context.
   */
  void vlc_interrupt_init(vlc_interrupt_t *ctx)
  {
++#ifndef I_CAN_HAZ_TSD
 +    pthread_once(&vlc_interrupt_var_key_once, vlc_interrupt_var_key_create);
++#endif
      vlc_mutex_init(&ctx->lock);
      ctx->interrupted = false;
      atomic_init(&ctx->killed, false);
-@@ -98,9 +105,8 @@ void vlc_interrupt_raise(vlc_interrupt_t *ctx)
+@@ -98,9 +115,15 @@ void vlc_interrupt_raise(vlc_interrupt_t *ctx)
  
  vlc_interrupt_t *vlc_interrupt_set(vlc_interrupt_t *newctx)
  {
--    vlc_interrupt_t *oldctx = vlc_interrupt_var;
--
--    vlc_interrupt_var = newctx;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *oldctx = vlc_interrupt_var;
+ 
+     vlc_interrupt_var = newctx;
++#else
 +    vlc_interrupt_t *oldctx = pthread_getspecific(vlc_interrupt_var_key);
++
 +    pthread_setspecific(vlc_interrupt_var_key, newctx);
++#endif
      return oldctx;
  }
  
-@@ -115,7 +121,7 @@ static void vlc_interrupt_prepare(vlc_interrupt_t *ctx,
+@@ -115,7 +138,11 @@ static void vlc_interrupt_prepare(vlc_interrupt_t *ctx,
                                    void (*cb)(void *), void *data)
  {
      assert(ctx != NULL);
--    assert(ctx == vlc_interrupt_var);
++#ifdef I_CAN_HAZ_TSD
+     assert(ctx == vlc_interrupt_var);
++#else
 +    assert(ctx == pthread_getspecific(vlc_interrupt_var_key));
++#endif
  
      vlc_mutex_lock(&ctx->lock);
      assert(ctx->callback == NULL);
-@@ -143,7 +149,7 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
+@@ -143,7 +170,11 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
      int ret = 0;
  
      assert(ctx != NULL);
--    assert(ctx == vlc_interrupt_var);
++#ifdef I_CAN_HAZ_TSD
+     assert(ctx == vlc_interrupt_var);
++#else
 +    assert(ctx == pthread_getspecific(vlc_interrupt_var_key));
++#endif
  
      /* Wait for pending callbacks to prevent access by other threads. */
      vlc_mutex_lock(&ctx->lock);
-@@ -159,14 +165,14 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
+@@ -159,14 +190,22 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
  
  void vlc_interrupt_register(void (*cb)(void *), void *opaque)
  {
--    vlc_interrupt_t *ctx = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *ctx = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
++#endif
      if (ctx != NULL)
          vlc_interrupt_prepare(ctx, cb, opaque);
  }
  
  int vlc_interrupt_unregister(void)
  {
--    vlc_interrupt_t *ctx = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *ctx = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
++#endif
      return (ctx != NULL) ? vlc_interrupt_finish(ctx) : 0;
  }
  
-@@ -185,7 +191,7 @@ void vlc_interrupt_kill(vlc_interrupt_t *ctx)
+@@ -185,7 +224,11 @@ void vlc_interrupt_kill(vlc_interrupt_t *ctx)
  
  bool vlc_killed(void)
  {
--    vlc_interrupt_t *ctx = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *ctx = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
++#endif
  
      return (ctx != NULL) && atomic_load(&ctx->killed);
  }
-@@ -197,7 +203,7 @@ static void vlc_interrupt_sem(void *opaque)
+@@ -197,7 +240,11 @@ static void vlc_interrupt_sem(void *opaque)
  
  int vlc_sem_wait_i11e(vlc_sem_t *sem)
  {
--    vlc_interrupt_t *ctx = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *ctx = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
++#endif
      if (ctx == NULL)
          return vlc_sem_wait(sem), 0;
  
-@@ -227,7 +233,7 @@ static void vlc_mwait_i11e_cleanup(void *opaque)
+@@ -227,7 +274,11 @@ static void vlc_mwait_i11e_cleanup(void *opaque)
  
  int vlc_mwait_i11e(mtime_t deadline)
  {
--    vlc_interrupt_t *ctx = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *ctx = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
++#endif
      if (ctx == NULL)
          return mwait(deadline), 0;
  
-@@ -262,7 +268,7 @@ void vlc_interrupt_forward_start(vlc_interrupt_t *to, void *data[2])
+@@ -262,7 +313,11 @@ void vlc_interrupt_forward_start(vlc_interrupt_t *to, void *data[2])
  {
      data[0] = data[1] = NULL;
  
--    vlc_interrupt_t *from = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *from = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *from = pthread_getspecific(vlc_interrupt_var_key);
++#endif
      if (from == NULL)
          return;
  
-@@ -371,7 +377,7 @@ static int vlc_poll_i11e_inner(struct pollfd *restrict fds, unsigned nfds,
+@@ -371,7 +426,11 @@ static int vlc_poll_i11e_inner(struct pollfd *restrict fds, unsigned nfds,
  
  int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
  {
--    vlc_interrupt_t *ctx = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *ctx = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
++#endif
      if (ctx == NULL)
          return poll(fds, nfds, timeout);
  
-@@ -568,7 +574,7 @@ static void vlc_poll_i11e_cleanup(void *opaque)
+@@ -568,7 +627,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
  
  int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
  {
--    vlc_interrupt_t *ctx = vlc_interrupt_var;
++#ifdef I_CAN_HAZ_TSD
+     vlc_interrupt_t *ctx = vlc_interrupt_var;
++#else
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
++#endif
      if (ctx == NULL)
          return vlc_poll(fds, nfds, timeout);
  
 diff --git a/src/misc/variables.c b/src/misc/variables.c
-index 87a9c27478..2b05526162 100644
+index 87a9c27478..10f142bbed 100644
 --- a/src/misc/variables.c
 +++ b/src/misc/variables.c
-@@ -1378,7 +1378,13 @@ void DumpVariables(vlc_object_t *obj)
+@@ -1378,7 +1378,21 @@ void DumpVariables(vlc_object_t *obj)
      vlc_mutex_unlock(&vlc_internals(obj)->var_lock);
  }
  
--static thread_local void *twalk_ctx;
++#ifdef __x86_64__
++#define I_CAN_HAZ_TSD
++#endif
++
++#ifdef I_CAN_HAZ_TSD
+ static thread_local void *twalk_ctx;
++#else
 +#include <pthread.h>
 +static pthread_key_t twalk_ctx_key;
 +static pthread_once_t twalk_ctx_key_once = PTHREAD_ONCE_INIT;
@@ -151,25 +200,32 @@ index 87a9c27478..2b05526162 100644
 +{
 +    pthread_key_create(&twalk_ctx_key, NULL);
 +}
++#endif
  
  static void TwalkGetNames(const void *data, const VISIT which, const int depth)
  {
-@@ -1387,7 +1393,7 @@ static void TwalkGetNames(const void *data, const VISIT which, const int depth)
+@@ -1387,7 +1401,11 @@ static void TwalkGetNames(const void *data, const VISIT which, const int depth)
      (void) depth;
  
      const variable_t *var = *(const variable_t **)data;
--    DECL_ARRAY(char *) *names = twalk_ctx;
++#ifdef I_CAN_HAZ_TSD
+     DECL_ARRAY(char *) *names = twalk_ctx;
++#else
 +    DECL_ARRAY(char *) *names = pthread_getspecific(twalk_ctx_key);
++#endif
      char *dup = strdup(var->psz_name);
      if (dup != NULL)
          ARRAY_APPEND(*names, dup);
-@@ -1400,7 +1406,8 @@ char **var_GetAllNames(vlc_object_t *obj)
+@@ -1400,7 +1418,12 @@ char **var_GetAllNames(vlc_object_t *obj)
      DECL_ARRAY(char *) names;
      ARRAY_INIT(names);
  
--    twalk_ctx = &names;
++#ifdef I_CAN_HAZ_TSD
+     twalk_ctx = &names;
++#else
 +    pthread_once(&twalk_ctx_key_once, twalk_ctx_key_create);
 +    pthread_setspecific(twalk_ctx_key, &names);
++#endif
      vlc_mutex_lock(&priv->var_lock);
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
