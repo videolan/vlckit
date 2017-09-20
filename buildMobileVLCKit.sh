@@ -339,7 +339,7 @@ buildLibVLC() {
         export OBJCFLAGS="-fobjc-abi-version=2 -fobjc-legacy-dispatch ${OBJCFLAGS}"
     fi
 
-    export LDFLAGS="-isysroot ${SDKROOT} -L${SDKROOT}/usr/lib -arch ${ACTUAL_ARCH}"
+    export LDFLAGS="-arch ${ACTUAL_ARCH}"
 
     if [ "$PLATFORM" = "OS" ]; then
         EXTRA_CFLAGS="-arch ${ACTUAL_ARCH}"
