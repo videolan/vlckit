@@ -22,7 +22,7 @@ OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH=ba3c32e03
+TESTEDHASH=bb7e8b5a
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
