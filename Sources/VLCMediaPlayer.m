@@ -995,7 +995,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)setEqualizerEnabled:(BOOL)equalizerEnabled
 {
-    if (!_equalizerInstance) {
+    if (!_equalizerInstance && equalizerEnabled) {
         if (!(_equalizerInstance = libvlc_audio_equalizer_new())) {
             NSAssert(_equalizerInstance, @"equalizer failed to initialize");
             return;
