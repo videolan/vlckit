@@ -263,7 +263,6 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_retain([_privateLibrary instance]);
 
         _playerInstance = playerInstance;
-        libvlc_media_player_retain(_playerInstance);
 
         [self registerObservers];
     }
@@ -1310,7 +1309,6 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         }
         libvlc_retain([_privateLibrary instance]);
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
-        libvlc_media_player_retain(_playerInstance);
 
         [self registerObservers];
 
