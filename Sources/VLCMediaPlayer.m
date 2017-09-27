@@ -329,6 +329,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     if (_equalizerInstance) {
         libvlc_media_player_set_equalizer(_playerInstance, NULL);
         libvlc_audio_equalizer_release(_equalizerInstance);
+        _equalizerInstance = nil;
     }
 
     if (_viewpoint)
@@ -1024,6 +1025,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     if (_equalizerInstance) {
         libvlc_media_player_set_equalizer(_playerInstance, NULL);
         libvlc_audio_equalizer_release(_equalizerInstance);
+        _equalizerInstance = nil;
         wasactive = YES;
     }
 
