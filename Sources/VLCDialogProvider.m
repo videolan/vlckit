@@ -36,25 +36,18 @@
 - (instancetype)initWithLibrary:(VLCLibrary *)library customUI:(BOOL)customUI
 {
 #if TARGET_OS_IPHONE
-    #if !TARGET_OS_TV
-        if (customUI)
-            return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
-
-        if (!SYSTEM_RUNS_IOS8_OR_LATER) {
-            return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
-        } else {
-            return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
-        }
-    #else
-        if (customUI)
-            return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
-
-        return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
-    #endif
-#else
     if (customUI)
         return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
-    else {
+
+    if ([UIAlertController class]) {
+        return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
+    } else {
+        return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
+    }
+#else
+    if (customUI) {
+        return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
+    } else {
         NSLog(@"YOU NEED TO IMPLEMENT YOUR UI YOURSELF ON THE MAC");
         return nil;
     }
