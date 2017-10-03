@@ -39,11 +39,15 @@
     if (customUI)
         return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
 
-    if ([UIAlertController class]) {
+    #if !TARGET_OS_TV
+        if ([UIAlertController class]) {
+            return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
+        } else {
+            return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
+        }
+    #else
         return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
-    } else {
-        return [[VLCiOSLegacyDialogProvider alloc] initWithLibrary:library];
-    }
+    #endif
 #else
     if (customUI) {
         return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
