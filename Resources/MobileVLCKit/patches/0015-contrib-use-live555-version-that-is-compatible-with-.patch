@@ -1,7 +1,8 @@
-From f7847b9389c3066f980462ffa5496054784f7a9c Mon Sep 17 00:00:00 2001
+From f0682a1f6acc25b28251fccc2087c194ab0cda90 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
-Subject: [PATCH] contrib: use live555 version that is compatible with LGPL2
+Subject: [PATCH 15/15] contrib: use live555 version that is compatible with
+ LGPL2
 
 ---
  contrib/src/live555/SHA512SUMS | 2 +-
@@ -45,5 +46,5 @@ index 19d04541d8..8eb4295f42 100644
  		echo "PREFIX = $(PREFIX)" >> $$subdir/Makefile.head && \
  		echo "LIBDIR = $(PREFIX)/lib" >> $$subdir/Makefile.head ; done
 -- 
-2.11.0 (Apple Git-81)
+2.14.2
 

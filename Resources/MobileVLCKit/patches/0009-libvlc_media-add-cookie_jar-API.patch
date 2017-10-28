@@ -1,7 +1,7 @@
-From 33b5c11f4bd689e6f4637fe5642403581cf7afcf Mon Sep 17 00:00:00 2001
+From e029a25646d1f456f59ea93836dd17af47aab099 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 09/14] libvlc_media: add cookie_jar API
+Subject: [PATCH 09/15] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -71,7 +71,7 @@ index caa55981bf..c0d5754abf 100644
  libvlc_playlist_play
  libvlc_release
 diff --git a/lib/media.c b/lib/media.c
-index 30e5bd55f4..1b31b948a0 100644
+index 8da5a130e2..167b3d733d 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -406,6 +406,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(
@@ -92,7 +92,7 @@ index 30e5bd55f4..1b31b948a0 100644
      vlc_cond_destroy( &p_md->parsed_cond );
      vlc_mutex_destroy( &p_md->parsed_lock );
      vlc_mutex_destroy( &p_md->subitems_lock );
-@@ -1278,3 +1282,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+@@ -1277,3 +1281,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
      free( pp_slaves );
  }
@@ -138,7 +138,7 @@ index 5a67e9ff60..0f0341e260 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 7da1bf25a8..94c9e8064d 100644
+index ef34125aa5..b0d8c65c93 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -620,6 +620,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -163,5 +163,5 @@ index 7da1bf25a8..94c9e8064d 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.14.1
+2.14.2
 

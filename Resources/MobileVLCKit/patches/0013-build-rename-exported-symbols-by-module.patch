@@ -1,7 +1,7 @@
-From 13e9a60f4e52df7012ca26ce54fef82ebca1ac7c Mon Sep 17 00:00:00 2001
+From bd286c30447867086bbeed1f988f73d6b4269da0 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
-Subject: [PATCH 13/14] build: rename exported symbols by module
+Subject: [PATCH 13/15] build: rename exported symbols by module
 
 This is quite ugly and temporary. Ideally we should rename symbols in binaries like the Android script do.
 ---
@@ -17,16 +17,16 @@ This is quite ugly and temporary. Ideally we should rename symbols in binaries l
  9 files changed, 34 insertions(+), 34 deletions(-)
 
 diff --git a/modules/codec/ttml/ttml.c b/modules/codec/ttml/ttml.c
-index 4727b28cbf..97631276e5 100644
+index 24b1050d5a..9b0abbbf26 100644
 --- a/modules/codec/ttml/ttml.c
 +++ b/modules/codec/ttml/ttml.c
 @@ -54,7 +54,7 @@ vlc_module_begin ()
-         set_capability( "demux", 2 )
+         set_capability( "demux", 3 )
          set_category( CAT_INPUT )
          set_subcategory( SUBCAT_INPUT_DEMUX )
 -        set_callbacks( OpenDemux, CloseDemux )
 +        set_callbacks( OpenDemux__ttml, CloseDemux__ttml )
-         add_shortcut( "ttml", "subtitle" )
+         add_shortcut( "ttml" )
  
  vlc_module_end ()
 diff --git a/modules/codec/ttml/ttml.h b/modules/codec/ttml/ttml.h
@@ -88,7 +88,7 @@ index 5105dd1efd..7c97fc842a 100644
  #define MUX_TEXT N_("Avformat mux")
  #define MUX_LONGTEXT N_("Force use of a specific avformat muxer.")
 diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
-index 783220df78..b712fa16a1 100644
+index e99a9aa750..ac50c4b0d8 100644
 --- a/modules/demux/avformat/demux.c
 +++ b/modules/demux/avformat/demux.c
 @@ -143,7 +143,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
@@ -136,7 +136,7 @@ index 783220df78..b712fa16a1 100644
          return VLC_EGENERIC;
      }
      free( psz_url );
-@@ -665,7 +665,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -672,7 +672,7 @@ int OpenDemux( vlc_object_t *p_this )
  /*****************************************************************************
   * Close
   *****************************************************************************/
@@ -319,5 +319,5 @@ index ecc26e0d60..0c71cda6d2 100644
   * frames, each algorithm is responsible for setting the offset correctly.
   * (The default is 0, so if that is correct, there's no need to do anything.)
 -- 
-2.14.1
+2.14.2
 

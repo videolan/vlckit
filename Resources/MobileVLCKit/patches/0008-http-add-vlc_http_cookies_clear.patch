@@ -1,7 +1,7 @@
-From 544391ca227ed3fd2d952a1793ae07e8aae8fd95 Mon Sep 17 00:00:00 2001
+From 355cea0bf383e528886c6d3ca4de1c39547281d1 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
-Subject: [PATCH 08/14] http: add vlc_http_cookies_clear
+Subject: [PATCH 08/15] http: add vlc_http_cookies_clear
 
 Clear all cookies without deleting the jar.
 ---
@@ -35,7 +35,7 @@ index 5b1a8bfee8..39e8b59cc7 100644
  vlc_http_cookies_fetch
  httpd_ClientIP
 diff --git a/src/misc/httpcookies.c b/src/misc/httpcookies.c
-index 2e4d3a8663..0929758f62 100644
+index 77ab852b15..f229b85dea 100644
 --- a/src/misc/httpcookies.c
 +++ b/src/misc/httpcookies.c
 @@ -281,7 +281,7 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
@@ -61,5 +61,5 @@ index 2e4d3a8663..0929758f62 100644
  }
  
 -- 
-2.14.1
+2.14.2
 

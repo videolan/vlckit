@@ -1,7 +1,7 @@
-From bbe96651ce201e069d28c6113d0729baf7f554b1 Mon Sep 17 00:00:00 2001
+From 75592fe271e36b6a21c818d3bf29052bcad8091d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 14/14] Replace thread local with pthread TSD
+Subject: [PATCH 14/15] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -175,7 +175,7 @@ index 3fafaa4183..476d9cfba5 100644
          return vlc_poll(fds, nfds, timeout);
  
 diff --git a/src/misc/variables.c b/src/misc/variables.c
-index 87a9c27478..5d3b8ebc1f 100644
+index 810c8ffc81..3d2d2f1dc8 100644
 --- a/src/misc/variables.c
 +++ b/src/misc/variables.c
 @@ -1378,7 +1378,17 @@ void DumpVariables(vlc_object_t *obj)
@@ -222,5 +222,5 @@ index 87a9c27478..5d3b8ebc1f 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.14.1
+2.14.2
 
