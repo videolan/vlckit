@@ -1,4 +1,4 @@
-From bd286c30447867086bbeed1f988f73d6b4269da0 Mon Sep 17 00:00:00 2001
+From 78de355e24edb893c6614bbde04d9ffb958260fc Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 11 Apr 2017 15:15:26 +0200
 Subject: [PATCH 13/15] build: rename exported symbols by module
@@ -9,12 +9,12 @@ This is quite ugly and temporary. Ideally we should rename symbols in binaries l
  modules/codec/ttml/ttml.h                      |  4 ++--
  modules/demux/avformat/avformat.c              |  4 ++--
  modules/demux/avformat/avformat.h              |  8 ++++----
- modules/demux/avformat/demux.c                 | 12 ++++++------
+ modules/demux/avformat/demux.c                 | 16 ++++++++--------
  modules/demux/avformat/mux.c                   |  4 ++--
  modules/demux/ttml.c                           |  6 +++---
  modules/video_filter/deinterlace/deinterlace.c | 10 +++++-----
  modules/video_filter/deinterlace/deinterlace.h | 18 +++++++++---------
- 9 files changed, 34 insertions(+), 34 deletions(-)
+ 9 files changed, 36 insertions(+), 36 deletions(-)
 
 diff --git a/modules/codec/ttml/ttml.c b/modules/codec/ttml/ttml.c
 index 24b1050d5a..9b0abbbf26 100644
@@ -88,10 +88,10 @@ index 5105dd1efd..7c97fc842a 100644
  #define MUX_TEXT N_("Avformat mux")
  #define MUX_LONGTEXT N_("Force use of a specific avformat muxer.")
 diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
-index e99a9aa750..ac50c4b0d8 100644
+index 2f3b907410..7c1a1a5319 100644
 --- a/modules/demux/avformat/demux.c
 +++ b/modules/demux/avformat/demux.c
-@@ -143,7 +143,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
+@@ -148,7 +148,7 @@ static void get_rotation(es_format_t *fmt, AVStream *s)
      }
  }
  
@@ -100,7 +100,7 @@ index e99a9aa750..ac50c4b0d8 100644
  {
      demux_t       *p_demux = (demux_t*)p_this;
      demux_sys_t   *p_sys;
-@@ -280,7 +280,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -288,7 +288,7 @@ int OpenDemux( vlc_object_t *p_this )
      if( !p_io_buffer )
      {
          free( psz_url );
@@ -109,7 +109,7 @@ index e99a9aa750..ac50c4b0d8 100644
          return VLC_ENOMEM;
      }
  
-@@ -289,7 +289,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -297,7 +297,7 @@ int OpenDemux( vlc_object_t *p_this )
      {
          av_free( p_io_buffer );
          free( psz_url );
@@ -118,7 +118,7 @@ index e99a9aa750..ac50c4b0d8 100644
          return VLC_ENOMEM;
      }
  
-@@ -299,7 +299,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -307,7 +307,7 @@ int OpenDemux( vlc_object_t *p_this )
      {
          av_free( p_io_buffer );
          free( psz_url );
@@ -127,7 +127,7 @@ index e99a9aa750..ac50c4b0d8 100644
          return VLC_ENOMEM;
      }
  
-@@ -314,7 +314,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -322,7 +322,7 @@ int OpenDemux( vlc_object_t *p_this )
          av_free( pb );
          p_sys->ic = NULL;
          free( psz_url );
@@ -136,7 +136,23 @@ index e99a9aa750..ac50c4b0d8 100644
          return VLC_EGENERIC;
      }
      free( psz_url );
-@@ -672,7 +672,7 @@ int OpenDemux( vlc_object_t *p_this )
+@@ -357,13 +357,13 @@ int OpenDemux( vlc_object_t *p_this )
+     if( !nb_streams )
+     {
+         msg_Err( p_demux, "No streams found");
+-        CloseDemux( p_this );
++        CloseDemux__avformat( p_this );
+         return VLC_EGENERIC;
+     }
+     p_sys->tracks = calloc( nb_streams, sizeof(*p_sys->tracks) );
+     if( !p_sys->tracks )
+     {
+-        CloseDemux( p_this );
++        CloseDemux__avformat( p_this );
+         return VLC_ENOMEM;
+     }
+ 
+@@ -690,7 +690,7 @@ int OpenDemux( vlc_object_t *p_this )
  /*****************************************************************************
   * Close
   *****************************************************************************/
