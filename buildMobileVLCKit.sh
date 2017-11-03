@@ -22,7 +22,7 @@ OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH=5430ac1
+TESTEDHASH=0885ed8
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -444,6 +444,7 @@ buildLibVLC() {
         --disable-aribb25 \
         --enable-vpx \
         --enable-libdsm \
+        --enable-libplacebo \
         ${TVOSOPTIONS} \
         --enable-taglib > ${out}
 
