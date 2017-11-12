@@ -403,6 +403,7 @@ buildLibVLC() {
     export ac_cv_func_mkostemp=no
     export ac_cv_func_mkostemps=no
     export ac_cv_func_open_memstream=no
+    export ac_cv_func_futimens=no
 
     export USE_FFMPEG=1
     ../bootstrap ${BUILD} --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
