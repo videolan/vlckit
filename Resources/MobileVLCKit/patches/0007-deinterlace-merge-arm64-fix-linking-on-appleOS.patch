@@ -1,7 +1,7 @@
-From 78de05ed1914bc1908c73e6fcc3e1657153006fa Mon Sep 17 00:00:00 2001
+From e6c689d3704187b16fa0de013ad782208263b285 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:04:05 +0200
-Subject: [PATCH 07/15] deinterlace-merge-arm64: fix linking on appleOS
+Subject: [PATCH 07/14] deinterlace-merge-arm64: fix linking on appleOS
 
 ---
  modules/arm_neon/asm64.S                       | 46 ++++++++++++++++++++++++++

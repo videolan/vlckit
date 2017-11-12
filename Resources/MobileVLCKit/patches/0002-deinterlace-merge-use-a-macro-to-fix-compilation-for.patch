@@ -1,7 +1,7 @@
-From f1a8fd5633d481c826b9333cd242b9dcb0dd8744 Mon Sep 17 00:00:00 2001
+From c4dd9c8e35c14e0eaa7693d57d5a10961f704cb4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 10 Aug 2012 16:02:07 +0200
-Subject: [PATCH 02/15] deinterlace/merge: use a macro to fix compilation for
+Subject: [PATCH 02/14] deinterlace/merge: use a macro to fix compilation for
  iOS
 
 ---
