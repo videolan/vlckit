@@ -45,7 +45,6 @@
 		7D1329711BA3057E00BE647E /* VLCMediaDiscoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */; };
 		7D1329721BA3057E00BE647E /* VLCTime.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7A5ECAD811DE8FAB00F66AF3 /* VLCTime.h */; };
 		7D24C2B61EC0A3390047E700 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B51EC0A3390047E700 /* libbz2.tbd */; };
-		7D24C2B81EC0A3400047E700 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B71EC0A3400047E700 /* VideoToolbox.framework */; };
 		7D24C2BA1EC0A3460047E700 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B91EC0A3460047E700 /* libbz2.tbd */; };
 		7D34F5521C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */; };
 		7D34F5531C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */; };
@@ -60,8 +59,6 @@
 		7D797FB31DF41E8700AD93ED /* TVVLCKit.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D797FB21DF41E8400AD93ED /* TVVLCKit.h */; };
 		7D797FB51DF41EBA00AD93ED /* StaticLibVLC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D797FB41DF41EBA00AD93ED /* StaticLibVLC.m */; };
 		7D797FB61DF41EBA00AD93ED /* StaticLibVLC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D797FB41DF41EBA00AD93ED /* StaticLibVLC.m */; };
-		7D797FB81DF41EF800AD93ED /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FB71DF41EF800AD93ED /* AVFoundation.framework */; };
-		7D797FBA1DF41EFB00AD93ED /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FB91DF41EFB00AD93ED /* AudioToolbox.framework */; };
 		7D797FBC1DF41F0300AD93ED /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FBB1DF41F0300AD93ED /* libc++.tbd */; };
 		7D797FBE1DF41F1B00AD93ED /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FBD1DF41F1B00AD93ED /* libiconv.tbd */; };
 		7D797FC01DF41F2000AD93ED /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FBF1DF41F2000AD93ED /* libz.tbd */; };
@@ -143,6 +140,10 @@
 		7DDC02121B501ECF0078FC84 /* VLCTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD811DE8FAB00F66AF3 /* VLCTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC02151B501ED70078FC84 /* VLCLibVLCBridging.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAE411DE8FEF00F66AF3 /* VLCLibVLCBridging.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7DDC02161B501ED70078FC84 /* VLCEventManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAE511DE8FEF00F66AF3 /* VLCEventManager.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7DE9EAD41FB9E00E00859664 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD31FB9E00E00859664 /* CoreMedia.framework */; };
+		7DE9EAD61FB9E01700859664 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD51FB9E01700859664 /* VideoToolbox.framework */; };
+		7DE9EAD81FB9E02200859664 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD71FB9E02200859664 /* AudioToolbox.framework */; };
+		7DE9EADA1FB9E02800859664 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD91FB9E02700859664 /* AVFoundation.framework */; };
 		7DFDF4E21C9AF17800BA86A6 /* VLCDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D803EB51C8F21D200864A9C /* VLCDialogProvider.m */; };
 		7DFDF4E71C9AF24700BA86A6 /* VLCAudio.h in Headers */ = {isa = PBXBuildFile; fileRef = 4B49C5FD1BC3D7960052D40C /* VLCAudio.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DFDF4E81C9AF25600BA86A6 /* VLCEmbeddedDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D803EC31C8F2AEF00864A9C /* VLCEmbeddedDialogProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -285,6 +286,10 @@
 		7DB683C61C995E9A000C70BE /* libStaticTVLibvlc.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticTVLibvlc.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB683D31C996187000C70BE /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCHelperCode.m; path = Sources/VLCHelperCode.m; sourceTree = "<group>"; };
 		7DB683D91C9961BA000C70BE /* VLCHelperCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCHelperCode.h; path = Headers/Internal/VLCHelperCode.h; sourceTree = "<group>"; };
+		7DE9EAD31FB9E00E00859664 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.1.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
+		7DE9EAD51FB9E01700859664 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.1.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		7DE9EAD71FB9E02200859664 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.1.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
+		7DE9EAD91FB9E02700859664 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		AA747D9E0F9514B9006C5449 /* MobilePrefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobilePrefix.pch; path = Headers/PCH/MobilePrefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libMobileVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,13 +339,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE9EADA1FB9E02800859664 /* AVFoundation.framework in Frameworks */,
+				7DE9EAD81FB9E02200859664 /* AudioToolbox.framework in Frameworks */,
+				7DE9EAD61FB9E01700859664 /* VideoToolbox.framework in Frameworks */,
+				7DE9EAD41FB9E00E00859664 /* CoreMedia.framework in Frameworks */,
 				7D24C2BA1EC0A3460047E700 /* libbz2.tbd in Frameworks */,
-				7D24C2B81EC0A3400047E700 /* VideoToolbox.framework in Frameworks */,
 				7D797FC01DF41F2000AD93ED /* libz.tbd in Frameworks */,
 				7D797FBE1DF41F1B00AD93ED /* libiconv.tbd in Frameworks */,
 				7D797FBC1DF41F0300AD93ED /* libc++.tbd in Frameworks */,
-				7D797FBA1DF41EFB00AD93ED /* AudioToolbox.framework in Frameworks */,
-				7D797FB81DF41EF800AD93ED /* AVFoundation.framework in Frameworks */,
 				7DB683CF1C995EA3000C70BE /* libStaticTVLibvlc.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -395,6 +401,10 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DE9EAD91FB9E02700859664 /* AVFoundation.framework */,
+				7DE9EAD71FB9E02200859664 /* AudioToolbox.framework */,
+				7DE9EAD51FB9E01700859664 /* VideoToolbox.framework */,
+				7DE9EAD31FB9E00E00859664 /* CoreMedia.framework */,
 				7D24C2B91EC0A3460047E700 /* libbz2.tbd */,
 				7D24C2B71EC0A3400047E700 /* VideoToolbox.framework */,
 				7D24C2B51EC0A3390047E700 /* libbz2.tbd */,
