@@ -1,4 +1,4 @@
-From 65934a43e53b3888ed378ee796db04cc223252f3 Mon Sep 17 00:00:00 2001
+From 878cd2e9ab9041f692a21bc38f8b2566dce27cd1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 06/14] Enable System DL
@@ -58,5 +58,5 @@ index 41d16a4fb2..3e5f910e99 100644
  
  .ffmpeg: ffmpeg
 -- 
-2.14.2
+2.15.0
 

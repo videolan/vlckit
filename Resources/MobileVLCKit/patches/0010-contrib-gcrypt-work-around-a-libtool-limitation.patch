@@ -1,4 +1,4 @@
-From 81da678c195a38fedcc96b5f65aa1fb64bf71b5a Mon Sep 17 00:00:00 2001
+From 99e5fd5479e463e9fed6e616fcaff8d9e3f1e434 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
 Subject: [PATCH 10/14] contrib/gcrypt: work-around a libtool limitation
@@ -53,5 +53,5 @@ index 0000000000..df97ffb488
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.14.2
+2.15.0
 
