@@ -419,6 +419,7 @@ buildLibVLC() {
         --disable-mpcdec \
         --disable-upnp \
         --disable-gme \
+        --disable-srt \
         --disable-tremor \
         --enable-vorbis \
         --disable-sidplay2 \
