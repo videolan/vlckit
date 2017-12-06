@@ -1,4 +1,4 @@
-From e11038af88732b7774dc3f39393e2018406ea632 Mon Sep 17 00:00:00 2001
+From dcdcc90c3a80bb7397baaa7393facfbce36a7d3d Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
 Subject: [PATCH 14/14] contrib: use live555 version that is compatible with
@@ -18,7 +18,7 @@ index f459fb9d16..02b2a69734 100644
 +10846fd6d5482bbea131ae805137077997e9dec242665e3c01d699d5584154c65049e8c520ea855599e554154a148e61fea77b592d97c814a4a98c773658d8f5  live.2016.10.21.tar.gz
 \ No newline at end of file
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index c389f2c33d..7a629bdee4 100644
+index 11bf9c0052..e51fac6950 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,14 +1,12 @@
@@ -37,7 +37,7 @@ index c389f2c33d..7a629bdee4 100644
  
  $(TARBALLS)/$(LIVE555_FILE):
  	$(call download_pkg,$(LIVEDOTCOM_URL),live555)
-@@ -76,7 +74,6 @@ endif
+@@ -78,7 +76,6 @@ endif
  SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
  
  .live555: live555
