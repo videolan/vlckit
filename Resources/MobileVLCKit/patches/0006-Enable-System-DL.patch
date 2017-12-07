@@ -1,4 +1,4 @@
-From c19bc84988c3b2dda0705215cb8e57739e2110d7 Mon Sep 17 00:00:00 2001
+From 9f2100b18b8b59bc5f2e366b2f689d122e125f7a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 06/14] Enable System DL
@@ -36,7 +36,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 4afb87af7c..9ac5c4862c 100644
+index b31c1e38ce..a98b343ade 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -24,6 +24,9 @@ FFMPEGCONF = \
@@ -49,14 +49,14 @@ index 4afb87af7c..9ac5c4862c 100644
  	--disable-debug \
  	--disable-avdevice \
  	--disable-devices \
-@@ -222,6 +225,7 @@ ffmpeg: ffmpeg-$(FFMPEG_BASENAME).tar.xz .sum-ffmpeg
- 	rm -Rf $@ $@-$(FFMPEG_BASENAME)
+@@ -223,6 +226,7 @@ ffmpeg: ffmpeg-$(FFMPEG_BASENAME).tar.xz .sum-ffmpeg
  	mkdir -p $@-$(FFMPEG_BASENAME)
  	tar xvJf "$<" --strip-components=1 -C $@-$(FFMPEG_BASENAME)
+ 	$(APPLY) $(SRC)/ffmpeg/armv7_fixup.patch
 +	$(APPLY) $(SRC)/ffmpeg/patch-as-patch-can.patch
  	$(MOVE)
  
  .ffmpeg: ffmpeg
 -- 
-2.15.0
+2.11.0
 
