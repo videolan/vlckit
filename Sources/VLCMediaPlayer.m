@@ -1103,7 +1103,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     }
 
     // Pause the stream
-    libvlc_media_player_pause(_playerInstance);
+    libvlc_media_player_set_pause(_playerInstance, 1);
 }
 
 - (void)stop
