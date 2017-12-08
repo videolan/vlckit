@@ -659,7 +659,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 - (void)play;
 
 /**
- * Toggle's the pause state of the feed.
+ * Set the pause state of the feed. Do nothing if already paused.
  */
 - (void)pause;
 
