@@ -150,7 +150,7 @@
         [self performSelectorInBackground:@selector(pause) withObject:nil];
         return;
     }
-    libvlc_media_list_player_pause(instance);
+    libvlc_media_list_player_set_pause(instance, 1);
 }
 
 - (void)stop
