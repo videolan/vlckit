@@ -983,12 +983,15 @@ if [ "$TVOS" != "yes" ]; then
     info "Building static MobileVLCKit.framework"
 
     lipo_libs=""
+    platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
-        buildxcodeproj MobileVLCKit "MobileVLCKit" iphoneos
+        platform="iphoneos"
+        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
-        buildxcodeproj MobileVLCKit "MobileVLCKit" iphonesimulator
+        platform="iphonesimulator"
+        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
     fi
 
@@ -998,7 +1001,7 @@ if [ "$TVOS" != "yes" ]; then
     mkdir MobileVLCKit.framework && \
     lipo -create ${lipo_libs} -o MobileVLCKit.framework/MobileVLCKit && \
     chmod a+x MobileVLCKit.framework/MobileVLCKit && \
-    cp -pr ${CONFIGURATION}-iphoneos/MobileVLCKit MobileVLCKit.framework/Headers
+    cp -pr ${CONFIGURATION}-${platform}/MobileVLCKit MobileVLCKit.framework/Headers
     spopd # build
 
     info "Build of static MobileVLCKit.framework completed"
@@ -1006,12 +1009,15 @@ else
     info "Building static TVVLCKit.framework"
 
     lipo_libs=""
+    platform=""
     if [ -d libvlc/vlc/install-AppleTVOS ];then
-        buildxcodeproj MobileVLCKit "TVVLCKit" appletvos
+        platform="appletvos"
+        buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
     fi
     if [ -d libvlc/vlc/install-AppleTVSimulator ];then
-        buildxcodeproj MobileVLCKit "TVVLCKit" appletvsimulator
+        platform="appletvsimulator"
+        buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
     fi
 
@@ -1021,7 +1027,7 @@ else
     mkdir TVVLCKit.framework && \
     lipo -create ${lipo_libs} -o TVVLCKit.framework/TVVLCKit && \
     chmod a+x TVVLCKit.framework/TVVLCKit && \
-    cp -pr ${CONFIGURATION}-appletvos/TVVLCKit TVVLCKit.framework/Headers
+    cp -pr ${CONFIGURATION}-${platform}/TVVLCKit TVVLCKit.framework/Headers
     spopd # build
 
     info "Build of static TVVLCKit.framework completed"
