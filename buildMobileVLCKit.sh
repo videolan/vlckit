@@ -211,6 +211,9 @@ spushd .
 ROOT_DIR=`pwd`
 spopd
 
+VLCROOT=${ROOT_DIR}/libvlc/vlc
+export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
 info "Preparing build dirs"
 
 mkdir -p libvlc
@@ -272,7 +275,6 @@ buildLibVLC() {
     SDK_VERSION="$7"
     PLATFORM="$8"
     OSSTYLE=iPhone
-    VLCROOT=${ROOT_DIR}/libvlc/vlc
 
     if [ "$DEBUG" = "yes" ]; then
         OPTIM="-O0 -g"
@@ -301,7 +303,6 @@ buildLibVLC() {
     TARGET="${ARCH}-apple-darwin14"
 
     # clean the environment
-    export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     export CFLAGS=""
     export CPPFLAGS=""
     export CXXFLAGS=""
