@@ -65,13 +65,13 @@
  * the current time value as NSNumber
  * \return the NSNumber object
  */
-@property (nonatomic, readonly) NSNumber * value;	///< Holds, in milliseconds, the VLCTime value
+@property (nonatomic, readonly) NSNumber * value;    ///< Holds, in milliseconds, the VLCTime value
 /**
  * the current time value as NSNumber
  * \return the NSNumber object
  * \deprecated use value instead
  */
-@property (readonly) NSNumber * numberValue __attribute__((deprecated));		// here for backwards compatibility
+@property (readonly) NSNumber * numberValue __attribute__((deprecated));	    // here for backwards compatibility
 
 /**
  * the current time value as string value localized for the current environment
