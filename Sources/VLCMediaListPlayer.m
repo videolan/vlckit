@@ -2,7 +2,7 @@
  * VLCMediaListPlayer.m: VLCKit.framework VLCMediaListPlayer implementation
  *****************************************************************************
  * Copyright (C) 2009 Pierre d'Herbemont
- * Partial Copyright (C) 2009-2013 Felix Paul Kühne
+ * Partial Copyright (C) 2009-2017 Felix Paul Kühne
  * Copyright (C) 2009-2013 VLC authors and VideoLAN
  * $Id$
  *
@@ -37,6 +37,7 @@
     VLCMediaPlayer *_mediaPlayer;
     VLCMediaList *_mediaList;
     VLCRepeatMode _repeatMode;
+    dispatch_queue_t _libVLCBackgroundQueue;
 }
 @end
 
@@ -45,6 +46,8 @@
 - (instancetype)initWithOptions:(NSArray *)options andDrawable:(id)drawable
 {
     if (self = [super init]) {
+        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
+
         VLCLibrary *library;
         if (options != nil) {
             library = [[VLCLibrary alloc] initWithOptions:options];
@@ -128,38 +131,30 @@
 
 - (void)playMedia:(VLCMedia *)media
 {
-    if ([NSThread isMainThread]) {
-        [self performSelectorInBackground:@selector(playMedia:) withObject:media];
-        return;
-    }
-    libvlc_media_list_player_play_item(instance, [media libVLCMediaDescriptor]);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_list_player_play_item(instance, [media libVLCMediaDescriptor]);
+    });
 }
 
 - (void)play
 {
-    if ([NSThread isMainThread]) {
-        [self performSelectorInBackground:@selector(play) withObject:nil];
-        return;
-    }
-    libvlc_media_list_player_play(instance);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_list_player_play(instance);
+    });
 }
 
 - (void)pause
 {
-    if ([NSThread isMainThread]) {
-        [self performSelectorInBackground:@selector(pause) withObject:nil];
-        return;
-    }
-    libvlc_media_list_player_set_pause(instance, 1);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_list_player_set_pause(instance, 1);
+    });
 }
 
 - (void)stop
 {
-    if ([NSThread isMainThread]) {
-        [self performSelectorInBackground:@selector(stop) withObject:nil];
-        return;
-    }
-    libvlc_media_list_player_stop(instance);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_list_player_stop(instance);
+    });
 }
 
 - (BOOL)next
@@ -179,12 +174,9 @@
 
 - (void)playItemAtNumber:(NSNumber *)index
 {
-    if ([NSThread isMainThread]) {
-        [self performSelectorInBackground:@selector(playItemAtNumber:) withObject:index];
-        return;
-    }
-
-    libvlc_media_list_player_play_item_at_index(instance, [index intValue]);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_list_player_play_item_at_index(instance, [index intValue]);
+    });
 }
 
 - (void)setRepeatMode:(VLCRepeatMode)repeatMode
