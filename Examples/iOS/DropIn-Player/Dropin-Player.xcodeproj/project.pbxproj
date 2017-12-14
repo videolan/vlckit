@@ -22,6 +22,7 @@
 		7D8745C3183BAC2700FD09E0 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C2183BAC2700FD09E0 /* libiconv.dylib */; };
 		7D8745C7183BACAE00FD09E0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */; };
 		7D8745C8183BACBF00FD09E0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */; };
+		7DBC87FD1FE2C0BE002A5ADC /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */; };
 		7DEBFE68183BEA9E00BC53D5 /* VDLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE65183BEA9E00BC53D5 /* VDLAppDelegate.m */; };
 		7DEBFE69183BEA9E00BC53D5 /* VDLPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE67183BEA9E00BC53D5 /* VDLPlaybackViewController.m */; };
 		7DEBFE6D183BEAB500BC53D5 /* VDLPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE6B183BEAB500BC53D5 /* VDLPlaybackViewController.xib */; };
@@ -56,6 +57,7 @@
 		7D8745C0183BAC2300FD09E0 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 		7D8745C2183BAC2700FD09E0 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		7DEBFE64183BEA9E00BC53D5 /* VDLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VDLAppDelegate.h; path = "Dropin-Player/VDLAppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		7DEBFE65183BEA9E00BC53D5 /* VDLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VDLAppDelegate.m; path = "Dropin-Player/VDLAppDelegate.m"; sourceTree = SOURCE_ROOT; };
 		7DEBFE66183BEA9E00BC53D5 /* VDLPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VDLPlaybackViewController.h; path = "Dropin-Player/VDLPlaybackViewController.h"; sourceTree = SOURCE_ROOT; };
@@ -81,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DBC87FD1FE2C0BE002A5ADC /* CoreImage.framework in Frameworks */,
 				7D7B6C7D1B70D0BA00E879CF /* libMobileVLCKit.a in Frameworks */,
 				7D7B6C4F1B70C43200E879CF /* CoreVideo.framework in Frameworks */,
 				7D7B6C4D1B70C41D00E879CF /* CoreMedia.framework in Frameworks */,
@@ -125,6 +128,7 @@
 		7D11B368183BA71600FF0D25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */,
 				7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */,
 				7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */,
 				7D7B6C4C1B70C41D00E879CF /* CoreMedia.framework */,

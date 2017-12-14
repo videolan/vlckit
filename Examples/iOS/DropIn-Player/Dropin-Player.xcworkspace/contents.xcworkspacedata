@@ -5,6 +5,6 @@
       location = "group:Dropin-Player.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../../MobileVLCKit.xcodeproj">
+      location = "group:../../../MobileVLCKit.xcodeproj">
    </FileRef>
 </Workspace>
