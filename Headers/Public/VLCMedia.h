@@ -171,23 +171,23 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  * list of possible media orientation.
  */
 typedef NS_ENUM(NSUInteger, VLCMediaOrientation) {
-	VLCMediaOrientationTopLeft,
-	VLCMediaOrientationTopRight,
-	VLCMediaOrientationBottomLeft,
-	VLCMediaOrientationBottomRight,
-	VLCMediaOrientationLeftTop,
-	VLCMediaOrientationLeftBottom,
-	VLCMediaOrientationRightTop,
-	VLCMediaOrientationRightBottom
+    VLCMediaOrientationTopLeft,
+    VLCMediaOrientationTopRight,
+    VLCMediaOrientationBottomLeft,
+    VLCMediaOrientationBottomRight,
+    VLCMediaOrientationLeftTop,
+    VLCMediaOrientationLeftBottom,
+    VLCMediaOrientationRightTop,
+    VLCMediaOrientationRightBottom
 };
 
 /**
  * list of possible media projection.
  */
 typedef NS_ENUM(NSUInteger, VLCMediaProjection) {
-	VLCMediaProjectionRectangular,
-	VLCMediaProjectionEquiRectangular,
-	VLCMediaProjectionCubemapLayoutStandard = 0x100
+    VLCMediaProjectionRectangular,
+    VLCMediaProjectionEquiRectangular,
+    VLCMediaProjectionCubemapLayoutStandard = 0x100
 };
 
 /**
