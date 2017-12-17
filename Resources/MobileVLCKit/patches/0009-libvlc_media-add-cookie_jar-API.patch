@@ -1,7 +1,7 @@
-From 7ff53222824c4e61f8db548dd28b50f2b86a9921 Mon Sep 17 00:00:00 2001
+From 2ed0f231c6665b39e914bee1130f0efabb0ed9e2 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 09/14] libvlc_media: add cookie_jar API
+Subject: [PATCH 09/15] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -58,10 +58,10 @@ index 383f366b69..2a5666688d 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index caa55981bf..c0d5754abf 100644
+index 7c7fea02e6..9dbf0efa4e 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -216,6 +216,8 @@ libvlc_media_set_user_data
+@@ -218,6 +218,8 @@ libvlc_media_set_user_data
  libvlc_media_subitems
  libvlc_media_tracks_get
  libvlc_media_tracks_release
@@ -71,7 +71,7 @@ index caa55981bf..c0d5754abf 100644
  libvlc_playlist_play
  libvlc_release
 diff --git a/lib/media.c b/lib/media.c
-index af246c6c7e..4004dbc1eb 100644
+index 54875d6a0e..e1d23caaf5 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -406,6 +406,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(
@@ -92,7 +92,7 @@ index af246c6c7e..4004dbc1eb 100644
      vlc_cond_destroy( &p_md->parsed_cond );
      vlc_mutex_destroy( &p_md->parsed_lock );
      vlc_mutex_destroy( &p_md->subitems_lock );
-@@ -1277,3 +1281,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+@@ -1288,3 +1292,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
      free( pp_slaves );
  }
@@ -163,5 +163,5 @@ index daef2faedd..4a6cf0cb0e 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.15.0
+2.15.1
 

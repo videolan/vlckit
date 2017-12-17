@@ -504,22 +504,22 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 #if TARGET_OS_IPHONE
 - (void)setTextRendererFontSize:(NSNumber *)fontSize
 {
-    #warning setTextRendererFontSize: NO-OP
+    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontsize, [fontSize intValue]);
 }
 
 - (void)setTextRendererFont:(NSString *)fontname
 {
-    #warning setTextRendererFont: NO-OP
+    libvlc_video_set_textrenderer_string(_playerInstance, libvlc_textrender_font, [fontname UTF8String]);
 }
 
 - (void)setTextRendererFontColor:(NSNumber *)fontColor
 {
-    #warning setTextRendererFontColor: NO-OP
+    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontcolor, [fontColor intValue]);
 }
 
 - (void)setTextRendererFontForceBold:(NSNumber *)fontForceBold
 {
-    #warning setTextRendererFontForceBold: NO-OP
+    libvlc_video_set_textrenderer_bool(_playerInstance, libvlc_textrender_fontforcebold, [fontForceBold boolValue]);
 }
 #endif
 
