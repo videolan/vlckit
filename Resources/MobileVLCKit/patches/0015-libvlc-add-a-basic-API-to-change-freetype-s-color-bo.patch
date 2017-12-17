@@ -1,0 +1,221 @@
+From de4d690e85b426fac18bf22acb498e96493b5852 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Sun, 17 Dec 2017 18:05:40 +0100
+Subject: [PATCH 15/15] libvlc: add a basic API to change freetype's color,
+ bold, font and size variables on-the-fly
+
+---
+ include/vlc/libvlc_media_player.h         | 26 ++++++++++++
+ lib/libvlc.sym                            |  6 +++
+ lib/media_player.c                        |  6 +++
+ lib/video.c                               | 69 ++++++++++++++++++++++++++++++-
+ modules/text_renderer/freetype/freetype.c | 22 ++++++++--
+ 5 files changed, 124 insertions(+), 5 deletions(-)
+
+diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
+index 4336df9442..20b220448b 100644
+--- a/include/vlc/libvlc_media_player.h
++++ b/include/vlc/libvlc_media_player.h
+@@ -1567,6 +1567,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+ LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
+                                                    unsigned option, float value );
+ 
++enum libvlc_video_textrenderer_option_t {
++    libvlc_textrender_font = 0,
++    libvlc_textrender_fontsize,
++    libvlc_textrender_fontcolor,
++    libvlc_textrender_fontforcebold,
++};
++
++LIBVLC_API bool libvlc_video_get_textrenderer_bool( libvlc_media_player_t *p_mi,
++                                                    unsigned option );
++
++LIBVLC_API void libvlc_video_set_textrenderer_bool( libvlc_media_player_t *p_mi,
++                                                    unsigned option, bool value );
++
++LIBVLC_API int libvlc_video_get_textrenderer_int( libvlc_media_player_t *p_mi,
++                                                  unsigned option );
++
++LIBVLC_API void libvlc_video_set_textrenderer_int( libvlc_media_player_t *p_mi,
++                                                   unsigned option, int value );
++
++LIBVLC_API char *libvlc_video_get_textrenderer_string( libvlc_media_player_t *p_mi,
++                                                       unsigned option );
++
++LIBVLC_API void libvlc_video_set_textrenderer_string( libvlc_media_player_t *p_mi,
++                                                      unsigned option,
++                                                      const char *psz_text );
++
+ /** @} video */
+ 
+ /** \defgroup libvlc_audio LibVLC audio controls
+diff --git a/lib/libvlc.sym b/lib/libvlc.sym
+index 9dbf0efa4e..a08c67ae46 100644
+--- a/lib/libvlc.sym
++++ b/lib/libvlc.sym
+@@ -261,6 +261,9 @@ libvlc_video_get_spu_count
+ libvlc_video_get_spu_delay
+ libvlc_video_get_spu_description
+ libvlc_video_get_teletext
++libvlc_video_get_textrenderer_bool
++libvlc_video_get_textrenderer_int
++libvlc_video_get_textrenderer_string
+ libvlc_video_get_title_description
+ libvlc_video_get_track
+ libvlc_video_get_track_count
+@@ -285,6 +288,9 @@ libvlc_video_set_spu
+ libvlc_video_set_spu_delay
+ libvlc_video_set_subtitle_file
+ libvlc_video_set_teletext
++libvlc_video_set_textrenderer_bool
++libvlc_video_set_textrenderer_int
++libvlc_video_set_textrenderer_string
+ libvlc_video_set_track
+ libvlc_video_take_snapshot
+ libvlc_video_new_viewpoint
+diff --git a/lib/media_player.c b/lib/media_player.c
+index ae72bb2b95..5f167bb4ad 100644
+--- a/lib/media_player.c
++++ b/lib/media_player.c
+@@ -694,6 +694,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+     var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
+     var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
+ 
++    /* SPU */
++    var_Create (mp, "freetype-font", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
++    var_Create (mp, "freetype-rel-fontsize", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
++    var_Create (mp, "freetype-color", VLC_VAR_INTEGER | VLC_VAR_DOINHERIT);
++    var_Create (mp, "freetype-bold", VLC_VAR_BOOL | VLC_VAR_DOINHERIT);
++
+      /* Audio */
+     var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
+     var_Create (mp, "audio-device", VLC_VAR_STRING);
+diff --git a/lib/video.c b/lib/video.c
+index acbba3a30f..035cc0ebf1 100644
+--- a/lib/video.c
++++ b/lib/video.c
+@@ -812,7 +812,7 @@ static bool find_sub_source_by_name( libvlc_media_player_t *p_mi, const char *re
+ }
+ 
+ typedef const struct {
+-    const char name[20];
++    const char name[25];
+     unsigned type;
+ } opt_t;
+ 
+@@ -839,6 +839,7 @@ set_value( libvlc_media_player_t *p_mi, const char *restrict name,
+         }
+         case VLC_VAR_INTEGER:
+         case VLC_VAR_FLOAT:
++        case VLC_VAR_BOOL:
+         case VLC_VAR_STRING:
+             if( i_expected_type != opt->type )
+             {
+@@ -1086,3 +1087,69 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+ {
+     return get_float( p_mi, "adjust", adjust_option_bynumber(option) );
+ }
++
++/* SPU HACK */
++
++static const opt_t *
++textrenderer_option_bynumber( unsigned option )
++{
++    static const opt_t optlist[] =
++    {
++    { "freetype-font",            VLC_VAR_STRING },
++    { "freetype-rel-fontsize",    VLC_VAR_INTEGER },
++    { "freetype-color",           VLC_VAR_INTEGER },
++    { "freetype-bold",            VLC_VAR_BOOL },
++    };
++    enum { num_opts = sizeof(optlist) / sizeof(*optlist) };
++
++    const opt_t *r = option < num_opts ? optlist+option : NULL;
++    if( !r )
++        libvlc_printerr( "Unknown freetype option" );
++    return r;
++}
++
++/* basic text renderer support */
++
++void libvlc_video_set_textrenderer_bool( libvlc_media_player_t *p_mi,
++                                        unsigned option, bool value )
++{
++    set_value( p_mi, "freetype", textrenderer_option_bynumber(option), VLC_VAR_BOOL,
++               &(vlc_value_t) { .b_bool = value }, false );
++}
++
++
++bool libvlc_video_get_textrenderer_bool( libvlc_media_player_t *p_mi,
++                                         unsigned option )
++{
++    return get_int( p_mi, "freetype", textrenderer_option_bynumber(option) );
++}
++
++
++void libvlc_video_set_textrenderer_int( libvlc_media_player_t *p_mi,
++                                       unsigned option, int value )
++{
++    set_value( p_mi, "freetype", textrenderer_option_bynumber(option), VLC_VAR_INTEGER,
++               &(vlc_value_t) { .i_int = value }, false );
++}
++
++
++int libvlc_video_get_textrenderer_int( libvlc_media_player_t *p_mi,
++                                      unsigned option )
++{
++    return get_int( p_mi, "freetype", textrenderer_option_bynumber(option) );
++}
++
++
++void libvlc_video_set_textrenderer_string( libvlc_media_player_t *p_mi,
++                                          unsigned option, const char *psz_value )
++{
++    set_value( p_mi, "freetype", textrenderer_option_bynumber(option), VLC_VAR_STRING,
++               &(vlc_value_t){ .psz_string = (char *)psz_value }, true );
++}
++
++
++char * libvlc_video_get_textrenderer_string( libvlc_media_player_t *p_mi,
++                                            unsigned option )
++{
++    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
++}
+diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
+index b7e4823e38..720870e9e3 100644
+--- a/modules/text_renderer/freetype/freetype.c
++++ b/modules/text_renderer/freetype/freetype.c
+@@ -943,12 +943,26 @@ static inline int RenderAXYZ( filter_t *p_filter,
+ 
+ static void UpdateDefaultLiveStyles( filter_t *p_filter )
+ {
+-    text_style_t *p_style = p_filter->p_sys->p_default_style;
++    filter_sys_t *p_sys = p_filter->p_sys;
++
++    p_sys->p_default_style->i_background_alpha = var_InheritInteger( p_filter, "freetype-background-opacity" );
++    p_sys->p_default_style->i_background_color = var_InheritInteger( p_filter, "freetype-background-color" );
++
++    FREENULL( p_sys->p_default_style->psz_fontname );
++    p_sys->p_default_style->psz_fontname = strdup( var_InheritString( p_filter, "freetype-font" ) );
+ 
+-    p_style->i_font_color = var_InheritInteger( p_filter, "freetype-color" );
++    p_sys->p_forced_style->f_font_relsize = 1.0 / var_InheritInteger( p_filter, "freetype-rel-fontsize" );;
+ 
+-    p_style->i_background_alpha = var_InheritInteger( p_filter, "freetype-background-opacity" );
+-    p_style->i_background_color = var_InheritInteger( p_filter, "freetype-background-color" );
++    p_sys->p_default_style->i_font_color = var_InheritInteger( p_filter, "freetype-color" );
++
++    if (var_InheritBool( p_filter, "freetype-bold" )) {
++        p_sys->p_forced_style->i_style_flags |= STYLE_BOLD;
++        p_sys->p_forced_style->i_features |= STYLE_HAS_FLAGS;
++    } else {
++        p_sys->p_forced_style->i_style_flags &= ~STYLE_BOLD;
++        p_sys->p_forced_style->i_features &= ~STYLE_HAS_FLAGS;
++    }
++    text_style_Merge( p_sys->p_default_style, p_sys->p_forced_style, true );
+ }
+ 
+ static void FillDefaultStyles( filter_t *p_filter )
+-- 
+2.15.1
+
