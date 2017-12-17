@@ -186,7 +186,9 @@ static void updateProgressCallback(void *p_data,
                                                      style:UIAlertActionStyleDestructive
                                                    handler:nil];
     [alertController addAction:action];
-    [alertController setPreferredAction:action];
+    if ([alertController respondsToSelector:@selector(setPreferredAction:)]) {
+        [alertController setPreferredAction:action];
+    }
     [[[[UIApplication sharedApplication].delegate.window rootViewController] presentedViewController] presentViewController:alertController
                                                                                                                    animated:YES
                                                                                                                  completion:nil];
@@ -224,7 +226,9 @@ static void updateProgressCallback(void *p_data,
                                                                                      NO);
                                                         }];
     [alertController addAction:loginAction];
-    [alertController setPreferredAction:loginAction];
+    if ([alertController respondsToSelector:@selector(setPreferredAction:)]) {
+        [alertController setPreferredAction:loginAction];
+    }
 
     [alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil)
                                                         style:UIAlertActionStyleCancel
@@ -271,7 +275,9 @@ static void updateProgressCallback(void *p_data,
                                                               libvlc_dialog_post_action([dialogData[0] pointerValue], 1);
                                                           }];
         [alertController addAction:yesAction];
-        [alertController setPreferredAction:yesAction];
+        if ([alertController respondsToSelector:@selector(setPreferredAction:)]) {
+            [alertController setPreferredAction:yesAction];
+        }
     }
 
     if (![dialogData[6] isEqualToString:@""]) {
