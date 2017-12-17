@@ -111,6 +111,9 @@
     _mediaplayer.delegate = self;
     _mediaplayer.drawable = self.movieView;
 
+    /* enable debug logging from libvlc here */
+    _mediaplayer.libraryInstance.debugLogging = YES;
+
     /* listen for notifications from the player */
     [_mediaplayer addObserver:self forKeyPath:@"time" options:0 context:nil];
     [_mediaplayer addObserver:self forKeyPath:@"remainingTime" options:0 context:nil];
@@ -194,6 +197,14 @@
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification
 {
     VLCMediaPlayerState currentState = _mediaplayer.state;
+
+    if (currentState == VLCMediaPlayerStateBuffering) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [_mediaplayer performSelector:@selector(setTextRendererFont:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFont]];
+        [_mediaplayer performSelector:@selector(setTextRendererFontSize:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFontSize]];
+        [_mediaplayer performSelector:@selector(setTextRendererFontColor:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFontColor]];
+        [_mediaplayer performSelector:@selector(setTextRendererFontForceBold:) withObject:[defaults objectForKey:kVLCSettingSubtitlesBoldFont]];
+    }
 
     /* distruct view controller on error */
     if (currentState == VLCMediaPlayerStateError)

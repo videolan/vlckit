@@ -33,7 +33,7 @@
 - (IBAction)startPlayback:(id)sender
 {
     VDLAppDelegate *appDelegate = (VDLAppDelegate *)[UIApplication sharedApplication].delegate;
-    [appDelegate playStreamFromURL:[NSURL URLWithString:@"http://streams.videolan.org/streams/mp4/Mr_MrsSmith-h264_aac.mp4"]];
+    [appDelegate playStreamFromURL:[NSURL URLWithString:@"file:///Users/fkuehne/Downloads/Alice.m4v"]];
 }
 
 - (void)didReceiveMemoryWarning

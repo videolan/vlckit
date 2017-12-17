@@ -26,6 +26,15 @@
 #import <UIKit/UIKit.h>
 #import <MediaPlayer/MediaPlayer.h>
 
+#define kVLCSettingSubtitlesFont @"quartztext-font"
+#define kVLCSettingSubtitlesFontDefaultValue @"HelveticaNeue"
+#define kVLCSettingSubtitlesFontSize @"quartztext-rel-fontsize"
+#define kVLCSettingSubtitlesFontSizeDefaultValue @"16"
+#define kVLCSettingSubtitlesBoldFont @"quartztext-bold"
+#define kVLCSettingSubtitlesBoldFontDefaultValue @NO
+#define kVLCSettingSubtitlesFontColor @"quartztext-color"
+#define kVLCSettingSubtitlesFontColorDefaultValue @"16777215"
+
 @interface VDLPlaybackViewController : UIViewController
 
 @property (nonatomic, strong) IBOutlet UIView *movieView;
