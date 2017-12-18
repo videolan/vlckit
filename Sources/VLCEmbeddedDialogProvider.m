@@ -36,6 +36,7 @@
 - (void)displayQuestion:(NSArray * _Nonnull)dialogData;
 - (void)displayProgressDialog:(NSArray * _Nonnull)dialogData;
 - (void)updateDisplayedProgressDialog:(NSArray * _Nonnull)dialogData;
+- (void)dismissCurrentDialogViewController;
 
 @end
 
@@ -119,7 +120,10 @@ static void cancelCallback(void *p_data,
                            libvlc_dialog_id *p_id)
 {
     @autoreleasepool {
-        [[[[UIApplication sharedApplication].delegate.window rootViewController] presentedViewController] dismissViewControllerAnimated:YES completion:nil];
+        VLCEmbeddedDialogProvider *dialogProvider = (__bridge VLCEmbeddedDialogProvider *)p_data;
+        [dialogProvider performSelectorOnMainThread:@selector(dismissCurrentDialogViewController)
+                                         withObject:nil
+                                      waitUntilDone:NO];
     }
 }
 
@@ -300,6 +304,11 @@ static void updateProgressCallback(void *p_data,
 - (void)updateDisplayedProgressDialog:(NSArray * _Nonnull)dialogData
 {
     VKLog(@"%s: %@", __PRETTY_FUNCTION__, dialogData);
+}
+
+- (void)dismissCurrentDialogViewController
+{
+    [[[[UIApplication sharedApplication].delegate.window rootViewController] presentedViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
