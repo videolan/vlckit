@@ -340,7 +340,8 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 - (void)setDrawable:(id)aDrawable
 {
     // Make sure that this instance has been associated with the drawing canvas.
-    libvlc_media_player_set_nsobject(_playerInstance, (__bridge void *)(aDrawable));
+    _drawable = aDrawable;
+    libvlc_media_player_set_nsobject(_playerInstance, (__bridge void *)(_drawable));
 }
 
 - (id)drawable
