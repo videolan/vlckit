@@ -50,7 +50,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \param media the media object that was added
  * \param index the index the media object was added at
  */
-- (void)mediaList:(VLCMediaList *)aMediaList mediaAdded:(VLCMedia *)media atIndex:(NSInteger)index;
+- (void)mediaList:(VLCMediaList *)aMediaList mediaAdded:(VLCMedia *)media atIndex:(NSUInteger)index;
 
 /**
  * delegate method triggered when a media was removed from the list
@@ -58,7 +58,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \param aMediaList the media list
  * \param index the index a media item was deleted at
  */
-- (void)mediaList:(VLCMediaList *)aMediaList mediaRemovedAtIndex:(NSInteger)index;
+- (void)mediaList:(VLCMediaList *)aMediaList mediaRemovedAtIndex:(NSUInteger)index;
 @end
 
 /**
@@ -92,7 +92,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \return the index of the newly added media
  * \note this function silently fails if the list is read-only
  */
-- (NSInteger)addMedia:(VLCMedia *)media;
+- (NSUInteger)addMedia:(VLCMedia *)media;
 
 /**
  * add a media to a read-write list at a given position
@@ -101,7 +101,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \param index the index where to add the given media
  * \note this function silently fails if the list is read-only
  */
-- (void)insertMedia:(VLCMedia *)media atIndex:(NSInteger)index;
+- (void)insertMedia:(VLCMedia *)media atIndex:(NSUInteger)index;
 
 /**
  * remove a media from a given position
@@ -109,7 +109,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \param index the index of the media to remove
  * \note this function silently fails if the list is read-only
  */
-- (void)removeMediaAtIndex:(NSInteger)index;
+- (void)removeMediaAtIndex:(NSUInteger)index;
 
 /**
  * retrieve a media from a given position
@@ -117,7 +117,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \param index the index of the media you want
  * \return the media object
  */
-- (VLCMedia *)mediaAtIndex:(NSInteger)index;
+- (VLCMedia *)mediaAtIndex:(NSUInteger)index;
 
 /**
  * retrieve the position of a media item
