@@ -70,6 +70,16 @@ New APIs:
 - VLCAudio
   - added property: passthrough
 
+Modified APIs:
+- VLCMediaList
+  - To match the KVC bindings, all NSInteger arguments were moved to NSUInteger as appropriate
+      - mediaList:mediaAdded:atIndex:
+      - mediaList:mediaRemovedAtIndex:
+      - addMedia:
+      - insertMedia:atIndex:
+      - removeMediaAtIndex:
+      - mediaAtIndex:
+
 Deprecated APIs:
 - VLCAudio
   - setMute:

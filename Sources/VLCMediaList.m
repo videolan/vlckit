@@ -143,14 +143,14 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     libvlc_media_list_unlock( p_mlist );
 }
 
-- (NSInteger)addMedia:(VLCMedia *)media
+- (NSUInteger)addMedia:(VLCMedia *)media
 {
     NSInteger index = [self count];
     [self insertMedia:media atIndex:index];
     return index;
 }
 
-- (void)insertMedia:(VLCMedia *)media atIndex: (NSInteger)index
+- (void)insertMedia:(VLCMedia *)media atIndex: (NSUInteger)index
 {
     // Add the media object to our cache
     [_mediaObjects setObject:media forKey:[NSValue valueWithPointer:[media libVLCMediaDescriptor]]];
@@ -161,18 +161,18 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     // we will add the media object to cachedMedia in the callback when libvlc acknowledges its addition
 }
 
-- (void)removeMediaAtIndex:(NSInteger)index
+- (void)removeMediaAtIndex:(NSUInteger)index
 {
-    if (index >= libvlc_media_list_count(p_mlist) || index < 0)
+    if (index >= libvlc_media_list_count(p_mlist))
         return;
 
     // Remove it from libvlc's medialist
     libvlc_media_list_remove_index(p_mlist, (int)index);
 }
 
-- (VLCMedia *)mediaAtIndex:(NSInteger)index
+- (VLCMedia *)mediaAtIndex:(NSUInteger)index
 {
-    if (index >= libvlc_media_list_count(p_mlist) || index < 0)
+    if (index >= libvlc_media_list_count(p_mlist))
         return nil;
 
     libvlc_media_t *mediaItem = libvlc_media_list_item_at_index(p_mlist, (int)index);
@@ -308,7 +308,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
         // Let the delegate know that the item is being removed
         if (delegate && [delegate respondsToSelector:@selector(mediaList:mediaRemovedAtIndex:)])
-            [delegate mediaList:self mediaRemovedAtIndex:[index intValue]];
+            [delegate mediaList:self mediaRemovedAtIndex:index];
     }
     [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] forKey:@"media"];
 }
