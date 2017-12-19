@@ -2,12 +2,12 @@
  * VLCMedia.m: VLCKit.framework VLCMedia implementation
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2013 Felix Paul K√ºhne
+ * Copyright (C) 2013, 2017 Felix Paul Kühne
  * Copyright (C) 2007, 2013 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
- *          Felix Paul K√ºhne <fkuehne # videolan.org>
+ *          Felix Paul Kühne <fkuehne # videolan.org>
  *          Soomin Lee <TheHungryBu # gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -288,8 +288,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (NSString *)description
 {
-    NSString * result = _metaDictionary[VLCMetaInformationTitle];
-    return [NSString stringWithFormat:@"<%@ %p> %@", [self class], self, (result ? result : [[_url absoluteString] stringByRemovingPercentEncoding])];
+    return [NSString stringWithFormat:@"<%@ %p>, md: %p, url: %@", [self class], self, p_md, [[_url absoluteString] stringByRemovingPercentEncoding]];
 }
 
 - (NSComparisonResult)compare:(VLCMedia *)media
