@@ -3,7 +3,7 @@
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
  * Copyright (C) 2007-2015 VLC authors and VideoLAN
- * Partial Copyright (C) 2009-2015 Felix Paul Kühne
+ * Partial Copyright (C) 2009-2017 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -86,6 +86,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 
 - (void)registerObservers;
 - (void)unregisterObservers;
+- (dispatch_queue_t)libVLCBackgroundQueue;
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime;
 - (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
 - (void)mediaPlayerStateChanged:(NSNumber *)newState;
@@ -220,6 +221,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     libvlc_equalizer_t *_equalizerInstance;     ///< The equalizer controller
     BOOL _equalizerEnabled;                     ///< Equalizer state
     libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
+    dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
 }
 @end
 
@@ -258,6 +260,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
+        _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
 
         _privateLibrary = library;
         libvlc_retain([_privateLibrary instance]);
@@ -298,7 +301,9 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (void)dealloc
 {
-    NSAssert(libvlc_media_player_get_state(_playerInstance) == libvlc_Stopped || libvlc_media_player_get_state(_playerInstance) == libvlc_NothingSpecial, @"You released the media player before ensuring that it is stopped");
+    NSAssert(libvlc_media_player_get_state(_playerInstance) == libvlc_Stopped ||
+             libvlc_media_player_get_state(_playerInstance) == libvlc_NothingSpecial,
+             @"You released the media player before ensuring that it is stopped");
 
     [self unregisterObservers];
     [[VLCEventManager sharedManager] cancelCallToObject:self];
@@ -321,6 +326,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_free(_viewpoint);
 
     libvlc_media_player_release(_playerInstance);
+
     if (_privateLibrary != [VLCLibrary sharedLibrary])
         libvlc_release(_privateLibrary.instance);
 }
@@ -341,7 +347,12 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     // Make sure that this instance has been associated with the drawing canvas.
     _drawable = aDrawable;
-    libvlc_media_player_set_nsobject(_playerInstance, (__bridge void *)(_drawable));
+
+    /* Note that ee need the caller to wait until the setter succeeded.
+     * Otherwise, s/he might want to deploy the drawable while it isn’t ready yet. */
+    dispatch_sync(_libVLCBackgroundQueue, ^{
+        libvlc_media_player_set_nsobject(_playerInstance, (__bridge void *)(aDrawable));
+    });
 }
 
 - (id)drawable
@@ -1080,45 +1091,24 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (void)play
 {
-    if ([NSThread isMainThread]) {
-        /* Hack because we create a dead lock here, when the vout is created
-         * and tries to recontact us on the main thread */
-        /* FIXME: to do this properly we need to do some locking. We may want
-         * to move that to libvlc */
-        [self performSelectorInBackground:@selector(play) withObject:nil];
-        return;
-    }
-
-    libvlc_media_player_play(_playerInstance);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_player_play(_playerInstance);
+    });
 }
 
 - (void)pause
 {
-    if ([NSThread isMainThread]) {
-        /* Hack because we create a dead lock here, when the vout is stopped
-         * and tries to recontact us on the main thread */
-        /* FIXME: to do this properly we need to do some locking. We may want
-         * to move that to libvlc */
-        [self performSelectorInBackground:@selector(pause) withObject:nil];
-        return;
-    }
-
     // Pause the stream
-    libvlc_media_player_set_pause(_playerInstance, 1);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_player_set_pause(_playerInstance, 1);
+    });
 }
 
 - (void)stop
 {
-    if ([NSThread isMainThread]) {
-        /* Hack because we create a dead lock here, when the vout is stopped
-         * and tries to recontact us on the main thread */
-        /* FIXME: to do this properly we need to do some locking. We may want
-         * to move that to libvlc */
-        [self performSelectorInBackground:@selector(stop) withObject:nil];
-        return;
-    }
-
-    libvlc_media_player_stop(_playerInstance);
+    dispatch_async(_libVLCBackgroundQueue, ^{
+        libvlc_media_player_stop(_playerInstance);
+    });
 }
 
 - (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute
@@ -1297,6 +1287,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
+        _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
 
         // Create a media instance, it doesn't matter what library we start off with
         // it will change depending on the media descriptor provided to the media
@@ -1321,28 +1312,32 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 - (void)registerObservers
 {
     // Attach event observers into the media instance
-    libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
+    __block libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
     if (!p_em)
         return;
 
-    libvlc_event_attach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    /* We need the caller to wait until this block is done.
+     * The initialized object shall not be returned until the event attachments are done. */
+    dispatch_sync(_libVLCBackgroundQueue,^{
+        libvlc_event_attach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
 
-    libvlc_event_attach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
 
-    libvlc_event_attach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
-    libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
-#if TARGET_OS_IPHONE
-    libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
-#endif
+    #if TARGET_OS_IPHONE
+        libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
+    #endif
+    });
 }
 
 - (void)unregisterObservers
@@ -1369,6 +1364,14 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 #if TARGET_OS_IPHONE
     libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
 #endif
+}
+
+- (dispatch_queue_t)libVLCBackgroundQueue
+{
+    if (!_libVLCBackgroundQueue) {
+        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
+    }
+    return  _libVLCBackgroundQueue;
 }
 
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime
