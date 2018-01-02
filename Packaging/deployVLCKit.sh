@@ -189,6 +189,15 @@ bumpPodSpec()
     `sed -i '' 's#.*sha256.*#'"    ${podSHA}"'#' $1`
 }
 
+
+gitCommit()
+{
+    local podspec=$1
+
+    git add $podspec
+    git commit -m "Update podspecs"
+}
+
 podDeploy()
 {
     local podspec=""
@@ -196,7 +205,6 @@ podDeploy()
     if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
         podspec="MobileVLCKit.podspec"
     else
-        #replace by the real TVVLCKit podspec
         podspec="TVVLCKit.podspec"
     fi
 
@@ -205,8 +213,9 @@ podDeploy()
         bumpPodSpec $podspec
         log "Info" "Starting pod spec lint..."
         pod spec lint $podspec
-        log "Info" "Starting pod trunk push!"
-        #pod trunk push $podspec
+        log "Info" "Starting pod trunk push..."
+        pod trunk push $podspec
+        gitCommit $podspec
     spopd #Packaging/podspecs
 }
 
