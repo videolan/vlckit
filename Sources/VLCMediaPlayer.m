@@ -140,6 +140,8 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
         newState = VLCMediaPlayerStateOpening;
     else if (event->type == libvlc_MediaPlayerEndReached)
         newState = VLCMediaPlayerStateEnded;
+    else if (event->type == libvlc_MediaPlayerESAdded)
+        newState = VLCMediaPlayerStateESAdded;
     else {
         VKLog(@"%s: Unknown event", __FUNCTION__);
         return;
@@ -1326,6 +1328,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_event_attach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerESAdded,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
 
         libvlc_event_attach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
@@ -1353,6 +1356,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     libvlc_event_detach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerESAdded,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
 
     libvlc_event_detach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
