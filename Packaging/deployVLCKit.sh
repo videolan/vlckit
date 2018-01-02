@@ -5,14 +5,12 @@ set -e
 ARCH="all"
 CLEAN=yes
 VERBOSE=no
-UNSTABLE=no
 DEPLOY_MOBILEVLCKIT=no
 DEPLOY_TVVLCKIT=no
 
 BUILD_MOBILEVLCKIT="./buildMobileVLCKit.sh -vf"
 CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh -z"
 STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/prod/"
-UNSTABLE_UPLOAD_URL="https://download.videolan.org/pub/cocoapods/unstable/"
 
 usage()
 {
@@ -21,7 +19,6 @@ usage: $0 [options] version
 
 OPTIONS
     -d      Disable cleaning of build directory
-    -u      Set to unstable release
     -m      Deploy MobileVLCKit
     -t      Deploy TVVLCKit
     -a      Build *VLCKit* for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
@@ -29,7 +26,7 @@ EOF
 }
 
 # Note: Need argument error handling on: version option, the options are ignored
-while getopts "hdumta:" OPTION
+while getopts "hdmta:" OPTION
 do
      case $OPTION in
          h)
@@ -38,9 +35,6 @@ do
             ;;
          d)
             CLEAN=no
-            ;;
-         u)
-            UNSTABLE=yes
             ;;
          m)
             DEPLOY_MOBILEVLCKIT=yes
@@ -161,11 +155,7 @@ renamePackage()
     local packageName="${target}-REPLACEWITHVERSION.zip"
     # git rev-parse --short HEAD in vlckit et vlc
     if [ -f $packageName ]; then
-        if [ "$UNSTABLE" = yes ]; then
-            DISTRIBUTION_PACKAGE="${target}-unstable-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.zip"
-        else
-            DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.zip"
-        fi
+        DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.zip"
         mv $packageName $DISTRIBUTION_PACKAGE
         log "Info" "Finished renaming package!"
     fi
@@ -204,11 +194,7 @@ podDeploy()
     local podspec=""
 
     if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
-        if [ "$UNSTABLE" = "yes" ]; then
-            podspec="MobileVLCKit-unstable.podspec"
-        else
-            podspec="MobileVLCKit.podspec"
-        fi
+        podspec="MobileVLCKit.podspec"
     else
         #replace by the real TVVLCKit podspec
         podspec="TVVLCKit.podspec"
@@ -279,11 +265,7 @@ elif [ "$DEPLOY_TVVLCKIT" = "yes" ]; then
     options="-t"
 fi
 
-if [ "$UNSTABLE" = "yes" ]; then
-    UPLOAD_URL=${UNSTABLE_UPLOAD_URL}
-else
-    UPLOAD_URL=${STABLE_UPLOAD_URL}
-fi
+UPLOAD_URL=${STABLE_UPLOAD_URL}
 
 
 spushd $ROOT_DIR
