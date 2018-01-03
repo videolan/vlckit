@@ -2,9 +2,7 @@
 
 set -e
 
-ARCH="all"
 CLEAN=yes
-VERBOSE=no
 DEPLOY_MOBILEVLCKIT=no
 DEPLOY_TVVLCKIT=no
 
@@ -21,12 +19,11 @@ OPTIONS
     -d      Disable cleaning of build directory
     -m      Deploy MobileVLCKit
     -t      Deploy TVVLCKit
-    -a      Build *VLCKit* for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
 EOF
 }
 
 # Note: Need argument error handling on: version option, the options are ignored
-while getopts "hdmta:" OPTION
+while getopts "hdmt:" OPTION
 do
      case $OPTION in
          h)
@@ -41,9 +38,6 @@ do
             ;;
          t)
             DEPLOY_TVVLCKIT=yes
-            ;;
-         a)
-            ARCH=$OPTARG
             ;;
          \?)
             usage
@@ -96,16 +90,7 @@ log()
         color=$red
         msgType="Error"
     fi
-    echo "[${color}${msgType}${normal}] $2"
-}
-
-getActualArch()
-{
-    if [ "$1" = "aarch64" ]; then
-        echo "arm64"
-    else
-        echo "$1"
-    fi
+    echo -e "[${color}${msgType}${normal}] $2"
 }
 
 clean()
