@@ -45,7 +45,7 @@ do
             ;;
      esac
 done
-shift $(($OPTIND-1))
+shift $((OPTIND-1))
 
 VERSION=$1
 if [[ -z $VERSION ]]; then
@@ -53,7 +53,7 @@ if [[ -z $VERSION ]]; then
     exit 1
 fi
 
-ROOT_DIR="`dirname $(pwd)`"
+ROOT_DIR="$(dirname "$(pwd)")"
 UPLOAD_URL=""
 VLC_HASH=""
 VLCKIT_HASH=""
@@ -66,7 +66,7 @@ DISTRIBUTION_PACKAGE_SHA=""
 
 spushd()
 {
-    pushd "$1" 2>&1> /dev/null
+    pushd $1 2>&1 /dev/null
 }
 
 spopd()
@@ -76,10 +76,10 @@ spopd()
 
 log()
 {
-    local green="\033[1;32m"
-    local orange="\033[1;91m"
-    local red="\033[1;31m"
-    local normal="\033[0m"
+    local green='\033[1;32m'
+    local orange='\033[1;91m'
+    local red='\033[1;31m'
+    local normal='\033[0m'
     local color=$green
     local msgType=$1
 
@@ -118,10 +118,10 @@ buildMobileVLCKit()
 getVLCHashes()
 {
     VLC_HASH=""
-    VLCKIT_HASH=`git rev-parse --short HEAD`
+    VLCKIT_HASH=$(git rev-parse --short HEAD)
 
     spushd "libvlc/vlc"
-        VLC_HASH=`git rev-parse --short HEAD`
+        VLC_HASH=$(git rev-parse --short HEAD)
     spopd #libvlc/vlc
 }
 
@@ -141,7 +141,7 @@ renamePackage()
     # git rev-parse --short HEAD in vlckit et vlc
     if [ -f $packageName ]; then
         DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.zip"
-        mv $packageName $DISTRIBUTION_PACKAGE
+        mv $packageName "$DISTRIBUTION_PACKAGE"
         log "Info" "Finished renaming package!"
     fi
 }
@@ -149,7 +149,7 @@ renamePackage()
 packageBuild()
 {
     spushd "Packaging"
-        if ! $CREATE_DISTRIBUTION_PACKAGE $1; then
+        if ! $CREATE_DISTRIBUTION_PACKAGE "$1"; then
             log "Error" "Failed to package!"
             exit 1
         fi
@@ -159,27 +159,27 @@ packageBuild()
 getSHA()
 {
     log "Info" "Getting SHA from distrubition package..."
-    DISTRIBUTION_PACKAGE_SHA=`shasum -a 256 $DISTRIBUTION_PACKAGE | cut -d " " -f 1 `
+    DISTRIBUTION_PACKAGE_SHA=$(shasum -a 256 "$DISTRIBUTION_PACKAGE" | cut -d " " -f 1 )
 }
 
-bumpPodSpec()
+bumpPodspec()
 {
     local podVersion="s.version   = '${VERSION}'"
     local uploadURL=":http => '${UPLOAD_URL}${DISTRIBUTION_PACKAGE}'"
     local podSHA=":sha256 => '${DISTRIBUTION_PACKAGE_SHA}'"
 
     # NOTE: sed -i '' because macOS
-    `sed -i '' 's#.*s.version.*#'"  ${podVersion}"'#' $1`
-    `sed -i '' 's#.*:http.*#'"    ${uploadURL}",'#' $1`
-    `sed -i '' 's#.*sha256.*#'"    ${podSHA}"'#' $1`
+    sed -i '' 's#.*s.version.*#'"  ${podVersion}"'#' "$1"
+    sed -i '' 's#.*:http.*#'"    ${uploadURL}",'#' "$1"
+    sed -i '' 's#.*sha256.*#'"    ${podSHA}"'#' "$1"
 }
 
 
 gitCommit()
 {
-    local podspec=$1
+    local podspec="$1"
 
-    git add $podspec
+    git add "$podspec"
     git commit -m "Update podspecs"
 }
 
@@ -195,7 +195,7 @@ podDeploy()
 
     spushd "Packaging/podspecs"
         log "Info" "Starting podspec update..."
-        bumpPodSpec $podspec
+        bumpPodspec $podspec
         log "Info" "Starting pod spec lint..."
         pod spec lint $podspec
         log "Info" "Starting pod trunk push..."
@@ -206,7 +206,7 @@ podDeploy()
 
 checkIfExistOnRemote()
 {
-    if ! `curl --head --silent "$1" | head -n 1 | grep -q 404`; then
+    if ! curl --head --silent "$1" | head -n 1 | grep -q 404; then
         return 0
     else
         return 1
@@ -222,9 +222,9 @@ uploadPackage()
         exit 1
     fi
 
-    while read  -n 1 -p "The package is ready please upload it to "${UPLOAD_URL}", press a key to continue when uploaded [y,a,r]: " response
+    while read -r -n 1 -p "The package is ready please upload it to \"${UPLOAD_URL}\", press a key to continue when uploaded [y,a,r]: " response
     do
-        echo '\r'
+        printf '\r'
         case $response in
             y)
                 log "Info" "Checking for: '${UPLOAD_URL}${DISTRIBUTION_PACKAGE}'..."
@@ -262,7 +262,7 @@ fi
 UPLOAD_URL=${STABLE_UPLOAD_URL}
 
 
-spushd $ROOT_DIR
+spushd "$ROOT_DIR"
     # Note: the current packaging script is building vlckit(s) if not found.
     buildMobileVLCKit
     packageBuild $options
