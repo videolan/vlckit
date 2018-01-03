@@ -8,7 +8,7 @@ DEPLOY_TVVLCKIT=no
 
 BUILD_MOBILEVLCKIT="./buildMobileVLCKit.sh -vf"
 CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh -z"
-STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/prod/"
+STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/unstable/"
 
 usage()
 {
@@ -188,16 +188,16 @@ podDeploy()
     local podspec=""
 
     if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
-        podspec="MobileVLCKit.podspec"
+        podspec="MobileVLCKit-unstable.podspec"
     else
-        podspec="TVVLCKit.podspec"
+        podspec="TVVLCKit-unstable.podspec"
     fi
 
     spushd "Packaging/podspecs"
         log "Info" "Starting podspec update..."
         bumpPodspec $podspec
         log "Info" "Starting pod spec lint..."
-        pod spec lint $podspec
+        pod spec lint --verbose $podspec
         log "Info" "Starting pod trunk push..."
         pod trunk push $podspec
         gitCommit $podspec
