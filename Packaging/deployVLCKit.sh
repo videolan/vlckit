@@ -23,7 +23,7 @@ EOF
 }
 
 # Note: Need argument error handling on: version option, the options are ignored
-while getopts "hdmt:" OPTION
+while getopts "hdmt" OPTION
 do
      case $OPTION in
          h)
@@ -45,7 +45,7 @@ do
             ;;
      esac
 done
-shift $((OPTIND-1))
+shift "$((OPTIND-1))"
 
 VERSION=$1
 if [[ -z $VERSION ]]; then
