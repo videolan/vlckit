@@ -93,7 +93,7 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
     if (self = [super init]) {
         _localizedName = nil;
         _discoveredMedia = nil;
-        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
+        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL);
 
         if (libraryInstance != nil) {
             _privateLibrary = libraryInstance;
