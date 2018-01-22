@@ -46,7 +46,7 @@
 - (instancetype)initWithOptions:(NSArray *)options andDrawable:(id)drawable
 {
     if (self = [super init]) {
-        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
+        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL);
 
         VLCLibrary *library;
         if (options != nil) {

@@ -1373,7 +1373,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 - (dispatch_queue_t)libVLCBackgroundQueue
 {
     if (!_libVLCBackgroundQueue) {
-        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL);
+        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL);
     }
     return  _libVLCBackgroundQueue;
 }
