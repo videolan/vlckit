@@ -162,6 +162,8 @@ buildLibVLC() {
     
     export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/x86_64-apple-darwin15/bin:$PATH"
     
+    export ac_cv_func_open_memstream=no
+
     info "Building tools"
     spushd extras/tools
     ./bootstrap
@@ -214,6 +216,7 @@ buildLibVLC() {
     spushd vlckitbuild
 
     ../configure --build=${TARGET} --prefix="${PREFIX}" \
+        --with-macosx-version-min=${SDK_MIN} \
         --disable-macosx \
         --enable-merge-ffmpeg \
         --disable-sparkle \
