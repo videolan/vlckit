@@ -29,6 +29,8 @@
 # include "vlc-plugins-AppleTV.h"
 #elif TARGET_OS_IPHONE
 # include "vlc-plugins-iPhone.h"
+#else
+# include "vlc-plugins-MacOSX.h"
 #endif
 
 #ifdef HAVE_CONFIG_H
