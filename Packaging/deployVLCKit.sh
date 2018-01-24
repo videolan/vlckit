@@ -180,7 +180,7 @@ gitCommit()
     local podspec="$1"
 
     git add "$podspec"
-    git commit -m "Update podspecs"
+    git commit -m "${podspec}: Update version to ${VERSION}"
 }
 
 podDeploy()
