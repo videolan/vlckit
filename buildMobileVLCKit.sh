@@ -16,6 +16,7 @@ NONETWORK=no
 SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 TVOS=no
+MACOS=no
 BITCODE=no
 OSVERSIONMINCFLAG=miphoneos-version-min
 OSVERSIONMINLDFLAG=ios_version_min
@@ -43,6 +44,7 @@ OPTIONS
    -n       Skip script steps requiring network interaction
    -l       Skip libvlc compilation
    -t       Build for tvOS
+   -x       Build for macOS / Mac OS X
    -w       Build a limited stack of non-scary libraries only
    -y       Build universal static libraries
    -b       Enable bitcode
@@ -50,7 +52,7 @@ OPTIONS
 EOF
 }
 
-while getopts "hvwsfbdntlk:a:" OPTION
+while getopts "hvwsfbdxntlk:a:" OPTION
 do
      case $OPTION in
          h)
@@ -100,6 +102,17 @@ do
              SDK_MIN=9.0
              OSVERSIONMINCFLAG=mtvos-version-min
              OSVERSIONMINLDFLAG=tvos_version_min
+             ;;
+         x)
+             MACOS=yes
+             BITCODE=no
+             SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
+             SDK_MIN=10.9
+             OSVERSIONMINCFLAG=mmacosx-version-min
+             OSVERSIONMINLDFLAG=macosx_version_min
+             BUILD_DEVICE=yes
+             FARCH=x86_64
+             BUILD_STATIC_FRAMEWORK=no
              ;;
          ?)
              usage
@@ -272,8 +285,9 @@ buildLibVLC() {
     BITCODE="$4"
     ARCH="$5"
     TVOS="$6"
-    SDK_VERSION="$7"
-    PLATFORM="$8"
+    MACOS="$7"
+    SDK_VERSION="$8"
+    PLATFORM="$9"
     OSSTYLE=iPhone
 
     if [ "$DEBUG" = "yes" ]; then
@@ -284,6 +298,10 @@ buildLibVLC() {
 
     if [ "$TVOS" = "yes" ]; then
         OSSTYLE=AppleTV
+    fi
+    if [ "$MACOS" = "yes" ]; then
+        OSSTYLE=MacOSX
+        PLATFORM=
     fi
 
     ACTUAL_ARCH=`get_actual_arch $ARCH`
@@ -381,9 +399,13 @@ buildLibVLC() {
     fi
 
     if [ "$TVOS" = "yes" ]; then
-        TVOSOPTIONS="--disable-libarchive"
+        CUSTOMOSOPTIONS="--disable-libarchive"
     else
-        TVOSOPTIONS=""
+        if [ "$MACOS" = "yes" ]; then
+            CUSTOMOSOPTIONS="--disable-fontconfig --disable-bghudappkit --disable-twolame --disable-microdns --disable-SDL --disable-SDL_image --disable-cddb --disable-bluray"
+        else
+            CUSTOMOSOPTIONS=""
+        fi
     fi
 
     if [ "${TARGET}" = "x86_64-apple-darwin14" ];then
@@ -392,19 +414,48 @@ buildLibVLC() {
         BUILD="--build=x86_64-apple-darwin14"
     fi
 
-    # The following symbols do not exist on the minimal iOS version (7.0), so they are disabled
-    # here. This allows compilation also with newer iOS SDKs
-    # Added symbols between 7.x and 10.x
-    export ac_cv_func_basename_r=no
-    export ac_cv_func_clock_getres=no
-    export ac_cv_func_clock_gettime=no
-    export ac_cv_func_clock_settime=no
-    export ac_cv_func_dirname_r=no
-    export ac_cv_func_getentropy=no
-    export ac_cv_func_mkostemp=no
-    export ac_cv_func_mkostemps=no
-    export ac_cv_func_open_memstream=no
-    export ac_cv_func_futimens=no
+    if [ "$MACOS" = "yes" ]; then
+        # The following symbols do not exist on the minimal macOS version (10.7), so they are disabled
+        # here. This allows compilation also with newer macOS SDKs.
+        # Added symbols in 10.13
+        export ac_cv_func_open_wmemstream=no
+        export ac_cv_func_fmemopen=no
+        export ac_cv_func_open_memstream=no
+        export ac_cv_func_futimens=no
+        export ac_cv_func_utimensat=no
+
+        # Added symbols between 10.11 and 10.12
+        export ac_cv_func_basename_r=no
+        export ac_cv_func_clock_getres=no
+        export ac_cv_func_clock_gettime=no
+        export ac_cv_func_clock_settime=no
+        export ac_cv_func_dirname_r=no
+        export ac_cv_func_getentropy=no
+        export ac_cv_func_mkostemp=no
+        export ac_cv_func_mkostemps=no
+
+        # Added symbols between 10.7 and 10.11
+        export ac_cv_func_ffsll=no
+        export ac_cv_func_flsll=no
+        export ac_cv_func_fdopendir=no
+        export ac_cv_func_openat=no
+        export ac_cv_func_fstatat=no
+        export ac_cv_func_readlinkat=no
+    else
+        # The following symbols do not exist on the minimal iOS version (7.0), so they are disabled
+        # here. This allows compilation also with newer iOS SDKs
+        # Added symbols between 7.x and 10.x
+        export ac_cv_func_basename_r=no
+        export ac_cv_func_clock_getres=no
+        export ac_cv_func_clock_gettime=no
+        export ac_cv_func_clock_settime=no
+        export ac_cv_func_dirname_r=no
+        export ac_cv_func_getentropy=no
+        export ac_cv_func_mkostemp=no
+        export ac_cv_func_mkostemps=no
+        export ac_cv_func_open_memstream=no
+        export ac_cv_func_futimens=no
+    fi
 
     export USE_FFMPEG=1
     ../bootstrap ${BUILD} --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
@@ -448,7 +499,11 @@ buildLibVLC() {
         --enable-vpx \
         --enable-libdsm \
         --enable-libplacebo \
-        ${TVOSOPTIONS} \
+        --disable-sparkle \
+        --disable-growl \
+        --disable-breakpad \
+        --disable-ncurses \
+        ${CUSTOMOSOPTIONS} \
         --enable-taglib > ${out}
 
     echo "EXTRA_CFLAGS += ${EXTRA_CFLAGS}" >> config.mak
@@ -543,6 +598,7 @@ buildLibVLC() {
         --enable-freetype \
         --enable-taglib \
         --disable-mmx \
+        --disable-sparkle \
         --disable-addonmanagermodules \
         --disable-mad > ${out}
     fi
@@ -670,12 +726,14 @@ buildMobileKit() {
 
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
         if [ "$TVOS" = "yes" ]; then
-            export BUILDFORTVOS="yes"
             info "Building libvlc for tvOS"
         else
-            info "Building libvlc for iOS"
+            if [ "$MACOS" = "yes" ]; then
+                info "Building libvlc for macOS"
+            else
+                info "Building libvlc for iOS"
+            fi
         fi
-        export BUILDFORIOS="yes"
 
         export AR=`xcrun -f ar`
         export RANLIB=`xcrun -f ranlib`
@@ -692,18 +750,22 @@ buildMobileKit() {
         if [ "$FARCH" = "all" ];then
             if [ "$TVOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "Simulator"
                 else
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $MACOS $SDK_VERSION "OS"
                 fi
             else
-                if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $SDK_VERSION "Simulator"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $SDK_VERSION "Simulator"
+                if [ "$MACOS" = "yes" ]; then
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "OS"
                 else
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $SDK_VERSION "OS"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $SDK_VERSION "OS"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $SDK_VERSION "OS"
+                    if [ "$PLATFORM" = "iphonesimulator" ]; then
+                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $MACOS $SDK_VERSION "Simulator"
+                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "Simulator"
+                    else
+                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $MACOS $SDK_VERSION "OS"
+                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $MACOS $SDK_VERSION "OS"
+                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $MACOS $SDK_VERSION "OS"
+                    fi
                 fi
             fi
         else
@@ -724,7 +786,7 @@ buildMobileKit() {
                 fi
             fi
             if [ ! -z "$buildPlatform" ];then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE $FARCH $TVOS $SDK_VERSION $buildPlatform
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE $FARCH $TVOS $MACOS $SDK_VERSION $buildPlatform
             fi
         fi
     fi
@@ -799,13 +861,24 @@ build_universal_static_lib() {
     touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
     touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-    spushd libvlc/vlc
-    rm -rf install-$OSSTYLE
-    mkdir install-$OSSTYLE
-    mkdir install-$OSSTYLE/core
-    mkdir install-$OSSTYLE/contrib
-    mkdir install-$OSSTYLE/plugins
-    spopd # vlc
+    if [ "$OSSTYLE" != "MacOSX" ]; then
+        spushd libvlc/vlc
+        rm -rf install-$OSSTYLE
+        mkdir install-$OSSTYLE
+        mkdir install-$OSSTYLE/core
+        mkdir install-$OSSTYLE/contrib
+        mkdir install-$OSSTYLE/plugins
+        spopd # vlc
+    else
+        spushd libvlc/vlc/install-$OSSTYLE
+        rm -rf core
+        rm -rf contrib
+        rm -rf plugins
+        ln -s x86_64/lib core
+        ln -s x86_64/contribs/lib contrib
+        ln -s x86_64/lib/vlc/plugins plugins
+        spopd # vlc
+    fi
 
     VLCMODULES=""
     VLCNEONMODULES=""
@@ -879,18 +952,25 @@ build_universal_static_lib() {
         spopd # vlc-install-"$OSSTYLE"Simulator
     fi
 
+    if [ "$OSSTYLE" = "MacOSX" ]; then
+        if [ -d libvlc/vlc/install-"$OSSTYLE" ];then
+            spushd libvlc/vlc/install-"$OSSTYLE"
+            echo `pwd`
+            echo "macOS: $arch"
+            spushd $arch/lib/vlc/plugins
+            for i in `ls *.a`
+            do
+                VLCMODULES="$i $VLCMODULES"
+            done
+            spopd # $actual_arch/lib/vlc/plugins
+
+            spopd # vlc-install-"$OSSTYLE"
+        fi
+    fi
+
     spushd libvlc/vlc
 
-    # lipo all the vlc libraries and its plugins
-    doVLCLipo "" "libvlc.a" "no" $OSSTYLE
-    doVLCLipo "" "libvlccore.a" "no" $OSSTYLE
-    doVLCLipo "vlc/" "libcompat.a" "no" $OSSTYLE
-    for i in $VLCMODULES
-    do
-        doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
-    done
-
-    # lipo contrib libraries
+    # collect contrib libraries
     spushd contrib/$OSSTYLE-$arch-apple-darwin14-$arch/lib
     for i in `ls *.a`
     do
@@ -898,25 +978,37 @@ build_universal_static_lib() {
     done
     spopd # contrib/$OSSTYLE-$arch-apple-darwin14-$arch/lib
 
-    for i in $CONTRIBLIBS
-    do
-        doContribLipo $i $OSSTYLE
-    done
-
-    if [ "$OSSTYLE" != "AppleTV" ]; then
-        # lipo the remaining NEON plugins
-        DEVICEARCHS=""
-        for i in armv7 armv7s; do
-            local iarch="`get_arch $i`"
-            if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
-                DEVICEARCHS="$DEVICEARCHS $iarch"
-            fi
-        done
-        SIMULATORARCHS=""
-        for i in $VLCNEONMODULES
+    # lipo all the vlc libraries and its plugins
+    if [ "$OSSTYLE" != "MacOSX" ]; then
+        doVLCLipo "" "libvlc.a" "no" $OSSTYLE
+        doVLCLipo "" "libvlccore.a" "no" $OSSTYLE
+        doVLCLipo "vlc/" "libcompat.a" "no" $OSSTYLE
+        for i in $VLCMODULES
         do
             doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
         done
+
+        # lipo contrib libraries
+        for i in $CONTRIBLIBS
+        do
+            doContribLipo $i $OSSTYLE
+        done
+
+        if [ "$OSSTYLE" != "AppleTV" ]; then
+            # lipo the remaining NEON plugins
+            DEVICEARCHS=""
+            for i in armv7 armv7s; do
+                local iarch="`get_arch $i`"
+                if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
+                    DEVICEARCHS="$DEVICEARCHS $iarch"
+                fi
+            done
+            SIMULATORARCHS=""
+            for i in $VLCNEONMODULES
+            do
+                doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
+            done
+        fi
     fi
 
     # create module list
@@ -970,10 +1062,14 @@ build_universal_static_lib() {
     spopd # vlc
 }
 
-if [ "$TVOS" != "yes" ]; then
-    build_universal_static_lib "iPhone"
-else
+if [ "$TVOS" = "yes" ]; then
     build_universal_static_lib "AppleTV"
+else
+    if [ "$MACOS" = "yes" ]; then
+        build_universal_static_lib "MacOSX"
+    else
+        build_universal_static_lib "iPhone"
+    fi
 fi
 
 info "all done"
