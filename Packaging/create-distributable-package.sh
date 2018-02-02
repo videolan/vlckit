@@ -22,6 +22,8 @@ MOBILE=no
 TV=no
 VERBOSE=no
 USEZIP=no
+USECOMPRESSEDARCHIVE=yes
+USEDMG=no
 
 usage()
 {
@@ -30,9 +32,9 @@ usage: $0 [options]
 
 Package VLCKit
 
-  By default, VLCKit for macOS will be packaged as a disk-image.
+  By default, VLCKit will be packaged as a tar.xz archive.
   You can use the options below to package a different flavor of VLCKit
-  or/and to store the binaries in a zip file instead.
+  or/and to store the binaries in a zip or a dmg file instead.
 
 OPTIONS:
    -h            Show some help
@@ -40,6 +42,7 @@ OPTIONS:
    -m            Package MobileVLCKit
    -t            Package TVVLCKit
    -z            Use zip file format
+   -d            Use dmg file format
 EOF
 
 }
@@ -64,6 +67,10 @@ do
          z)
              USEZIP=yes
              ;;
+         z)
+             USEDMG=yes
+             USECOMPRESSEDARCHIVE=no
+             ;;
      esac
 done
 shift $(($OPTIND - 1))
@@ -83,12 +90,12 @@ root=`dirname $0`/../
 DMGFOLDERNAME="VLCKit - binary package"
 DMGITEMNAME="VLCKit-REPLACEWITHVERSION"
 
-if [ "$USEZIP" = "yes" ]; then
+if [ "$USECOMPRESSEDARCHIVE" != "yes" ]; then
     DMGFOLDERNAME="VLCKit-binary"
 fi
 
 if [ "$MOBILE" = "yes" ]; then
-    if [ "$USEZIP" = "yes" ]; then
+    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
         DMGFOLDERNAME="MobileVLCKit-binary"
     else
         DMGFOLDERNAME="MobileVLCKit - binary package"
@@ -96,7 +103,7 @@ if [ "$MOBILE" = "yes" ]; then
     DMGITEMNAME="MobileVLCKit-REPLACEWITHVERSION"
 fi
 if [ "$TV" = "yes" ]; then
-    if [ "$USEZIP" = "yes" ]; then
+    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
         DMGFOLDERNAME="TVVLCKit-binary"
     else
         DMGFOLDERNAME="TVVLCKit - binary package"
@@ -152,10 +159,10 @@ spushd "${DMGFOLDERNAME}"
 mv NEWS NEWS.txt
 mv COPYING COPYING.txt
 spopd
-rm -f ${DMGITEMNAME}-rw.dmg
 
-if [ "$USEZIP" = "no" ]; then
-info "Creating disk-image"
+if [ "$USEDMG" = "yes" ]; then
+    info "Creating disk-image"
+    rm -f ${DMGITEMNAME}-rw.dmg
     hdiutil create -srcfolder "${DMGFOLDERNAME}" "${DMGITEMNAME}-rw.dmg" -scrub -format UDRW
     mkdir -p ./mount
 
@@ -176,8 +183,13 @@ info "Creating disk-image"
     rm -f ${DMGITEMNAME}-rw.dmg
     rm -rf "${DMGFOLDERNAME}"
 else
-    info "Creating zip-archive"
-    zip -y -r ${DMGITEMNAME}.zip "${DMGFOLDERNAME}"
+    if [ "$USEZIP" = "yes" ]; then
+        info "Creating zip-archive"
+        zip -y -r ${DMGITEMNAME}.zip "${DMGFOLDERNAME}"
+    else
+        info "Creating xz-archive"
+        tar -cJf ${DMGITEMNAME}.tar.xz "${DMGFOLDERNAME}"
+    fi
 fi
 
 spopd
