@@ -503,6 +503,7 @@ buildLibVLC() {
         --disable-growl \
         --disable-breakpad \
         --disable-ncurses \
+        --disable-asdcplib \
         ${CUSTOMOSOPTIONS} \
         --enable-taglib > ${out}
 
