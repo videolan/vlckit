@@ -727,12 +727,21 @@ buildMobileKit() {
 
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
         if [ "$TVOS" = "yes" ]; then
+            # this variable is read by libvlc's contrib build script
+            # to create the required build environment
+            # for historical raisons, tvOS is a special flavor of iOS
+            # so we need to export both variables
+            export BUILDFORIOS="yes"
             export BUILDFORTVOS="yes"
             info "Building libvlc for tvOS"
         else
             if [ "$MACOS" = "yes" ]; then
+                # macOS is the default build environment for libvlc's contrib
+                # build scripts, so we don't need to export anything
                 info "Building libvlc for macOS"
             else
+                # this variable is read by libvlc's contrib build script
+                # to create the required build environment
                 export BUILDFORIOS="yes"
                 info "Building libvlc for iOS"
             fi
