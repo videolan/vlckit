@@ -726,11 +726,13 @@ buildMobileKit() {
 
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
         if [ "$TVOS" = "yes" ]; then
+            export BUILDFORTVOS="yes"
             info "Building libvlc for tvOS"
         else
             if [ "$MACOS" = "yes" ]; then
                 info "Building libvlc for macOS"
             else
+                export BUILDFORIOS="yes"
                 info "Building libvlc for iOS"
             fi
         fi
