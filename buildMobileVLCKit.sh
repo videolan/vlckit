@@ -287,10 +287,7 @@ buildLibVLC() {
     SCARY="$3"
     BITCODE="$4"
     ARCH="$5"
-    TVOS="$6"
-    MACOS="$7"
-    SDK_VERSION="$8"
-    PLATFORM="$9"
+    PLATFORM="$6"
     OSSTYLE=iPhone
 
     if [ "$DEBUG" = "yes" ]; then
@@ -765,22 +762,22 @@ buildMobileKit() {
         if [ "$FARCH" = "all" ];then
             if [ "$TVOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "Simulator"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" "Simulator"
                 else
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $MACOS $SDK_VERSION "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" "OS"
                 fi
             fi
             if [ "$MACOS" = "yes" ]; then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "OS"
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" "OS"
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $MACOS $SDK_VERSION "Simulator"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "Simulator"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" "Simulator"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" "Simulator"
                 else
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $MACOS $SDK_VERSION "OS"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $MACOS $SDK_VERSION "OS"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $MACOS $SDK_VERSION "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" "OS"
                 fi
             fi
         else
@@ -801,7 +798,7 @@ buildMobileKit() {
                 fi
             fi
             if [ ! -z "$buildPlatform" ];then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE $FARCH $TVOS $MACOS $SDK_VERSION $buildPlatform
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE $FARCH $buildPlatform
             fi
         fi
     fi
