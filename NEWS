@@ -3,7 +3,7 @@ Version 3.0.0:
 Generic changes:
 - Added support for tvOS
 - Removed support for the 32bit OS X platform
-- Added support for audio muting on iOS and tvOS
+- Added support for audio muting and software volume changes on iOS and tvOS
 
 New APIs:
 - VLCAudio
@@ -62,6 +62,10 @@ New APIs:
                  VLCMediaOrientation, VLCMediaProjection
   - changed behavior: media will no longer be parsed automatically if meta
       data is requested prior to concluded parsing
+
+- VLCMediaList
+  - changed behavior: lists of media objects added through arrays or on init
+      are no longer added in reverse order
 
 - VLCTime
   - added selectors: isEqual:

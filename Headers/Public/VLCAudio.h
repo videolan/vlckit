@@ -42,8 +42,7 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 @property (getter=isMuted) BOOL muted;
 
 /**
- * control the current audio output volume
- * \note This is a NO-OP on iOS and tvOS */
+ * control the current audio output volume */
 @property (assign) int volume;
 
 /**
@@ -57,13 +56,11 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 - (void)setMute:(BOOL)value __attribute__((deprecated));
 
 /**
- * lower the current audio output volume
- * \note This is a NO-OP on iOS and tvOS */
+ * lower the current audio output volume */
 - (void)volumeDown;
 
 /**
- * higher the current audio output volume
- * \note This is a NO-OP on iOS and tvOS */
+ * higher the current audio output volume */
 - (void)volumeUp;
 
 @end
