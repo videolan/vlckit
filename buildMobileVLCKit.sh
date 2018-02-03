@@ -282,12 +282,8 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
 fi
 
 buildLibVLC() {
-    VERBOSE="$1"
-    DEBUG="$2"
-    SCARY="$3"
-    BITCODE="$4"
-    ARCH="$5"
-    PLATFORM="$6"
+    ARCH="$1"
+    PLATFORM="$2"
     OSSTYLE=iPhone
 
     if [ "$DEBUG" = "yes" ]; then
@@ -762,22 +758,22 @@ buildMobileKit() {
         if [ "$FARCH" = "all" ];then
             if [ "$TVOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" "Simulator"
+                    buildLibVLC "x86_64" "Simulator"
                 else
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" "OS"
+                    buildLibVLC "aarch64" "OS"
                 fi
             fi
             if [ "$MACOS" = "yes" ]; then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" "OS"
+                buildLibVLC "x86_64" "OS"
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" "Simulator"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" "Simulator"
+                    buildLibVLC "i386" "Simulator"
+                    buildLibVLC "x86_64" "Simulator"
                 else
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" "OS"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" "OS"
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" "OS"
+                    buildLibVLC "armv7" "OS"
+                    buildLibVLC "armv7s" "OS"
+                    buildLibVLC "aarch64" "OS"
                 fi
             fi
         else
@@ -798,7 +794,7 @@ buildMobileKit() {
                 fi
             fi
             if [ ! -z "$buildPlatform" ];then
-                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE $FARCH $buildPlatform
+                buildLibVLC $FARCH $buildPlatform
             fi
         fi
     fi
