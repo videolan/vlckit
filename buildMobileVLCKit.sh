@@ -17,6 +17,7 @@ SKIPLIBVLCCOMPILATION=no
 SCARY=yes
 TVOS=no
 MACOS=no
+IOS=yes
 BITCODE=no
 OSVERSIONMINCFLAG=miphoneos-version-min
 OSVERSIONMINLDFLAG=ios_version_min
@@ -97,6 +98,7 @@ do
              ;;
          t)
              TVOS=yes
+             IOS=no
              BITCODE=yes
              SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
              SDK_MIN=9.0
@@ -105,6 +107,7 @@ do
              ;;
          x)
              MACOS=yes
+             IOS=no
              BITCODE=no
              SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
              SDK_MIN=10.9
@@ -363,16 +366,16 @@ buildLibVLC() {
     if [ "$PLATFORM" = "OS" ]; then
         EXTRA_CFLAGS="-arch ${ACTUAL_ARCH}"
         EXTRA_LDFLAGS="-arch ${ACTUAL_ARCH}"
-    if [ "$ARCH" != "aarch64" ]; then
-        EXTRA_CFLAGS+=" -mcpu=cortex-a8"
-        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-        EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-        export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-    else
-        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-        EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-        export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-    fi
+        if [ "$ARCH" != "aarch64" ]; then
+            EXTRA_CFLAGS+=" -mcpu=cortex-a8"
+            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+        else
+            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+        fi
     else
         EXTRA_CFLAGS="-arch ${ARCH}"
         EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
@@ -400,12 +403,12 @@ buildLibVLC() {
 
     if [ "$TVOS" = "yes" ]; then
         CUSTOMOSOPTIONS="--disable-libarchive"
-    else
-        if [ "$MACOS" = "yes" ]; then
-            CUSTOMOSOPTIONS="--disable-fontconfig --disable-bghudappkit --disable-twolame --disable-microdns --disable-SDL --disable-SDL_image --disable-cddb --disable-bluray"
-        else
-            CUSTOMOSOPTIONS=""
-        fi
+    fi
+    if [ "$MACOS" = "yes" ]; then
+        CUSTOMOSOPTIONS="--disable-fontconfig --disable-bghudappkit --disable-twolame --disable-microdns --disable-SDL --disable-SDL_image --disable-cddb --disable-bluray"
+    fi
+    if [ "$IOS" = "yes" ]; then
+        CUSTOMOSOPTIONS=""
     fi
 
     if [ "${TARGET}" = "x86_64-apple-darwin14" ];then
@@ -734,17 +737,17 @@ buildMobileKit() {
             export BUILDFORIOS="yes"
             export BUILDFORTVOS="yes"
             info "Building libvlc for tvOS"
-        else
-            if [ "$MACOS" = "yes" ]; then
-                # macOS is the default build environment for libvlc's contrib
-                # build scripts, so we don't need to export anything
-                info "Building libvlc for macOS"
-            else
-                # this variable is read by libvlc's contrib build script
-                # to create the required build environment
-                export BUILDFORIOS="yes"
-                info "Building libvlc for iOS"
-            fi
+        fi
+        if [ "$MACOS" = "yes" ]; then
+            # macOS is the default build environment for libvlc's contrib
+            # build scripts, so we don't need to export anything
+            info "Building libvlc for macOS"
+        fi
+        if [ "$IOS" = "yes" ]; then
+            # this variable is read by libvlc's contrib build script
+            # to create the required build environment
+            export BUILDFORIOS="yes"
+            info "Building libvlc for iOS"
         fi
 
         export AR=`xcrun -f ar`
@@ -766,18 +769,18 @@ buildMobileKit() {
                 else
                     buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $MACOS $SDK_VERSION "OS"
                 fi
-            else
-                if [ "$MACOS" = "yes" ]; then
-                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "OS"
+            fi
+            if [ "$MACOS" = "yes" ]; then
+                buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "OS"
+            fi
+            if [ "$IOS" = "yes" ]; then
+                if [ "$PLATFORM" = "iphonesimulator" ]; then
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $MACOS $SDK_VERSION "Simulator"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "Simulator"
                 else
-                    if [ "$PLATFORM" = "iphonesimulator" ]; then
-                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "i386" $TVOS $MACOS $SDK_VERSION "Simulator"
-                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "x86_64" $TVOS $MACOS $SDK_VERSION "Simulator"
-                    else
-                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $MACOS $SDK_VERSION "OS"
-                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $MACOS $SDK_VERSION "OS"
-                        buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $MACOS $SDK_VERSION "OS"
-                    fi
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7" $TVOS $MACOS $SDK_VERSION "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "armv7s" $TVOS $MACOS $SDK_VERSION "OS"
+                    buildLibVLC $VERBOSE $DEBUG $SCARY $BITCODE "aarch64" $TVOS $MACOS $SDK_VERSION "OS"
                 fi
             fi
         else
@@ -1050,7 +1053,8 @@ build_universal_static_lib() {
         info "...$entryname"
     done;
 
-    if [ "$OSSTYLE" != "AppleTV" ]; then
+    # we only have ARM NEON modules for 32bit so this is limited to iOS
+    if [ "$OSSTYLE" = "iPhone" ]; then
         BUILTINS+="#ifdef __arm__\n"
         DEFINITIONS+="#ifdef __arm__\n"
         for file in $VLCNEONMODULES
@@ -1076,44 +1080,18 @@ build_universal_static_lib() {
 
 if [ "$TVOS" = "yes" ]; then
     build_universal_static_lib "AppleTV"
-else
-    if [ "$MACOS" = "yes" ]; then
-        build_universal_static_lib "MacOSX"
-    else
-        build_universal_static_lib "iPhone"
-    fi
+fi
+if [ "$MACOS" = "yes" ]; then
+    build_universal_static_lib "MacOSX"
+fi
+if [ "$IOS" = "yes" ]; then
+    build_universal_static_lib "iPhone"
 fi
 
 info "all done"
 
 if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
-if [ "$TVOS" != "yes" ]; then
-    info "Building static MobileVLCKit.framework"
-
-    lipo_libs=""
-    platform=""
-    if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
-        platform="iphoneos"
-        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
-    fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
-        platform="iphonesimulator"
-        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
-    fi
-
-    # Assumes both platforms were built currently
-    spushd build
-    rm -rf MobileVLCKit.framework && \
-    mkdir MobileVLCKit.framework && \
-    lipo -create ${lipo_libs} -o MobileVLCKit.framework/MobileVLCKit && \
-    chmod a+x MobileVLCKit.framework/MobileVLCKit && \
-    cp -pr ${CONFIGURATION}-${platform}/MobileVLCKit MobileVLCKit.framework/Headers
-    spopd # build
-
-    info "Build of static MobileVLCKit.framework completed"
-else
+if [ "$TVOS" = "yes" ]; then
     info "Building static TVVLCKit.framework"
 
     lipo_libs=""
@@ -1139,5 +1117,32 @@ else
     spopd # build
 
     info "Build of static TVVLCKit.framework completed"
+fi
+if [ "$IOS" = "yes" ]; then
+    info "Building static MobileVLCKit.framework"
+
+    lipo_libs=""
+    platform=""
+    if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
+        platform="iphoneos"
+        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
+        lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
+    fi
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+        platform="iphonesimulator"
+        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
+        lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
+    fi
+
+    # Assumes both platforms were built currently
+    spushd build
+    rm -rf MobileVLCKit.framework && \
+    mkdir MobileVLCKit.framework && \
+    lipo -create ${lipo_libs} -o MobileVLCKit.framework/MobileVLCKit && \
+    chmod a+x MobileVLCKit.framework/MobileVLCKit && \
+    cp -pr ${CONFIGURATION}-${platform}/MobileVLCKit MobileVLCKit.framework/Headers
+    spopd # build
+
+    info "Build of static MobileVLCKit.framework completed"
 fi
 fi
