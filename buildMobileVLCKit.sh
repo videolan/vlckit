@@ -282,9 +282,8 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
 fi
 
 buildLibVLC() {
-    DEBUG="$1"
-    ARCH="$2"
-    PLATFORM="$3"
+    ARCH="$1"
+    PLATFORM="$2"
     OSSTYLE=iPhone
 
     if [ "$DEBUG" = "yes" ]; then
