@@ -7,6 +7,7 @@ set -e
 BUILD_DEVICE=yes
 BUILD_SIMULATOR=yes
 BUILD_STATIC_FRAMEWORK=no
+BUILD_DYNAMIC_FRAMEWORK=no
 SDK_VERSION=`xcrun --sdk iphoneos --show-sdk-version`
 SDK_MIN=7.0
 VERBOSE=no
@@ -115,6 +116,7 @@ do
              OSVERSIONMINLDFLAG=macosx_version_min
              BUILD_DEVICE=yes
              FARCH=x86_64
+             BUILD_DYNAMIC_FRAMEWORK=yes
              BUILD_STATIC_FRAMEWORK=no
              ;;
          ?)
@@ -185,17 +187,18 @@ buildxcodeproj()
 
     local architectures=""
     if [ "$FARCH" = "all" ];then
-        if [ "$TVOS" != "yes" ]; then
-            if [ "$PLATFORM" = "iphonesimulator" ]; then
-                architectures="i386 x86_64"
-            else
-                architectures="armv7 armv7s arm64"
-            fi
-        else
+        if [ "$TVOS" = "yes" ]; then
             if [ "$PLATFORM" = "appletvsimulator" ]; then
                 architectures="x86_64"
             else
                 architectures="arm64"
+            fi
+        fi
+        if [ "$IOS" = "yes" ]; then
+            if [ "$PLATFORM" = "iphonesimulator" ]; then
+                architectures="i386 x86_64"
+            else
+                architectures="armv7 armv7s arm64"
             fi
         fi
     else
@@ -1137,5 +1140,19 @@ if [ "$IOS" = "yes" ]; then
     spopd # build
 
     info "Build of static MobileVLCKit.framework completed"
+fi
+fi
+if [ "$BUILD_DYNAMIC_FRAMEWORK" != "no" ]; then
+if [ "$MACOS" = "yes" ]; then
+    info "Building VLCKit.framework"
+
+    buildxcodeproj VLCKit "VLCKit" "macosx"
+
+    # remove intermediate build result we don't need to keep
+    spushd build
+    rm ${CONFIGURATION}/libStaticLibVLC.a
+    spopd # build
+
+    info "Build of VLCKit.framework completed"
 fi
 fi
