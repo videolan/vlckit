@@ -116,8 +116,8 @@ info "checking for distributable binary package"
 spushd ${root}
 if [ "$MOBILE" = "no" ]; then
     if [ ! -e "build/Release/VLCKit.framework" ]; then
-        info "VLCKit not found for distribution, creating..."
-        ./buildVLCKit.sh
+        info "VLCKit not found for distribution, creating... this will take long"
+        ./buildMobileVLCKit.sh -x
     fi
 else
     if [ "$TV" = "yes" ]; then
