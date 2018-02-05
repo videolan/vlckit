@@ -93,7 +93,6 @@
 {
     [self setMediaIndex:mediaIndex+1];
     if (![player isPlaying] && [playlist count] > 0) {
-        NSLog(@"%@ length = %@", [playlist mediaAtIndex:mediaIndex], [[playlist mediaAtIndex:mediaIndex] lengthWaitUntilDate:[NSDate dateWithTimeIntervalSinceNow:60]]);
         [player play];
     }
 }
