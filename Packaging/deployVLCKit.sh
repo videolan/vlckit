@@ -137,10 +137,10 @@ renamePackage()
 
     getVLCHashes
 
-    local packageName="${target}-REPLACEWITHVERSION.xz"
+    local packageName="${target}-REPLACEWITHVERSION.tar.xz"
     # git rev-parse --short HEAD in vlckit et vlc
     if [ -f $packageName ]; then
-        DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.xz"
+        DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.tar.xz"
         mv $packageName "$DISTRIBUTION_PACKAGE"
         log "Info" "Finished renaming package!"
     fi
