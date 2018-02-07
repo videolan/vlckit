@@ -7,7 +7,7 @@ DEPLOY_MOBILEVLCKIT=no
 DEPLOY_TVVLCKIT=no
 
 BUILD_MOBILEVLCKIT="./buildMobileVLCKit.sh -vf"
-CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh"
+CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh -z"
 STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/unstable/"
 
 usage()
@@ -137,10 +137,10 @@ renamePackage()
 
     getVLCHashes
 
-    local packageName="${target}-REPLACEWITHVERSION.tar.xz"
+    local packageName="${target}-REPLACEWITHVERSION.zip"
     # git rev-parse --short HEAD in vlckit et vlc
     if [ -f $packageName ]; then
-        DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.tar.xz"
+        DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.zip"
         mv $packageName "$DISTRIBUTION_PACKAGE"
         log "Info" "Finished renaming package!"
     fi
