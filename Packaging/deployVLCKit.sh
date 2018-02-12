@@ -100,7 +100,7 @@ clean()
     if [ -d "build" ]; then
         rm -rf "$ROOT_DIR/build"
     else
-        log "warning" "Build directory not found!"
+        log "Warning" "Build directory not found!"
     fi
     log "Info" "Build directory cleaned"
 }
@@ -109,7 +109,7 @@ buildMobileVLCKit()
 {
     log "Info" "Staring MobileVLCKit build..."
     if ! $BUILD_MOBILEVLCKIT; then
-        log "error" "MobileVLCKit build failed"
+        log "Error" "MobileVLCKit build failed"
         exit 1
     fi
     log "Info" "MobileVLCKit build finished!"
@@ -138,7 +138,7 @@ renamePackage()
     getVLCHashes
 
     local packageName="${target}-REPLACEWITHVERSION.zip"
-    # git rev-parse --short HEAD in vlckit et vlc
+
     if [ -f $packageName ]; then
         DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.zip"
         mv $packageName "$DISTRIBUTION_PACKAGE"
@@ -193,15 +193,20 @@ podDeploy()
         podspec="TVVLCKit-unstable.podspec"
     fi
 
+    log "Info" "Starting podspec operations..."
     spushd "Packaging/podspecs"
-        log "Info" "Starting podspec update..."
-        bumpPodspec $podspec
-        log "Info" "Starting pod spec lint..."
-        pod spec lint --verbose $podspec
-        log "Info" "Starting pod trunk push..."
-        pod trunk push $podspec
-        gitCommit $podspec
-    spopd #Packaging/podspecs
+        if bumpPodspec $podspec && \
+        pod spec lint --verbose $podspec && \
+        pod trunk push $podspec && \
+        gitCommit $podspec ; then
+            spopd
+            log "Info" "Podpsec operations successfully finished!"
+            return 0
+        else
+            spopd
+            log "Error" "Podspec operations failed, removing generated package."
+            return 1
+        fi
 }
 
 checkIfExistOnRemote()
@@ -269,6 +274,8 @@ spushd "$ROOT_DIR"
     renamePackage $options
     getSHA
     uploadPackage
-    podDeploy
+    if ! podDeploy; then
+        rm ${DISTRIBUTION_PACKAGE}
+    fi
 
 spopd #ROOT_DIR
