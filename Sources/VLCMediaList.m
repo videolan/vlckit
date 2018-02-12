@@ -79,6 +79,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     id <VLCMediaListDelegate,NSObject> __weak delegate;    ///< Delegate object
     /* We need that private copy because of Cocoa Bindings, that need to be working on first thread */
     NSMutableArray *_mediaObjects;                   ///< Private copy of media objects.
+    dispatch_queue_t _serialMediaObjectsQueue;      ///< Queue for accessing and modifying the mediaobjects
 }
 @end
 
@@ -91,6 +92,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
         // Initialize internals to defaults
         _mediaObjects = [[NSMutableArray alloc] init];
+        _serialMediaObjectsQueue = dispatch_queue_create("org.videolan.serialMediaObjectsQueue",  DISPATCH_QUEUE_SERIAL);
         [self initInternalMediaList];
     }
 
@@ -153,7 +155,9 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (void)insertMedia:(VLCMedia *)media atIndex: (NSUInteger)index
 {
     // Add the media object to our cache
-    [_mediaObjects insertObject:media atIndex:index];
+    dispatch_sync(_serialMediaObjectsQueue, ^{
+        [_mediaObjects insertObject:media atIndex:index];
+    });
 
     // Add it to libvlc's medialist
     libvlc_media_list_insert_media(p_mlist, [media libVLCMediaDescriptor], (int)index);
@@ -161,21 +165,24 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
 - (void)removeMediaAtIndex:(NSUInteger)index
 {
-    if (index >= [_mediaObjects count])
-        return;
+    dispatch_sync(_serialMediaObjectsQueue, ^{
+        if (index >= [_mediaObjects count])
+            return;
+        //remove from cached Media
+        [_mediaObjects removeObjectAtIndex:index];
+    });
 
-    //remove from cached Media
-    [_mediaObjects removeObjectAtIndex:index];
     // Remove it from libvlc's medialist
     libvlc_media_list_remove_index(p_mlist, (int)index);
 }
 
 - (VLCMedia *)mediaAtIndex:(NSUInteger)index
 {
-    if (index >= [_mediaObjects count])
-        return nil;
-
-    return [_mediaObjects objectAtIndex:index];
+    __block VLCMedia *media;
+    dispatch_sync(_serialMediaObjectsQueue, ^{
+        media = index >= [_mediaObjects count] ? nil : [_mediaObjects objectAtIndex:index];
+    });
+    return media;
 }
 
 - (NSInteger)indexOfMedia:(VLCMedia *)media
@@ -197,7 +204,11 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
 - (NSInteger)count
 {
-    return [_mediaObjects count];
+    __block NSInteger count;
+    dispatch_sync(_serialMediaObjectsQueue, ^{
+        count = [_mediaObjects count];
+    });
+    return count;
 }
 
 - (void)insertObject:(VLCMedia *)object inMediaAtIndex:(NSUInteger)i
@@ -232,11 +243,13 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
         libvlc_media_list_retain( p_mlist );
         libvlc_media_list_lock( p_mlist );
         _mediaObjects = [[NSMutableArray alloc] initWithCapacity:libvlc_media_list_count(p_mlist)];
-
+        _serialMediaObjectsQueue = dispatch_queue_create("org.videolan.serialMediaObjectsQueue", NULL);
         NSUInteger count = libvlc_media_list_count(p_mlist);
         for (int i = 0; i < count; i++) {
             libvlc_media_t * p_md = libvlc_media_list_item_at_index(p_mlist, i);
-            [_mediaObjects addObject:[VLCMedia mediaWithLibVLCMediaDescriptor:p_md]];
+            dispatch_sync(_serialMediaObjectsQueue, ^{
+                [_mediaObjects addObject:[VLCMedia mediaWithLibVLCMediaDescriptor:p_md]];
+            });
             libvlc_media_release(p_md);
         }
         [self initInternalMediaList];
@@ -274,19 +287,23 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     for (NSDictionary *args in arrayOfArgs) {
         NSInteger index = [args[@"index"] intValue];
         VLCMedia *tempMedia = args[@"media"];
-        VLCMedia *foundMedia;
-        //we have two instances of VLCMedia. One from the event and the one we added to _mediaObjects, hence themcheck to avoid duplication
-
-        for (VLCMedia *media in _mediaObjects) {
-            if ([tempMedia.url isEqual:media.url]){
-                foundMedia = media;
+        __block VLCMedia *foundMedia;
+        //we have two instances of VLCMedia. One from the event and the one we added to _mediaObjects, hence check them to avoid duplication
+        dispatch_sync(_serialMediaObjectsQueue, ^{
+            for (VLCMedia *media in _mediaObjects) {
+                if ([tempMedia.url isEqual:media.url]){
+                    foundMedia = media;
+                    break;
+                }
             }
-        }
+        });
 
         if (!foundMedia) {
             // In case we found Media on the network we don't have a cached copy yet
             foundMedia = tempMedia;
-            index >= [_mediaObjects count] ? [_mediaObjects addObject:foundMedia] : [_mediaObjects insertObject:foundMedia atIndex:index];
+            dispatch_sync(_serialMediaObjectsQueue, ^{
+                index >= [_mediaObjects count] ? [_mediaObjects addObject:foundMedia] : [_mediaObjects insertObject:foundMedia atIndex:index];
+            });
         }
         if (delegate && [delegate respondsToSelector:@selector(mediaList:mediaAdded:atIndex:)])
             [delegate mediaList:self mediaAdded:foundMedia atIndex:index];
@@ -297,7 +314,9 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 - (void)mediaListItemRemoved:(NSNumber *)index
 {
     [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:[index intValue]] forKey:@"media"];
-    [_mediaObjects removeObjectAtIndex:[index intValue]];
+    dispatch_sync(_serialMediaObjectsQueue, ^{
+        [_mediaObjects removeObjectAtIndex:[index intValue]];
+    });
     [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:[index intValue]] forKey:@"media"];
 
     // Post the notification
