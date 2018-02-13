@@ -23,7 +23,6 @@ OPTIONS
 EOF
 }
 
-# Note: Need argument error handling on: version option, the options are ignored
 while getopts "hdmt" OPTION
 do
      case $OPTION in
@@ -48,12 +47,8 @@ do
 done
 shift "$((OPTIND-1))"
 
-VERSION=$1
-if [[ -z $VERSION ]]; then
-    echo "Please specify a version."
-    exit 1
-fi
-
+VERSION=""
+VERSION_DELIMITER="3.0.0a"
 ROOT_DIR="$(dirname "$(pwd)")"
 UPLOAD_URL=""
 VLC_HASH=""
@@ -188,6 +183,7 @@ gitCommit()
 podDeploy()
 {
     local podspec=""
+    local retVal=0
 
     if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
         podspec="MobileVLCKit-unstable.podspec"
@@ -198,17 +194,18 @@ podDeploy()
     log "Info" "Starting podspec operations..."
     spushd "Packaging/podspecs"
         if bumpPodspec $podspec && \
-        pod spec lint --verbose $podspec && \
-        pod trunk push $podspec && \
-        gitCommit $podspec ; then
-            spopd
+           pod spec lint --verbose $podspec && \
+           pod trunk push $podspec && \
+           gitCommit $podspec ; then
             log "Info" "Podpsec operations successfully finished!"
-            return 0
+            retVal=0
         else
-            spopd
-            log "Error" "Podspec operations failed, removing generated package."
-            return 1
+            git checkout $podspec
+            log "Error" "Podspec operations failed."
+            retVal=1
         fi
+    spopd #Packaging/podspecs
+    return $retVal
 }
 
 checkIfExistOnRemote()
@@ -251,6 +248,16 @@ uploadPackage()
     done
 }
 
+getVersion()
+{
+    spushd "Packaging/podspecs"
+        # Basing on the version of the MobileVLCKit podspec to retreive old version
+        local oldVersion=$(grep s.version MobileVLCKit-unstable.podspec | cut -d "'" -f 2)
+
+        VERSION=$(echo $oldVersion | awk -F$VERSION_DELIMITER -v OFS=$VERSION_DELIMITER 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print}')
+    spopd #Packaging/podspecs
+}
+
 ##################
 # Command Center #
 ##################
@@ -272,11 +279,13 @@ UPLOAD_URL=${STABLE_UPLOAD_URL}
 spushd "$ROOT_DIR"
     # Note: the current packaging script is building vlckit(s) if not found.
     buildMobileVLCKit
+    getVersion
     packageBuild $options
     renamePackage $options
     getSHA
     uploadPackage
     if ! podDeploy; then
+        log "Warning" "Removing distribution package."
         rm ${DISTRIBUTION_PACKAGE}
     fi
 
