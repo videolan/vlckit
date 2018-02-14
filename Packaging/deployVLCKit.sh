@@ -184,25 +184,18 @@ gitCommit()
 
 podDeploy()
 {
-    local podspec=""
     local retVal=0
-
-    if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
-        podspec=$MOBILE_PODSPEC
-    else
-        podspec=$TV_PODSPEC
-    fi
 
     log "Info" "Starting podspec operations..."
     spushd "Packaging/podspecs"
-        if bumpPodspec $podspec && \
-           pod spec lint --verbose $podspec && \
-           pod trunk push $podspec && \
-           gitCommit $podspec ; then
+        if bumpPodspec $CURRENT_PODSPEC && \
+           pod spec lint --verbose $CURRENT_PODSPEC && \
+           pod trunk push $CURRENT_PODSPEC && \
+           gitCommit $CURRENT_PODSPEC ; then
             log "Info" "Podpsec operations successfully finished!"
             retVal=0
         else
-            git checkout $podspec
+            git checkout $CURRENT_PODSPEC
             log "Error" "Podspec operations failed."
             retVal=1
         fi
@@ -260,6 +253,16 @@ getVersion()
     spopd #Packaging/podspecs
 }
 
+setCurrentPodspec()
+{
+    # Addded extra precision of target to protect against future targets
+    if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
+        CURRENT_PODSPEC=$MOBILE_PODSPEC
+    elif [ "$DEPLOY_TVVLCKIT" = "yes" ]; then
+        CURRENT_PODSPEC=$TV_PODSPEC
+    fi
+}
+
 ##################
 # Command Center #
 ##################
@@ -268,6 +271,7 @@ if [ "$CLEAN" = "yes" ]; then
     clean
 fi
 
+# Used to send parameter to the other scripts.
 options=""
 if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
     options="-m"
@@ -277,10 +281,10 @@ fi
 
 UPLOAD_URL=${STABLE_UPLOAD_URL}
 
-
 spushd "$ROOT_DIR"
     # Note: the current packaging script is building vlckit(s) if not found.
     buildMobileVLCKit
+    setCurrentPodspec
     getVersion
     packageBuild $options
     renamePackage $options
