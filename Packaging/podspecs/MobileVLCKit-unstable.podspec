@@ -14,9 +14,9 @@ Pod::Spec.new do |s|
     :http => 'https://download.videolan.org/pub/cocoapods/unstable/MobileVLCKit-unstable-3.0.0a46-fede59f8.zip',
     :sha256 => '530804af815612c74d66dbe208b1153eeb6cb59d61503d3b1915282854c6e24d'
   }
-  s.ios.vendored_framework = 'MobileVLCKit-binary/MobileVLCKit.framework'
-  s.source_files = 'MobileVLCKit-binary/MobileVLCKit.framework/Headers/*.h'
-  s.public_header_files = 'MobileVLCKit-binary/MobileVLCKit.framework/Headers/*.h'
+  s.ios.vendored_framework = 'MobileVLCKit.framework'
+  s.source_files = 'MobileVLCKit.framework/Headers/*.h'
+  s.public_header_files = 'MobileVLCKit.framework/Headers/*.h'
   s.ios.deployment_target = '7.0'
   s.frameworks = 'QuartzCore', 'CoreText', 'AVFoundation', 'Security', 'CFNetwork', 'AudioToolbox', 'OpenGLES', 'CoreGraphics', 'VideoToolbox', 'CoreMedia'
   s.libraries = 'c++', 'xml2', 'z', 'bz2', 'iconv'
