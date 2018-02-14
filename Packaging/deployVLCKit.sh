@@ -57,6 +57,7 @@ VLC_HASH=""
 VLCKIT_HASH=""
 DISTRIBUTION_PACKAGE=""
 DISTRIBUTION_PACKAGE_SHA=""
+TARGET=""
 
 ##################
 # Helper methods #
@@ -125,21 +126,19 @@ getVLCHashes()
 
 renamePackage()
 {
-    local target=""
-
     if [ "$1" = "-m" ]; then
-        target="MobileVLCKit"
+        TARGET="MobileVLCKit"
     else
-        target="TVVLCKit"
+        TARGET="TVVLCKit"
     fi
 
     getVLCHashes
 
 
-    local packageName="${target}-REPLACEWITHVERSION.tar.xz"
+    local packageName="${TARGET}-REPLACEWITHVERSION.tar.xz"
     # git rev-parse --short HEAD in vlckit et vlc
     if [ -f $packageName ]; then
-        DISTRIBUTION_PACKAGE="${target}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.tar.xz"
+        DISTRIBUTION_PACKAGE="${TARGET}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.tar.xz"
         mv $packageName "$DISTRIBUTION_PACKAGE"
         log "Info" "Finished renaming package!"
     fi
@@ -263,6 +262,14 @@ setCurrentPodspec()
     fi
 }
 
+removePackageAndBuildDir()
+{
+    if ! podDeploy; then
+        log "info" "Removing distribution package ${DISTRIBUTION_PACKAGE} and build directory ${TARGET}-binary."
+        rm ${DISTRIBUTION_PACKAGE}
+        rm -rf ${TARGET}-binary
+    fi
+}
 ##################
 # Command Center #
 ##################
@@ -290,9 +297,6 @@ spushd "$ROOT_DIR"
     renamePackage $options
     getSHA
     uploadPackage
-    if ! podDeploy; then
-        log "Warning" "Removing distribution package."
-        rm ${DISTRIBUTION_PACKAGE}
-    fi
+    removePackageAndBuildDir
 
 spopd #ROOT_DIR
