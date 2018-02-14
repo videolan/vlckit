@@ -69,7 +69,7 @@ TARGET=""
 
 spushd()
 {
-    pushd $1 2>&1 /dev/null
+    pushd $1 2>&1> /dev/null
 }
 
 spopd()
