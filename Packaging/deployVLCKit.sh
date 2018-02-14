@@ -9,6 +9,8 @@ DEPLOY_TVVLCKIT=no
 BUILD_MOBILEVLCKIT="./buildMobileVLCKit.sh -vf"
 CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh -z"
 STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/unstable/"
+MOBILE_PODSPEC="MobileVLCKit-unstable.podspec"
+TV_PODSPEC="TVVLCKit-unstable.podspec"
 
 usage()
 {
@@ -184,9 +186,9 @@ podDeploy()
     local retVal=0
 
     if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
-        podspec="MobileVLCKit-unstable.podspec"
+        podspec=$MOBILE_PODSPEC
     else
-        podspec="TVVLCKit-unstable.podspec"
+        podspec=$TV_PODSPEC
     fi
 
     log "Info" "Starting podspec operations..."
@@ -250,7 +252,7 @@ getVersion()
 {
     spushd "Packaging/podspecs"
         # Basing on the version of the MobileVLCKit podspec to retreive old version
-        local oldVersion=$(grep s.version MobileVLCKit-unstable.podspec | cut -d "'" -f 2)
+        local oldVersion=$(grep s.version $MOBILE_PODSPEC | cut -d "'" -f 2)
 
         VERSION=$(echo $oldVersion | awk -F$VERSION_DELIMITER -v OFS=$VERSION_DELIMITER 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print}')
     spopd #Packaging/podspecs
