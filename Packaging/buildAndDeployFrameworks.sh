@@ -171,10 +171,9 @@ bumpPodspec()
     local uploadURL=":http => '${UPLOAD_URL}${DISTRIBUTION_PACKAGE}'"
     local podSHA=":sha256 => '${DISTRIBUTION_PACKAGE_SHA}'"
 
-    # NOTE: sed -i '' because macOS
-    sed -i '' 's#.*s.version.*#'"  ${podVersion}"'#' "$1"
-    sed -i '' 's#.*:http.*#'"    ${uploadURL}",'#' "$1"
-    sed -i '' 's#.*sha256.*#'"    ${podSHA}"'#' "$1"
+    perl -i -pe's#s.version.*#'"${podVersion}"'#g' $1
+    perl -i -pe's#:http.*#'"${uploadURL},"'#g' $1
+    perl -i -pe's#:sha256.*#'"${podSHA}"'#g' $1
 }
 
 
