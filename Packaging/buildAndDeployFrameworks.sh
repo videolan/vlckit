@@ -5,6 +5,7 @@ set -e
 CLEAN=yes
 DEPLOY_MOBILEVLCKIT=no
 DEPLOY_TVVLCKIT=no
+TEST_MODE=no
 
 BUILD_MOBILEVLCKIT="./buildMobileVLCKit.sh -vf"
 CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh -z"
@@ -21,10 +22,11 @@ OPTIONS
     -d      Disable cleaning of build directory
     -m      Deploy MobileVLCKit
     -t      Deploy TVVLCKit
+    -l      Start test for build phases
 EOF
 }
 
-while getopts "hdmt" OPTION
+while getopts "hdmtl" OPTION
 do
      case $OPTION in
          h)
@@ -39,6 +41,9 @@ do
             ;;
          t)
             DEPLOY_TVVLCKIT=yes
+            ;;
+         l)
+            TEST_MODE=yes
             ;;
          \?)
             usage
@@ -179,6 +184,23 @@ gitCommit()
     git commit -m "${podspec}: Update version to ${VERSION}"
 }
 
+startTesting()
+{
+    # Testing on a side even though it ressembles podDeploy() for future tests.
+    log "Info" "Starting local tests..."
+    spushd "Packaging/podspecs"
+        if bumpPodspec $CURRENT_PODSPEC && \
+           pod spec lint --verbose $CURRENT_PODSPEC ; then
+            log "Info" "Testing succesfull!"
+        else
+            log "Error" "Testing failed."
+        fi
+        git checkout $CURRENT_PODSPEC
+   spopd #Packaging/podspecs
+   rm ${DISTRIBUTION_PACKAGE}
+   log "Warning" "All files generated during tests have been removed."
+}
+
 podDeploy()
 {
     local retVal=0
@@ -262,8 +284,10 @@ setCurrentPodspec()
 
 removePackageAndBuildDir()
 {
-    if ! podDeploy; then
-        log "info" "Removing distribution package ${DISTRIBUTION_PACKAGE} and build directory ${TARGET}-binary."
+    if [ "$TEST_MODE" = "yes" ]; then
+        startTesting
+    elif ! podDeploy; then
+        log "Info" "Removing distribution package ${DISTRIBUTION_PACKAGE} and build directory ${TARGET}-binary."
         rm ${DISTRIBUTION_PACKAGE}
         rm -rf ${TARGET}-binary
     fi
@@ -296,5 +320,4 @@ spushd "$ROOT_DIR"
     getSHA
     uploadPackage
     removePackageAndBuildDir
-
 spopd #ROOT_DIR
