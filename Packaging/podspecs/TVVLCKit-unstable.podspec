@@ -14,9 +14,9 @@ Pod::Spec.new do |s|
     :http => 'https://download.videolan.org/cocoapods/unstable/TVVLCKit-3.0.0a57-0e9f4a78-a4de4ecc.zip',
     :sha256 => 'b960c92e25286894e8bfe09554c1790aba7ada261bb960f54715d261ed067ee1'
   }
-  s.tvos.vendored_framework = 'TVVLCKit-binary/TVVLCKit.framework'
-  s.source_files = 'TVVLCKit-binary/TVVLCKit.framework/Headers/*.h'
-  s.public_header_files = 'TVVLCKit-binary/TVVLCKit.framework/Headers/*.h'
+  s.tvos.vendored_framework = 'TVVLCKit.framework'
+  s.source_files = 'TVVLCKit.framework/Headers/*.h'
+  s.public_header_files = 'TVVLCKit.framework/Headers/*.h'
   s.tvos.deployment_target = '10.2'
   s.frameworks = 'CoreText', 'AVFoundation', 'AudioToolbox', 'OpenGLES', 'VideoToolbox', 'CoreMedia'
   s.libraries = 'c++', 'xml2', 'z', 'bz2', 'iconv'
