@@ -13,10 +13,13 @@ STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/unstable/"
 MOBILE_PODSPEC="MobileVLCKit-unstable.podspec"
 TV_PODSPEC="TVVLCKit-unstable.podspec"
 
+# Note: create-distributable-package script is building VLCKit(s) if not found.
+# Note: by default, VLCKit will be build if no option is passed.
+
 usage()
 {
 cat << EOF
-usage: $0 [options] version
+usage: $0 [options]
 
 OPTIONS
     -d      Disable cleaning of build directory
@@ -98,8 +101,7 @@ log()
 
 clean()
 {
-    log "Info" "Starting the build purge..."
-    pwd
+    log "Info" "Starting cleaning..."
     if [ -d "build" ]; then
         rm -rf "$ROOT_DIR/build"
     else
@@ -113,6 +115,7 @@ buildMobileVLCKit()
     log "Info" "Staring MobileVLCKit build..."
     if ! $BUILD_MOBILEVLCKIT; then
         log "Error" "MobileVLCKit build failed"
+        rm -fr "build/"
         exit 1
     fi
     log "Info" "MobileVLCKit build finished!"
@@ -120,9 +123,7 @@ buildMobileVLCKit()
 
 getVLCHashes()
 {
-    VLC_HASH=""
     VLCKIT_HASH=$(git rev-parse --short HEAD)
-
     spushd "libvlc/vlc"
         VLC_HASH=$(git rev-parse --short HEAD)
     spopd #libvlc/vlc
@@ -132,14 +133,13 @@ renamePackage()
 {
     if [ "$1" = "-m" ]; then
         TARGET="MobileVLCKit"
-    else
+    elif [ "$1" = "-t" ]; then
         TARGET="TVVLCKit"
     fi
-
     getVLCHashes
 
     local packageName="${TARGET}-REPLACEWITHVERSION.tar.xz"
-    # git rev-parse --short HEAD in vlckit et vlc
+
     if [ -f $packageName ]; then
         DISTRIBUTION_PACKAGE="${TARGET}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.tar.xz"
         mv $packageName "$DISTRIBUTION_PACKAGE"
@@ -174,7 +174,6 @@ bumpPodspec()
     perl -i -pe's#:sha256.*#'"${podSHA}"'#g' $1
 }
 
-
 gitCommit()
 {
     local podspec="$1"
@@ -183,7 +182,7 @@ gitCommit()
     git commit -m "${podspec}: Update version to ${VERSION}"
 }
 
-startTesting()
+startPodTesting()
 {
     # Testing on a side even though it ressembles podDeploy() for future tests.
     log "Info" "Starting local tests..."
@@ -197,28 +196,24 @@ startTesting()
         git checkout $CURRENT_PODSPEC
    spopd #Packaging/podspecs
    rm ${DISTRIBUTION_PACKAGE}
+   rm -rf ${TARGET}-binary
    log "Warning" "All files generated during tests have been removed."
 }
 
 podDeploy()
 {
-    local retVal=0
-
-    log "Info" "Starting podspec operations..."
+   log "Info" "Starting podspec operations..."
     spushd "Packaging/podspecs"
         if bumpPodspec $CURRENT_PODSPEC && \
            pod spec lint --verbose $CURRENT_PODSPEC && \
            pod trunk push $CURRENT_PODSPEC && \
-           gitCommit $CURRENT_PODSPEC ; then
+           gitCommit $CURRENT_PODSPEC; then
             log "Info" "Podpsec operations successfully finished!"
-            retVal=0
         else
             git checkout $CURRENT_PODSPEC
             log "Error" "Podspec operations failed."
-            retVal=1
         fi
     spopd #Packaging/podspecs
-    return $retVal
 }
 
 checkIfExistOnRemote()
@@ -281,11 +276,12 @@ setCurrentPodspec()
     fi
 }
 
-removePackageAndBuildDir()
+podOperations()
 {
     if [ "$TEST_MODE" = "yes" ]; then
-        startTesting
-    elif ! podDeploy; then
+        startPodTesting
+    else
+        podDeploy
         log "Info" "Removing distribution package ${DISTRIBUTION_PACKAGE} and build directory ${TARGET}-binary."
         rm ${DISTRIBUTION_PACKAGE}
         rm -rf ${TARGET}-binary
@@ -310,7 +306,6 @@ fi
 UPLOAD_URL=${STABLE_UPLOAD_URL}
 
 spushd "$ROOT_DIR"
-    # Note: the current packaging script is building vlckit(s) if not found.
     buildMobileVLCKit
     setCurrentPodspec
     getVersion
@@ -318,5 +313,5 @@ spushd "$ROOT_DIR"
     renamePackage $options
     getSHA
     uploadPackage
-    removePackageAndBuildDir
+    podOperations
 spopd #ROOT_DIR
