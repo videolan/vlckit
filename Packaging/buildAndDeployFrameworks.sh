@@ -292,6 +292,12 @@ podOperations()
 # Command Center #
 ##################
 
+# Currently, mobile and tv cannot be deployed at the same time.
+if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ] && [ "$DEPLOY_TVVLCKIT" = "yes" ]; then
+    log "Error" "Cannot depoy MobileVLCKit and TVVLCKit at the same time!"
+    exit 1
+fi
+
 if [ "$CLEAN" = "yes" ]; then
     clean
 fi
