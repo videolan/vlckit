@@ -66,6 +66,18 @@
 		7DC28D9920194315002D05C4 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D9820194315002D05C4 /* libbz2.tbd */; };
 		7DC28D9B2019431B002D05C4 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D9A2019431A002D05C4 /* AudioUnit.framework */; };
 		7DC28D9D20194324002D05C4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D9C20194324002D05C4 /* AudioToolbox.framework */; };
+		7DEBDACE203C561D000A7D2F /* deprecated.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B73114D9BE800D34AAB /* deprecated.h */; };
+		7DEBDACF203C561D000A7D2F /* libvlc_events.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B74114D9BE800D34AAB /* libvlc_events.h */; };
+		7DEBDAD0203C561D000A7D2F /* libvlc_media_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B75114D9BE800D34AAB /* libvlc_media_discoverer.h */; };
+		7DEBDAD1203C561D000A7D2F /* libvlc_media_library.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B76114D9BE800D34AAB /* libvlc_media_library.h */; };
+		7DEBDAD2203C561D000A7D2F /* libvlc_media_list_player.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B77114D9BE800D34AAB /* libvlc_media_list_player.h */; };
+		7DEBDAD3203C561D000A7D2F /* libvlc_media_list.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B78114D9BE800D34AAB /* libvlc_media_list.h */; };
+		7DEBDAD4203C561D000A7D2F /* libvlc_media_player.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B79114D9BE800D34AAB /* libvlc_media_player.h */; };
+		7DEBDAD5203C561D000A7D2F /* libvlc_media.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7A114D9BE800D34AAB /* libvlc_media.h */; };
+		7DEBDAD6203C561D000A7D2F /* libvlc_renderer_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7B114D9BE800D34AAB /* libvlc_renderer_discoverer.h */; };
+		7DEBDAD7203C561D000A7D2F /* libvlc_vlm.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */; };
+		7DEBDAD8203C561D000A7D2F /* libvlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7D114D9BE800D34AAB /* libvlc.h */; };
+		7DEBDAD9203C561D000A7D2F /* vlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7E114D9BE800D34AAB /* vlc.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +89,30 @@
 			remoteInfo = StaticLibVLC;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7DEBDACD203C5607000A7D2F /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = ../Headers/vlc;
+			dstSubfolderSpec = 7;
+			files = (
+				7DEBDACE203C561D000A7D2F /* deprecated.h in CopyFiles */,
+				7DEBDACF203C561D000A7D2F /* libvlc_events.h in CopyFiles */,
+				7DEBDAD0203C561D000A7D2F /* libvlc_media_discoverer.h in CopyFiles */,
+				7DEBDAD1203C561D000A7D2F /* libvlc_media_library.h in CopyFiles */,
+				7DEBDAD2203C561D000A7D2F /* libvlc_media_list_player.h in CopyFiles */,
+				7DEBDAD3203C561D000A7D2F /* libvlc_media_list.h in CopyFiles */,
+				7DEBDAD4203C561D000A7D2F /* libvlc_media_player.h in CopyFiles */,
+				7DEBDAD5203C561D000A7D2F /* libvlc_media.h in CopyFiles */,
+				7DEBDAD6203C561D000A7D2F /* libvlc_renderer_discoverer.h in CopyFiles */,
+				7DEBDAD7203C561D000A7D2F /* libvlc_vlm.h in CopyFiles */,
+				7DEBDAD8203C561D000A7D2F /* libvlc.h in CopyFiles */,
+				7DEBDAD9203C561D000A7D2F /* vlc.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -481,6 +517,7 @@
 				7DC28D4D20194117002D05C4 /* Headers */,
 				7DC28D6520194117002D05C4 /* Sources */,
 				7DC28D7920194117002D05C4 /* Frameworks */,
+				7DEBDACD203C5607000A7D2F /* CopyFiles */,
 			);
 			buildRules = (
 			);
