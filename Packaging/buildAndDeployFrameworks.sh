@@ -159,8 +159,8 @@ packageBuild()
 
 getSHA()
 {
-    log "Info" "Getting SHA from distrubition package..."
-    DISTRIBUTION_PACKAGE_SHA=$(shasum -a 256 "$DISTRIBUTION_PACKAGE" | cut -d " " -f 1 )
+    DISTRIBUTION_PACKAGE_SHA=$(shasum -a 256 "$DISTRIBUTION_PACKAGE" | cut -d " " -f 1)
+    log "Info" "Distribution package checksum: ${DISTRIBUTION_PACKAGE_SHA}"
 }
 
 bumpPodspec()
