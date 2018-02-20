@@ -397,7 +397,7 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
-		CCEC5B6C114D9BD300D34AAB /* libvlc (not distributed) */ = {
+		CCEC5B6C114D9BD300D34AAB /* libvlc */ = {
 			isa = PBXGroup;
 			children = (
 				CCEC5B73114D9BE800D34AAB /* deprecated.h */,
@@ -413,7 +413,7 @@
 				CCEC5B7D114D9BE800D34AAB /* libvlc.h */,
 				CCEC5B7E114D9BE800D34AAB /* vlc.h */,
 			);
-			name = "libvlc (not distributed)";
+			name = libvlc;
 			sourceTree = "<group>";
 		};
 		EF6BC9110DA1932F00DD37EF /* Public */ = {
@@ -442,7 +442,7 @@
 		EF78BD3B0CAEEFD000354E6E /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				CCEC5B6C114D9BD300D34AAB /* libvlc (not distributed) */,
+				CCEC5B6C114D9BD300D34AAB /* libvlc */,
 				637CFB960D2D281900A041B6 /* Internal */,
 				EF6BC9110DA1932F00DD37EF /* Public */,
 			);
