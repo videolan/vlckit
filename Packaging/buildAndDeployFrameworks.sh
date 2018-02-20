@@ -57,7 +57,7 @@ done
 shift "$((OPTIND-1))"
 
 VERSION=""
-VERSION_DELIMITER="3.0.0a"
+VERSION_DELIMITER="3.0.1a"
 ROOT_DIR="$(dirname "$(pwd)")"
 UPLOAD_URL=""
 VLC_HASH=""
