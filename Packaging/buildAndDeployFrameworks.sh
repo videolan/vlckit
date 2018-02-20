@@ -318,6 +318,7 @@ spushd "$ROOT_DIR"
     packageBuild $options
     renamePackage $options
     getSHA
-    uploadPackage
-    podOperations
+    # Note: Disable uploading and podoperations for now.
+    #uploadPackage
+    #podOperations
 spopd #ROOT_DIR
