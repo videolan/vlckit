@@ -231,7 +231,7 @@ ROOT_DIR=`pwd`
 spopd
 
 VLCROOT=${ROOT_DIR}/libvlc/vlc
-export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
 
 info "Preparing build dirs"
 
