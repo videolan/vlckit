@@ -143,7 +143,7 @@ renamePackage()
     if [ -f $packageName ]; then
         DISTRIBUTION_PACKAGE="${TARGET}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.tar.xz"
         mv $packageName "$DISTRIBUTION_PACKAGE"
-        log "Info" "Finished renaming package!"
+        log "Info" "Finished renaming package with name: ${DISTRIBUTION_PACKAGE}"
     fi
 }
 
