@@ -40,6 +40,7 @@
 #endif
 
 @class VLCLibrary;
+@class VLCRendererItem;
 
 /* Notification Messages */
 extern NSString *const VLCMediaPlayerTimeChanged;
@@ -819,5 +820,18 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) UIImage *lastSnapshot;
 #endif
+
+#pragma mark -
+#pragma mark Renderer
+
+/**
+ * Sets a `VLCRendererItem` to the current media player
+ * \param item `VLCRendererItem` discovered by `VLCRendererDiscoverer`
+ * \return `YES` if successful, `NO` otherwise
+ * \note Must be called before the first call of `play` to take effect
+ * \see VLCRendererDiscoverer
+ * \see VLCRendererItem
+ */
+- (BOOL)setRendererItem:(VLCRendererItem *)item;
 
 @end

@@ -30,6 +30,7 @@
 #import "VLCMediaPlayer.h"
 #import "VLCEventManager.h"
 #import "VLCLibVLCBridging.h"
+#import "VLCRendererItem+Init.h"
 #if !TARGET_OS_IPHONE
 # import "VLCVideoView.h"
 #endif
@@ -1279,6 +1280,15 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     return _playerInstance;
 }
+
+#pragma mark -
+#pragma mark - Renderer
+
+- (BOOL)setRendererItem:(VLCRendererItem *)item
+{
+    return libvlc_media_player_set_renderer(_playerInstance, item.rendererItem) == 0;
+}
+
 @end
 
 @implementation VLCMediaPlayer (Private)
