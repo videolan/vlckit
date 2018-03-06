@@ -348,7 +348,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Return the current video track index
  *
- * \return 0 if none is set.
+ * \return current video track index, -1 if none or no media track
  *
  * Pass -1 to disable.
  */
@@ -375,7 +375,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Return the current video subtitle index
  *
- * \return 0 if none is set.
+ * \return current video subtitle index, -1 if none
  *
  * Pass -1 to disable.
  */
@@ -439,8 +439,8 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
  */
 
 /**
- * Return the current chapter index, or
- * \return NSNotFound if none is set.
+ * Return the current chapter index
+ * \return current chapter index or -1 if there is no chapter
  */
 @property (readwrite) int currentChapterIndex;
 /**
@@ -489,8 +489,8 @@ extern NSString *const VLCChapterDescriptionDuration;
 - (NSArray *)chapterDescriptionsOfTitle:(int)titleIndex;
 
 /**
- * Title selection and enumeration
- * \return NSNotFound if none is set.
+ * Return the current title index
+ * \return title index currently playing, or -1 if none
  */
 @property (readwrite) int currentTitleIndex;
 /**
@@ -545,7 +545,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 /**
  * Return the current audio track index
  *
- * \return 0 if none is set.
+ * \return current audio track index, -1 if none or no media track
  *
  * Pass -1 to disable.
  */
@@ -760,6 +760,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \param fov new field of view.
  * \param absolute if true replace the old viewpoint with the new one. If
  * false, increase/decrease it.
+ * \return NO in case of error, YES otherwise
  * \note This will create a viewpoint instance if not present.
  */
 - (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute;
