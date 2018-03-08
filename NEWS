@@ -1,6 +1,8 @@
 Version 3.0.2:
 --------------
-- automatic reconnections to HTTP(S) servers on unexpected drops on iOS and tvOS
+- Automatic reconnections to HTTP(S) servers on unexpected drops on iOS and tvOS
+- Fixed deadlock when sent to background
+- Fixed some OpenGL crashes
 
 Version 3.0.0:
 --------------
