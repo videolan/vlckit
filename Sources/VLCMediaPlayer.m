@@ -489,10 +489,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (BOOL)openVideoSubTitlesFromFile:(NSString *)path
 {
-    return libvlc_media_player_add_slave(_playerInstance,
-                                         libvlc_media_slave_type_subtitle,
-                                         [path UTF8String],
-                                         TRUE);
+    return [self addPlaybackSlave:[NSURL fileURLWithPath:path] type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
 }
 
 - (int)addPlaybackSlave:(NSURL *)slaveURL type:(VLCMediaPlaybackSlaveType)slaveType enforce:(BOOL)enforceSelection
