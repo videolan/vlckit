@@ -2,7 +2,9 @@ Version 3.0.2:
 --------------
 - Automatic reconnections to HTTP(S) servers on unexpected drops on iOS and tvOS
 - Fixed deadlock when sent to background
-- Fixed some OpenGL crashes
+- Fixed some OpenGL and flv crashes
+- Fixed HEVC playback that resulted in just a black screen
+- Removal of private API usage by ffmpeg
 
 Version 3.0.0:
 --------------
