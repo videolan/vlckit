@@ -124,6 +124,7 @@ buildMobileVLCKit()
 getVLCHashes()
 {
     VLCKIT_HASH=$(git rev-parse --short HEAD)
+    VERSION=$(git describe --tags HEAD)
     spushd "libvlc/vlc"
         VLC_HASH=$(git rev-parse --short HEAD)
     spopd #libvlc/vlc
@@ -257,16 +258,6 @@ uploadPackage()
     done
 }
 
-getVersion()
-{
-    spushd "Packaging/podspecs"
-        # Basing on the version of the MobileVLCKit podspec to retreive old version
-        local oldVersion=$(grep s.version $MOBILE_PODSPEC | cut -d "'" -f 2)
-
-        VERSION=$(echo $oldVersion | awk -F$VERSION_DELIMITER -v OFS=$VERSION_DELIMITER 'NF==1{print ++$NF}; NF>1{$NF=sprintf("%0*d", length($NF), ($NF+1)); print}')
-    spopd #Packaging/podspecs
-}
-
 setCurrentPodspec()
 {
     # Addded extra precision of target to protect against future targets
@@ -315,7 +306,6 @@ UPLOAD_URL=${STABLE_UPLOAD_URL}
 spushd "$ROOT_DIR"
     buildMobileVLCKit
     setCurrentPodspec
-    getVersion
     packageBuild $options
     renamePackage $options
     getSHA
