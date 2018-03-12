@@ -112,7 +112,8 @@ static VLCLibrary * sharedLibrary = nil;
 #endif
 #endif
                       @"--text-renderer=freetype",
-                      @"--avi-index=3"];
+                      @"--avi-index=3",
+                      @"--audio-resampler=soxr"];
     }
 #else
     if (!vlcParams) {
@@ -125,6 +126,7 @@ static VLCLibrary * sharedLibrary = nil;
         [defaultParams addObject:@"--vout=macosx"];                             // Select Mac OS X video output
         [defaultParams addObject:@"--text-renderer=freetype"];
         [defaultParams addObject:@"--extraintf=macosx_dialog_provider"];        // Some extra dialog (login, progress) may come up from here
+        [defaultParams addObject:@"--audio-resampler=soxr"];                    // High quality resamper (will be used by default on VLC 4.0)
 
         [[NSUserDefaults standardUserDefaults] setObject:defaultParams forKey:@"VLCParams"];
         [[NSUserDefaults standardUserDefaults] synchronize];
