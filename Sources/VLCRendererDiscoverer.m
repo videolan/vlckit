@@ -157,16 +157,12 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
 - (void)itemAdded:(VLCRendererItem *)item
 {
-    if ([_delegate respondsToSelector:@selector(rendererDiscovererItemAdded:)]) {
-        [_delegate rendererDiscovererItemAdded:self item:item];
-    }
+    [_delegate rendererDiscovererItemAdded:self item:item];
 }
 
 - (void)itemDeleted:(VLCRendererItem *)item
 {
-    if ([_delegate respondsToSelector:@selector(rendererDiscovererItemDeleted:)]) {
-        [_delegate rendererDiscovererItemDeleted:self item:item];
-    }
+    [_delegate rendererDiscovererItemDeleted:self item:item];
 }
 
 @end
