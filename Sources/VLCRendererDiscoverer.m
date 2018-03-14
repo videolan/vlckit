@@ -138,7 +138,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
         return NULL;
     }
 
-    NSMutableArray *list;
+    NSMutableArray *list = [[NSMutableArray alloc] init];
 
     for (size_t i = 0; i < i_nb_services; ++i) {
         [list addObject:[[VLCRendererDiscovererDescription alloc] initWithName:[NSString stringWithUTF8String:pp_services[i]->psz_name]
