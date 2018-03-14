@@ -81,6 +81,8 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 {
     self = [super init];
     if (self) {
+        NSAssert(!name, @"VLCRendererDiscoverer: name is NULL");
+        _name = name;
         _rendererDiscoverer = libvlc_renderer_discoverer_new([VLCLibrary sharedLibrary].instance, [name UTF8String]);
 
         if (!_rendererDiscoverer) {

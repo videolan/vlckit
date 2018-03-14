@@ -68,6 +68,11 @@
 @interface VLCRendererDiscoverer : NSObject
 
 /**
+ * Name of the renderer discoverer
+ */
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+
+/**
  * Receiver's delegate
  */
 @property (nonatomic, weak) id <VLCRendererDiscovererDelegate> _Nullable delegate;
