@@ -1,3 +1,7 @@
+Version 3.0.3:
+--------------
+- Expose the existing snapshot API of the VLCMediaPlayer class to macOS
+
 Version 3.0.2:
 --------------
 - Automatic reconnections to HTTP(S) servers on unexpected drops on iOS and tvOS
