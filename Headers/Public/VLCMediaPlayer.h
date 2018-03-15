@@ -118,14 +118,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)mediaPlayerChapterChanged:(NSNotification *)aNotification;
 
-#if TARGET_OS_PHONE
 /**
  * Sent by the default notification center whenever a new snapshot is taken.
  * \details Discussion The value of aNotification is always an VLCMediaPlayerSnapshotTaken notification. You can retrieve
  * the VLCMediaPlayer object in question by sending object to aNotification.
  */
 - (void)mediaPlayerSnapshot:(NSNotification *)aNotification;
-#endif
 
 @end
 
@@ -804,14 +802,14 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL canPause;
 
-#if TARGET_OS_IPHONE
 /**
  * Array of taken snapshots of the current video output
- * \return a NSArray of UIImage instances
+ * \return a NSArray of NSString instances containing the names
  * \note This property is not available to macOS
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *snapshots;
 
+#if TARGET_OS_PHONE
 /**
  * Get last snapshot available.
  * \return an UIImage with the last snapshot available.
@@ -819,6 +817,14 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \note This property is not available to macOS
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) UIImage *lastSnapshot;
+#else
+/**
+ * Get last snapshot available.
+ * \return an NSImage with the last snapshot available.
+ * \note return value is nil if there is no snapshot
+ * \note This property is not available to iOS and tvOS
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) NSImage *lastSnapshot;
 #endif
 
 #pragma mark -

@@ -95,9 +95,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerTitleChanged:(NSNumber *)newTitle;
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
 
-#if TARGET_OS_IPHONE
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
-#endif
 @end
 
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
@@ -190,7 +188,6 @@ static void HandleMediaChapterChanged(const libvlc_event_t * event, void * self)
     }
 }
 
-#if TARGET_OS_IPHONE
 static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
@@ -205,7 +202,6 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         }
     }
 }
-#endif
 
 @interface VLCMediaPlayer ()
 {
@@ -217,9 +213,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
     float _position;                            ///< The position of the media being played
     id _drawable;                               ///< The drawable associated to this media player
-#if TARGET_OS_IPHONE
     NSMutableArray *_snapshots;                 ///< Array with snapshot file names
-#endif
     VLCAudio *_audio;                           ///< The audio controller
     libvlc_equalizer_t *_equalizerInstance;     ///< The equalizer controller
     BOOL _equalizerEnabled;                     ///< Equalizer state
@@ -1253,12 +1247,12 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     return libvlc_media_player_can_pause(_playerInstance);
 }
 
-#if TARGET_OS_IPHONE
 - (NSArray *)snapshots
 {
     return [_snapshots copy];
 }
 
+#if TARGET_OS_IPHONE
 - (UIImage *)lastSnapshot {
     if (_snapshots == nil) {
         return nil;
@@ -1269,6 +1263,19 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
             return nil;
 
         return [UIImage imageWithContentsOfFile:[_snapshots lastObject]];
+    }
+}
+#else
+- (NSImage *)lastSnapshot {
+    if (_snapshots == nil) {
+        return nil;
+    }
+
+    @synchronized(_snapshots) {
+        if (_snapshots.count == 0)
+            return nil;
+
+        return [[NSImage alloc] initWithContentsOfFile:[_snapshots lastObject]];
     }
 }
 #endif
@@ -1344,9 +1351,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_event_attach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
-    #if TARGET_OS_IPHONE
         libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
-    #endif
     });
 }
 
@@ -1372,9 +1377,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     libvlc_event_detach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
-#if TARGET_OS_IPHONE
     libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
-#endif
 }
 
 - (dispatch_queue_t)libVLCBackgroundQueue
@@ -1464,7 +1467,6 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     [self didChangeValueForKey:@"currentChapterIndex"];
 }
 
-#if TARGET_OS_IPHONE
 - (void)mediaPlayerSnapshot:(NSString *)fileName
 {
     @synchronized(_snapshots) {
@@ -1475,6 +1477,5 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         [_snapshots addObject:fileName];
     }
 }
-#endif
 
 @end
