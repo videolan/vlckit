@@ -810,7 +810,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *snapshots;
 
-#if TARGET_OS_PHONE
+#if TARGET_OS_IPHONE
 /**
  * Get last snapshot available.
  * \return an UIImage with the last snapshot available.
