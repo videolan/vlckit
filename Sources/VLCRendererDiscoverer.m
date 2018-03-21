@@ -24,11 +24,12 @@
 #import "VLCRendererDiscoverer.h"
 #import "VLCLibrary.h"
 #import "VLCEventManager.h"
-#import "VLCRendererItem+Init.h"
+#import "VLCLibVLCBridging.h"
 
 @interface VLCRendererDiscoverer()
 {
     libvlc_renderer_discoverer_t *_rendererDiscoverer;
+    NSMutableArray<VLCRendererItem *> *_rendererItems;
 }
 @end
 
@@ -39,7 +40,7 @@ static void HandleRendererDiscovererItemAdded(const libvlc_event_t *event, void 
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(itemAdded:)
-                                           withArgumentAsObject:[[VLCRendererItem alloc] initWithCItem:
+                                           withArgumentAsObject:[NSValue valueWithPointer:
                                                                  event->u.renderer_discoverer_item_added.item]];
     }
 }
@@ -49,8 +50,8 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(itemDeleted:)
-                                           withArgumentAsObject:[[VLCRendererItem alloc] initWithCItem:
-                                                                  event->u.renderer_discoverer_item_deleted.item]];
+                                           withArgumentAsObject:[NSValue valueWithPointer:
+                                                                 event->u.renderer_discoverer_item_deleted.item]];
     }
 }
 
@@ -90,6 +91,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
             return nil;
         }
 
+        _rendererItems = [[NSMutableArray alloc] init];
         libvlc_event_manager_t *p_em = libvlc_renderer_discoverer_event_manager(_rendererDiscoverer);
 
         if (p_em) {
@@ -98,7 +100,6 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
             libvlc_event_attach(p_em, libvlc_RendererDiscovererItemDeleted,
                                 HandleRendererDiscovererItemDeleted, (__bridge void *)(self));
         }
-
     }
     return self;
 }
@@ -153,16 +154,47 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     return [list copy];
 }
 
-#pragma mark - Handling libvlc event callbacks
-
-- (void)itemAdded:(VLCRendererItem *)item
+- (VLCRendererItem *)discoveredItemsContainItem:(libvlc_renderer_item_t *)item
 {
-    [_delegate rendererDiscovererItemAdded:self item:item];
+    for (VLCRendererItem *rendererItem in _rendererItems) {
+        BOOL hasSameName = !strcmp(libvlc_renderer_item_name(rendererItem.libVLCRendererItem), libvlc_renderer_item_name(item));
+        BOOL hasSameType = !strcmp(libvlc_renderer_item_type(rendererItem.libVLCRendererItem), libvlc_renderer_item_type(item));
+
+        if (hasSameName && hasSameType) {
+            return rendererItem;
+        }
+    }
+    return nil;
 }
 
-- (void)itemDeleted:(VLCRendererItem *)item
+- (NSArray<VLCRendererItem *> *)renderers
 {
-    [_delegate rendererDiscovererItemDeleted:self item:item];
+    return [_rendererItems copy];
+}
+
+#pragma mark - Handling libvlc event callbacks
+
+- (void)itemAdded:(NSValue *)item
+{
+    libvlc_renderer_item_t *renderer_item = item.pointerValue;
+    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
+
+    if (!rendererItem) {
+        rendererItem = [[VLCRendererItem alloc] initWithRendererItem:renderer_item];
+        [_rendererItems addObject:rendererItem];
+        [_delegate rendererDiscovererItemAdded:self item:rendererItem];
+    }
+}
+
+- (void)itemDeleted:(NSValue *)item
+{
+    libvlc_renderer_item_t *renderer_item = item.pointerValue;
+    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
+
+    if (rendererItem) {
+        [_rendererItems removeObject:rendererItem];
+        [_delegate rendererDiscovererItemDeleted:self item:rendererItem];
+    }
 }
 
 @end
