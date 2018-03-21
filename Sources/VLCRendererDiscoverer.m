@@ -29,6 +29,7 @@
 @interface VLCRendererDiscoverer()
 {
     libvlc_renderer_discoverer_t *_rendererDiscoverer;
+    NSMutableArray<VLCRendererItem *> *_items;
 }
 @end
 
@@ -39,8 +40,8 @@ static void HandleRendererDiscovererItemAdded(const libvlc_event_t *event, void 
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(itemAdded:)
-                                           withArgumentAsObject:[[VLCRendererItem alloc] initWithCItem:
-                                                                 event->u.renderer_discoverer_item_added.item]];
+                                           withArgumentAsObject:[NSValue valueWithPointer:
+                                                                 event->u.renderer_discoverer_item_added.item]] ;
     }
 }
 
@@ -49,8 +50,8 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(itemDeleted:)
-                                           withArgumentAsObject:[[VLCRendererItem alloc] initWithCItem:
-                                                                  event->u.renderer_discoverer_item_deleted.item]];
+                                           withArgumentAsObject:[NSValue valueWithPointer:
+                                                                 event->u.renderer_discoverer_item_deleted.item]];
     }
 }
 
@@ -90,6 +91,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
             return nil;
         }
 
+        _items = [[NSMutableArray alloc] init];
         libvlc_event_manager_t *p_em = libvlc_renderer_discoverer_event_manager(_rendererDiscoverer);
 
         if (p_em) {
@@ -98,7 +100,6 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
             libvlc_event_attach(p_em, libvlc_RendererDiscovererItemDeleted,
                                 HandleRendererDiscovererItemDeleted, (__bridge void *)(self));
         }
-
     }
     return self;
 }
@@ -153,16 +154,37 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     return [list copy];
 }
 
-#pragma mark - Handling libvlc event callbacks
-
-- (void)itemAdded:(VLCRendererItem *)item
+- (VLCRendererItem *)discoveredItemsContainsItem:(libvlc_renderer_item_t *)item
 {
-    [_delegate rendererDiscovererItemAdded:self item:item];
+    for (VLCRendererItem *tmpItem in _items) {
+        if (tmpItem.rendererItem == item) {
+            return tmpItem;
+        }
+    }
+    return nil;
 }
 
-- (void)itemDeleted:(VLCRendererItem *)item
+#pragma mark - Handling libvlc event callbacks
+
+- (void)itemAdded:(NSValue *)item
 {
-    [_delegate rendererDiscovererItemDeleted:self item:item];
+    libvlc_renderer_item_t *pointerValue = item.pointerValue;
+    VLCRendererItem *tmp = [self discoveredItemsContainsItem:pointerValue];
+
+    if (!tmp) {
+        tmp = [[VLCRendererItem alloc] initWithCItem: pointerValue];
+        [_items addObject:tmp];
+    }
+    [_delegate rendererDiscovererItemAdded:self item:tmp];
+}
+
+- (void)itemDeleted:(NSValue *)item
+{
+    libvlc_renderer_item_t *pointerValue = item.pointerValue;
+    VLCRendererItem *tmp = [self discoveredItemsContainsItem:pointerValue];
+
+    [_items removeObject:tmp];
+    [_delegate rendererDiscovererItemDeleted:self item:tmp];
 }
 
 @end
