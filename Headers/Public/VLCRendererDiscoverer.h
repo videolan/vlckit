@@ -73,6 +73,11 @@
 @property (nonatomic, readonly, copy) NSString * _Nonnull name;
 
 /**
+ * Renderers of the discoverer
+ */
+@property (nonatomic, readonly, copy) NSArray<VLCRendererItem *> * _Nonnull renderers;
+
+/**
  * Receiver's delegate
  */
 @property (nonatomic, weak) id <VLCRendererDiscovererDelegate> _Nullable delegate;
@@ -85,6 +90,13 @@
  * \return A new `VLCRendererDiscoverer` object, only if there were no errors
  */
 - (instancetype _Nullable)initWithName:(NSString * _Nonnull)name;
+
+
+/**
+ * Returns discovered renderers
+ * \return discovered renderers
+ */
+- (NSArray<VLCRendererItem *> *_Nonnull)renderers;
 
 /**
  * Start the renderer discoverer

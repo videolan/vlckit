@@ -165,6 +165,11 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     return nil;
 }
 
+- (NSArray<VLCRendererItem *> *)renderers
+{
+    return [_items copy];
+}
+
 #pragma mark - Handling libvlc event callbacks
 
 - (void)itemAdded:(NSValue *)item
