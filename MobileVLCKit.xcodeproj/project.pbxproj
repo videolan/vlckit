@@ -378,7 +378,6 @@
 		8D2CE648203DCC48004BB7F6 /* VLCRendererDiscoverer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VLCRendererDiscoverer.m; path = Sources/VLCRendererDiscoverer.m; sourceTree = "<group>"; };
 		8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VLCRendererItem.h; path = Headers/Public/VLCRendererItem.h; sourceTree = "<group>"; };
 		8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VLCRendererItem.m; path = Sources/VLCRendererItem.m; sourceTree = "<group>"; };
-		8D2CE653203F206F004BB7F6 /* VLCRendererItem+Init.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "VLCRendererItem+Init.h"; path = "Headers/Internal/VLCRendererItem+Init.h"; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* MobilePrefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobilePrefix.pch; path = Headers/PCH/MobilePrefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libMobileVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -585,7 +584,6 @@
 				7D803EC41C8F2AEF00864A9C /* VLCiOSLegacyDialogProvider.h */,
 				7D34F5551C909DF6008A39F0 /* VLCCustomDialogProvider.h */,
 				7DB683D91C9961BA000C70BE /* VLCHelperCode.h */,
-				8D2CE653203F206F004BB7F6 /* VLCRendererItem+Init.h */,
 			);
 			name = Internal;
 			sourceTree = "<group>";

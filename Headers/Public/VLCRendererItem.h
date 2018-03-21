@@ -21,6 +21,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_OPTIONS(NSInteger, VLCRendererPlay) {
     /** The renderer can render audio */
     VLCRendererPlaysAudio = 1 << 0,
@@ -36,17 +38,17 @@ typedef NS_OPTIONS(NSInteger, VLCRendererPlay) {
 /**
  * Name of the renderer item
  */
-@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly, copy) NSString *name;
 
 /**
  * For now, the type can only be "chromecast" ("upnp", "airplay" may come later)
  */
-@property (nonatomic, readonly, copy) NSString * _Nonnull type;
+@property (nonatomic, readonly, copy) NSString *type;
 
 /**
  * IconURI of the renderer item
  */
-@property (nonatomic, readonly, copy) NSString * _Nonnull iconURI;
+@property (nonatomic, readonly, copy) NSString *iconURI;
 
 /**
  * Flags of the renderer item
@@ -60,3 +62,5 @@ typedef NS_OPTIONS(NSInteger, VLCRendererPlay) {
 - (instancetype _Nullable)init NS_UNAVAILABLE;
 
 @end
+
+NS_ASSUME_NONNULL_END
