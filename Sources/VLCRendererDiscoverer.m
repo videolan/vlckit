@@ -180,8 +180,8 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     if (!tmp) {
         tmp = [[VLCRendererItem alloc] initWithCItem: pointerValue];
         [_items addObject:tmp];
+        [_delegate rendererDiscovererItemAdded:self item:tmp];
     }
-    [_delegate rendererDiscovererItemAdded:self item:tmp];
 }
 
 - (void)itemDeleted:(NSValue *)item
