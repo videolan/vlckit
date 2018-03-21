@@ -189,8 +189,10 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     libvlc_renderer_item_t *pointerValue = item.pointerValue;
     VLCRendererItem *tmp = [self discoveredItemsContainsItem:pointerValue];
 
-    [_items removeObject:tmp];
-    [_delegate rendererDiscovererItemDeleted:self item:tmp];
+    if (tmp) {
+        [_items removeObject:tmp];
+        [_delegate rendererDiscovererItemDeleted:self item:tmp];
+    }
 }
 
 @end
