@@ -174,24 +174,24 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
 - (void)itemAdded:(NSValue *)item
 {
-    libvlc_renderer_item_t *pointerValue = item.pointerValue;
-    VLCRendererItem *tmp = [self discoveredItemsContainsItem:pointerValue];
+    libvlc_renderer_item_t *renderer_item = item.pointerValue;
+    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
 
-    if (!tmp) {
-        tmp = [[VLCRendererItem alloc] initWithCItem: pointerValue];
-        [_items addObject:tmp];
-        [_delegate rendererDiscovererItemAdded:self item:tmp];
+    if (!rendererItem) {
+        rendererItem = [[VLCRendererItem alloc] initWithCItem:renderer_item];
+        [_items addObject:rendererItem];
+        [_delegate rendererDiscovererItemAdded:self item:rendererItem];
     }
 }
 
 - (void)itemDeleted:(NSValue *)item
 {
-    libvlc_renderer_item_t *pointerValue = item.pointerValue;
-    VLCRendererItem *tmp = [self discoveredItemsContainsItem:pointerValue];
+    libvlc_renderer_item_t *renderer_item = item.pointerValue;
+    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
 
-    if (tmp) {
-        [_items removeObject:tmp];
-        [_delegate rendererDiscovererItemDeleted:self item:tmp];
+    if (rendererItem) {
+        [_items removeObject:rendererItem];
+        [_delegate rendererDiscovererItemDeleted:self item:rendererItem];
     }
 }
 
