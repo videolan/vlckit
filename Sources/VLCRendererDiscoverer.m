@@ -41,7 +41,7 @@ static void HandleRendererDiscovererItemAdded(const libvlc_event_t *event, void 
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(itemAdded:)
                                            withArgumentAsObject:[NSValue valueWithPointer:
-                                                                 event->u.renderer_discoverer_item_added.item]] ;
+                                                                 event->u.renderer_discoverer_item_added.item]];
     }
 }
 
