@@ -156,10 +156,10 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
 - (VLCRendererItem *)discoveredItemsContainItem:(libvlc_renderer_item_t *)item
 {
-    for (VLCRendererItem *tmpItem in _rendererItems) {
-        if (!strcmp(libvlc_renderer_item_name(tmpItem.renderer_item), libvlc_renderer_item_name(item))
-            && !strcmp(libvlc_renderer_item_type(tmpItem.renderer_item), libvlc_renderer_item_type(item))) {
-            return tmpItem;
+    for (VLCRendererItem *rendererItem in _rendererItems) {
+        if (!strcmp(libvlc_renderer_item_name(rendererItem.renderer_item), libvlc_renderer_item_name(item))
+            && !strcmp(libvlc_renderer_item_type(rendererItem.renderer_item), libvlc_renderer_item_type(item))) {
+            return rendererItem;
         }
     }
     return nil;
