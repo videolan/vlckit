@@ -41,6 +41,6 @@
  * Returns the C renderer item
  * \return Renderer item
  */
-- (libvlc_renderer_item_t * _Nonnull)rendererItem;
+- (libvlc_renderer_item_t * _Nonnull)renderer_item;
 
 @end

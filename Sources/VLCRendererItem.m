@@ -67,7 +67,7 @@
     return self;
 }
 
-- (libvlc_renderer_item_t *)rendererItem
+- (libvlc_renderer_item_t *)renderer_item
 {
     return _item;
 }
