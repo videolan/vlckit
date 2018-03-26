@@ -29,7 +29,7 @@
 @interface VLCRendererDiscoverer()
 {
     libvlc_renderer_discoverer_t *_rendererDiscoverer;
-    NSMutableArray<VLCRendererItem *> *_items;
+    NSMutableArray<VLCRendererItem *> *_rendererItems;
 }
 @end
 
@@ -91,7 +91,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
             return nil;
         }
 
-        _items = [[NSMutableArray alloc] init];
+        _rendererItems = [[NSMutableArray alloc] init];
         libvlc_event_manager_t *p_em = libvlc_renderer_discoverer_event_manager(_rendererDiscoverer);
 
         if (p_em) {
@@ -156,7 +156,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
 - (VLCRendererItem *)discoveredItemsContainItem:(libvlc_renderer_item_t *)item
 {
-    for (VLCRendererItem *tmpItem in _items) {
+    for (VLCRendererItem *tmpItem in _rendererItems) {
         if (!strcmp(libvlc_renderer_item_name(tmpItem.rendererItem), libvlc_renderer_item_name(item))
             && !strcmp(libvlc_renderer_item_type(tmpItem.rendererItem), libvlc_renderer_item_type(item))) {
             return tmpItem;
@@ -167,7 +167,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
 - (NSArray<VLCRendererItem *> *)renderers
 {
-    return [_items copy];
+    return [_rendererItems copy];
 }
 
 #pragma mark - Handling libvlc event callbacks
@@ -179,7 +179,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
     if (!rendererItem) {
         rendererItem = [[VLCRendererItem alloc] initWithCItem:renderer_item];
-        [_items addObject:rendererItem];
+        [_rendererItems addObject:rendererItem];
         [_delegate rendererDiscovererItemAdded:self item:rendererItem];
     }
 }
@@ -190,7 +190,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
 
     if (rendererItem) {
-        [_items removeObject:rendererItem];
+        [_rendererItems removeObject:rendererItem];
         [_delegate rendererDiscovererItemDeleted:self item:rendererItem];
     }
 }
