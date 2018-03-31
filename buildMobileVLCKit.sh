@@ -178,8 +178,28 @@ info()
      echo "[${green}info${normal}] $1"
 }
 
+cleantheenvironment()
+{
+    export AS=""
+    export CCAS=""
+    export ASCPP=""
+    export CC=""
+    export CFLAGS=""
+    export CPPFLAGS=""
+    export CXX=""
+    export CXXFLAGS=""
+    export CXXCPPFLAGS=""
+    export OBJC=""
+    export OBJCFLAGS=""
+    export LD=""
+    export LDFLAGS=""
+    export STRIP=""
+}
+
 buildxcodeproj()
 {
+    cleantheenvironment
+
     local target="$2"
     local PLATFORM="$3"
 
@@ -214,6 +234,7 @@ buildxcodeproj()
     if [ "$SCARY" = "no" ]; then
         defs="$defs NOSCARYCODECS"
     fi
+
     xcodebuild -project "$1.xcodeproj" \
                -target "$target" \
                -sdk $PLATFORM$SDK \
@@ -319,7 +340,7 @@ buildLibVLC() {
     PREFIX="${VLCROOT}/install-${OSSTYLE}${PLATFORM}/${ACTUAL_ARCH}"
     TARGET="${ARCH}-apple-darwin14"
 
-    # clean the environment
+    # partially clean the environment
     export CFLAGS=""
     export CPPFLAGS=""
     export CXXFLAGS=""
@@ -724,6 +745,8 @@ buildLibVLC() {
 
 buildMobileKit() {
     PLATFORM="$1"
+
+    cleantheenvironment
 
     if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
         if [ "$TVOS" = "yes" ]; then
