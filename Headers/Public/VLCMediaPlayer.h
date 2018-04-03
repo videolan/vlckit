@@ -348,7 +348,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Return the current video track index
  *
- * \return current video track index, -1 if none or no active input
+ * \return current video track index, -1 if none or no media track
  *
  * Pass -1 to disable.
  */
@@ -440,7 +440,7 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
 
 /**
  * Return the current chapter index
- * \return current chapter index or -1 if there is no media
+ * \return current chapter index or -1 if there is no chapter
  */
 @property (readwrite) int currentChapterIndex;
 /**
@@ -545,7 +545,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 /**
  * Return the current audio track index
  *
- * \return current audio track index, -1 if none or no active input
+ * \return current audio track index, -1 if none or no media track
  *
  * Pass -1 to disable.
  */
