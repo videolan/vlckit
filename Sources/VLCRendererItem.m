@@ -21,7 +21,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCRendererItem+Init.h"
+#import "VLCRendererItem.h"
 
 @interface VLCRendererItem()
 {
@@ -40,9 +40,9 @@
 
 @end
 
-@implementation VLCRendererItem (Internal)
+@implementation VLCRendererItem (VLCRendererItemBridging)
 
-- (instancetype)initWithCItem:(libvlc_renderer_item_t *)item
+- (instancetype)initWithRendererItem:(libvlc_renderer_item_t *)item
 {
     self = [super init];
     if (self) {
@@ -67,7 +67,7 @@
     return self;
 }
 
-- (libvlc_renderer_item_t *)renderer_item
+- (void *)instance
 {
     return _item;
 }

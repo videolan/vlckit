@@ -24,7 +24,7 @@
 #import "VLCRendererDiscoverer.h"
 #import "VLCLibrary.h"
 #import "VLCEventManager.h"
-#import "VLCRendererItem+Init.h"
+#import "VLCLibVLCBridging.h"
 
 @interface VLCRendererDiscoverer()
 {
@@ -157,8 +157,8 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 - (VLCRendererItem *)discoveredItemsContainItem:(libvlc_renderer_item_t *)item
 {
     for (VLCRendererItem *rendererItem in _rendererItems) {
-        BOOL hasSameName = !strcmp(libvlc_renderer_item_name(rendererItem.renderer_item), libvlc_renderer_item_name(item));
-        BOOL hasSameType = !strcmp(libvlc_renderer_item_type(rendererItem.renderer_item), libvlc_renderer_item_type(item));
+        BOOL hasSameName = !strcmp(libvlc_renderer_item_name(rendererItem.instance), libvlc_renderer_item_name(item));
+        BOOL hasSameType = !strcmp(libvlc_renderer_item_type(rendererItem.instance), libvlc_renderer_item_type(item));
 
         if (hasSameName && hasSameType) {
             return rendererItem;
@@ -180,7 +180,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
 
     if (!rendererItem) {
-        rendererItem = [[VLCRendererItem alloc] initWithCItem:renderer_item];
+        rendererItem = [[VLCRendererItem alloc] initWithRendererItem:renderer_item];
         [_rendererItems addObject:rendererItem];
         [_delegate rendererDiscovererItemAdded:self item:rendererItem];
     }

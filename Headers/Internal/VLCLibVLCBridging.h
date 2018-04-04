@@ -27,6 +27,7 @@
 #import "VLCStreamOutput.h"
 #endif
 #import "VLCMediaPlayer.h"
+#import "VLCRendererItem.h"
 
 /**
  * Bridges functionality between libvlc and VLCMediaList implementation.
@@ -144,6 +145,27 @@
  * \return Newly created audio object using specified VLCMediaPlayer instance.
  */
 - (id)initWithMediaPlayer:(VLCMediaPlayer *)mediaPlayer;
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCRendererItem implementation.
+ */
+@interface VLCRendererItem (VLCRendererItemBridging)
+/**
+ * Initializer method to create an VLCRendererItem with an `libvlc_renderer_item_t *`.
+ *
+ * \param renderer item.
+ * \note This initializer is not meant to be used externally.
+ * \return An instance of `VLCRendererItem`, can be nil.
+ */
+- (instancetype)initWithRendererItem:(libvlc_renderer_item_t *)item;
+
+/**
+ * Returns a `libvlc_renderer_item_t *` renderer item.
+ * \return Renderer item.
+ */
+- (void *)instance;
+
 @end
 
 /**
