@@ -1289,7 +1289,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (BOOL)setRendererItem:(VLCRendererItem *)item
 {
-    return libvlc_media_player_set_renderer(_playerInstance, item.instance) == 0;
+    return libvlc_media_player_set_renderer(_playerInstance, item.libVLCRendererItem) == 0;
 }
 
 @end

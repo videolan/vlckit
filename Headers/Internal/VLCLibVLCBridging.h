@@ -164,7 +164,7 @@
  * Returns a `libvlc_renderer_item_t *` renderer item.
  * \return Renderer item.
  */
-- (void *)instance;
+- (void *)libVLCRendererItem;
 
 @end
 

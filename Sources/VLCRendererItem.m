@@ -67,7 +67,7 @@
     return self;
 }
 
-- (void *)instance
+- (void *)libVLCRendererItem
 {
     return _item;
 }

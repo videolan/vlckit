@@ -157,8 +157,8 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 - (VLCRendererItem *)discoveredItemsContainItem:(libvlc_renderer_item_t *)item
 {
     for (VLCRendererItem *rendererItem in _rendererItems) {
-        BOOL hasSameName = !strcmp(libvlc_renderer_item_name(rendererItem.instance), libvlc_renderer_item_name(item));
-        BOOL hasSameType = !strcmp(libvlc_renderer_item_type(rendererItem.instance), libvlc_renderer_item_type(item));
+        BOOL hasSameName = !strcmp(libvlc_renderer_item_name(rendererItem.libVLCRendererItem), libvlc_renderer_item_name(item));
+        BOOL hasSameType = !strcmp(libvlc_renderer_item_type(rendererItem.libVLCRendererItem), libvlc_renderer_item_type(item));
 
         if (hasSameName && hasSameType) {
             return rendererItem;
