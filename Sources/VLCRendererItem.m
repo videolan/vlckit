@@ -42,7 +42,7 @@
 
 @implementation VLCRendererItem (VLCRendererItemBridging)
 
-- (instancetype)initWithRendererItem:(libvlc_renderer_item_t *)item
+- (instancetype)initWithRendererItem:(void *)item
 {
     self = [super init];
     if (self) {

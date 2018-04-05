@@ -158,7 +158,7 @@
  * \note This initializer is not meant to be used externally.
  * \return An instance of `VLCRendererItem`, can be nil.
  */
-- (instancetype)initWithRendererItem:(libvlc_renderer_item_t *)item;
+- (instancetype)initWithRendererItem:(void *)item;
 
 /**
  * Returns a `libvlc_renderer_item_t *` renderer item.
