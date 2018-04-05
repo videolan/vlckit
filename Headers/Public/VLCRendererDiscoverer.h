@@ -24,16 +24,18 @@
 @class VLCRendererItem;
 @class VLCRendererDiscoverer;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Renderer Discoverer delegate protocol
  * Allows to be notified upon discovery/changes of an renderer item
  */
 @protocol VLCRendererDiscovererDelegate <NSObject>
 
-- (void)rendererDiscovererItemAdded:(VLCRendererDiscoverer * _Nonnull)rendererDiscoverer
-                               item:(VLCRendererItem * _Nonnull)item;
-- (void)rendererDiscovererItemDeleted:(VLCRendererDiscoverer * _Nonnull)rendererDiscoverer
-                               item:(VLCRendererItem * _Nonnull)item;
+- (void)rendererDiscovererItemAdded:(VLCRendererDiscoverer *)rendererDiscoverer
+                               item:(VLCRendererItem *)item;
+- (void)rendererDiscovererItemDeleted:(VLCRendererDiscoverer *)rendererDiscoverer
+                               item:(VLCRendererItem *)item;
 
 @end
 
@@ -45,12 +47,12 @@
 /**
  * Name of the renderer discoverer
  */
-@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly, copy) NSString *name;
 
 /**
  * Long name of the renderer discoverer
  */
-@property (nonatomic, readonly, copy) NSString * _Nonnull longName;
+@property (nonatomic, readonly, copy) NSString *longName;
 
 /**
  * Instanciates an object that holds information about a renderer discoverer
@@ -58,7 +60,7 @@
  * \param longName Long name of the renderer discoverer
  * \return A new `VLCRendererDiscovererDescription` object, only if there were no errors
  */
-- (instancetype _Nonnull)initWithName:(NSString * _Nonnull)name longName:(NSString *_Nonnull)longName;
+- (instancetype)initWithName:(NSString *)name longName:(NSString *)longName;
 
 @end
 
@@ -70,7 +72,12 @@
 /**
  * Name of the renderer discoverer
  */
-@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly, copy) NSString *name;
+
+/**
+ * Renderers of the discoverer
+ */
+@property (nonatomic, readonly, copy) NSArray<VLCRendererItem *> *renderers;
 
 /**
  * Receiver's delegate
@@ -84,7 +91,14 @@
  * \param name Name of the renderer discoverer
  * \return A new `VLCRendererDiscoverer` object, only if there were no errors
  */
-- (instancetype _Nullable)initWithName:(NSString * _Nonnull)name;
+- (instancetype _Nullable)initWithName:(NSString *)name;
+
+
+/**
+ * Returns discovered renderers
+ * \return discovered renderers
+ */
+- (NSArray<VLCRendererItem *> *)renderers;
 
 /**
  * Start the renderer discoverer
@@ -107,3 +121,5 @@
 + (NSArray<VLCRendererDiscovererDescription *> * _Nullable)list;
 
 @end
+
+NS_ASSUME_NONNULL_END
