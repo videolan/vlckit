@@ -754,16 +754,44 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * Updates viewpoint with given values.
- * \param yaw new yaw.
- * \param pitch new pitch.
- * \param roll new roll.
- * \param fov new field of view.
+ * \param view point yaw in degrees  ]-180;180]
+ * \param view point pitch in degrees  ]-90;90]
+ * \param view point roll in degrees ]-180;180]
+ * \param field of view in degrees ]0;180[ (default 80.)
  * \param absolute if true replace the old viewpoint with the new one. If
  * false, increase/decrease it.
  * \return NO in case of error, YES otherwise
  * \note This will create a viewpoint instance if not present.
  */
-- (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute;
+- (BOOL)updateViewpoint:(float)yaw pitch:(float)pitch roll:(float)roll fov:(float)fov absolute:(BOOL)absolute;
+
+/**
+* Get the view point yaw in degrees
+*
+* \return view point yaw in degrees  ]-180;180]
+*/
+@property (nonatomic) float yaw;
+
+/**
+ * Get the view point pitch in degrees
+ *
+ * \return view point pitch in degrees  ]-90;90]
+ */
+@property (nonatomic) float pitch;
+
+/**
+ * Get the view point roll in degrees
+ *
+ * \return view point roll in degrees ]-180;180]
+ */
+@property (nonatomic) float roll;
+
+/**
+ * Set/Get the adjust filter's gamma value
+ *
+ * \return field of view in degrees ]0;180[ (default 80.)
+ */
+@property (nonatomic) float fov;
 
 #pragma mark -
 #pragma mark playback information
