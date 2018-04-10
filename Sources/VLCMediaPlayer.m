@@ -1104,20 +1104,44 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     });
 }
 
-- (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute
+- (libvlc_video_viewpoint_t *)viewPoint
 {
     if (_viewpoint == NULL) {
         _viewpoint = libvlc_video_new_viewpoint();
         if (_viewpoint == NULL)
-            return NO;
+            return nil;
     }
+    return _viewpoint;
+}
 
-    _viewpoint->f_yaw = yaw;
-    _viewpoint->f_pitch = pitch;
-    _viewpoint->f_roll = roll;
-    _viewpoint->f_field_of_view = fov;
+- (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute
+{
+    [self viewPoint]->f_yaw = yaw;
+    [self viewPoint]->f_pitch = pitch;
+    [self viewPoint]->f_roll = roll;
+    [self viewPoint]->f_field_of_view = fov;
 
-    return libvlc_video_update_viewpoint(_playerInstance, _viewpoint, absolute) == 0 ? YES : NO;
+    return libvlc_video_update_viewpoint(_playerInstance, _viewpoint, absolute) == 0;
+}
+
+- (CGFloat)yaw
+{
+    return [self viewPoint]->f_yaw;
+}
+
+- (CGFloat)pitch
+{
+    return [self viewPoint]->f_pitch;
+}
+
+- (CGFloat)roll
+{
+    return [self viewPoint]->f_roll;
+}
+
+- (CGFloat)fov
+{
+    return [self viewPoint]->f_field_of_view;
 }
 
 - (void)gotoNextFrame

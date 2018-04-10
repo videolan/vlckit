@@ -765,6 +765,34 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  */
 - (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute;
 
+/**
+* Get the view point yaw in degrees
+*
+* \return view point yaw in degrees  ]-180;180]
+*/
+@property (nonatomic, assign, readonly) CGFloat yaw;
+
+/**
+ * Get the view point pitch in degrees
+ *
+ * \return view point pitch in degrees  ]-90;90]
+ */
+@property (nonatomic, assign, readonly) CGFloat pitch;
+
+/**
+ * Get the view point roll in degrees
+ *
+ * \return view point roll in degrees ]-180;180]
+ */
+@property (nonatomic, assign, readonly) CGFloat roll;
+
+/**
+ * Set/Get the adjust filter's gamma value
+ *
+ * \return field of view in degrees ]0;180[ (default 80.)
+ */
+@property (nonatomic, assign, readonly) CGFloat fov;
+
 #pragma mark -
 #pragma mark playback information
 /**
