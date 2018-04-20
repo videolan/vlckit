@@ -7,7 +7,7 @@ DEPLOY_MOBILEVLCKIT=no
 DEPLOY_TVVLCKIT=no
 TEST_MODE=no
 
-BUILD_MOBILEVLCKIT="./buildMobileVLCKit.sh -vf"
+BUILD_MOBILEVLCKIT="./compileAndBuildVLCKit.sh -vf"
 CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh"
 STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/unstable/"
 MOBILE_PODSPEC="MobileVLCKit-unstable.podspec"

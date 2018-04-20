@@ -1,6 +1,7 @@
 Version 3.0.3:
 --------------
 - Expose the existing snapshot API of the VLCMediaPlayer class to macOS
+- Rename buildMobileVLCKit to compileAndBuildVLCKit
 
 Version 3.0.2:
 --------------
