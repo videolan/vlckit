@@ -29,7 +29,7 @@ For detailed information on the development process, please read below and our w
 
 ### Build
 
-Run `buildMobileVLCKit.sh` with the `-a ${ARCH}` option
+Run `compileAndBuildVLCKit.sh` with the `-a ${ARCH}` option
 
 ### Build with your own VLC repository
 1. Put a vlc repository inside libvlc/vlc
@@ -42,7 +42,7 @@ Run `buildMobileVLCKit.sh` with the `-a ${ARCH}` option
     
     `git am ../../Resources/MobileVLCKit/patches/* `
 
-3. run `buildMobileVLCKit.sh` with the `-n` and the `-a ${ARCH}` option 
+3. run `compileAndBuildVLCKit.sh` with the `-n` and the `-a ${ARCH}` option
 
 ## Get in touch!
 

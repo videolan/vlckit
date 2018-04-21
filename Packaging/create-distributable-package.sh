@@ -117,18 +117,18 @@ spushd ${root}
 if [ "$MOBILE" = "no" ]; then
     if [ ! -e "build/Release/VLCKit.framework" ]; then
         info "VLCKit not found for distribution, creating... this will take long"
-        ./buildMobileVLCKit.sh -x
+        ./compileAndBuildVLCKit.sh -x
     fi
 else
     if [ "$TV" = "yes" ]; then
         if [ ! -e "build/TVVLCKit.framework" ]; then
             info "TVVLCKit not found for distribution, creating... this will take long"
-            ./buildMobileVLCKit.sh -f -t
+            ./compileAndBuildVLCKit.sh -f -t
         fi
     else
         if [ ! -e "build/MobileVLCKit.framework" ]; then
             info "MobileVLCKit not found for distribution, creating... this will take long"
-            ./buildMobileVLCKit.sh -f
+            ./compileAndBuildVLCKit.sh -f
         fi
     fi
 fi
