@@ -33,13 +33,13 @@ Run `compileAndBuildVLCKit.sh` with the `-a ${ARCH}` option
 
 ### Build with your own VLC repository
 1. Put a vlc repository inside libvlc/vlc
-     
+
     `mkdir libvlc && cd libvlc && ln -s ${MYVLCGIT}`
 
 2. Apply VLC patches needed for VLCKit
-     
+
     `cd vlc`
-    
+
     `git am ../../Resources/MobileVLCKit/patches/* `
 
 3. run `compileAndBuildVLCKit.sh` with the `-n` and the `-a ${ARCH}` option
