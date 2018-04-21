@@ -54,89 +54,6 @@ OPTIONS
 EOF
 }
 
-while getopts "hvwsfbdxntlk:a:" OPTION
-do
-     case $OPTION in
-         h)
-             usage
-             exit 1
-             ;;
-         v)
-             VERBOSE=yes
-             ;;
-         s)
-             BUILD_DEVICE=no
-             BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=no
-             ;;
-         f)
-             BUILD_DEVICE=yes
-             BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=yes
-             ;;
-         d)  CONFIGURATION="Debug"
-             DEBUG=yes
-             ;;
-         w)  SCARY="no"
-             ;;
-         n)
-             NONETWORK=yes
-             ;;
-         l)
-             SKIPLIBVLCCOMPILATION=yes
-             ;;
-         k)
-             SDK=$OPTARG
-             ;;
-         a)
-             BUILD_DEVICE=yes
-             BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=yes
-             FARCH=$OPTARG
-             ;;
-         b)
-             BITCODE=yes
-             ;;
-         t)
-             TVOS=yes
-             IOS=no
-             BITCODE=yes
-             SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
-             SDK_MIN=9.0
-             OSVERSIONMINCFLAG=mtvos-version-min
-             OSVERSIONMINLDFLAG=tvos_version_min
-             ;;
-         x)
-             MACOS=yes
-             IOS=no
-             BITCODE=no
-             SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
-             SDK_MIN=10.9
-             OSVERSIONMINCFLAG=mmacosx-version-min
-             OSVERSIONMINLDFLAG=macosx_version_min
-             BUILD_DEVICE=yes
-             FARCH=x86_64
-             BUILD_DYNAMIC_FRAMEWORK=yes
-             BUILD_STATIC_FRAMEWORK=no
-             ;;
-         ?)
-             usage
-             exit 1
-             ;;
-     esac
-done
-shift $(($OPTIND - 1))
-
-out="/dev/null"
-if [ "$VERBOSE" = "yes" ]; then
-   out="/dev/stdout"
-fi
-
-if [ "x$1" != "x" ]; then
-    usage
-    exit 1
-fi
-
 get_actual_arch() {
     if [ "$1" = "aarch64" ]; then
         echo "arm64"
@@ -245,65 +162,6 @@ buildxcodeproj()
                ${bitcodeflag} \
                > ${out}
 }
-
-# Get root dir
-spushd .
-ROOT_DIR=`pwd`
-spopd
-
-VLCROOT=${ROOT_DIR}/libvlc/vlc
-export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
-
-info "Preparing build dirs"
-
-mkdir -p libvlc
-
-spushd libvlc
-
-echo `pwd`
-
-if [ "$NONETWORK" != "yes" ]; then
-    if ! [ -e vlc ]; then
-        git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc
-        info "Applying patches to vlc.git"
-        cd vlc
-        git checkout -B localBranch ${TESTEDHASH}
-        git branch --set-upstream-to=origin/master localBranch
-        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
-        if [ $? -ne 0 ]; then
-            git am --abort
-            info "Applying the patches failed, aborting git-am"
-            exit 1
-        fi
-        cd ..
-    else
-        cd vlc
-        git reset --hard ${TESTEDHASH}
-        git pull --rebase
-        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
-        cd ..
-    fi
-fi
-
-spopd
-
-#
-# Build time
-#
-
-out="/dev/null"
-if [ "$VERBOSE" = "yes" ]; then
-   out="/dev/stdout"
-fi
-
-if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
-    info "Building tools"
-    spushd ${ROOT_DIR}/libvlc/vlc/extras/tools
-    ./bootstrap
-    make
-    make .gas
-    spopd #libvlc/vlc/extras/tools
-fi
 
 buildLibVLC() {
     ARCH="$1"
@@ -827,16 +685,6 @@ buildMobileKit() {
     fi
 }
 
-if [ "$BUILD_DEVICE" != "no" ]; then
-    buildMobileKit iphoneos
-fi
-if [ "$BUILD_SIMULATOR" != "no" ]; then
-    buildMobileKit iphonesimulator
-fi
-
-DEVICEARCHS=""
-SIMULATORARCHS=""
-
 doVLCLipo() {
     FILEPATH="$1"
     FILE="$2"
@@ -1097,6 +945,158 @@ build_universal_static_lib() {
 
     spopd # vlc
 }
+
+while getopts "hvwsfbdxntlk:a:" OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             exit 1
+             ;;
+         v)
+             VERBOSE=yes
+             ;;
+         s)
+             BUILD_DEVICE=no
+             BUILD_SIMULATOR=yes
+             BUILD_STATIC_FRAMEWORK=no
+             ;;
+         f)
+             BUILD_DEVICE=yes
+             BUILD_SIMULATOR=yes
+             BUILD_STATIC_FRAMEWORK=yes
+             ;;
+         d)  CONFIGURATION="Debug"
+             DEBUG=yes
+             ;;
+         w)  SCARY="no"
+             ;;
+         n)
+             NONETWORK=yes
+             ;;
+         l)
+             SKIPLIBVLCCOMPILATION=yes
+             ;;
+         k)
+             SDK=$OPTARG
+             ;;
+         a)
+             BUILD_DEVICE=yes
+             BUILD_SIMULATOR=yes
+             BUILD_STATIC_FRAMEWORK=yes
+             FARCH=$OPTARG
+             ;;
+         b)
+             BITCODE=yes
+             ;;
+         t)
+             TVOS=yes
+             IOS=no
+             BITCODE=yes
+             SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
+             SDK_MIN=9.0
+             OSVERSIONMINCFLAG=mtvos-version-min
+             OSVERSIONMINLDFLAG=tvos_version_min
+             ;;
+         x)
+             MACOS=yes
+             IOS=no
+             BITCODE=no
+             SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
+             SDK_MIN=10.9
+             OSVERSIONMINCFLAG=mmacosx-version-min
+             OSVERSIONMINLDFLAG=macosx_version_min
+             BUILD_DEVICE=yes
+             FARCH=x86_64
+             BUILD_DYNAMIC_FRAMEWORK=yes
+             BUILD_STATIC_FRAMEWORK=no
+             ;;
+         ?)
+             usage
+             exit 1
+             ;;
+     esac
+done
+shift $(($OPTIND - 1))
+
+out="/dev/null"
+if [ "$VERBOSE" = "yes" ]; then
+   out="/dev/stdout"
+fi
+
+if [ "x$1" != "x" ]; then
+    usage
+    exit 1
+fi
+
+# Get root dir
+spushd .
+ROOT_DIR=`pwd`
+spopd
+
+VLCROOT=${ROOT_DIR}/libvlc/vlc
+export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
+
+info "Preparing build dirs"
+
+mkdir -p libvlc
+
+spushd libvlc
+
+echo `pwd`
+
+if [ "$NONETWORK" != "yes" ]; then
+    if ! [ -e vlc ]; then
+        git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc
+        info "Applying patches to vlc.git"
+        cd vlc
+        git checkout -B localBranch ${TESTEDHASH}
+        git branch --set-upstream-to=origin/master localBranch
+        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+        if [ $? -ne 0 ]; then
+            git am --abort
+            info "Applying the patches failed, aborting git-am"
+            exit 1
+        fi
+        cd ..
+    else
+        cd vlc
+        git reset --hard ${TESTEDHASH}
+        git pull --rebase
+        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+        cd ..
+    fi
+fi
+
+spopd
+
+#
+# Build time
+#
+
+out="/dev/null"
+if [ "$VERBOSE" = "yes" ]; then
+   out="/dev/stdout"
+fi
+
+if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
+    info "Building tools"
+    spushd ${ROOT_DIR}/libvlc/vlc/extras/tools
+    ./bootstrap
+    make
+    make .gas
+    spopd #libvlc/vlc/extras/tools
+fi
+
+if [ "$BUILD_DEVICE" != "no" ]; then
+    buildMobileKit iphoneos
+fi
+if [ "$BUILD_SIMULATOR" != "no" ]; then
+    buildMobileKit iphonesimulator
+fi
+
+DEVICEARCHS=""
+SIMULATORARCHS=""
 
 if [ "$TVOS" = "yes" ]; then
     build_universal_static_lib "AppleTV"
