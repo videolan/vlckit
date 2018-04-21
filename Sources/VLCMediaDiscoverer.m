@@ -117,6 +117,8 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 {
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
+    _discoveredMedia = nil;
+
     if (_mdis) {
         if (libvlc_media_discoverer_is_running(_mdis))
             libvlc_media_discoverer_stop(_mdis);
