@@ -272,8 +272,12 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     if (!em)
         return;
 
-    libvlc_event_attach( em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
-    libvlc_event_attach( em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
+    /* We need the caller to wait until this block is done.
+     * The initialized object shall not be returned until the event attachments are done. */
+    dispatch_sync(_serialMediaObjectsQueue,^{
+        libvlc_event_attach( em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
+        libvlc_event_attach( em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
+    });
 }
 
 - (void)mediaListItemAdded:(NSArray *)arrayOfArgs
