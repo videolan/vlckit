@@ -745,7 +745,7 @@ build_universal_static_lib() {
     touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
     if [ "$OSSTYLE" != "MacOSX" ]; then
-        spushd libvlc/vlc
+        spushd ${VLCROOT}
         rm -rf install-$OSSTYLE
         mkdir install-$OSSTYLE
         mkdir install-$OSSTYLE/core
@@ -753,7 +753,7 @@ build_universal_static_lib() {
         mkdir install-$OSSTYLE/plugins
         spopd # vlc
     else
-        spushd libvlc/vlc/install-$OSSTYLE
+        spushd ${VLCROOT}/install-$OSSTYLE
         rm -rf core
         rm -rf contrib
         rm -rf plugins
@@ -776,8 +776,8 @@ build_universal_static_lib() {
     fi
     actual_arch=`get_actual_arch $arch`
 
-    if [ -d libvlc/vlc/install-"$OSSTYLE"OS ];then
-        spushd libvlc/vlc/install-"$OSSTYLE"OS
+    if [ -d ${VLCROOT}/install-"$OSSTYLE"OS ];then
+        spushd ${VLCROOT}/install-"$OSSTYLE"OS
         for i in `ls .`
         do
             local iarch="`get_arch $i`"
@@ -813,8 +813,8 @@ build_universal_static_lib() {
         spopd # vlc-install-"$OSSTYLE"OS
     fi
 
-    if [ -d libvlc/vlc/install-"$OSSTYLE"Simulator ];then
-        spushd libvlc/vlc/install-"$OSSTYLE"Simulator
+    if [ -d ${VLCROOT}/install-"$OSSTYLE"Simulator ];then
+        spushd ${VLCROOT}/install-"$OSSTYLE"Simulator
 
         if (is_simulator_arch $arch);then
             echo "SIMU OS: $arch"
@@ -836,8 +836,8 @@ build_universal_static_lib() {
     fi
 
     if [ "$OSSTYLE" = "MacOSX" ]; then
-        if [ -d libvlc/vlc/install-"$OSSTYLE" ];then
-            spushd libvlc/vlc/install-"$OSSTYLE"
+        if [ -d ${VLCROOT}/install-"$OSSTYLE" ];then
+            spushd ${VLCROOT}/install-"$OSSTYLE"
             echo `pwd`
             echo "macOS: $arch"
             spushd $arch/lib/vlc/plugins
@@ -851,7 +851,7 @@ build_universal_static_lib() {
         fi
     fi
 
-    spushd libvlc/vlc
+    spushd ${VLCROOT}
 
     # collect contrib libraries
     spushd contrib/$OSSTYLE-$arch-apple-darwin14-$arch/lib
@@ -908,7 +908,7 @@ build_universal_static_lib() {
     # add contrib libraries to LDFLAGS
     for file in $CONTRIBLIBS
     do
-        LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/contrib/$file "
+        LDFLAGS+="\$(PROJECT_DIR)/${VLCROOT}/install-"$OSSTYLE"/contrib/$file "
     done
 
     for file in $VLCMODULES
@@ -917,7 +917,7 @@ build_universal_static_lib() {
         entryname=$(get_symbol "$symbols" _)
         DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
         BUILTINS+=" $entryname,\n"
-        LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
+        LDFLAGS+="\$(PROJECT_DIR)/${VLCROOT}/install-"$OSSTYLE"/plugins/$file "
         info "...$entryname"
     done;
 
@@ -931,7 +931,7 @@ build_universal_static_lib() {
             entryname=$(get_symbol "$symbols" _)
             DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
             BUILTINS+=" $entryname,\n"
-            LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
+            LDFLAGS+="\$(PROJECT_DIR)/${VLCROOT}/install-"$OSSTYLE"/plugins/$file "
             info "...$entryname"
         done;
         BUILTINS+="#endif\n"
@@ -1081,11 +1081,11 @@ fi
 
 if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     info "Building tools"
-    spushd ${ROOT_DIR}/libvlc/vlc/extras/tools
+    spushd ${VLCROOT}/extras/tools
     ./bootstrap
     make
     make .gas
-    spopd #libvlc/vlc/extras/tools
+    spopd #${VLCROOT}/extras/tools
 fi
 
 if [ "$BUILD_DEVICE" != "no" ]; then
@@ -1116,12 +1116,12 @@ if [ "$TVOS" = "yes" ]; then
 
     lipo_libs=""
     platform=""
-    if [ -d libvlc/vlc/install-AppleTVOS ];then
+    if [ -d ${VLCROOT}/install-AppleTVOS ];then
         platform="appletvos"
         buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
     fi
-    if [ -d libvlc/vlc/install-AppleTVSimulator ];then
+    if [ -d ${VLCROOT}/install-AppleTVSimulator ];then
         platform="appletvsimulator"
         buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
