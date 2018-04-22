@@ -210,54 +210,41 @@ buildLibVLC() {
     export SDK_VERSION=$SDK_VERSION
     export VLCSDKROOT=$SDKROOT
 
-    CFLAGS="-isysroot ${SDKROOT} -arch ${ACTUAL_ARCH} ${OPTIM}"
     OBJCFLAGS="${OPTIM}"
+    CFLAGS="-isysroot ${SDKROOT} -arch ${ACTUAL_ARCH} ${OPTIM}"
+    EXTRA_CFLAGS="-arch ${ACTUAL_ARCH}"
+    LDFLAGS="-arch ${ACTUAL_ARCH}"
+    EXTRA_LDFLAGS="-arch ${ACTUAL_ARCH}"
+
+    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+    EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
 
     if [ "$PLATFORM" = "OS" ]; then
-    if [ "$ARCH" != "aarch64" ]; then
-    CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-    else
-    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-    fi
-    else
-    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+        if [ "$ARCH" != "aarch64" ]; then
+            CFLAGS+=" -mcpu=cortex-a8"
+            EXTRA_CFLAGS+=" -mcpu=cortex-a8"
+        fi
+    else # Simulator platform
+        LDFLAGS+=" -v"
     fi
 
     if [ "$BITCODE" = "yes" ]; then
-    CFLAGS+=" -fembed-bitcode"
+        CFLAGS+=" -fembed-bitcode"
     fi
 
     export CFLAGS="${CFLAGS}"
     export CXXFLAGS="${CFLAGS}"
     export CPPFLAGS="${CFLAGS}"
     export OBJCFLAGS="${OBJCFLAGS}"
+    export LDFLAGS="${LDFLAGS}"
 
     if [ "$PLATFORM" = "Simulator" ]; then
         # Use the new ABI on simulator, else we can't build
         export OBJCFLAGS="-fobjc-abi-version=2 -fobjc-legacy-dispatch ${OBJCFLAGS}"
     fi
 
-    export LDFLAGS="-arch ${ACTUAL_ARCH}"
-
-    if [ "$PLATFORM" = "OS" ]; then
-        EXTRA_CFLAGS="-arch ${ACTUAL_ARCH}"
-        EXTRA_LDFLAGS="-arch ${ACTUAL_ARCH}"
-        if [ "$ARCH" != "aarch64" ]; then
-            EXTRA_CFLAGS+=" -mcpu=cortex-a8"
-            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-        else
-            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-        fi
-    else
-        EXTRA_CFLAGS="-arch ${ARCH}"
-        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-        EXTRA_LDFLAGS=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-        export LDFLAGS="${LDFLAGS} -v -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-    fi
 
     spushd ${VLCROOT}/contrib
 
