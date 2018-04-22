@@ -92,7 +92,7 @@ info()
 {
      local green="\033[1;32m"
      local normal="\033[0m"
-     echo "[${green}info${normal}] $1"
+     echo -e "[${green}info${normal}] $1"
 }
 
 cleantheenvironment()
