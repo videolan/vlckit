@@ -228,6 +228,9 @@ buildLibVLC() {
         fi
     else # Simulator platform
         LDFLAGS+=" -v"
+
+        # Use the new ABI on simulator, else we can't build
+        OBJCFLAGS+=" -fobjc-abi-version=2 -fobjc-legacy-dispatch"
     fi
 
     if [ "$BITCODE" = "yes" ]; then
@@ -239,12 +242,6 @@ buildLibVLC() {
     export CPPFLAGS="${CFLAGS}"
     export OBJCFLAGS="${OBJCFLAGS}"
     export LDFLAGS="${LDFLAGS}"
-
-    if [ "$PLATFORM" = "Simulator" ]; then
-        # Use the new ABI on simulator, else we can't build
-        export OBJCFLAGS="-fobjc-abi-version=2 -fobjc-legacy-dispatch ${OBJCFLAGS}"
-    fi
-
 
     spushd ${VLCROOT}/contrib
 
