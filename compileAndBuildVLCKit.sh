@@ -51,6 +51,7 @@ OPTIONS
    -y       Build universal static libraries
    -b       Enable bitcode
    -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
+   -e       External VLC source path
 EOF
 }
 
@@ -946,7 +947,7 @@ build_universal_static_lib() {
     spopd # vlc
 }
 
-while getopts "hvwsfbdxntlk:a:" OPTION
+while getopts "hvwsfbdxntlk:a:e:" OPTION
 do
      case $OPTION in
          h)
@@ -1011,6 +1012,9 @@ do
              BUILD_DYNAMIC_FRAMEWORK=yes
              BUILD_STATIC_FRAMEWORK=no
              ;;
+         e)
+             VLCROOT=$OPTARG
+             ;;
          ?)
              usage
              exit 1
@@ -1034,41 +1038,42 @@ spushd .
 ROOT_DIR=`pwd`
 spopd
 
-VLCROOT=${ROOT_DIR}/libvlc/vlc
-export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
+if [ "$VLCROOT" = "" ]; then
+    VLCROOT=${ROOT_DIR}/libvlc/vlc
+    info "Preparing build dirs"
 
-info "Preparing build dirs"
+    mkdir -p libvlc
+    spushd libvlc
 
-mkdir -p libvlc
-
-spushd libvlc
-
-echo `pwd`
-
-if [ "$NONETWORK" != "yes" ]; then
-    if ! [ -e vlc ]; then
-        git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc
-        info "Applying patches to vlc.git"
-        cd vlc
-        git checkout -B localBranch ${TESTEDHASH}
-        git branch --set-upstream-to=origin/master localBranch
-        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
-        if [ $? -ne 0 ]; then
-            git am --abort
-            info "Applying the patches failed, aborting git-am"
-            exit 1
+    if [ "$NONETWORK" != "yes" ]; then
+        if ! [ -e vlc ]; then
+            git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc
+            info "Applying patches to vlc.git"
+            cd vlc
+            git checkout -B localBranch ${TESTEDHASH}
+            git branch --set-upstream-to=origin/master localBranch
+            git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+            if [ $? -ne 0 ]; then
+                git am --abort
+                info "Applying the patches failed, aborting git-am"
+                exit 1
+            fi
+            cd ..
+        else
+            cd vlc
+            git reset --hard ${TESTEDHASH}
+            git pull --rebase
+            git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+            cd ..
         fi
-        cd ..
-    else
-        cd vlc
-        git reset --hard ${TESTEDHASH}
-        git pull --rebase
-        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
-        cd ..
     fi
+
+    spopd
 fi
 
-spopd
+export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
+
+echo `pwd`
 
 #
 # Build time
