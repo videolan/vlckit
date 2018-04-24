@@ -607,6 +607,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 /**
  * Toggle equalizer state
  * param: bool value to enable/disable the equalizer
+ * \note this can fail, if failed the value will not be changed
  * \return current state */
 @property (readwrite) BOOL equalizerEnabled;
 

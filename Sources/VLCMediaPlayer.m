@@ -973,10 +973,14 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
 - (void)setEqualizerEnabled:(BOOL)equalizerEnabled
 {
-    _equalizerEnabled = equalizerEnabled;
     if (!_equalizerInstance) {
-        _equalizerInstance = libvlc_audio_equalizer_new();
+        if (!(_equalizerInstance = libvlc_audio_equalizer_new())) {
+            NSAssert(_instance, @"equalizer failed to initialize");
+            return;
+        }
     }
+
+    _equalizerEnabled = equalizerEnabled;
     libvlc_media_player_set_equalizer(_playerInstance,
                                       equalizerEnabled ? _equalizerInstance : NULL);
 }
