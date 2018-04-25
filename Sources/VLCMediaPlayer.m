@@ -1108,40 +1108,54 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     if (_viewpoint == NULL) {
         _viewpoint = libvlc_video_new_viewpoint();
-        if (_viewpoint == NULL)
-            return nil;
+        NSAssert(_viewpoint != nil, @"Viewpoint wasn't allocated");
     }
     return _viewpoint;
 }
 
-- (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute
+- (BOOL)updateViewpoint:(float)yaw pitch:(float)pitch roll:(float)roll fov:(float)fov absolute:(BOOL)absolute
 {
-    [self viewPoint]->f_yaw = yaw;
-    [self viewPoint]->f_pitch = pitch;
-    [self viewPoint]->f_roll = roll;
-    [self viewPoint]->f_field_of_view = fov;
+    if ([self viewPoint]) {
+        [self viewPoint]->f_yaw = yaw;
+        [self viewPoint]->f_pitch = pitch;
+        [self viewPoint]->f_roll = roll;
+        [self viewPoint]->f_field_of_view = fov;
 
-    return libvlc_video_update_viewpoint(_playerInstance, _viewpoint, absolute) == 0;
+        return libvlc_video_update_viewpoint(_playerInstance, _viewpoint, absolute) == 0;
+    }
+    return NO;
 }
 
-- (CGFloat)yaw
+- (float)yaw
 {
-    return [self viewPoint]->f_yaw;
+    if ([self viewPoint]) {
+        return [self viewPoint]->f_yaw;
+    }
+    return 0;
 }
 
-- (CGFloat)pitch
+- (float)pitch
 {
-    return [self viewPoint]->f_pitch;
+    if ([self viewPoint]) {
+        return [self viewPoint]->f_pitch;
+    }
+    return 0;
 }
 
-- (CGFloat)roll
+- (float)roll
 {
-    return [self viewPoint]->f_roll;
+    if ([self viewPoint]) {
+        return [self viewPoint]->f_roll;
+    }
+    return 0;
 }
 
-- (CGFloat)fov
+- (float)fov
 {
-    return [self viewPoint]->f_field_of_view;
+    if ([self viewPoint]) {
+        return [self viewPoint]->f_field_of_view;
+    }
+    return 0;
 }
 
 - (void)gotoNextFrame

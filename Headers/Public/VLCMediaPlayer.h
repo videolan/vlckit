@@ -763,35 +763,35 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \return NO in case of error, YES otherwise
  * \note This will create a viewpoint instance if not present.
  */
-- (BOOL)updateViewpoint:(CGFloat)yaw pitch:(CGFloat)pitch roll:(CGFloat)roll fov:(CGFloat)fov absolute:(BOOL)absolute;
+- (BOOL)updateViewpoint:(float)yaw pitch:(float)pitch roll:(float)roll fov:(float)fov absolute:(BOOL)absolute;
 
 /**
 * Get the view point yaw in degrees
 *
 * \return view point yaw in degrees  ]-180;180]
 */
-@property (nonatomic, assign, readonly) CGFloat yaw;
+@property (nonatomic) float yaw;
 
 /**
  * Get the view point pitch in degrees
  *
  * \return view point pitch in degrees  ]-90;90]
  */
-@property (nonatomic, assign, readonly) CGFloat pitch;
+@property (nonatomic) float pitch;
 
 /**
  * Get the view point roll in degrees
  *
  * \return view point roll in degrees ]-180;180]
  */
-@property (nonatomic, assign, readonly) CGFloat roll;
+@property (nonatomic) float roll;
 
 /**
  * Set/Get the adjust filter's gamma value
  *
  * \return field of view in degrees ]0;180[ (default 80.)
  */
-@property (nonatomic, assign, readonly) CGFloat fov;
+@property (nonatomic) float fov;
 
 #pragma mark -
 #pragma mark playback information
