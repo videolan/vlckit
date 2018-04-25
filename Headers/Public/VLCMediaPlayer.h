@@ -754,10 +754,10 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * Updates viewpoint with given values.
- * \param yaw new yaw.            view point yaw in degrees  ]-180;180]
- * \param pitch new pitch.        view point pitch in degrees  ]-90;90]
- * \param roll new roll.          view point roll in degrees ]-180;180]
- * \param fov new field of view.  field of view in degrees ]0;180[ (default 80.)
+ * \param view point yaw in degrees  ]-180;180]
+ * \param view point pitch in degrees  ]-90;90]
+ * \param view point roll in degrees ]-180;180]
+ * \param field of view in degrees ]0;180[ (default 80.)
  * \param absolute if true replace the old viewpoint with the new one. If
  * false, increase/decrease it.
  * \return NO in case of error, YES otherwise
