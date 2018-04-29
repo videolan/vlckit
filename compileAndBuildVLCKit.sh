@@ -941,8 +941,8 @@ build_universal_static_lib() {
 
     BUILTINS="$BUILTINS NULL\n};\n"
 
-    echo "$DEFINITIONS\n$BUILTINS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    echo "VLC_PLUGINS_LDFLAGS=$LDFLAGS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
+    echo "$DEFINITIONS\n$BUILTINS" >> $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    echo "VLC_PLUGINS_LDFLAGS=$LDFLAGS" >> $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
     spopd # vlc
 }
