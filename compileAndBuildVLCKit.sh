@@ -909,7 +909,7 @@ build_universal_static_lib() {
     # add contrib libraries to LDFLAGS
     for file in $CONTRIBLIBS
     do
-        LDFLAGS+="\$(PROJECT_DIR)/${VLCROOT}/install-"$OSSTYLE"/contrib/$file "
+        LDFLAGS+="${VLCROOT}/install-$OSSTYLE/contrib/$file "
     done
 
     for file in $VLCMODULES
@@ -918,7 +918,7 @@ build_universal_static_lib() {
         entryname=$(get_symbol "$symbols" _)
         DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
         BUILTINS+=" $entryname,\n"
-        LDFLAGS+="\$(PROJECT_DIR)/${VLCROOT}/install-"$OSSTYLE"/plugins/$file "
+        LDFLAGS+="${VLCROOT}/install-$OSSTYLE/plugins/$file "
         info "...$entryname"
     done;
 
@@ -932,7 +932,7 @@ build_universal_static_lib() {
             entryname=$(get_symbol "$symbols" _)
             DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
             BUILTINS+=" $entryname,\n"
-            LDFLAGS+="\$(PROJECT_DIR)/${VLCROOT}/install-"$OSSTYLE"/plugins/$file "
+            LDFLAGS+="${VLCROOT}/install-$OSSTYLE/plugins/$file "
             info "...$entryname"
         done;
         BUILTINS+="#endif\n"
