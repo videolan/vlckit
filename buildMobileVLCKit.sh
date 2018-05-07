@@ -480,7 +480,7 @@ buildLibVLC() {
     export USE_FFMPEG=1
     ../bootstrap ${BUILD} --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
         --enable-ad-clauses \
-        --disable-disc --disable-sout \
+        --disable-disc \
         --disable-sdl \
         --disable-SDL_image \
         --disable-iconv \
@@ -513,7 +513,6 @@ buildLibVLC() {
         --disable-gnutls \
         --disable-lua \
         --disable-luac \
-        --disable-protobuf \
         --disable-aribb24 \
         --disable-aribb25 \
         --enable-vpx \
@@ -704,10 +703,8 @@ buildLibVLC() {
     demuxdump
     fingerprinter
     output_udp
-    output_http
     output_livehttp
     libmux
-    stream_out
     "
 
     if [ "$SCARY" = "no" ]; then
