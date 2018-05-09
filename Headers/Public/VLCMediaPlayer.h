@@ -76,6 +76,16 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackNavigationAction)
 };
 
 /**
+ * VLCMediaPlaybackNavigationAction describes actions which can be performed to navigate an interactive title
+ */
+typedef NS_ENUM(NSInteger, VLCDeinterlace)
+{
+    VLCDeinterlaceAuto = -1,
+    VLCDeinterlaceOn = 1,
+    VLCDeinterlaceOff = 0
+};
+
+/**
  * Returns the name of the player state as a string.
  * \param state The player state.
  * \return A string containing the name of state. If state is not a valid state, returns nil.
@@ -245,6 +255,15 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \param name of deinterlace filter to use (availability depends on underlying VLC version), NULL to disable.
  */
 - (void)setDeinterlaceFilter: (NSString *)name;
+
+/**
+ * Enable or disable deinterlace and specify which filter to use
+ *
+ *
+ * \param VLCDeinterlace - enable, disable or auto
+ * \param name of deinterlace filter to use (availability depends on underlying VLC version).
+ */
+- (void)setDeinterlace:(VLCDeinterlace)deinterlace withFilter:(NSString *)name;
 
 /**
  * Enable or disable adjust video filter (contrast, brightness, hue, saturation, gamma)
