@@ -1,5 +1,6 @@
-Version 3.0.3:
+Version 3.1.0:
 --------------
+- Add API to enable or disable deinterlace and specify a filter
 - Expose the existing snapshot API of the VLCMediaPlayer class to macOS
 - Expose yaw, pitch, roll and fov for viewpoint
 - Include protobuf, sout, output_http and stream_out modules for Chromecast
