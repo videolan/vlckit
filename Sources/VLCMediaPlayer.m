@@ -573,9 +573,14 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 - (void)setDeinterlaceFilter:(NSString *)name
 {
     if (!name || name.length < 1)
-        libvlc_video_set_deinterlace(_playerInstance, NULL);
+        libvlc_video_set_deinterlace(_playerInstance, VLCDeinterlaceOff, NULL);
     else
-        libvlc_video_set_deinterlace(_playerInstance, [name UTF8String]);
+        libvlc_video_set_deinterlace(_playerInstance, VLCDeinterlaceOn, [name UTF8String]);
+}
+
+- (void)setDeinterlace:(VLCDeinterlace)deinterlace withFilter:(NSString *)name
+{
+    libvlc_video_set_deinterlace(_playerInstance, deinterlace, [name UTF8String]);
 }
 
 - (BOOL)adjustFilterEnabled

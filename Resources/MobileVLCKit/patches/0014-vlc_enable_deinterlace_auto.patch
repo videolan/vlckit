@@ -1,0 +1,118 @@
+From 4ae5821be54655e3a029ef1b5bc0e3bc03085ee6 Mon Sep 17 00:00:00 2001
+From: Luis Fernandes <zipleen@gmail.com>
+Date: Mon, 30 Apr 2018 14:33:08 +0100
+Subject: [PATCH 1/2] add auto deinterlacer-mode which is also valid
+
+---
+ lib/video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/lib/video.c b/lib/video.c
+index 035cc0ebf1..a3e5b248e9 100644
+--- a/lib/video.c
++++ b/lib/video.c
+@@ -675,7 +675,8 @@ void libvlc_video_set_deinterlace( libvlc_media_player_t *p_mi,
+      && strcmp (psz_mode, "discard")  && strcmp (psz_mode, "linear")
+      && strcmp (psz_mode, "mean")     && strcmp (psz_mode, "x")
+      && strcmp (psz_mode, "yadif")    && strcmp (psz_mode, "yadif2x")
+-     && strcmp (psz_mode, "phosphor") && strcmp (psz_mode, "ivtc"))
++     && strcmp (psz_mode, "phosphor") && strcmp (psz_mode, "ivtc")
++     && strcmp (psz_mode, "auto"))
+         return;
+
+     if (*psz_mode)
+--
+2.15.1 (Apple Git-101)
+
+
+From bc236ea6a0c7c057883f2251d331cecdd40d6ec7 Mon Sep 17 00:00:00 2001
+From: Luis Fernandes <zipleen@gmail.com>
+Date: Wed, 9 May 2018 10:44:43 +0100
+Subject: [PATCH 2/2] Users will be able to change the deinterlace mode without
+ forcing it.
+
+---
+ include/vlc/libvlc_media_player.h |  5 ++++-
+ lib/video.c                       | 29 ++++++++++++-----------------
+ 2 files changed, 16 insertions(+), 18 deletions(-)
+
+diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
+index 20b220448b..cbb5ec251a 100644
+--- a/include/vlc/libvlc_media_player.h
++++ b/include/vlc/libvlc_media_player.h
+@@ -1419,9 +1419,12 @@ int libvlc_video_take_snapshot( libvlc_media_player_t *p_mi, unsigned num,
+  * Enable or disable deinterlace filter
+  *
+  * \param p_mi libvlc media player
+- * \param psz_mode type of deinterlace filter, NULL to disable
++ * \param deinterlace deinterlace mode -1:auto (default), 0: disabled, 1: enabled
++ * \param psz_mode type of deinterlace filter, NULL for current/default filter
++ * \version LibVLC 4.0.0 and later
+  */
+ LIBVLC_API void libvlc_video_set_deinterlace( libvlc_media_player_t *p_mi,
++                                                  int deinterlace,
+                                                   const char *psz_mode );
+
+ /**
+diff --git a/lib/video.c b/lib/video.c
+index a3e5b248e9..9bc0f634f5 100644
+--- a/lib/video.c
++++ b/lib/video.c
+@@ -663,14 +663,15 @@ end:
+ }
+
+ /******************************************************************************
+- * libvlc_video_set_deinterlace : enable deinterlace
++ * libvlc_video_set_deinterlace : enable/disable/auto deinterlace and filter
+  *****************************************************************************/
+-void libvlc_video_set_deinterlace( libvlc_media_player_t *p_mi,
++void libvlc_video_set_deinterlace( libvlc_media_player_t *p_mi, int deinterlace,
+                                    const char *psz_mode )
+ {
+-    if (psz_mode == NULL)
+-        psz_mode = "";
+-    if (*psz_mode
++    if (deinterlace != 0 && deinterlace != 1)
++        deinterlace = -1;
++
++    if (psz_mode
+      && strcmp (psz_mode, "blend")    && strcmp (psz_mode, "bob")
+      && strcmp (psz_mode, "discard")  && strcmp (psz_mode, "linear")
+      && strcmp (psz_mode, "mean")     && strcmp (psz_mode, "x")
+@@ -679,13 +680,10 @@ void libvlc_video_set_deinterlace( libvlc_media_player_t *p_mi,
+      && strcmp (psz_mode, "auto"))
+         return;
+
+-    if (*psz_mode)
+-    {
++    if (psz_mode && deinterlace != 0)
+         var_SetString (p_mi, "deinterlace-mode", psz_mode);
+-        var_SetInteger (p_mi, "deinterlace", 1);
+-    }
+-    else
+-        var_SetInteger (p_mi, "deinterlace", 0);
++
++    var_SetInteger (p_mi, "deinterlace", deinterlace);
+
+     size_t n;
+     vout_thread_t **pp_vouts = GetVouts (p_mi, &n);
+@@ -693,13 +691,10 @@ void libvlc_video_set_deinterlace( libvlc_media_player_t *p_mi,
+     {
+         vout_thread_t *p_vout = pp_vouts[i];
+
+-        if (*psz_mode)
+-        {
++        if (psz_mode && deinterlace != 0)
+             var_SetString (p_vout, "deinterlace-mode", psz_mode);
+-            var_SetInteger (p_vout, "deinterlace", 1);
+-        }
+-        else
+-            var_SetInteger (p_vout, "deinterlace", 0);
++
++        var_SetInteger (p_vout, "deinterlace", deinterlace);
+         vlc_object_release (p_vout);
+     }
+     free (pp_vouts);
+--
+2.15.1 (Apple Git-101)
+
