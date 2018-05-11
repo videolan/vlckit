@@ -1,0 +1,383 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F05B2FB773791BF55D81248F /* Pods_SimplePlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05BC1021135D0C7F6635605 /* Pods_SimplePlayback.framework */; };
+		FFF926F820A58744008E37FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF926F720A58744008E37FD /* AppDelegate.swift */; };
+		FFF926FA20A58744008E37FD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFF926F920A58744008E37FD /* ViewController.swift */; };
+		FFF926FD20A58744008E37FD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FFF926FB20A58744008E37FD /* Main.storyboard */; };
+		FFF926FF20A58745008E37FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFF926FE20A58745008E37FD /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		305B6354D91459F44B66EE30 /* Pods-SimplePlayback.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplePlayback.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimplePlayback/Pods-SimplePlayback.debug.xcconfig"; sourceTree = "<group>"; };
+		4C9617C744856EBCE4881321 /* Pods-SimplePlayback.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimplePlayback.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimplePlayback/Pods-SimplePlayback.release.xcconfig"; sourceTree = "<group>"; };
+		B05BC1021135D0C7F6635605 /* Pods_SimplePlayback.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimplePlayback.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF3E331D20A5885400EAE363 /* SimplePlayback-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimplePlayback-Bridging-Header.h"; sourceTree = "<group>"; };
+		FFA0D52320A59E1D007AE619 /* libTVVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libTVVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFA0D52520A59F0F007AE619 /* DynamicTVVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = DynamicTVVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF926F420A58744008E37FD /* SimplePlayback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplePlayback.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFF926F720A58744008E37FD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FFF926F920A58744008E37FD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FFF926FC20A58744008E37FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FFF926FE20A58745008E37FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FFF9270020A58745008E37FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FFF926F120A58744008E37FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F05B2FB773791BF55D81248F /* Pods_SimplePlayback.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04AE6ADEEE24C899927563A6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				305B6354D91459F44B66EE30 /* Pods-SimplePlayback.debug.xcconfig */,
+				4C9617C744856EBCE4881321 /* Pods-SimplePlayback.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FFA0D52220A59E1D007AE619 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FFA0D52520A59F0F007AE619 /* DynamicTVVLCKit.framework */,
+				FFA0D52320A59E1D007AE619 /* libTVVLCKit.a */,
+				B05BC1021135D0C7F6635605 /* Pods_SimplePlayback.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFF926EB20A58744008E37FD = {
+			isa = PBXGroup;
+			children = (
+				FFF926F620A58744008E37FD /* SimplePlayback */,
+				FFF926F520A58744008E37FD /* Products */,
+				FFA0D52220A59E1D007AE619 /* Frameworks */,
+				04AE6ADEEE24C899927563A6 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		FFF926F520A58744008E37FD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FFF926F420A58744008E37FD /* SimplePlayback.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FFF926F620A58744008E37FD /* SimplePlayback */ = {
+			isa = PBXGroup;
+			children = (
+				FFF926F720A58744008E37FD /* AppDelegate.swift */,
+				FFF926F920A58744008E37FD /* ViewController.swift */,
+				FFF926FB20A58744008E37FD /* Main.storyboard */,
+				FFF926FE20A58745008E37FD /* Assets.xcassets */,
+				FFF9270020A58745008E37FD /* Info.plist */,
+				FF3E331D20A5885400EAE363 /* SimplePlayback-Bridging-Header.h */,
+			);
+			path = SimplePlayback;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FFF926F320A58744008E37FD /* SimplePlayback */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FFF9270320A58745008E37FD /* Build configuration list for PBXNativeTarget "SimplePlayback" */;
+			buildPhases = (
+				6C19EE7D99BBECF0C3B8E27E /* [CP] Check Pods Manifest.lock */,
+				FFF926F020A58744008E37FD /* Sources */,
+				FFF926F120A58744008E37FD /* Frameworks */,
+				FFF926F220A58744008E37FD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimplePlayback;
+			productName = SimplePlayback;
+			productReference = FFF926F420A58744008E37FD /* SimplePlayback.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FFF926EC20A58744008E37FD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = VideoLAN;
+				TargetAttributes = {
+					FFF926F320A58744008E37FD = {
+						CreatedOnToolsVersion = 9.3;
+					};
+				};
+			};
+			buildConfigurationList = FFF926EF20A58744008E37FD /* Build configuration list for PBXProject "SimplePlayback" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FFF926EB20A58744008E37FD;
+			productRefGroup = FFF926F520A58744008E37FD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FFF926F320A58744008E37FD /* SimplePlayback */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FFF926F220A58744008E37FD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFF926FF20A58745008E37FD /* Assets.xcassets in Resources */,
+				FFF926FD20A58744008E37FD /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6C19EE7D99BBECF0C3B8E27E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SimplePlayback-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FFF926F020A58744008E37FD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFF926FA20A58744008E37FD /* ViewController.swift in Sources */,
+				FFF926F820A58744008E37FD /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FFF926FB20A58744008E37FD /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FFF926FC20A58744008E37FD /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FFF9270120A58745008E37FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = appletvos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 11.3;
+			};
+			name = Debug;
+		};
+		FFF9270220A58745008E37FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = appletvos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TVOS_DEPLOYMENT_TARGET = 11.3;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FFF9270420A58745008E37FD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 305B6354D91459F44B66EE30 /* Pods-SimplePlayback.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SimplePlayback/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.SimplePlayback;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimplePlayback/SimplePlayback-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Debug;
+		};
+		FFF9270520A58745008E37FD /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C9617C744856EBCE4881321 /* Pods-SimplePlayback.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SimplePlayback/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.SimplePlayback;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SimplePlayback/SimplePlayback-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 11.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FFF926EF20A58744008E37FD /* Build configuration list for PBXProject "SimplePlayback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFF9270120A58745008E37FD /* Debug */,
+				FFF9270220A58745008E37FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FFF9270320A58745008E37FD /* Build configuration list for PBXNativeTarget "SimplePlayback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FFF9270420A58745008E37FD /* Debug */,
+				FFF9270520A58745008E37FD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FFF926EC20A58744008E37FD /* Project object */;
+}
