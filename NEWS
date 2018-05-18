@@ -5,6 +5,7 @@ Version 3.1.0:
 - Expose yaw, pitch, roll and fov for viewpoint
 - Include protobuf, sout, output_http and stream_out modules for Chromecast
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
+- Use NSDateComponents API for VLCTime.verboseStringValue
 
 Version 3.0.2:
 --------------
