@@ -114,21 +114,15 @@
     long mins = (long)((positiveDuration / 60) % 60);
     long seconds = (long)(positiveDuration % 60);
     BOOL remaining = duration < 0;
-    NSString *format;
-    if (hours > 0) {
-        format = remaining ? NSLocalizedString(@"%ld hours %ld minutes remaining", nil) : NSLocalizedString(@"%ld hours %ld minutes", nil);
-        return [NSString stringWithFormat:format, hours, mins, remaining];
-    }
-    if (mins > 5) {
-        format = remaining ? NSLocalizedString(@"%ld minutes remaining", nil) : NSLocalizedString(@"%ld minutes", nil);
-        return [NSString stringWithFormat:format, mins, remaining];
-    }
-    if (mins > 0) {
-        format = remaining ? NSLocalizedString(@"%ld minutes %ld seconds remaining", nil) : NSLocalizedString(@"%ld minutes %ld seconds", nil);
-        return [NSString stringWithFormat:format, mins, seconds, remaining];
-    }
-    format = remaining ? NSLocalizedString(@"%ld seconds remaining", nil) : NSLocalizedString(@"%ld seconds", nil);
-    return [NSString stringWithFormat:format, seconds, remaining];
+   
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    [components setHour:hours];
+    [components setMinute:mins];
+    [components setSecond:seconds];
+
+    NSString *verboseString = [NSDateComponentsFormatter localizedStringFromDateComponents:components unitsStyle:NSDateComponentsFormatterUnitsStyleFull];
+    verboseString = remaining ? [NSString stringWithFormat:@"%@ remaining", verboseString] : verboseString;
+    return [verboseString stringByReplacingOccurrencesOfString:@"," withString:@""];
 }
 
 - (NSString *)minuteStringValue

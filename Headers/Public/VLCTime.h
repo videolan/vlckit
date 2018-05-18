@@ -79,7 +79,7 @@
  */
 @property (readonly) NSString * stringValue;
 /**
- * the current time value as verbose string value localized for the current environment
+ * the current time value as verbose localized string by spelling out the units of time, but not the quantities
  * \return the NSString object
  */
 @property (readonly) NSString * verboseStringValue;
