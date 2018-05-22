@@ -180,6 +180,7 @@
 		8D826AE2203F3CC500536EF7 /* VLCRendererItem.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		CA0301D020ADFD2500452BB8 /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libMobileVLCKit.a */; };
+		CA8A2F5620B44BD600F5D3EA /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA8A2F5520B44BD600F5D3EA /* VLCTimeTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -394,6 +395,7 @@
 		CA0301CB20ADFD2500452BB8 /* MobileVLCKit-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MobileVLCKit-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA0301CF20ADFD2500452BB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA0301D620ADFEA100452BB8 /* MobileVLCKit-iOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MobileVLCKit-iOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		CA8A2F5520B44BD600F5D3EA /* VLCTimeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VLCTimeTest.swift; path = ../Sources/VLCTimeTest.swift; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libMobileVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -706,6 +708,7 @@
 			children = (
 				CA0301CF20ADFD2500452BB8 /* Info.plist */,
 				CA0301D620ADFEA100452BB8 /* MobileVLCKit-iOSTests-Bridging-Header.h */,
+				CA8A2F5520B44BD600F5D3EA /* VLCTimeTest.swift */,
 			);
 			name = "MobileVLCKit-iOSTests";
 			path = "Tests/MobileVLCKit-iOSTests";
@@ -1036,6 +1039,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA8A2F5620B44BD600F5D3EA /* VLCTimeTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
