@@ -1,13 +1,22 @@
-!Makefile
+# Xcode
 *.mode*
 *.pbxuser
 xcuserdata
+*.xccheckout
+
+# macOS
+.DS_Store
+
+# Cocoapods
+Pods
+
+# Others
+!Makefile
 project.xcworkspace
 MobileVLCKit/vlc-plugins-AppleTV.h
 MobileVLCKit/vlc-plugins-AppleTV.xcconfig
 MobileVLCKit/vlc-plugins-iPhone.h
 MobileVLCKit/vlc-plugins-iPhone.xcconfig
-.DS_Store
 build
 /vlc-unstable
 DerivedData
