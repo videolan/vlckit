@@ -5,6 +5,7 @@ Version 3.1.0:
 - Expose yaw, pitch, roll and fov for viewpoint
 - Include protobuf, sout, output_http and stream_out modules for Chromecast
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
+- VLCTime.verboseStringValue now returns a localized string by spelling out the units of time, but not the quantities. Given the quantity of 1 hour, 30 minutes, and 17 seconds, the function returns the string "1 hour 30 minutes 17 seconds" in the U.S. English locale
 
 Version 3.0.2:
 --------------
