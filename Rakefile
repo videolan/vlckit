@@ -24,7 +24,7 @@
 SDK_SIM = 'iphonesimulator11.3'
 SDK_SIM_DEST = "'platform=iOS Simulator,name=iPhone 7,OS=11.3'"
 
-SCHEME_IOS = 'MobileVLCKit-iOSTests'
+SCHEME_IOS = 'MobileVLCKitTests'
 PROJECT_IOS = 'MobileVLCKit.xcodeproj'
 
 VLC_FLAGS_IOS = '-dva x86_64'

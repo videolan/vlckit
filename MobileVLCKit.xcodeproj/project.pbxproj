@@ -392,10 +392,10 @@
 		8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VLCRendererItem.m; path = Sources/VLCRendererItem.m; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* MobilePrefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobilePrefix.pch; path = Headers/PCH/MobilePrefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		CA0301CB20ADFD2500452BB8 /* MobileVLCKit-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MobileVLCKit-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA0301CB20ADFD2500452BB8 /* MobileVLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileVLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA0301CF20ADFD2500452BB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA0301D620ADFEA100452BB8 /* MobileVLCKit-iOSTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MobileVLCKit-iOSTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		CA8A2F5520B44BD600F5D3EA /* VLCTimeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VLCTimeTest.swift; path = ../Sources/VLCTimeTest.swift; sourceTree = "<group>"; };
+		CA978D1E20B89F4B00F7E768 /* MobileVLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MobileVLCKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libMobileVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -490,7 +490,7 @@
 				7D1329591BA304D900BE647E /* libTVVLCKit.a */,
 				7DB6837F1C995D39000C70BE /* DynamicTVVLCKit.framework */,
 				7DB683C61C995E9A000C70BE /* libStaticTVLibvlc.a */,
-				CA0301CB20ADFD2500452BB8 /* MobileVLCKit-iOSTests.xctest */,
+				CA0301CB20ADFD2500452BB8 /* MobileVLCKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -505,7 +505,7 @@
 				7D89394F1B500DBC008F2B14 /* StaticLibVLC */,
 				7D13295A1BA304D900BE647E /* TVVLCKit */,
 				7DB683801C995D39000C70BE /* DynamicTVVLCKit */,
-				CA0301CC20ADFD2500452BB8 /* MobileVLCKit-iOSTests */,
+				CA0301CC20ADFD2500452BB8 /* MobileVLCKitTests */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
 			);
@@ -703,15 +703,15 @@
 			name = Renderer;
 			sourceTree = "<group>";
 		};
-		CA0301CC20ADFD2500452BB8 /* MobileVLCKit-iOSTests */ = {
+		CA0301CC20ADFD2500452BB8 /* MobileVLCKitTests */ = {
 			isa = PBXGroup;
 			children = (
+				CA978D1E20B89F4B00F7E768 /* MobileVLCKitTests-Bridging-Header.h */,
 				CA0301CF20ADFD2500452BB8 /* Info.plist */,
-				CA0301D620ADFEA100452BB8 /* MobileVLCKit-iOSTests-Bridging-Header.h */,
 				CA8A2F5520B44BD600F5D3EA /* VLCTimeTest.swift */,
 			);
-			name = "MobileVLCKit-iOSTests";
-			path = "Tests/MobileVLCKit-iOSTests";
+			name = MobileVLCKitTests;
+			path = Tests/MobileVLCKitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -855,9 +855,9 @@
 			productReference = 7DB683C61C995E9A000C70BE /* libStaticTVLibvlc.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CA0301CA20ADFD2500452BB8 /* MobileVLCKit-iOSTests */ = {
+		CA0301CA20ADFD2500452BB8 /* MobileVLCKitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA0301D520ADFD2500452BB8 /* Build configuration list for PBXNativeTarget "MobileVLCKit-iOSTests" */;
+			buildConfigurationList = CA0301D520ADFD2500452BB8 /* Build configuration list for PBXNativeTarget "MobileVLCKitTests" */;
 			buildPhases = (
 				CA0301C720ADFD2500452BB8 /* Sources */,
 				CA0301C820ADFD2500452BB8 /* Frameworks */,
@@ -868,9 +868,9 @@
 			dependencies = (
 				CA0301D220ADFD2500452BB8 /* PBXTargetDependency */,
 			);
-			name = "MobileVLCKit-iOSTests";
+			name = MobileVLCKitTests;
 			productName = "MobileVLCKit-iOSTests";
-			productReference = CA0301CB20ADFD2500452BB8 /* MobileVLCKit-iOSTests.xctest */;
+			productReference = CA0301CB20ADFD2500452BB8 /* MobileVLCKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		D2AAC07D0554694100DB518D /* MobileVLCKit */ = {
@@ -939,7 +939,7 @@
 				7D1329581BA304D900BE647E /* TVVLCKit */,
 				7DB6837E1C995D39000C70BE /* DynamicTVVLCKit */,
 				7DB683C51C995E9A000C70BE /* StaticTVLibvlc */,
-				CA0301CA20ADFD2500452BB8 /* MobileVLCKit-iOSTests */,
+				CA0301CA20ADFD2500452BB8 /* MobileVLCKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1728,14 +1728,14 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "Tests/MobileVLCKit-iOSTests/Info.plist";
+				INFOPLIST_FILE = Tests/MobileVLCKitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.videolan.MobileVLCKit-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.MobileVLCKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/MobileVLCKit-iOSTests/MobileVLCKit-iOSTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/MobileVLCKitTests/MobileVLCKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1795,16 +1795,16 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = "Tests/MobileVLCKit-iOSTests/Info.plist";
+				INFOPLIST_FILE = Tests/MobileVLCKitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.videolan.MobileVLCKit-iOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.MobileVLCKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/MobileVLCKit-iOSTests/MobileVLCKit-iOSTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/MobileVLCKitTests/MobileVLCKitTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1877,7 +1877,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA0301D520ADFD2500452BB8 /* Build configuration list for PBXNativeTarget "MobileVLCKit-iOSTests" */ = {
+		CA0301D520ADFD2500452BB8 /* Build configuration list for PBXNativeTarget "MobileVLCKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA0301D320ADFD2500452BB8 /* Release */,
