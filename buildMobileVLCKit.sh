@@ -685,7 +685,6 @@ buildLibVLC() {
     visual
     fb
     aout_file
-    dummy
     invert
     sepia
     wave
