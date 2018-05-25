@@ -549,7 +549,7 @@ buildLibVLC() {
     fi
 
     if [ "$SCARY" = "yes" ]; then
-        SCARYFLAG="--enable-dvbpsi --enable-avcodec --disable-vpx"
+        SCARYFLAG="--enable-dvbpsi --enable-avcodec"
     else
         SCARYFLAG="--disable-dca --disable-dvbpsi --disable-avcodec --disable-avformat --disable-zvbi --enable-vpx"
     fi
