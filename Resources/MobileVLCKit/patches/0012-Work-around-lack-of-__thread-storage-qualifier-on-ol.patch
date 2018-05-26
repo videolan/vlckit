@@ -1,19 +1,20 @@
-From 4579acfee3d2479e1c849c5124f539bbb831262b Mon Sep 17 00:00:00 2001
+From e1106f9c6599da8b3c35752af42c935f98c0e895 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH] Work around lack of __thread storage qualifier on old macOS
+Subject: [PATCH 12/16] Work around lack of __thread storage qualifier on old
+ macOS
 
 ---
- configure.ac                      |  4 +--
- include/vlc_fixups.h              |  7 ++--
+ configure.ac                      |  4 +-
+ include/vlc_fixups.h              |  7 +++-
  po/POTFILES.in                    |  1 +
  src/Makefile.am                   |  1 +
- {compat => src/extras}/tdestroy.c | 67 +++++++++++++++++++++++----------------
+ {compat => src/extras}/tdestroy.c | 67 ++++++++++++++++++-------------
  5 files changed, 48 insertions(+), 32 deletions(-)
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 225bcae987..c5d7a41063 100644
+index 206690b468..78583f37e3 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -590,8 +590,8 @@ dnl Check for system libs needed
@@ -203,5 +204,5 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 -- 
-2.14.3 (Apple Git-98)
+2.17.0
 

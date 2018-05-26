@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="d3c5d18" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="a4d6277" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -588,7 +588,6 @@ buildLibVLC() {
         --disable-vcd \
         --disable-vlc \
         --disable-vlm \
-        --disable-httpd \
         --disable-nls \
         --disable-sse \
         --disable-notify \
