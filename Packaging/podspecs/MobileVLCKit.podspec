@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
   s.ios.vendored_framework = 'MobileVLCKit.framework'
   s.source_files = 'MobileVLCKit.framework/Headers/*.h'
   s.public_header_files = 'MobileVLCKit.framework/Headers/*.h'
-  s.ios.deployment_target = '7.0'
+  s.ios.deployment_target = '8.0'
   s.frameworks = 'QuartzCore', 'CoreText', 'AVFoundation', 'Security', 'CFNetwork', 'AudioToolbox', 'OpenGLES', 'CoreGraphics', 'VideoToolbox', 'CoreMedia'
   s.libraries = 'c++', 'xml2', 'z', 'bz2', 'iconv'
   s.requires_arc = false
