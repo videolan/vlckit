@@ -480,6 +480,7 @@ buildLibVLC() {
     export USE_FFMPEG=1
     ../bootstrap ${BUILD} --host=${TARGET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${TARGET}-${ARCH} --disable-gpl \
         --enable-ad-clauses \
+        --disable-gnuv3 \
         --disable-disc \
         --disable-sdl \
         --disable-SDL_image \
