@@ -1,7 +1,7 @@
 From 76b00818f5fa5c1722dd860e1f5313cb8181b407 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
-Subject: [PATCH 10/16] contrib: use live555 version that is compatible with
+Subject: [PATCH 10/18] contrib: use live555 version that is compatible with
  LGPL2
 
 ---
