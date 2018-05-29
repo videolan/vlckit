@@ -1,7 +1,7 @@
-From 9f44e0b6609cc396429b309dfeded220cf769068 Mon Sep 17 00:00:00 2001
+From 2fd059124fb02972d4354ff299ab408b55e2f6cd Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Mon, 30 Apr 2018 14:33:08 +0100
-Subject: [PATCH 14/18] add auto deinterlacer-mode which is also valid
+Subject: [PATCH 14/17] add auto deinterlacer-mode which is also valid
 
 ---
  lib/video.c | 3 ++-
