@@ -12,6 +12,13 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          key: v1-gems-{{ checksum "Gemfile.lock" }}
+      - run: bundle check || bundle install --path .bundle
+      - save_cache:
+          key: v1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - .bundle
+      - restore_cache:
           key: libvlc-{{ checksum "compileAndBuildVLCKit.sh" }}
       - run:
           name: Build VLCKit
@@ -27,4 +34,11 @@ jobs:
           name: Run Tests
           command: |
             rake test:ios
+      - run:
+          name: Generate Coverage Reports
+          command: |
+            rake codecov:ios
+      - store_artifacts:
+          path: Tests/Coverage
+          destination: Coverage
 
