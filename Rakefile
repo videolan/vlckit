@@ -21,15 +21,20 @@
 #
 # ------------------------------------------------------------- Constants ------
 
-PROJECT_MOBILE = 'MobileVLCKit.xcodeproj'
+PROJECT_IOS = 'MobileVLCKit.xcodeproj'
+PROJECT_MAC = 'VLCKit.xcodeproj'
 
 SDK_SIM_IOS = 'iphonesimulator11.3'
+SDK_SIM_MAC = 'macosx10.13'
 
 SDK_SIM_DEST_IOS = "'platform=iOS Simulator,name=iPhone 7,OS=11.3'"
+SDK_SIM_DEST_MAC = "'platform=OS X,arch=x86_64'"
 
 SCHEME_IOS = 'MobileVLCKitTests'
+SCHEME_MAC = 'VLCKitTests'
 
 VLC_FLAGS_IOS = '-dva x86_64'
+VLC_FLAGS_MAC = '-dxs'
 
 DERIVED_DATA_PATH = 'DerivedData'
 COVERAGE_REPORT_PATH = 'Tests/Coverage'
@@ -52,16 +57,42 @@ task 'build:vlckit:ios' do
   end
 end
 
+desc 'Build VLCKit (macOS)'
+task 'build:vlckit:mac' do
+  puts 'Building VLCKit (macOS)'
+
+  plugin_file = 'Resources/MobileVLCKit/vlc-plugins-MacOSX.xcconfig'
+  required_dirs = ['./libvlc/vlc/install-MacOSX', './libvlc/vlc/build-MacOSX']
+
+  if File.exist?(plugin_file) && dirs_exist?(required_dirs)
+    puts 'Found pre-existing build directory. Skipping build'
+  else
+    sh "./compileAndBuildVLCKit.sh #{VLC_FLAGS_MAC}"
+  end
+end
+
 desc 'Run MobileVLCKit tests'
 task 'test:ios' do
   puts 'Running tests for MobileVLCKit'
-  sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_IOS} -project #{PROJECT_MOBILE} -scheme #{SCHEME_IOS} -sdk #{SDK_SIM_IOS} -destination #{SDK_SIM_DEST_IOS} test | #{XCPRETTY}"
+  sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_IOS} -project #{PROJECT_IOS} -scheme #{SCHEME_IOS} -sdk #{SDK_SIM_IOS} -destination #{SDK_SIM_DEST_IOS} test | #{XCPRETTY}"
+end
+
+desc 'Run VLCKit tests'
+task 'test:mac' do
+  puts 'Running tests for VLCKit'
+  sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_MAC} -project #{PROJECT_MAC} -scheme #{SCHEME_MAC} -sdk #{SDK_SIM_MAC} -destination #{SDK_SIM_DEST_MAC} test | #{XCPRETTY}"
 end
 
 desc 'Generate code coverage reports (MobileVLCKit)'
 task 'codecov:ios' do
   puts 'Generating code coverage reports (MobileVLCKit)'
   generate_coverage(SCHEME_IOS)
+end
+
+desc 'Generate code coverage reports (VLCKit macOS)'
+task 'codecov:mac' do
+  puts 'Generating code coverage reports (VLCKit macOS)'
+  generate_coverage(SCHEME_MAC)
 end
 
 # ------------------------------------------------------------- Functions ------
