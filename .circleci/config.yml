@@ -19,13 +19,14 @@ jobs:
           paths:
             - .bundle
       - restore_cache:
-          key: libvlc-{{ checksum "compileAndBuildVLCKit.sh" }}
+          key: libvlc-v2-{{ checksum "compileAndBuildVLCKit.sh" }}
       - run:
           name: Build VLCKit
           command: |
             rake build:vlckit:ios
+            rake build:vlckit:mac
       - save_cache:
-          key: libvlc-{{ checksum "compileAndBuildVLCKit.sh" }}
+          key: libvlc-v2-{{ checksum "compileAndBuildVLCKit.sh" }}
           paths:
             - build
             - libvlc
@@ -34,10 +35,12 @@ jobs:
           name: Run Tests
           command: |
             rake test:ios
+            rake test:mac
       - run:
           name: Generate Coverage Reports
           command: |
             rake codecov:ios
+            rake codecov:mac
       - store_artifacts:
           path: Tests/Coverage
           destination: Coverage
