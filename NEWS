@@ -1,3 +1,9 @@
+Version 3.1.1:
+--------------
+- Drop support for platforms < iOS 8 & < tvOS 10.2
+- Fix transcoding for the Chromecast
+- Fix an issue that led to green artifacts in H264 streams
+
 Version 3.1.0:
 --------------
 - Add API to enable or disable deinterlace and specify a filter
