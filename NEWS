@@ -1,8 +1,11 @@
 Version 3.1.1:
 --------------
 - Drop support for platforms < iOS 8 & < tvOS 10.2
-- Fix transcoding for the Chromecast
+- Add transcoding for the Chromecast
 - Fix an issue that led to green artifacts in H264 streams
+- Fix AVAudioSession handling on tvOS and iOS when playing multiple streams
+- Fix OpenGL multithreading issues on macOS
+- Updated third party libraries, notably Harfbuzz for security improvements
 
 Version 3.1.0:
 --------------
