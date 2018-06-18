@@ -1,7 +1,7 @@
-From aa35e69da94471e118f4bd879c24157b896753ae Mon Sep 17 00:00:00 2001
+From dec4176195d2c58ca6aa001243d2499641810710 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
-Subject: [PATCH 07/17] contrib/gcrypt: fix tvOS compilation
+Subject: [PATCH 07/18] contrib/gcrypt: fix tvOS compilation
 
 ---
  .../src/gcrypt/fix-sha1-ssse3-for-clang.patch    | 16 ++++++++++++++++
@@ -56,5 +56,5 @@ index bc938e585f..3564fde87b 100644
  GCRYPT_CONF += --disable-aesni-support
  else
 -- 
-2.17.0
+2.17.1
 
