@@ -88,6 +88,7 @@
 		7DEBDAD9203C561D000A7D2F /* vlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7E114D9BE800D34AAB /* vlc.h */; };
 		CA23EBC120BDF02700C0D635 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D7F20194117002D05C4 /* VLCKit.framework */; };
 		CA23EBCC20BDF07700C0D635 /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */; };
+		CABF4D5420D8E31700FCCE29 /* VLCMediaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,6 +192,7 @@
 		CA23EBC020BDF02700C0D635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA23EBCA20BDF07700C0D635 /* VLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VLCKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCTimeTest.swift; sourceTree = "<group>"; };
+		CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCMediaTest.swift; sourceTree = "<group>"; };
 		CCEC5B73114D9BE800D34AAB /* deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deprecated.h; path = libvlc/vlc/include/vlc/deprecated.h; sourceTree = SOURCE_ROOT; };
 		CCEC5B74114D9BE800D34AAB /* libvlc_events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_events.h; path = libvlc/vlc/include/vlc/libvlc_events.h; sourceTree = SOURCE_ROOT; };
 		CCEC5B75114D9BE800D34AAB /* libvlc_media_discoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_media_discoverer.h; path = libvlc/vlc/include/vlc/libvlc_media_discoverer.h; sourceTree = SOURCE_ROOT; };
@@ -452,6 +454,7 @@
 		CA23EBC720BDF03400C0D635 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */,
 				CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */,
 			);
 			path = Sources;
@@ -714,6 +717,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABF4D5420D8E31700FCCE29 /* VLCMediaTest.swift in Sources */,
 				CA23EBCC20BDF07700C0D635 /* VLCTimeTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
