@@ -179,7 +179,6 @@
 		8D826AE1203F3CC500536EF7 /* VLCRendererDiscoverer.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8D2CE647203DCC48004BB7F6 /* VLCRendererDiscoverer.h */; };
 		8D826AE2203F3CC500536EF7 /* VLCRendererItem.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
-		CA0301D020ADFD2500452BB8 /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libMobileVLCKit.a */; };
 		CAA03D0C20C8DCDB001764DA /* libTVVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D1329591BA304D900BE647E /* libTVVLCKit.a */; };
 		CAA03D1720C8DE4D001764DA /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D1620C8DE4D001764DA /* libbz2.tbd */; };
 		CAA03D1920C8DE51001764DA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D1820C8DE51001764DA /* libz.tbd */; };
@@ -191,6 +190,15 @@
 		CAA03D2520C8DE7B001764DA /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D2420C8DE7A001764DA /* CoreMedia.framework */; };
 		CAA9F00320D254AB00CDBB2C /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA9F00120D254A600CDBB2C /* VLCTimeTest.swift */; };
 		CAA9F00420D254AC00CDBB2C /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA9F00120D254A600CDBB2C /* VLCTimeTest.swift */; };
+		CABF4D4520D8DCDD00FCCE29 /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libMobileVLCKit.a */; };
+		CABF4D4620D8DD1B00FCCE29 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC31DF41F9100AD93ED /* libc++.tbd */; };
+		CABF4D4720D8DD2000FCCE29 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B51EC0A3390047E700 /* libbz2.tbd */; };
+		CABF4D4820D8DD2900FCCE29 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC51DF41F9500AD93ED /* libiconv.tbd */; };
+		CABF4D4920D8DD3A00FCCE29 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6C891F1C0CA81F00321894 /* AVFoundation.framework */; };
+		CABF4D4B20D8DD6500FCCE29 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8939011B5009DD008F2B14 /* CoreFoundation.framework */; };
+		CABF4D4D20D8DD7300FCCE29 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938F71B5009BE008F2B14 /* VideoToolbox.framework */; };
+		CABF4D4E20D8DD7B00FCCE29 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938F51B5009B4008F2B14 /* CoreMedia.framework */; };
+		CABF4D4F20D8DD7F00FCCE29 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938F01B5009A2008F2B14 /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -494,7 +502,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA0301D020ADFD2500452BB8 /* libMobileVLCKit.a in Frameworks */,
+				CABF4D4920D8DD3A00FCCE29 /* AVFoundation.framework in Frameworks */,
+				CABF4D4B20D8DD6500FCCE29 /* CoreFoundation.framework in Frameworks */,
+				CABF4D4D20D8DD7300FCCE29 /* VideoToolbox.framework in Frameworks */,
+				CABF4D4E20D8DD7B00FCCE29 /* CoreMedia.framework in Frameworks */,
+				CABF4D4F20D8DD7F00FCCE29 /* AudioToolbox.framework in Frameworks */,
+				CABF4D4820D8DD2900FCCE29 /* libiconv.tbd in Frameworks */,
+				CABF4D4720D8DD2000FCCE29 /* libbz2.tbd in Frameworks */,
+				CABF4D4620D8DD1B00FCCE29 /* libc++.tbd in Frameworks */,
+				CABF4D4520D8DCDD00FCCE29 /* libMobileVLCKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
