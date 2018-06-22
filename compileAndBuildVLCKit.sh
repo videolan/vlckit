@@ -1101,12 +1101,12 @@ if [ "$TVOS" = "yes" ]; then
 
     lipo_libs=""
     platform=""
-    if [ -d ${VLCROOT}/install-AppleTVOS ];then
+    if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="appletvos"
         buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
     fi
-    if [ -d ${VLCROOT}/install-AppleTVSimulator ];then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
         buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
