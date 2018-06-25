@@ -1,0 +1,61 @@
+From 3865597b78cbb84d7b31bb372725d204d456a3f8 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Wed, 17 Jan 2018 10:06:13 +0200
+Subject: [PATCH 1/2] core: expose config_AutoSaveConfigFile
+
+---
+ include/vlc_configuration.h | 2 ++
+ src/config/configuration.h  | 1 -
+ src/config/file.c           | 1 +
+ src/libvlccore.sym          | 1 +
+ 4 files changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/include/vlc_configuration.h b/include/vlc_configuration.h
+index 2779e99d17..020db37aca 100644
+--- a/include/vlc_configuration.h
++++ b/include/vlc_configuration.h
+@@ -109,6 +109,8 @@ VLC_API ssize_t config_GetPszChoices(vlc_object_t *, const char *,
+ 
+ VLC_API int config_SaveConfigFile( vlc_object_t * );
+ #define config_SaveConfigFile(a) config_SaveConfigFile(VLC_OBJECT(a))
++VLC_API int  config_AutoSaveConfigFile( vlc_object_t * );
++#define config_AutoSaveConfigFile(a) config_AutoSaveConfigFile(VLC_OBJECT(a))
+ 
+ VLC_API void config_ResetAll( vlc_object_t * );
+ #define config_ResetAll(a) config_ResetAll(VLC_OBJECT(a))
+diff --git a/src/config/configuration.h b/src/config/configuration.h
+index dd02c7f4af..9cdf3c96de 100644
+--- a/src/config/configuration.h
++++ b/src/config/configuration.h
+@@ -28,7 +28,6 @@ extern "C" {
+ /* Internal configuration prototypes and structures */
+ 
+ int  config_CreateDir( vlc_object_t *, const char * );
+-int  config_AutoSaveConfigFile( vlc_object_t * );
+ 
+ void config_Free (module_config_t *, size_t);
+ 
+diff --git a/src/config/file.c b/src/config/file.c
+index 6270a6bc9d..9f3b85494c 100644
+--- a/src/config/file.c
++++ b/src/config/file.c
+@@ -522,6 +522,7 @@ error:
+     return -1;
+ }
+ 
++#undef config_AutoSaveConfigFile
+ int config_AutoSaveConfigFile( vlc_object_t *p_this )
+ {
+     int ret = 0;
+diff --git a/src/libvlccore.sym b/src/libvlccore.sym
+index a15ba0d923..3f18118c3f 100644
+--- a/src/libvlccore.sym
++++ b/src/libvlccore.sym
+@@ -44,6 +44,7 @@ block_shm_Alloc
+ block_Realloc
+ block_TryRealloc
+ config_AddIntf
++config_AutoSaveConfigFile
+ config_ChainCreate
+ config_ChainDestroy
+ config_ChainDuplicate
