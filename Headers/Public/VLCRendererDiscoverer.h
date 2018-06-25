@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, weak) id <VLCRendererDiscovererDelegate> _Nullable delegate;
 
-- (instancetype _Nullable)init NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
 
 /**
  * Instanciates a `VLCRendererDiscoverer`

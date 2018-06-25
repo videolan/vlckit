@@ -56,10 +56,10 @@ typedef NS_OPTIONS(NSInteger, VLCRendererPlay) {
 @property (nonatomic, readonly, assign) int flags;
 
 /**
- * \note Unavailable, handled by `VLCRendererDicoverer`
+ * \note Unavailable, handled by `VLCRendererDiscoverer`
  * \see VLCRendererDiscoverer
  */
-- (instancetype _Nullable)init NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 
