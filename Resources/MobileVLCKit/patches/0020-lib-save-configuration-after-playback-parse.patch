@@ -1,0 +1,39 @@
+From 3865597b78cbb84d7b31bb372725d204d456a3f8 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Wed, 17 Jan 2018 10:06:13 +0200
+Subject: [PATCH 2/2] lib: save configuration after playback/parse
+
+The configuration is also saved when the libvlc instance is terminated but this
+doesn't happen often. Indeed, apps using libvlc will generally hold the libvlc
+instance during all its lifetime and won't be able to clean it up in a lot of
+case (app killed by OS to free up memory, crashes, reboot, force close...).
+---
+ lib/media.c        | 2 ++
+ lib/media_player.c | 1 +
+ 2 files changed, 3 insertions(+)
+
+diff --git a/lib/media.c b/lib/media.c
+index 58881e315f..5380250f9d 100644
+--- a/lib/media.c
++++ b/lib/media.c
+@@ -574,6 +574,8 @@ void libvlc_media_release( libvlc_media_t *p_md )
+     libvlc_event_send( &p_md->event_manager, &event );
+ 
+     libvlc_event_manager_destroy( &p_md->event_manager );
++    if( p_md->is_parsed )
++        config_AutoSaveConfigFile( p_md->p_libvlc_instance->p_libvlc_int );
+     libvlc_release( p_md->p_libvlc_instance );
+     free( p_md );
+ }
+diff --git a/lib/media_player.c b/lib/media_player.c
+index 6e00a4547f..3994925212 100644
+--- a/lib/media_player.c
++++ b/lib/media_player.c
+@@ -182,6 +182,7 @@ static void release_input_thread( libvlc_media_player_t *p_mi )
+     /* We owned this one */
+     input_Stop( p_input_thread );
+     input_Close( p_input_thread );
++    config_AutoSaveConfigFile( p_mi );
+ }
+ 
+ /*
