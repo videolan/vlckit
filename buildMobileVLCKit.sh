@@ -194,6 +194,7 @@ cleantheenvironment()
     export LD=""
     export LDFLAGS=""
     export STRIP=""
+    export PKG_CONFIG_PATH=""
 }
 
 buildxcodeproj()
