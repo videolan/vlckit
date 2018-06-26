@@ -5,6 +5,7 @@ set -e
 CLEAN=yes
 DEPLOY_MOBILEVLCKIT=no
 DEPLOY_TVVLCKIT=no
+DEPLOY_MACOSVLCKIT=no
 TEST_MODE=no
 
 BUILD_MOBILEVLCKIT="./compileAndBuildVLCKit.sh -vf"
@@ -12,6 +13,7 @@ CREATE_DISTRIBUTION_PACKAGE="./create-distributable-package.sh"
 STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/unstable/"
 MOBILE_PODSPEC="MobileVLCKit-unstable.podspec"
 TV_PODSPEC="TVVLCKit-unstable.podspec"
+MACOS_PODSPEC="VLCKit.podspec"
 
 # Note: create-distributable-package script is building VLCKit(s) if not found.
 # Note: by default, VLCKit will be build if no option is passed.
@@ -25,11 +27,12 @@ OPTIONS
     -d      Disable cleaning of build directory
     -m      Deploy MobileVLCKit
     -t      Deploy TVVLCKit
+    -x      Deploy VLCKit for macOS
     -l      Start test for build phases
 EOF
 }
 
-while getopts "hdmtl" OPTION
+while getopts "hdmtlx" OPTION
 do
      case $OPTION in
          h)
@@ -44,6 +47,9 @@ do
             ;;
          t)
             DEPLOY_TVVLCKIT=yes
+            ;;
+         x)
+            DEPLOY_MACOSVLCKIT=yes
             ;;
          l)
             TEST_MODE=yes
@@ -265,6 +271,8 @@ setCurrentPodspec()
         CURRENT_PODSPEC=$MOBILE_PODSPEC
     elif [ "$DEPLOY_TVVLCKIT" = "yes" ]; then
         CURRENT_PODSPEC=$TV_PODSPEC
+    elif [ "DEPLOY_MACOSVLCKIT" = "yes" ]; then
+        CURRENT_PODSPEC=$MACOS_PODSPEC
     fi
 }
 
@@ -299,6 +307,8 @@ if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
     options="-m"
 elif [ "$DEPLOY_TVVLCKIT" = "yes" ]; then
     options="-t"
+elif [ "$DEPLOY_MACOSVLCKIT" = "yes" ]; then
+    options="-x"
 fi
 
 UPLOAD_URL=${STABLE_UPLOAD_URL}
