@@ -118,8 +118,8 @@ clean()
 
 buildMobileVLCKit()
 {
-    log "Info" "Staring MobileVLCKit build..."
-    if ! $BUILD_MOBILEVLCKIT; then
+    log "Info" "Starting MobileVLCKit build..."
+    if ! $BUILD_MOBILEVLCKIT "$1"; then
         log "Error" "MobileVLCKit build failed"
         rm -fr "build/"
         exit 1
@@ -142,6 +142,8 @@ renamePackage()
         TARGET="MobileVLCKit"
     elif [ "$1" = "-t" ]; then
         TARGET="TVVLCKit"
+    elif [ "$1" = "-x" ]; then
+        TARGET="VLCKit"
     fi
     getVLCHashes
 
@@ -313,7 +315,7 @@ fi
 UPLOAD_URL=${STABLE_UPLOAD_URL}
 
 spushd "$ROOT_DIR"
-    buildMobileVLCKit
+    buildMobileVLCKit $options
     setCurrentPodspec
     packageBuild $options
     renamePackage $options
