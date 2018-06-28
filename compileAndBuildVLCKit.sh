@@ -800,38 +800,37 @@ build_universal_static_lib() {
 
     if [ -d ${VLCROOT}/install-"$OSSTYLE"Simulator ];then
         spushd ${VLCROOT}/install-"$OSSTYLE"Simulator
-
-        if (is_simulator_arch $arch);then
-            echo "SIMU OS: $arch"
-            spushd $actual_arch/lib/vlc/plugins
-            for i in `ls *.a`
+            for i in `ls .`
             do
-                VLCMODULES="$i $VLCMODULES"
+                local iarch="`get_arch $i`"
+                if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
+                    SIMULATORARCHS="$SIMULATORARCHS $iarch"
+                fi
             done
-            spopd # $actual_arch/lib/vlc/plugins
-        fi
-        for i in `ls .`
-        do
-            local iarch="`get_arch $i`"
-            if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
-                SIMULATORARCHS="$SIMULATORARCHS $iarch"
+
+            if (is_simulator_arch $arch);then
+                echo "SIMU OS: $arch"
+                spushd $arch/lib/vlc/plugins
+                    for i in `ls *.a`
+                    do
+                        VLCMODULES="$i $VLCMODULES"
+                    done
+                spopd # $iarch/lib/vlc/plugins
             fi
-        done
         spopd # vlc-install-"$OSSTYLE"Simulator
     fi
 
     if [ "$OSSTYLE" = "MacOSX" ]; then
         if [ -d ${VLCROOT}/install-"$OSSTYLE" ];then
             spushd ${VLCROOT}/install-"$OSSTYLE"
-            echo `pwd`
-            echo "macOS: $arch"
-            spushd $arch/lib/vlc/plugins
-            for i in `ls *.a`
-            do
-                VLCMODULES="$i $VLCMODULES"
-            done
-            spopd # $actual_arch/lib/vlc/plugins
-
+                echo `pwd`
+                echo "macOS: $arch"
+                spushd $arch/lib/vlc/plugins
+                    for i in `ls *.a`
+                    do
+                        VLCMODULES="$i $VLCMODULES"
+                    done
+                spopd # $actual_arch/lib/vlc/plugins
             spopd # vlc-install-"$OSSTYLE"
         fi
     fi
