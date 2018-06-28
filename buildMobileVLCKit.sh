@@ -922,7 +922,10 @@ build_universal_static_lib() {
     arch="aarch64"
     if [ "$FARCH" != "all" ];then
         arch="$FARCH"
+    elif [ "$BUILD_SIMULATOR" = "yes" ]; then
+        arch="x86_64"
     fi
+
     actual_arch=`get_actual_arch $arch`
 
     if [ -d libvlc/vlc/install-"$OSSTYLE"OS ];then
