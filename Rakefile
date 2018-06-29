@@ -22,18 +22,23 @@
 # ------------------------------------------------------------- Constants ------
 
 PROJECT_IOS = 'MobileVLCKit.xcodeproj'
+PROJECT_TV = 'MobileVLCKit.xcodeproj'
 PROJECT_MAC = 'VLCKit.xcodeproj'
 
 SDK_SIM_IOS = 'iphonesimulator11.3'
+SDK_SIM_TV = 'appletvsimulator11.3'
 SDK_SIM_MAC = 'macosx10.13'
 
 SDK_SIM_DEST_IOS = "'platform=iOS Simulator,name=iPhone 7,OS=11.3'"
+SDK_SIM_DEST_TV = "'platform=tvOS Simulator,name=Apple TV,OS=11.3'"
 SDK_SIM_DEST_MAC = "'platform=OS X,arch=x86_64'"
 
 SCHEME_IOS = 'MobileVLCKitTests'
+SCHEME_TV = 'TVVLCKitTests'
 SCHEME_MAC = 'VLCKitTests'
 
 VLC_FLAGS_IOS = '-dva x86_64'
+VLC_FLAGS_TV = '-stb'
 VLC_FLAGS_MAC = '-dxs'
 
 DERIVED_DATA_PATH = 'DerivedData'
@@ -57,6 +62,20 @@ task 'build:vlckit:ios' do
   end
 end
 
+desc 'Build TVVLCKit'
+task 'build:vlckit:tv' do
+  puts 'Building TVVLCKit'
+
+  plugin_file = 'Resources/MobileVLCKit/vlc-plugins-AppleTV.xcconfig'
+  required_dirs = ['./libvlc/vlc/install-AppleTVSimulator', './libvlc/vlc/build-AppleTVSimulator']
+
+  if File.exist?(plugin_file) && dirs_exist?(required_dirs)
+    puts 'Found pre-existing build directory. Skipping build'
+  else
+    sh "./compileAndBuildVLCKit.sh #{VLC_FLAGS_TV}"
+  end
+end
+
 desc 'Build VLCKit (macOS)'
 task 'build:vlckit:mac' do
   puts 'Building VLCKit (macOS)'
@@ -77,21 +96,33 @@ task 'test:ios' do
   sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_IOS} -project #{PROJECT_IOS} -scheme #{SCHEME_IOS} -sdk #{SDK_SIM_IOS} -destination #{SDK_SIM_DEST_IOS} test | #{XCPRETTY}"
 end
 
+desc 'Run TVVLCKit tests'
+task 'test:tv' do
+  puts 'Running tests for TVVLCKit'
+  sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_TV} -project #{PROJECT_TV} -scheme #{SCHEME_TV} -sdk #{SDK_SIM_TV} -destination #{SDK_SIM_DEST_TV} test | #{XCPRETTY}"
+end
+
 desc 'Run VLCKit tests'
 task 'test:mac' do
   puts 'Running tests for VLCKit'
   sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_MAC} -project #{PROJECT_MAC} -scheme #{SCHEME_MAC} -sdk #{SDK_SIM_MAC} -destination #{SDK_SIM_DEST_MAC} test | #{XCPRETTY}"
 end
 
-desc 'Generate code coverage reports (MobileVLCKit)'
+desc 'Generate MobileVLCKit coverage reports'
 task 'codecov:ios' do
-  puts 'Generating code coverage reports (MobileVLCKit)'
+  puts 'Generating MobileVLCKit code coverage reports'
   generate_coverage(SCHEME_IOS)
 end
 
-desc 'Generate code coverage reports (VLCKit macOS)'
+desc 'Generate TVVLCKit code coverage reports'
+task 'codecov:tv' do
+  puts 'Generating TVVLCKit code coverage reports'
+  generate_coverage(SCHEME_TV)
+end
+
+desc 'Generate VLCKit (macOS) code coverage reports'
 task 'codecov:mac' do
-  puts 'Generating code coverage reports (VLCKit macOS)'
+  puts 'Generating VLCKit code coverage reports'
   generate_coverage(SCHEME_MAC)
 end
 
