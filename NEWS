@@ -1,6 +1,9 @@
 Version 3.1.2:
 --------------
 - Fix an issue that led to subtitles not being displayed for mkv files
+- h264 low-latency improvements for VideoToolbox
+- Improved display of subtitles
+- Fix playback issues with certain AVI, MP4 and MKV files
 
 Version 3.1.1:
 --------------
