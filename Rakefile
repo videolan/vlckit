@@ -38,7 +38,7 @@ SCHEME_TV = 'TVVLCKitTests'
 SCHEME_MAC = 'VLCKitTests'
 
 VLC_FLAGS_IOS = '-dva x86_64'
-VLC_FLAGS_TV = '-stb'
+VLC_FLAGS_TV = '-st'
 VLC_FLAGS_MAC = '-dxs'
 
 DERIVED_DATA_PATH = 'DerivedData'
