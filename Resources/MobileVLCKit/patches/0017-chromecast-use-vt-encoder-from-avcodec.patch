@@ -1,17 +1,17 @@
-From 12ff751cf70def44d81783c8e766117902d61d02 Mon Sep 17 00:00:00 2001
+From 813a97f1522009b7714b80f86d9b21751a52d7f5 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:52:35 +0200
 Subject: [PATCH 17/20] chromecast: use vt encoder from avcodec
 
 ---
- modules/stream_out/chromecast/cast.cpp | 30 ++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ modules/stream_out/chromecast/cast.cpp | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/modules/stream_out/chromecast/cast.cpp b/modules/stream_out/chromecast/cast.cpp
-index b330b70297..92257a149d 100644
+index b330b70297..fc30380720 100644
 --- a/modules/stream_out/chromecast/cast.cpp
 +++ b/modules/stream_out/chromecast/cast.cpp
-@@ -956,12 +956,42 @@ static std::string GetVencX264Option( sout_stream_t * /* p_stream */,
+@@ -956,12 +956,25 @@ static std::string GetVencX264Option( sout_stream_t * /* p_stream */,
      return ssout.str();
  }
  
@@ -22,23 +22,6 @@ index b330b70297..92257a149d 100644
 +{
 +    std::stringstream ssout;
 +    ssout << "venc=avcodec{codec=h264_videotoolbox,options{realtime=1}}";
-+    switch( i_quality )
-+    {
-+        /* Here, performances issues won't come from videotoolbox but from
-+         * some old chromecast devices */
-+
-+        case CONVERSION_QUALITY_HIGH:
-+            ssout << ",vb=16000000";
-+            break;
-+        case CONVERSION_QUALITY_MEDIUM:
-+            ssout << ",vb=8000000";
-+            break;
-+        case CONVERSION_QUALITY_LOW:
-+        case CONVERSION_QUALITY_LOWCPU:
-+            ssout << ",vb=3000000";
-+            break;
-+    }
-+
 +    return ssout.str();
 +}
 +#endif

@@ -1,28 +1,30 @@
-From 3865597b78cbb84d7b31bb372725d204d456a3f8 Mon Sep 17 00:00:00 2001
+From 64e1e3ebe7519896e342facdfab4220ff7dcc884 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
-Subject: [PATCH 18/18] ffmpeg: backport vtenc patches
+Subject: [PATCH 18/20] ffmpeg: backport vtenc patches
 
 ---
  ...lboxenc-fix-mutex-cond-leak-in-error.patch |  35 ++++++
  ...videotoolboxenc-split-initialization.patch | 112 ++++++++++++++++++
  ...oolboxenc-fix-invalid-session-on-iOS.patch |  48 ++++++++
- contrib/src/ffmpeg/rules.mak                  |   3 +
- 4 files changed, 198 insertions(+)
+ ...lboxenc-fix-undefined-behavior-with-.patch | 105 ++++++++++++++++
+ contrib/src/ffmpeg/rules.mak                  |   4 +
+ 5 files changed, 304 insertions(+)
  create mode 100644 contrib/src/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch
  create mode 100644 contrib/src/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch
  create mode 100644 contrib/src/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch
+ create mode 100644 contrib/src/ffmpeg/0004-avcodec-videotoolboxenc-fix-undefined-behavior-with-.patch
 
 diff --git a/contrib/src/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch b/contrib/src/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch
 new file mode 100644
-index 0000000000..0f54eff3a8
+index 0000000000..679bd70da3
 --- /dev/null
 +++ b/contrib/src/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch
 @@ -0,0 +1,35 @@
-+From 488c99a65b5a2e35b63dc52da51e32400f15c131 Mon Sep 17 00:00:00 2001
++From dea72b148a1250808c625dda0077e43d11689845 Mon Sep 17 00:00:00 2001
 +From: Thomas Guillem <thomas@gllm.fr>
 +Date: Tue, 29 May 2018 18:04:38 +0200
-+Subject: [PATCH 1/3] avcodec/videotoolboxenc: fix mutex/cond leak in error
++Subject: [PATCH 1/4] avcodec/videotoolboxenc: fix mutex/cond leak in error
 + path
 +
 +The leak could happen when the vtenc_create_encoder() function failed.
@@ -31,7 +33,7 @@ index 0000000000..0f54eff3a8
 + 1 file changed, 3 insertions(+), 2 deletions(-)
 +
 +diff --git a/libavcodec/videotoolboxenc.c b/libavcodec/videotoolboxenc.c
-+index 7796a685c2..9f2a71b15d 100644
++index 086beb41fc..aafef20db0 100644
 +--- a/libavcodec/videotoolboxenc.c
 ++++ b/libavcodec/videotoolboxenc.c
 +@@ -2473,13 +2473,14 @@ static av_cold int vtenc_close(AVCodecContext *avctx)
@@ -52,18 +54,18 @@ index 0000000000..0f54eff3a8
 +     vtctx->session = NULL;
 + 
 +-- 
-+2.17.1
++2.18.0
 +
 diff --git a/contrib/src/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch b/contrib/src/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch
 new file mode 100644
-index 0000000000..2ed920f287
+index 0000000000..c64aa7521a
 --- /dev/null
 +++ b/contrib/src/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch
 @@ -0,0 +1,112 @@
-+From 6c30ec8b4942d8423d6f5ff8cc0632ed326aea27 Mon Sep 17 00:00:00 2001
++From 0a83285f54c5c042104a4d2a03c40e8f69a09a3c Mon Sep 17 00:00:00 2001
 +From: Thomas Guillem <thomas@gllm.fr>
 +Date: Mon, 11 Jun 2018 15:43:56 +0200
-+Subject: [PATCH 2/3] avcodec/videotoolboxenc: split initialization
++Subject: [PATCH 2/4] avcodec/videotoolboxenc: split initialization
 +
 +Split vtenc_init() into vtenc_init() (VTEncContext initialization) and
 +vtenc_configure_encoder() (creates the vt session).
@@ -74,7 +76,7 @@ index 0000000000..2ed920f287
 + 1 file changed, 28 insertions(+), 20 deletions(-)
 +
 +diff --git a/libavcodec/videotoolboxenc.c b/libavcodec/videotoolboxenc.c
-+index 9f2a71b15d..1060055ba5 100644
++index aafef20db0..0b47a0abac 100644
 +--- a/libavcodec/videotoolboxenc.c
 ++++ b/libavcodec/videotoolboxenc.c
 +@@ -1262,19 +1262,16 @@ static int vtenc_create_encoder(AVCodecContext   *avctx,
@@ -170,18 +172,18 @@ index 0000000000..2ed920f287
 + 
 + static void vtenc_get_frame_info(CMSampleBufferRef buffer, bool *is_key_frame)
 +-- 
-+2.17.1
++2.18.0
 +
 diff --git a/contrib/src/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch b/contrib/src/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch
 new file mode 100644
-index 0000000000..5e76c4bd97
+index 0000000000..9138060be1
 --- /dev/null
 +++ b/contrib/src/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch
 @@ -0,0 +1,48 @@
-+From 68932bcf2a8edcc7371347f6a4ae0d2211528cef Mon Sep 17 00:00:00 2001
++From 72812a3931cda0fcb66d740bbb19c330e97ccbd0 Mon Sep 17 00:00:00 2001
 +From: Thomas Guillem <thomas@gllm.fr>
 +Date: Mon, 11 Jun 2018 16:17:28 +0200
-+Subject: [PATCH 3/3] avcodec/videotoolboxenc: fix invalid session on iOS
++Subject: [PATCH 3/4] avcodec/videotoolboxenc: fix invalid session on iOS
 +
 +Cf. comment. Restart the VT session when the APP goes from foreground to
 +background and vice versa.
@@ -190,7 +192,7 @@ index 0000000000..5e76c4bd97
 + 1 file changed, 21 insertions(+), 2 deletions(-)
 +
 +diff --git a/libavcodec/videotoolboxenc.c b/libavcodec/videotoolboxenc.c
-+index 1060055ba5..ac847358ab 100644
++index 0b47a0abac..f516ad7d40 100644
 +--- a/libavcodec/videotoolboxenc.c
 ++++ b/libavcodec/videotoolboxenc.c
 +@@ -2175,8 +2175,27 @@ static int create_cv_pixel_buffer(AVCodecContext   *avctx,
@@ -224,22 +226,134 @@ index 0000000000..5e76c4bd97
 + 
 +     status = CVPixelBufferPoolCreatePixelBuffer(NULL,
 +-- 
-+2.17.1
++2.18.0
++
+diff --git a/contrib/src/ffmpeg/0004-avcodec-videotoolboxenc-fix-undefined-behavior-with-.patch b/contrib/src/ffmpeg/0004-avcodec-videotoolboxenc-fix-undefined-behavior-with-.patch
+new file mode 100644
+index 0000000000..42f4cce1e6
+--- /dev/null
++++ b/contrib/src/ffmpeg/0004-avcodec-videotoolboxenc-fix-undefined-behavior-with-.patch
+@@ -0,0 +1,105 @@
++From 029cb11cf13275ec8536d889aae4a307eb987b2f Mon Sep 17 00:00:00 2001
++From: Thomas Guillem <thomas@gllm.fr>
++Date: Tue, 3 Jul 2018 16:59:34 +0200
++Subject: [PATCH 4/4] avcodec/videotoolboxenc: fix undefined behavior with
++ rc_max_rate=0
++
++On macOS, a zero rc_max_rate cause an error from
++VTSessionSetProperty(kVTCompressionPropertyKey_DataRateLimits).
++
++on iOS (depending on device/version), a zero rc_max_rate cause invalid
++arguments from the vtenc_output_callback after few frames and then a crash
++within the VideoToolbox library.
++---
++ libavcodec/videotoolboxenc.c | 72 ++++++++++++++++++------------------
++ 1 file changed, 37 insertions(+), 35 deletions(-)
++
++diff --git a/libavcodec/videotoolboxenc.c b/libavcodec/videotoolboxenc.c
++index f516ad7d40..c2f827b9c6 100644
++--- a/libavcodec/videotoolboxenc.c
+++++ b/libavcodec/videotoolboxenc.c
++@@ -1019,44 +1019,46 @@ static int vtenc_create_encoder(AVCodecContext   *avctx,
++ 
++     if (vtctx->codec_id == AV_CODEC_ID_H264) {
++         // kVTCompressionPropertyKey_DataRateLimits is not available for HEVC
++-        bytes_per_second_value = max_rate >> 3;
++-        bytes_per_second = CFNumberCreate(kCFAllocatorDefault,
++-                                          kCFNumberSInt64Type,
++-                                          &bytes_per_second_value);
++-        if (!bytes_per_second) {
++-            return AVERROR(ENOMEM);
++-        }
++-        one_second_value = 1;
++-        one_second = CFNumberCreate(kCFAllocatorDefault,
++-                                    kCFNumberSInt64Type,
++-                                    &one_second_value);
++-        if (!one_second) {
++-            CFRelease(bytes_per_second);
++-            return AVERROR(ENOMEM);
++-        }
++-        nums[0] = (void *)bytes_per_second;
++-        nums[1] = (void *)one_second;
++-        data_rate_limits = CFArrayCreate(kCFAllocatorDefault,
++-                                         (const void **)nums,
++-                                         2,
++-                                         &kCFTypeArrayCallBacks);
++-
++-        if (!data_rate_limits) {
+++        if (max_rate > 0) {
+++            bytes_per_second_value = max_rate >> 3;
+++            bytes_per_second = CFNumberCreate(kCFAllocatorDefault,
+++                                              kCFNumberSInt64Type,
+++                                              &bytes_per_second_value);
+++            if (!bytes_per_second) {
+++                return AVERROR(ENOMEM);
+++            }
+++            one_second_value = 1;
+++            one_second = CFNumberCreate(kCFAllocatorDefault,
+++                                        kCFNumberSInt64Type,
+++                                        &one_second_value);
+++            if (!one_second) {
+++                CFRelease(bytes_per_second);
+++                return AVERROR(ENOMEM);
+++            }
+++            nums[0] = (void *)bytes_per_second;
+++            nums[1] = (void *)one_second;
+++            data_rate_limits = CFArrayCreate(kCFAllocatorDefault,
+++                                             (const void **)nums,
+++                                             2,
+++                                             &kCFTypeArrayCallBacks);
+++
+++            if (!data_rate_limits) {
+++                CFRelease(bytes_per_second);
+++                CFRelease(one_second);
+++                return AVERROR(ENOMEM);
+++            }
+++            status = VTSessionSetProperty(vtctx->session,
+++                                          kVTCompressionPropertyKey_DataRateLimits,
+++                                          data_rate_limits);
+++
++             CFRelease(bytes_per_second);
++             CFRelease(one_second);
++-            return AVERROR(ENOMEM);
++-        }
++-        status = VTSessionSetProperty(vtctx->session,
++-                                      kVTCompressionPropertyKey_DataRateLimits,
++-                                      data_rate_limits);
+++            CFRelease(data_rate_limits);
++ 
++-        CFRelease(bytes_per_second);
++-        CFRelease(one_second);
++-        CFRelease(data_rate_limits);
++-
++-        if (status) {
++-            av_log(avctx, AV_LOG_ERROR, "Error setting max bitrate property: %d\n", status);
++-            return AVERROR_EXTERNAL;
+++            if (status) {
+++                av_log(avctx, AV_LOG_ERROR, "Error setting max bitrate property: %d\n", status);
+++                return AVERROR_EXTERNAL;
+++            }
++         }
++ 
++         if (profile_level) {
++-- 
++2.18.0
 +
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 7a3b678370..d0cd900c17 100644
+index 7a3b678370..7c3a87068c 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -239,6 +239,9 @@ ifdef USE_FFMPEG
+@@ -239,6 +239,10 @@ ifdef USE_FFMPEG
  	$(APPLY) $(SRC)/ffmpeg/armv7_fixup.patch
  	$(APPLY) $(SRC)/ffmpeg/dxva_vc1_crash.patch
  	$(APPLY) $(SRC)/ffmpeg/h264_early_SAR.patch
 +	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch
 +	$(APPLY) $(SRC)/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch
 +	$(APPLY) $(SRC)/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch
++	$(APPLY) $(SRC)/ffmpeg/0004-avcodec-videotoolboxenc-fix-undefined-behavior-with-.patch
  endif
  ifdef USE_LIBAV
  	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
 -- 
-2.17.1
+2.18.0
 
