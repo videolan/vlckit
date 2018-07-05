@@ -119,7 +119,14 @@ clean()
 buildMobileVLCKit()
 {
     log "Info" "Starting MobileVLCKit build..."
-    if ! $BUILD_MOBILEVLCKIT "$1"; then
+
+    local option="$1"
+
+    if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
+        option=""
+    fi
+
+    if ! $BUILD_MOBILEVLCKIT $option; then
         log "Error" "MobileVLCKit build failed"
         rm -fr "build/"
         exit 1
