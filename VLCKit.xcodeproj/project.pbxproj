@@ -87,6 +87,7 @@
 		7DEBDAD9203C561D000A7D2F /* vlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7E114D9BE800D34AAB /* vlc.h */; };
 		CA23EBC120BDF02700C0D635 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D7F20194117002D05C4 /* VLCKit.framework */; };
 		CA23EBCC20BDF07700C0D635 /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */; };
+		CA766ED620E9E53E009B3F3F /* VLCAudioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA766ED520E9E53E009B3F3F /* VLCAudioTest.swift */; };
 		CA7BC8B720F4424100C86820 /* XCTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BC8B020F4424100C86820 /* XCTestHelper.swift */; };
 		CABF4D5420D8E31700FCCE29 /* VLCMediaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */; };
 /* End PBXBuildFile section */
@@ -192,6 +193,7 @@
 		CA23EBC020BDF02700C0D635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA23EBCA20BDF07700C0D635 /* VLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VLCKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCTimeTest.swift; sourceTree = "<group>"; };
+		CA766ED520E9E53E009B3F3F /* VLCAudioTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCAudioTest.swift; sourceTree = "<group>"; };
 		CA7BC8B020F4424100C86820 /* XCTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestHelper.swift; sourceTree = "<group>"; };
 		CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCMediaTest.swift; sourceTree = "<group>"; };
 		CCEC5B73114D9BE800D34AAB /* deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deprecated.h; path = libvlc/vlc/include/vlc/deprecated.h; sourceTree = SOURCE_ROOT; };
@@ -457,6 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */,
+				CA766ED520E9E53E009B3F3F /* VLCAudioTest.swift */,
 				CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */,
 			);
 			path = Sources;
@@ -728,6 +731,7 @@
 			files = (
 				CABF4D5420D8E31700FCCE29 /* VLCMediaTest.swift in Sources */,
 				CA23EBCC20BDF07700C0D635 /* VLCTimeTest.swift in Sources */,
+				CA766ED620E9E53E009B3F3F /* VLCAudioTest.swift in Sources */,
 				CA7BC8B720F4424100C86820 /* XCTestHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
