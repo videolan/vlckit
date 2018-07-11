@@ -122,17 +122,13 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
     int tempVolume = [self volume] + VOLUME_STEP;
     if (tempVolume > VOLUME_MAX)
         tempVolume = VOLUME_MAX;
-    else if (tempVolume < VOLUME_MIN)
-        tempVolume = VOLUME_MIN;
     [self setVolume: tempVolume];
 }
 
 - (void)volumeDown
 {
     int tempVolume = [self volume] - VOLUME_STEP;
-    if (tempVolume > VOLUME_MAX)
-        tempVolume = VOLUME_MAX;
-    else if (tempVolume < VOLUME_MIN)
+    if (tempVolume < VOLUME_MIN)
         tempVolume = VOLUME_MIN;
     [self setVolume: tempVolume];
 }
