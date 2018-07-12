@@ -12,7 +12,6 @@
 		41657C282059D56900AB915B /* TVVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C272059D56900AB915B /* TVVLCKit.h */; };
 		41657C2B2059D57900AB915B /* DynamicTVVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C292059D57800AB915B /* DynamicTVVLCKit.h */; };
 		41657C2C2059D57900AB915B /* DynamicMobileVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C2A2059D57800AB915B /* DynamicMobileVLCKit.h */; };
-		41657C2E2059D5CE00AB915B /* VLCRendererItem+Init.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C2D2059D5CE00AB915B /* VLCRendererItem+Init.h */; };
 		41657C322059D63D00AB915B /* VLCHelperCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C312059D63D00AB915B /* VLCHelperCode.h */; };
 		41657C3D2059D99E00AB915B /* VLCCustomDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C3A2059D99E00AB915B /* VLCCustomDialogProvider.h */; };
 		41657C3E2059D99E00AB915B /* VLCEmbeddedDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C3B2059D99E00AB915B /* VLCEmbeddedDialogProvider.h */; };
@@ -142,7 +141,6 @@
 		41657C272059D56900AB915B /* TVVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVVLCKit.h; path = Public/TVVLCKit.h; sourceTree = "<group>"; };
 		41657C292059D57800AB915B /* DynamicTVVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicTVVLCKit.h; path = Public/DynamicTVVLCKit.h; sourceTree = "<group>"; };
 		41657C2A2059D57800AB915B /* DynamicMobileVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicMobileVLCKit.h; path = Public/DynamicMobileVLCKit.h; sourceTree = "<group>"; };
-		41657C2D2059D5CE00AB915B /* VLCRendererItem+Init.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VLCRendererItem+Init.h"; path = "Internal/VLCRendererItem+Init.h"; sourceTree = "<group>"; };
 		41657C312059D63D00AB915B /* VLCHelperCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCHelperCode.h; path = Internal/VLCHelperCode.h; sourceTree = "<group>"; };
 		41657C3A2059D99E00AB915B /* VLCCustomDialogProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCCustomDialogProvider.h; path = Internal/VLCCustomDialogProvider.h; sourceTree = "<group>"; };
 		41657C3B2059D99E00AB915B /* VLCEmbeddedDialogProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEmbeddedDialogProvider.h; path = Internal/VLCEmbeddedDialogProvider.h; sourceTree = "<group>"; };
@@ -188,6 +186,7 @@
 		7DF7A2041D197E8E0001FF69 /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHelperCode.m; sourceTree = "<group>"; };
 		A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoCommon.h; path = Internal/VLCVideoCommon.h; sourceTree = "<group>"; };
 		A7A0CEA30D2EF13000F2C039 /* VLCVideoCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCVideoCommon.m; sourceTree = "<group>"; };
+		CA08590320F7156100B3AB69 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = macros.h; path = Headers/Internal/macros.h; sourceTree = "<group>"; };
 		CA23EBBC20BDF02700C0D635 /* VLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA23EBC020BDF02700C0D635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA23EBCA20BDF07700C0D635 /* VLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VLCKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -358,6 +357,7 @@
 			isa = PBXGroup;
 			children = (
 				32DBCF5E0370ADEE00C91783 /* Prefix.pch */,
+				CA08590320F7156100B3AB69 /* macros.h */,
 				7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */,
 			);
 			name = "Other Sources";
@@ -391,7 +391,6 @@
 				41657C3A2059D99E00AB915B /* VLCCustomDialogProvider.h */,
 				41657C3B2059D99E00AB915B /* VLCEmbeddedDialogProvider.h */,
 				41657C3C2059D99E00AB915B /* VLCiOSLegacyDialogProvider.h */,
-				41657C2D2059D5CE00AB915B /* VLCRendererItem+Init.h */,
 				41657C312059D63D00AB915B /* VLCHelperCode.h */,
 			);
 			name = Internal;
@@ -550,7 +549,6 @@
 				7DC28D5F20194117002D05C4 /* VLCVideoCommon.h in Headers */,
 				41657C242059D49200AB915B /* VLCRendererItem.h in Headers */,
 				41657C2B2059D57900AB915B /* DynamicTVVLCKit.h in Headers */,
-				41657C2E2059D5CE00AB915B /* VLCRendererItem+Init.h in Headers */,
 				7DC28D6020194117002D05C4 /* VLCDialogProvider.h in Headers */,
 				7DC28D6120194117002D05C4 /* VLCStreamSession.h in Headers */,
 				7DC28D6220194117002D05C4 /* VLCStreamOutput.h in Headers */,
