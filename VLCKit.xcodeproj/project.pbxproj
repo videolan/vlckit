@@ -188,6 +188,7 @@
 		7DF7A2041D197E8E0001FF69 /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHelperCode.m; sourceTree = "<group>"; };
 		A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoCommon.h; path = Internal/VLCVideoCommon.h; sourceTree = "<group>"; };
 		A7A0CEA30D2EF13000F2C039 /* VLCVideoCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCVideoCommon.m; sourceTree = "<group>"; };
+		CA08590320F7156100B3AB69 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = macros.h; path = Headers/Internal/macros.h; sourceTree = "<group>"; };
 		CA23EBBC20BDF02700C0D635 /* VLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA23EBC020BDF02700C0D635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA23EBCA20BDF07700C0D635 /* VLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VLCKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -358,6 +359,7 @@
 			isa = PBXGroup;
 			children = (
 				32DBCF5E0370ADEE00C91783 /* Prefix.pch */,
+				CA08590320F7156100B3AB69 /* macros.h */,
 				7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */,
 			);
 			name = "Other Sources";
