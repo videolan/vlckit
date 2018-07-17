@@ -31,7 +31,6 @@
     VLCLibrary *_libraryInstance;
 }
 
-- (void)displayError:(NSArray * _Nonnull)dialogData;
 - (void)displayLoginDialog:(NSArray * _Nonnull)dialogData;
 - (void)displayQuestion:(NSArray * _Nonnull)dialogData;
 - (void)displayProgressDialog:(NSArray * _Nonnull)dialogData;
@@ -44,13 +43,7 @@ static void displayErrorCallback(void *p_data,
                                  const char *psz_title,
                                  const char *psz_text)
 {
-    @autoreleasepool {
-        VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
-        [dialogProvider performSelectorOnMainThread:@selector(displayError:)
-                                         withObject:@[toNSStr(psz_title),
-                                                      toNSStr(psz_text)]
-                                      waitUntilDone:NO];
-    }
+    //Not handled since we don't want to show users a dialog that they can't do anything about
 }
 
 static void displayLoginCallback(void *p_data,
@@ -178,17 +171,6 @@ static void updateProgressCallback(void *p_data,
     }
 
     return self;
-}
-
-- (void)displayError:(NSArray * _Nonnull)dialogData
-{
-    if (!self.customRenderer) {
-        return;
-    }
-
-    if ([self.customRenderer respondsToSelector:@selector(showErrorWithTitle:message:)]) {
-        [self.customRenderer showErrorWithTitle:dialogData[0] message:dialogData[1]];
-    }
 }
 
 - (void)displayLoginDialog:(NSArray * _Nonnull)dialogData

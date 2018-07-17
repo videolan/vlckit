@@ -34,13 +34,6 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
  */
 @protocol VLCCustomDialogRendererProtocol <NSObject>
 
-/**
- * called when VLC wants to show an error
- * \param error the dialog title
- * \param message the error message
- */
-- (void)showErrorWithTitle:(NSString * _Nonnull)error
-      message:(NSString * _Nonnull)message;
 
 /**
  * called when user logs in to something
