@@ -1,4 +1,4 @@
-<img src="./logo.svg" alt="VLCKit logo" height="70" >
+<img src="https://www.videolan.org/images/vlckit/logo.svg" alt="VLCKit logo" height="70" >
 
 |              | Platform                                                     | Master                                                       | Cocoapods                                                    |
 | ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
