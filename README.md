@@ -2,9 +2,9 @@
 
 |              | Platform                                                     | Master                                                       | Cocoapods                                                    |
 | ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| VLCKit       | ![Platform](https://img.shields.io/cocoapods/p/VLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit.svg) | [![VLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/VLCKit.svg)](https://cocoapods.org/pods/VLCKit) |
-| MobileVLCKit | ![Platform](https://img.shields.io/cocoapods/p/MobileVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit.svg) | [![MobileVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/MobileVLCKit.svg)](https://cocoapods.org/pods/MobileVLCKit) |
-| TVVLCKit     | ![Platform](https://img.shields.io/cocoapods/p/TVVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit.svg) | [![TVVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/TVVLCKit.svg)](https://cocoapods.org/pods/TVVLCKit) |
+| VLCKit       | ![Platform](https://img.shields.io/cocoapods/p/VLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![VLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/VLCKit.svg)](https://cocoapods.org/pods/VLCKit) |
+| MobileVLCKit | ![Platform](https://img.shields.io/cocoapods/p/MobileVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![MobileVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/MobileVLCKit.svg)](https://cocoapods.org/pods/MobileVLCKit) |
+| TVVLCKit     | ![Platform](https://img.shields.io/cocoapods/p/TVVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![TVVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/TVVLCKit.svg)](https://cocoapods.org/pods/TVVLCKit) |
 
 - [Features](#features)
 - [Use-case](#use-case)
