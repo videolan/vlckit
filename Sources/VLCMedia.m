@@ -65,6 +65,54 @@ NSString *const VLCMetaInformationDiscNumber     = @"discNumber";
 NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
 
 /******************************************************************************
+ * VLC callbacks for streaming.
+ */
+int open_cb(void *opaque, void **datap, uint64_t *sizep) {
+    NSInputStream *stream = (__bridge NSInputStream *)(opaque);
+    
+    // Once a stream is closed, it cannot be reopened.
+    if (stream && stream.streamStatus == NSStreamStatusNotOpen) {
+        [stream open];
+        *datap = opaque;
+        *sizep = UINT64_MAX;
+        return 0;
+    }
+    return stream.streamStatus == NSStreamStatusOpen ? 0 : -1;
+}
+
+ssize_t read_cb(void *opaque, unsigned char *buf, size_t len) {
+    NSInputStream *stream = (__bridge NSInputStream *)(opaque);
+    if (!stream) {
+        return -1;
+    }
+    
+    return [stream read:buf maxLength:len];
+}
+
+int seek_cb(void *opaque, uint64_t offset) {
+    NSInputStream *stream = (__bridge NSInputStream *)(opaque);
+    if (!stream) {
+        return -1;
+    }
+    
+    /*
+     By default, NSStream instances that are not file-based are non-seekable, one-way streams (although custom seekable subclasses are possible).
+     Once the data has been provided or consumed, the data cannot be retrieved from the stream.
+     
+     However, you may want a peer subclass to NSInputStream whose instances are capable of seeking through a stream.
+     */
+    return [stream setProperty:@(offset) forKey:NSStreamFileCurrentOffsetKey] ? 0 : -1;
+}
+
+void close_cb(void *opaque) {
+    NSInputStream *stream = (__bridge NSInputStream *)(opaque);
+    if (stream && stream.streamStatus != NSStreamStatusClosed && stream.streamStatus != NSStreamStatusNotOpen) {
+        [stream close];
+    }
+    return;
+}
+
+/******************************************************************************
  * VLCMedia ()
  */
 @interface VLCMedia()
@@ -74,6 +122,7 @@ NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
     BOOL                    areOthersMetaFetched;   ///< Value used to determine of the other meta has been parsed
     BOOL                    isArtURLFetched;        ///< Value used to determine of the other meta has been preparsed
     NSMutableDictionary     *_metaDictionary;       ///< Dictionary to cache metadata read from libvlc
+    NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
 }
 
 /* Make our properties internally readwrite */
@@ -232,6 +281,23 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
         _metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
 
+        [self initInternalMediaDescriptor];
+    }
+    return self;
+}
+
+- (instancetype)initWithStream:(NSInputStream *)stream
+{
+    if (self = [super init]) {
+        VLCLibrary *library = [VLCLibrary sharedLibrary];
+        NSAssert(library.instance, @"no library instance when creating media");
+        NSAssert(stream.streamStatus != NSStreamStatusClosed, @"Passing closed stream to VLCMedia.init does not work");
+        
+        self->stream = stream;
+        p_md = libvlc_media_new_callbacks(library.instance, open_cb, read_cb, seek_cb, close_cb, (__bridge void *)(stream));
+        
+        _metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
+        
         [self initInternalMediaDescriptor];
     }
     return self;
