@@ -621,6 +621,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA23EBC420BDF02700C0D635 /* Build configuration list for PBXNativeTarget "VLCKitTests" */;
 			buildPhases = (
+				CA738BF820F3500A00901B26 /* Run Script */,
 				CA23EBB820BDF02700C0D635 /* Sources */,
 				CA23EBB920BDF02700C0D635 /* Frameworks */,
 				CA23EBBA20BDF02700C0D635 /* Resources */,
@@ -687,6 +688,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CA738BF820F3500A00901B26 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh Tests/downloadTestAssets.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7DC28D3D20194043002D05C4 /* Sources */ = {
