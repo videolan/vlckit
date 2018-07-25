@@ -975,6 +975,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA0301D520ADFD2500452BB8 /* Build configuration list for PBXNativeTarget "MobileVLCKitTests" */;
 			buildPhases = (
+				CA738BF020F3487500901B26 /* ShellScript */,
 				CA0301C720ADFD2500452BB8 /* Sources */,
 				CA0301C820ADFD2500452BB8 /* Frameworks */,
 				CA0301C920ADFD2500452BB8 /* Resources */,
@@ -993,6 +994,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CAA03D1120C8DCDB001764DA /* Build configuration list for PBXNativeTarget "TVVLCKitTests" */;
 			buildPhases = (
+				CA738BF520F34D3400901B26 /* ShellScript */,
 				CAA03D0320C8DCDA001764DA /* Sources */,
 				CAA03D0420C8DCDA001764DA /* Frameworks */,
 				CAA03D0520C8DCDA001764DA /* Resources */,
@@ -1100,6 +1102,35 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CA738BF020F3487500901B26 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh Tests/downloadTestAssets.sh\n";
+		};
+		CA738BF520F34D3400901B26 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh Tests/downloadTestAssets.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7D1329551BA304D900BE647E /* Sources */ = {
