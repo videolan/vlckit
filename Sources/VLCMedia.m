@@ -368,6 +368,12 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return p_md == [media libVLCMediaDescriptor] ? NSOrderedSame : NSOrderedAscending;
 }
 
+- (BOOL)isEqual:(id)other
+{
+    return ([other isKindOfClass: [VLCMedia class]] &&
+            [other libVLCMediaDescriptor] == p_md);
+}
+
 - (VLCTime *)length
 {
     if (!_length) {
