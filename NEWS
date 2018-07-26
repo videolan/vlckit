@@ -1,6 +1,7 @@
 Version 3.1.4:
 --------------
 - Added missing VLCMediaParseStatusTimeout to VLCMediaParsedStatus enum
+- debugLoggingLevel of VLCLibrary defaults to 0 (just errors) when provided with an invalid level
 
 Version 3.1.3:
 --------------
