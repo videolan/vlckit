@@ -23,7 +23,6 @@
  *****************************************************************************/
 
 #import "VLCLibrary.h"
-#import "VLCLibVLCBridging.h"
 
 #if TARGET_OS_TV
 # include "vlc-plugins-AppleTV.h"
@@ -31,10 +30,6 @@
 # include "vlc-plugins-iPhone.h"
 #else
 # include "vlc-plugins-MacOSX.h"
-#endif
-
-#ifdef HAVE_CONFIG_H
-# include "config.h"
 #endif
 
 #include <vlc/vlc.h>
