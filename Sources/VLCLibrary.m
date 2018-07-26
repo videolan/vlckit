@@ -71,7 +71,7 @@ static VLCLibrary * sharedLibrary = nil;
     return self;
 }
 
-- (instancetype)initWithOptions:(NSArray*)options
+- (instancetype)initWithOptions:(NSArray *)options
 {
     if (self = [super init]) {
         [self prepareInstanceWithOptions:options];
@@ -143,10 +143,24 @@ static VLCLibrary * sharedLibrary = nil;
     if (!_instance)
         return;
 
+    _debugLogging = debugLogging;
+    
     if (debugLogging) {
         libvlc_log_set(_instance, HandleMessage, (__bridge void *)(self));
     } else {
         libvlc_log_unset(_instance);
+    }
+}
+
+- (void)setDebugLoggingLevel:(int)debugLoggingLevel
+{
+    if (debugLoggingLevel >= 0 && debugLoggingLevel <= 4) {
+        _debugLoggingLevel = debugLoggingLevel;
+    } else {
+        VKLog(@"Invalid debugLoggingLevel of %d provided", debugLoggingLevel);
+        VKLog(@"Please provide a valid debugLoggingLevel between 0 and 4");
+        VKLog(@"Defaulting debugLoggingLevel to 0 (just errors)");
+        _debugLoggingLevel = 0;
     }
 }
 
