@@ -123,9 +123,10 @@ extern NSString *const VLCMediaListItemDeleted;
  * retrieve the position of a media item
  *
  * \param media the media object to search for
- * \return the index position of the media in the list or -1 if not found
+ * \return The lowest index of the provided media in the list
+ * If media does not exist in the list, returns NSNotFound.
  */
-- (NSInteger)indexOfMedia:(VLCMedia *)media;
+- (NSUInteger)indexOfMedia:(VLCMedia *)media;
 
 /* Properties */
 /**

@@ -185,10 +185,9 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     return media;
 }
 
-- (NSInteger)indexOfMedia:(VLCMedia *)media
+- (NSUInteger)indexOfMedia:(VLCMedia *)media
 {
-    NSInteger result = libvlc_media_list_index_of_item(p_mlist, [media libVLCMediaDescriptor]);
-    return result;
+    return [_mediaObjects indexOfObject:media];
 }
 
 /* KVC Compliance: For the @"media" key */
