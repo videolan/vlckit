@@ -85,6 +85,19 @@
 		7DEBDAD7203C561D000A7D2F /* libvlc_vlm.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */; };
 		7DEBDAD8203C561D000A7D2F /* libvlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7D114D9BE800D34AAB /* libvlc.h */; };
 		7DEBDAD9203C561D000A7D2F /* vlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7E114D9BE800D34AAB /* vlc.h */; };
+		CA1E133021087CD60066F32F /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E132F21087CD60066F32F /* Video.swift */; };
+		CA1E134021087CEB0066F32F /* german.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133221087CEA0066F32F /* german.srt */; };
+		CA1E134121087CEB0066F32F /* slovak.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133321087CEA0066F32F /* slovak.srt */; };
+		CA1E134221087CEB0066F32F /* portuguese.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133421087CEA0066F32F /* portuguese.srt */; };
+		CA1E134321087CEB0066F32F /* raspberry.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133521087CEA0066F32F /* raspberry.mp4 */; };
+		CA1E134421087CEB0066F32F /* bunny.avi in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133721087CEA0066F32F /* bunny.avi */; };
+		CA1E134521087CEB0066F32F /* sea_lions.mov in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133821087CEA0066F32F /* sea_lions.mov */; };
+		CA1E134621087CEB0066F32F /* salmon.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133921087CEA0066F32F /* salmon.mp4 */; };
+		CA1E134721087CEB0066F32F /* bird.m4v in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133A21087CEA0066F32F /* bird.m4v */; };
+		CA1E134821087CEB0066F32F /* browser.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133C21087CEB0066F32F /* browser.mp4 */; };
+		CA1E134921087CEB0066F32F /* french.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133D21087CEB0066F32F /* french.srt */; };
+		CA1E134A21087CEB0066F32F /* chinese-traditional.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133E21087CEB0066F32F /* chinese-traditional.srt */; };
+		CA1E134B21087CEB0066F32F /* english.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E133F21087CEB0066F32F /* english.srt */; };
 		CA23EBC120BDF02700C0D635 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D7F20194117002D05C4 /* VLCKit.framework */; };
 		CA23EBCC20BDF07700C0D635 /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */; };
 		CA766ED620E9E53E009B3F3F /* VLCAudioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA766ED520E9E53E009B3F3F /* VLCAudioTest.swift */; };
@@ -189,6 +202,19 @@
 		A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoCommon.h; path = Internal/VLCVideoCommon.h; sourceTree = "<group>"; };
 		A7A0CEA30D2EF13000F2C039 /* VLCVideoCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCVideoCommon.m; sourceTree = "<group>"; };
 		CA08590320F7156100B3AB69 /* macros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = macros.h; path = Headers/Internal/macros.h; sourceTree = "<group>"; };
+		CA1E132F21087CD60066F32F /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		CA1E133221087CEA0066F32F /* german.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = german.srt; sourceTree = "<group>"; };
+		CA1E133321087CEA0066F32F /* slovak.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = slovak.srt; sourceTree = "<group>"; };
+		CA1E133421087CEA0066F32F /* portuguese.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = portuguese.srt; sourceTree = "<group>"; };
+		CA1E133521087CEA0066F32F /* raspberry.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = raspberry.mp4; sourceTree = "<group>"; };
+		CA1E133721087CEA0066F32F /* bunny.avi */ = {isa = PBXFileReference; lastKnownFileType = video.avi; path = bunny.avi; sourceTree = "<group>"; };
+		CA1E133821087CEA0066F32F /* sea_lions.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = sea_lions.mov; sourceTree = "<group>"; };
+		CA1E133921087CEA0066F32F /* salmon.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = salmon.mp4; sourceTree = "<group>"; };
+		CA1E133A21087CEA0066F32F /* bird.m4v */ = {isa = PBXFileReference; lastKnownFileType = file; path = bird.m4v; sourceTree = "<group>"; };
+		CA1E133C21087CEB0066F32F /* browser.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = browser.mp4; sourceTree = "<group>"; };
+		CA1E133D21087CEB0066F32F /* french.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = french.srt; sourceTree = "<group>"; };
+		CA1E133E21087CEB0066F32F /* chinese-traditional.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "chinese-traditional.srt"; sourceTree = "<group>"; };
+		CA1E133F21087CEB0066F32F /* english.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = english.srt; sourceTree = "<group>"; };
 		CA23EBBC20BDF02700C0D635 /* VLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA23EBC020BDF02700C0D635 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA23EBCA20BDF07700C0D635 /* VLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VLCKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -439,11 +465,55 @@
 		CA0B184920BDEFB0001CA52B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				CA1E134C21087CEE0066F32F /* Assets */,
 				CA7BC8AE20F4424100C86820 /* Helper */,
 				CA23EBC720BDF03400C0D635 /* Sources */,
 				CA23EBBD20BDF02700C0D635 /* VLCKitTests */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		CA1E133121087CEA0066F32F /* raspberry */ = {
+			isa = PBXGroup;
+			children = (
+				CA1E133221087CEA0066F32F /* german.srt */,
+				CA1E133321087CEA0066F32F /* slovak.srt */,
+				CA1E133421087CEA0066F32F /* portuguese.srt */,
+				CA1E133521087CEA0066F32F /* raspberry.mp4 */,
+			);
+			path = raspberry;
+			sourceTree = "<group>";
+		};
+		CA1E133621087CEA0066F32F /* standard */ = {
+			isa = PBXGroup;
+			children = (
+				CA1E133721087CEA0066F32F /* bunny.avi */,
+				CA1E133821087CEA0066F32F /* sea_lions.mov */,
+				CA1E133921087CEA0066F32F /* salmon.mp4 */,
+				CA1E133A21087CEA0066F32F /* bird.m4v */,
+			);
+			path = standard;
+			sourceTree = "<group>";
+		};
+		CA1E133B21087CEB0066F32F /* browser */ = {
+			isa = PBXGroup;
+			children = (
+				CA1E133D21087CEB0066F32F /* french.srt */,
+				CA1E133E21087CEB0066F32F /* chinese-traditional.srt */,
+				CA1E133F21087CEB0066F32F /* english.srt */,
+				CA1E133C21087CEB0066F32F /* browser.mp4 */,
+			);
+			path = browser;
+			sourceTree = "<group>";
+		};
+		CA1E134C21087CEE0066F32F /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				CA1E133B21087CEB0066F32F /* browser */,
+				CA1E133121087CEA0066F32F /* raspberry */,
+				CA1E133621087CEA0066F32F /* standard */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		CA23EBBD20BDF02700C0D635 /* VLCKitTests */ = {
@@ -468,6 +538,7 @@
 		CA7BC8AE20F4424100C86820 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				CA1E132F21087CD60066F32F /* Video.swift */,
 				CA7BC8B020F4424100C86820 /* XCTestHelper.swift */,
 			);
 			path = Helper;
@@ -621,6 +692,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA23EBC420BDF02700C0D635 /* Build configuration list for PBXNativeTarget "VLCKitTests" */;
 			buildPhases = (
+				CA738BF820F3500A00901B26 /* Run Script */,
 				CA23EBB820BDF02700C0D635 /* Sources */,
 				CA23EBB920BDF02700C0D635 /* Frameworks */,
 				CA23EBBA20BDF02700C0D635 /* Resources */,
@@ -683,10 +755,39 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA1E134B21087CEB0066F32F /* english.srt in Resources */,
+				CA1E134621087CEB0066F32F /* salmon.mp4 in Resources */,
+				CA1E134421087CEB0066F32F /* bunny.avi in Resources */,
+				CA1E134221087CEB0066F32F /* portuguese.srt in Resources */,
+				CA1E134521087CEB0066F32F /* sea_lions.mov in Resources */,
+				CA1E134A21087CEB0066F32F /* chinese-traditional.srt in Resources */,
+				CA1E134021087CEB0066F32F /* german.srt in Resources */,
+				CA1E134921087CEB0066F32F /* french.srt in Resources */,
+				CA1E134321087CEB0066F32F /* raspberry.mp4 in Resources */,
+				CA1E134721087CEB0066F32F /* bird.m4v in Resources */,
+				CA1E134821087CEB0066F32F /* browser.mp4 in Resources */,
+				CA1E134121087CEB0066F32F /* slovak.srt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CA738BF820F3500A00901B26 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh Tests/downloadTestAssets.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7DC28D3D20194043002D05C4 /* Sources */ = {
@@ -733,6 +834,7 @@
 				CA23EBCC20BDF07700C0D635 /* VLCTimeTest.swift in Sources */,
 				CA766ED620E9E53E009B3F3F /* VLCAudioTest.swift in Sources */,
 				CA7BC8B720F4424100C86820 /* XCTestHelper.swift in Sources */,
+				CA1E133021087CD60066F32F /* Video.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
