@@ -44,10 +44,12 @@
 
     void * _internalLibVLCInstance;
 }
+
 - (void)didFetchThumbnail;
 - (void)notifyDelegate;
 - (void)fetchThumbnail;
 - (void)startFetchingThumbnail;
+
 @property (readonly, assign, nonatomic) void *dataPointer;
 @property (readonly, assign, nonatomic) BOOL shouldRejectFrames;
 @end
@@ -197,6 +199,7 @@ static void display(void *opaque, void *picture)
 
     _effectiveThumbnailHeight = imageHeight;
     _effectiveThumbnailWidth = imageWidth;
+    _snapshotPosition = snapshotPosition;
 
     _data = calloc(1, imageWidth * imageHeight * 4);
     NSAssert(_data, @"Can't create data");
@@ -312,6 +315,8 @@ static void display(void *opaque, void *picture)
     if (_thumbnail)
         CGImageRelease(_thumbnail);
     _thumbnail = CGBitmapContextCreateImage(bitmap);
+    _thumbnailWidth = _effectiveThumbnailWidth;
+    _thumbnailHeight = _effectiveThumbnailHeight;
 
     // Put a new context there.
     CGContextRelease(bitmap);
