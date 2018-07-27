@@ -94,7 +94,7 @@
  * Snapshot Position
  * You shouldn't change this after -fetchThumbnail
  * has been called.
- * @return snapshot position. Default value 0.5
+ * @return snapshot position. Default value 0.3
  */
 @property (readwrite, assign, nonatomic) float snapshotPosition;
 @end
