@@ -13,16 +13,9 @@ error()
 
 ASSET_DIR="Assets"
 
-PWD=$(pwd | xargs basename);
+cd "$(dirname "$0")"
 
-if [ ${PWD} = "vlckit" ] || [ ${PWD} = "project" ] ; then
-  cd Tests
-elif [ ${PWD} != "Tests" ]; then
-  error "Running program from unknown directory. Please move to project's root directory; vlckit"
-  exit 1
-fi
-
-if [ -d ${ASSET_DIR}/.git ]; then
+if [ -e ${ASSET_DIR} ]; then
   cd ${ASSET_DIR}
   git reset --hard
   git pull origin master
