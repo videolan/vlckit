@@ -104,6 +104,7 @@
 		CA766ED620E9E53E009B3F3F /* VLCAudioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA766ED520E9E53E009B3F3F /* VLCAudioTest.swift */; };
 		CA7BC8B720F4424100C86820 /* XCTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BC8B020F4424100C86820 /* XCTestHelper.swift */; };
 		CABEDABB2109525B005FED09 /* VLCLibraryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEDABA2109525B005FED09 /* VLCLibraryTest.swift */; };
+		CABEDABF21095BBD005FED09 /* VLCMediaListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEDABD21095BBD005FED09 /* VLCMediaListTest.swift */; };
 		CABF4D5420D8E31700FCCE29 /* VLCMediaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -225,6 +226,7 @@
 		CA766ED520E9E53E009B3F3F /* VLCAudioTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCAudioTest.swift; sourceTree = "<group>"; };
 		CA7BC8B020F4424100C86820 /* XCTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestHelper.swift; sourceTree = "<group>"; };
 		CABEDABA2109525B005FED09 /* VLCLibraryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCLibraryTest.swift; sourceTree = "<group>"; };
+		CABEDABD21095BBD005FED09 /* VLCMediaListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCMediaListTest.swift; sourceTree = "<group>"; };
 		CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCMediaTest.swift; sourceTree = "<group>"; };
 		CCEC5B73114D9BE800D34AAB /* deprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = deprecated.h; path = libvlc/vlc/include/vlc/deprecated.h; sourceTree = SOURCE_ROOT; };
 		CCEC5B74114D9BE800D34AAB /* libvlc_events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_events.h; path = libvlc/vlc/include/vlc/libvlc_events.h; sourceTree = SOURCE_ROOT; };
@@ -534,6 +536,7 @@
 			children = (
 				CABEDABA2109525B005FED09 /* VLCLibraryTest.swift */,
 				CA6F70B2210AD41400FADCAB /* VLCMediaThumbnailerTest.swift */,
+				CABEDABD21095BBD005FED09 /* VLCMediaListTest.swift */,
 				CABF4D5320D8E31700FCCE29 /* VLCMediaTest.swift */,
 				CA766ED520E9E53E009B3F3F /* VLCAudioTest.swift */,
 				CA23EBCB20BDF07700C0D635 /* VLCTimeTest.swift */,
@@ -837,6 +840,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABF4D5420D8E31700FCCE29 /* VLCMediaTest.swift in Sources */,
+				CABEDABF21095BBD005FED09 /* VLCMediaListTest.swift in Sources */,
 				CA23EBCC20BDF07700C0D635 /* VLCTimeTest.swift in Sources */,
 				CA6F70B3210AD41400FADCAB /* VLCMediaThumbnailerTest.swift in Sources */,
 				CA766ED620E9E53E009B3F3F /* VLCAudioTest.swift in Sources */,

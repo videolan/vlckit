@@ -226,6 +226,8 @@
 		CABF4D4220D8DBA900FCCE29 /* VLCMediaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF4D4020D8DBA900FCCE29 /* VLCMediaTest.swift */; };
 		CABCBAE220EB0B080040E2F5 /* VLCAudioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABCBADD20EB0B080040E2F5 /* VLCAudioTest.swift */; };
 		CABCBAE320EB0B080040E2F5 /* VLCAudioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABCBADD20EB0B080040E2F5 /* VLCAudioTest.swift */; };
+		CABEDACB210996D9005FED09 /* VLCMediaListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEDAC8210996D9005FED09 /* VLCMediaListTest.swift */; };
+		CABEDACC210996D9005FED09 /* VLCMediaListTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEDAC8210996D9005FED09 /* VLCMediaListTest.swift */; };
 		CABF4D4520D8DCDD00FCCE29 /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AAC07E0554694100DB518D /* libMobileVLCKit.a */; };
 		CABF4D4620D8DD1B00FCCE29 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC31DF41F9100AD93ED /* libc++.tbd */; };
 		CABF4D4720D8DD2000FCCE29 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B51EC0A3390047E700 /* libbz2.tbd */; };
@@ -487,6 +489,7 @@
 		CABEDAB721095242005FED09 /* VLCLibraryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCLibraryTest.swift; sourceTree = "<group>"; };
 		CABF4D4020D8DBA900FCCE29 /* VLCMediaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCMediaTest.swift; sourceTree = "<group>"; };
 		CABCBADD20EB0B080040E2F5 /* VLCAudioTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCAudioTest.swift; sourceTree = "<group>"; };
+		CABEDAC8210996D9005FED09 /* VLCMediaListTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCMediaListTest.swift; sourceTree = "<group>"; };
 		D2AAC07E0554694100DB518D /* libMobileVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMobileVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -914,6 +917,7 @@
 			isa = PBXGroup;
 			children = (
 				CA5D5787210B16960099D6D0 /* VLCMediaThumbnailerTest.swift */,
+				CABEDAC8210996D9005FED09 /* VLCMediaListTest.swift */,
 				CABCBADD20EB0B080040E2F5 /* VLCAudioTest.swift */,
 				CABEDAB721095242005FED09 /* VLCLibraryTest.swift */,
 				CAA9F00120D254A600CDBB2C /* VLCTimeTest.swift */,
@@ -1334,6 +1338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABF4D4120D8DBA900FCCE29 /* VLCMediaTest.swift in Sources */,
+				CABEDACB210996D9005FED09 /* VLCMediaListTest.swift in Sources */,
 				CA7BC89120F4419E00C86820 /* XCTestHelper.swift in Sources */,
 				CA5D5788210B16960099D6D0 /* VLCMediaThumbnailerTest.swift in Sources */,
 				CAA9F00320D254AB00CDBB2C /* VLCTimeTest.swift in Sources */,
@@ -1348,6 +1353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABF4D4220D8DBA900FCCE29 /* VLCMediaTest.swift in Sources */,
+				CABEDACC210996D9005FED09 /* VLCMediaListTest.swift in Sources */,
 				CA7BC89520F441B500C86820 /* XCTestHelper.swift in Sources */,
 				CA5D5789210B16960099D6D0 /* VLCMediaThumbnailerTest.swift in Sources */,
 				CAA9F00420D254AC00CDBB2C /* VLCTimeTest.swift in Sources */,
