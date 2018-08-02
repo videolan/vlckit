@@ -11,6 +11,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Cocoapods](#cocoapods)
+    - [Carthage](#carthage)
 - [Build](#build)
     - [Default](#default)
     - [Build with your own VLC repository](#build-with-your-own-vlc-repository)
@@ -88,7 +89,25 @@ Then, run the following command,
 ```bash
 $ pod install
 ```
+### Carthage
 
+[Carthage](https://github.com/Carthage/Carthage) is a way to add frameworks to your Cocoa application. You can install it with the following command,
+
+```bash
+brew install carthage
+```
+
+To integrate VLCKit into your project, specify it in your `Cartfile`,
+
+```
+binary "https://code.videolan.org/videolan/VLCKit/tree/master/Packaging/MobileVLCKit.json" ~> 3.1.3
+```
+
+Then, run the following command,
+
+```bash
+carthage update
+```
 ## Build
 
 ### Default
