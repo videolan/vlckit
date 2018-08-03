@@ -221,11 +221,6 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     [self insertMedia:object atIndex:i];
 }
 
-- (void)removeObjectFromMediaAtIndex:(NSUInteger)i
-{
-    [self removeMediaAtIndex:i];
-}
-
 @synthesize delegate;
 
 - (BOOL)isReadOnly
