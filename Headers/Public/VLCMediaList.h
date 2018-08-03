@@ -104,12 +104,14 @@ extern NSString *const VLCMediaListItemDeleted;
 - (void)insertMedia:(VLCMedia *)media atIndex:(NSUInteger)index;
 
 /**
- * remove a media from a given position
+ * remove media at position index and return true if the operation was successful.
+ * An unsuccessful operation occurs when the index is greater than the medialists count
  *
  * \param index the index of the media to remove
+ * \return boolean result of the removal operation
  * \note this function silently fails if the list is read-only
  */
-- (void)removeMediaAtIndex:(NSUInteger)index;
+- (BOOL)removeMediaAtIndex:(NSUInteger)index;
 
 /**
  * retrieve a media from a given position
