@@ -2,6 +2,7 @@ Version 3.1.4:
 --------------
 - Added missing VLCMediaParseStatusTimeout to VLCMediaParsedStatus enum
 - debugLoggingLevel of VLCLibrary defaults to 0 (just errors) when provided with an invalid level
+- Added VLCMedia initWithStream:(NSInputStream *)stream to create a new VLCMedia object to use an input stream.
 
 Version 3.1.3:
 --------------
