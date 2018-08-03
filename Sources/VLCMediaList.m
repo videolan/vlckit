@@ -69,7 +69,8 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
         id self = (__bridge id)(user_data);
         [[VLCEventManager sharedManager] callOnMainThreadObject:self
                                                      withMethod:@selector(mediaListItemRemoved:)
-                                           withArgumentAsObject:@(event->u.media_list_item_deleted.index)];
+                                           withArgumentAsObject:@[@{@"media": [VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_list_item_deleted.item],
+                                                                    @"index": @(event->u.media_list_item_deleted.index)}]];
     }
 }
 
@@ -163,17 +164,22 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     libvlc_media_list_insert_media(p_mlist, [media libVLCMediaDescriptor], (int)index);
 }
 
-- (void)removeMediaAtIndex:(NSUInteger)index
+- (BOOL)removeMediaAtIndex:(NSUInteger)index
 {
+    __block BOOL ok = YES;
+    
     dispatch_sync(_serialMediaObjectsQueue, ^{
-        if (index >= [_mediaObjects count])
+        // Remove from cached Media
+        if (index >= [_mediaObjects count]) {
+            ok = NO;
             return;
-        //remove from cached Media
+        }
         [_mediaObjects removeObjectAtIndex:index];
     });
 
-    // Remove it from libvlc's medialist
+    // Remove from libvlc's medialist
     libvlc_media_list_remove_index(p_mlist, (int)index);
+    return ok;
 }
 
 - (VLCMedia *)mediaAtIndex:(NSUInteger)index
@@ -314,14 +320,19 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] forKey:@"media"];
 }
 
-- (void)mediaListItemRemoved:(NSNumber *)index
+- (void)mediaListItemRemoved:(NSArray *)arguments
 {
+    NSNumber *index = arguments.firstObject[@"index"];
+    VLCMedia *deleted = arguments.firstObject[@"media"];
+    
     [self willChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:[index intValue]] forKey:@"media"];
     dispatch_sync(_serialMediaObjectsQueue, ^{
-        [_mediaObjects removeObjectAtIndex:[index intValue]];
+        if ([_mediaObjects containsObject:deleted]) {
+            [_mediaObjects removeObject:deleted];
+        }
     });
     [self didChange:NSKeyValueChangeRemoval valuesAtIndexes:[NSIndexSet indexSetWithIndex:[index intValue]] forKey:@"media"];
-
+    
     // Post the notification
     [[NSNotificationCenter defaultCenter] postNotificationName:VLCMediaListItemDeleted
                                                         object:self
@@ -330,6 +341,5 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     // Let the delegate know that the item is being removed
     if (delegate && [delegate respondsToSelector:@selector(mediaList:mediaRemovedAtIndex:)])
         [delegate mediaList:self mediaRemovedAtIndex:[index intValue]];
-
 }
 @end
