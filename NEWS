@@ -1,8 +1,14 @@
+Version 4.0.0:
+--------------
+- Rename buildMobileVLCKit to compileAndBuildVLCKit
+- Use NSDateComponents API for VLCTime.verboseStringValue
+
 Version 3.1.4:
 --------------
 - Added missing VLCMediaParseStatusTimeout to VLCMediaParsedStatus enum
 - debugLoggingLevel of VLCLibrary defaults to 0 (just errors) when provided with an invalid level
 - Added VLCMedia initWithStream:(NSInputStream *)stream to create a new VLCMedia object to use an input stream.
+- Fixed VLCMediaThumbnailer dimensions not being updated after fetching a thumbnail
 
 Version 3.1.3:
 --------------
@@ -31,8 +37,6 @@ Version 3.1.0:
 - Expose the existing snapshot API of the VLCMediaPlayer class to macOS
 - Expose yaw, pitch, roll and fov for viewpoint
 - Include protobuf, sout, output_http and stream_out modules for Chromecast
-- Rename buildMobileVLCKit to compileAndBuildVLCKit
-- Use NSDateComponents API for VLCTime.verboseStringValue
 
 Version 3.0.2:
 --------------
