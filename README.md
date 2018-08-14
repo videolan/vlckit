@@ -100,7 +100,7 @@ brew install carthage
 To integrate VLCKit into your project, specify it in your `Cartfile`,
 
 ```
-binary "https://code.videolan.org/videolan/VLCKit/tree/master/Packaging/MobileVLCKit.json" ~> 3.1.3
+binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/MobileVLCKit.json" ~> 3.1.3
 ```
 
 Then, run the following command,
