@@ -70,14 +70,16 @@ NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
 int open_cb(void *opaque, void **datap, uint64_t *sizep) {
     NSInputStream *stream = (__bridge NSInputStream *)(opaque);
     
+    *datap = opaque;
+    *sizep = UINT64_MAX;
+    
     // Once a stream is closed, it cannot be reopened.
     if (stream && stream.streamStatus == NSStreamStatusNotOpen) {
         [stream open];
-        *datap = opaque;
-        *sizep = UINT64_MAX;
         return 0;
+    } else {
+        return stream.streamStatus == NSStreamStatusOpen ? 0 : -1;
     }
-    return stream.streamStatus == NSStreamStatusOpen ? 0 : -1;
 }
 
 ssize_t read_cb(void *opaque, unsigned char *buf, size_t len) {

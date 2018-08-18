@@ -168,7 +168,6 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  * This subclass must allow setting NSStreamFileCurrentOffsetKey property.
  * \note VLCMedia will open stream if it is not already opened, and will close eventually.
  * You can't pass an already closed input stream.
- * \note VLCHTTPInputStream instance can be passed in order to stream remote media.
  * \param stream Input stream for media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
