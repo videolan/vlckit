@@ -108,6 +108,16 @@ Then, run the following command,
 ```bash
 carthage update
 ```
+
+Note that the following system dependencies are required and need to be linked into the project:
+
+* AudioToolbox.framework
+* AVFoundation.framework
+* CoreMedia.framework
+* VideoToolbox.framework
+* libiconv.tbd
+* libbz2.tbd
+
 ## Build
 
 ### Default
