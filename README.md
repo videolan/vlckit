@@ -97,10 +97,21 @@ $ pod install
 brew install carthage
 ```
 
-To integrate VLCKit into your project, specify it in your `Cartfile`,
+To integrate VLCKit into your project, specify it in your `Cartfile`. The URL depends on your target OS.
 
+iOS:
 ```
 binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/MobileVLCKit.json" ~> 3.1.3
+```
+
+macOS:
+```
+binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/VLCKit.json" ~> 3.1.3
+```
+
+tvOS:
+```
+binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/TVVLCKit.json" ~> 3.1.3
 ```
 
 Then, run the following command,
@@ -125,8 +136,11 @@ Note that the following system dependencies are required and need to be linked i
 * OpenGLES.framework
 * QuartzCore.framework
 * Security.framework
-* UIKit.framework
 * VideoToolbox.framework
+
+On iOS and tvOS, you also need to link:
+
+* UIKit.framework
 
 ## Build
 
