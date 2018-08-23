@@ -113,10 +113,20 @@ Note that the following system dependencies are required and need to be linked i
 
 * AudioToolbox.framework
 * AVFoundation.framework
+* CFNetwork.framework
+* CoreFoundation.framework
+* CoreGraphics.framework
 * CoreMedia.framework
-* VideoToolbox.framework
-* libiconv.tbd
+* CoreText.framework
+* CoreVideo.framework
+* Foundation.framework
 * libbz2.tbd
+* libiconv.tbd
+* OpenGLES.framework
+* QuartzCore.framework
+* Security.framework
+* UIKit.framework
+* VideoToolbox.framework
 
 ## Build
 
