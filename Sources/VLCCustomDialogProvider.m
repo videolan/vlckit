@@ -121,7 +121,7 @@ static void cancelCallback(void *p_data,
 {
     @autoreleasepool {
         VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
-        [dialogProvider performSelectorOnMainThread:@selector(displayProgressDialog:)
+        [dialogProvider performSelectorOnMainThread:@selector(cancelDialog:)
                                          withObject:[NSValue valueWithPointer:p_id]
                                       waitUntilDone:NO];
     }
