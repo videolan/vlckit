@@ -76,7 +76,8 @@ class VLCMediaListDelegateTest: XCTestCase {
             (10, 0, false),
         ]
         
-        let source = Video.standards.map{ VLCMedia(path: $0.path) }
+        let videos = [Video.test1, Video.test2, Video.test3, Video.test4]
+        let source = videos.map{ VLCMedia(path: $0.path) }
         let mediaList = try XCTAssertNotNilAndUnwrap(VLCMediaList(array: source))
 
         for (deleteIdx, count, removalSuccessful) in tests {

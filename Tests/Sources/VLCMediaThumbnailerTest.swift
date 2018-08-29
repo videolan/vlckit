@@ -43,7 +43,8 @@ class VLCMediaThumbnailerTest: XCTestCase {
     // MARK: Initializers
     
     func testInitWithMediaAndDelegate() throws {
-        let tests = Video.standards.map{ $0.media }
+        let videos = [Video.test1, Video.test2, Video.test3, Video.test4]
+        let tests = videos.map{ $0.media }
         
         for media in tests {
             let delegate = MockThumbnailerDelegate()
