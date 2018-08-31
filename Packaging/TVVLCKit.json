@@ -1,6 +1,7 @@
 {
+  "3.1.4": "https://download.videolan.org/pub/cocoapods/prod/TVVLCKit-3.1.4-b5923ed-5a623ba37f.tar.xz",
   "3.1.3": "https://download.videolan.org/pub/cocoapods/prod/TVVLCKit-3.1.3-82c45e9-2a3005699f.tar.xz",
   "3.1.2": "https://download.videolan.org/pub/cocoapods/prod/TVVLCKit-3.1.2-fc8f1b0-d7dd5e41f2.tar.xz",
   "3.1.1": "https://download.videolan.org/pub/cocoapods/prod/TVVLCKit-3.1.1-e6b8ed6-1c5c2f965e.tar.xz",
-  "3.1.0": "https://download.videolan.org/pub/cocoapods/prod/TVVLCKit-3.1.0-1773552-8b2161fdd6.tar.xz" 	
+  "3.1.0": "https://download.videolan.org/pub/cocoapods/prod/TVVLCKit-3.1.0-1773552-8b2161fdd6.tar.xz"
 }

@@ -101,17 +101,17 @@ To integrate VLCKit into your project, specify it in your `Cartfile`. The URL de
 
 iOS:
 ```
-binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/MobileVLCKit.json" ~> 3.1.3
+binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/MobileVLCKit.json" ~> 3.1.4
 ```
 
 macOS:
 ```
-binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/VLCKit.json" ~> 3.1.3
+binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/VLCKit.json" ~> 3.1.4
 ```
 
 tvOS:
 ```
-binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/TVVLCKit.json" ~> 3.1.3
+binary "https://code.videolan.org/videolan/VLCKit/raw/master/Packaging/TVVLCKit.json" ~> 3.1.4
 ```
 
 Then, run the following command,
