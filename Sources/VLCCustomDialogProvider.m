@@ -264,10 +264,10 @@ static void updateProgressCallback(void *p_data,
         return;
     }
 
-    if ([self.customRenderer respondsToSelector:@selector(updateProgressWithReference:message:postion:)]) {
+    if ([self.customRenderer respondsToSelector:@selector(updateProgressWithReference:message:position:)]) {
         [self.customRenderer updateProgressWithReference:dialogData[0]
                                                  message:dialogData[1]
-                                                 postion:[dialogData[2] floatValue]];
+                                                 position:[dialogData[2] floatValue]];
     }
 }
 
