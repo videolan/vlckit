@@ -98,7 +98,7 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
  */
 - (void)updateProgressWithReference:(NSValue * _Nonnull)reference
                             message:(NSString * _Nullable)message
-                            postion:(float)position;
+                            position:(float)position;
 
 /** VLC decided to destroy a dialog
  * \param reference to the dialog to destroy
