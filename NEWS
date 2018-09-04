@@ -7,6 +7,9 @@ Version 3.2.0:
 --------------
 - Enabled libmux module
 
+- API Changes:
+    - updateProgressWithReference:message:postion: to updateProgressWithReference:message:position:
+
 - new recording Api
 VLCMediaPlayerDelegate:
 	- (void)mediaPlayerStartedRecording:(VLCMediaPlayer *)player;
