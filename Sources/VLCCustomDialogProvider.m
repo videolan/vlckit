@@ -136,8 +136,8 @@ static void updateProgressCallback(void *p_data,
         VLCCustomDialogProvider *dialogProvider = (__bridge VLCCustomDialogProvider *)p_data;
         [dialogProvider performSelectorOnMainThread:@selector(updateDisplayedProgressDialog:)
                                          withObject:@[[NSValue valueWithPointer:p_id],
-                                                      @(f_position),
-                                                      toNSStr(psz_text)]
+                                                      toNSStr(psz_text),
+                                                      @(f_position)]
                                       waitUntilDone:NO];
     }
 }
