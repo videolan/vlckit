@@ -81,6 +81,8 @@ Instance Methods</h2></td></tr>
 <tr class="separator:a857838e3a322f96cf60fa94dc905e8d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa0cba7a31646e3b6dbb7b994776eaf4b"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_v_l_c_media_player_delegate-p.html#aa0cba7a31646e3b6dbb7b994776eaf4b">mediaPlayerChapterChanged:</a></td></tr>
 <tr class="separator:aa0cba7a31646e3b6dbb7b994776eaf4b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac975d4b4100985c55cf5765fef978c29"><td class="memItemLeft" align="right" valign="top">(void)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="protocol_v_l_c_media_player_delegate-p.html#ac975d4b4100985c55cf5765fef978c29">mediaPlayerSnapshot:</a></td></tr>
+<tr class="separator:ac975d4b4100985c55cf5765fef978c29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Formal protocol declaration for playback delegates. Allows playback messages to be trapped by delegated objects. </p>
@@ -110,6 +112,34 @@ Instance Methods</h2></td></tr>
 </div><div class="memdoc">
 <p>Sent by the default notification center whenever the player's chapter has changed (if any).</p>
 <p>Discussion The value of aNotification is always an VLCMediaPlayerChapterChanged notification. You can retrieve the <a class="el" href="interface_v_l_c_media_player.html">VLCMediaPlayer</a> object in question by sending object to aNotification. </p>
+
+</div>
+</div>
+<a id="ac975d4b4100985c55cf5765fef978c29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac975d4b4100985c55cf5765fef978c29">&#9670;&nbsp;</a></span>mediaPlayerSnapshot:()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (void) mediaPlayerSnapshot: </td>
+          <td></td>
+          <td class="paramtype">(NSNotification *)&#160;</td>
+          <td class="paramname"><em>aNotification</em></td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">optional</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Sent by the default notification center whenever a new snapshot is taken.</p>
+<p>Discussion The value of aNotification is always an VLCMediaPlayerSnapshotTaken notification. You can retrieve the <a class="el" href="interface_v_l_c_media_player.html">VLCMediaPlayer</a> object in question by sending object to aNotification. </p>
 
 </div>
 </div>

@@ -81,7 +81,7 @@ $(function() {
 
 <h3><a id="index_a"></a>- a -</h3><ul>
 <li>addMedia:
-: <a class="el" href="interface_v_l_c_media_list.html#aaab2d450d6a7540f98df2313f6963dd0">VLCMediaList</a>
+: <a class="el" href="interface_v_l_c_media_list.html#a42eb32becfd0b41b61094a8f37dd2ed0">VLCMediaList</a>
 </li>
 <li>addOptions:
 : <a class="el" href="interface_v_l_c_media.html#a4ef68cc558ac4af2180acbad69c07289">VLCMedia</a>
@@ -192,9 +192,13 @@ $(function() {
 </li>
 <li>initWithName:
 : <a class="el" href="interface_v_l_c_media_discoverer.html#a41cd6e81501ef6d0f90788c6dc761cce">VLCMediaDiscoverer</a>
+, <a class="el" href="interface_v_l_c_renderer_discoverer.html#a955ed444b32f6fd9dedbecc880142567">VLCRendererDiscoverer</a>
 </li>
 <li>initWithName:libraryInstance:
 : <a class="el" href="interface_v_l_c_media_discoverer.html#af97ed30ce3de1cd00b7ae8e1c34e308c">VLCMediaDiscoverer</a>
+</li>
+<li>initWithName:longName:
+: <a class="el" href="interface_v_l_c_renderer_discoverer_description.html#a10bf81b9f3ec02fd551a5651335d7f79">VLCRendererDiscovererDescription</a>
 </li>
 <li>initWithNumber:
 : <a class="el" href="interface_v_l_c_time.html#a4681ebad8d27e7243ebf6d83679e8a24">VLCTime</a>
@@ -213,6 +217,9 @@ $(function() {
 <li>initWithPath:
 : <a class="el" href="interface_v_l_c_media.html#a4215c08e40a19e60bf10a9ea15b8fb85">VLCMedia</a>
 </li>
+<li>initWithStream:
+: <a class="el" href="interface_v_l_c_media.html#a0f4a6c10ac143fdcd19bc12fdb2bb71a">VLCMedia</a>
+</li>
 <li>initWithURL:
 : <a class="el" href="interface_v_l_c_media.html#a1a980dff03ccacf966e754c0a60bac49">VLCMedia</a>
 </li>
@@ -223,7 +230,7 @@ $(function() {
 : <a class="el" href="interface_v_l_c_media_player.html#a432545540f6be27394824275fa6e3d10">VLCMediaPlayer</a>
 </li>
 <li>insertMedia:atIndex:
-: <a class="el" href="interface_v_l_c_media_list.html#a381b6e20c66079e6bf6e8717917dad12">VLCMediaList</a>
+: <a class="el" href="interface_v_l_c_media_list.html#afa8c25de2c66bda46436b5e70ca23093">VLCMediaList</a>
 </li>
 <li>ipodStreamOutputWithFilePath:
 : <a class="el" href="interface_v_l_c_stream_output.html#a518d4dd8d9b9733acd58dce332f8d004">VLCStreamOutput</a>
@@ -248,6 +255,9 @@ $(function() {
 <li>lengthWaitUntilDate:
 : <a class="el" href="interface_v_l_c_media.html#a82e93da5f18bf8584beff1b714d496d4">VLCMedia</a>
 </li>
+<li>list
+: <a class="el" href="interface_v_l_c_renderer_discoverer.html#aa6ffdcd169141a032021df59fdfe3e14">VLCRendererDiscoverer</a>
+</li>
 <li>lock
 : <a class="el" href="interface_v_l_c_media_list.html#aa852de8d98be00568958006826b24661">VLCMediaList</a>
 </li>
@@ -265,22 +275,25 @@ $(function() {
 : <a class="el" href="interface_v_l_c_media.html#a3aaff98fc9546ceaf4c1871577c00a17">VLCMedia</a>
 </li>
 <li>mediaAtIndex:
-: <a class="el" href="interface_v_l_c_media_list.html#a54473cfb8a521c50d648f06d353f9a25">VLCMediaList</a>
+: <a class="el" href="interface_v_l_c_media_list.html#af07ba2e377bd890b7b12c61ac34a9e5c">VLCMediaList</a>
 </li>
 <li>mediaDidFinishParsing:
 : <a class="el" href="protocol_v_l_c_media_delegate_01-p.html#a60bcf0b83c3c0a1bc876ce818feba300">&lt;VLCMediaDelegate &gt;</a>
 </li>
 <li>mediaList:mediaAdded:atIndex:
-: <a class="el" href="protocol_v_l_c_media_list_delegate-p.html#a7fbf833b998890b3d41283ccffd88054">&lt;VLCMediaListDelegate&gt;</a>
+: <a class="el" href="protocol_v_l_c_media_list_delegate-p.html#a1dda4236df55b94c49065b9d82bbcc49">&lt;VLCMediaListDelegate&gt;</a>
 </li>
 <li>mediaList:mediaRemovedAtIndex:
-: <a class="el" href="protocol_v_l_c_media_list_delegate-p.html#abce101bf0e6340f6d703fc6a37f13869">&lt;VLCMediaListDelegate&gt;</a>
+: <a class="el" href="protocol_v_l_c_media_list_delegate-p.html#a40b2e3fccdee841b7831baddad568f20">&lt;VLCMediaListDelegate&gt;</a>
 </li>
 <li>mediaMetaDataDidChange:
 : <a class="el" href="protocol_v_l_c_media_delegate_01-p.html#aed1d7f2ff7d8f89ba0cbbf780e09427c">&lt;VLCMediaDelegate &gt;</a>
 </li>
 <li>mediaPlayerChapterChanged:
 : <a class="el" href="protocol_v_l_c_media_player_delegate-p.html#aa0cba7a31646e3b6dbb7b994776eaf4b">&lt;VLCMediaPlayerDelegate&gt;</a>
+</li>
+<li>mediaPlayerSnapshot:
+: <a class="el" href="protocol_v_l_c_media_player_delegate-p.html#ac975d4b4100985c55cf5765fef978c29">&lt;VLCMediaPlayerDelegate&gt;</a>
 </li>
 <li>mediaPlayerStateChanged:
 : <a class="el" href="protocol_v_l_c_media_player_delegate-p.html#afd15a9281d2a0d4c03b1b67ff0041ba8">&lt;VLCMediaPlayerDelegate&gt;</a>
@@ -328,6 +341,9 @@ $(function() {
 <li>NS_ENUM
 : <a class="el" href="interface_v_l_c_media.html#af4439eb3074ae064da27365b68ddbfc8">VLCMedia</a>
 , <a class="el" href="interface_v_l_c_media_player.html#a7eb2b3aeb06985b3b655c1c76609924f">VLCMediaPlayer</a>
+</li>
+<li>NS_UNAVAILABLE
+: <a class="el" href="interface_v_l_c_renderer_item.html#a7d4e309821a947227bdf33e2f9eb668e">VLCRendererItem</a>
 </li>
 <li>nullTime
 : <a class="el" href="interface_v_l_c_time.html#ae4b7157f2152d3eddafe14e126a4b96c">VLCTime</a>
@@ -386,7 +402,10 @@ $(function() {
 
 <h3><a id="index_r"></a>- r -</h3><ul>
 <li>removeMediaAtIndex:
-: <a class="el" href="interface_v_l_c_media_list.html#a413b75e2e0e46ac2f108b7de18e938f8">VLCMediaList</a>
+: <a class="el" href="interface_v_l_c_media_list.html#ae213e599e18a75a367279c9a4e62363c">VLCMediaList</a>
+</li>
+<li>renderers
+: <a class="el" href="interface_v_l_c_renderer_discoverer.html#acb4c6a5e9321cdd8432bd0f6e6ebee1d">VLCRendererDiscoverer</a>
 </li>
 <li>resetEqualizerFromProfile:
 : <a class="el" href="interface_v_l_c_media_player.html#abb2864039496be0bde196467971dd873">VLCMediaPlayer</a>
@@ -413,6 +432,9 @@ $(function() {
 <li>setApplicationIdentifier:withVersion:andApplicationIconName:
 : <a class="el" href="interface_v_l_c_library.html#a206f9468fc0694a35ff0fbc39d6b77ee">VLCLibrary</a>
 </li>
+<li>setDeinterlace:withFilter:
+: <a class="el" href="interface_v_l_c_media_player.html#aab513b275e510b982651fe034731185c">VLCMediaPlayer</a>
+</li>
 <li>setDeinterlaceFilter:
 : <a class="el" href="interface_v_l_c_media_player.html#a95abbbed4ddab2adb3fb5c4a8b8ae076">VLCMediaPlayer</a>
 </li>
@@ -424,6 +446,9 @@ $(function() {
 </li>
 <li>setMute:
 : <a class="el" href="interface_v_l_c_audio.html#ab5c770cd553794ec294c77fd4e56668d">VLCAudio</a>
+</li>
+<li>setRendererItem:
+: <a class="el" href="interface_v_l_c_media_player.html#a44f8101ea62406d757c44520361f8930">VLCMediaPlayer</a>
 </li>
 <li>setVideoLayer:
 : <a class="el" href="interface_v_l_c_media_player.html#a76dc478bf25fae8e0f671e39d006ce25">VLCMediaPlayer</a>
@@ -452,12 +477,16 @@ $(function() {
 <li>showQuestionWithTitle:message:type:cancelString:action1String:action2String:withReference:
 : <a class="el" href="protocol_v_l_c_custom_dialog_renderer_protocol_01-p.html#aaf89ec0239b9d1533e007c7f4af38dfc">&lt;VLCCustomDialogRendererProtocol &gt;</a>
 </li>
+<li>start
+: <a class="el" href="interface_v_l_c_renderer_discoverer.html#a5f344593f78573d3cba3bc9b89ccea14">VLCRendererDiscoverer</a>
+</li>
 <li>startDiscoverer
 : <a class="el" href="interface_v_l_c_media_discoverer.html#ae24d8b9250ccead549c829071f7cf184">VLCMediaDiscoverer</a>
 </li>
 <li>stop
 : <a class="el" href="interface_v_l_c_media_list_player.html#ab4473d33d43e75b4c73fd9ed1ec5cc2c">VLCMediaListPlayer</a>
 , <a class="el" href="interface_v_l_c_media_player.html#ad7184261982c10d5d1307e37ed16fb52">VLCMediaPlayer</a>
+, <a class="el" href="interface_v_l_c_renderer_discoverer.html#ab7ca6afa57b5f53f6284791fde3f8839">VLCRendererDiscoverer</a>
 </li>
 <li>stopDiscoverer
 : <a class="el" href="interface_v_l_c_media_discoverer.html#aedebd3f4b61febe5ca436af1f1ea7508">VLCMediaDiscoverer</a>
@@ -498,7 +527,7 @@ $(function() {
 : <a class="el" href="protocol_v_l_c_custom_dialog_renderer_protocol_01-p.html#a7b5d3cd75a42166e5c5eb3e9e08229b2">&lt;VLCCustomDialogRendererProtocol &gt;</a>
 </li>
 <li>updateViewpoint:pitch:roll:fov:absolute:
-: <a class="el" href="interface_v_l_c_media_player.html#ad3d5fa3c5f8729c99e5d07883b004765">VLCMediaPlayer</a>
+: <a class="el" href="interface_v_l_c_media_player.html#a8b3b8c6b2055f23b983b33baba2fac84">VLCMediaPlayer</a>
 </li>
 </ul>
 

@@ -5,6 +5,7 @@ var searchData=
   ['scalefactor',['scaleFactor',['../interface_v_l_c_media_player.html#a773e8e2b5b169fa6cb0bcef37330d327',1,'VLCMediaPlayer']]],
   ['seekable',['seekable',['../interface_v_l_c_media_player.html#ae3f8bc09a07c8b58935d4cd1cf58e69e',1,'VLCMediaPlayer']]],
   ['snapshotposition',['snapshotPosition',['../interface_v_l_c_media_thumbnailer.html#ab6c36054a654a28cc678082d0a1e02fa',1,'VLCMediaThumbnailer']]],
+  ['snapshots',['snapshots',['../interface_v_l_c_media_player.html#ada4fadb2ae81bd34fce217a34571872a',1,'VLCMediaPlayer']]],
   ['state',['state',['../interface_v_l_c_media.html#af247fea93ce48e219ddef15bdaf256de',1,'VLCMedia::state()'],['../interface_v_l_c_media_player.html#aa800575a8facf5db251df3cc88bd44ea',1,'VLCMediaPlayer::state()']]],
   ['stats',['stats',['../interface_v_l_c_media.html#a9c2d85f9c2dba700d7b2ca18cf12049a',1,'VLCMedia']]],
   ['streamoutputbitrate',['streamOutputBitrate',['../interface_v_l_c_media.html#afd944ae42af805d532f4ab36d5b0fe7d',1,'VLCMedia']]],

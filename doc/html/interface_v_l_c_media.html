@@ -100,6 +100,8 @@ Instance Methods</h2></td></tr>
 <tr class="separator:a1a980dff03ccacf966e754c0a60bac49"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4215c08e40a19e60bf10a9ea15b8fb85"><td class="memItemLeft" align="right" valign="top">(instancetype)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_v_l_c_media.html#a4215c08e40a19e60bf10a9ea15b8fb85">initWithPath:</a></td></tr>
 <tr class="separator:a4215c08e40a19e60bf10a9ea15b8fb85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f4a6c10ac143fdcd19bc12fdb2bb71a"><td class="memItemLeft" align="right" valign="top">(instancetype)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_v_l_c_media.html#a0f4a6c10ac143fdcd19bc12fdb2bb71a">initWithStream:</a></td></tr>
+<tr class="separator:a0f4a6c10ac143fdcd19bc12fdb2bb71a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9a048525b9aeb4919c47e1148962638"><td class="memItemLeft" align="right" valign="top">(instancetype)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_v_l_c_media.html#af9a048525b9aeb4919c47e1148962638">initAsNodeWithName:</a></td></tr>
 <tr class="separator:af9a048525b9aeb4919c47e1148962638"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4439eb3074ae064da27365b68ddbfc8"><td class="memItemLeft" align="right" valign="top">(typedef)&#160;</td><td class="memItemRight" valign="bottom">- <a class="el" href="interface_v_l_c_media.html#af4439eb3074ae064da27365b68ddbfc8">NS_ENUM</a></td></tr>
@@ -476,6 +478,35 @@ Properties</h2></td></tr>
 <p>Initializes a new <a class="el" href="interface_v_l_c_media.html">VLCMedia</a> object to use the specified path. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">aPath</td><td>Path to media to be accessed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A new <a class="el" href="interface_v_l_c_media.html">VLCMedia</a> object, only if there were no errors. </dd></dl>
+
+</div>
+</div>
+<a id="a0f4a6c10ac143fdcd19bc12fdb2bb71a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f4a6c10ac143fdcd19bc12fdb2bb71a">&#9670;&nbsp;</a></span>initWithStream:()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">- (instancetype) initWithStream: </td>
+          <td></td>
+          <td class="paramtype">(NSInputStream *)&#160;</td>
+          <td class="paramname"><em>stream</em></td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Initializes a new <a class="el" href="interface_v_l_c_media.html">VLCMedia</a> object to use an input stream.</p>
+<dl class="section note"><dt>Note</dt><dd>By default, NSStream instances that are not file-based are non-seekable, you may subclass NSInputStream whose instances are capable of seeking through a stream. This subclass must allow setting NSStreamFileCurrentOffsetKey property. </dd>
+<dd>
+<a class="el" href="interface_v_l_c_media.html">VLCMedia</a> will open stream if it is not already opened, and will close eventually. You can't pass an already closed input stream. </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>Input stream for media to be accessed. </td></tr>
   </table>
   </dd>
 </dl>
