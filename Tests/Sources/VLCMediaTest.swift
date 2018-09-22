@@ -38,4 +38,41 @@ class VLCMediaTest: XCTestCase {
             XCTAssertEqual(expected, actual, input)
         }
     }
+    
+    func testInitWithUrl() throws {
+        let tests = [
+            "sftp://dummypath.mov",
+            "smb://dummypath.mkv",
+            "http://www.xyz.com/我们走吧.mp3".encodeURL(),
+            "smb://server/가즈아.mp3".encodeURL(),
+            "smb://server/media file.mp3".encodeURL()
+        ]
+        
+        for path in tests {
+            let url = try XCTAssertNotNilAndUnwrap(URL(string: path))
+            let media = VLCMedia(url: url)
+            XCTAssertEqual(media.url, url)
+            media.verify(type: .file)
+        }
+    }
+}
+
+extension VLCMedia {
+    func verify(type: VLCMediaType,file: StaticString = #file, line: UInt = #line) {
+        XCTAssertNotNil(metaDictionary, file: file, line: line)
+        XCTAssertNotNil(subitems, file: file, line: line)
+        XCTAssertNotNil(url, file: file, line: line)
+        XCTAssertEqual(mediaType, type, file: file, line: line)
+        XCTAssertEqual(state, VLCMediaState.nothingSpecial, file: file, line: line)
+    }
+}
+
+extension String {
+    func encodeURL() -> String {
+        guard let encoded = addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) else {
+            XCTFail("Failed to encode URL \(self)")
+            return ""
+        }
+        return encoded
+    }
 }
