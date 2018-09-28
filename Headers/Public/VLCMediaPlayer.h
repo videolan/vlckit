@@ -135,6 +135,10 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)mediaPlayerSnapshot:(NSNotification *)aNotification;
 
+
+- (void)mediaPlayerRecordStartedAtPath:(NSString *)path;
+- (void)mediaPlayerRecordStoppedAtPath:(NSString *)path;
+
 @end
 
 

@@ -203,6 +203,17 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     }
 }
 
+static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerRecordChanged:)
+                                           withArgumentAsObject:@[@{@"path": [NSString stringWithUTF8String:event->u.media_player_record_changed.path],
+                                                                    @"isRecording": @(event->u.media_player_record_changed.recording)
+                                                                    }]];
+    }
+}
+
 @interface VLCMediaPlayer ()
 {
     VLCLibrary *_privateLibrary;                ///< Internal
@@ -1405,6 +1416,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
         libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
     });
 }
 
@@ -1431,6 +1443,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     libvlc_event_detach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
     libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
 }
 
 - (dispatch_queue_t)libVLCBackgroundQueue
@@ -1529,6 +1542,15 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
         [_snapshots addObject:fileName];
     }
+}
+
+- (void)mediaPlayerRecordChanged:(NSArray *)arguments
+{
+    NSString *path = arguments.firstObject[@"path"];
+    BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
+
+    isRecording ? [_delegate mediaPlayerRecordStartedAtPath:path]
+                : [_delegate mediaPlayerRecordStoppedAtPath:path];
 }
 
 @end
