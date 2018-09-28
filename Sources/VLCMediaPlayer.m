@@ -1328,6 +1328,16 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     return _playerInstance;
 }
 
+- (BOOL)startRecordingAtPath:(NSString *)path
+{
+    return libvlc_media_player_record(_playerInstance, YES, [path UTF8String]);
+}
+
+- (BOOL)stopRecording
+{
+    return libvlc_media_player_record(_playerInstance, NO, nil);
+}
+
 #pragma mark -
 #pragma mark - Renderer
 

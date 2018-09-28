@@ -875,6 +875,14 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSImage *lastSnapshot;
 #endif
 
+/**
+ * Start recording at given **directory** path
+ * \param path directory where the recording should go
+ * \return an BOOL with the success status
+ */
+- (BOOL)startRecordingAtPath:(NSString *)path;
+- (BOOL)stopRecording;
+
 #pragma mark -
 #pragma mark Renderer
 
