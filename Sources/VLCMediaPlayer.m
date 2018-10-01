@@ -203,6 +203,17 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     }
 }
 
+static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerRecordChanged:)
+                                           withArgumentAsObject:@[@{@"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.file_path],
+                                                                    @"isRecording": @(event->u.media_player_record_changed.recording)
+                                                                    }]];
+    }
+}
+
 @interface VLCMediaPlayer ()
 {
     VLCLibrary *_privateLibrary;                ///< Internal
@@ -1328,6 +1339,17 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     return _playerInstance;
 }
 
+- (BOOL)startRecordingAtPath:(NSString *)path
+{
+    return libvlc_media_player_record(_playerInstance, YES, [path UTF8String]);
+}
+
+- (BOOL)stopRecording
+{
+    return libvlc_media_player_record(_playerInstance, NO, nil);
+}
+
+
 #pragma mark -
 #pragma mark - Renderer
 
@@ -1395,6 +1417,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
         libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
         libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
     });
 }
 
@@ -1421,6 +1444,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
     libvlc_event_detach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
     libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
 }
 
 - (dispatch_queue_t)libVLCBackgroundQueue
@@ -1519,6 +1543,15 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 
         [_snapshots addObject:fileName];
     }
+}
+
+- (void)mediaPlayerRecordChanged:(NSArray *)arguments
+{
+    NSString *filePath = arguments.firstObject[@"filePath"];
+    BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
+
+    isRecording ? [_delegate mediaPlayerStartedRecording:self]
+                : [_delegate mediaPlayer:self recordStoppedAtPath:filePath];
 }
 
 @end
