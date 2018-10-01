@@ -1,0 +1,69 @@
+From 46ce2f7ed9951abbd6a29f67404b9d45290d4c4a Mon Sep 17 00:00:00 2001
+From: Soomin Lee <bubu@mikan.io>
+Date: Thu, 27 Sep 2018 18:40:39 +0200
+Subject: [PATCH 2/2] libvlc: events: Add callbacks for record
+
+---
+ include/vlc/libvlc_events.h |  9 +++++++++
+ lib/media_player.c          | 11 +++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/include/vlc/libvlc_events.h b/include/vlc/libvlc_events.h
+index f8b0e9b5b2..c449209507 100644
+--- a/include/vlc/libvlc_events.h
++++ b/include/vlc/libvlc_events.h
+@@ -32,6 +32,8 @@
+ 
+ # ifdef __cplusplus
+ extern "C" {
++# else
++#  include <stdbool.h>
+ # endif
+ 
+ typedef struct libvlc_renderer_item_t libvlc_renderer_item_t;
+@@ -86,6 +88,7 @@ enum libvlc_event_e {
+     libvlc_MediaPlayerAudioVolume,
+     libvlc_MediaPlayerAudioDevice,
+     libvlc_MediaPlayerChapterChanged,
++    libvlc_MediaPlayerRecordChanged,
+ 
+     libvlc_MediaListItemAdded=0x200,
+     libvlc_MediaListWillAddItem,
+@@ -275,6 +278,12 @@ typedef struct libvlc_event_t
+             const char *device;
+         } media_player_audio_device;
+ 
++        struct
++        {
++            const char *path;
++            bool recording;
++        } media_player_record_changed;
++
+         struct
+         {
+             libvlc_renderer_item_t *item;
+diff --git a/lib/media_player.c b/lib/media_player.c
+index 61cc0b0e0d..480a1278c8 100644
+--- a/lib/media_player.c
++++ b/lib/media_player.c
+@@ -446,6 +446,17 @@ input_event_changed( vlc_object_t * p_this, char const * psz_cmd,
+             }
+         }
+     }
++    else if ( newval.i_int == INPUT_EVENT_RECORD )
++    {
++        char *path = var_GetString( p_mi, "input-record-path" );
++
++        event.type = libvlc_MediaPlayerRecordChanged;
++        event.u.media_player_record_changed.recording = var_GetBool( p_input, "record" );
++        event.u.media_player_record_changed.path = path;
++
++        libvlc_event_send( &p_mi->event_manager, &event );
++        free(path);
++    }
+ 
+     return VLC_SUCCESS;
+ }
+-- 
+2.19.0
+

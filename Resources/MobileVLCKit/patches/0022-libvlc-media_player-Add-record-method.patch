@@ -1,0 +1,74 @@
+From bb1a41c606579d39e28d89e51696fb8b88abeaf2 Mon Sep 17 00:00:00 2001
+From: Soomin Lee <bubu@mikan.io>
+Date: Tue, 25 Sep 2018 18:37:47 +0200
+Subject: [PATCH 1/2] libvlc: media_player: Add record method
+
+---
+ include/vlc/libvlc_media_player.h | 14 ++++++++++++++
+ lib/media_player.c                | 21 +++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
+index 4336df9442..da64504a93 100644
+--- a/include/vlc/libvlc_media_player.h
++++ b/include/vlc/libvlc_media_player.h
+@@ -2080,6 +2080,20 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
+ LIBVLC_API int libvlc_media_player_set_role(libvlc_media_player_t *p_mi,
+                                             unsigned role);
+ 
++/**
++ * Start/stop recording
++ *
++ * \version LibVLC 4.0.0 and later.
++ *
++ * \param p_mi media player
++ * \param enable true to start recording, false to stop
++ * \param path the path of the recording directory
++ * \return 0 on success, -1 on error
++ */
++LIBVLC_API int libvlc_media_player_record(libvlc_media_player_t *p_mi,
++                                          bool enable,
++                                          const char *path);
++
+ /** @} audio */
+ 
+ /** @} media_player */
+diff --git a/lib/media_player.c b/lib/media_player.c
+index a9a22fee15..61cc0b0e0d 100644
+--- a/lib/media_player.c
++++ b/lib/media_player.c
+@@ -621,6 +621,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+     var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
+     var_Create (mp, "sout", VLC_VAR_STRING);
+     var_Create (mp, "demux-filter", VLC_VAR_STRING);
++    var_Create (mp, "input-record-path", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
+ 
+     /* Video */
+     var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
+@@ -2078,3 +2079,23 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
+     free(str);
+     return ret;
+ }
++
++int libvlc_media_player_record( libvlc_media_player_t *p_mi,
++                                bool enable,
++                                const char *path)
++{
++    vlc_value_t val = { .psz_string = (char *)path };
++    input_thread_t *p_input_thread;
++
++    p_input_thread = libvlc_get_input_thread ( p_mi );
++    if( !p_input_thread )
++        return VLC_EGENERIC;
++
++    if( enable )
++        var_Set( p_mi, "input-record-path", val );
++
++    var_SetBool( p_input_thread, "record", enable);
++
++    vlc_object_release( p_input_thread );
++    return VLC_SUCCESS;
++}
+-- 
+2.19.0
+
