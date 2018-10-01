@@ -40,6 +40,7 @@
 #endif
 
 @class VLCLibrary;
+@class VLCMediaPlayer;
 @class VLCRendererItem;
 
 /* Notification Messages */
@@ -134,6 +135,19 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * the VLCMediaPlayer object in question by sending object to aNotification.
  */
 - (void)mediaPlayerSnapshot:(NSNotification *)aNotification;
+
+/**
+ * Sent by the default notification center whenever the player started recording.
+ * @param player the player who started recording
+ */
+- (void)mediaPlayerStartedRecording:(VLCMediaPlayer *)player;
+
+/**
+ * Sent by the default notification center whenever the player stopped recording.
+ * @param player the player who stopped recording
+ * @param path the path to the file that the player recorded to
+ */
+- (void)mediaPlayer:(VLCMediaPlayer *)player recordStoppedAtPath:(NSString *)path;
 
 @end
 
@@ -874,6 +888,19 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) NSImage *lastSnapshot;
 #endif
+
+/**
+ * Start recording at given **directory** path
+ * \param path directory where the recording should go
+ * \return an BOOL with the success status
+ */
+- (BOOL)startRecordingAtPath:(NSString *)path;
+
+/**
+ * Stop current recording
+ * \return an BOOL with the success status
+ */
+- (BOOL)stopRecording;
 
 #pragma mark -
 #pragma mark Renderer
