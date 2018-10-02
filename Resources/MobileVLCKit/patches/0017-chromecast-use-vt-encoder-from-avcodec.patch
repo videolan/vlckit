@@ -1,17 +1,17 @@
-From 813a97f1522009b7714b80f86d9b21751a52d7f5 Mon Sep 17 00:00:00 2001
+From 9c32cfca617bd2a443bd2a27bdc1c435e28e10ae Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:52:35 +0200
-Subject: [PATCH 17/20] chromecast: use vt encoder from avcodec
+Subject: [PATCH 17/21] chromecast: use vt encoder from avcodec
 
 ---
  modules/stream_out/chromecast/cast.cpp | 13 +++++++++++++
  1 file changed, 13 insertions(+)
 
 diff --git a/modules/stream_out/chromecast/cast.cpp b/modules/stream_out/chromecast/cast.cpp
-index b330b70297..fc30380720 100644
+index 53227c258b..60edf28e82 100644
 --- a/modules/stream_out/chromecast/cast.cpp
 +++ b/modules/stream_out/chromecast/cast.cpp
-@@ -956,12 +956,25 @@ static std::string GetVencX264Option( sout_stream_t * /* p_stream */,
+@@ -954,12 +954,25 @@ static std::string GetVencX264Option( sout_stream_t * /* p_stream */,
      return ssout.str();
  }
  
@@ -38,5 +38,5 @@ index b330b70297..fc30380720 100644
      { .fcc = VLC_CODEC_VP8,  .get_opt = GetVencVPXOption },
      { .fcc = VLC_CODEC_H264, .get_opt = NULL },
 -- 
-2.18.0
+2.19.0
 

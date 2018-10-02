@@ -1,7 +1,7 @@
-From e0dcb507b92e1d66a34f56c84a6d7a23c7370fc5 Mon Sep 17 00:00:00 2001
+From 535218a5a6afa59b077a46648ab27077428efa57 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Dec 2017 18:05:40 +0100
-Subject: [PATCH 11/18] libvlc: add a basic API to change freetype's color,
+Subject: [PATCH 11/21] libvlc: add a basic API to change freetype's color,
  bold, font and size variables on-the-fly
 
 ---
@@ -182,7 +182,7 @@ index acbba3a30f..035cc0ebf1 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 53cf99cd18..822aae9905 100644
+index b92c66ceac..681e26ca98 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -952,12 +952,35 @@ static inline int RenderAXYZ( filter_t *p_filter,
@@ -226,5 +226,5 @@ index 53cf99cd18..822aae9905 100644
  
  static void FillDefaultStyles( filter_t *p_filter )
 -- 
-2.17.1
+2.19.0
 

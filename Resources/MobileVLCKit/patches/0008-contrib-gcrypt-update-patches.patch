@@ -1,7 +1,7 @@
-From 1b81fbb7622c2e237a718e1a050378fe0d45bf08 Mon Sep 17 00:00:00 2001
+From 4d09268ef4d5952f169f8b2777a379306175d11a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:03:37 +0200
-Subject: [PATCH 08/18] contrib/gcrypt: update patches
+Subject: [PATCH 08/21] contrib/gcrypt: update patches
 
 ---
  .../src/gcrypt/fix-sha1-ssse3-for-clang.patch | 308 +++++++++++++++++-
@@ -363,5 +363,5 @@ index df97ffb488..957f268ad2 100644
   
   # Need to include ../src in addition to top_srcdir because gcrypt.h is
 -- 
-2.17.1
+2.19.0
 
