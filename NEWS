@@ -1,3 +1,8 @@
+Version 3.1.5:
+--------------
+- Fixed a crash when updateProgressCallback was called
+- Fixed an issue with authentification for certain HTTP streams
+
 Version 3.1.4:
 --------------
 - debugLoggingLevel of VLCLibrary defaults to 0 (just errors) when provided with an invalid level
