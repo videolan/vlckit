@@ -1,0 +1,7 @@
+platform :ios, '9.0'
+
+target 'SwiftSimplePlayback' do
+  use_frameworks!
+  pod 'MobileVLCKit'
+
+end
