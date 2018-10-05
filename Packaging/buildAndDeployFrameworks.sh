@@ -138,9 +138,7 @@ getVLCHashes()
 {
     VLCKIT_HASH=$(git rev-parse --short HEAD)
     VERSION=$(git describe --tags HEAD)
-    spushd "libvlc/vlc"
-        VLC_HASH=$(git rev-parse --short HEAD)
-    spopd #libvlc/vlc
+    VLC_HASH=`awk -F'"' '/TESTEDHASH=/ {print $2}' compileAndBuildVLCKit.sh`
 }
 
 renamePackage()
@@ -153,7 +151,6 @@ renamePackage()
         TARGET="VLCKit"
     fi
     getVLCHashes
-
 
     local packageName="${TARGET}-REPLACEWITHVERSION.tar.xz"
 
