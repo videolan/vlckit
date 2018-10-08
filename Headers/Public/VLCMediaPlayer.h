@@ -40,6 +40,7 @@
 #endif
 
 @class VLCLibrary;
+@class VLCMediaPlayer;
 @class VLCRendererItem;
 
 /* Notification Messages */
@@ -135,9 +136,19 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)mediaPlayerSnapshot:(NSNotification *)aNotification;
 
+/**
+ * Sent by the default notification center whenever the player started recording.
+ * @param player the player who started recording
+ * @param path the path to the file that the player records to
+ */
+- (void)mediaPlayer:(VLCMediaPlayer *)player recordStartedAtPath:(NSString *)path;
 
-- (void)mediaPlayerRecordStartedAtPath:(NSString *)path;
-- (void)mediaPlayerRecordStoppedAtPath:(NSString *)path;
+/**
+ * Sent by the default notification center whenever the player stopped recording.
+ * @param player the player who stopped recording
+ * @param path the path to the file that the player recorded to
+ */
+- (void)mediaPlayer:(VLCMediaPlayer *)player recordStoppedAtPath:(NSString *)path;
 
 @end
 

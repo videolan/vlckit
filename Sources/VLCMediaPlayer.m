@@ -1549,8 +1549,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     NSString *path = arguments.firstObject[@"path"];
     BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
 
-    isRecording ? [_delegate mediaPlayerRecordStartedAtPath:path]
-                : [_delegate mediaPlayerRecordStoppedAtPath:path];
+    isRecording ? [_delegate mediaPlayer:self recordStartedAtPath:path] : [_delegate mediaPlayer:self recordStoppedAtPath:path];
 }
 
 @end
