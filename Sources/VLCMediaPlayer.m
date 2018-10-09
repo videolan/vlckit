@@ -208,7 +208,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(mediaPlayerRecordChanged:)
-                                           withArgumentAsObject:@[@{@"path": [NSString stringWithUTF8String:event->u.media_player_record_changed.path],
+                                           withArgumentAsObject:@[@{@"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.file_path],
                                                                     @"isRecording": @(event->u.media_player_record_changed.recording)
                                                                     }]];
     }
@@ -1557,10 +1557,11 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)mediaPlayerRecordChanged:(NSArray *)arguments
 {
-    NSString *path = arguments.firstObject[@"path"];
+    NSString *filePath = arguments.firstObject[@"filePath"];
     BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
 
-    isRecording ? [_delegate mediaPlayer:self recordStartedAtPath:path] : [_delegate mediaPlayer:self recordStoppedAtPath:path];
+    isRecording ? [_delegate mediaPlayerRecordStarted:self]
+                : [_delegate mediaPlayer:self recordStoppedAtPath:filePath];
 }
 
 @end

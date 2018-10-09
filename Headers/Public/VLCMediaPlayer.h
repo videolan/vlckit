@@ -139,9 +139,8 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Sent by the default notification center whenever the player started recording.
  * @param player the player who started recording
- * @param path the path to the file that the player records to
  */
-- (void)mediaPlayer:(VLCMediaPlayer *)player recordStartedAtPath:(NSString *)path;
+- (void)mediaPlayerRecordStarted:(VLCMediaPlayer *)player;
 
 /**
  * Sent by the default notification center whenever the player stopped recording.
