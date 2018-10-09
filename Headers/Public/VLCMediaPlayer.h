@@ -896,7 +896,21 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \return an BOOL with the success status
  */
 - (BOOL)startRecordingAtPath:(NSString *)path;
+
+/**
+ * Stop current recording
+ * \return an BOOL with the success status
+ */
 - (BOOL)stopRecording;
+
+/**
+ * mux srt and mp4 file to an mp4 file with embedded subtitles
+ * \param srtPath path to srt file
+ * \param mp4Path path to mp4 file
+ * \param outPath path where the new file should be written to
+ * \return an BOOL with the success status
+ */
+- (BOOL)muxSubtitleFile:(NSString *)srtPath toMp4File:(NSString *)mp4Path outputPath:(NSString *)outPath;
 
 #pragma mark -
 #pragma mark Renderer

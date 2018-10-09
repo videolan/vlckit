@@ -1349,6 +1349,17 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_media_player_record(_playerInstance, NO, nil);
 }
 
+- (BOOL)muxSubtitleFile:(NSString *)srtPath toMp4File:(NSString *)mp4Path outputPath:(NSString *)outPath
+{
+    //check if mp4 file is valid, srt is valid
+    libvlc_media_t* p_media = libvlc_media_new_location(_playerInstance, [outPath UTF8String]);
+    NSString *soutString = [NSString stringWithFormat:@":sout=#transcode{vcodec=mp4,vb=800,fps=24,scale=Auto,width=1920,height=1080,acodec=mpga,ab=128,channels=2,samplerate=44100,soverlay}:file{dst=%@,no-overwrite} :sout-keep", outPath];
+    libvlc_media_add_option(p_media, [soutString UTF8String]);
+    libvlc_media_player_t* p_mp = libvlc_media_player_new_from_media( p_media );
+    int play = libvlc_media_player_play(p_mp);
+    return play == 0;
+}
+
 #pragma mark -
 #pragma mark - Renderer
 
