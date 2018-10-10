@@ -1,15 +1,15 @@
-From 46ce2f7ed9951abbd6a29f67404b9d45290d4c4a Mon Sep 17 00:00:00 2001
+From 8ddb9512335005505493838b105a005b6a7be610 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
-Subject: [PATCH 2/2] libvlc: events: Add callbacks for record
+Subject: [PATCH 04/20] libvlc: events: Add callbacks for record
 
 ---
  include/vlc/libvlc_events.h |  9 +++++++++
- lib/media_player.c          | 11 +++++++++++
- 2 files changed, 20 insertions(+)
+ lib/media_player.c          | 16 ++++++++++++++++
+ 2 files changed, 25 insertions(+)
 
 diff --git a/include/vlc/libvlc_events.h b/include/vlc/libvlc_events.h
-index f8b0e9b5b2..c449209507 100644
+index f8b0e9b5b2..bbc6bc0eec 100644
 --- a/include/vlc/libvlc_events.h
 +++ b/include/vlc/libvlc_events.h
 @@ -32,6 +32,8 @@
@@ -35,7 +35,7 @@ index f8b0e9b5b2..c449209507 100644
  
 +        struct
 +        {
-+            const char *path;
++            const char *file_path;
 +            bool recording;
 +        } media_player_record_changed;
 +
@@ -43,27 +43,32 @@ index f8b0e9b5b2..c449209507 100644
          {
              libvlc_renderer_item_t *item;
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 61cc0b0e0d..480a1278c8 100644
+index 61cc0b0e0d..439910d053 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -446,6 +446,17 @@ input_event_changed( vlc_object_t * p_this, char const * psz_cmd,
+@@ -446,6 +446,22 @@ input_event_changed( vlc_object_t * p_this, char const * psz_cmd,
              }
          }
      }
 +    else if ( newval.i_int == INPUT_EVENT_RECORD )
 +    {
-+        char *path = var_GetString( p_mi, "input-record-path" );
++        bool recording = var_GetBool( p_input, "record" );
++        char *file_path = NULL;
++
++        if ( !recording )
++            file_path = var_GetString( p_mi->obj.libvlc, "record-file" );
 +
 +        event.type = libvlc_MediaPlayerRecordChanged;
-+        event.u.media_player_record_changed.recording = var_GetBool( p_input, "record" );
-+        event.u.media_player_record_changed.path = path;
++        event.u.media_player_record_changed.file_path = file_path;
++        event.u.media_player_record_changed.recording = recording;
 +
 +        libvlc_event_send( &p_mi->event_manager, &event );
-+        free(path);
++
++        free( file_path );
 +    }
  
      return VLC_SUCCESS;
  }
 -- 
-2.19.0
+2.19.1
 
