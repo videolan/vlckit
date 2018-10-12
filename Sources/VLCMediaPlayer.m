@@ -74,7 +74,8 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
         [VLCMediaPlayerStateEnded]        = @"VLCMediaPlayerStateEnded",
         [VLCMediaPlayerStateError]        = @"VLCMediaPlayerStateError",
         [VLCMediaPlayerStatePlaying]      = @"VLCMediaPlayerStatePlaying",
-        [VLCMediaPlayerStatePaused]       = @"VLCMediaPlayerStatePaused"
+        [VLCMediaPlayerStatePaused]       = @"VLCMediaPlayerStatePaused",
+        [VLCMediaPlayerStateESAdded]      = @"VLCMediaPlayerStateESAdded"
     };
     return stateToStrings[state];
 }
