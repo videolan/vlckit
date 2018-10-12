@@ -185,7 +185,7 @@ diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/f
 index b7e4823e38..720870e9e3 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
-@@ -943,12 +943,26 @@ static inline int RenderAXYZ( filter_t *p_filter,
+@@ -943,12 +943,27 @@ static inline int RenderAXYZ( filter_t *p_filter,
  
  static void UpdateDefaultLiveStyles( filter_t *p_filter )
  {
@@ -199,7 +199,8 @@ index b7e4823e38..720870e9e3 100644
 +    p_sys->p_default_style->psz_fontname = strdup( var_InheritString( p_filter, "freetype-font" ) );
  
 -    p_style->i_font_color = var_InheritInteger( p_filter, "freetype-color" );
-+    p_sys->p_forced_style->f_font_relsize = 1.0 / var_InheritInteger( p_filter, "freetype-rel-fontsize" );;
++    int size = 1.0 / var_InheritInteger( p_filter, "freetype-rel-fontsize" );
++    p_sys->p_forced_style->f_font_relsize = size < 0 ? 10 : size;
  
 -    p_style->i_background_alpha = var_InheritInteger( p_filter, "freetype-background-opacity" );
 -    p_style->i_background_color = var_InheritInteger( p_filter, "freetype-background-color" );
