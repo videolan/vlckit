@@ -1,4 +1,4 @@
-From c16e5f5126606ab94865f4ef058a6821f85b820d Mon Sep 17 00:00:00 2001
+From f7f6a1736714a969e7ed2bdfd213d59bc98dd7df Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Mon, 30 Apr 2018 14:33:08 +0100
 Subject: [PATCH 14/21] add auto deinterlacer-mode which is also valid
@@ -22,5 +22,5 @@ index 035cc0ebf1..a3e5b248e9 100644
  
      if (*psz_mode)
 -- 
-2.19.0
+2.19.1
 

@@ -1,4 +1,4 @@
-From 535218a5a6afa59b077a46648ab27077428efa57 Mon Sep 17 00:00:00 2001
+From 0fcb64856d14c35c14a0a435b090a2e79fd1de90 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Dec 2017 18:05:40 +0100
 Subject: [PATCH 11/21] libvlc: add a basic API to change freetype's color,
@@ -9,8 +9,8 @@ Subject: [PATCH 11/21] libvlc: add a basic API to change freetype's color,
  lib/libvlc.sym                            |  6 ++
  lib/media_player.c                        |  6 ++
  lib/video.c                               | 69 ++++++++++++++++++++++-
- modules/text_renderer/freetype/freetype.c | 31 ++++++++--
- 5 files changed, 133 insertions(+), 5 deletions(-)
+ modules/text_renderer/freetype/freetype.c | 32 +++++++++--
+ 5 files changed, 134 insertions(+), 5 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
 index 4336df9442..20b220448b 100644
@@ -182,7 +182,7 @@ index acbba3a30f..035cc0ebf1 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index b92c66ceac..681e26ca98 100644
+index b92c66ceac..fb1469a6ea 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -952,12 +952,36 @@ static inline int RenderAXYZ( filter_t *p_filter,
@@ -227,5 +227,5 @@ index b92c66ceac..681e26ca98 100644
  
  static void FillDefaultStyles( filter_t *p_filter )
 -- 
-2.19.0
+2.19.1
 

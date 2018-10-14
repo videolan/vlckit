@@ -1,4 +1,4 @@
-From b2bb6c7cd12a5bbe46c88489d150e72b89793456 Mon Sep 17 00:00:00 2001
+From b68d83237a50beb6da2a9520011029e527f45be4 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
 Subject: [PATCH 10/21] contrib: use live555 version that is compatible with
@@ -46,5 +46,5 @@ index b77d96ce73..3a2526a497 100644
  		echo "PREFIX = $(PREFIX)" >> $$subdir/Makefile.head && \
  		echo "LIBDIR = $(PREFIX)/lib" >> $$subdir/Makefile.head ; done
 -- 
-2.19.0
+2.19.1
 

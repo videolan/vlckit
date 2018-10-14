@@ -1,4 +1,4 @@
-From 2641d57514c799c7219aead95e88043bfa53b716 Mon Sep 17 00:00:00 2001
+From a2103b8070ad060de61baab046c7424ddb5d9681 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 18 Dec 2014 22:14:55 +0100
 Subject: [PATCH 01/21] arm_neon: work-around libtool issue
@@ -18,5 +18,5 @@ index 10f5c15d7c..0406ded7eb 100644
  
  libchroma_yuv_neon_plugin_la_SOURCES = \
 -- 
-2.19.0
+2.19.1
 

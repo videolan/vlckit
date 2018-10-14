@@ -1,4 +1,4 @@
-From 402a5dcc5f28b95a617cfb22f5d5be04794c10dc Mon Sep 17 00:00:00 2001
+From ef572bd0e55241ee419c2c3267f277583cc4a0c6 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
 Subject: [PATCH 19/21] core: expose config_AutoSaveConfigFile
@@ -60,5 +60,5 @@ index db7f4030b9..4ad59b1fc0 100644
  config_ChainDestroy
  config_ChainDuplicate
 -- 
-2.19.0
+2.19.1
 

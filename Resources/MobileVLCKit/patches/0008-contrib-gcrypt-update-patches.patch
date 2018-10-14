@@ -1,4 +1,4 @@
-From 4d09268ef4d5952f169f8b2777a379306175d11a Mon Sep 17 00:00:00 2001
+From 85cd4dcac702493f4eb4c7e09dbf6914e2bfdb51 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:03:37 +0200
 Subject: [PATCH 08/21] contrib/gcrypt: update patches
@@ -363,5 +363,5 @@ index df97ffb488..957f268ad2 100644
   
   # Need to include ../src in addition to top_srcdir because gcrypt.h is
 -- 
-2.19.0
+2.19.1
 
