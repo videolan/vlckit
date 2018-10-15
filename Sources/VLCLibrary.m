@@ -206,17 +206,9 @@ static void HandleMessage(void *data,
         return;
 
     char *str;
-    if (vasprintf(&str, fmt, args) == -1) {
-        if (str)
-            free(str);
-        str = NULL;
-        return;
+
+    if (vasprintf(&str, fmt, args) != -1) {
+        VKLog(@"%s", str);
+        free(str);
     }
-
-    if (str == NULL)
-        return;
-
-    VKLog(@"%s", str);
-    free(str);
-    str = NULL;
 }
