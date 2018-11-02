@@ -87,8 +87,6 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 
 - (void)registerObservers;
 - (void)unregisterObservers;
-- (void)registerObserversForMuxWithPlayer:(libvlc_media_player_t *)player;
-- (void)unregisterObserversForMuxWithPlayer:(libvlc_media_player_t *)player;
 - (dispatch_queue_t)libVLCBackgroundQueue;
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime;
 - (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
@@ -216,21 +214,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     }
 }
 
-static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, void * self)
-{
-    VLCMediaPlayerState newState;
-
-    if (event->type == libvlc_MediaPlayerPaused) {
-        newState = libvlc_MediaPlayerPaused;
-
-        @autoreleasepool {
-            [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                         withMethod:@selector(mediaPlayerStateChangeForMux:)
-                                               withArgumentAsObject:@(newState)];
-        }
-    }
-}
-
 @interface VLCMediaPlayer ()
 {
     VLCLibrary *_privateLibrary;                ///< Internal
@@ -247,7 +230,6 @@ static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, voi
     BOOL _equalizerEnabled;                     ///< Equalizer state
     libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
-    libvlc_media_player_t *_p_mp;
 }
 @end
 
@@ -350,9 +332,6 @@ static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, voi
 
     if (_viewpoint)
         libvlc_free(_viewpoint);
-
-    if (_p_mp)
-        libvlc_media_player_release(_p_mp);
 
     libvlc_media_player_release(_playerInstance);
 
@@ -1370,23 +1349,6 @@ static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, voi
     return libvlc_media_player_record(_playerInstance, NO, nil);
 }
 
-- (BOOL)muxSubtitleFile:(NSString *)srtPath toMp4File:(NSString *)mp4Path outputPath:(NSString *)outputPath
-{
-    //check if mp4 file is valid, srt is valid
-
-    libvlc_media_t* p_media = libvlc_media_new_path([_privateLibrary instance], [mp4Path UTF8String]);
-
-    NSString *option = [NSString stringWithFormat:@":sout=#transcode{vcodec=h264,width=720,height=480,venc=avcodec{codec=h264_videotoolbox},acodec=mpga,ab=128,channels=2,samplerate=44100,soverlay}:file{dst='%@',mux=mp4}", outputPath];
-
-    libvlc_media_add_option(p_media, [[NSString stringWithFormat:@":sub-file=%@", srtPath] UTF8String]);
-    libvlc_media_add_option(p_media, [option UTF8String]);
-
-    _p_mp = libvlc_media_player_new_from_media( p_media );
-
-    [self registerObserversForMuxWithPlayer:_p_mp];
-
-    return libvlc_media_player_play( _p_mp ) == 0;
-}
 
 #pragma mark -
 #pragma mark - Renderer
@@ -1426,37 +1388,6 @@ static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, voi
         [self setDrawable:aDrawable];
     }
     return self;
-}
-
-- (void)mediaPlayerStateChangeForMux:(NSNumber *)newState
-{
-    if (_p_mp) {
-        [self unregisterObserversForMuxWithPlayer:_p_mp];
-        libvlc_media_player_stop( _p_mp );
-        libvlc_media_player_release( _p_mp );
-    }
-}
-
-- (void)registerObserversForMuxWithPlayer:(libvlc_media_player_t *)player
-{
-    __block libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(player);
-    if (!p_em)
-        return;
-
-    dispatch_sync(_libVLCBackgroundQueue,^{
-        libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,
-                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
-    });
-}
-
-- (void)unregisterObserversForMuxWithPlayer:(libvlc_media_player_t *)player
-{
-    libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(player);
-    if (!p_em)
-        return;
-
-    libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,
-                        HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
 }
 
 - (void)registerObservers
