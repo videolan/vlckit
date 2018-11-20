@@ -1043,7 +1043,7 @@ if [ "$VLCROOT" = "" ]; then
             cd ..
         else
             cd vlc
-            git pull --rebase
+            git fetch --all
             git reset --hard ${TESTEDHASH}
             git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
             cd ..
