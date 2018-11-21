@@ -1,11 +1,11 @@
-From 823adc6b13806e57deb4f6fc5c3e3a2d1869a8e9 Mon Sep 17 00:00:00 2001
+From 3cd38bd0a11400577995f94b10a94ac0d601ddd0 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 13/15] Replace thread local with pthread TSD
+Subject: [PATCH 09/21] Replace thread local with pthread TSD
 
 ---
- src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- src/misc/variables.c | 19 +++++++++++++++++
+ src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
+ src/misc/variables.c | 19 ++++++++++++++
  2 files changed, 78 insertions(+)
 
 diff --git a/src/misc/interrupt.c b/src/misc/interrupt.c
@@ -222,5 +222,5 @@ index 810c8ffc81..3d2d2f1dc8 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.15.1
+2.19.1
 

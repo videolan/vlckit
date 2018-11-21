@@ -1,7 +1,7 @@
-From 2ed0f231c6665b39e914bee1130f0efabb0ed9e2 Mon Sep 17 00:00:00 2001
+From 7ea0717450762464b257e5ee36624871a96b1d74 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 09/15] libvlc_media: add cookie_jar API
+Subject: [PATCH 05/21] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -58,10 +58,10 @@ index 383f366b69..2a5666688d 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 7c7fea02e6..9dbf0efa4e 100644
+index 482d95f6f1..8ae5da8d0f 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -218,6 +218,8 @@ libvlc_media_set_user_data
+@@ -217,6 +217,8 @@ libvlc_media_set_user_data
  libvlc_media_subitems
  libvlc_media_tracks_get
  libvlc_media_tracks_release
@@ -138,10 +138,10 @@ index 5a67e9ff60..0f0341e260 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index daef2faedd..4a6cf0cb0e 100644
+index a9a22fee15..fde008aaeb 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -620,6 +620,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -621,6 +621,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
      var_Create (mp, "sout", VLC_VAR_STRING);
      var_Create (mp, "demux-filter", VLC_VAR_STRING);
@@ -149,7 +149,7 @@ index daef2faedd..4a6cf0cb0e 100644
  
      /* Video */
      var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
-@@ -964,6 +965,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -985,6 +986,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
      for( size_t i = 0; i < ARRAY_SIZE( p_mi->selected_es ); ++i )
          p_mi->selected_es[i] = ES_INIT;
  
@@ -163,5 +163,5 @@ index daef2faedd..4a6cf0cb0e 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.15.1
+2.19.1
 

@@ -1,16 +1,16 @@
-From 43681d842ba377f6a4eff434d5bd5d81775fce7f Mon Sep 17 00:00:00 2001
+From 20fc6522b5fdc3b2e9cd43c20365e0449bf7370e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
-Subject: [PATCH 10/15] contrib/gcrypt: work-around a libtool limitation
+Subject: [PATCH 06/21] contrib/gcrypt: work-around a libtool limitation
 
 ---
- contrib/src/gcrypt/rules.mak                       |  1 +
- .../gcrypt/work-around-libtool-limitation.patch    | 25 ++++++++++++++++++++++
+ contrib/src/gcrypt/rules.mak                  |  1 +
+ .../work-around-libtool-limitation.patch      | 25 +++++++++++++++++++
  2 files changed, 26 insertions(+)
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index eff80415a1..c2d4b934f4 100644
+index eb1debac1b..bc938e585f 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -12,6 +12,7 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
@@ -53,5 +53,5 @@ index 0000000000..df97ffb488
 + AM_CFLAGS = $(GPG_ERROR_CFLAGS)
 + 
 -- 
-2.15.1
+2.19.1
 

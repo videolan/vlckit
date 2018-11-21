@@ -1,0 +1,31 @@
+From 939e1151740e3abb060a0afeac620a22a0cd70ef Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Tue, 27 Mar 2018 16:49:34 +0200
+Subject: [PATCH 16/21] contrib: ffmpeg: enable videotoolbox encoder
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+No problem for decoders since it won't be used.
+
+(cherry picked from commit 1003d6aa220d18088d2d6d2949dc117b622f85e3)
+Signed-off-by: Felix Paul Kühne <felix@feepk.net>
+---
+ contrib/src/ffmpeg/rules.mak | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
+index 4d2d716146..7a3b678370 100644
+--- a/contrib/src/ffmpeg/rules.mak
++++ b/contrib/src/ffmpeg/rules.mak
+@@ -50,7 +50,6 @@ FFMPEGCONF += \
+ 	--disable-linux-perf
+ ifdef HAVE_DARWIN_OS
+ FFMPEGCONF += \
+-	--disable-videotoolbox \
+ 	--disable-securetransport
+ endif
+ endif
+-- 
+2.19.1
+

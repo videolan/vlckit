@@ -1,11 +1,11 @@
-From b15a3081c13c1f7487695292905e80fec4708ec6 Mon Sep 17 00:00:00 2001
+From 56de0725dec3e6bbb1e7c50bbdd27e6f71c9c1fe Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
-Subject: [PATCH 11/15] contrib/gcrypt: fix tvOS compilation
+Subject: [PATCH 07/21] contrib/gcrypt: fix tvOS compilation
 
 ---
- contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch | 16 ++++++++++++++++
- contrib/src/gcrypt/rules.mak                      |  6 ++++++
+ .../src/gcrypt/fix-sha1-ssse3-for-clang.patch    | 16 ++++++++++++++++
+ contrib/src/gcrypt/rules.mak                     |  6 ++++++
  2 files changed, 22 insertions(+)
  create mode 100644 contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
 
@@ -32,7 +32,7 @@ index 0000000000..f1d3ccc71f
 +    *	%rdi: ctx, CTX
 +    *	%rsi: data (64 bytes)
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index c2d4b934f4..dbd556be61 100644
+index bc938e585f..3564fde87b 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -13,6 +13,7 @@ gcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
@@ -43,7 +43,7 @@ index c2d4b934f4..dbd556be61 100644
  	$(APPLY) $(SRC)/gcrypt/fix-pthread-detection.patch
  ifdef HAVE_WINSTORE
  	$(APPLY) $(SRC)/gcrypt/winrt.patch
-@@ -43,6 +44,11 @@ GCRYPT_EXTRA_CFLAGS = -fheinous-gnu-extensions
+@@ -45,6 +46,11 @@ GCRYPT_EXTRA_CFLAGS = -fheinous-gnu-extensions
  else
  GCRYPT_EXTRA_CFLAGS =
  endif
@@ -56,5 +56,5 @@ index c2d4b934f4..dbd556be61 100644
  GCRYPT_CONF += --disable-aesni-support
  else
 -- 
-2.15.1
+2.19.1
 

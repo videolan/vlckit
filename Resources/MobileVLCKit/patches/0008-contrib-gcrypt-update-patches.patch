@@ -1,11 +1,11 @@
-From be3c74bb2d7ab28e21f4c8270392f553579ff867 Mon Sep 17 00:00:00 2001
+From 7eb426d0b581e6ca258c61185b9b58b75b59069a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:03:37 +0200
-Subject: [PATCH 12/15] contrib/gcrypt: update patches
+Subject: [PATCH 08/21] contrib/gcrypt: update patches
 
 ---
- contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch  | 308 ++++++++++++++++++++-
- .../gcrypt/work-around-libtool-limitation.patch    |  16 +-
+ .../src/gcrypt/fix-sha1-ssse3-for-clang.patch | 308 +++++++++++++++++-
+ .../work-around-libtool-limitation.patch      |  16 +-
  2 files changed, 310 insertions(+), 14 deletions(-)
 
 diff --git a/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch b/contrib/src/gcrypt/fix-sha1-ssse3-for-clang.patch
@@ -363,5 +363,5 @@ index df97ffb488..957f268ad2 100644
   
   # Need to include ../src in addition to top_srcdir because gcrypt.h is
 -- 
-2.15.1
+2.19.1
 

@@ -1,19 +1,20 @@
-From 4579acfee3d2479e1c849c5124f539bbb831262b Mon Sep 17 00:00:00 2001
+From f48e06d158c35e5546e76e0bfde719f40b540553 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH] Work around lack of __thread storage qualifier on old macOS
+Subject: [PATCH 12/21] Work around lack of __thread storage qualifier on old
+ macOS
 
 ---
- configure.ac                      |  4 +--
- include/vlc_fixups.h              |  7 ++--
+ configure.ac                      |  4 +-
+ include/vlc_fixups.h              |  7 +++-
  po/POTFILES.in                    |  1 +
  src/Makefile.am                   |  1 +
- {compat => src/extras}/tdestroy.c | 67 +++++++++++++++++++++++----------------
+ {compat => src/extras}/tdestroy.c | 67 ++++++++++++++++++-------------
  5 files changed, 48 insertions(+), 32 deletions(-)
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 225bcae987..c5d7a41063 100644
+index cfdae650b3..603b260a73 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -590,8 +590,8 @@ dnl Check for system libs needed
@@ -21,20 +22,20 @@ index 225bcae987..c5d7a41063 100644
  
  dnl Check for usual libc functions
 -AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getpwuid_r isatty lstat memalign mkostemp mmap newlocale open_memstream openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime uselocale])
--AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tdestroy tfind timegm timespec_get strverscmp pathconf])
+-AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tdestroy tfind timegm timespec_get strverscmp pathconf])
 +AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getpwuid_r isatty lstat memalign mkostemp mmap open_memstream openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime tdestroy uselocale])
-+AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tfind timegm timespec_get strverscmp pathconf])
++AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tfind timegm timespec_get strverscmp pathconf])
  AC_REPLACE_FUNCS([gettimeofday])
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 3003a154f6..ba4f6447be 100644
+index 6c0de2854b..8e8e406028 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
-@@ -486,9 +486,12 @@ void *tsearch( const void *key, void **rootp, int(*cmp)(const void *, const void
- void *tfind( const void *key, const void **rootp, int(*cmp)(const void *, const void *) );
- void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void *) );
+@@ -490,9 +490,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
  void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int depth) );
+ void *lfind( const void *key, const void *base, size_t *nmemb,
+              size_t size, int(*cmp)(const void *, const void *) );
 -#endif /* HAVE_SEARCH_H */
 -#ifndef HAVE_TDESTROY
  void tdestroy( void *root, void (*free_node)(void *nodep) );
@@ -47,7 +48,7 @@ index 3003a154f6..ba4f6447be 100644
  
  /* Random numbers */
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index fd35c8935c..cde9849d0c 100644
+index 2b4319f140..cb7f3948e9 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
 @@ -68,6 +68,7 @@ src/config/help.c
@@ -203,5 +204,5 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 -- 
-2.14.3 (Apple Git-98)
+2.19.1
 
