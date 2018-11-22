@@ -17,7 +17,7 @@ index fbefce0be8..a2a72db411 100644
                  continue;
 +            if (errno == ENOSPC)
 +                vlc_dialog_display_error(p_access, "record",
-+                                         "error: %s", vlc_strerror_c(errno));
++                                         "An error occurred during recording. Error: %s", vlc_strerror_c(errno));
              block_ChainRelease (p_buffer);
              msg_Err( p_access, "cannot write: %s", vlc_strerror_c(errno) );
              return -1;
@@ -30,7 +30,7 @@ index fbefce0be8..a2a72db411 100644
                           vlc_strerror_c(errno));
 +
 +                vlc_dialog_display_error(p_access, "record",
-+                                         "error: %s", vlc_strerror_c(errno));
++                                         "An error occurred during recording. Error: %s", vlc_strerror_c(errno));
 +            }
              if (overwrite || errno != EEXIST)
                  break;
