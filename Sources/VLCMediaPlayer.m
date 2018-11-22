@@ -1548,7 +1548,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
 
     isRecording ? [_delegate mediaPlayerStartedRecording:self]
-                : [_delegate mediaPlayer:self recordStoppedAtPath:filePath];
+                : [_delegate mediaPlayer:self recordingStoppedAtPath:filePath];
 }
 
 @end

@@ -147,7 +147,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * @param player the player who stopped recording
  * @param path the path to the file that the player recorded to
  */
-- (void)mediaPlayer:(VLCMediaPlayer *)player recordStoppedAtPath:(NSString *)path;
+- (void)mediaPlayer:(VLCMediaPlayer *)player recordingStoppedAtPath:(NSString *)path;
 
 @end
 
