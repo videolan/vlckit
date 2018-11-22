@@ -547,7 +547,6 @@ buildLibVLC() {
     fingerprinter
     output_udp
     output_livehttp
-    libmux
     "
 
     if [ "$SCARY" = "no" ]; then
