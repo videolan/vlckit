@@ -96,6 +96,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
 
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
+- (void)mediaPlayerRecordChanged:(NSArray *)arguments;
 @end
 
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
