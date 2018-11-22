@@ -96,6 +96,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
 
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
+- (void)mediaPlayerRecordChanged:(NSArray *)arguments;
 @end
 
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
@@ -1548,7 +1549,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
 
     isRecording ? [_delegate mediaPlayerStartedRecording:self]
-                : [_delegate mediaPlayer:self recordStoppedAtPath:filePath];
+                : [_delegate mediaPlayer:self recordingStoppedAtPath:filePath];
 }
 
 @end
