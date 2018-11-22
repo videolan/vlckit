@@ -1,3 +1,16 @@
+
+Version 3.2.0:
+--------------
+- Enabled libmux module
+
+- new recording Api
+VLCMediaPlayerDelegate:
+	- (void)mediaPlayerStartedRecording:(VLCMediaPlayer *)player;
+	- (void)mediaPlayer:(VLCMediaPlayer *)player recordingStoppedAtPath:(NSString *)path;
+VLCMediaPlayer:
+	- (BOOL)startRecordingAtPath:(NSString *)path;
+	- (BOOL)stopRecording;
+
 Version 3.1.5:
 --------------
 - Fixed a crash when updateProgressCallback was called
