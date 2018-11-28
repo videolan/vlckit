@@ -1,4 +1,4 @@
-From bb6baab0248c4534e25074e5e576c266f00ba057 Mon Sep 17 00:00:00 2001
+From cc310ecf2a4cfe7aad4c363c5acfeb086fe32133 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Mon, 1 Oct 2018 15:37:57 +0200
 Subject: [PATCH 24/24] access_output: file: Add error dialog for write/open
@@ -8,7 +8,7 @@ Subject: [PATCH 24/24] access_output: file: Add error dialog for write/open
  1 file changed, 8 insertions(+)
 
 diff --git a/modules/access_output/file.c b/modules/access_output/file.c
-index fbefce0be8..a2a72db411 100644
+index fbefce0be8..45de0fc75e 100644
 --- a/modules/access_output/file.c
 +++ b/modules/access_output/file.c
 @@ -88,6 +88,9 @@ static ssize_t Write( sout_access_out_t *p_access, block_t *p_buffer )
@@ -36,5 +36,5 @@ index fbefce0be8..a2a72db411 100644
                  break;
              flags &= ~O_EXCL;
 -- 
-2.19.0
+2.19.1
 
