@@ -1,4 +1,4 @@
-From 8ddb9512335005505493838b105a005b6a7be610 Mon Sep 17 00:00:00 2001
+From ff4255bc853ef1b4026a9dea54cdc55c6ad320da Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
 Subject: [PATCH 23/24] libvlc: events: Add callbacks for record
@@ -43,10 +43,10 @@ index f8b0e9b5b2..bbc6bc0eec 100644
          {
              libvlc_renderer_item_t *item;
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 61cc0b0e0d..439910d053 100644
+index 7e714d247b..d76ed7ca56 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -446,6 +446,22 @@ input_event_changed( vlc_object_t * p_this, char const * psz_cmd,
+@@ -447,6 +447,22 @@ input_event_changed( vlc_object_t * p_this, char const * psz_cmd,
              }
          }
      }

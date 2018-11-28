@@ -1,4 +1,4 @@
-From b7ac55bfbc294676bd6ae343a80269f104b4b8d0 Mon Sep 17 00:00:00 2001
+From 87cd7de678ddb793468bd64cbdd0a73158bcc524 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
 Subject: [PATCH 18/24] ffmpeg: backport vtenc patches

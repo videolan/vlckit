@@ -1,4 +1,4 @@
-From 20fc6522b5fdc3b2e9cd43c20365e0449bf7370e Mon Sep 17 00:00:00 2001
+From 6919eee7ec517745c48aec19e8b2d82ba14e9b85 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
 Subject: [PATCH 06/24] contrib/gcrypt: work-around a libtool limitation
@@ -10,7 +10,7 @@ Subject: [PATCH 06/24] contrib/gcrypt: work-around a libtool limitation
  create mode 100644 contrib/src/gcrypt/work-around-libtool-limitation.patch
 
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index eb1debac1b..bc938e585f 100644
+index 0e45004c30..4bc68ce60f 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -12,6 +12,7 @@ $(TARBALLS)/libgcrypt-$(GCRYPT_VERSION).tar.bz2:
@@ -19,8 +19,8 @@ index eb1debac1b..bc938e585f 100644
  	$(APPLY) $(SRC)/gcrypt/disable-tests-compilation.patch
 +	$(APPLY) $(SRC)/gcrypt/work-around-libtool-limitation.patch
  	$(APPLY) $(SRC)/gcrypt/fix-pthread-detection.patch
- ifdef HAVE_WINSTORE
- 	$(APPLY) $(SRC)/gcrypt/winrt.patch
+ 	$(APPLY) $(SRC)/gcrypt/0001-random-Don-t-assume-that-_WIN64-implies-x86_64.patch
+ 	$(APPLY) $(SRC)/gcrypt/0002-aarch64-mpi-Fix-building-the-mpi-aarch64-assembly-fo.patch
 diff --git a/contrib/src/gcrypt/work-around-libtool-limitation.patch b/contrib/src/gcrypt/work-around-libtool-limitation.patch
 new file mode 100644
 index 0000000000..df97ffb488
