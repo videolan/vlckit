@@ -1010,7 +1010,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
@@ -1023,7 +1023,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1134,7 +1134,7 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1163,7 +1163,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
