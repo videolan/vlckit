@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="70073ce949" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="218028bb7f" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
