@@ -93,7 +93,12 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 
         // Initialize internals to defaults
         _mediaObjects = [[NSMutableArray alloc] init];
-        _serialMediaObjectsQueue = dispatch_queue_create("org.videolan.serialMediaObjectsQueue",  DISPATCH_QUEUE_SERIAL);
+
+        dispatch_queue_attr_t qosAttribute = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL,
+                                                                                     QOS_CLASS_USER_INITIATED,
+                                                                                     0);
+
+        _serialMediaObjectsQueue = dispatch_queue_create("org.videolan.serialMediaObjectsQueue", qosAttribute);
         [self initInternalMediaList];
     }
 
