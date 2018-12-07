@@ -202,7 +202,7 @@ static void HandleMessage(void *data,
 {
     VLCLibrary *libraryInstance = (__bridge VLCLibrary *)data;
 
-    if (level < libraryInstance.debugLoggingLevel)
+    if (level > libraryInstance.debugLoggingLevel)
         return;
 
     char *str;
