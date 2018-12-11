@@ -199,8 +199,8 @@ index b92c66ceac..fb1469a6ea 100644
 +    p_sys->p_default_style->psz_fontname = strdup( var_InheritString( p_filter, "freetype-font" ) );
  
 -    p_style->i_font_color = var_InheritInteger( p_filter, "freetype-color" );
-+    int size = (1.0 / var_InheritInteger( p_filter, "freetype-rel-fontsize" )) * 100;
-+    p_sys->p_forced_style->f_font_relsize = size < 0 ? 10 : size;
++    int freetype_rel_size = var_InheritInteger( p_filter, "freetype-rel-fontsize" );
++    p_sys->p_forced_style->f_font_relsize = freetype_rel_size <= 0 ? 10 : 100.0 / freetype_rel_size;
  
 -    p_style->i_background_alpha = var_InheritInteger( p_filter, "freetype-background-opacity" );
 -    p_style->i_background_color = var_InheritInteger( p_filter, "freetype-background-color" );
