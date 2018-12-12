@@ -31,6 +31,7 @@
 #import <MobileVLCKit/VLCMediaThumbnailer.h>
 #import <MobileVLCKit/VLCDialogProvider.h>
 #import <MobileVLCKit/VLCTime.h>
+#import <MobileVLCKit/VLCTranscoder.h>
 #import <MobileVLCKit/VLCRendererDiscoverer.h>
 #import <MobileVLCKit/VLCRendererItem.h>
 

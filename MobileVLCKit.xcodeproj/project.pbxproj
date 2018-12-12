@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		0E159EC41BC6B2890015BA7C /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
 		0E159EC51BC6B2930015BA7C /* VLCAudio.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4B49C5FD1BC3D7960052D40C /* VLCAudio.h */; };
+		41E1959721BEA28F00F10277 /* VLCTranscoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E1959621BEA28F00F10277 /* VLCTranscoder.m */; };
+		41E1959A21BEA4FD00F10277 /* VLCTranscoder.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 41E1959821BEA2AF00F10277 /* VLCTranscoder.h */; };
 		4B09CED21BC463B100695566 /* VLCAudio.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 4B49C5FD1BC3D7960052D40C /* VLCAudio.h */; };
 		4B49C5FC1BC3D7870052D40C /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
 		6360B0E211E7F0C000EAD790 /* VLCMediaDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */; };
@@ -261,6 +263,7 @@
 			dstPath = MobileVLCKit;
 			dstSubfolderSpec = 16;
 			files = (
+				41E1959A21BEA4FD00F10277 /* VLCTranscoder.h in Copy Headers */,
 				8D826AE1203F3CC500536EF7 /* VLCRendererDiscoverer.h in Copy Headers */,
 				8D826AE2203F3CC500536EF7 /* VLCRendererItem.h in Copy Headers */,
 				7D6695301CB5574C00F79C08 /* VLCDialogProvider.h in Copy Headers */,
@@ -361,6 +364,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		41E1959621BEA28F00F10277 /* VLCTranscoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCTranscoder.m; path = Sources/VLCTranscoder.m; sourceTree = "<group>"; };
+		41E1959821BEA2AF00F10277 /* VLCTranscoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VLCTranscoder.h; path = Headers/Public/VLCTranscoder.h; sourceTree = "<group>"; };
 		4B49C5FB1BC3D7870052D40C /* VLCAudio.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCAudio.m; path = Sources/VLCAudio.m; sourceTree = "<group>"; };
 		4B49C5FD1BC3D7960052D40C /* VLCAudio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCAudio.h; path = Headers/Public/VLCAudio.h; sourceTree = "<group>"; };
 		6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaDiscoverer.m; path = Sources/VLCMediaDiscoverer.m; sourceTree = "<group>"; };
@@ -684,6 +689,7 @@
 				636E975711EBC67A002FE8A9 /* VLCMediaThumbnailer.m */,
 				6360B0E111E7F0C000EAD790 /* VLCMediaDiscoverer.m */,
 				7A5ECAC911DE8F7300F66AF3 /* VLCTime.m */,
+				41E1959621BEA28F00F10277 /* VLCTranscoder.m */,
 				7D34F5571C909E13008A39F0 /* Dialogs */,
 				7DB683D31C996187000C70BE /* VLCHelperCode.m */,
 				8D826AE0203F3CA700536EF7 /* Renderer */,
@@ -717,6 +723,7 @@
 				6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */,
 				7D803EB71C8F21EF00864A9C /* VLCDialogProvider.h */,
 				7A5ECAD811DE8FAB00F66AF3 /* VLCTime.h */,
+				41E1959821BEA2AF00F10277 /* VLCTranscoder.h */,
 				8D2CE647203DCC48004BB7F6 /* VLCRendererDiscoverer.h */,
 				8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */,
 				7DEBDADE203C56BC000A7D2F /* libvlc */,
@@ -1371,6 +1378,7 @@
 				7D803EC91C8F2B0900864A9C /* VLCDialogProvider.m in Sources */,
 				7A5ECACE11DE8F7300F66AF3 /* VLCMediaList.m in Sources */,
 				7A5ECACF11DE8F7300F66AF3 /* VLCMediaPlayer.m in Sources */,
+				41E1959721BEA28F00F10277 /* VLCTranscoder.m in Sources */,
 				7A5ECAD011DE8F7300F66AF3 /* VLCTime.m in Sources */,
 				6360B0E211E7F0C000EAD790 /* VLCMediaDiscoverer.m in Sources */,
 				7DB683D61C996187000C70BE /* VLCHelperCode.m in Sources */,

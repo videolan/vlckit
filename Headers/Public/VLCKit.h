@@ -30,11 +30,12 @@
 #import <VLCKit/VLCMediaDiscoverer.h>
 #import <VLCKit/VLCMediaPlayer.h>
 #import <VLCKit/VLCMediaThumbnailer.h>
-#import <VLCKit/VLCTime.h>
-#import <VLCKit/VLCVideoView.h>
-#import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCStreamSession.h>
 #import <VLCKit/VLCStreamOutput.h>
+#import <VLCKit/VLCTime.h>
+#import <VLCKit/VLCTranscoder.h>
+#import <VLCKit/VLCVideoView.h>
+#import <VLCKit/VLCVideoLayer.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
