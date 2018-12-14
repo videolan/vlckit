@@ -6,6 +6,9 @@ Version 4.0.0:
 Version 3.2.0:
 --------------
 - Enabled libmux module
+- Fixed a bug where debuglogging logged less than what the loglevel indicated
+- Fixed a bug where subtitles where not displayed by default on iOS
+- Fixed a crash when playing back mkv on iOS 12
 
 - API Changes:
     - updateProgressWithReference:message:postion: to updateProgressWithReference:message:position:
@@ -17,6 +20,15 @@ VLCMediaPlayerDelegate:
 VLCMediaPlayer:
 	- (BOOL)startRecordingAtPath:(NSString *)path;
 	- (BOOL)stopRecording;
+
+- new Transcoder Class and API
+VLCTranscoderDelegate:
+	- (void)transcode:(VLCTranscoder *)transcoder finishedSucessfully:(BOOL)success;
+VLCTranscoder:
+	- (BOOL)reencodeAndMuxSRTFile:(NSString *)srtPath toMP4File:(NSString *)mp4Path outputPath:(NSString *)outPath
+
+
+
 
 Version 3.1.5:
 --------------
