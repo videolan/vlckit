@@ -1,0 +1,91 @@
+From 44b50f7f6634bfa390aecdb6859e85c923530a75 Mon Sep 17 00:00:00 2001
+From: Trong Vu <vungoctrong@gmail.com>
+Date: Wed, 26 Dec 2018 13:59:00 +0700
+Subject: [PATCH] vout: ios: update vout config in case only video source
+ parameters was changed
+
+Update event will be skip due to checking condition of _cfg value (vout_display_cfg_t).
+There is a posibility to change _place (vout_display_place_t) from video source.
+So we should Update the condition to make sure GLView will be updated with vout_display_place_t.
+Change signature of getPlaceLocked to get PlaceDisplay on fly.
+Also request to update Constraints immidiately after updating Vout Config.
+
+---
+ modules/video_output/ios.m | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
+
+diff --git a/modules/video_output/ios.m b/modules/video_output/ios.m
+index 1ea2ee45aa..01e76074b5 100644
+--- a/modules/video_output/ios.m
++++ b/modules/video_output/ios.m
+@@ -118,7 +118,7 @@ - (void)releaseCurrent:(EAGLContext *)previousEaglContext;
+ - (void)presentRenderbuffer;
+ 
+ - (void)updateVoutCfg:(const vout_display_cfg_t *)cfg withVGL:(vout_display_opengl_t *)vgl;
+-- (void)getPlaceLocked:(vout_display_place_t *)place;
++- (void)getPlaceLocked:(vout_display_place_t *)place withConfig:(const vout_display_cfg_t *)config;
+ @end
+ 
+ struct vout_display_sys_t
+@@ -628,7 +628,7 @@ - (BOOL)makeCurrentWithGL:(EAGLContext **)previousEaglContext withGL:(vlc_gl_t *
+             _placeInvalidated = NO;
+ 
+             vout_display_place_t place;
+-            [self getPlaceLocked: &place];
++            [self getPlaceLocked: &place withConfig:&_cfg];
+             vout_display_opengl_SetWindowAspectRatio(glsys->vgl, (float)place.width / place.height);
+ 
+             // x / y are top left corner, but we need the lower left one
+@@ -674,10 +674,10 @@ - (void)layoutSubviews
+     vlc_mutex_unlock(&_mutex);
+ }
+ 
+-- (void)getPlaceLocked:(vout_display_place_t *)place
++- (void)getPlaceLocked:(vout_display_place_t *)place withConfig:(const vout_display_cfg_t *)config
+ {
+     assert(_voutDisplay);
+-    vout_display_cfg_t cfg = _cfg;
++    vout_display_cfg_t cfg = *config;
+ 
+     cfg.display.width  = _viewSize.width * _scaleFactor;
+     cfg.display.height = _viewSize.height * _scaleFactor;
+@@ -699,7 +699,7 @@ - (void)reshape
+     _scaleFactor = self.contentScaleFactor;
+ 
+     vout_display_place_t place;
+-    [self getPlaceLocked: &place];
++    [self getPlaceLocked: &place withConfig:&_cfg];
+ 
+     if (memcmp(&place, &_place, sizeof(vout_display_place_t)) != 0)
+     {
+@@ -737,20 +737,23 @@ - (void)tapRecognized:(UITapGestureRecognizer *)tapRecognizer
+ 
+ - (void)updateVoutCfg:(const vout_display_cfg_t *)cfg withVGL:(vout_display_opengl_t *)vgl
+ {
+-    if (memcmp(&_cfg, cfg, sizeof(vout_display_cfg_t)) == 0)
++    vout_display_place_t place;
++    [self getPlaceLocked: &place withConfig:cfg];
++    if (memcmp(&_cfg, cfg, sizeof(vout_display_cfg_t)) == 0 && memcmp(&place, &_place, sizeof(vout_display_place_t)) == 0)
+         return;
+ 
+     vlc_mutex_lock(&_mutex);
+     _cfg = *cfg;
+ 
+-    vout_display_place_t place;
+-    [self getPlaceLocked: &place];
+     vout_display_opengl_SetWindowAspectRatio(vgl, (float)place.width / place.height);
+ 
+     vlc_mutex_unlock(&_mutex);
+ 
+     [self performSelectorOnMainThread:@selector(setNeedsUpdateConstraints)
+-                           withObject:nil
++                            withObject:nil
++                        waitUntilDone:NO];
++    [self performSelectorOnMainThread:@selector(updateConstraintsIfNeeded)
++                            withObject:nil
+                         waitUntilDone:NO];
+ }
+ 
+-- 
+2.17.2 (Apple Git-113)
+
