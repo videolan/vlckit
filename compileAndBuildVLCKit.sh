@@ -1143,6 +1143,7 @@ if [ "$TVOS" = "yes" ]; then
     lipo -create ${lipo_libs} -o TVVLCKit.framework/TVVLCKit && \
     chmod a+x TVVLCKit.framework/TVVLCKit && \
     cp -pr ${CONFIGURATION}-${platform}/TVVLCKit TVVLCKit.framework/Headers
+    cp -pr ${CONFIGURATION}-${platform}/Modules TVVLCKit.framework/Modules
     spopd # build
 
     info "Build of static TVVLCKit.framework completed"
@@ -1170,6 +1171,7 @@ if [ "$IOS" = "yes" ]; then
     lipo -create ${lipo_libs} -o MobileVLCKit.framework/MobileVLCKit && \
     chmod a+x MobileVLCKit.framework/MobileVLCKit && \
     cp -pr ${CONFIGURATION}-${platform}/MobileVLCKit MobileVLCKit.framework/Headers
+    cp -pr ${CONFIGURATION}-${platform}/Modules MobileVLCKit.framework/Modules
     spopd # build
 
     info "Build of static MobileVLCKit.framework completed"
