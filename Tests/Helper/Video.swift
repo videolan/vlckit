@@ -37,8 +37,6 @@ struct Video {
         let bundle = Bundle(identifier: "org.videolan.TVVLCKitTests")!
     #endif
     
-    static let standards = [Video.test1, Video.test2, Video.test3, Video.test4]
-    
     static let test1 = Video(
         name: "bird",
         type: "m4v",
