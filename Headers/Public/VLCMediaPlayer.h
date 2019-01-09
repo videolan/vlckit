@@ -97,7 +97,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * Formal protocol declaration for playback delegates.  Allows playback messages
  * to be trapped by delegated objects.
  */
-@protocol VLCMediaPlayerDelegate
+@protocol VLCMediaPlayerDelegate <NSObject>
 
 @optional
 /**

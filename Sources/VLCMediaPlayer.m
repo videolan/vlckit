@@ -1554,12 +1554,12 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
 
     if (isRecording) {
-        if ([(NSObject *)_delegate respondsToSelector:@selector(mediaPlayerStartedRecording:)]) {
+        if ([_delegate respondsToSelector:@selector(mediaPlayerStartedRecording:)]) {
             [_delegate mediaPlayerStartedRecording:self];
         }
     } else {
-        if ([(NSObject *)_delegate respondsToSelector:@selector(mediaPlayer:recordingStoppedAtPath:)]) {
-            [self.delegate mediaPlayer:self recordingStoppedAtPath:filePath];
+        if ([_delegate respondsToSelector:@selector(mediaPlayer:recordingStoppedAtPath:)]) {
+            [_delegate mediaPlayer:self recordingStoppedAtPath:filePath];
         }
     }
 }
