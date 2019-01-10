@@ -3,6 +3,10 @@ Version 4.0.0:
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
 - Use NSDateComponents API for VLCTime.verboseStringValue
 
+Version 3.2.1:
+--------------
+- Add API to VLCLibrary to log debug information to a file
+
 Version 3.2.0:
 --------------
 - Enabled libmux module
@@ -26,9 +30,6 @@ VLCTranscoderDelegate:
 	- (void)transcode:(VLCTranscoder *)transcoder finishedSucessfully:(BOOL)success;
 VLCTranscoder:
 	- (BOOL)reencodeAndMuxSRTFile:(NSString *)srtPath toMP4File:(NSString *)mp4Path outputPath:(NSString *)outPath
-
-
-
 
 Version 3.1.5:
 --------------

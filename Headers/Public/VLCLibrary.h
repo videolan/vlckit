@@ -2,10 +2,11 @@
  * VLCLibrary.h: VLCKit.framework VLCLibrary header
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007-2019 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
+ *          Felix Paul Kühne <fkuehne # videolan.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -57,9 +58,19 @@
 /**
  * Gets/sets the debug logging level
  * \note Logging level ranges from 0 (just error messages) to 4 (everything)
+ * \note values set here will be ignored when logging to a file
  * \warning If an invalid level is provided, level defaults to 0
  */
 @property (readwrite, nonatomic) int debugLoggingLevel;
+
+/**
+ * Activates debug logging to a file stream
+ * If the file already exists, the log will be appended by the end. If it does not exist, will be created.
+ * The file will continously updated with new messages from this library instance.
+ * \note It is the client app's obligation to ensure that the target file path is writable and all subfolders exist
+ * \warning when enabling this feature, logging to the console will be stopped automatically
+ */
+- (void)setDebugLoggingToFile:(NSString * _Nonnull)filePath;
 
 /**
  * Returns the library's version

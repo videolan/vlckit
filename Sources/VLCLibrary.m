@@ -2,10 +2,11 @@
  * VLCLibrary.m: VLCKit.framework VLCLibrary implementation
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007-2019 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
+ *          Felix Paul Kühne <fkuehne # videolan.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -41,6 +42,12 @@ static void HandleMessage(void *,
                           va_list);
 
 static VLCLibrary * sharedLibrary = nil;
+
+@interface VLCLibrary()
+{
+    FILE *_logFileStream;
+}
+@end
 
 @implementation VLCLibrary
 
@@ -144,6 +151,9 @@ static VLCLibrary * sharedLibrary = nil;
         libvlc_log_set(_instance, HandleMessage, (__bridge void *)(self));
     } else {
         libvlc_log_unset(_instance);
+
+        if (_logFileStream)
+            fclose(_logFileStream);
     }
 }
 
@@ -156,6 +166,25 @@ static VLCLibrary * sharedLibrary = nil;
         VKLog(@"Please provide a valid debugLoggingLevel between 0 and 4");
         VKLog(@"Defaulting debugLoggingLevel to 0 (just errors)");
         _debugLoggingLevel = 0;
+    }
+}
+
+- (void)setDebugLoggingToFile:(NSString * _Nonnull)filePath
+{
+    if (!filePath)
+        return;
+
+    if (!_instance)
+        return;
+
+    if (_debugLogging) {
+        libvlc_log_unset(_instance);
+    }
+
+    _logFileStream = fopen([filePath UTF8String], "a");
+
+    if (_logFileStream) {
+        libvlc_log_set_file(_instance, _logFileStream);
     }
 }
 
@@ -188,8 +217,14 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (void)dealloc
 {
-    if (_instance)
+    if (_instance) {
+        libvlc_log_unset(_instance);
         libvlc_release(_instance);
+    }
+
+    if (_logFileStream) {
+        fclose(_logFileStream);
+    }
 }
 
 @end
