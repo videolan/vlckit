@@ -373,6 +373,13 @@ buildLibVLC() {
 
     echo "EXTRA_CFLAGS += ${EXTRA_CFLAGS}" >> config.mak
     echo "EXTRA_LDFLAGS += ${EXTRA_LDFLAGS}" >> config.mak
+    echo "CC=${CC}" >> config.mak
+    echo "CXX=${CXX}" >> config.mak
+    echo "OBJC=${OBJC}" >> config.mak
+    echo "LD=${LD}" >> config.mak
+    echo "AR=${AR}" >> config.mak
+    echo "RANLIB=${RANLIB}" >> config.mak
+    echo "STRIP=${STRIP}" >> config.mak
     make fetch -j$MAKE_JOBS
     make -j$MAKE_JOBS > ${out}
 
