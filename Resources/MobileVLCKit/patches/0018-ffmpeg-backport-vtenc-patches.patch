@@ -1,7 +1,7 @@
-From 87cd7de678ddb793468bd64cbdd0a73158bcc524 Mon Sep 17 00:00:00 2001
+From 349a07bff41310f005b72891a5b9cd26ff1981d5 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
-Subject: [PATCH 18/24] ffmpeg: backport vtenc patches
+Subject: [PATCH 18/26] ffmpeg: backport vtenc patches
 
 ---
  ...lboxenc-fix-mutex-cond-leak-in-error.patch |  35 ++++++
@@ -340,10 +340,10 @@ index 0000000000..42f4cce1e6
 +2.18.0
 +
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 7a3b678370..7c3a87068c 100644
+index 2837616642..59d8b1e8a5 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -239,6 +239,10 @@ ifdef USE_FFMPEG
+@@ -242,6 +242,10 @@ ifdef USE_FFMPEG
  	$(APPLY) $(SRC)/ffmpeg/armv7_fixup.patch
  	$(APPLY) $(SRC)/ffmpeg/dxva_vc1_crash.patch
  	$(APPLY) $(SRC)/ffmpeg/h264_early_SAR.patch
@@ -355,5 +355,5 @@ index 7a3b678370..7c3a87068c 100644
  ifdef USE_LIBAV
  	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
 -- 
-2.19.1
+2.20.1
 

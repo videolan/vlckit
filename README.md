@@ -49,9 +49,10 @@ Here are some other common use-cases
 
 ## Requirements
 
-- iOS 8.0 + / macOS 10.9+ / tvOS 10.2+
+- iOS 8.4 + / macOS 10.9+ / tvOS 10.2+
 - Xcode 9.0+
 - Cocoapods 1.4+
+- python 3.7 (compile time only)
 
 ## Installation
 
@@ -70,17 +71,17 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target '<macOS Target>' do
     platform :macos, '10.9'
-    pod 'VLCKit', '3.1.2'
+    pod 'VLCKit', '3.1.4'
 end
 
 target '<iOS Target>' do
-    platform :ios, '8.0'
-    pod 'MobileVLCKit', '3.1.2'
+    platform :ios, '8.4'
+    pod 'MobileVLCKit', '3.1.4'
 end
 
 target '<tvOS Target>' do
     platform :tvos, '9.0'
-    pod 'TVVLCKit', '3.1.2'
+    pod 'TVVLCKit', '3.1.4'
 end
 ```
 
@@ -145,6 +146,8 @@ On iOS and tvOS, you also need to link:
 ## Build
 
 ### Default
+
+Make sure that python 3.7 is installed. Get the package from https://www.python.org - do NOT use homebrew for installation as it will be ignored by VLC's build process.
 
 Run `compileAndBuildVLCKit.sh` with the `-a ${ARCH}` option to specify the target architecture.
 
