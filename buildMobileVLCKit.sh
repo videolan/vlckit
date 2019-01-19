@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios_version_min
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="218028bb7f" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="5ec99d0db3" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -253,7 +253,7 @@ ROOT_DIR=`pwd`
 spopd
 
 VLCROOT=${ROOT_DIR}/libvlc/vlc
-export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
 
 info "Preparing build dirs"
 

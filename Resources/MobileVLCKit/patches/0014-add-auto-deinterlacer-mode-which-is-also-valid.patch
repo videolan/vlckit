@@ -1,7 +1,7 @@
-From ff9698b3306cc13be988e27f5c75a7d9f20356d6 Mon Sep 17 00:00:00 2001
+From 432a13a097b951873c8d874af0fad37771e5301c Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Mon, 30 Apr 2018 14:33:08 +0100
-Subject: [PATCH 14/24] add auto deinterlacer-mode which is also valid
+Subject: [PATCH 14/26] add auto deinterlacer-mode which is also valid
 
 ---
  lib/video.c | 3 ++-
@@ -22,5 +22,5 @@ index 035cc0ebf1..a3e5b248e9 100644
  
      if (*psz_mode)
 -- 
-2.19.1
+2.20.1
 

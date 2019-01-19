@@ -29,6 +29,10 @@ For detailed information on the development process, please read below and our w
 
 ### Build
 
+Make sure that both your Xcode and macOS installation is up-to-date. If needed, you will be asked to install the Xcode command line tools while the script is executed.
+
+Install python 3.7. Download and install a package from https://www.python.org - do NOT use homebrew to install python.
+
 Run `buildMobileVLCKit.sh` with the `-a ${ARCH}` option
 
 ### Build with your own VLC repository

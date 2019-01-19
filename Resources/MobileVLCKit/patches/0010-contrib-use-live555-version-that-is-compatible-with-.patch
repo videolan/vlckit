@@ -1,7 +1,7 @@
-From ef3c9b20be99382ef6090f8318cd38736d212f76 Mon Sep 17 00:00:00 2001
+From e9bf297b30a286c26681dd733530b4d6a02d39d5 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
-Subject: [PATCH 10/24] contrib: use live555 version that is compatible with
+Subject: [PATCH 10/26] contrib: use live555 version that is compatible with
  LGPL2
 
 ---
@@ -18,7 +18,7 @@ index f459fb9d16..02b2a69734 100644
 +10846fd6d5482bbea131ae805137077997e9dec242665e3c01d699d5584154c65049e8c520ea855599e554154a148e61fea77b592d97c814a4a98c773658d8f5  live.2016.10.21.tar.gz
 \ No newline at end of file
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index e4ed5afb07..f99b7968a4 100644
+index bb1d5655c7..41fc1c6179 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,14 +1,12 @@
@@ -46,5 +46,5 @@ index e4ed5afb07..f99b7968a4 100644
  		echo "PREFIX = $(PREFIX)" >> $$subdir/Makefile.head && \
  		echo "LIBDIR = $(PREFIX)/lib" >> $$subdir/Makefile.head ; done
 -- 
-2.19.1
+2.20.1
 
