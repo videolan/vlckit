@@ -34,6 +34,7 @@ SDK_SIM_DEST_TV = "'platform=tvOS Simulator,name=Apple TV,OS=11.3'"
 SDK_SIM_DEST_MAC = "'platform=OS X,arch=x86_64'"
 
 SCHEME_IOS = 'MobileVLCKitTests'
+SCHEME_IOS_DYNAMIC = 'DynamicMobileVLCKitTests'
 SCHEME_TV = 'TVVLCKitTests'
 SCHEME_MAC = 'VLCKitTests'
 
@@ -96,6 +97,12 @@ task 'test:ios' do
   sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_IOS} -project #{PROJECT_IOS} -scheme #{SCHEME_IOS} -sdk #{SDK_SIM_IOS} -destination #{SDK_SIM_DEST_IOS} test | #{XCPRETTY}"
 end
 
+desc 'Run DynamicMobileVLCKit tests'
+task 'test:ios_dynamic' do
+  puts 'Running tests for DynamicMobileVLCKit'
+  sh "xcodebuild -derivedDataPath #{DERIVED_DATA_PATH}/#{SCHEME_IOS_DYNAMIC} -project #{PROJECT_IOS} -scheme #{SCHEME_IOS_DYNAMIC} -sdk #{SDK_SIM_IOS} -destination #{SDK_SIM_DEST_IOS} -UseModernBuildSystem=NO test | #{XCPRETTY}"
+end
+
 desc 'Run TVVLCKit tests'
 task 'test:tv' do
   puts 'Running tests for TVVLCKit'
@@ -112,6 +119,12 @@ desc 'Generate MobileVLCKit coverage reports'
 task 'codecov:ios' do
   puts 'Generating MobileVLCKit code coverage reports'
   generate_coverage(SCHEME_IOS)
+end
+
+desc 'Generate DynamicMobileVLCKit coverage reports'
+task 'codecov:ios_dynamic' do
+  puts 'Generating DynamicMobileVLCKit code coverage reports'
+  generate_coverage(SCHEME_IOS_DYNAMIC)
 end
 
 desc 'Generate TVVLCKit code coverage reports'

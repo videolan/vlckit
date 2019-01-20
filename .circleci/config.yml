@@ -36,15 +36,16 @@ jobs:
           name: Run Tests
           command: |
             rake test:ios
+            rake test:ios_dynamic
             rake test:tv
             rake test:mac
       - run:
           name: Generate Coverage Reports
           command: |
             rake codecov:ios
+            rake codecov:ios_dynamic
             rake codecov:tv
             rake codecov:mac
       - store_artifacts:
           path: Tests/Coverage
           destination: Coverage
-
