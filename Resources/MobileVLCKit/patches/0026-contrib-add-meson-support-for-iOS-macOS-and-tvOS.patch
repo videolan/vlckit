@@ -1,12 +1,12 @@
-From c656dad17eaf001b5ee1e685d8b778f9b9b98598 Mon Sep 17 00:00:00 2001
+From bd9e279907ce374ecb0e99b583b04c6af6d12993 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 18 Jan 2019 21:44:13 +0100
-Subject: [PATCH 26/26] contrib: add meson support for iOS and tvOS
+Subject: [PATCH 26/26] contrib: add meson support for iOS, macOS and tvOS
 
 ---
  contrib/bootstrap    | 20 +++++++++++++++++---
- contrib/src/main.mak | 11 ++++++++++-
- 2 files changed, 27 insertions(+), 4 deletions(-)
+ contrib/src/main.mak | 15 ++++++++++++++-
+ 2 files changed, 31 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/bootstrap b/contrib/bootstrap
 index 20ce524926..b7cab040a5 100755
@@ -40,10 +40,10 @@ index 20ce524926..b7cab040a5 100755
  		fi
  		if test "$BUILDFORTVOS"
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
-index 6b70974651..ffb1ba8cf3 100644
+index 6b70974651..b062ba6c91 100644
 --- a/contrib/src/main.mak
 +++ b/contrib/src/main.mak
-@@ -538,12 +538,21 @@ crossfile.meson:
+@@ -538,12 +538,25 @@ crossfile.meson:
  	echo "windres = '$(WINDRES)'" >> $@
  	echo "[properties]" >> $@
  	echo "needs_exe_wrapper = true" >> $@
@@ -55,6 +55,10 @@ index 6b70974651..ffb1ba8cf3 100644
 +	echo "c_args = ['-isysroot', '$(IOS_SDK)', '-miphoneos-version-min=8.4', '-arch', '$(PLATFORM_SHORT_ARCH)']" >> $@
 +	echo "c_link_args = ['-isysroot', '$(IOS_SDK)', '-arch', '$(PLATFORM_SHORT_ARCH)']" >> $@
 +endif
++endif
++ifdef HAVE_MACOSX
++	echo "c_args = ['-isysroot', '$(MACOSX_SDK)', '-mmacosx-version-min=10.10', '-arch', '$(ARCH)']" >> $@
++	echo "c_link_args = ['-isysroot', '$(MACOSX_SDK)', '-arch', '$(ARCH)']" >> $@
 +endif
  ifdef HAVE_CROSS_COMPILE
  	echo "[host_machine]" >> $@
