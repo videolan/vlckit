@@ -252,8 +252,14 @@ spushd .
 ROOT_DIR=`pwd`
 spopd
 
+# get python installation
+python3Path=$(echo /Library/Frameworks/Python.framework/Versions/3.*/bin | awk '{print $1;}')
+if [ ! -d "$python3Path" ]; then
+    python3Path=""
+fi
+
 VLCROOT=${ROOT_DIR}/libvlc/vlc
-export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$python3Path:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
 
 info "Preparing build dirs"
 
