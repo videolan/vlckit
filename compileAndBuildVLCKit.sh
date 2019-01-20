@@ -1053,7 +1053,13 @@ if [ "$VLCROOT" = "" ]; then
     spopd
 fi
 
-export PATH="${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
+# get python installation
+python3Path=$(echo /Library/Frameworks/Python.framework/Versions/3.*/bin | awk '{print $1;}')
+if [ ! -d "$python3Path" ]; then
+    python3Path=""
+fi
+
+export PATH="$python3Path:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
 
 echo `pwd`
 
