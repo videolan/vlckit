@@ -20,8 +20,8 @@ TVOS=no
 MACOS=no
 IOS=yes
 BITCODE=no
-OSVERSIONMINCFLAG=miphoneos-version-min
-OSVERSIONMINLDFLAG=ios_version_min
+OSVERSIONMINCFLAG=iphoneos
+OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
@@ -206,6 +206,8 @@ buildLibVLC() {
     export CXXFLAGS=""
     export OBJCFLAGS=""
     export LDFLAGS=""
+    export EXTRA_LDFLAGS=""
+    export EXTRA_CFLAGS=""
 
     export PLATFORM=$PLATFORM
     export SDK_VERSION=$SDK_VERSION
@@ -217,10 +219,17 @@ buildLibVLC() {
     LDFLAGS="-arch ${ACTUAL_ARCH}"
     EXTRA_LDFLAGS="-arch ${ACTUAL_ARCH}"
 
-    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-    EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-    LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-    EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+    SDKNAME_CFLAGS=${OSVERSIONMINCFLAG}
+    SDKNAME_LDFLAGS=${OSVERSIONMINLDFLAG}
+
+    if [ "$PLATFORM" = "Simulator" ]; then
+        SDKNAME_LDFLAGS+="_simulator"
+    fi
+
+    CFLAGS+=" -m${SDKNAME_CFLAGS}-version-min=${SDK_MIN}"
+    EXTRA_CFLAGS+=" -m${SDKNAME_CFLAGS}-version-min=${SDK_MIN}"
+    LDFLAGS+=" -Wl,-${SDKNAME_LDFLAGS}_version_min,${SDK_MIN}"
+    EXTRA_LDFLAGS+=" -Wl,-${SDKNAME_LDFLAGS}_version_min,${SDK_MIN}"
 
     if [ "$PLATFORM" = "OS" ]; then
         if [ "$ARCH" != "aarch64" ]; then
@@ -985,8 +994,8 @@ do
              BITCODE=yes
              SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
              SDK_MIN=10.2
-             OSVERSIONMINCFLAG=mtvos-version-min
-             OSVERSIONMINLDFLAG=tvos_version_min
+             OSVERSIONMINCFLAG=tvos
+             OSVERSIONMINLDFLAG=tvos
              ;;
          x)
              MACOS=yes
@@ -994,8 +1003,8 @@ do
              BITCODE=no
              SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
              SDK_MIN=10.9
-             OSVERSIONMINCFLAG=mmacosx-version-min
-             OSVERSIONMINLDFLAG=macosx_version_min
+             OSVERSIONMINCFLAG=macosx
+             OSVERSIONMINLDFLAG=macosx
              BUILD_DEVICE=yes
              FARCH=x86_64
              BUILD_DYNAMIC_FRAMEWORK=yes
