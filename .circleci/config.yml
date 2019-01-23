@@ -3,7 +3,7 @@ version: 2
 jobs:
   build:
     macos:
-      xcode: "9.3.0"
+      xcode: "10.1.0"
     environment:
       LC_ALL: en_US.UTF-8
       LANG: en_US.UTF-8
@@ -20,6 +20,11 @@ jobs:
             - .bundle
       - restore_cache:
           key: libvlc-v4-{{ checksum "compileAndBuildVLCKit.sh" }}
+      - run:
+          name: Install Python
+          command: |
+            curl -OL https://www.python.org/ftp/python/3.7.2/python-3.7.2-macosx10.9.pkg
+      - run: 'sudo installer -store -pkg "python-3.7.2-macosx10.9.pkg" -target /'
       - run:
           name: Build VLCKit
           command: |
@@ -39,13 +44,13 @@ jobs:
             rake test:ios_dynamic
             rake test:tv
             rake test:mac
-      - run:
-          name: Generate Coverage Reports
-          command: |
-            rake codecov:ios
-            rake codecov:ios_dynamic
-            rake codecov:tv
-            rake codecov:mac
-      - store_artifacts:
-          path: Tests/Coverage
-          destination: Coverage
+      # - run:
+      #     name: Generate Coverage Reports
+      #     command: |
+      #       rake codecov:ios
+      #       rake codecov:ios_dynamic
+      #       rake codecov:tv
+      #       rake codecov:mac
+      # - store_artifacts:
+      #     path: Tests/Coverage
+      #     destination: Coverage
