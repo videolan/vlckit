@@ -25,12 +25,12 @@ PROJECT_IOS = 'MobileVLCKit.xcodeproj'
 PROJECT_TV = 'MobileVLCKit.xcodeproj'
 PROJECT_MAC = 'VLCKit.xcodeproj'
 
-SDK_SIM_IOS = 'iphonesimulator11.3'
-SDK_SIM_TV = 'appletvsimulator11.3'
-SDK_SIM_MAC = 'macosx10.13'
+SDK_SIM_IOS = 'iphonesimulator12.1'
+SDK_SIM_TV = 'appletvsimulator12.1'
+SDK_SIM_MAC = 'macosx10.14'
 
-SDK_SIM_DEST_IOS = "'platform=iOS Simulator,name=iPhone 7,OS=11.3'"
-SDK_SIM_DEST_TV = "'platform=tvOS Simulator,name=Apple TV,OS=11.3'"
+SDK_SIM_DEST_IOS = "'platform=iOS Simulator,name=iPhone 7,OS=12.1'"
+SDK_SIM_DEST_TV = "'platform=tvOS Simulator,name=Apple TV,OS=12.1'"
 SDK_SIM_DEST_MAC = "'platform=OS X,arch=x86_64'"
 
 SCHEME_IOS = 'MobileVLCKitTests'
@@ -147,7 +147,7 @@ def generate_coverage(scheme)
 
   if Dir.exist?(scheme_derived_data)
     sh "mkdir -p #{COVERAGE_REPORT_PATH}"
-    sh "xcrun xccov view #{scheme_derived_data}/Logs/Test/*.xccovreport > #{report_name}"
+    sh "xcrun xccov view #{scheme_derived_data}/Logs/Test/Test-#{scheme}*.xcresult/1_Test/*.xccovreport > #{report_name}"
     sh "cat #{report_name}"
   else
     puts "#{scheme} has not been tested yet. Please run its tests first"
