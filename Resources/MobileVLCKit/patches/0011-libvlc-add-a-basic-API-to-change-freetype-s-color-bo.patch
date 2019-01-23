@@ -1,7 +1,7 @@
-From 68e12bd41f54948d9e70526767394687057243fd Mon Sep 17 00:00:00 2001
+From 5da293c4d3fa9621851beeb93e5c7b090a0078b1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Dec 2017 18:05:40 +0100
-Subject: [PATCH 11/26] libvlc: add a basic API to change freetype's color,
+Subject: [PATCH 11/25] libvlc: add a basic API to change freetype's color,
  bold, font and size variables on-the-fly
 
 ---
@@ -13,7 +13,7 @@ Subject: [PATCH 11/26] libvlc: add a basic API to change freetype's color,
  5 files changed, 134 insertions(+), 5 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 4336df9442..20b220448b 100644
+index c431c235e9..4582688b27 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
 @@ -1567,6 +1567,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,

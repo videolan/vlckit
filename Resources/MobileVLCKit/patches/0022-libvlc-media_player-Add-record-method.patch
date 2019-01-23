@@ -1,7 +1,7 @@
-From b45614dc091e8c776be6e3de5c58a49424ec4dde Mon Sep 17 00:00:00 2001
+From 3bf2a0f10af8987e96ee4033e9ba82895e1dace7 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 22/26] libvlc: media_player: Add record method
+Subject: [PATCH 22/25] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -9,7 +9,7 @@ Subject: [PATCH 22/26] libvlc: media_player: Add record method
  2 files changed, 34 insertions(+)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index cbb5ec251a..d58dc4ddcf 100644
+index 4e951292c9..363779fd3d 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
 @@ -2108,6 +2108,19 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
