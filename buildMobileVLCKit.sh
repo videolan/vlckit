@@ -20,8 +20,8 @@ TVOS=no
 MACOS=no
 IOS=yes
 BITCODE=no
-OSVERSIONMINCFLAG=miphoneos-version-min
-OSVERSIONMINLDFLAG=ios_version_min
+OSVERSIONMINCFLAG=miphoneos
+OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
@@ -103,8 +103,8 @@ do
              BITCODE=yes
              SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
              SDK_MIN=10.2
-             OSVERSIONMINCFLAG=mtvos-version-min
-             OSVERSIONMINLDFLAG=tvos_version_min
+             OSVERSIONMINCFLAG=mtvos
+             OSVERSIONMINLDFLAG=tvos
              ;;
          x)
              MACOS=yes
@@ -112,8 +112,8 @@ do
              BITCODE=no
              SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
              SDK_MIN=10.9
-             OSVERSIONMINCFLAG=mmacosx-version-min
-             OSVERSIONMINLDFLAG=macosx_version_min
+             OSVERSIONMINCFLAG=mmacosx
+             OSVERSIONMINLDFLAG=macosx
              BUILD_DEVICE=yes
              FARCH=x86_64
              BUILD_DYNAMIC_FRAMEWORK=yes
@@ -363,12 +363,12 @@ buildLibVLC() {
 
     if [ "$PLATFORM" = "OS" ]; then
     if [ "$ARCH" != "aarch64" ]; then
-    CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     else
-    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     fi
     else
-    CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
+    CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     fi
 
     if [ "$BITCODE" = "yes" ]; then
@@ -392,19 +392,19 @@ buildLibVLC() {
         EXTRA_LDFLAGS="-arch ${ACTUAL_ARCH}"
         if [ "$ARCH" != "aarch64" ]; then
             EXTRA_CFLAGS+=" -mcpu=cortex-a8"
-            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG}_version_min,${SDK_MIN}"
+            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG}_version_min,${SDK_MIN}"
         else
-            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+            EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+            EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG}_version_min,${SDK_MIN}"
+            export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG}_version_min,${SDK_MIN}"
         fi
     else
         EXTRA_CFLAGS="-arch ${ARCH}"
-        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}=${SDK_MIN}"
-        EXTRA_LDFLAGS=" -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
-        export LDFLAGS="${LDFLAGS} -v -Wl,-${OSVERSIONMINLDFLAG},${SDK_MIN}"
+        EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+        EXTRA_LDFLAGS=" -Wl,-${OSVERSIONMINLDFLAG}_simulator_version_min,${SDK_MIN}"
+        export LDFLAGS="${LDFLAGS} -v -Wl,-${OSVERSIONMINLDFLAG}_simulator_version_min,${SDK_MIN}"
     fi
 
     spushd ${VLCROOT}/contrib
