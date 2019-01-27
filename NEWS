@@ -5,7 +5,7 @@ Version 4.0.0:
 
 Version 3.2.1:
 --------------
-- Add API to VLCLibrary to log debug information to a file
+- Add API to VLCLibrary to log debug information to a file or a custom target
 
 Version 3.2.0:
 --------------

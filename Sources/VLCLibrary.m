@@ -41,6 +41,12 @@ static void HandleMessage(void *,
                           const char *,
                           va_list);
 
+static void HandleMessageForCustomTarget(void *,
+                                         int,
+                                         const libvlc_log_t *,
+                                         const char *,
+                                         va_list);
+
 static VLCLibrary * sharedLibrary = nil;
 
 @interface VLCLibrary()
@@ -169,10 +175,40 @@ static VLCLibrary * sharedLibrary = nil;
     }
 }
 
-- (void)setDebugLoggingToFile:(NSString * _Nonnull)filePath
+- (BOOL)setDebugLoggingToFile:(NSString * _Nonnull)filePath
 {
     if (!filePath)
+        return NO;
+
+    if (!_instance)
+        return NO;
+
+    if (_debugLogging) {
+        libvlc_log_unset(_instance);
+    }
+
+    if (_logFileStream) {
+        fclose(_logFileStream);
+    }
+
+    _logFileStream = fopen([filePath UTF8String], "a");
+
+    if (_logFileStream) {
+        libvlc_log_set_file(_instance, _logFileStream);
+        _debugLogging = YES;
+        return YES;
+    }
+
+    return NO;
+}
+
+- (void)setDebugLoggingTarget:(id<VLCLibraryLogReceiverProtocol>) target
+{
+    if (![target respondsToSelector:@selector(handleMessage:debugLevel:)]) {
+        VKLog(@"%s: target object does not implement required protocol", __func__);
         return;
+    }
+    _debugLoggingTarget = target;
 
     if (!_instance)
         return;
@@ -181,10 +217,12 @@ static VLCLibrary * sharedLibrary = nil;
         libvlc_log_unset(_instance);
     }
 
-    _logFileStream = fopen([filePath UTF8String], "a");
+    if (_logFileStream)
+        fclose(_logFileStream);
 
-    if (_logFileStream) {
-        libvlc_log_set_file(_instance, _logFileStream);
+    if (target) {
+        libvlc_log_set(_instance, HandleMessageForCustomTarget, (__bridge void *)(self));
+        _debugLogging = YES;
     }
 }
 
@@ -240,11 +278,10 @@ static void HandleMessage(void *data,
     if (level > libraryInstance.debugLoggingLevel)
         return;
 
-    char *str;
+    char *str = NULL;
     if (vasprintf(&str, fmt, args) == -1) {
         if (str)
             free(str);
-        str = NULL;
         return;
     }
 
@@ -253,5 +290,32 @@ static void HandleMessage(void *data,
 
     VKLog(@"%s", str);
     free(str);
-    str = NULL;
+}
+
+static void HandleMessageForCustomTarget(void *data,
+                                         int level,
+                                         const libvlc_log_t *ctx,
+                                         const char *fmt,
+                                         va_list args)
+{
+    VLCLibrary *libraryInstance = (__bridge VLCLibrary *)data;
+    id debugLoggingTarget = libraryInstance.debugLoggingTarget;
+
+    if (!debugLoggingTarget) {
+        return;
+    }
+
+    char *str = NULL;
+    if (vasprintf(&str, fmt, args) == -1) {
+        if (str)
+            free(str);
+        return;
+    }
+
+    if (str == NULL)
+        return;
+
+    NSString *message = [[NSString alloc] initWithBytesNoCopy:str length:strlen(str) encoding:NSUTF8StringEncoding freeWhenDone:YES];
+
+    [debugLoggingTarget handleMessage:message debugLevel:level];
 }
