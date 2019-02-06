@@ -853,8 +853,9 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 @property (NS_NONATOMIC_IOSONLY) float position;
 
 /**
- * Set movie position. This has no effect if playback is not enabled.
- * \note movie position as percentage between 0.0 and 1.0.
+ * property whether the current input is seekable or not, e.g. it's a live stream
+ * \note Setting position or time for non-seekable inputs does not have any effect and will fail silently
+ * \return BOOL value
  */
 @property (NS_NONATOMIC_IOSONLY, getter=isSeekable, readonly) BOOL seekable;
 
