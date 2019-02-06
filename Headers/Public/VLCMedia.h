@@ -511,11 +511,11 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
 - (void)synchronousParse __attribute__((deprecated));
 
 enum {
-    VLCMediaParseLocal          = 0x00,     //Parse media if it's a local file
-    VLCMediaParseNetwork        = 0x01,     //Parse media even if it's a network file
-    VLCMediaFetchLocal          = 0x02,     //Fetch meta and covert art using local resources
-    VLCMediaFetchNetwork        = 0x04,     //Fetch meta and covert art using network resources
-    VLCMediaDoInteract          = 0x08,     //Interact with the user when preparsing this item (and not its sub items). Set this flag in order to receive a callback when the input is asking for credentials.
+    VLCMediaParseLocal          = 0x00,     ///< Parse media if it's a local file
+    VLCMediaParseNetwork        = 0x01,     ///< Parse media even if it's a network file
+    VLCMediaFetchLocal          = 0x02,     ///< Fetch meta and covert art using local resources
+    VLCMediaFetchNetwork        = 0x04,     ///< Fetch meta and covert art using network resources
+    VLCMediaDoInteract          = 0x08,     ///< Interact with the user when preparsing this item (and not its sub items). Set this flag in order to receive a callback when the input is asking for credentials.
 };
 /**
  * enum of available options for use with parseWithOptions
