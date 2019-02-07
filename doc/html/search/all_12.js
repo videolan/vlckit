@@ -10,5 +10,6 @@ var searchData=
   ['timewithnumber_3a',['timeWithNumber:',['../interface_v_l_c_time.html#af9b7c469a7cb064a3d9c2c5bcaa769bb',1,'VLCTime']]],
   ['titledescriptions',['titleDescriptions',['../interface_v_l_c_media_player.html#a937a50fb274ec99b146d999fd8c02a1b',1,'VLCMediaPlayer']]],
   ['tracksinformation',['tracksInformation',['../interface_v_l_c_media.html#a7b098bacc67ab0ff8fa9d316bef987d6',1,'VLCMedia']]],
+  ['transcode_3afinishedsucessfully_3a',['transcode:finishedSucessfully:',['../protocol_v_l_c_transcoder_delegate-p.html#ac5cb5a3f13bd81f34dee9becb6d2046d',1,'VLCTranscoderDelegate-p']]],
   ['type',['type',['../interface_v_l_c_renderer_item.html#aaac905fef90a323b9a56d116aba7c840',1,'VLCRendererItem']]]
 ];

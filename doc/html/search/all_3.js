@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['canceldialogwithreference_3a',['cancelDialogWithReference:',['../protocol_v_l_c_custom_dialog_renderer_protocol_01-p.html#a288ed9f961ae4bb468db61e35b631da2',1,'VLCCustomDialogRendererProtocol -p']]],
+  ['canceldialogwithreference_3a',['cancelDialogWithReference:',['../protocol_v_l_c_custom_dialog_renderer_protocol-p.html#a2a33b761b5aa9da31e6998d2ae9726b0',1,'VLCCustomDialogRendererProtocol-p']]],
   ['canpause',['canPause',['../interface_v_l_c_media_player.html#a1e2ece165a5fb056a2f8737ac1ff2367',1,'VLCMediaPlayer']]],
   ['changeset',['changeset',['../interface_v_l_c_library.html#a9201c5f4b1ee745e31e3875835914124',1,'VLCLibrary']]],
   ['chapterdescriptionsoftitle_3a',['chapterDescriptionsOfTitle:',['../interface_v_l_c_media_player.html#a637f12081f1748693c9234b33c752640',1,'VLCMediaPlayer']]],
