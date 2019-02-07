@@ -1,11 +1,12 @@
 var searchData=
 [
   ['vlcaudio',['VLCAudio',['../interface_v_l_c_audio.html',1,'']]],
-  ['vlccustomdialogrendererprotocol_20_2dp',['VLCCustomDialogRendererProtocol -p',['../protocol_v_l_c_custom_dialog_renderer_protocol_01-p.html',1,'']]],
+  ['vlccustomdialogrendererprotocol_2dp',['VLCCustomDialogRendererProtocol-p',['../protocol_v_l_c_custom_dialog_renderer_protocol-p.html',1,'']]],
   ['vlcdialogprovider',['VLCDialogProvider',['../interface_v_l_c_dialog_provider.html',1,'']]],
   ['vlclibrary',['VLCLibrary',['../interface_v_l_c_library.html',1,'']]],
+  ['vlclibrarylogreceiverprotocol_2dp',['VLCLibraryLogReceiverProtocol-p',['../protocol_v_l_c_library_log_receiver_protocol-p.html',1,'']]],
   ['vlcmedia',['VLCMedia',['../interface_v_l_c_media.html',1,'']]],
-  ['vlcmediadelegate_20_2dp',['VLCMediaDelegate -p',['../protocol_v_l_c_media_delegate_01-p.html',1,'']]],
+  ['vlcmediadelegate_2dp',['VLCMediaDelegate-p',['../protocol_v_l_c_media_delegate-p.html',1,'']]],
   ['vlcmediadiscoverer',['VLCMediaDiscoverer',['../interface_v_l_c_media_discoverer.html',1,'']]],
   ['vlcmedialibrary',['VLCMediaLibrary',['../interface_v_l_c_media_library.html',1,'']]],
   ['vlcmedialist',['VLCMediaList',['../interface_v_l_c_media_list.html',1,'']]],
@@ -15,9 +16,15 @@ var searchData=
   ['vlcmediaplayerdelegate_2dp',['VLCMediaPlayerDelegate-p',['../protocol_v_l_c_media_player_delegate-p.html',1,'']]],
   ['vlcmediathumbnailer',['VLCMediaThumbnailer',['../interface_v_l_c_media_thumbnailer.html',1,'']]],
   ['vlcmediathumbnailerdelegate_2dp',['VLCMediaThumbnailerDelegate-p',['../protocol_v_l_c_media_thumbnailer_delegate-p.html',1,'']]],
+  ['vlcrendererdiscoverer',['VLCRendererDiscoverer',['../interface_v_l_c_renderer_discoverer.html',1,'']]],
+  ['vlcrendererdiscovererdelegate_2dp',['VLCRendererDiscovererDelegate-p',['../protocol_v_l_c_renderer_discoverer_delegate-p.html',1,'']]],
+  ['vlcrendererdiscovererdescription',['VLCRendererDiscovererDescription',['../interface_v_l_c_renderer_discoverer_description.html',1,'']]],
+  ['vlcrendereritem',['VLCRendererItem',['../interface_v_l_c_renderer_item.html',1,'']]],
   ['vlcstreamoutput',['VLCStreamOutput',['../interface_v_l_c_stream_output.html',1,'']]],
   ['vlcstreamsession',['VLCStreamSession',['../interface_v_l_c_stream_session.html',1,'']]],
   ['vlctime',['VLCTime',['../interface_v_l_c_time.html',1,'']]],
+  ['vlctranscoder',['VLCTranscoder',['../interface_v_l_c_transcoder.html',1,'']]],
+  ['vlctranscoderdelegate_2dp',['VLCTranscoderDelegate-p',['../protocol_v_l_c_transcoder_delegate-p.html',1,'']]],
   ['vlcvideolayer',['VLCVideoLayer',['../interface_v_l_c_video_layer.html',1,'']]],
   ['vlcvideoview',['VLCVideoView',['../interface_v_l_c_video_view.html',1,'']]]
 ];
