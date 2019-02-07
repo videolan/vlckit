@@ -1,7 +1,11 @@
 
 Version 3.2.1:
 --------------
-- Add API to VLCLibrary to log debug information to a file or a custom target
+- Added a new default AV1 decoder - dav1d
+- Fixed issues with decoding certain HEVC streams
+- Added API to VLCLibrary to log debug information to a file or a custom target
+- Fixed crash and leaks in our OpenGL based video output
+- Fixed chromecast not displaying Videos for certain devices
 
 Version 3.2.0:
 --------------
