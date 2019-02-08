@@ -38,20 +38,20 @@
 static void HandleRendererDiscovererItemAdded(const libvlc_event_t *event, void *self)
 {
     @autoreleasepool {
+        VLCRendererItem *renderer = [[VLCRendererItem alloc] initWithRendererItem:event->u.renderer_discoverer_item_added.item];
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(itemAdded:)
-                                           withArgumentAsObject:[NSValue valueWithPointer:
-                                                                 event->u.renderer_discoverer_item_added.item]];
+                                           withArgumentAsObject:renderer];
     }
 }
 
 static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, void *self)
 {
     @autoreleasepool {
+        VLCRendererItem *renderer = [[VLCRendererItem alloc] initWithRendererItem:event->u.renderer_discoverer_item_deleted.item];
         [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
                                                      withMethod:@selector(itemDeleted:)
-                                           withArgumentAsObject:[NSValue valueWithPointer:
-                                                                 event->u.renderer_discoverer_item_deleted.item]];
+                                           withArgumentAsObject:renderer];
     }
 }
 
@@ -154,11 +154,11 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     return [list copy];
 }
 
-- (VLCRendererItem *)discoveredItemsContainItem:(libvlc_renderer_item_t *)item
+- (VLCRendererItem *)discoveredItemsContainItem:(VLCRendererItem *)item
 {
     for (VLCRendererItem *rendererItem in _rendererItems) {
-        BOOL hasSameName = !strcmp(libvlc_renderer_item_name(rendererItem.libVLCRendererItem), libvlc_renderer_item_name(item));
-        BOOL hasSameType = !strcmp(libvlc_renderer_item_type(rendererItem.libVLCRendererItem), libvlc_renderer_item_type(item));
+        BOOL hasSameName = [rendererItem.name isEqualToString:item.name];
+        BOOL hasSameType = [rendererItem.type isEqualToString:item.type];
 
         if (hasSameName && hasSameType) {
             return rendererItem;
@@ -174,22 +174,19 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
 #pragma mark - Handling libvlc event callbacks
 
-- (void)itemAdded:(NSValue *)item
+- (void)itemAdded:(VLCRendererItem *)item
 {
-    libvlc_renderer_item_t *renderer_item = item.pointerValue;
-    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
+    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:item];
 
     if (!rendererItem) {
-        rendererItem = [[VLCRendererItem alloc] initWithRendererItem:renderer_item];
-        [_rendererItems addObject:rendererItem];
+        [_rendererItems addObject:item];
         [_delegate rendererDiscovererItemAdded:self item:rendererItem];
     }
 }
 
-- (void)itemDeleted:(NSValue *)item
+- (void)itemDeleted:(VLCRendererItem *)item
 {
-    libvlc_renderer_item_t *renderer_item = item.pointerValue;
-    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:renderer_item];
+    VLCRendererItem *rendererItem = [self discoveredItemsContainItem:item];
 
     if (rendererItem) {
         [_rendererItems removeObject:rendererItem];
