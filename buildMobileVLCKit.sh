@@ -400,7 +400,7 @@ buildLibVLC() {
             EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG}_version_min,${SDK_MIN}"
             export LDFLAGS="${LDFLAGS} -Wl,-${OSVERSIONMINLDFLAG}_version_min,${SDK_MIN}"
         fi
-    else
+    elif [ "$PLATFORM" = "Simulator" ]; then
         EXTRA_CFLAGS="-arch ${ARCH}"
         EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
         EXTRA_LDFLAGS=" -Wl,-${OSVERSIONMINLDFLAG}_simulator_version_min,${SDK_MIN}"
