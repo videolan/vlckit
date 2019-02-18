@@ -135,8 +135,8 @@ NS_ASSUME_NONNULL_BEGIN
 @required
 /**
  * called when VLC wants to print a debug message
- * \param error the dialog title
- * \param message the error message
+ * \param message the debug message
+ * \param level the debug level
  */
 - (void)handleMessage:(NSString *)message
            debugLevel:(int)level;
