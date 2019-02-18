@@ -253,6 +253,10 @@ buildLibVLC() {
     export OBJCFLAGS="${OBJCFLAGS}"
     export LDFLAGS="${LDFLAGS}"
 
+    fetch_python3_path
+
+    export PATH="${PYTHON3_PATH}:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
+
     spushd ${VLCROOT}/contrib
 
     info "Compiling third-party libraries"
@@ -1069,15 +1073,12 @@ if [ "$VLCROOT" = "" ]; then
     spopd
 fi
 
-# get python installation
-python3Path=$(echo /Library/Frameworks/Python.framework/Versions/3.*/bin | awk '{print $1;}')
-if [ ! -d "$python3Path" ]; then
-    python3Path=""
-fi
-
-export PATH="$python3Path:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:${VLC_PATH}:/usr/bin:/bin:/usr/sbin:/sbin"
-
-echo `pwd`
+fetch_python3_path() {
+    PYTHON3_PATH=$(echo /Library/Frameworks/Python.framework/Versions/3.*/bin | awk '{print $1;}')
+    if [ ! -d "${PYTHON3_PATH}" ]; then
+        PYTHON3_PATH=""
+    fi
+}
 
 #
 # Build time
