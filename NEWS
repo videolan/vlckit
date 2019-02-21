@@ -1,3 +1,10 @@
+Version 3.2.2:
+--------------
+
+API Changes:
+ - VLCMediaList:
+   - indexOfMedia Returns NSUInteger instead of NSInteger
+   - removeMediaAtIndex Returns BOOL instead of void
 
 Version 3.2.1:
 --------------
