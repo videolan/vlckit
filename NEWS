@@ -3,6 +3,22 @@ Version 4.0.0:
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
 - Use NSDateComponents API for VLCTime.verboseStringValue
 
+Version 3.3.0:
+--------------
+
+- Add SMB 2 support
+- VLCMediaList: Fix removeMediaAtIndex NSRangeException crash
+- mp4: Improve muxing & demuxing
+- ogg: Improve demuxing
+- mkv: Fix GotoAndPlay command uid conversion
+- avcodec: Fix missing FourCC in libav
+- microdns: Fix memory leak
+
+API Changes:
+  VLCMediaList:
+   - indexOfMedia Returns NSUInteger instead of NSInteger
+   - removeMediaAtIndex Returns BOOL instead of void
+
 Version 3.2.1:
 --------------
 - Added a new default AV1 decoder - dav1d
