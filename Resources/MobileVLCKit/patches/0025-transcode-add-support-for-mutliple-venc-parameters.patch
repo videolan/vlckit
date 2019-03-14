@@ -176,7 +176,8 @@ index c92dd4a974..9009f312bb 100644
 -    es_format_Init( &id->p_encoder->fmt_out, p_fmt->i_cat, 0 );
 -    id->p_encoder->fmt_out.i_id    = p_fmt->i_id;
 -    id->p_encoder->fmt_out.i_group = p_fmt->i_group;
-+    if( p_fmt->i_cat == VIDEO_ES ) //&& p_sys->i_vcodec )
++    if( p_fmt->i_cat == VIDEO_ES &&
++      ( p_sys->i_vcodec || p_sys->pp_vencs.i_size > 0 ) )
 +    {
 +        for( int config_idx=0;
 +             config_idx<p_sys->pp_vencs.i_size;
