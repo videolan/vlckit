@@ -1,4 +1,4 @@
-From cf17761fdabb21b1dddc318bd5fdfc58fb5ffce2 Mon Sep 17 00:00:00 2001
+From 00c4ee62fb59a59c51d4db5efbde0d8b5e1e4a39 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Apr 2018 16:15:16 +0200
 Subject: [PATCH 26/26] access: add smb2 module
@@ -29,7 +29,7 @@ allow to use Builtin NTLMSSP authentication instead of libkrb5.
  create mode 100644 modules/access/smb2.c
 
 diff --git a/configure.ac b/configure.ac
-index 32a45bac65..4c6305786a 100644
+index 9891bed93e..9bbba2b3df 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1854,7 +1854,14 @@ AS_IF([test "${SYS}" = "mingw32" -a "${enable_winstore_app}" != "yes"], [ VLC_AD

@@ -1,4 +1,4 @@
-From 810535d5955a255f6a593c38fc83e0dcc525fc0e Mon Sep 17 00:00:00 2001
+From 2151e1407c4d28e47b3624ed05940cdb91f7e811 Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Mon, 30 Apr 2018 14:33:08 +0100
 Subject: [PATCH 14/26] add auto deinterlacer-mode which is also valid

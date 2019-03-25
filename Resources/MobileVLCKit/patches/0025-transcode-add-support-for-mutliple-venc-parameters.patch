@@ -1,4 +1,4 @@
-From 034daa0d65377986472b8d3bc11acf1292ad5b5a Mon Sep 17 00:00:00 2001
+From 143033b48bc77061fd9286fb00c82160cd8b8de3 Mon Sep 17 00:00:00 2001
 From: Alexandre Janniaux <alexandre.janniaux@gmail.com>
 Date: Wed, 28 Nov 2018 18:27:16 +0100
 Subject: [PATCH 25/26] transcode: add support for mutliple venc parameters
@@ -14,12 +14,12 @@ For example:
 will first try avcodec module with h264 video format, then vpx module
 with VP8 video format.
 ---
- modules/stream_out/transcode/transcode.c | 257 ++++++++++++++++++-----
+ modules/stream_out/transcode/transcode.c | 258 ++++++++++++++++++-----
  modules/stream_out/transcode/transcode.h |   2 +
- 2 files changed, 204 insertions(+), 55 deletions(-)
+ 2 files changed, 205 insertions(+), 55 deletions(-)
 
 diff --git a/modules/stream_out/transcode/transcode.c b/modules/stream_out/transcode/transcode.c
-index c92dd4a974..9009f312bb 100644
+index c92dd4a974..bc9f9e694a 100644
 --- a/modules/stream_out/transcode/transcode.c
 +++ b/modules/stream_out/transcode/transcode.c
 @@ -153,6 +153,9 @@ vlc_module_begin ()
@@ -152,7 +152,7 @@ index c92dd4a974..9009f312bb 100644
  static sout_stream_id_sys_t *Add( sout_stream_t *p_stream,
                                    const es_format_t *p_fmt )
  {
-@@ -499,49 +522,173 @@ static sout_stream_id_sys_t *Add( sout_stream_t *p_stream,
+@@ -499,49 +522,174 @@ static sout_stream_id_sys_t *Add( sout_stream_t *p_stream,
      /* Create decoder object */
      id->p_decoder = vlc_object_create( p_stream, sizeof( decoder_t ) );
      if( !id->p_decoder )
@@ -176,7 +176,8 @@ index c92dd4a974..9009f312bb 100644
 -    es_format_Init( &id->p_encoder->fmt_out, p_fmt->i_cat, 0 );
 -    id->p_encoder->fmt_out.i_id    = p_fmt->i_id;
 -    id->p_encoder->fmt_out.i_group = p_fmt->i_group;
-+    if( p_fmt->i_cat == VIDEO_ES ) //&& p_sys->i_vcodec )
++    if( p_fmt->i_cat == VIDEO_ES &&
++      ( p_sys->i_vcodec || p_sys->pp_vencs.i_size > 0 ) )
 +    {
 +        for( int config_idx=0;
 +             config_idx<p_sys->pp_vencs.i_size;

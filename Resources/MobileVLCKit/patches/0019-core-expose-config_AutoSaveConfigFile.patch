@@ -1,4 +1,4 @@
-From fea065350574fe5ef6ec8386f9f82341b8043d1f Mon Sep 17 00:00:00 2001
+From 46c4a0a08e62fe318520112feeb7c10848c68ea6 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
 Subject: [PATCH 19/26] core: expose config_AutoSaveConfigFile
