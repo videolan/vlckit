@@ -3,6 +3,19 @@ Version 4.0.0:
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
 - Use NSDateComponents API for VLCTime.verboseStringValue
 
+Version 3.3.1:
+--------------
+
+- Lower SMB 2 priority
+- transcode: Fix transcode with passthrough video
+- asf: Fix memory leak
+- demux:
+    - dash: Handle infinite repeat in timeline
+    - mkv: Fix playback of files created with lavf 58.12
+- sftp: Fix version for ECDSA known hosts
+- contribs:
+    - Bump dav1d to 0.2.1
+
 Version 3.3.0:
 --------------
 
