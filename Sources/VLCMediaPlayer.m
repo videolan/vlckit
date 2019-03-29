@@ -1486,7 +1486,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 {
 #if !TARGET_OS_IPHONE
     // This seems to be the most relevant place to delay sleeping and screen saver.
-    [self delaySleep];
+    //[self delaySleep]; // Commento per evitare che venga impedito l'avvio dello screensaver
 #endif
 
     [self willChangeValueForKey:@"position"];
