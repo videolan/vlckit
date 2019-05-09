@@ -272,12 +272,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         VLCLibrary *library = [VLCLibrary sharedLibrary];
         NSAssert(library.instance, @"no library instance when creating media");
 
-        if (([[anURL absoluteString] hasPrefix:@"sftp://"]) ||
-            ([[anURL absoluteString] hasPrefix:@"smb://"])) {
-            url = [[[anURL absoluteString] stringByRemovingPercentEncoding] UTF8String];
-        } else {
-            url = [[anURL absoluteString] UTF8String];
-        }
+        url = [[anURL absoluteString] UTF8String];
 
         p_md = libvlc_media_new_location(library.instance, url);
 
@@ -951,12 +946,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         return;
 
     NSString *urlString = [NSString stringWithUTF8String:p_url];
-    if (!urlString) {
-        free(p_url);
-        return;
-    }
-
-    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     if (!urlString) {
         free(p_url);
         return;
