@@ -1,7 +1,15 @@
+
 Version 4.0.0:
 --------------
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
 - Use NSDateComponents API for VLCTime.verboseStringValue
+
+Version 3.3.2:
+--------------
+
+- Internal percent encoding handling of URLs within VLCMedia was removed. This fixes a bug where URLs ended up double encoded.
+
+/!\ This change might require changes to client Apps to ensure that their URLS are correctly percent encoded when initialising VLCMedia /!\
 
 Version 3.3.1:
 --------------
