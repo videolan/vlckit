@@ -3,7 +3,25 @@ Version 3.3.2:
 
 - Internal percent encoding handling of URLs within VLCMedia was removed. This fixes a bug where URLs ended up double encoded.
 
-/!\ This change might require changes to client Apps to ensure that their URLS are correctly percent encoded when initialising VLCMedia /!\
+/!\ This change might require changes to client Apps to ensure that their URLs are correctly percent encoded when initialising VLCMedia /!\
+
+- access:
+        - rdp: Fix URI parsing
+        - vnc: Fix URI parsing
+        - live555: Fix crash parsing H264
+- demux:
+    - hls: Disable webvtt
+    - mp4: Add sample overread check for non seekable case
+                Probe fragments on missing duration
+                    Ignore indirect index references for seek
+Pack sidx items
+    - ts: Fix broken var reading
+- mux:
+    - mp4: Fix tkdh visible values
+            Set visible dimensions in stsd instead of buffer
+- contribs:
+    - Bump dav1d to 0.3.0
+
 
 Version 3.3.1:
 --------------
