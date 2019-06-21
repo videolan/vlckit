@@ -3,11 +3,13 @@
  *****************************************************************************
  * Copyright (C) 2009 Pierre d'Herbemont
  * Partial Copyright (C) 2009-2013 Felix Paul Kühne
- * Copyright (C) 2009-2013 VLC authors and VideoLAN
+ * Copyright (C) 2009-2019 VLC authors and VideoLAN
+
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
- *          Felix Paul Kühne <fkuehne # videolan.org
+ *          Felix Paul Kühne <fkuehne # videolan.org>
+ *          Soomin Lee <bubu # mikan.io>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +26,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-@class VLCMedia, VLCMediaPlayer, VLCMediaList;
+@class VLCMedia, VLCMediaPlayer, VLCMediaList, VLCMediaListPlayer;
 
 /**
  * VLCRepeatMode
@@ -35,6 +37,27 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
     VLCRepeatCurrentItem,
     VLCRepeatAllItems
 };
+
+@protocol VLCMediaListPlayerDelegate <NSObject>
+@optional
+/**
+ * Sent when VLCMediaListPlayer has finished playing.
+ */
+- (void)mediaListPlayerFinishedPlayback:(VLCMediaListPlayer *)player;
+
+/**
+ * Sent when VLCMediaListPlayer going to play next media
+ */
+- (void)mediaListPlayer:(VLCMediaListPlayer *)player
+              nextMedia:(VLCMedia *)media;
+
+/**
+ * Sent when VLCMediaListPlayer is stopped.
+ * Internally or by using the stop()
+ * \see stop
+ */
+- (void)mediaListPlayerStopped:(VLCMediaListPlayer *)player;
+@end
 
 /**
  * A media list player, which eases the use of playlists
@@ -58,6 +81,11 @@ typedef NS_ENUM(NSInteger, VLCRepeatMode) {
  * the media player instance used for playback by the list player
  */
 @property (readonly) VLCMediaPlayer *mediaPlayer;
+
+/**
+ * Receiver's delegate
+ */
+@property (nonatomic, weak) id <VLCMediaListPlayerDelegate> delegate;
 
 /**
  * initializer with a certain drawable
