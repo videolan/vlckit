@@ -3,11 +3,12 @@
  *****************************************************************************
  * Copyright (C) 2009 Pierre d'Herbemont
  * Partial Copyright (C) 2009-2017 Felix Paul Kühne
- * Copyright (C) 2009-2013 VLC authors and VideoLAN
+ * Copyright (C) 2009-2019 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
- *          Felix Paul Kühne <fkuehne # videolan.org
+ *          Felix Paul Kühne <fkuehne # videolan.org>
+ *          Soomin Lee <bubu # mikan.io>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -30,6 +31,7 @@
 #import "VLCMediaList.h"
 #import "VLCLibVLCBridging.h"
 #import "VLCLibrary.h"
+#import "VLCEventManager.h"
 
 @interface VLCMediaListPlayer () {
     void *instance;
@@ -40,6 +42,36 @@
     dispatch_queue_t _libVLCBackgroundQueue;
 }
 @end
+
+static void HandleMediaListPlayerPlayed(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaListPlayerPlayed)
+                                           withArgumentAsObject:nil];
+    }
+}
+
+static void HandleMediaListPlayerNextItemSet(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        VLCMedia *media = [[VLCMedia alloc]
+                           initWithLibVLCMediaDescriptor:event->u.media_list_player_next_item_set.item];
+
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaListPlayerNextItemSet:)
+                                           withArgumentAsObject:media];
+    }
+}
+
+static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaListPlayerStopped)
+                                           withArgumentAsObject:nil];
+    }
+}
 
 @implementation VLCMediaListPlayer
 
@@ -59,8 +91,44 @@
         _mediaPlayer = [[VLCMediaPlayer alloc] initWithLibVLCInstance:libvlc_media_list_player_get_media_player(instance) andLibrary:library];
         if (drawable != nil)
             [_mediaPlayer setDrawable:drawable];
+
+        [self registerObservers];
     }
     return self;
+}
+
+- (void)registerObservers
+{
+    __block libvlc_event_manager_t * p_em = libvlc_media_list_player_event_manager(instance);
+
+    if (!p_em) {
+        return;
+    }
+
+    dispatch_sync(_libVLCBackgroundQueue,^{
+        libvlc_event_attach(p_em, libvlc_MediaListPlayerPlayed,
+                            HandleMediaListPlayerPlayed, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaListPlayerNextItemSet,
+                            HandleMediaListPlayerNextItemSet, (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaListPlayerStopped,
+                            HandleMediaListPlayerStopped, (__bridge void *)(self));
+    });
+}
+
+- (void)unregisterObservers
+{
+    libvlc_event_manager_t * p_em = libvlc_media_list_player_event_manager(instance);
+
+    if (!p_em) {
+        return;
+    }
+
+    libvlc_event_detach(p_em, libvlc_MediaListPlayerPlayed,
+                        HandleMediaListPlayerPlayed, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaListPlayerNextItemSet,
+                        HandleMediaListPlayerNextItemSet, (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaListPlayerStopped,
+                        HandleMediaListPlayerStopped, (__bridge void *)(self));
 }
 
 - (instancetype)initWithOptions:(NSArray *)options
@@ -81,6 +149,7 @@
 - (void)dealloc
 {
     [_mediaPlayer stop];
+    [self unregisterObservers];
     libvlc_media_list_player_release(instance);
 }
 
@@ -205,4 +274,28 @@
 {
     return _repeatMode;
 }
+
+#pragma mark - Delegate methods
+
+- (void)mediaListPlayerPlayed
+{
+    if ([_delegate respondsToSelector:@selector(mediaListPlayerPlayed)]) {
+        [_delegate mediaListPlayerFinishedPlayback:self];
+    }
+}
+
+- (void)mediaListPlayerNextItemSet:(VLCMedia *)media
+{
+    if ([_delegate respondsToSelector:@selector(mediaListPlayer:nextMedia:)]) {
+        [_delegate mediaListPlayer:self nextMedia:media];
+    }
+}
+
+- (void)mediaListPlayerStopped
+{
+    if ([_delegate respondsToSelector:@selector(mediaListPlayerStopped)]) {
+        [_delegate mediaListPlayerStopped:self];
+    }
+}
+
 @end
