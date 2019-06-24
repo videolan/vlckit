@@ -1,4 +1,4 @@
-From 0751562da380cd3632569793b6d23bc270d45f4c Mon Sep 17 00:00:00 2001
+From c91696810190457fe6d4f1b68c6d05ebcfcbc225 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
 Subject: [PATCH 18/26] ffmpeg: backport vtenc patches
@@ -340,13 +340,13 @@ index 0000000000..42f4cce1e6
 +2.18.0
 +
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 2837616642..59d8b1e8a5 100644
+index 6fefe4d5f7..74dea0aeca 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -242,6 +242,10 @@ ifdef USE_FFMPEG
- 	$(APPLY) $(SRC)/ffmpeg/armv7_fixup.patch
- 	$(APPLY) $(SRC)/ffmpeg/dxva_vc1_crash.patch
- 	$(APPLY) $(SRC)/ffmpeg/h264_early_SAR.patch
+@@ -246,6 +246,10 @@ ifdef USE_FFMPEG
+ 	$(APPLY) $(SRC)/ffmpeg/ffmpeg-mkv-overshoot.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-hevcdec-set-the-SEI-parameters-early-on-the-.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-h264_slice-set-the-SEI-parameters-early-on-t.patch
 +	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch
 +	$(APPLY) $(SRC)/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch
 +	$(APPLY) $(SRC)/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch
