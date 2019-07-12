@@ -1054,7 +1054,7 @@ if [ "$VLCROOT" = "" ]; then
             cd vlc
             git checkout -B localBranch ${TESTEDHASH}
             git branch --set-upstream-to=origin/master localBranch
-            git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+            git am ${ROOT_DIR}/libvlc/patches/*.patch
             if [ $? -ne 0 ]; then
                 git am --abort
                 info "Applying the patches failed, aborting git-am"
@@ -1065,7 +1065,7 @@ if [ "$VLCROOT" = "" ]; then
             cd vlc
             git fetch --all
             git reset --hard ${TESTEDHASH}
-            git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+            git am ${ROOT_DIR}/libvlc/patches/*.patch
             cd ..
         fi
     fi
