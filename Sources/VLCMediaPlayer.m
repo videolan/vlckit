@@ -45,6 +45,7 @@
 #  import <CoreServices/../Frameworks/OSServices.framework/Headers/Power.h>
 # endif
 #endif
+#import "AVKit/AVKit.h"
 
 #include <vlc/vlc.h>
 
@@ -79,6 +80,8 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
     };
     return stateToStrings[state];
 }
+
+const int64_t VLC_AUDIO_DELAY_MAX = 1000000ULL;
 
 // TODO: Documentation
 @interface VLCMediaPlayer (Private)
@@ -231,6 +234,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     BOOL _equalizerEnabled;                     ///< Equalizer state
     libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
+    int64_t _extraDelay;
 }
 @end
 
@@ -270,6 +274,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
+        _extraDelay = 0.0f;
 
         _privateLibrary = library;
         libvlc_retain([_privateLibrary instance]);
@@ -982,12 +987,12 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)setCurrentAudioPlaybackDelay:(NSInteger)index
 {
-    libvlc_audio_set_delay(_playerInstance, index);
+    libvlc_audio_set_delay(_playerInstance, index + _extraDelay);
 }
 
 - (NSInteger)currentAudioPlaybackDelay
 {
-    return libvlc_audio_get_delay(_playerInstance);
+    return libvlc_audio_get_delay(_playerInstance) - _extraDelay;
 }
 
 #pragma mark -
@@ -1352,6 +1357,25 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_media_player_record(_playerInstance, NO, nil);
 }
 
+- (void)readjustAudioDelayIfNeeded
+{
+    int64_t latency = [[AVAudioSession sharedInstance] outputLatency] * 1000000ULL;
+
+    /* XXX: VLC 3.0 audio output can only handle a latency max of 1sec. If the
+     * output latency is superior, apply an input delay to catch up */
+    if ((latency > VLC_AUDIO_DELAY_MAX
+     && latency - VLC_AUDIO_DELAY_MAX != _extraDelay) || _extraDelay != 0)
+    {
+        int64_t delay;
+        if (latency < VLC_AUDIO_DELAY_MAX)
+            delay = 0;
+        else
+            delay = VLC_AUDIO_DELAY_MAX - latency;
+        libvlc_audio_set_delay(_playerInstance, self.currentAudioPlaybackDelay + delay);
+        _extraDelay = delay;
+        NSLog(@"adjusting airplay delay: %" PRId64, delay);
+    }
+}
 
 #pragma mark -
 #pragma mark - Renderer
@@ -1400,6 +1424,12 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)registerObservers
 {
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+    [defaultCenter addObserver:self
+                      selector:@selector(audioSessionRouteChange:)
+                          name:AVAudioSessionRouteChangeNotification
+                        object:AVAudioSession.sharedInstance];
+    
     // Attach event observers into the media instance
     __block libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
     if (!p_em)
@@ -1431,6 +1461,8 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)unregisterObservers
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
     if (!p_em)
         return;
@@ -1522,6 +1554,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _cachedTime = [VLCTime nullTime];
         _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;
+        [self readjustAudioDelayIfNeeded];
         [self didChangeValueForKey:@"position"];
         [self didChangeValueForKey:@"remainingTime"];
         [self didChangeValueForKey:@"time"];
@@ -1567,6 +1600,16 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
             [_delegate mediaPlayer:self recordingStoppedAtPath:filePath];
         }
     }
+}
+
+- (void)audioSessionRouteChange:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    NSInteger routeChangeReason = [[userInfo valueForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
+    if (routeChangeReason == AVAudioSessionRouteChangeReasonRouteConfigurationChange) {
+        return;
+    }
+    [self readjustAudioDelayIfNeeded];
 }
 
 @end
