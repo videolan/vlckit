@@ -1,20 +1,20 @@
-From a1a5a96fe411e385473dcbb695c27f0ffcead6fd Mon Sep 17 00:00:00 2001
+From e489e76cd40a12913096f8932e4ae003568c99a6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 21/26] http access: retain auth struct for the runtime of the
+Subject: [PATCH 09/17] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
 ---
- modules/access/http.c   | 12 +++++++-----
+ modules/access/http.c   |  9 +++++++--
  src/network/http_auth.c | 17 ++++++++++++++++-
- 2 files changed, 23 insertions(+), 6 deletions(-)
+ 2 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http.c b/modules/access/http.c
-index 1d58a034b8..9078c8019e 100644
+index a1d0593e0f..138b262643 100644
 --- a/modules/access/http.c
 +++ b/modules/access/http.c
-@@ -269,6 +269,8 @@ static int Open( vlc_object_t *p_this )
+@@ -271,6 +271,8 @@ static int Open( vlc_object_t *p_this )
          p_sys->url.psz_username = (char *) credential.psz_username;
          p_sys->url.psz_password = (char *) credential.psz_password;
      }
@@ -23,7 +23,7 @@ index 1d58a034b8..9078c8019e 100644
  
  connect:
      /* Connect */
-@@ -356,6 +358,8 @@ error:
+@@ -358,6 +360,8 @@ error:
      free( p_sys->psz_referrer );
      free( p_sys->psz_username );
      free( p_sys->psz_password );
@@ -32,7 +32,7 @@ index 1d58a034b8..9078c8019e 100644
  
      return ret;
  }
-@@ -384,6 +388,9 @@ static void Close( vlc_object_t *p_this )
+@@ -386,6 +390,9 @@ static void Close( vlc_object_t *p_this )
      free( p_sys->psz_username );
      free( p_sys->psz_password );
  
@@ -42,7 +42,7 @@ index 1d58a034b8..9078c8019e 100644
      Disconnect( p_access );
  }
  
-@@ -628,8 +635,6 @@ static int Connect( stream_t *p_access )
+@@ -624,8 +631,6 @@ static int Connect( stream_t *p_access )
      free( p_sys->psz_icy_name );
      free( p_sys->psz_icy_title );
  
@@ -51,21 +51,11 @@ index 1d58a034b8..9078c8019e 100644
      p_sys->psz_location = NULL;
      p_sys->psz_mime = NULL;
      p_sys->i_icy_meta = 0;
-@@ -977,9 +982,6 @@ static void Disconnect( stream_t *p_access )
-     if( p_sys->fd != -1)
-         net_Close(p_sys->fd);
-     p_sys->fd = -1;
--
--    vlc_http_auth_Deinit( &p_sys->auth );
--    vlc_http_auth_Deinit( &p_sys->proxy_auth );
- }
- 
- /*****************************************************************************
 diff --git a/src/network/http_auth.c b/src/network/http_auth.c
-index 07064ce226..2ad5c28970 100644
+index 0ad9d92042..fe1ead8bca 100644
 --- a/src/network/http_auth.c
 +++ b/src/network/http_auth.c
-@@ -243,7 +243,10 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
+@@ -242,7 +242,10 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
          /* 2 Basic Authentication Scheme */
          msg_Dbg( p_this, "Using Basic Authentication" );
          psz_header += sizeof( psz_basic_prefix ) - 1;
@@ -76,7 +66,7 @@ index 07064ce226..2ad5c28970 100644
          if ( p_auth->psz_realm == NULL )
              msg_Warn( p_this, "Basic Authentication: "
                        "Mandatory 'realm' parameter is missing" );
-@@ -259,12 +262,24 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
+@@ -258,12 +261,24 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
              return;
  
          psz_header += sizeof( psz_digest_prefix ) - 1;
@@ -103,5 +93,5 @@ index 07064ce226..2ad5c28970 100644
          p_auth->i_nonce = 0;
  
 -- 
-2.20.1
+2.20.1 (Apple Git-117)
 

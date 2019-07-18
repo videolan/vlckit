@@ -1,7 +1,7 @@
-From 46c4a0a08e62fe318520112feeb7c10848c68ea6 Mon Sep 17 00:00:00 2001
+From 45441bdaeda40bc29eca9be3da21bee2975cb11b Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 19/26] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 14/17] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
@@ -11,20 +11,20 @@ Subject: [PATCH 19/26] core: expose config_AutoSaveConfigFile
  4 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/include/vlc_configuration.h b/include/vlc_configuration.h
-index 209168615b..c521714ded 100644
+index ee4e57b7c6..33bef6f46c 100644
 --- a/include/vlc_configuration.h
 +++ b/include/vlc_configuration.h
-@@ -109,6 +109,8 @@ VLC_API ssize_t config_GetPszChoices(vlc_object_t *, const char *,
+@@ -246,6 +246,8 @@ VLC_API ssize_t config_GetPszChoices(const char *,
  
  VLC_API int config_SaveConfigFile( vlc_object_t * );
  #define config_SaveConfigFile(a) config_SaveConfigFile(VLC_OBJECT(a))
 +VLC_API int  config_AutoSaveConfigFile( vlc_object_t * );
 +#define config_AutoSaveConfigFile(a) config_AutoSaveConfigFile(VLC_OBJECT(a))
  
- VLC_API void config_ResetAll( vlc_object_t * );
- #define config_ResetAll(a) config_ResetAll(VLC_OBJECT(a))
+ /**
+  * Resets the configuration.
 diff --git a/src/config/configuration.h b/src/config/configuration.h
-index dd02c7f4af..9cdf3c96de 100644
+index ec19abc89e..c1bf31fc46 100644
 --- a/src/config/configuration.h
 +++ b/src/config/configuration.h
 @@ -28,7 +28,6 @@ extern "C" {
@@ -36,10 +36,10 @@ index dd02c7f4af..9cdf3c96de 100644
  void config_Free (module_config_t *, size_t);
  
 diff --git a/src/config/file.c b/src/config/file.c
-index 6270a6bc9d..9f3b85494c 100644
+index e6b10e5c02..4275a7ad00 100644
 --- a/src/config/file.c
 +++ b/src/config/file.c
-@@ -522,6 +522,7 @@ error:
+@@ -527,6 +527,7 @@ error:
      return -1;
  }
  
@@ -48,11 +48,11 @@ index 6270a6bc9d..9f3b85494c 100644
  {
      int ret = 0;
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index db7f4030b9..4ad59b1fc0 100644
+index 8d9b85ab4c..794c923db0 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -44,6 +44,7 @@ block_shm_Alloc
- block_Realloc
+@@ -48,6 +48,7 @@ block_Realloc
+ block_Release
  block_TryRealloc
  config_AddIntf
 +config_AutoSaveConfigFile
@@ -60,5 +60,5 @@ index db7f4030b9..4ad59b1fc0 100644
  config_ChainDestroy
  config_ChainDuplicate
 -- 
-2.20.1
+2.20.1 (Apple Git-117)
 

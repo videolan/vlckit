@@ -9,7 +9,7 @@ BUILD_SIMULATOR=yes
 BUILD_STATIC_FRAMEWORK=no
 BUILD_DYNAMIC_FRAMEWORK=no
 SDK_VERSION=`xcrun --sdk iphoneos --show-sdk-version`
-SDK_MIN=8.0
+SDK_MIN=9.0
 VERBOSE=no
 DEBUG=no
 CONFIGURATION="Release"
@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="774a96ae6" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="fb26e2443" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -373,7 +373,6 @@ buildLibVLC() {
         --disable-aribb24 \
         --disable-aribb25 \
         --enable-vpx \
-        --enable-libdsm \
         --enable-libplacebo \
         --disable-sparkle \
         --disable-growl \
@@ -381,18 +380,13 @@ buildLibVLC() {
         --disable-ncurses \
         --disable-asdcplib \
         --enable-soxr \
+        --disable-aom \
+        --disable-sqlite \
+        --disable-medialibrary \
+        --disable-libdsm \
         ${CUSTOMOSOPTIONS} \
         --enable-taglib > ${out}
 
-    echo "EXTRA_CFLAGS += ${EXTRA_CFLAGS}" >> config.mak
-    echo "EXTRA_LDFLAGS += ${EXTRA_LDFLAGS}" >> config.mak
-    echo "CC=${CC}" >> config.mak
-    echo "CXX=${CXX}" >> config.mak
-    echo "OBJC=${OBJC}" >> config.mak
-    echo "LD=${LD}" >> config.mak
-    echo "AR=${AR}" >> config.mak
-    echo "RANLIB=${RANLIB}" >> config.mak
-    echo "STRIP=${STRIP}" >> config.mak
     make fetch -j$MAKE_JOBS
     make -j$MAKE_JOBS > ${out}
 
@@ -440,7 +434,6 @@ buildLibVLC() {
         ${DEBUGFLAG} \
         ${SCARYFLAG} \
         --disable-macosx \
-        --disable-macosx-qtkit \
         --disable-macosx-avfoundation \
         --disable-shared \
         --enable-opus \
@@ -452,12 +445,10 @@ buildLibVLC() {
         --disable-vcd \
         --disable-vlc \
         --disable-vlm \
-        --disable-httpd \
         --disable-nls \
         --disable-sse \
         --disable-notify \
         --enable-live555 \
-        --enable-realrtsp \
         --enable-swscale \
         --disable-projectm \
         --enable-libass \
@@ -485,6 +476,7 @@ buildLibVLC() {
         --disable-mmx \
         --disable-sparkle \
         --disable-addonmanagermodules \
+        --disable-libplacebo \
         --disable-mad > ${out}
     fi
 
@@ -1006,7 +998,7 @@ do
              IOS=no
              BITCODE=no
              SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
-             SDK_MIN=10.9
+             SDK_MIN=10.11
              OSVERSIONMINCFLAG=macosx
              OSVERSIONMINLDFLAG=macosx
              BUILD_DEVICE=yes
@@ -1049,7 +1041,7 @@ if [ "$VLCROOT" = "" ]; then
 
     if [ "$NONETWORK" != "yes" ]; then
         if ! [ -e vlc ]; then
-            git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc
+            git clone https://git.videolan.org/git/vlc.git vlc
             info "Applying patches to vlc.git"
             cd vlc
             git checkout -B localBranch ${TESTEDHASH}
@@ -1091,10 +1083,18 @@ fi
 
 if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     info "Building tools"
+
+    fetch_python3_path
+    export PATH="${PYTHON3_PATH}:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
     spushd ${VLCROOT}/extras/tools
     ./bootstrap
     make
-    make .gas
+    make .buildgas
+    make .buildxz
+    make .buildtar
+    make .buildmeson
+    make .buildninja
     spopd #${VLCROOT}/extras/tools
 fi
 

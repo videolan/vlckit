@@ -1,7 +1,7 @@
-From 2b9087215fe11e22b4e29369cedca7579ac605bc Mon Sep 17 00:00:00 2001
+From 55aea7a102ebb1e10f9211e90e3593b44ed16b0e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 09/26] Replace thread local with pthread TSD
+Subject: [PATCH 11/17] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
@@ -9,7 +9,7 @@ Subject: [PATCH 09/26] Replace thread local with pthread TSD
  2 files changed, 78 insertions(+)
 
 diff --git a/src/misc/interrupt.c b/src/misc/interrupt.c
-index 7004ed2c3a..65607cdcd3 100644
+index d2a04a72b3..75edb2d7c1 100644
 --- a/src/misc/interrupt.c
 +++ b/src/misc/interrupt.c
 @@ -43,13 +43,26 @@
@@ -128,7 +128,7 @@ index 7004ed2c3a..65607cdcd3 100644
  
 @@ -227,7 +270,11 @@ static void vlc_mwait_i11e_cleanup(void *opaque)
  
- int vlc_mwait_i11e(mtime_t deadline)
+ int vlc_mwait_i11e(vlc_tick_t deadline)
  {
 +#ifdef I_CAN_HAZ_TSD
      vlc_interrupt_t *ctx = vlc_interrupt_var;
@@ -136,7 +136,7 @@ index 7004ed2c3a..65607cdcd3 100644
 +    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
 +#endif
      if (ctx == NULL)
-         return mwait(deadline), 0;
+         return vlc_tick_wait(deadline), 0;
  
 @@ -262,7 +309,11 @@ void vlc_interrupt_forward_start(vlc_interrupt_t *to, void *data[2])
  {
@@ -162,7 +162,7 @@ index 7004ed2c3a..65607cdcd3 100644
      if (ctx == NULL)
          return poll(fds, nfds, timeout);
  
-@@ -568,7 +623,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
+@@ -570,7 +625,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
  
  int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
  {
@@ -175,11 +175,11 @@ index 7004ed2c3a..65607cdcd3 100644
          return vlc_poll(fds, nfds, timeout);
  
 diff --git a/src/misc/variables.c b/src/misc/variables.c
-index 810c8ffc81..3d2d2f1dc8 100644
+index a39fd4143f..30ce120fce 100644
 --- a/src/misc/variables.c
 +++ b/src/misc/variables.c
-@@ -1378,7 +1378,17 @@ void DumpVariables(vlc_object_t *obj)
-     vlc_mutex_unlock(&vlc_internals(obj)->var_lock);
+@@ -1134,7 +1134,17 @@ error:
+     return VLC_EGENERIC;
  }
  
 +#ifdef I_CAN_HAZ_TSD
@@ -196,7 +196,7 @@ index 810c8ffc81..3d2d2f1dc8 100644
  
  static void TwalkGetNames(const void *data, const VISIT which, const int depth)
  {
-@@ -1387,7 +1397,11 @@ static void TwalkGetNames(const void *data, const VISIT which, const int depth)
+@@ -1143,7 +1153,11 @@ static void TwalkGetNames(const void *data, const VISIT which, const int depth)
      (void) depth;
  
      const variable_t *var = *(const variable_t **)data;
@@ -208,7 +208,7 @@ index 810c8ffc81..3d2d2f1dc8 100644
      char *dup = strdup(var->psz_name);
      if (dup != NULL)
          ARRAY_APPEND(*names, dup);
-@@ -1400,7 +1414,12 @@ char **var_GetAllNames(vlc_object_t *obj)
+@@ -1156,7 +1170,12 @@ char **var_GetAllNames(vlc_object_t *obj)
      DECL_ARRAY(char *) names;
      ARRAY_INIT(names);
  
@@ -222,5 +222,5 @@ index 810c8ffc81..3d2d2f1dc8 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.20.1
+2.20.1 (Apple Git-117)
 

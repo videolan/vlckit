@@ -1,7 +1,7 @@
-From 1c27a07ca0bce5f92dbf4dbb43a7c23aa19474d6 Mon Sep 17 00:00:00 2001
+From 7676899bbb73251c05e62a258b74c7d103ff307c Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 12/26] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 12/17] Work around lack of __thread storage qualifier on old
  macOS
 
 ---
@@ -14,25 +14,25 @@ Subject: [PATCH 12/26] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 49b1166742..9891bed93e 100644
+index 38446812ca..81f64c7657 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -591,8 +591,8 @@ dnl Check for system libs needed
+@@ -633,8 +633,8 @@ dnl Check for system libs needed
  need_libc=false
  
  dnl Check for usual libc functions
--AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getpwuid_r isatty lstat memalign mkostemp mmap newlocale open_memstream openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime uselocale])
--AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tdestroy tfind timegm timespec_get strverscmp pathconf])
-+AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getpwuid_r isatty lstat memalign mkostemp mmap open_memstream openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime tdestroy uselocale])
-+AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tfind timegm timespec_get strverscmp pathconf])
+-AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getpwuid_r isatty memalign mkostemp mmap open_memstream newlocale openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime uselocale])
+-AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tdestroy tfind timegm timespec_get strverscmp pathconf])
++AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getpwuid_r isatty memalign mkostemp mmap open_memstream openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime uselocale])
++AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab  tfind timegm timespec_get strverscmp pathconf])
  AC_REPLACE_FUNCS([gettimeofday])
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 239cad4d77..e1a1d13e1e 100644
+index 2164f690b1..709fe39301 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
-@@ -495,9 +495,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
+@@ -489,9 +489,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
  void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int depth) );
  void *lfind( const void *key, const void *base, size_t *nmemb,
               size_t size, int(*cmp)(const void *, const void *) );
@@ -48,29 +48,29 @@ index 239cad4d77..e1a1d13e1e 100644
  
  /* Random numbers */
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index 2b4319f140..cb7f3948e9 100644
+index 1c2a5298a8..4f385589e8 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
-@@ -68,6 +68,7 @@ src/config/help.c
+@@ -66,6 +66,7 @@ src/config/help.c
  src/config/intf.c
  src/darwin/error.c
  src/extras/libc.c
 +src/extras/tdestroy.c
  src/input/access.c
- src/input/clock.c
- src/input/clock.h
+ src/input/decoder.c
+ src/input/decoder.h
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 502990c70c..044169156c 100644
+index 8c56c0e165..80cb5fdbc5 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
-@@ -200,6 +200,7 @@ libvlccore_la_SOURCES = \
+@@ -210,6 +210,7 @@ libvlccore_la_SOURCES = \
  	config/getopt.c \
  	config/vlc_getopt.h \
  	extras/libc.c \
 +	extras/tdestroy.c \
- 	modules/modules.h \
- 	modules/modules.c \
- 	modules/bank.c \
+ 	media_source/media_source.c \
+ 	media_source/media_source.h \
+ 	media_source/media_tree.c \
 diff --git a/compat/tdestroy.c b/src/extras/tdestroy.c
 similarity index 59%
 rename from compat/tdestroy.c
@@ -204,5 +204,5 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 -- 
-2.20.1
+2.20.1 (Apple Git-117)
 

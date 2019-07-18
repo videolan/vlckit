@@ -1,0 +1,25 @@
+From 0b0e3f59bd0f86b4080ac7cc86154950af343582 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Wed, 17 Jul 2019 10:34:47 +0200
+Subject: [PATCH 07/17] tools: fix libtool bootstapping on macOS
+
+---
+ extras/tools/tools.mak | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/extras/tools/tools.mak b/extras/tools/tools.mak
+index 7d677de1d8..937a324331 100644
+--- a/extras/tools/tools.mak
++++ b/extras/tools/tools.mak
+@@ -131,7 +131,7 @@ libtool: libtool-$(LIBTOOL_VERSION).tar.gz
+ 	$(APPLY) $(TOOLS)/libtool-2.4.6-san.patch
+ 	$(APPLY) $(TOOLS)/libtool-2.4.6-clang-libs.patch
+ 	$(APPLY) $(TOOLS)/libtool-2.4.6-response-files.patch
+-	(cd $(UNPACK_DIR) && autoreconf)
++	(cd $(UNPACK_DIR) && autoreconf -fv)
+ 	$(MOVE)
+ 
+ .buildlibtool: libtool .automake .help2man
+-- 
+2.20.1 (Apple Git-117)
+
