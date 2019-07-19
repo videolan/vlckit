@@ -111,7 +111,7 @@
 {
     if (_p_mp) {
         [self unregisterObserversForMuxWithPlayer:_p_mp];
-        libvlc_media_player_stop( _p_mp );
+        libvlc_media_player_stop_async( _p_mp );
         if (self.delegate && [self.delegate respondsToSelector:@selector(transcode:finishedSucessfully:)]) {
             BOOL success = ![newState isEqualToNumber: @(VLCMediaPlayerStateError)];
             [self.delegate transcode:self finishedSucessfully:success];

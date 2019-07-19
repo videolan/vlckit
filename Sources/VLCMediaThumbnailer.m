@@ -281,16 +281,16 @@ static void display(void *opaque, void *picture)
 
     // Make sure we are getting the right frame
     if (position < self.snapshotPosition && _numberOfReceivedFrames < 2) {
-        libvlc_media_player_set_position(_mp, self.snapshotPosition);
+        libvlc_media_player_set_position(_mp, self.snapshotPosition, YES);
         return;
     }
     if ((length < kStandardStartTime * 2 && _numberOfReceivedFrames < 5) && self.snapshotPosition == kSnapshotPosition) {
-        libvlc_media_player_set_position(_mp, kSnapshotPosition);
+        libvlc_media_player_set_position(_mp, kSnapshotPosition, YES);
         return;
     }
     if ((position <= 0.05 && _numberOfReceivedFrames < 8) && length > 1000) {
         // Arbitrary choice to work around broken files.
-        libvlc_media_player_set_position(_mp, kSnapshotPosition);
+        libvlc_media_player_set_position(_mp, kSnapshotPosition, YES);
         return;
     }
     // it isn't always best what comes first
@@ -332,7 +332,7 @@ static void display(void *opaque, void *picture)
 - (void)stopAsync
 {
     if (_mp) {
-        libvlc_media_player_stop(_mp);
+        libvlc_media_player_stop_async(_mp);
         libvlc_media_player_release(_mp);
         _mp = NULL;
     }

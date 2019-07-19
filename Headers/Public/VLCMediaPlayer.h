@@ -233,12 +233,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 @property (NS_NONATOMIC_IOSONLY) char *videoAspectRatio;
 
 /**
- * Set/Get current crop filter geometry.
- *
- * param: psz_geometry new crop filter geometry (NULL to unset)
- * \return the crop filter geometry or NULL if unset
+ * This function forces a crop ratio on any and all video tracks rendered by
+ * the media player. If the display aspect ratio of a video does not match the
+ * crop ratio, either the top and bottom, or the left and right of the video
+ * will be cut out to fit the crop ratio.
  */
-@property (NS_NONATOMIC_IOSONLY) char *videoCropGeometry;
+- (void)setCropRatioWithNumerator:(unsigned int)numerator denominator:(unsigned int)denominator;
 
 /**
  * Set/Get the current video scaling factor.
@@ -490,12 +490,6 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
 - (int)numberOfChaptersForTitle:(int)titleIndex;
 
 /**
- * Chapters of a given title index
- * \deprecated Use chapterDescriptionsOfTitle instead
- */
-- (NSArray *)chaptersForTitleIndex:(int)titleIndex __attribute__((deprecated));
-
-/**
  * dictionary value for the user-facing chapter name
  */
 extern NSString *const VLCChapterDescriptionName;
@@ -530,17 +524,6 @@ extern NSString *const VLCChapterDescriptionDuration;
  * \return the number of titles
  */
 @property (readonly) int numberOfTitles;
-
-/**
- * count of titles
- * \deprecated Use numberOfTitles instead
- */
-@property (readonly) NSUInteger countOfTitles __attribute__((deprecated));
-/**
- * array of available titles
- * \deprecated Use titleDescriptions instead
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titles __attribute__((deprecated));
 
 /**
  * dictionary value for the user-facing title name
@@ -833,12 +816,6 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \return TRUE if the feed is playing, FALSE if otherwise.
  */
 @property (NS_NONATOMIC_IOSONLY, getter=isPlaying, readonly) BOOL playing;
-
-/**
- * Playback state flag identifying wheather the stream will play.
- * \return TRUE if the feed is ready for playback, FALSE if otherwise.
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL willPlay;
 
 /**
  * Playback's current state.

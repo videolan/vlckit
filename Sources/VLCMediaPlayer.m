@@ -2,8 +2,8 @@
  * VLCMediaPlayer.m: VLCKit.framework VLCMediaPlayer implementation
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2015 VLC authors and VideoLAN
- * Partial Copyright (C) 2009-2017 Felix Paul Kühne
+ * Copyright (C) 2007-2019 VLC authors and VideoLAN
+ * Partial Copyright (C) 2009-2019 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -545,15 +545,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 #pragma mark -
 #pragma mark Video Crop geometry
 
-- (void)setVideoCropGeometry:(char *)value
+- (void)setCropRatioWithNumerator:(unsigned int)numerator denominator:(unsigned int)denominator
 {
-    libvlc_video_set_crop_geometry(_playerInstance, value);
-}
-
-- (char *)videoCropGeometry
-{
-    char * result = libvlc_video_get_crop_geometry(_playerInstance);
-    return result;
+    libvlc_video_set_crop_ratio(_playerInstance, numerator, denominator);
 }
 
 - (void)setVideoAspectRatio:(char *)value
@@ -701,7 +695,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 {
     // Time is managed in seconds, while duration is managed in microseconds
     // TODO: Redo VLCTime to provide value numberAsMilliseconds, numberAsMicroseconds, numberAsSeconds, numberAsMinutes, numberAsHours
-    libvlc_media_player_set_time(_playerInstance, value ? [[value value] longLongValue] : 0);
+    libvlc_media_player_set_time(_playerInstance, value ? [[value value] longLongValue] : 0, NO);
 }
 
 - (VLCTime *)time
@@ -740,27 +734,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     libvlc_media_player_previous_chapter(_playerInstance);
 }
 
-- (NSArray *)chaptersForTitleIndex:(int)title
-{
-    NSInteger count = libvlc_media_player_get_chapter_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
-    libvlc_track_description_t *firstTrack = libvlc_video_get_chapter_description(_playerInstance, title);
-    libvlc_track_description_t *currentTrack = firstTrack;
-#pragma clang diagnostic push
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    for (NSInteger i = 0; i < count ; i++) {
-        [tempArray addObject:@(currentTrack->psz_name)];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray:tempArray];
-}
-
 #pragma mark -
 #pragma mark Titles
 
@@ -781,42 +754,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 - (int)numberOfTitles
 {
     return libvlc_media_player_get_title_count(_playerInstance);
-}
-
-- (NSUInteger)countOfTitles
-{
-    NSUInteger result = libvlc_media_player_get_title_count(_playerInstance);
-    return result;
-}
-
-- (NSArray *)titles
-{
-    NSUInteger count = [self countOfTitles];
-    if (count == 0)
-        return [NSArray array];
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
-    libvlc_track_description_t *firstTrack = libvlc_video_get_title_description(_playerInstance);
-    libvlc_track_description_t *currentTrack = firstTrack;
-#pragma clang diagnostic pop
-
-    if (!currentTrack)
-        return [NSArray array];
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-
-    while (1) {
-        if (currentTrack->psz_name != nil)
-            [tempArray addObject:@(currentTrack->psz_name)];
-        if (currentTrack->p_next)
-            currentTrack = currentTrack->p_next;
-        else
-            break;
-    }
-
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray: tempArray];
 }
 
 - (NSArray *)titleDescriptions
@@ -1118,7 +1055,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 - (void)stop
 {
     dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_player_stop(_playerInstance);
+        libvlc_media_player_stop_async(_playerInstance);
     });
 }
 
@@ -1271,11 +1208,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_media_player_is_playing(_playerInstance);
 }
 
-- (BOOL)willPlay
-{
-    return libvlc_media_player_will_play(_playerInstance);
-}
-
 - (VLCMediaPlayerState)state
 {
     return _cachedState;
@@ -1288,7 +1220,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)setPosition:(float)newPosition
 {
-    libvlc_media_player_set_position(_playerInstance, newPosition);
+    libvlc_media_player_set_position(_playerInstance, newPosition, NO);
 }
 
 - (BOOL)isSeekable

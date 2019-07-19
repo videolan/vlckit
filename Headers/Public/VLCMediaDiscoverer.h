@@ -102,12 +102,6 @@ extern NSString *const VLCMediaDiscovererCategory;
 @property (weak, readonly) VLCMediaList *discoveredMedia;
 
 /**
- * localized name of the discovery module if available, otherwise in US English
- * \deprecated Will be removed in the next major release, may return an empty string for binary compatibility
- */
-@property (readonly, copy) NSString *localizedName __attribute__((deprecated));
-
-/**
  * read-only property to check if the discovery service is active
  * \return boolean value
  */

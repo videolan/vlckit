@@ -39,7 +39,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 
 @interface VLCMediaDiscoverer ()
 {
-    NSString *_localizedName;
     VLCMediaList *_discoveredMedia;
     libvlc_media_discoverer_t *_mdis;
 
@@ -91,7 +90,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 - (instancetype)initWithName:(NSString *)aServiceName libraryInstance:(VLCLibrary *)libraryInstance
 {
     if (self = [super init]) {
-        _localizedName = nil;
         _discoveredMedia = nil;
         _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL);
 
@@ -159,22 +157,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 - (VLCMediaList *)discoveredMedia
 {
     return _discoveredMedia;
-}
-
-- (NSString *)localizedName
-{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated"
-    if (_localizedName)
-        return _localizedName;
-
-    char *name = libvlc_media_discoverer_localized_name(_mdis);
-    if (name) {
-        _localizedName = @(name);
-        free(name);
-    }
-    return _localizedName;
-#pragma clang diagnostic pop
 }
 
 - (BOOL)isRunning
