@@ -381,6 +381,7 @@ buildLibVLC() {
         --disable-asdcplib \
         --enable-soxr \
         --disable-aom \
+        --disable-dav1d \
         --disable-sqlite \
         --disable-medialibrary \
         --disable-libdsm \
