@@ -1,12 +1,13 @@
-From 55aea7a102ebb1e10f9211e90e3593b44ed16b0e Mon Sep 17 00:00:00 2001
+From a4d4646f35d755ab9a300bed4725eac4ea3c7dee Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 11/20] Replace thread local with pthread TSD
+Subject: [PATCH 10/16] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
+ src/misc/sort.c      |  4 +++
  src/misc/variables.c | 19 ++++++++++++++
- 2 files changed, 78 insertions(+)
+ 3 files changed, 82 insertions(+)
 
 diff --git a/src/misc/interrupt.c b/src/misc/interrupt.c
 index d2a04a72b3..75edb2d7c1 100644
@@ -174,6 +175,22 @@ index d2a04a72b3..75edb2d7c1 100644
      if (ctx == NULL)
          return vlc_poll(fds, nfds, timeout);
  
+diff --git a/src/misc/sort.c b/src/misc/sort.c
+index fc62eb7fff..a96fb0104c 100644
+--- a/src/misc/sort.c
++++ b/src/misc/sort.c
+@@ -26,7 +26,11 @@
+ #include <vlc_common.h>
+ #include <vlc_sort.h>
+ 
++#ifdef I_CAN_HAZ_TSD
+ static thread_local struct
++#else
++static struct
++#endif
+ {
+     int (*compar)(const void *, const void *, void *);
+     void *arg;
 diff --git a/src/misc/variables.c b/src/misc/variables.c
 index a39fd4143f..30ce120fce 100644
 --- a/src/misc/variables.c

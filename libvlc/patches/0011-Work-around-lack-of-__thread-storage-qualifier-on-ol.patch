@@ -1,16 +1,16 @@
-From 7676899bbb73251c05e62a258b74c7d103ff307c Mon Sep 17 00:00:00 2001
+From b1cde0aa486420bb1dd1d5f872088a7f159aeb60 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 12/20] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 11/16] Work around lack of __thread storage qualifier on old
  macOS
 
 ---
  configure.ac                      |  4 +-
- include/vlc_fixups.h              |  7 +++-
+ include/vlc_fixups.h              |  6 ++-
  po/POTFILES.in                    |  1 +
  src/Makefile.am                   |  1 +
  {compat => src/extras}/tdestroy.c | 67 ++++++++++++++++++-------------
- 5 files changed, 48 insertions(+), 32 deletions(-)
+ 5 files changed, 47 insertions(+), 32 deletions(-)
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
@@ -29,24 +29,23 @@ index 38446812ca..81f64c7657 100644
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 2164f690b1..709fe39301 100644
+index 1518b84362..ffd64f382a 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
-@@ -489,9 +489,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
- void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int depth) );
- void *lfind( const void *key, const void *base, size_t *nmemb,
-              size_t size, int(*cmp)(const void *, const void *) );
--#endif /* HAVE_SEARCH_H */
+@@ -500,9 +500,11 @@ void *lfind( const void *key, const void *base, size_t *nmemb,
+          lfind((a),(b), &(unsigned){ (*(c) > UINT_MAX) ? UINT_MAX : *(c) }, (d),(e))
+ #endif /* _WIN64 */
+ 
 -#ifndef HAVE_TDESTROY
  void tdestroy( void *root, void (*free_node)(void *nodep) );
-+#else // HAVE_SEARCH_H
+-#endif
 +# ifndef HAVE_TDESTROY
 +void vlc_tdestroy( void *, void (*)(void *) );
 +#  define tdestroy vlc_tdestroy
 +# endif
- #endif
  
  /* Random numbers */
+ #ifndef HAVE_NRAND48
 diff --git a/po/POTFILES.in b/po/POTFILES.in
 index 1c2a5298a8..4f385589e8 100644
 --- a/po/POTFILES.in

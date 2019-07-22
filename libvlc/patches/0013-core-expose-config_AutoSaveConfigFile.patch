@@ -1,7 +1,7 @@
-From 5150bced77dbf54ea8fa0a1b7a9071fc4a646fe3 Mon Sep 17 00:00:00 2001
+From 67124257866654878786383e0aa26e0c2f91f63f Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 14/20] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 13/16] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
@@ -11,10 +11,10 @@ Subject: [PATCH 14/20] core: expose config_AutoSaveConfigFile
  4 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/include/vlc_configuration.h b/include/vlc_configuration.h
-index ee4e57b7c6..33bef6f46c 100644
+index f1467c9a0c..7ecc1ea174 100644
 --- a/include/vlc_configuration.h
 +++ b/include/vlc_configuration.h
-@@ -246,6 +246,8 @@ VLC_API ssize_t config_GetPszChoices(const char *,
+@@ -243,6 +243,8 @@ VLC_API ssize_t config_GetPszChoices(const char *,
  
  VLC_API int config_SaveConfigFile( vlc_object_t * );
  #define config_SaveConfigFile(a) config_SaveConfigFile(VLC_OBJECT(a))
