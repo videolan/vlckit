@@ -171,9 +171,9 @@ buildLibVLC() {
     OSSTYLE=iPhone
 
     if [ "$DEBUG" = "yes" ]; then
-        OPTIM="-O0 -g"
+        OPTIM="-O0"
     else
-        OPTIM="-O3 -g"
+        OPTIM="-O3"
     fi
 
     if [ "$TVOS" = "yes" ]; then
@@ -381,7 +381,7 @@ buildLibVLC() {
         --disable-asdcplib \
         --enable-soxr \
         --disable-aom \
-        --disable-dav1d \
+        --enable-dav1d \
         --disable-sqlite \
         --disable-medialibrary \
         --disable-libdsm \
