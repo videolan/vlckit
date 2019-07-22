@@ -504,7 +504,6 @@ buildLibVLC() {
     dynamicoverlay
     rss
     ball
-    marq
     magnify
     audiobargraph_
     clone
@@ -538,7 +537,6 @@ buildLibVLC() {
     remoteosd
     magnify
     gradient
-    logger
     visual
     fb
     aout_file
