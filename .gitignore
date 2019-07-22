@@ -3,6 +3,7 @@
 *.pbxuser
 xcuserdata
 *.xccheckout
+xcshareddata
 
 # macOS
 .DS_Store
