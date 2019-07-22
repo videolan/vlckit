@@ -271,7 +271,7 @@
 
     if (_currentAspectRatioMask + 1 > count - 1) {
         _mediaplayer.videoAspectRatio = NULL;
-        _mediaplayer.videoCropGeometry = NULL;
+//        _mediaplayer.videoCropGeometry = NULL;
         _currentAspectRatioMask = 0;
         NSLog(@"crop disabled");
     } else {
@@ -281,7 +281,7 @@
             UIScreen *screen = [UIScreen mainScreen];
             float f_ar = screen.bounds.size.width / screen.bounds.size.height;
 
-            if (f_ar == (float)(640./1136.)) // iPhone 5 aka 16:9.01
+/*            if (f_ar == (float)(640./1136.)) // iPhone 5 aka 16:9.01
                 _mediaplayer.videoCropGeometry = "16:9";
             else if (f_ar == (float)(2./3.)) // all other iPhones
                 _mediaplayer.videoCropGeometry = "16:10"; // libvlc doesn't support 2:3 crop
@@ -291,12 +291,12 @@
                 _mediaplayer.videoCropGeometry = "16:9";
             else
                 NSLog(@"unknown screen format %f, can't crop", f_ar);
-
+*/
             NSLog(@"FILL_TO_SCREEN");
             return;
         }
 
-        _mediaplayer.videoCropGeometry = NULL;
+//        _mediaplayer.videoCropGeometry = NULL;
         _mediaplayer.videoAspectRatio = (char *)[_aspectRatios[_currentAspectRatioMask] UTF8String];
         NSLog(@"crop switched to %@", _aspectRatios[_currentAspectRatioMask]);
     }

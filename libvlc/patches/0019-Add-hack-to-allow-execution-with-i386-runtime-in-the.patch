@@ -1,0 +1,29 @@
+From 2d2305c5e7b7c23fe73e395d9d098316ca033c35 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Mon, 22 Jul 2019 16:23:46 +0200
+Subject: [PATCH 19/20] Add hack to allow execution with i386 runtime in the
+ simulator
+
+---
+ src/misc/sort.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/misc/sort.c b/src/misc/sort.c
+index fc62eb7fff..a96fb0104c 100644
+--- a/src/misc/sort.c
++++ b/src/misc/sort.c
+@@ -26,7 +26,11 @@
+ #include <vlc_common.h>
+ #include <vlc_sort.h>
+ 
++#ifdef I_CAN_HAZ_TSD
+ static thread_local struct
++#else
++static struct
++#endif
+ {
+     int (*compar)(const void *, const void *, void *);
+     void *arg;
+-- 
+2.20.1 (Apple Git-117)
+

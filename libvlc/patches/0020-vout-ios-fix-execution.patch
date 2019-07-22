@@ -1,0 +1,36 @@
+From 2a6c5dad3e858aef8b0297daf1bb8ed9e416c8a3 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Mon, 22 Jul 2019 18:26:58 +0200
+Subject: [PATCH 20/20] vout/ios: fix execution
+
+---
+ modules/video_output/ios.m | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/modules/video_output/ios.m b/modules/video_output/ios.m
+index d394e8a92a..4013ff22e2 100644
+--- a/modules/video_output/ios.m
++++ b/modules/video_output/ios.m
+@@ -148,7 +148,7 @@ static int Open(vout_display_t *vd, const vout_display_cfg_t *cfg,
+     if (vout_display_cfg_IsWindowed(cfg))
+         return VLC_EGENERIC;
+ 
+-    vout_display_sys_t *sys = vlc_obj_calloc(vd, 1, sizeof(*sys));
++    vout_display_sys_t *sys = calloc(1, sizeof(*sys));
+ 
+     if (!sys)
+         return VLC_ENOMEM;
+@@ -689,10 +689,6 @@ - (void)reshape
+         _place = place;
+     }
+ 
+-    vout_display_sys_t *sys = _voutDisplay->sys;
+-    vout_window_ReportSize(sys->embed, _viewSize.width * _scaleFactor,
+-                           _viewSize.height * _scaleFactor);
+-
+     vlc_mutex_unlock(&_mutex);
+ }
+ 
+-- 
+2.20.1 (Apple Git-117)
+

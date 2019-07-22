@@ -1,7 +1,7 @@
 From 55aea7a102ebb1e10f9211e90e3593b44ed16b0e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 11/17] Replace thread local with pthread TSD
+Subject: [PATCH 11/20] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++

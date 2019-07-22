@@ -1,7 +1,7 @@
 From 0b0e3f59bd0f86b4080ac7cc86154950af343582 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 17 Jul 2019 10:34:47 +0200
-Subject: [PATCH 07/17] tools: fix libtool bootstapping on macOS
+Subject: [PATCH 07/20] tools: fix libtool bootstapping on macOS
 
 ---
  extras/tools/tools.mak | 2 +-

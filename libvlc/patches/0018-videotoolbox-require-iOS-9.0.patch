@@ -1,0 +1,25 @@
+From d65fb18dff3e9f13deeb3d2280846a695465cf63 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Mon, 22 Jul 2019 16:23:10 +0200
+Subject: [PATCH 18/20] videotoolbox: require iOS 9.0
+
+---
+ modules/codec/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/codec/Makefile.am b/modules/codec/Makefile.am
+index 313ec0db0d..e77725014c 100644
+--- a/modules/codec/Makefile.am
++++ b/modules/codec/Makefile.am
+@@ -340,7 +340,7 @@ libvideotoolbox_plugin_la_SOURCES = \
+ 	packetizer/hevc_nal.c packetizer/hevc_nal.h
+ libvideotoolbox_plugin_la_OBJCFLAGS = $(AM_OBJCFLAGS) -fobjc-arc
+ if HAVE_IOS
+-libvideotoolbox_plugin_la_OBJCFLAGS += -miphoneos-version-min=8.0
++libvideotoolbox_plugin_la_OBJCFLAGS += -miphoneos-version-min=9.0
+ endif
+ if HAVE_TVOS
+ libvideotoolbox_plugin_la_OBJCFLAGS += -mtvos-version-min=10.2
+-- 
+2.20.1 (Apple Git-117)
+
