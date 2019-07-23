@@ -41,6 +41,9 @@
     VLCRepeatMode _repeatMode;
     dispatch_queue_t _libVLCBackgroundQueue;
 }
+- (void)mediaListPlayerPlayed;
+- (void)mediaListPlayerNextItemSet:(VLCMedia *)media;
+- (void)mediaListPlayerStopped;
 @end
 
 static void HandleMediaListPlayerPlayed(const libvlc_event_t * event, void * self)
@@ -279,7 +282,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 
 - (void)mediaListPlayerPlayed
 {
-    if ([_delegate respondsToSelector:@selector(mediaListPlayerPlayed)]) {
+    if ([_delegate respondsToSelector:@selector(mediaListPlayerFinishedPlayback:)]) {
         [_delegate mediaListPlayerFinishedPlayback:self];
     }
 }
@@ -293,7 +296,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 
 - (void)mediaListPlayerStopped
 {
-    if ([_delegate respondsToSelector:@selector(mediaListPlayerStopped)]) {
+    if ([_delegate respondsToSelector:@selector(mediaListPlayerStopped:)]) {
         [_delegate mediaListPlayerStopped:self];
     }
 }
