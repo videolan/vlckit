@@ -44,8 +44,9 @@
 # ifdef __x86_64__
 #  import <CoreServices/../Frameworks/OSServices.framework/Headers/Power.h>
 # endif
-#endif
+#else
 #import "AVKit/AVKit.h"
+#endif // !TARGET_OS_IPHONE
 
 #include <vlc/vlc.h>
 
@@ -1327,6 +1328,27 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         return [UIImage imageWithContentsOfFile:[_snapshots lastObject]];
     }
 }
+
+- (void)readjustAudioDelayIfNeeded
+{
+    int64_t latency = [[AVAudioSession sharedInstance] outputLatency] * 1000000ULL;
+
+    /* XXX: VLC 3.0 audio output can only handle a latency max of 1sec. If the
+     * output latency is superior, apply an input delay to catch up */
+    if ((latency > VLC_AUDIO_DELAY_MAX
+         && latency - VLC_AUDIO_DELAY_MAX != _extraDelay) || _extraDelay != 0)
+    {
+        int64_t delay;
+        if (latency < VLC_AUDIO_DELAY_MAX)
+            delay = 0;
+        else
+            delay = VLC_AUDIO_DELAY_MAX - latency;
+        libvlc_audio_set_delay(_playerInstance, self.currentAudioPlaybackDelay + delay);
+        _extraDelay = delay;
+        NSLog(@"adjusting airplay delay: %" PRId64, delay);
+    }
+}
+
 #else
 - (NSImage *)lastSnapshot {
     if (_snapshots == nil) {
@@ -1357,25 +1379,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_media_player_record(_playerInstance, NO, nil);
 }
 
-- (void)readjustAudioDelayIfNeeded
-{
-    int64_t latency = [[AVAudioSession sharedInstance] outputLatency] * 1000000ULL;
-
-    /* XXX: VLC 3.0 audio output can only handle a latency max of 1sec. If the
-     * output latency is superior, apply an input delay to catch up */
-    if ((latency > VLC_AUDIO_DELAY_MAX
-     && latency - VLC_AUDIO_DELAY_MAX != _extraDelay) || _extraDelay != 0)
-    {
-        int64_t delay;
-        if (latency < VLC_AUDIO_DELAY_MAX)
-            delay = 0;
-        else
-            delay = VLC_AUDIO_DELAY_MAX - latency;
-        libvlc_audio_set_delay(_playerInstance, self.currentAudioPlaybackDelay + delay);
-        _extraDelay = delay;
-        NSLog(@"adjusting airplay delay: %" PRId64, delay);
-    }
-}
 
 #pragma mark -
 #pragma mark - Renderer
@@ -1424,12 +1427,14 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)registerObservers
 {
+#if TARGET_OS_IPHONE
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+
     [defaultCenter addObserver:self
                       selector:@selector(audioSessionRouteChange:)
                           name:AVAudioSessionRouteChangeNotification
                         object:AVAudioSession.sharedInstance];
-    
+#endif
     // Attach event observers into the media instance
     __block libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(_playerInstance);
     if (!p_em)
@@ -1554,7 +1559,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _cachedTime = [VLCTime nullTime];
         _cachedRemainingTime = [VLCTime nullTime];
         _position = 0.0f;
+#if TARGET_OS_IPHONE
         [self readjustAudioDelayIfNeeded];
+#endif
         [self didChangeValueForKey:@"position"];
         [self didChangeValueForKey:@"remainingTime"];
         [self didChangeValueForKey:@"time"];
@@ -1601,6 +1608,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         }
     }
 }
+#if TARGET_OS_IPHONE
 
 - (void)audioSessionRouteChange:(NSNotification *)notification
 {
@@ -1611,5 +1619,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     }
     [self readjustAudioDelayIfNeeded];
 }
+
+#endif
 
 @end
