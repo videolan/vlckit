@@ -1,4 +1,4 @@
-From 567147c54252894d1eb878c92150ebb7d8dc4be4 Mon Sep 17 00:00:00 2001
+From 0ca1ba665ec3ce023399d97ee9fe2008dd331462 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Apr 2018 16:15:16 +0200
 Subject: [PATCH 26/26] access: add smb2 module
@@ -18,16 +18,16 @@ allow to use Builtin NTLMSSP authentication instead of libkrb5.
  contrib/src/smb2/rules.mak                    |  28 +
  modules/MODULES_LIST                          |   1 +
  modules/access/Makefile.am                    |  11 +
- modules/access/smb2.c                         | 718 ++++++++++++++++++
+ modules/access/smb2.c                         | 712 ++++++++++++++++++
  po/POTFILES.in                                |   1 +
- 8 files changed, 992 insertions(+), 1 deletion(-)
+ 8 files changed, 986 insertions(+), 1 deletion(-)
  create mode 100644 contrib/src/smb2/0001-ntlmssp-add-support-for-Anonymous-logins.patch
  create mode 100644 contrib/src/smb2/SHA512SUMS
  create mode 100644 contrib/src/smb2/rules.mak
  create mode 100644 modules/access/smb2.c
 
 diff --git a/configure.ac b/configure.ac
-index 77e42e861a..198777bcba 100644
+index 77e42e861a..78f35954ff 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1854,7 +1854,14 @@ AS_IF([test "${SYS}" = "mingw32" -a "${enable_winstore_app}" != "yes"], [ VLC_AD
@@ -53,7 +53,7 @@ index 77e42e861a..198777bcba 100644
 +dnl
 +dnl smb2 access support
 +dnl
-+PKG_ENABLE_MODULES_VLC([SMB2], [smb2], [libsmb2 >= 2.0.0], (support smb2 protocol via libsmb2), [auto])
++PKG_ENABLE_MODULES_VLC([SMB2], [smb2], [libsmb2 >= 3.0.0], (support smb2 protocol via libsmb2), [auto])
 +
  dnl
  dnl  Video4Linux 2
@@ -360,10 +360,10 @@ index 765ceec45f..2a773029e3 100644
  access_LTLIBRARIES += libtcp_plugin.la
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
 new file mode 100644
-index 0000000000..a132c3876f
+index 0000000000..05cc8594eb
 --- /dev/null
 +++ b/modules/access/smb2.c
-@@ -0,0 +1,718 @@
+@@ -0,0 +1,712 @@
 +/*****************************************************************************
 + * smb2.c: SMB2 access plug-in
 + *****************************************************************************
@@ -423,8 +423,6 @@ index 0000000000..a132c3876f
 +#endif
 +
 +#include "smb_common.h"
-+
-+#define CIFS_PORT 445
 +
 +static int Open(vlc_object_t *);
 +static void Close(vlc_object_t *);
@@ -948,10 +946,6 @@ index 0000000000..a132c3876f
 +    if (vlc_UrlParseFixup(&sys->encoded_url, access->psz_url) != 0)
 +        return VLC_ENOMEM;
 +
-+    if (sys->encoded_url.i_port != 0 && sys->encoded_url.i_port != CIFS_PORT)
-+        goto error;
-+    sys->encoded_url.i_port = 0;
-+
 +    sys->smb2 = smb2_init_context();
 +    if (sys->smb2 == NULL)
 +    {
@@ -963,10 +957,10 @@ index 0000000000..a132c3876f
 +        sys->encoded_url.psz_path = (char *) "/";
 +
 +    char *resolved_host = vlc_smb2_resolve(access, sys->encoded_url.psz_host,
-+                                           CIFS_PORT);
++                                           sys->encoded_url.i_port);
 +
 +    /* smb2_* functions need a decoded url. Re compose the url from the
-+     * modified sys->encoded_url (without port and with the resolved host). */
++     * modified sys->encoded_url (with the resolved host). */
 +    char *url;
 +    if (resolved_host != NULL)
 +    {
