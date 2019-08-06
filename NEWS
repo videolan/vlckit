@@ -1,3 +1,13 @@
+Version 3.3.3:
+--------------
+- Fix airplay AV sync
+- Fix bluetooth audio drop
+- SMB2: Add support for NTLM anonymous login and port specification
+- Add MediaListPlayerDelegate callbacks:
+	- (void)mediaListPlayerFinishedPlayback:(VLCMediaListPlayer *)player;
+	- (void)mediaListPlayer:(VLCMediaListPlayer *)player;
+	- (void)mediaListPlayerStopped:(VLCMediaListPlayer *)player;
+
 Version 3.3.2:
 --------------
 
