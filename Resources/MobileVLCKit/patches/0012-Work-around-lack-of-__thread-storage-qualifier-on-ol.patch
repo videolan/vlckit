@@ -1,4 +1,4 @@
-From 6676c183324c28f12c839b7b7afdbccb7521c7e8 Mon Sep 17 00:00:00 2001
+From 07d1c5ca41b16751d4413a44e7f092582f80f209 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
 Subject: [PATCH 12/26] Work around lack of __thread storage qualifier on old
@@ -14,7 +14,7 @@ Subject: [PATCH 12/26] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index b29079ac58..32a45bac65 100644
+index 4909c43539..77e42e861a 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -591,8 +591,8 @@ dnl Check for system libs needed

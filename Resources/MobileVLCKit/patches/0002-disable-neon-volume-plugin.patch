@@ -1,4 +1,4 @@
-From e3a269e75ce4fae45ca9c1ee2e7556d045236ca7 Mon Sep 17 00:00:00 2001
+From 90b69f9a3548637525b88c173d17932e16b2126f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
 Subject: [PATCH 02/26] disable neon volume plugin
