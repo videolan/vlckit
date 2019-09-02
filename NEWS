@@ -1,3 +1,27 @@
+Version 3.3.4:
+--------------
+
+- Fix SMB 2 possible null-deref when stopping a session
+
+- vout: fix low framerate stuttering
+- transcode: video: patch missing chroma in decoder format ouput
+- access: dvdread: fix null dereference on vts failure
+
+- demux:
+    - mp4: fix potential endless loop
+    - avi: simplify strf handling
+    - mkv: remove elements from vector when we delete them
+    - mkv: fix vector erase in destructor
+    - mkv: do not use the file if there's no usable stream/segment
+
+- faad: Fix read buffer overflow
+- ogg: Fix potential integer overflow
+- chromecast: transcode audio to MP3 320 kbps instead of 96 kbps
+
+- Bump libelml requirement to 1.3.6
+- Bump dav1d to 0.4.0
+- Bump libmodplug to 0.8.9.0
+
 Version 3.3.3:
 --------------
 - Fix airplay AV sync
