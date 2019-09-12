@@ -1,7 +1,7 @@
-From ff1c824ce9931e6256f1067128e7946559980721 Mon Sep 17 00:00:00 2001
+From e0e747b5515cfcfbe6b571ad7200b2704c2eba9d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Apr 2018 16:15:16 +0200
-Subject: [PATCH 26/26] access: add smb2 module
+Subject: [PATCH 26/28] access: add smb2 module
 
 Using libsmb2 from Ronnie Sahlberg https://github.com/sahlberg/libsmb2
 This is LGPL 2.1 fully async lib for accessing SMB2 and SMB3 shares.
@@ -15,15 +15,15 @@ allow to use Builtin NTLMSSP authentication instead of libkrb5.
  configure.ac                                  |  14 +-
  ...ssp-add-support-for-Anonymous-logins.patch | 219 ++++++
  .../0002-Fix-indent-and-white-spaces.patch    |  97 +++
- .../src/smb2/0003-Fix-getlogin-usage.patch    |  58 ++
+ .../src/smb2/0003-Fix-getlogin-usage.patch    |  70 ++
  ...troy_context-fix-possible-null-deref.patch |  48 ++
  contrib/src/smb2/SHA512SUMS                   |   1 +
  contrib/src/smb2/rules.mak                    |  31 +
  modules/MODULES_LIST                          |   1 +
  modules/access/Makefile.am                    |  11 +
- modules/access/smb2.c                         | 731 ++++++++++++++++++
+ modules/access/smb2.c                         | 734 ++++++++++++++++++
  po/POTFILES.in                                |   1 +
- 11 files changed, 1211 insertions(+), 1 deletion(-)
+ 11 files changed, 1226 insertions(+), 1 deletion(-)
  create mode 100644 contrib/src/smb2/0001-ntlmssp-add-support-for-Anonymous-logins.patch
  create mode 100644 contrib/src/smb2/0002-Fix-indent-and-white-spaces.patch
  create mode 100644 contrib/src/smb2/0003-Fix-getlogin-usage.patch
@@ -33,7 +33,7 @@ allow to use Builtin NTLMSSP authentication instead of libkrb5.
  create mode 100644 modules/access/smb2.c
 
 diff --git a/configure.ac b/configure.ac
-index 2e046acaa2..7964d8fe2e 100644
+index bdb618ac7b..8d854dba54 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -1854,7 +1854,14 @@ AS_IF([test "${SYS}" = "mingw32" -a "${enable_winstore_app}" != "yes"], [ VLC_AD
@@ -394,11 +394,11 @@ index 0000000000..66a97508c7
 +
 diff --git a/contrib/src/smb2/0003-Fix-getlogin-usage.patch b/contrib/src/smb2/0003-Fix-getlogin-usage.patch
 new file mode 100644
-index 0000000000..e639596a7b
+index 0000000000..91776d9f5f
 --- /dev/null
 +++ b/contrib/src/smb2/0003-Fix-getlogin-usage.patch
-@@ -0,0 +1,58 @@
-+From 4801820ba947ca895721ac0a198362409cd94d69 Mon Sep 17 00:00:00 2001
+@@ -0,0 +1,70 @@
++From 434a880dc7f304eafb2377e26d47d93187109b14 Mon Sep 17 00:00:00 2001
 +From: Thomas Guillem <thomas@gllm.fr>
 +Date: Tue, 30 Jul 2019 18:02:14 +0200
 +Subject: [PATCH 3/4] Fix getlogin() usage
@@ -408,32 +408,44 @@ index 0000000000..e639596a7b
 +
 +Also check for error and use "Guest" as a fallback.
 +---
-+ lib/init.c | 10 ++++++----
-+ 1 file changed, 6 insertions(+), 4 deletions(-)
++ lib/init.c | 20 ++++++++++++++++----
++ 1 file changed, 16 insertions(+), 4 deletions(-)
 +
 +diff --git a/lib/init.c b/lib/init.c
-+index eab69a5..3c01774 100644
++index eab69a5..4387cd0 100644
 +--- a/lib/init.c
 ++++ b/lib/init.c
-+@@ -52,7 +52,7 @@
++@@ -52,17 +52,27 @@
 + #define MAX_URL_SIZE 256
 + 
 + #ifdef _MSC_VER
 +-#define getlogin() "Guest"
-++#define getlogin_r() ENXIO
+++#include <errno.h>
+++#define getlogin_r(a,b) ENXIO
 + #define random rand
 + #define getpid GetCurrentProcessId
 + #endif // _MSC_VER
-+@@ -60,7 +60,7 @@
++ 
 + #ifdef ESP_PLATFORM
+++#include <errno.h>
 + #include <esp_system.h>
 + #define random esp_random
 +-#define getlogin() "Guest"
-++#define getlogin_r() ENXIO
+++#define getlogin_r(a,b) ENXIO
 + #endif
 + 
+++#ifdef __ANDROID__
+++#include <errno.h>
+++// getlogin_r() was added in API 28
+++#if __ANDROID_API__ < 28
+++#define getlogin_r(a,b) ENXIO
+++#endif
+++#endif // __ANDROID__
+++
 + static int
-+@@ -206,7 +206,8 @@ void smb2_destroy_url(struct smb2_url *url)
++ smb2_parse_args(struct smb2_context *smb2, const char *args)
++ {
++@@ -206,7 +216,8 @@ void smb2_destroy_url(struct smb2_url *url)
 + struct smb2_context *smb2_init_context(void)
 + {
 +         struct smb2_context *smb2;
@@ -443,7 +455,7 @@ index 0000000000..e639596a7b
 + 
 +         smb2 = malloc(sizeof(struct smb2_context));
 +         if (smb2 == NULL) {
-+@@ -214,7 +215,8 @@ struct smb2_context *smb2_init_context(void)
++@@ -214,7 +225,8 @@ struct smb2_context *smb2_init_context(void)
 +         }
 +         memset(smb2, 0, sizeof(struct smb2_context));
 + 
@@ -458,11 +470,11 @@ index 0000000000..e639596a7b
 +
 diff --git a/contrib/src/smb2/0004-smb2_destroy_context-fix-possible-null-deref.patch b/contrib/src/smb2/0004-smb2_destroy_context-fix-possible-null-deref.patch
 new file mode 100644
-index 0000000000..f5327b64cb
+index 0000000000..ec8f9331b3
 --- /dev/null
 +++ b/contrib/src/smb2/0004-smb2_destroy_context-fix-possible-null-deref.patch
 @@ -0,0 +1,48 @@
-+From ada4e70f9aee53421aba23a9a4dbb947470d7c5d Mon Sep 17 00:00:00 2001
++From 6e2126a854292621548948a3d30e6023943d7c99 Mon Sep 17 00:00:00 2001
 +From: Thomas Guillem <thomas@gllm.fr>
 +Date: Thu, 8 Aug 2019 15:18:31 +0200
 +Subject: [PATCH 4/4] smb2_destroy_context: fix possible null-deref
@@ -474,10 +486,10 @@ index 0000000000..f5327b64cb
 + 1 file changed, 8 insertions(+), 8 deletions(-)
 +
 +diff --git a/lib/init.c b/lib/init.c
-+index 3c01774..0a279d0 100644
++index 4387cd0..03903fb 100644
 +--- a/lib/init.c
 ++++ b/lib/init.c
-+@@ -245,14 +245,6 @@ void smb2_destroy_context(struct smb2_context *smb2)
++@@ -255,14 +255,6 @@ void smb2_destroy_context(struct smb2_context *smb2)
 +                 smb2->fd = -1;
 +         }
 + 
@@ -492,7 +504,7 @@ index 0000000000..f5327b64cb
 +         while (smb2->outqueue) {
 +                 struct smb2_pdu *pdu = smb2->outqueue;
 + 
-+@@ -273,6 +265,14 @@ void smb2_destroy_context(struct smb2_context *smb2)
++@@ -283,6 +275,14 @@ void smb2_destroy_context(struct smb2_context *smb2)
 +                 smb2->pdu = NULL;
 +         }
 + 
@@ -590,10 +602,10 @@ index 765ceec45f..2a773029e3 100644
  access_LTLIBRARIES += libtcp_plugin.la
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
 new file mode 100644
-index 0000000000..2c8a4a1b43
+index 0000000000..965c40dd7c
 --- /dev/null
 +++ b/modules/access/smb2.c
-@@ -0,0 +1,731 @@
+@@ -0,0 +1,734 @@
 +/*****************************************************************************
 + * smb2.c: SMB2 access plug-in
 + *****************************************************************************
@@ -661,7 +673,7 @@ index 0000000000..2c8a4a1b43
 +    set_shortname("smb2")
 +    set_description(N_("SMB2 / SMB3 input"))
 +    set_help(N_("Samba (Windows network shares) input via libsmb2"))
-+    set_capability("access", 19)
++    set_capability("access", 21)
 +    set_category(CAT_INPUT)
 +    set_subcategory(SUBCAT_INPUT_ACCESS)
 +    add_string("smb-user", NULL, SMB_USER_TEXT, SMB_USER_LONGTEXT, false)
@@ -1202,6 +1214,8 @@ index 0000000000..2c8a4a1b43
 +        goto error;
 +    }
 +
++    smb2_set_security_mode(sys->smb2, SMB2_NEGOTIATE_SIGNING_ENABLED);
++
 +    if (sys->encoded_url.psz_path == NULL)
 +        sys->encoded_url.psz_path = (char *) "/";
 +
@@ -1261,9 +1275,10 @@ index 0000000000..2c8a4a1b43
 +
 +    if (ret != 0)
 +    {
-+        vlc_dialog_display_error(access,
-+                                 _("SMB2 operation failed"), "%s",
-+                                 smb2_get_error(sys->smb2));
++        const char *error = smb2_get_error(sys->smb2);
++        if (error && *error)
++            vlc_dialog_display_error(access,
++                                     _("SMB2 operation failed"), "%s", error);
 +        goto error;
 +    }
 +
