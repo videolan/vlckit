@@ -1,3 +1,12 @@
+Version 3.3.5:
+--------------
+
+- access: fix smb2/dsm conflicts
+- directsound: fix uninitialized var usage on error path
+- lib: media: fix media not being preparsed after a failure
+- packetizer: flac: don't increment invalid date
+- videotoolbox: don't reset the vout when closing
+
 Version 3.3.4:
 --------------
 
