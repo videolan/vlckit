@@ -1,4 +1,4 @@
-From e0e747b5515cfcfbe6b571ad7200b2704c2eba9d Mon Sep 17 00:00:00 2001
+From fac35d71d925698b75c0b5c6b83bb254809af2a3 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Apr 2018 16:15:16 +0200
 Subject: [PATCH 26/28] access: add smb2 module
@@ -602,7 +602,7 @@ index 765ceec45f..2a773029e3 100644
  access_LTLIBRARIES += libtcp_plugin.la
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
 new file mode 100644
-index 0000000000..965c40dd7c
+index 0000000000..6b56bf8706
 --- /dev/null
 +++ b/modules/access/smb2.c
 @@ -0,0 +1,734 @@
@@ -1268,9 +1268,9 @@ index 0000000000..965c40dd7c
 +    {
 +        sys->error_status = 0;
 +        ret = vlc_smb2_open_share(access, smb2_url, &credential);
-+        if (ret == 0)
-+            vlc_credential_store(&credential, access);
 +    }
++    if (ret == 0)
++        vlc_credential_store(&credential, access);
 +    vlc_credential_clean(&credential);
 +
 +    if (ret != 0)
