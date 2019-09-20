@@ -123,6 +123,7 @@ void close_cb(void *opaque) {
     BOOL                    isArtFetched;           ///< Value used to determine of the artwork has been parsed
     BOOL                    areOthersMetaFetched;   ///< Value used to determine of the other meta has been parsed
     BOOL                    isArtURLFetched;        ///< Value used to determine of the other meta has been preparsed
+    BOOL                    eventsAttached;         ///< YES when events are attached
     NSMutableDictionary     *_metaDictionary;       ///< Dictionary to cache metadata read from libvlc
     NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
 }
@@ -314,18 +315,22 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (void)dealloc
 {
-    libvlc_event_manager_t * p_em = libvlc_media_event_manager(p_md);
-    if (p_em) {
-        libvlc_event_detach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     (__bridge void *)(self));
-        libvlc_event_detach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
-        libvlc_event_detach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
-        libvlc_event_detach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
-        libvlc_event_detach(p_em, libvlc_MediaParsedChanged,    HandleMediaParsedChanged,   (__bridge void *)(self));
+    if (eventsAttached)
+    {
+        libvlc_event_manager_t * p_em = libvlc_media_event_manager(p_md);
+        if (p_em) {
+            libvlc_event_detach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     (__bridge void *)(self));
+            libvlc_event_detach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
+            libvlc_event_detach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
+            libvlc_event_detach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
+            libvlc_event_detach(p_em, libvlc_MediaParsedChanged,    HandleMediaParsedChanged,   (__bridge void *)(self));
+        }
     }
 
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
-    libvlc_media_release( p_md );
+    if (p_md)
+        libvlc_media_release(p_md);
 }
 
 - (VLCMediaType)mediaType
@@ -970,6 +975,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         libvlc_event_attach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaParsedChanged,    HandleMediaParsedChanged,   (__bridge void *)(self));
+        eventsAttached = YES;
     }
 
     libvlc_media_list_t * p_mlist = libvlc_media_subitems( p_md );
