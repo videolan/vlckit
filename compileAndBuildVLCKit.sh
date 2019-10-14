@@ -294,6 +294,13 @@ buildLibVLC() {
     if [ "$MACOS" = "yes" ]; then
         # The following symbols do not exist on the minimal macOS version (10.7), so they are disabled
         # here. This allows compilation also with newer macOS SDKs.
+        # Added in 10.15
+        export ac_cv_func_aligned_alloc=no
+        export ac_cv_func_timespec_get=no
+
+        # Added in 10.14
+        export ac_cv_func_thread_get_register_pointer_values=no
+
         # Added symbols in 10.13
         export ac_cv_func_open_wmemstream=no
         export ac_cv_func_fmemopen=no
@@ -321,6 +328,9 @@ buildLibVLC() {
     else
         # The following symbols do not exist on the minimal iOS version (7.0), so they are disabled
         # here. This allows compilation also with newer iOS SDKs
+        # Added symbols in iOS 13 / tvOS 13
+        export ac_cv_func_aligned_alloc=no
+        export ac_cv_func_timespec_get=no
         # Added symbols between 7.x and 10.x
         export ac_cv_func_basename_r=no
         export ac_cv_func_clock_getres=no
