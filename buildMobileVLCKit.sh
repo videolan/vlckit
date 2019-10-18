@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="e38fee84ad" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="d30d59d570" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -529,6 +529,7 @@ buildLibVLC() {
         --disable-aribb25 \
         --enable-vpx \
         --enable-libdsm \
+        --enable-smb2 \
         --enable-libplacebo \
         --disable-sparkle \
         --disable-growl \
@@ -629,6 +630,7 @@ buildLibVLC() {
         --disable-screen \
         --enable-freetype \
         --enable-taglib \
+        --enable-smb2 \
         --disable-mmx \
         --disable-sparkle \
         --disable-addonmanagermodules \

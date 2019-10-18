@@ -1,7 +1,7 @@
-From ccee63929f09c84f84bfb18854c03650ec4dc254 Mon Sep 17 00:00:00 2001
+From 2ef988f722132c9c3595c22408e0f0e0b82cf46f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:03:37 +0200
-Subject: [PATCH 08/28] contrib/gcrypt: update patches
+Subject: [PATCH 08/26] contrib/gcrypt: update patches
 
 ---
  .../src/gcrypt/fix-sha1-ssse3-for-clang.patch | 308 +++++++++++++++++-
