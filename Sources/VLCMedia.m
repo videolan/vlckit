@@ -454,6 +454,13 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
                                            -1);
 }
 
+- (void)addOption:(NSString *)option
+{
+    if (p_md) {
+        libvlc_media_add_option(p_md, [option UTF8String]);
+    }
+}
+
 - (void)addOptions:(NSDictionary*)options
 {
     if (p_md) {

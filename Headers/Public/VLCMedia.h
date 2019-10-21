@@ -556,6 +556,7 @@ typedef int VLCMediaParsingOptions;
  * The options are detailed in vlc --long-help, for instance "--sout-all"
  * And on the web: http://wiki.videolan.org/VLC_command-line_help
 */
+- (void)addOption:(NSString *)option;
 - (void)addOptions:(NSDictionary*)options;
 
 /**
