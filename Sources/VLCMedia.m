@@ -454,6 +454,13 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
                                            -1);
 }
 
+- (void)parseStop
+{
+    if (p_md) {
+        libvlc_media_parse_stop(p_md);
+    }
+}
+
 - (void)addOption:(NSString *)option
 {
     if (p_md) {
