@@ -1,4 +1,4 @@
-From 065eaa09993a7294dd690c1df730f7ac2676497d Mon Sep 17 00:00:00 2001
+From ff7340eb6801c1248672ba29256fae35337155f5 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Sep 2019 14:41:31 +0200
 Subject: [PATCH 26/26] lib: media: fix media not being preparsed after a
@@ -7,11 +7,11 @@ Subject: [PATCH 26/26] lib: media: fix media not being preparsed after a
 After a failure (like when browsing a smb folder with credential), it was
 impossible to preparse the same media again.
 ---
- lib/media.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/media.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/lib/media.c b/lib/media.c
-index 843f3747dc..64ba95c3ff 100644
+index 843f3747dc..b0090c6679 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -267,7 +267,7 @@ static void send_parsed_changed( libvlc_media_t *p_md,
@@ -23,6 +23,17 @@ index 843f3747dc..64ba95c3ff 100644
          p_md->has_asked_preparse = false;
  
      vlc_mutex_unlock( &p_md->parsed_lock );
+@@ -784,7 +784,10 @@ static int media_parse(libvlc_media_t *media, bool b_async,
+     needed = !media->has_asked_preparse;
+     media->has_asked_preparse = true;
+     if (needed)
++    {
+         media->is_parsed = false;
++        media->parsed_status = 0;
++    }
+     vlc_mutex_unlock(&media->parsed_lock);
+ 
+     if (needed)
 -- 
 2.20.1
 
