@@ -549,6 +549,14 @@ typedef int VLCMediaParsingOptions;
 - (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue;
 
 /**
+ * Stop the parsing of the media
+ *
+ * When the media parsing is stopped, the mediaDidFinishParsing will
+ * be sent with the VLCMediaParsedStatusTimeout status.
+*/
+- (void)parseStop;
+
+/**
  * Add options to the media, that will be used to determine how
  * VLCMediaPlayer will read the media. This allow to use VLC advanced
  * reading/streaming options in a per-media basis
