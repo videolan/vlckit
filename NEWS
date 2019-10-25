@@ -1,3 +1,66 @@
+Version 3.3.7:
+--------------
+
+- VLCMedia:
+    - Add helper method to easily add option
+    - Add method to stop parsing
+
+- codec:
+    - avcodec: really drain video
+    - webvtt: fix node reparenting on closing tags
+
+- demux:
+    - ttml: recreate entities
+
+    - mp4:
+        - fix non packetized ms55
+        - fix quicktime sample size regression for twos/stwo
+
+    - h26x:
+        - fix frame duration
+        - use fmtout rate as date rate
+
+    - adaptive:
+        - store timeline directly
+        - inherit template defaults
+        - missing flags propagation using MimeDemuxer
+
+- packetizer:
+    - flac:
+        - check next header
+        - return a block even with invalid pts
+
+    - hevc:
+        - add secondary drain
+        - set fmtout rate when unknown
+
+    - h264:
+        - handle secondary drain
+        - do not override fmtin frame rate
+        - only use date_t for length computation
+
+    - mpegvideo: perform secondary drain
+
+- audiounit_ios: add support for > 48kHz sample rate
+
+- coreaudio:
+    - start deferred
+    - update the play date until the first rendering
+    - use the dev latency for the deferred calculation
+
+- vaapi: add YUVJ420P pixfmt
+- mp4: meta: fix format-truncation warning
+
+- access: add smb2 module
+
+- smb2/dsm: avoid to request the dialog two times
+- dsm:
+    - query credentials only when needed
+    - add "smb-force-v1" option
+    - specify the v1 protocol in the dialog credential title
+
+contrib: add libsmb2
+
 Version 3.3.6:
 --------------
 
