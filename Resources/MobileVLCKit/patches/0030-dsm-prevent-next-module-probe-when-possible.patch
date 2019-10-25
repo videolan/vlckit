@@ -1,0 +1,77 @@
+From 506753d64023fd87b4e3282ff2e7a64753a9c4da Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Fri, 25 Oct 2019 10:54:35 +0200
+Subject: [PATCH 30/30] dsm: prevent next module probe when possible
+
+(cherry picked from commit efa6620181697424968d3c2965d386811aae3a6d)
+Signed-off-by: Thomas Guillem <thomas@gllm.fr>
+---
+ modules/access/dsm/access.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
+
+diff --git a/modules/access/dsm/access.c b/modules/access/dsm/access.c
+index 0713775c9d..69f61b9860 100644
+--- a/modules/access/dsm/access.c
++++ b/modules/access/dsm/access.c
+@@ -35,6 +35,7 @@
+ #include <vlc_variables.h>
+ #include <vlc_keystore.h>
+ #include <vlc_network.h>
++#include <vlc_interrupt.h>
+ 
+ #include <assert.h>
+ #include <errno.h>
+@@ -143,6 +144,7 @@ static int Open( vlc_object_t *p_this )
+     stream_t     *p_access = (stream_t*)p_this;
+     access_sys_t *p_sys;
+     smb_stat st;
++    int status = DSM_ERROR_GENERIC;
+ 
+     /* Init p_access */
+     p_sys = p_access->p_sys = (access_sys_t*)calloc( 1, sizeof( access_sys_t ) );
+@@ -161,17 +163,23 @@ static int Open( vlc_object_t *p_this )
+         goto error;
+ 
+     if( get_address( p_access ) != VLC_SUCCESS )
++    {
++        status = DSM_ERROR_NETWORK;
+         goto error;
++    }
+ 
+     msg_Dbg( p_access, "Session: Host name = %s, ip = %s", p_sys->netbios_name,
+              inet_ntoa( p_sys->addr ) );
+ 
+     /* Now that we have the required data, let's establish a session */
+-    if( smb_session_connect( p_sys->p_session, p_sys->netbios_name,
+-                             p_sys->addr.s_addr, SMB_TRANSPORT_TCP )
+-                             != DSM_SUCCESS )
++    status = smb_session_connect( p_sys->p_session, p_sys->netbios_name,
++                                  p_sys->addr.s_addr, SMB_TRANSPORT_TCP );
++    if( status != DSM_SUCCESS )
+     {
+         msg_Err( p_access, "Unable to connect/negotiate SMB session");
++        /* FIXME: libdsm wrongly return network error when the server can't
++         * handle the SMBv1 protocol */
++        status = DSM_ERROR_GENERIC;
+         goto error;
+     }
+ 
+@@ -207,7 +215,14 @@ static int Open( vlc_object_t *p_this )
+ 
+     error:
+         Close( p_this );
+-        return VLC_EGENERIC;
++
++        /* Returning VLC_ETIMEOUT will stop the module probe and prevent to
++         * load the next smb module. The dsm module can return this specific
++         * error in case of network error (DSM_ERROR_NETWORK) or when the user
++         * asked to cancel it (vlc_killed()). Indeed, in these cases, it is
++         * useless to try next smb modules. */
++        return vlc_killed() || status == DSM_ERROR_NETWORK ? VLC_ETIMEOUT
++             : VLC_EGENERIC;
+ }
+ 
+ static int OpenForced( vlc_object_t *p_this )
+-- 
+2.20.1
+
