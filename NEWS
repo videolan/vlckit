@@ -1,3 +1,8 @@
+Version 3.3.8:
+--------------
+
+- Compatibility fix with iOS/tvOS 13 when distributing on the App Store
+
 Version 3.3.7:
 --------------
 
