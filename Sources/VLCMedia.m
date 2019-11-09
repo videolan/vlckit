@@ -411,30 +411,12 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return _length;
 }
 
-- (BOOL)isParsed
-{
-   VLCMediaParsedStatus status = [self parsedStatus];
-   return (status == VLCMediaParsedStatusFailed || status == VLCMediaParsedStatusDone) ? YES:NO;
-}
-
 - (VLCMediaParsedStatus)parsedStatus
 {
     if (!p_md)
         return VLCMediaParsedStatusFailed;
     libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
     return (VLCMediaParsedStatus)status;
-}
-
-- (void)parse
-{
-    if (p_md)
-        libvlc_media_parse_async(p_md);
-}
-
-- (void)synchronousParse
-{
-    if (p_md)
-        libvlc_media_parse(p_md);
 }
 
 - (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue

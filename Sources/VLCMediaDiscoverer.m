@@ -50,11 +50,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 @implementation VLCMediaDiscoverer
 @synthesize libraryInstance = _privateLibrary;
 
-+ (NSArray *)availableMediaDiscoverer
-{
-    return @[];
-}
-
 + (NSArray *)availableMediaDiscovererForCategoryType:(VLCMediaDiscovererCategoryType)categoryType
 {
     libvlc_media_discoverer_description_t **discoverers;

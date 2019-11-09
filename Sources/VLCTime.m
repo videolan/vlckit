@@ -71,11 +71,6 @@
     return self.stringValue;
 }
 
-- (NSNumber *)numberValue
-{
-    return _value;
-}
-
 - (NSString *)stringValue
 {
     if (_value) {

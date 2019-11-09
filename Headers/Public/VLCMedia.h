@@ -256,12 +256,6 @@ typedef NS_ENUM(NSUInteger, VLCMediaType) {
 - (VLCTime *)lengthWaitUntilDate:(NSDate *)aDate;
 
 /**
- * Determines if the media has already been preparsed.
- * \deprecated use parseStatus instead
- */
-@property (nonatomic, readonly) BOOL isParsed __attribute__((deprecated));
-
-/**
  * list of possible parsed states returnable by parsedStatus
  */
 typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
@@ -489,26 +483,6 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
  */
 
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *tracksInformation;
-
-/**
- * Start asynchronously to parse the media.
- * This will attempt to fetch the meta data and tracks information.
- *
- * This is automatically done when an accessor requiring parsing
- * is called.
- *
- * \see -[VLCMediaDelegate mediaDidFinishParsing:]
- * \deprecated Use parseWithOptions: instead
- */
-- (void)parse __attribute__((deprecated));
-
-/**
- * Trigger a synchronous parsing of the media
- * the selector won't return until parsing finished
- *
- * \deprecated Use parseWithOptions: instead
- */
-- (void)synchronousParse __attribute__((deprecated));
 
 enum {
     VLCMediaParseLocal          = 0x00,     ///< Parse media if it's a local file

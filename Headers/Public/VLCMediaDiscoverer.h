@@ -58,13 +58,6 @@ extern NSString *const VLCMediaDiscovererCategory;
 @property (nonatomic, readonly) VLCLibrary *libraryInstance;
 
 /**
- * The full list of available media discoverers
- * \return returns an empty array for binary compatibility, will be removed in subsequent releases
- * \deprecated use availableMediaDiscovererForCategoryType instead
- */
-+ (NSArray *)availableMediaDiscoverer __attribute__((deprecated));
-
-/**
  * \param categoryType VLCMediaDiscovererCategory you are looking for
  * \return an array of dictionaries describing the available discoverers for the requested type
  */

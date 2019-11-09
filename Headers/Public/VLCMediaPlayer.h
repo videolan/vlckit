@@ -346,13 +346,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) BOOL hasVideoOut;
 
-/**
- * Frames per second
- * \deprecated provided for API compatibility only, to retrieve a media's FPS, use VLCMediaTracksInformationFrameRate.
- * \returns 0
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) float framesPerSecond __attribute__((deprecated));
-
 #pragma mark -
 #pragma mark time
 
@@ -430,13 +423,6 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return number of tracks
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) int numberOfSubtitlesTracks;
-
-/**
- * Load and set a specific video subtitle, from a file.
- *
- * \deprecated use addPlaybackSlave:type:enforce: instead
- */
-- (BOOL)openVideoSubTitlesFromFile:(NSString *)path __attribute__((deprecated));
 
 /**
  * VLCMediaPlaybackNavigationAction describes actions which can be performed to navigate an interactive title

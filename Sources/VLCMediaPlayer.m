@@ -494,11 +494,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_video_get_spu_count(_playerInstance);
 }
 
-- (BOOL)openVideoSubTitlesFromFile:(NSString *)path
-{
-    return [self addPlaybackSlave:[NSURL fileURLWithPath:path] type:VLCMediaPlaybackSlaveTypeSubtitle enforce:YES];
-}
-
 - (int)addPlaybackSlave:(NSURL *)slaveURL type:(VLCMediaPlaybackSlaveType)slaveType enforce:(BOOL)enforceSelection
 {
     if (!slaveURL)
@@ -684,11 +679,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 - (BOOL)hasVideoOut
 {
     return libvlc_media_player_has_vout(_playerInstance);
-}
-
-- (float)framesPerSecond
-{
-    return .0;
 }
 
 - (void)setTime:(VLCTime *)value
