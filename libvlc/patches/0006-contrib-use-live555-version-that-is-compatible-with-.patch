@@ -1,4 +1,4 @@
-From d552e8d399fa1de9e8a959a8aa73da6bf23332cd Mon Sep 17 00:00:00 2001
+From 476f4c07e43f8dba7689eba73a40d7210d84a79b Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
 Subject: [PATCH 06/16] contrib: use live555 version that is compatible with
@@ -46,5 +46,5 @@ index 4f9b70d452..976154312d 100644
  		echo "PREFIX = $(PREFIX)" >> $$subdir/Makefile.head && \
  		echo "LIBDIR = $(PREFIX)/lib" >> $$subdir/Makefile.head ; done
 -- 
-2.20.1 (Apple Git-117)
+2.21.0 (Apple Git-122.2)
 

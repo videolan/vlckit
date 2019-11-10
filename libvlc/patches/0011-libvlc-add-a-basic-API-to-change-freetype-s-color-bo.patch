@@ -1,7 +1,7 @@
-From f7029fdee76892c213beab6c93ce59a0914ef8c7 Mon Sep 17 00:00:00 2001
+From 3397b6c35dd97ef8a6e77d5c4118d420da50d7a9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Dec 2017 18:05:40 +0100
-Subject: [PATCH 12/16] libvlc: add a basic API to change freetype's color,
+Subject: [PATCH 11/16] libvlc: add a basic API to change freetype's color,
  bold, font and size variables on-the-fly
 
 ---
@@ -13,10 +13,10 @@ Subject: [PATCH 12/16] libvlc: add a basic API to change freetype's color,
  5 files changed, 148 insertions(+), 5 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 1ab92f5bc3..99ed1fcccb 100644
+index 7c72c9774b..d4597e3353 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1950,6 +1950,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1956,6 +1956,32 @@ LIBVLC_API float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  LIBVLC_API void libvlc_video_set_adjust_float( libvlc_media_player_t *p_mi,
                                                     unsigned option, float value );
  
@@ -50,10 +50,10 @@ index 1ab92f5bc3..99ed1fcccb 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 23306395ee..88fc0056d4 100644
+index e79a65a362..72946add0d 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -226,6 +226,9 @@ libvlc_video_get_spu_count
+@@ -227,6 +227,9 @@ libvlc_video_get_spu_count
  libvlc_video_get_spu_delay
  libvlc_video_get_spu_description
  libvlc_video_get_teletext
@@ -63,7 +63,7 @@ index 23306395ee..88fc0056d4 100644
  libvlc_video_get_track
  libvlc_video_get_track_count
  libvlc_video_get_track_description
-@@ -251,6 +254,9 @@ libvlc_video_set_scale
+@@ -252,6 +255,9 @@ libvlc_video_set_scale
  libvlc_video_set_spu
  libvlc_video_set_spu_delay
  libvlc_video_set_teletext
@@ -74,10 +74,10 @@ index 23306395ee..88fc0056d4 100644
  libvlc_video_take_snapshot
  libvlc_video_new_viewpoint
 diff --git a/lib/media_player.c b/lib/media_player.c
-index e3915e155d..90fa54d1d2 100644
+index 575632f2cd..ec56b4bc6a 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -661,6 +661,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -660,6 +660,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -248,5 +248,5 @@ index 65c2386553..e84c902691 100644
  
  static void FillDefaultStyles( filter_t *p_filter )
 -- 
-2.20.1 (Apple Git-117)
+2.21.0 (Apple Git-122.2)
 

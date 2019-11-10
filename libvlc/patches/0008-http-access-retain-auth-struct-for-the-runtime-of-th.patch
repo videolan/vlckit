@@ -1,4 +1,4 @@
-From 01677160c9d1273e2e497dd63804278b2f5bbba2 Mon Sep 17 00:00:00 2001
+From a59c26e4dfaf9587dbf553c648b19795403396e1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
 Subject: [PATCH 08/16] http access: retain auth struct for the runtime of the
@@ -11,7 +11,7 @@ Previously, it was retained for a given connection only, so all information need
  2 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http.c b/modules/access/http.c
-index a1d0593e0f..138b262643 100644
+index 4384e2b0a3..1a112b9ec1 100644
 --- a/modules/access/http.c
 +++ b/modules/access/http.c
 @@ -271,6 +271,8 @@ static int Open( vlc_object_t *p_this )
@@ -52,7 +52,7 @@ index a1d0593e0f..138b262643 100644
      p_sys->psz_mime = NULL;
      p_sys->i_icy_meta = 0;
 diff --git a/src/network/http_auth.c b/src/network/http_auth.c
-index 0ad9d92042..fe1ead8bca 100644
+index ff1796c25d..939e493b76 100644
 --- a/src/network/http_auth.c
 +++ b/src/network/http_auth.c
 @@ -242,7 +242,10 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
@@ -93,5 +93,5 @@ index 0ad9d92042..fe1ead8bca 100644
          p_auth->i_nonce = 0;
  
 -- 
-2.20.1 (Apple Git-117)
+2.21.0 (Apple Git-122.2)
 

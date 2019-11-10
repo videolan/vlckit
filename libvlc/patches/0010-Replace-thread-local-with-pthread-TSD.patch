@@ -1,4 +1,4 @@
-From a4d4646f35d755ab9a300bed4725eac4ea3c7dee Mon Sep 17 00:00:00 2001
+From a0ffc3168589f0d3627a4c6ede0045e3dfc5e434 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
 Subject: [PATCH 10/16] Replace thread local with pthread TSD
@@ -192,10 +192,10 @@ index fc62eb7fff..a96fb0104c 100644
      int (*compar)(const void *, const void *, void *);
      void *arg;
 diff --git a/src/misc/variables.c b/src/misc/variables.c
-index a39fd4143f..30ce120fce 100644
+index ed284cf4f4..15f6dfe096 100644
 --- a/src/misc/variables.c
 +++ b/src/misc/variables.c
-@@ -1134,7 +1134,17 @@ error:
+@@ -1135,7 +1135,17 @@ error:
      return VLC_EGENERIC;
  }
  
@@ -213,7 +213,7 @@ index a39fd4143f..30ce120fce 100644
  
  static void TwalkGetNames(const void *data, const VISIT which, const int depth)
  {
-@@ -1143,7 +1153,11 @@ static void TwalkGetNames(const void *data, const VISIT which, const int depth)
+@@ -1144,7 +1154,11 @@ static void TwalkGetNames(const void *data, const VISIT which, const int depth)
      (void) depth;
  
      const variable_t *var = *(const variable_t **)data;
@@ -225,7 +225,7 @@ index a39fd4143f..30ce120fce 100644
      char *dup = strdup(var->psz_name);
      if (dup != NULL)
          ARRAY_APPEND(*names, dup);
-@@ -1156,7 +1170,12 @@ char **var_GetAllNames(vlc_object_t *obj)
+@@ -1157,7 +1171,12 @@ char **var_GetAllNames(vlc_object_t *obj)
      DECL_ARRAY(char *) names;
      ARRAY_INIT(names);
  
@@ -239,5 +239,5 @@ index a39fd4143f..30ce120fce 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.20.1 (Apple Git-117)
+2.21.0 (Apple Git-122.2)
 

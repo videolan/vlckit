@@ -1,7 +1,7 @@
-From b35c48d3a181265d438ff91390d74b0809ee39ce Mon Sep 17 00:00:00 2001
+From ef5e61d24238f31caa193b54ac262a52134a7cc8 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 15/16] libvlc: media_player: Add record method
+Subject: [PATCH 13/16] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -9,10 +9,10 @@ Subject: [PATCH 15/16] libvlc: media_player: Add record method
  2 files changed, 33 insertions(+)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 99ed1fcccb..cd42a8b60b 100644
+index d4597e3353..fcb7e23ce6 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -2489,6 +2489,19 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
+@@ -2480,6 +2480,19 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
   */
  LIBVLC_API int libvlc_media_player_set_role(libvlc_media_player_t *p_mi,
                                              unsigned role);
@@ -33,7 +33,7 @@ index 99ed1fcccb..cd42a8b60b 100644
  /** @} audio */
  
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 6244d1b2c5..5b1f8ab22e 100644
+index ec56b4bc6a..58eec27ae9 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -576,6 +576,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -44,7 +44,7 @@ index 6244d1b2c5..5b1f8ab22e 100644
      var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
  
      /* Video */
-@@ -1908,6 +1909,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
+@@ -1907,6 +1908,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
      return ret;
  }
  
@@ -71,5 +71,5 @@ index 6244d1b2c5..5b1f8ab22e 100644
  
  /* make sure surface structures from libvlc can be passed as such to vlc
 -- 
-2.20.1 (Apple Git-117)
+2.21.0 (Apple Git-122.2)
 

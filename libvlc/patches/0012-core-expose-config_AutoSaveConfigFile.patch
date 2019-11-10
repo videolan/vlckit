@@ -1,7 +1,7 @@
-From 67124257866654878786383e0aa26e0c2f91f63f Mon Sep 17 00:00:00 2001
+From c96126cd6c8c6964a731a34a678f76e18748a264 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 13/16] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 12/16] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
@@ -11,7 +11,7 @@ Subject: [PATCH 13/16] core: expose config_AutoSaveConfigFile
  4 files changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/include/vlc_configuration.h b/include/vlc_configuration.h
-index f1467c9a0c..7ecc1ea174 100644
+index d4b8fc2473..155081b37b 100644
 --- a/include/vlc_configuration.h
 +++ b/include/vlc_configuration.h
 @@ -243,6 +243,8 @@ VLC_API ssize_t config_GetPszChoices(const char *,
@@ -48,7 +48,7 @@ index e6b10e5c02..4275a7ad00 100644
  {
      int ret = 0;
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index 8d9b85ab4c..794c923db0 100644
+index 0e9efa567d..17fcbdfcbc 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
 @@ -48,6 +48,7 @@ block_Realloc
@@ -60,5 +60,5 @@ index 8d9b85ab4c..794c923db0 100644
  config_ChainDestroy
  config_ChainDuplicate
 -- 
-2.20.1 (Apple Git-117)
+2.21.0 (Apple Git-122.2)
 

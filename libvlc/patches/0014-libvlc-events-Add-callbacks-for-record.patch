@@ -1,7 +1,7 @@
-From 59d8c11ae6ba5218ba89e7484878f8c63562c742 Mon Sep 17 00:00:00 2001
+From 911267d8b6bfa0a4f1ba05e26ce74eecec79c3d6 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
-Subject: [PATCH 16/16] libvlc: events: Add callbacks for record
+Subject: [PATCH 14/16] libvlc: events: Add callbacks for record
 
 ---
  include/vlc/libvlc_events.h |  9 +++++++++
@@ -43,7 +43,7 @@ index 62a81104da..22730b35e1 100644
          {
              libvlc_renderer_item_t *item;
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 5b1f8ab22e..3ae31ddf61 100644
+index 58eec27ae9..4b41ce5e13 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -127,6 +127,28 @@ on_state_changed(vlc_player_t *player, enum vlc_player_state new_state,
@@ -84,5 +84,5 @@ index 5b1f8ab22e..3ae31ddf61 100644
  
  static const struct vlc_player_aout_cbs vlc_player_aout_cbs = {
 -- 
-2.20.1 (Apple Git-117)
+2.21.0 (Apple Git-122.2)
 
