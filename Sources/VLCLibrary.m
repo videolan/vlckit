@@ -280,20 +280,36 @@ static void HandleMessage(void *data,
 {
     VLCLibrary *libraryInstance = (__bridge VLCLibrary *)data;
 
+    const char *log_prefix;
+    switch (level)
+    {
+        case LIBVLC_NOTICE:
+            level = 0;
+            log_prefix = "INF";
+            break;
+        case LIBVLC_ERROR:
+            level = 1;
+            log_prefix = "ERR";
+            break;
+        case LIBVLC_WARNING:
+            level = 2;
+            log_prefix = "WAR";
+            break;
+        case LIBVLC_DEBUG:
+        default:
+            level = 3;
+            log_prefix = "DBG";
+            break;
+
+    }
     if (level > libraryInstance.debugLoggingLevel)
         return;
 
-    char *str = NULL;
-    if (vasprintf(&str, fmt, args) == -1) {
-        if (str)
-            free(str);
-        return;
-    }
-
-    if (str == NULL)
+    char *str;
+    if (vasprintf(&str, fmt, args) == -1)
         return;
 
-    VKLog(@"%s", str);
+    VKLog(@"[%s] %s", log_prefix, str);
     free(str);
 }
 

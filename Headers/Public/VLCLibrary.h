@@ -66,7 +66,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  * Gets/sets the debug logging level
- * \note Logging level ranges from 0 (just error messages) to 4 (everything)
+ * \note Logging level
+ * 0: info/notice
+ * 1: error
+ * 2: warning
+ * 3-4: debug
  * \note values set here will be consired only when logging to console
  * \warning If an invalid level is provided, level defaults to 0
  */
