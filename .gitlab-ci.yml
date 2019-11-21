@@ -1,0 +1,51 @@
+stages:
+    - nightly
+
+## Shared configuration
+
+.nightly-job-base:
+    tags:
+        - macos
+    stage: nightly
+    only:
+        - schedules
+
+.build-base:
+    script:
+        - ./buildMobileVLCKit.sh -${BUILD_PARAM}
+        - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
+
+## Nightly builds
+
+MobileVLCKit:
+    extends:
+        - .nightly-job-base
+        - .build-base
+    variables:
+        BUILD_PARAM: "vf"
+        PACKAGING_PARAM: "m"
+    artifacts:
+        paths:
+            - vlckit/MobileVLCKit/
+
+TVVLCKit:
+    extends:
+        - .nightly-job-base
+        - .build-base
+    variables:
+        BUILD_PARAM: "vft"
+        PACKAGING_PARAM: "t"
+    artifacts:
+        paths:
+            - vlckit/TVVLCKit/
+
+VLCKit:
+    extends:
+        - .nightly-job-base
+        - .build-base
+    variables:
+        BUILD_PARAM: "vx"
+        PACKAGING_PARAM: "z"
+    artifacts:
+        paths:
+            - vlckit/VLCKit/
