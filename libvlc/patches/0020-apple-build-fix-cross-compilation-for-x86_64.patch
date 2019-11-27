@@ -1,0 +1,34 @@
+From 9b591c5c8e121e69f7dee3fbe6be0bf416f3dddc Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Wed, 27 Nov 2019 16:16:04 +0100
+Subject: [PATCH 20/24] apple/build: fix cross-compilation for x86_64
+
+---
+ extras/package/apple/build.sh | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/extras/package/apple/build.sh b/extras/package/apple/build.sh
+index 5f7f0ed6f5..f35dcd4de0 100755
+--- a/extras/package/apple/build.sh
++++ b/extras/package/apple/build.sh
+@@ -407,11 +407,14 @@ check_tool xcrun
+ # Validate given SDK name
+ validate_sdk_name "$VLC_APPLE_SDK_NAME"
+ 
++# Set triplet (query the compiler for this)
++# FIXME: we hard-code the version number here so HOST and BUILD will not be same
++# which fixes cross-compilation for x86_64
++# note that for 'aarch64', we need to specify it like this here and sanity to 'arm64' afterwards
++readonly VLC_HOST_TRIPLET="${VLC_HOST_ARCH}-apple-darwin18"
++
+ # Validate architecture argument
+ validate_architecture "$VLC_HOST_ARCH"
+-
+-# Set triplet (query the compiler for this)
+-readonly VLC_HOST_TRIPLET="$(${CC:-cc} -arch "$VLC_HOST_ARCH" -dumpmachine)"
+ # Set pseudo-triplet
+ readonly VLC_PSEUDO_TRIPLET="${VLC_HOST_ARCH}-apple-${VLC_HOST_PLATFORM}_${VLC_DEPLOYMENT_TARGET}"
+ # Contrib install dir
+-- 
+2.21.0 (Apple Git-122.2)
+

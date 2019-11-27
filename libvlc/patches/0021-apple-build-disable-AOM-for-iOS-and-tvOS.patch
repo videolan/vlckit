@@ -1,0 +1,32 @@
+From 00c763e87101f2e804c2225a03e9ba7ad99af49c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Wed, 27 Nov 2019 17:55:18 +0100
+Subject: [PATCH 21/24] apple/build: disable AOM for iOS and tvOS
+
+---
+ extras/package/apple/build.conf | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/extras/package/apple/build.conf b/extras/package/apple/build.conf
+index d9ba5c9436..4b53fb9aaf 100644
+--- a/extras/package/apple/build.conf
++++ b/extras/package/apple/build.conf
+@@ -82,11 +82,14 @@ export VLC_CONTRIB_OPTIONS_MACOSX=(
+ )
+ 
+ # Additional contrib bootstrap options for iOS
+-export VLC_CONTRIB_OPTIONS_IOS=()
++export VLC_CONTRIB_OPTIONS_IOS=(
++    --disable-aom
++)
+ 
+ # Additional contrib bootstrap options for tvOS
+ export VLC_CONTRIB_OPTIONS_TVOS=(
+     --disable-libarchive
++    --disable-aom
+ )
+ 
+ #
+-- 
+2.21.0 (Apple Git-122.2)
+

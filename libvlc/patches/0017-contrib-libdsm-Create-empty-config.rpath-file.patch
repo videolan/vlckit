@@ -1,0 +1,28 @@
+From 527a2638d8f80a2ed384ddaedac24014ee4d4763 Mon Sep 17 00:00:00 2001
+From: Marvin Scholz <epirat07@gmail.com>
+Date: Wed, 19 Jun 2019 13:38:26 +0200
+Subject: [PATCH 17/24] contrib: libdsm: Create empty config.rpath file
+
+Workaround for autoreconf failure:
+configure.ac:38: error: required file './config.rpath' not found
+
+This is apparently a bug in some versions of autotools.
+---
+ contrib/src/libdsm/rules.mak | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/contrib/src/libdsm/rules.mak b/contrib/src/libdsm/rules.mak
+index d2a413874d..33964b9b41 100644
+--- a/contrib/src/libdsm/rules.mak
++++ b/contrib/src/libdsm/rules.mak
+@@ -28,6 +28,7 @@ DEPS_libdsm += pthreads $(DEPS_pthreads)
+ endif
+ 
+ .libdsm: libdsm
++	cd $< && touch "config.rpath"
+ 	$(RECONF)
+ 	cd $< && $(HOSTVARS_PIC) ./configure --disable-programs $(LIBDSM_CONF)
+ 	cd $< && $(MAKE)
+-- 
+2.21.0 (Apple Git-122.2)
+

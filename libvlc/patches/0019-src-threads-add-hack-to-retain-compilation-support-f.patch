@@ -1,0 +1,30 @@
+From d1b2834caff3d17dd86bbec015ac9870f4480bbc Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Wed, 27 Nov 2019 14:39:44 +0100
+Subject: [PATCH 19/24] src/threads: add hack to retain compilation support for
+ i386
+
+This leads to potentially undefined behavior when using the 32bit iOS Simulator. This code path never ends-up in production.
+---
+ src/misc/threads.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/misc/threads.c b/src/misc/threads.c
+index d267cc7344..f75031dd0e 100644
+--- a/src/misc/threads.c
++++ b/src/misc/threads.c
+@@ -117,7 +117,11 @@ static bool vlc_lock_marked(const void *lock, void **rootp)
+     return tfind(mark, rootp, vlc_lock_mark_cmp) != NULL;
+ }
+ 
++#ifdef __i386__
++static void *vlc_mutex_marks = NULL;
++#else
+ static _Thread_local void *vlc_mutex_marks = NULL;
++#endif
+ 
+ void vlc_mutex_mark(const vlc_mutex_t *mutex)
+ {
+-- 
+2.21.0 (Apple Git-122.2)
+
