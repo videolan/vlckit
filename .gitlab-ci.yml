@@ -1,6 +1,9 @@
 stages:
     - nightly
 
+variables:
+    VLC_VERSION: "3.0"
+
 ## Shared configuration
 
 .nightly-job-base:
@@ -9,43 +12,41 @@ stages:
     stage: nightly
     only:
         - schedules
+    artifacts:
+        paths:
+            - ./*.tar.xz
 
-.build-base:
+.nightly-build-base:
     script:
         - ./buildMobileVLCKit.sh -${BUILD_PARAM}
         - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
+        - mv ${JOB_NAME}-*.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
 
 ## Nightly builds
 
 MobileVLCKit:
     extends:
         - .nightly-job-base
-        - .build-base
+        - .nightly-build-base
     variables:
         BUILD_PARAM: "vf"
-        PACKAGING_PARAM: "m"
-    artifacts:
-        paths:
-            - vlckit/MobileVLCKit/
+        PACKAGING_PARAM: "vm"
+        JOB_NAME: "MobileVLCKit"
 
 TVVLCKit:
     extends:
         - .nightly-job-base
-        - .build-base
+        - .nightly-build-base
     variables:
         BUILD_PARAM: "vft"
-        PACKAGING_PARAM: "t"
-    artifacts:
-        paths:
-            - vlckit/TVVLCKit/
+        PACKAGING_PARAM: "vt"
+        JOB_NAME: "TVVLCKit"
 
 VLCKit:
     extends:
         - .nightly-job-base
-        - .build-base
+        - .nightly-build-base
     variables:
         BUILD_PARAM: "vx"
-        PACKAGING_PARAM: "z"
-    artifacts:
-        paths:
-            - vlckit/VLCKit/
+        PACKAGING_PARAM: "v"
+        JOB_NAME: "VLCKit"
