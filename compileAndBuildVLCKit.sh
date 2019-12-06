@@ -194,6 +194,27 @@ buildMobileKit() {
                 echo "*** Framework ARCH: ${FARCH} is invalid ***"
                 exit 1
             fi
+            if (is_simulator_arch $FARCH);then
+                if [ "$TVOS" = "yes" ]; then
+                    PLATFORM="appletvsimulator"
+                fi
+                if [ "$IOS" = "yes" ]; then
+                    PLATFORM="iphonesimulator"
+                fi
+                if [ "$MACOS" = "yes" ]; then
+                    PLATFORM="macosx"
+                fi
+            else
+                if [ "$TVOS" = "yes" ]; then
+                    PLATFORM="appletvos"
+                fi
+                if [ "$IOS" = "yes" ]; then
+                    PLATFORM="iphoneos"
+                fi
+                if [ "$MACOS" = "yes" ]; then
+                    PLATFORM="macosx"
+                fi
+            fi
 
             buildLibVLC $FARCH "$PLATFORM"
         fi
