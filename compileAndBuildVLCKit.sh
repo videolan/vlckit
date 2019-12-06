@@ -395,7 +395,7 @@ build_universal_static_lib() {
         done
         spopd
 
-        spushd ${VLCROOT}/build-"$OSSTYLE"simulator-x86_64/contrib/x86_64-"$OSSTYLE"simulator/lib
+        spushd ${VLCROOT}/build-"$OSSTYLE"simulator-x86_64/contrib/x86_64-"$OSSTYLE"simulator${SDK_VERSION}/lib
         for i in `ls *.a`
         do
             CONTRIBLIBS="$i $CONTRIBLIBS"
