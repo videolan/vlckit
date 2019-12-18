@@ -111,7 +111,6 @@ static VLCLibrary * sharedLibrary = nil;
         vlcParams = @[@"--no-color",
                       @"--no-osd",
                       @"--no-video-title-show",
-                      @"--no-stats",
                       @"--no-snapshot-preview",
                       @"--http-reconnect",
 #ifndef NOSCARYCODECS
