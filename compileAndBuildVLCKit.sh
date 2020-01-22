@@ -43,7 +43,7 @@ OPTIONS
    -x       Build for macOS / Mac OS X
    -y       Build universal static libraries
    -b       Enable bitcode
-   -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
+   -a       Build framework for specific arch (all|i386|x86_64|armv7|aarch64)
    -e       External VLC source path
 EOF
 }
@@ -109,7 +109,7 @@ buildxcodeproj()
             if [ "$PLATFORM" = "iphonesimulator" ]; then
                 architectures="i386 x86_64"
             else
-                architectures="armv7 armv7s arm64"
+                architectures="armv7 arm64"
             fi
         fi
     else
@@ -184,13 +184,12 @@ buildMobileKit() {
                     buildLibVLC "x86_64" $PLATFORM
                 else
                     buildLibVLC "armv7" $PLATFORM
-                    buildLibVLC "armv7s" $PLATFORM
                     buildLibVLC "aarch64" $PLATFORM
                 fi
             fi
         else
             if [ "$FARCH" != "x86_64" -a "$FARCH" != "aarch64" -a "$FARCH" != "i386" \
-              -a "$FARCH" != "armv7" -a "$FARCH" != "armv7s" ];then
+              -a "$FARCH" != "armv7" ];then
                 echo "*** Framework ARCH: ${FARCH} is invalid ***"
                 exit 1
             fi
@@ -252,10 +251,6 @@ build_universal_static_lib() {
     if [ -d ${VLCROOT}/build-${OSSTYLE}os-armv7 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-armv7/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-armv7/static-lib/static-module-list.c"
-    fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}os-armv7s ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-armv7s/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-armv7s/static-lib/static-module-list.c"
     fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-x86_64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-x86_64/${VLCSTATICLIBRARYNAME}"
