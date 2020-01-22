@@ -506,7 +506,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return @{
         @"demuxBitrate" : @(p_stats.f_demux_bitrate),
         @"inputBitrate" : @(p_stats.f_input_bitrate),
-        @"sendBitrate" : @(p_stats.f_send_bitrate),
         @"decodedAudio" : @(p_stats.i_decoded_audio),
         @"decodedVideo" : @(p_stats.i_decoded_video),
         @"demuxCorrupted" : @(p_stats.i_demux_corrupted),
@@ -516,9 +515,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         @"lostAbuffers" : @(p_stats.i_lost_abuffers),
         @"lostPictures" : @(p_stats.i_lost_pictures),
         @"playedAbuffers" : @(p_stats.i_played_abuffers),
-        @"readBytes" : @(p_stats.i_read_bytes),
-        @"sentBytes" : @(p_stats.i_sent_bytes),
-        @"sentPackets" : @(p_stats.i_sent_packets)
+        @"readBytes" : @(p_stats.i_read_bytes)
     };
 }
 
@@ -630,39 +627,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     libvlc_media_get_stats(p_md, &p_stats);
 
     return p_stats.i_lost_abuffers;
-}
-
-- (NSInteger)numberOfSentPackets
-{
-    if (!p_md)
-        return 0;
-
-    libvlc_media_stats_t p_stats;
-    libvlc_media_get_stats(p_md, &p_stats);
-
-    return p_stats.i_sent_packets;
-}
-
-- (NSInteger)numberOfSentBytes
-{
-    if (!p_md)
-        return 0;
-
-    libvlc_media_stats_t p_stats;
-    libvlc_media_get_stats(p_md, &p_stats);
-
-    return p_stats.i_sent_bytes;
-}
-
-- (float)streamOutputBitrate
-{
-    if (!p_md)
-        return .0;
-
-    libvlc_media_stats_t p_stats;
-    libvlc_media_get_stats(p_md, &p_stats);
-
-    return p_stats.f_send_bitrate;
 }
 
 - (NSInteger)numberOfCorruptedDataPackets

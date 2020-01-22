@@ -634,21 +634,6 @@ typedef int VLCMediaParsingOptions;
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfLostAudioBuffers;
 
 /**
- * returns the total number of packets sent during the current media session
- * \return a NSInteger with the total number of sent packets
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSentPackets;
-/**
- * returns the total number of raw bytes sent during the current media session
- * \return a NSInteger with the total number of sent bytes
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfSentBytes;
-/**
- * returns the current bitrate of sent bytes
- * \return a float of the current bitrate of sent bits
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) float streamOutputBitrate;
-/**
  * returns the total number of corrupted data packets during current sout session
  * \note value is 0 on non-stream-output operations
  * \return a NSInteger with the total number of corrupted data packets
