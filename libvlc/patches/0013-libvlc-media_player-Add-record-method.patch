@@ -1,7 +1,7 @@
-From 0845d7059776b05b2d769d7361fafdb0ab5183b7 Mon Sep 17 00:00:00 2001
+From e2920fa71793d8924c133df2fda7392d14652a98 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 13/24] libvlc: media_player: Add record method
+Subject: [PATCH 13/18] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -71,5 +71,5 @@ index ec56b4bc6a..58eec27ae9 100644
  
  /* make sure surface structures from libvlc can be passed as such to vlc
 -- 
-2.21.0 (Apple Git-122.2)
+2.21.1 (Apple Git-122.3)
 

@@ -1,7 +1,7 @@
-From fbdf8fa1a68f84d5c85cd59c2213307ef5664be8 Mon Sep 17 00:00:00 2001
+From dde887cb110407b671a163bef4e9f3b1e0598cf5 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 12/24] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 12/18] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
@@ -48,7 +48,7 @@ index e6b10e5c02..4275a7ad00 100644
  {
      int ret = 0;
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index 0e9efa567d..17fcbdfcbc 100644
+index fb5b32a5a4..2f7cb3bb85 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
 @@ -48,6 +48,7 @@ block_Realloc
@@ -60,5 +60,5 @@ index 0e9efa567d..17fcbdfcbc 100644
  config_ChainDestroy
  config_ChainDuplicate
 -- 
-2.21.0 (Apple Git-122.2)
+2.21.1 (Apple Git-122.3)
 

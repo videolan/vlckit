@@ -1,7 +1,7 @@
-From 90114e902ffc6858d0894f58cc48e029752977e0 Mon Sep 17 00:00:00 2001
+From 541cd9b67aa1e2eba554d304ac2c5d2057307d9f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 18 Dec 2014 22:14:55 +0100
-Subject: [PATCH 03/24] arm_neon: work-around libtool issue
+Subject: [PATCH 03/18] arm_neon: work-around libtool issue
 
 ---
  modules/arm_neon/Makefile.am | 2 ++
@@ -18,5 +18,5 @@ index 10f5c15d7c..0406ded7eb 100644
  
  libchroma_yuv_neon_plugin_la_SOURCES = \
 -- 
-2.21.0 (Apple Git-122.2)
+2.21.1 (Apple Git-122.3)
 

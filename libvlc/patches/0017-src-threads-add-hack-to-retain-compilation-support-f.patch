@@ -1,7 +1,7 @@
-From d1b2834caff3d17dd86bbec015ac9870f4480bbc Mon Sep 17 00:00:00 2001
+From 4a03b0d4b159d7c7f7e131e0c800438f4e23370d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 27 Nov 2019 14:39:44 +0100
-Subject: [PATCH 19/24] src/threads: add hack to retain compilation support for
+Subject: [PATCH 17/18] src/threads: add hack to retain compilation support for
  i386
 
 This leads to potentially undefined behavior when using the 32bit iOS Simulator. This code path never ends-up in production.
@@ -26,5 +26,5 @@ index d267cc7344..f75031dd0e 100644
  void vlc_mutex_mark(const vlc_mutex_t *mutex)
  {
 -- 
-2.21.0 (Apple Git-122.2)
+2.21.1 (Apple Git-122.3)
 

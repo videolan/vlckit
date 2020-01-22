@@ -1,7 +1,7 @@
-From a108b59ea30b2f2abbb2469aadcce7ca94bb3a72 Mon Sep 17 00:00:00 2001
+From 418a5d18571040627b7dfefb444ce7223bdffe9b Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
-Subject: [PATCH 14/24] libvlc: events: Add callbacks for record
+Subject: [PATCH 14/18] libvlc: events: Add callbacks for record
 
 ---
  include/vlc/libvlc_events.h |  9 +++++++++
@@ -84,5 +84,5 @@ index 58eec27ae9..4b41ce5e13 100644
  
  static const struct vlc_player_aout_cbs vlc_player_aout_cbs = {
 -- 
-2.21.0 (Apple Git-122.2)
+2.21.1 (Apple Git-122.3)
 
