@@ -1,17 +1,17 @@
-From 2863d696321d0e7d742d5c92d3de19fa52c58231 Mon Sep 17 00:00:00 2001
+From 17e2fda214de9c912b876a5bc59c3f879ef1e7e2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 22 Jan 2020 17:59:47 +0100
 Subject: [PATCH 18/18] contrib/gpg-error: remove appleOS hacks
 
 ---
- contrib/src/gpg-error/rules.mak | 15 ---------------
- 1 file changed, 15 deletions(-)
+ contrib/src/gpg-error/rules.mak | 13 -------------
+ 1 file changed, 13 deletions(-)
 
 diff --git a/contrib/src/gpg-error/rules.mak b/contrib/src/gpg-error/rules.mak
-index b36cc57344..d08ac94384 100644
+index badf00cf57..d08ac94384 100644
 --- a/contrib/src/gpg-error/rules.mak
 +++ b/contrib/src/gpg-error/rules.mak
-@@ -32,21 +32,6 @@ else
+@@ -32,19 +32,6 @@ else
  	cp $@/src/syscfg/lock-obj-pub.arm-unknown-linux-androideabi.h $@/src/syscfg/lock-obj-pub.linux-android.h
  endif
  endif
@@ -24,9 +24,7 @@ index b36cc57344..d08ac94384 100644
 -	cp $@/src/syscfg/lock-obj-pub.aarch64-apple-darwin.h $@/src/syscfg/lock-obj-pub.$(HOST).h
 -endif
 -else
--ifneq ($(ARCH),x86_64)
 -	cp $@/src/syscfg/lock-obj-pub.x86_64-apple-darwin.h $@/src/syscfg/lock-obj-pub.$(HOST).h
--endif
 -endif
 -endif
 -endif
