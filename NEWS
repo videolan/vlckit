@@ -1,8 +1,127 @@
-
 Version 4.0.0:
 --------------
+- Remove support for ARMv7s, use the regular ARMv7 slice instead
+- Removed all API deprecated in version 3
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
 - Use NSDateComponents API for VLCTime.verboseStringValue
+
+Version 3.3.9:
+--------------
+- Bump dav1d to 0.5.1
+- Fix debug logging level
+- Fix iOS 9 no audio during playback
+
+Version 3.3.8:
+--------------
+- Compatibility fix with iOS/tvOS 13 when distributing on the App Store
+
+Version 3.3.7:
+--------------
+- VLCMedia:
+    - Add helper method to easily add option
+    - Add method to stop parsing
+
+- codec:
+    - avcodec: really drain video
+    - webvtt: fix node reparenting on closing tags
+
+- demux:
+    - ttml: recreate entities
+
+    - mp4:
+        - fix non packetized ms55
+        - fix quicktime sample size regression for twos/stwo
+
+    - h26x:
+        - fix frame duration
+        - use fmtout rate as date rate
+
+    - adaptive:
+        - store timeline directly
+        - inherit template defaults
+        - missing flags propagation using MimeDemuxer
+
+- packetizer:
+    - flac:
+        - check next header
+        - return a block even with invalid pts
+
+    - hevc:
+        - add secondary drain
+        - set fmtout rate when unknown
+
+    - h264:
+        - handle secondary drain
+        - do not override fmtin frame rate
+        - only use date_t for length computation
+
+    - mpegvideo: perform secondary drain
+
+- audiounit_ios: add support for > 48kHz sample rate
+
+- coreaudio:
+    - start deferred
+    - update the play date until the first rendering
+    - use the dev latency for the deferred calculation
+
+- vaapi: add YUVJ420P pixfmt
+- mp4: meta: fix format-truncation warning
+
+- access: add smb2 module
+
+- smb2/dsm: avoid to request the dialog two times
+- dsm:
+    - query credentials only when needed
+    - add "smb-force-v1" option
+    - specify the v1 protocol in the dialog credential title
+
+contrib: add libsmb2
+
+Version 3.3.6:
+--------------
+- Fix abort from dealloc when VLCMedia init failed
+- Fix SMB 2 not storing credentials
+
+Version 3.3.5:
+--------------
+- access: fix smb2/dsm conflicts
+- directsound: fix uninitialized var usage on error path
+- lib: media: fix media not being preparsed after a failure
+- packetizer: flac: don't increment invalid date
+- videotoolbox: don't reset the vout when closing
+
+Version 3.3.4:
+--------------
+- Fix SMB 2 possible null-deref when stopping a session
+
+- vout: fix low framerate stuttering
+- transcode: video: patch missing chroma in decoder format ouput
+- access: dvdread: fix null dereference on vts failure
+
+- demux:
+    - mp4: fix potential endless loop
+    - avi: simplify strf handling
+    - mkv: remove elements from vector when we delete them
+    - mkv: fix vector erase in destructor
+    - mkv: do not use the file if there's no usable stream/segment
+
+- faad: Fix read buffer overflow
+- ogg: Fix potential integer overflow
+- chromecast: transcode audio to MP3 320 kbps instead of 96 kbps
+
+- Bump libelml requirement to 1.3.6
+- Bump dav1d to 0.4.0
+- Bump libmodplug to 0.8.9.0
+
+Version 3.3.3:
+--------------
+- Fix airplay AV sync
+- Fix bluetooth audio drop
+- SMB2: Add support for NTLM anonymous login and port specification
+- Add MediaListPlayerDelegate callbacks:
+	- (void)mediaListPlayerFinishedPlayback:(VLCMediaListPlayer *)player;
+	- (void)mediaListPlayer:(VLCMediaListPlayer *)player;
+	- (void)mediaListPlayerStopped:(VLCMediaListPlayer *)player;
 
 Version 3.3.2:
 --------------
