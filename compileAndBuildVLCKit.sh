@@ -24,7 +24,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="6e223d67a" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="b932973a9" # libvlc hash that this version of VLCKit is build on
 
 usage()
 {
@@ -36,7 +36,7 @@ OPTIONS
    -v       Be more verbose
    -s       Build for simulator
    -f       Build framework for device and simulator
-   -d       Disable Debug
+   -r       Disable Debug for Release
    -n       Skip script steps requiring network interaction
    -l       Skip libvlc compilation
    -t       Build for tvOS
@@ -221,53 +221,6 @@ buildMobileKit() {
     fi
 }
 
-doVLCLipo() {
-    FILEPATH="$1"
-    FILE="$2"
-    PLUGIN="$3"
-    OSSTYLE="$4"
-    files=""
-
-    info "...$FILEPATH$FILE"
-
-    for i in $DEVICEARCHS
-    do
-        actual_arch=`get_actual_arch $i`
-        files="build-"$OSSTYLE"os-$actual_arch/vlc-"$OSSTYLE"os${SDK_VERSION}-$actual_arch/lib/$FILEPATH$FILE $files"
-    done
-
-    for i in $SIMULATORARCHS
-    do
-        actual_arch=`get_actual_arch $i`
-        files="build-"$OSSTYLE"simulator-$actual_arch/vlc-"$OSSTYLE"simulator${SDK_VERSION}-$actual_arch/lib/$FILEPATH$FILE $files"
-    done
-
-    if [ "$PLUGIN" != "no" ]; then
-        lipo $files -create -output install-$OSSTYLE/plugins/$FILE
-    else
-        lipo $files -create -output install-$OSSTYLE/core/$FILE
-    fi
-}
-
-doContribLipo() {
-    LIBNAME="$1"
-    OSSTYLE="$2"
-    files=""
-
-    info "...$LIBNAME"
-
-    for i in $DEVICEARCHS
-    do
-        files="build-"$OSSTYLE"os-$i/contrib/$i-"$OSSTYLE"os/lib/$LIBNAME $files"
-    done
-    for i in $SIMULATORARCHS
-    do
-        files="build-"$OSSTYLE"simulator-$i/contrib/$i-"$OSSTYLE"simulator/lib/$LIBNAME $files"
-    done
-
-    lipo $files -create -output install-$OSSTYLE/contrib/$LIBNAME
-}
-
 get_symbol()
 {
     echo "$1" | grep vlc_entry_$2|cut -d" " -f 3|sed 's/_vlc/vlc/'
@@ -276,241 +229,57 @@ get_symbol()
 build_universal_static_lib() {
     PROJECT_DIR=`pwd`
     OSSTYLE="$1"
-    info "building universal static libs for OS style $OSSTYLE"
+    info "building universal static libs for $OSSTYLE"
 
     # remove old module list
     rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
     touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-    if [ "$OSSTYLE" != "MacOSX" ]; then
-        spushd ${VLCROOT}
-        rm -rf install-$OSSTYLE
-        mkdir install-$OSSTYLE
-        mkdir install-$OSSTYLE/core
-        mkdir install-$OSSTYLE/contrib
-        mkdir install-$OSSTYLE/plugins
-        spopd # vlc
-    else
-        spushd ${VLCROOT}/install-$OSSTYLE
-        rm -rf core
-        rm -rf contrib
-        rm -rf plugins
-        ln -s x86_64/lib core
-        ln -s x86_64/contribs/lib contrib
-        ln -s x86_64/lib/vlc/plugins plugins
-        spopd # vlc
+    spushd ${VLCROOT}
+    rm -rf install-$OSSTYLE
+    mkdir install-$OSSTYLE
+    spopd # vlc
+
+    VLCSTATICLIBS=""
+    VLCSTATICLIBRARYNAME="static-lib/libvlc-full-static.a"
+    VLCSTATICMODULELIST=""
+
+    # brute-force test the available architectures we could lipo
+    if [ -d ${VLCROOT}/build-${OSSTYLE}os-arm64 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-arm64/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-arm64/static-lib/static-module-list.c"
     fi
-
-    VLCMODULES=""
-    VLCMODULECATEGORYNAMES=""
-    VLCNEONMODULES=""
-    SIMULATORARCHS=""
-    CONTRIBLIBS=""
-    DEVICEARCHS=""
-
-    arch="aarch64"
-    if [ "$FARCH" != "all" ];then
-        arch="$FARCH"
-    elif [ "$BUILD_SIMULATOR" = "yes" ]; then
-        arch="x86_64"
+    if [ -d ${VLCROOT}/build-${OSSTYLE}os-armv7 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-armv7/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-armv7/static-lib/static-module-list.c"
     fi
-
-    actual_arch=`get_actual_arch $arch`
-
-    # arm64 got the lowest number of modules, so we iterate here
-    if [ -d ${VLCROOT}/build-"$OSSTYLE"os-arm64 ];then
-        if [ "$OSSTYLE" = "iphone" ];then
-            if [ "$FARCH" = "all" ];then
-                DEVICEARCHS="arm64 armv7 armv7s"
-            fi
-        fi
-        if [ "$OSSTYLE" = "appletv" ];then
-            if [ "$FARCH" = "all" ];then
-                DEVICEARCHS="arm64"
-            fi
-        fi
-        VLCMODULES=""
-        CONTRIBLIBS=""
-
-        spushd ${VLCROOT}/build-"$OSSTYLE"os-arm64/vlc-"$OSSTYLE"os${SDK_VERSION}-arm64/lib/vlc/plugins/
-        for f in `ls -F`
-        do
-            VLCMODULECATEGORYNAMES="$f $VLCMODULECATEGORYNAMES"
-            for i in `ls $f*.a`
-            do
-                VLCMODULES="$i $VLCMODULES"
-            done
-        done
-        spopd
-
-        spushd ${VLCROOT}/build-"$OSSTYLE"os-arm64/contrib/arm64-"$OSSTYLE"os/lib
-        for i in `ls *.a`
-        do
-            CONTRIBLIBS="$i $CONTRIBLIBS"
-        done
-        spopd
+    if [ -d ${VLCROOT}/build-${OSSTYLE}os-armv7s ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-armv7s/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-armv7s/static-lib/static-module-list.c"
     fi
-
-    if [ "$OSSTYLE" != "appletv" ];then
-        # if we have an armv7(s) slice, we should search for and include NEON modules
-        if [ -d ${VLCROOT}/build-"$OSSTYLE"os-armv7 ];then
-            spushd ${VLCROOT}/build-"$OSSTYLE"os-armv7/vlc-"$OSSTYLE"os${SDK_VERSION}-armv7/lib/vlc/plugins/
-            for f in `ls -F`
-            do
-                for i in `ls $f*.a | grep neon`
-                do
-                    VLCNEONMODULES="$i $VLCNEONMODULES"
-                done
-            done
-            spopd
-        fi
+    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-x86_64 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-x86_64/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-x86_64/static-lib/static-module-list.c"
     fi
-
-    # x86_64 got the lowest number of modules, so we iterate here
-    if [ -d ${VLCROOT}/build-"$OSSTYLE"simulator-x86_64 ];then
-        if [ "$OSSTYLE" = "iphone" ];then
-            if [ "$FARCH" = "all" ];then
-                SIMULATORARCHS="x86_64 i386"
-            fi
-        fi
-        if [ "$OSSTYLE" = "appletv" ];then
-            if [ "$FARCH" = "all" ];then
-                DEVICEARCHS="x86_64"
-            fi
-        fi
-        VLCMODULES=""
-        CONTRIBLIBS=""
-        VLCMODULECATEGORYNAMES=""
-
-        spushd ${VLCROOT}/build-"$OSSTYLE"simulator-x86_64/vlc-"$OSSTYLE"simulator${SDK_VERSION}-x86_64/lib/vlc/plugins/
-        for f in `ls -F`
-        do
-            VLCMODULECATEGORYNAMES="$f $VLCMODULECATEGORYNAMES"
-            for i in `ls $f*.a`
-            do
-                VLCMODULES="$i $VLCMODULES"
-            done
-        done
-        spopd
-
-        spushd ${VLCROOT}/build-"$OSSTYLE"simulator-x86_64/contrib/x86_64-"$OSSTYLE"simulator${SDK_VERSION}/lib
-        for i in `ls *.a`
-        do
-            CONTRIBLIBS="$i $CONTRIBLIBS"
-        done
-        spopd
+    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-i386 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-i386/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-i386/static-lib/static-module-list.c"
     fi
-
-    if [ "$OSSTYLE" = "MacOSX" ]; then
-        if [ -d ${VLCROOT}/install-"$OSSTYLE" ];then
-            spushd ${VLCROOT}/install-"$OSSTYLE"
-                echo `pwd`
-                echo "macOS: $arch"
-                spushd $arch/lib/vlc/plugins
-                    for i in `ls *.a`
-                    do
-                        VLCMODULES="$i $VLCMODULES"
-                    done
-                spopd # $actual_arch/lib/vlc/plugins
-            spopd # vlc-install-"$OSSTYLE"
-        fi
+    if [ -d ${VLCROOT}/build-${OSSTYLE}-x86_64 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-x86_64/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-x86_64/static-lib/static-module-list.c"
     fi
 
     spushd ${VLCROOT}
 
-    # add missing destination folders based on module category names
-    for i in $VLCMODULECATEGORYNAMES
-    do
-        mkdir install-$OSSTYLE/plugins/$i
-    done
+    lipo $VLCSTATICLIBS -create -output install-$OSSTYLE/libvlc-full-static.a
 
-    # lipo all the vlc libraries and its plugins
-    if [ "$OSSTYLE" != "MacOSX" ]; then
-        doVLCLipo "" "libvlc.a" "no" $OSSTYLE
-        doVLCLipo "" "libvlccore.a" "no" $OSSTYLE
-        doVLCLipo "vlc/" "libcompat.a" "no" $OSSTYLE
-        for i in $VLCMODULES
-        do
-            doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
-        done
+    cp $VLCSTATICMODULELIST $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
 
-        # lipo contrib libraries
-        for i in $CONTRIBLIBS
-        do
-            doContribLipo $i $OSSTYLE
-        done
-
-        if [ "$OSSTYLE" != "AppleTV" ]; then
-            # lipo the remaining NEON plugins
-            DEVICEARCHS=""
-            for i in armv7 armv7s; do
-                local iarch="`get_arch $i`"
-                if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
-                    DEVICEARCHS="$DEVICEARCHS $iarch"
-                fi
-            done
-            SIMULATORARCHS=""
-            for i in $VLCNEONMODULES
-            do
-                doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
-            done
-        fi
-    fi
-    spopd
-
-    # create module list
-    info "creating module list"
-    echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
-
-    # arm64 got the lowest number of modules
-    BUILTINS="const void *vlc_static_modules[] = {\n"; \
-
-    LDFLAGS=""
-    DEFINITIONS=""
-
-    # add contrib libraries to LDFLAGS
-    for file in $CONTRIBLIBS
-    do
-        LDFLAGS+="${VLCROOT}/install-$OSSTYLE/contrib/$file "
-    done
-
-    for file in $VLCMODULES
-    do
-        symbols=$(nm -g -arch $actual_arch ${VLCROOT}/install-$OSSTYLE/plugins/$file)
-        entryname=$(get_symbol "$symbols" _)
-        DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
-        BUILTINS+=" $entryname,\n"
-        LDFLAGS+="${VLCROOT}/install-$OSSTYLE/plugins/$file "
-        info "...$entryname"
-    done;
-
-    # we only have ARM NEON modules for 32bit so this is limited to iOS
-    if [ "$OSSTYLE" = "iphone" ]; then
-        BUILTINS+="#ifdef __arm__\n"
-        DEFINITIONS+="#ifdef __arm__\n"
-        for file in $VLCNEONMODULES
-        do
-            symbols=$(nm -g -arch $actual_arch ${VLCROOT}/install-$OSSTYLE/plugins/$file)
-            entryname=$(get_symbol "$symbols" _)
-            DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
-            BUILTINS+=" $entryname,\n"
-            LDFLAGS+="${VLCROOT}/install-$OSSTYLE/plugins/$file "
-            info "...$entryname"
-        done;
-        BUILTINS+="#endif\n"
-        DEFINITIONS+="#endif\n"
-    fi
-
-    BUILTINS="$BUILTINS NULL\n};\n"
-
-    echo "$DEFINITIONS\n$BUILTINS" >> $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    echo "VLC_PLUGINS_LDFLAGS=$LDFLAGS" >> $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
+    spopd # VLCROOT
 }
 
-while getopts "hvsfbdxntlk:a:e:" OPTION
+while getopts "hvsfbrxntlk:a:e:" OPTION
 do
      case $OPTION in
          h)
@@ -530,7 +299,7 @@ do
              BUILD_SIMULATOR=yes
              BUILD_STATIC_FRAMEWORK=yes
              ;;
-         d)  CONFIGURATION="Release"
+         r)  CONFIGURATION="Release"
              DISABLEDEBUG=yes
              ;;
          n)
@@ -747,7 +516,8 @@ fi
 fi
 if [ "$BUILD_DYNAMIC_FRAMEWORK" != "no" ]; then
 if [ "$MACOS" = "yes" ]; then
-    info "Building VLCKit.framework"
+    CURRENT_DIR=`pwd`
+    info "Building VLCKit.framework in ${CURRENT_DIR}"
 
     buildxcodeproj VLCKit "VLCKit" "macosx"
 

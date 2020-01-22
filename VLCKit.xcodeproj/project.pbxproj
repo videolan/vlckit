@@ -181,7 +181,6 @@
 		7D34F5611C90A96C008A39F0 /* VLCDialogProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCDialogProvider.h; path = Public/VLCDialogProvider.h; sourceTree = "<group>"; };
 		7D34F5641C90A98B008A39F0 /* VLCCustomDialogProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCustomDialogProvider.m; sourceTree = "<group>"; };
 		7D34F5651C90A98B008A39F0 /* VLCDialogProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCDialogProvider.m; sourceTree = "<group>"; };
-		7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "vlc-plugins-MacOSX.xcconfig"; path = "Resources/MobileVLCKit/vlc-plugins-MacOSX.xcconfig"; sourceTree = "<group>"; };
 		7DC28D4120194043002D05C4 /* libStaticLibVLC.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLibVLC.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DC28D4A2019406B002D05C4 /* StaticLibVLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticLibVLC.m; path = Sources/StaticLibVLC.m; sourceTree = SOURCE_ROOT; };
 		7DC28D7F20194117002D05C4 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -386,7 +385,6 @@
 			children = (
 				32DBCF5E0370ADEE00C91783 /* Prefix.pch */,
 				CA08590320F7156100B3AB69 /* macros.h */,
-				7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -923,7 +921,6 @@
 		};
 		7DC28D4820194043002D05C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -958,14 +955,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/vlc/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		7DC28D4920194043002D05C4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -995,14 +991,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/vlc/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
 		7DC28D7D20194117002D05C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1038,7 +1033,6 @@
 		};
 		7DC28D7E20194117002D05C4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;

@@ -449,10 +449,8 @@
 		7A5ECAE511DE8FEF00F66AF3 /* VLCEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEventManager.h; path = Headers/Internal/VLCEventManager.h; sourceTree = "<group>"; };
 		7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobileVLCKit.h; path = Headers/Public/MobileVLCKit.h; sourceTree = "<group>"; };
 		7D1329591BA304D900BE647E /* libTVVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTVVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D1329751BA305D600BE647E /* vlc-plugins-AppleTV.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "vlc-plugins-AppleTV.xcconfig"; path = "Resources/MobileVLCKit/vlc-plugins-AppleTV.xcconfig"; sourceTree = "<group>"; };
 		7D1329761BA306DE00BE647E /* vlc-plugins-iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-iPhone.h"; path = "Resources/MobileVLCKit/vlc-plugins-iPhone.h"; sourceTree = "<group>"; };
 		7D1329771BA306E600BE647E /* vlc-plugins-AppleTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-AppleTV.h"; path = "Resources/MobileVLCKit/vlc-plugins-AppleTV.h"; sourceTree = "<group>"; };
-		7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "vlc-plugins-iPhone.xcconfig"; path = "Resources/MobileVLCKit/vlc-plugins-iPhone.xcconfig"; sourceTree = "<group>"; };
 		7D24C2B51EC0A3390047E700 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		7D24C2B71EC0A3400047E700 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		7D24C2B91EC0A3460047E700 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
@@ -783,9 +781,7 @@
 			children = (
 				3F7CC79721D69D9A0094B074 /* module.modulemap */,
 				CA08590420F7184A00B3AB69 /* macros.h */,
-				7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */,
 				AA747D9E0F9514B9006C5449 /* MobilePrefix.pch */,
-				7D1329751BA305D600BE647E /* vlc-plugins-AppleTV.xcconfig */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -1583,7 +1579,6 @@
 /* Begin XCBuildConfiguration section */
 		1DEB922008733DC00010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
@@ -1603,7 +1598,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
 			name = Release;
@@ -1624,7 +1619,6 @@
 		};
 		7D13295F1BA304D900BE647E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329751BA305D600BE647E /* vlc-plugins-AppleTV.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1658,7 +1652,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -1669,7 +1663,6 @@
 		};
 		7D1329601BA304D900BE647E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329751BA305D600BE647E /* vlc-plugins-AppleTV.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1710,7 +1703,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -1734,7 +1727,6 @@
 		};
 		7D8938941B500013008F2B14 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = (
@@ -1755,7 +1747,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(VLC_PLUGINS_LDFLAGS) $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
 			name = Debug;
@@ -1884,7 +1876,6 @@
 		};
 		7D8939601B500DBC008F2B14 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1914,7 +1905,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -1923,7 +1914,6 @@
 		};
 		7D8939611B500DBC008F2B14 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329791BA3074100BE647E /* vlc-plugins-iPhone.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -1960,7 +1950,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-iPhone/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -2088,7 +2078,6 @@
 		};
 		7DB683CD1C995E9A000C70BE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329751BA305D600BE647E /* vlc-plugins-AppleTV.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -2120,7 +2109,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2131,7 +2120,6 @@
 		};
 		7DB683CE1C995E9A000C70BE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7D1329751BA305D600BE647E /* vlc-plugins-AppleTV.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
@@ -2170,7 +2158,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-AppleTV/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
