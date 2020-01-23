@@ -500,7 +500,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         return -1;
 
     return libvlc_media_player_add_slave(_playerInstance,
-                                         slaveType,
+                                         (libvlc_media_slave_type_t)slaveType,
                                          [[slaveURL absoluteString] UTF8String],
                                          enforceSelection);
 }
@@ -583,7 +583,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)setDeinterlace:(VLCDeinterlace)deinterlace withFilter:(NSString *)name
 {
-    libvlc_video_set_deinterlace(_playerInstance, deinterlace, [name UTF8String]);
+    libvlc_video_set_deinterlace(_playerInstance, (int)deinterlace, [name UTF8String]);
 }
 
 - (BOOL)adjustFilterEnabled
