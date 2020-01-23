@@ -1,7 +1,7 @@
-From 4a03b0d4b159d7c7f7e131e0c800438f4e23370d Mon Sep 17 00:00:00 2001
+From 9f12f8c32ed2c4e8a5483905ca4d4020f9bceba0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 27 Nov 2019 14:39:44 +0100
-Subject: [PATCH 17/18] src/threads: add hack to retain compilation support for
+Subject: [PATCH 17/17] src/threads: add hack to retain compilation support for
  i386
 
 This leads to potentially undefined behavior when using the 32bit iOS Simulator. This code path never ends-up in production.
