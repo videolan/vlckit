@@ -1387,7 +1387,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     [self willChangeValueForKey:@"time"];
     [self willChangeValueForKey:@"remainingTime"];
     _cachedTime = [VLCTime timeWithNumber:newTime];
-    double currentTime = [[_cachedTime numberValue] doubleValue];
+    double currentTime = [[_cachedTime value] doubleValue];
     if (currentTime > 0 && _position > 0.) {
         double remaining = currentTime / _position * (1 - _position);
         _cachedRemainingTime = [VLCTime timeWithNumber:@(-remaining)];
