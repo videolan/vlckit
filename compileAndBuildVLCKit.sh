@@ -24,7 +24,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="bfb245618" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="361ad729d" # libvlc hash that this version of VLCKit is build on
 
 usage()
 {
