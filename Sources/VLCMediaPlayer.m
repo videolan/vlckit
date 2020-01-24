@@ -799,7 +799,10 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (int)numberOfChaptersForTitle:(int)titleIndex
 {
-    return libvlc_media_player_get_chapter_count_for_title(_playerInstance, titleIndex);
+    if (titleIndex >= 0) {
+        return libvlc_media_player_get_chapter_count_for_title(_playerInstance, titleIndex);
+    }
+    return 0;
 }
 
 - (NSArray *)chapterDescriptionsOfTitle:(int)titleIndex
