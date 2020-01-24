@@ -1043,9 +1043,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)stop
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_player_stop_async(_playerInstance);
-    });
+    libvlc_media_player_stop_async(_playerInstance);
 }
 
 - (libvlc_video_viewpoint_t *)viewPoint

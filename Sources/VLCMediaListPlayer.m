@@ -224,9 +224,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 
 - (void)stop
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_list_player_stop_async(instance);
-    });
+    libvlc_media_list_player_stop_async(instance);
 }
 
 - (BOOL)next
