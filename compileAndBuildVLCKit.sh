@@ -24,7 +24,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="0455fc1dd" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="bfb245618" # libvlc hash that this version of VLCKit is build on
 
 usage()
 {
@@ -148,6 +148,11 @@ buildLibVLC() {
     else
         VERBOSEFLAG=""
     fi
+    if [ "$BITCODE" = "yes" ]; then
+        BITCODEFLAG="--enable-bitcode"
+    else
+        BITCODEFLAG=""
+    fi
     info "Compiling ${ARCH} with SDK version ${SDK_VERSION}, platform ${PLATFORM}"
 
     ACTUAL_ARCH=`get_actual_arch $ARCH`
@@ -155,8 +160,8 @@ buildLibVLC() {
 
     mkdir -p ${BUILDDIR}
     spushd ${BUILDDIR}
-    
-    ../extras/package/apple/build.sh --arch=$ARCH --sdk=${PLATFORM}${SDK_VERSION} ${DEBUGFLAG} ${VERBOSEFLAG}
+
+    ../extras/package/apple/build.sh --arch=$ARCH --sdk=${PLATFORM}${SDK_VERSION} ${DEBUGFLAG} ${VERBOSEFLAG} ${BITCODEFLAG}
 
     spopd # builddir
 
