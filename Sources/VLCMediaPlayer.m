@@ -310,10 +310,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)dealloc
 {
-    NSAssert(libvlc_media_player_get_state(_playerInstance) == libvlc_Stopped ||
-             libvlc_media_player_get_state(_playerInstance) == libvlc_NothingSpecial,
-             @"You released the media player before ensuring that it is stopped");
-
     [self unregisterObservers];
     [[VLCEventManager sharedManager] cancelCallToObject:self];
 
@@ -322,9 +318,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     _delegate = nil;
 
     // Clear our drawable as we are going to release it, we don't
-    // want the core to use it from this point. This won't happen as
-    // the media player must be stopped.
+    // want the core to use it from this point.
     libvlc_media_player_set_nsobject(_playerInstance, nil);
+    _drawable = nil;
 
     if (_equalizerInstance) {
         libvlc_media_player_set_equalizer(_playerInstance, NULL);
