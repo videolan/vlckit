@@ -169,7 +169,7 @@ More information can be found under `./compileAndBuildVLCKit.sh -h`.
 
     `cd vlc`
 
-    `git am ../../Resources/MobileVLCKit/patches/*`
+    `git am ../libvlc/patches/*`
 
 3. run `compileAndBuildVLCKit.sh` with the `-n` option.
 
