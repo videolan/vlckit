@@ -77,17 +77,17 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 target '<macOS Target>' do
     platform :macos, '10.9'
-    pod 'VLCKit', '3.3.0'
+    pod 'VLCKit', '~>3.3.0'
 end
 
 target '<iOS Target>' do
     platform :ios, '8.4'
-    pod 'MobileVLCKit', '3.3.0'
+    pod 'MobileVLCKit', '~>3.3.0'
 end
 
 target '<tvOS Target>' do
     platform :tvos, '10.2'
-    pod 'TVVLCKit', '3.3.0'
+    pod 'TVVLCKit', '~>3.3.0'
 end
 ```
 
