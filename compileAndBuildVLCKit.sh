@@ -580,9 +580,6 @@ if [ "$BUILD_SIMULATOR" != "no" ]; then
     buildMobileKit iphonesimulator
 fi
 
-DEVICEARCHS=""
-SIMULATORARCHS=""
-
 if [ "$TVOS" = "yes" ]; then
     build_simulator_static_lib "appletv"
     build_device_static_lib "appletv"
