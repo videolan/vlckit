@@ -626,7 +626,7 @@ if [ "$TVOS" = "yes" ]; then
             spopd
         fi
     fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $FARCH);then
         platform="appletvsimulator"
         buildxcodeproj VLCKit ${platform} "tvOS Simulator"
         dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
@@ -663,7 +663,7 @@ if [ "$IOS" = "yes" ]; then
             spopd
         fi
     fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $FARCH);then
         platform="iphonesimulator"
         buildxcodeproj VLCKit ${platform} "iOS Simulator"
         dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
