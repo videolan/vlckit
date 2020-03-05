@@ -38,6 +38,7 @@ extern NSString * VLCDefaultStreamOutputRTP;
 /**
  * a class allowing you to stream media based on predefined definitions
  */
+OBJC_VISIBLE
 @interface VLCStreamOutput : NSObject
 
 /**

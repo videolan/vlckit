@@ -155,6 +155,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * The player base class needed to do any playback
  */
+OBJC_VISIBLE
 @interface VLCMediaPlayer : NSObject
 
 /**

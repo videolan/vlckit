@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  * Currently, the framework does not support multiple instances of VLCLibrary.
  * Furthermore, you cannot destroy any instance of VLCLibrary; this is done automatically by the dynamic link loader.
  */
+OBJC_VISIBLE
 @interface VLCLibrary : NSObject
 
 /**

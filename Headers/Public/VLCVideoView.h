@@ -28,6 +28,7 @@
 /**
  * a custom view suitable for video rendering in AppKit environments
  */
+OBJC_VISIBLE
 @interface VLCVideoView : NSView
 
 /* Properties */

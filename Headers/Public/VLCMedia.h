@@ -109,6 +109,7 @@ typedef NS_ENUM(NSInteger, VLCMediaState) {
  * \see VLCMediaPlayer
  * \see VLCMediaList
  */
+OBJC_VISIBLE
 @interface VLCMedia : NSObject
 
 /* Factories */

@@ -27,6 +27,7 @@
 /**
  * a custom layer for rendering video in a CoreAnimation environment
  */
+OBJC_VISIBLE
 @interface VLCVideoLayer : CALayer
 
 /**

@@ -49,6 +49,7 @@ extern NSString *const VLCMediaDiscovererCategory;
  * VLCMediaDiscoverer
  */
 
+OBJC_VISIBLE
 @interface VLCMediaDiscoverer : NSObject
 
 /**

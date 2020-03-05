@@ -64,6 +64,7 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * VLCMediaList
  */
+OBJC_VISIBLE
 @interface VLCMediaList : NSObject
 
 /**

@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Provides an object to convert a subtitle file and moviefile into one.
  */
+OBJC_VISIBLE
 @interface VLCTranscoder: NSObject
 
 /**

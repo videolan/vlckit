@@ -33,6 +33,7 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 /**
  * basic class to control audio output
  */
+OBJC_VISIBLE
 @interface VLCAudio : NSObject
 
 /**
