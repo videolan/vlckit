@@ -35,38 +35,65 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Standard dictionary keys for retreiving meta data.
  */
-OBJC_EXTERN NSString *const VLCMetaInformationTitle;          /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationArtist;         /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationGenre;          /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationCopyright;      /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationAlbum;          /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationTrackNumber;    /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationDescription;    /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationRating;         /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationDate;           /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationSetting;        /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationURL;            /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationLanguage;       /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationNowPlaying;     /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationPublisher;      /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationEncodedBy;      /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationArtworkURL;     /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationArtwork;        /* NSImage  */
-OBJC_EXTERN NSString *const VLCMetaInformationTrackID;        /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationTrackTotal;     /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationDirector;       /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationSeason;         /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationEpisode;        /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationShowName;       /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationActors;         /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationAlbumArtist;    /* NSString */
-OBJC_EXTERN NSString *const VLCMetaInformationDiscNumber;     /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationTitle;          /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationArtist;         /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationGenre;          /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationCopyright;      /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationAlbum;          /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationTrackNumber;    /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationDescription;    /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationRating;         /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationDate;           /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationSetting;        /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationURL;            /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationLanguage;       /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationNowPlaying;     /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationPublisher;      /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationEncodedBy;      /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationArtworkURL;     /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationArtwork;        /* NSImage  */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationTrackID;        /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationTrackTotal;     /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationDirector;       /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationSeason;         /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationEpisode;        /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationShowName;       /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationActors;         /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationAlbumArtist;    /* NSString */
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMetaInformationDiscNumber;     /* NSString */
 
 /* Notification Messages */
 /**
  * Available notification messages.
  */
-OBJC_EXTERN NSString *const VLCMediaMetaChanged;  ///< Notification message for when the media's meta data has changed
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaMetaChanged;  ///< Notification message for when the media's meta data has changed
 
 // Forward declarations, supresses compiler error messages
 @class VLCMediaList;
@@ -327,13 +354,15 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
  * Codec information
  * \note returns a NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationCodec;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationCodec;
 
 /**
  * tracks information ID
  * \note returns a NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationId;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationId;
 /**
  * track information type
  * \note returns a NSString
@@ -342,112 +371,133 @@ OBJC_EXTERN NSString *const VLCMediaTracksInformationId;
  * \see VLCMediaTracksInformationTypeText
  * \see VLCMediaTracksInformationTypeUnknown
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationType;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationType;
 
 /**
  * codec profile
  * \note returns a NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationCodecProfile;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationCodecProfile;
 /**
  * codec level
  * \note returns a NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationCodecLevel;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationCodecLevel;
 
 /**
  * track bitrate
  * \note returns the bitrate as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationBitrate;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationBitrate;
 /**
  * track language
  * \note returns the language as NSString
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationLanguage;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationLanguage;
 /**
  * track description
  * \note returns the description as NSString
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationDescription;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationDescription;
 
 /**
  * number of audio channels of a given track
  * \note returns the audio channel number as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationAudioChannelsNumber;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationAudioChannelsNumber;
 /**
  * audio rate
  * \note returns the audio rate as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationAudioRate;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationAudioRate;
 
 /**
  * video track height
  * \note returns the height as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationVideoHeight;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationVideoHeight;
 /**
  * video track width
  * \note the width as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationVideoWidth;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationVideoWidth;
 
 /**
  * video track orientation
  * \note returns the orientation as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationVideoOrientation;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationVideoOrientation;
 /**
  * video track projection
  * \note the projection as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationVideoProjection;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationVideoProjection;
 
 /**
  * source aspect ratio
  * \note returns the source aspect ratio as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationSourceAspectRatio;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationSourceAspectRatio;
 /**
  * source aspect ratio denominator
  * \note returns the source aspect ratio denominator as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationSourceAspectRatioDenominator;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationSourceAspectRatioDenominator;
 
 /**
  * frame rate
  * \note returns the frame rate as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationFrameRate;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationFrameRate;
 /**
  * frame rate denominator
  * \note returns the frame rate denominator as NSNumber
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationFrameRateDenominator;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationFrameRateDenominator;
 
 /**
  * text encoding
  * \note returns the text encoding as NSString
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationTextEncoding;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationTextEncoding;
 
 /**
  * audio track information NSDictionary value for VLCMediaTracksInformationType
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationTypeAudio;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationTypeAudio;
 /**
  * video track information NSDictionary value for VLCMediaTracksInformationType
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationTypeVideo;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationTypeVideo;
 /**
  * text / subtitles track information NSDictionary value for VLCMediaTracksInformationType
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationTypeText;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationTypeText;
 /**
  * unknown track information NSDictionary value for VLCMediaTracksInformationType
  */
-OBJC_EXTERN NSString *const VLCMediaTracksInformationTypeUnknown;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaTracksInformationTypeUnknown;
 
 /**
  * Returns the tracks information.

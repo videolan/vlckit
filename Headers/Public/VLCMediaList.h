@@ -29,11 +29,13 @@
 /**
  * notification name if a list item was added
  */
-OBJC_EXTERN NSString *const VLCMediaListItemAdded;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaListItemAdded;
 /**
  * notification name if a list item was deleted
  */
-OBJC_EXTERN NSString *const VLCMediaListItemDeleted;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaListItemDeleted;
 
 @class VLCMedia;
 @class VLCMediaList;
