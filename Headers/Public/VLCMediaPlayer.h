@@ -44,10 +44,10 @@
 @class VLCRendererItem;
 
 /* Notification Messages */
-extern NSString *const VLCMediaPlayerTimeChanged;
-extern NSString *const VLCMediaPlayerStateChanged;
-extern NSString *const VLCMediaPlayerTitleChanged;
-extern NSString *const VLCMediaPlayerChapterChanged;
+OBJC_EXTERN NSString *const VLCMediaPlayerTimeChanged;
+OBJC_EXTERN NSString *const VLCMediaPlayerStateChanged;
+OBJC_EXTERN NSString *const VLCMediaPlayerTitleChanged;
+OBJC_EXTERN NSString *const VLCMediaPlayerChapterChanged;
 
 /**
  * VLCMediaPlayerState describes the state of the media player.
@@ -91,7 +91,7 @@ typedef NS_ENUM(NSInteger, VLCDeinterlace)
  * \param state The player state.
  * \return A string containing the name of state. If state is not a valid state, returns nil.
  */
-extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
+OBJC_EXTERN NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Formal protocol declaration for playback delegates.  Allows playback messages
@@ -479,15 +479,15 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
 /**
  * dictionary value for the user-facing chapter name
  */
-extern NSString *const VLCChapterDescriptionName;
+OBJC_EXTERN NSString *const VLCChapterDescriptionName;
 /**
  * dictionary value for the chapter's time offset
  */
-extern NSString *const VLCChapterDescriptionTimeOffset;
+OBJC_EXTERN NSString *const VLCChapterDescriptionTimeOffset;
 /**
  * dictionary value for the chapter's duration
  */
-extern NSString *const VLCChapterDescriptionDuration;
+OBJC_EXTERN NSString *const VLCChapterDescriptionDuration;
 
 /**
  * chapter descriptions
@@ -515,15 +515,15 @@ extern NSString *const VLCChapterDescriptionDuration;
 /**
  * dictionary value for the user-facing title name
  */
-extern NSString *const VLCTitleDescriptionName;
+OBJC_EXTERN NSString *const VLCTitleDescriptionName;
 /**
  * dictionary value for the title's duration
  */
-extern NSString *const VLCTitleDescriptionDuration;
+OBJC_EXTERN NSString *const VLCTitleDescriptionDuration;
 /**
  * dictionary value whether the title is a menu or not
  */
-extern NSString *const VLCTitleDescriptionIsMenu;
+OBJC_EXTERN NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * title descriptions

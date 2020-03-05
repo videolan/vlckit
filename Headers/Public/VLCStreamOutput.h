@@ -25,15 +25,15 @@
 /**
  * \deprecated will be removed in the next release
  */
-extern NSString * VLCDefaultStreamOutputRTSP;
+OBJC_EXTERN NSString * VLCDefaultStreamOutputRTSP;
 /**
  * \deprecated will be removed in the next release
  */
-extern NSString * VLCDefaultStreamOutputRTP;
+OBJC_EXTERN NSString * VLCDefaultStreamOutputRTP;
 /**
  * \deprecated will be removed in the next release
  */
-extern NSString * VLCDefaultStreamOutputRTP;
+OBJC_EXTERN NSString * VLCDefaultStreamOutputRTP;
 
 /**
  * a class allowing you to stream media based on predefined definitions
