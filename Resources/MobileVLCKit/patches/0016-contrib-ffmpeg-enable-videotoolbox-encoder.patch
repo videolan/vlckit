@@ -1,7 +1,7 @@
-From fdc8eb9a165511ebe0bf06e7189a3c20b3780222 Mon Sep 17 00:00:00 2001
+From bfa116d0f2e57051b1b5e7aba4013f29e15fe7f0 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:49:34 +0200
-Subject: [PATCH 16/26] contrib: ffmpeg: enable videotoolbox encoder
+Subject: [PATCH 16/27] contrib: ffmpeg: enable videotoolbox encoder
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -27,5 +27,5 @@ index 08be5809a7..6fefe4d5f7 100644
  endif
  endif
 -- 
-2.20.1
+2.21.1 (Apple Git-122.3)
 

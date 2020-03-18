@@ -1,7 +1,7 @@
-From da6d0fb11116125d30194225ff12da499f12f230 Mon Sep 17 00:00:00 2001
+From 76e9d95194441d710ffe390277f79ece50e8c66b Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
-Subject: [PATCH 10/26] contrib: use live555 version that is compatible with
+Subject: [PATCH 10/27] contrib: use live555 version that is compatible with
  LGPL2
 
 ---
@@ -46,5 +46,5 @@ index bb1d5655c7..41fc1c6179 100644
  		echo "PREFIX = $(PREFIX)" >> $$subdir/Makefile.head && \
  		echo "LIBDIR = $(PREFIX)/lib" >> $$subdir/Makefile.head ; done
 -- 
-2.20.1
+2.21.1 (Apple Git-122.3)
 

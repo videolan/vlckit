@@ -1,7 +1,7 @@
-From a1ee79589e147eec642dad36727e3c27b26042b8 Mon Sep 17 00:00:00 2001
+From 9d467d0d957d73b2c6917c91beb1ffb8eda5a564 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 22/26] libvlc: media_player: Add record method
+Subject: [PATCH 22/27] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -69,5 +69,5 @@ index 29285065f0..7e714d247b 100644
 +    return VLC_SUCCESS;
 +}
 -- 
-2.20.1
+2.21.1 (Apple Git-122.3)
 

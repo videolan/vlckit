@@ -1,7 +1,7 @@
-From f4e9ad93e4f6d10f41422b49797e7162f8bbc1e7 Mon Sep 17 00:00:00 2001
+From 56694c498d4369067fe5df3373657d779c611e36 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 20/26] lib: save configuration after playback/parse
+Subject: [PATCH 20/27] lib: save configuration after playback/parse
 
 The configuration is also saved when the libvlc instance is terminated but this
 doesn't happen often. Indeed, apps using libvlc will generally hold the libvlc
@@ -38,5 +38,5 @@ index 7b4050164f..29285065f0 100644
  
  /*
 -- 
-2.20.1
+2.21.1 (Apple Git-122.3)
 
