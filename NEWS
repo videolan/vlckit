@@ -1,3 +1,10 @@
+Version 3.3.10:
+--------------
+
+- Allow http bearer tokens
+- Publish statistics on iOS and tvOS
+- Minor libvlc improvements
+
 Version 3.3.9:
 --------------
 
