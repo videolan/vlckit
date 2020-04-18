@@ -1,3 +1,32 @@
+Version 3.3.11:
+--------------
+
+- Fix missing modulemap for iOS and tvOS releases
+
+- demux:
+    - fix some WebVTT styling tags being not applied
+    - fix MP4 interlacing handling
+    - fix MP4 regression with twos/sowt PCM audio
+    - fix some MP4 raw quicktime and ms-PCM audio
+    - Enabled Live seeking for HLS
+    - fix seeking in some cases for HLS
+    - fix multiple adaptive stack (DASH/HLS/Smooth) issues
+    - fix adaptive regression on TS format change (mostly HLS)
+    - fix adaptive unwanted end of stream in some cases
+    - Faster adaptive start and new buffering control options
+    - Improved Live playback for Smooth and DASH
+
+- contrib:
+    - ffmpeg: backport VP9 profile 10-bit support
+    - update dca to 0.0.7
+    - update libdsm to 0.3.2
+    - update faad to 2.9.1
+    - update libebml to 1.3.10
+    - update libmatroska to 1.5.2
+    - update fontconfig to 2.13.1
+    - update freetype to 2.10.1
+    - update fribidi to 1.0.9
+
 Version 3.3.10:
 --------------
 
