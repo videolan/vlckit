@@ -1,4 +1,4 @@
-From 470f374f179f634fa6a67ef85274243a92d8fade Mon Sep 17 00:00:00 2001
+From aaace06f94583e1b4405e816f985e93e12609292 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
 Subject: [PATCH 18/27] ffmpeg: backport vtenc patches
@@ -340,13 +340,13 @@ index 0000000000..42f4cce1e6
 +2.18.0
 +
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 6fefe4d5f7..74dea0aeca 100644
+index 3e3b260622..c531fe5bb4 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -246,6 +246,10 @@ ifdef USE_FFMPEG
- 	$(APPLY) $(SRC)/ffmpeg/ffmpeg-mkv-overshoot.patch
+@@ -247,6 +247,10 @@ ifdef USE_FFMPEG
  	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-hevcdec-set-the-SEI-parameters-early-on-the-.patch
  	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-h264_slice-set-the-SEI-parameters-early-on-t.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-vp9-add-profile-2-10-bit-DXVA2-D3D11-decodin.patch
 +	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch
 +	$(APPLY) $(SRC)/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch
 +	$(APPLY) $(SRC)/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch
@@ -355,5 +355,5 @@ index 6fefe4d5f7..74dea0aeca 100644
  ifdef USE_LIBAV
  	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
 -- 
-2.21.1 (Apple Git-122.3)
+2.25.0
 
