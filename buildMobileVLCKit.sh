@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="b7574279cb" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="dc36872e6c" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -318,9 +318,9 @@ buildLibVLC() {
     OSSTYLE=iPhone
 
     if [ "$DEBUG" = "yes" ]; then
-        OPTIM="-O0 -g"
+        OPTIM="-O0"
     else
-        OPTIM="-O3 -g"
+        OPTIM="-O3"
     fi
 
     if [ "$TVOS" = "yes" ]; then
