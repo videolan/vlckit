@@ -5,7 +5,9 @@ stages:
 variables:
     VLC_VERSION: "3.0"
 
-## Shared configuration
+####################
+## Nightly builds ##
+####################
 
 .nightly-job-base:
     tags:
@@ -22,8 +24,6 @@ variables:
         - ./buildMobileVLCKit.sh -${BUILD_PARAM}
         - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
         - mv ${JOB_NAME}-*.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
-
-## Nightly builds
 
 MobileVLCKit:
     extends:
