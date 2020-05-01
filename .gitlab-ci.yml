@@ -1,5 +1,6 @@
 stages:
     - nightly
+    - release
 
 variables:
     VLC_VERSION: "3.0"
@@ -50,3 +51,43 @@ VLCKit:
         BUILD_PARAM: "vx"
         PACKAGING_PARAM: "v"
         JOB_NAME: "VLCKit"
+
+####################
+## Release builds ##
+####################
+
+.release-job-base:
+    tags:
+        - macos
+    stage: release
+    only:
+        - tags
+    artifacts:
+        paths:
+            - ./*.tar.xz
+
+.release-build-base:
+    script:
+        - cd Packaging
+        - ./buildAndDeployFrameworks.sh -${BUILD_PARAM}
+
+MobileVLCKit:
+    extends:
+        - .release-job-base
+        - .release-build-base
+    variables:
+        BUILD_PARAM: "m"
+
+TVVLCKit:
+    extends:
+        - .release-job-base
+        - .release-build-base
+    variables:
+        BUILD_PARAM: "t"
+
+VLCKit:
+    extends:
+        - .release-job-base
+        - .release-build-base
+    variables:
+        BUILD_PARAM: "x"
