@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name      = 'TVVLCKit'
-  s.version   = '3.3.10'
+  s.version   = '3.3.11'
   s.summary   = "TVVLCKit is an Objective-C wrapper for libvlc's external interface on tvOS."
   s.homepage  = 'https://code.videolan.org/videolan/VLCKit'
   s.license   = {
@@ -11,8 +11,8 @@ Pod::Spec.new do |s|
   s.platform  = :tvos
   s.authors   = { "Pierre d'Herbemont" => "pdherbemont@videolan.org", "Felix Paul Kühne" => "fkuehne@videolan.org", "Carola Nitz" => "nitz.carola@googlemail.com", "Jean-Baptiste Kempf" => "jb@videolan.org", "Rafaël Carré" => "funman@videolan.org", "Faustino E. Osuna" => "riquedafreak@videolan.org", "Rémi Denis-Courmont" => "remi@remlab.net", "Faustino Osuna" => "riquedafreak@videolan.org", "Tanguy Krotoff" => "tkrotoff@gmail.com", "VideoLAN" => "videolan@videolan.org", "Derk-Jan Hartman" => "hartman@videolan.org", "Jean-Paul Saman" => "jpsaman@videolan.org", "Malte Tancred" => "malte@frontbase.com", "Mike Schrag" => "mschrag@pobox.com", "Sebastien Zwickert" => "dilaroga@free.fr", "Toralf Niebuhr" => "gmthor85@aim.com", "Emmanuel de Roux" => "lostbread@free.fr", "Daniel Mierswa" => "impulze@impulze.org", "Rune Botten" => "rbotten@gmail.com", "Konstantin Pavlov" => "thresh@videolan.org", "Pere Orga" => "gotrunks@gmail.com", "Philippe Coent" => "philippe.coent@gmail.com", "Andrey Utkin" => "andrey.krieger.utkin@gmail.com", "Brendon Justin" => "brendonjustin@gmail.com", "Sylver Bruneau" => "sylver.bruneau@gmail.com", "Gleb Pinigin" => "gpinigin@gmail.com", "Kuang Rufan" => "master@a1983.com.cn", "Paul Williamson" => "squarefrog@gmail.com", "David Fuhrmann" => "david.fuhrmann@googlemail.com", "Brion Vibber" => "brion@pobox.com", "Martin Storsjö" => "martin@martin.st", "Winston Weinert" => "winston@ml1.net", "Florent Pillet" => "fpillet@gmail.com", "Paulo Vitor Magacho da Silva" => "pvmagacho@gmail.com", "James Dumay" => "james.w.dumay@gmail.com", "Jörg Bleyel" => "jbleyel@gmx.net", "Aleksandr Matuzok" => "sherilynhope@gmail.com", "Pierre SAGASPE" => "pierre.sagaspe@me.com", "Shenggang Hu" => "mrhhsg@gmail.com", "Filipe Cabecinhas" => "vlc@filcab.net", "Jeremy Marchand" => "kodlian@users.noreply.github.com", "Andre Silva" => "andre.silva@blip.pt", "Stefan Schmidt-Bilkenroth" => "ssb@mac.com", "Benjamin Adolphi" => "b.adolphi@gmail.com" }
   s.source    = {
-    :http => 'https://download.videolan.org/cocoapods/prod/TVVLCKit-3.3.10-1447ac9-e425b28e36.tar.xz',
-    :sha256 => '1c780f102792a4fbb8c48c214cc61dc28da7ab63a6b0636e00fd21cd8483786d'
+    :http => 'https://download.videolan.org/cocoapods/prod/TVVLCKit-3.3.11-e90e716-dc36872e6c.tar.xz',
+    :sha256 => '0b7d6239e523d70c83d340b704bafcae7f8a0d6026f02c5e7548d252767c6d51'
   }
   s.tvos.vendored_framework = 'TVVLCKit.framework'
   s.source_files = 'TVVLCKit.framework/Headers/*.h'
