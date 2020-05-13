@@ -187,7 +187,7 @@ You can look through the currently open [issues on GitLab](https://code.videolan
 
 ### Patches
 
-If you like the more classic apporach, you can submit patches!
+If you like the more classic approach, you can submit patches!
 
 For detailed explanation on how to do so, please read our wiki page on [how to send patches](https://wiki.videolan.org/Sending_Patches_VLC/).
 
