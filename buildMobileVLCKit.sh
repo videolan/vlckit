@@ -720,7 +720,6 @@ buildLibVLC() {
     remap
     oldmovie
     vhs
-    demuxdump
     fingerprinter
     output_udp
     output_livehttp
