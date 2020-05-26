@@ -1,3 +1,28 @@
+Version 3.3.12:
+--------------
+
+- coreaudio: fix invalid delay after a unpause
+
+- mp4: no sync table means all sync
+
+- demux:
+    - hls:
+        - remove double update need check
+        - set more accurate update time
+        - do proper schedule on update
+        - handle timescale rounding when matching segment
+    - adaptive:
+        - rely on live offset for edge control
+        - use current segment number when available
+        - fixup AnyURI
+        - set current segment start time on init
+        - fix invalid offset on start
+
+- contrib:
+    - bump faad to 2.9.2
+    - bump libarchive to 3.4.2
+    - bump dav1d to 0.7.0
+
 Version 3.3.11:
 --------------
 
