@@ -1,7 +1,7 @@
-From edcee42598db7d7aa63b3a953449f1b0e505d7b1 Mon Sep 17 00:00:00 2001
+From 75e3eb6eac8844c27b97b8d5ba52e5fdd21b4215 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 09/27] Replace thread local with pthread TSD
+Subject: [PATCH 09/29] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
@@ -222,5 +222,5 @@ index 810c8ffc81..3d2d2f1dc8 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.25.0
+2.21.1 (Apple Git-122.3)
 

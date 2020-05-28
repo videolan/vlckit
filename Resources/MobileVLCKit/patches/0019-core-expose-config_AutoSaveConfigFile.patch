@@ -1,7 +1,7 @@
-From b3a2381c424bb652d0b6e6d1ba3e20f7636b45e1 Mon Sep 17 00:00:00 2001
+From 595b39659f59e67646c65c1765efc67caedcb9dc Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 19/27] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 19/29] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
@@ -60,5 +60,5 @@ index db7f4030b9..4ad59b1fc0 100644
  config_ChainDestroy
  config_ChainDuplicate
 -- 
-2.25.0
+2.21.1 (Apple Git-122.3)
 

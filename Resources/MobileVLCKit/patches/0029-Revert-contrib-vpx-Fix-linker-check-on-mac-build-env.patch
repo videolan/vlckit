@@ -1,0 +1,47 @@
+From 5942f2b9ae7b4f67ccb454404d4c199112c2fe82 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Thu, 28 May 2020 11:12:42 +0200
+Subject: [PATCH 29/29] Revert "contrib: vpx: Fix linker check on mac build
+ environment"
+
+This reverts commit 9832addb1d0dec26b464db41bce11f1e058b3d63.
+---
+ contrib/src/vpx/darwin-do-not-overwrite-ld.patch | 11 -----------
+ contrib/src/vpx/rules.mak                        |  3 ---
+ 2 files changed, 14 deletions(-)
+ delete mode 100644 contrib/src/vpx/darwin-do-not-overwrite-ld.patch
+
+diff --git a/contrib/src/vpx/darwin-do-not-overwrite-ld.patch b/contrib/src/vpx/darwin-do-not-overwrite-ld.patch
+deleted file mode 100644
+index c69709f7a4..0000000000
+--- a/contrib/src/vpx/darwin-do-not-overwrite-ld.patch
++++ /dev/null
+@@ -1,11 +0,0 @@
+---- libvpx/configure.old	2020-05-13 21:15:06.000000000 +0200
+-+++ libvpx/configure	2020-05-13 21:15:28.000000000 +0200
+-@@ -758,8 +758,6 @@
+- EOF
+-         ;;
+-     esac
+--    # libwebm needs to be linked with C++ standard library
+--    enabled webm_io && LD=${CXX}
+- 
+-     # append any user defined extra cflags
+-     if [ -n "${extra_cflags}" ] ; then
+diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
+index fe3dc1538c..7e899d898e 100644
+--- a/contrib/src/vpx/rules.mak
++++ b/contrib/src/vpx/rules.mak
+@@ -20,9 +20,6 @@ ifdef HAVE_ANDROID
+ 	$(APPLY) $(SRC)/vpx/libvpx-android.patch
+ 	cp "${ANDROID_NDK}"/sources/android/cpufeatures/cpu-features.c $(UNPACK_DIR)/vpx_ports
+ 	cp "${ANDROID_NDK}"/sources/android/cpufeatures/cpu-features.h $(UNPACK_DIR)
+-endif
+-ifdef HAVE_MACOSX
+-	$(APPLY) $(SRC)/vpx/darwin-do-not-overwrite-ld.patch
+ endif
+ 	$(MOVE)
+ 
+-- 
+2.21.1 (Apple Git-122.3)
+
