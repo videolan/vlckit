@@ -509,7 +509,7 @@ buildLibVLC() {
         --disable-caca \
         --disable-gettext \
         --disable-mpcdec \
-        --disable-upnp \
+        --enable-upnp \
         --disable-gme \
         --disable-srt \
         --disable-tremor \
