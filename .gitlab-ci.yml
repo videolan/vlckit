@@ -25,7 +25,7 @@ variables:
         - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
         - mv ${JOB_NAME}-*.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
 
-MobileVLCKit:
+nightly-MobileVLCKit:
     extends:
         - .nightly-job-base
         - .nightly-build-base
@@ -34,7 +34,7 @@ MobileVLCKit:
         PACKAGING_PARAM: "vm"
         JOB_NAME: "MobileVLCKit"
 
-TVVLCKit:
+nightly-TVVLCKit:
     extends:
         - .nightly-job-base
         - .nightly-build-base
@@ -43,7 +43,7 @@ TVVLCKit:
         PACKAGING_PARAM: "vt"
         JOB_NAME: "TVVLCKit"
 
-VLCKit:
+nightly-VLCKit:
     extends:
         - .nightly-job-base
         - .nightly-build-base
