@@ -51,7 +51,7 @@
 /* Notification Messages */
 NSString *const VLCMediaPlayerTimeChanged       = @"VLCMediaPlayerTimeChanged";
 NSString *const VLCMediaPlayerStateChanged      = @"VLCMediaPlayerStateChanged";
-NSString *const VLCMediaPlayerTitleChanged       = @"VLCMediaPlayerTitleChanged";
+NSString *const VLCMediaPlayerTitleSelectionChanged  = @"VLCMediaPlayerTitleSelectionChanged";
 NSString *const VLCMediaPlayerChapterChanged      = @"VLCMediaPlayerChapterChanged";
 NSString *const VLCMediaPlayerSnapshotTaken     = @"VLCMediaPlayerSnapshotTaken";
 
@@ -171,12 +171,12 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
     }
 }
 
-static void HandleMediaTitleChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaTitleSelectionChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
         [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                       withDelegateMethod:@selector(mediaPlayerTitleChanged:)
-                                                     withNotificationName:VLCMediaPlayerTitleChanged];
+                                                       withDelegateMethod:@selector(mediaPlayerTitleSelectionChanged:)
+                                                     withNotificationName:VLCMediaPlayerTitleSelectionChanged];
     }
 }
 
@@ -1337,7 +1337,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
 
-        libvlc_event_attach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerTitleSelectionChanged, HandleMediaTitleSelectionChanged,     (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
         libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
@@ -1364,7 +1364,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
 
-    libvlc_event_detach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerTitleSelectionChanged, HandleMediaTitleSelectionChanged,     (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
 
     libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
@@ -1446,7 +1446,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     [self didChangeValueForKey:@"media"];
 }
 
-- (void)mediaPlayerTitleChanged:(NSNumber *)newTitle
+- (void)mediaPlayerTitleSelectionChanged:(NSNumber *)newTitle
 {
     [self willChangeValueForKey:@"currentTitleIndex"];
     [self didChangeValueForKey:@"currentTitleIndex"];

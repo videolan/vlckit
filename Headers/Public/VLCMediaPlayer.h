@@ -49,7 +49,7 @@ NSString *const VLCMediaPlayerTimeChanged;
 OBJC_VISIBLE OBJC_EXTERN
 NSString *const VLCMediaPlayerStateChanged;
 OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaPlayerTitleChanged;
+NSString *const VLCMediaPlayerTitleSelectionChanged;
 OBJC_VISIBLE OBJC_EXTERN
 NSString *const VLCMediaPlayerChapterChanged;
 
@@ -121,11 +121,12 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Sent by the default notification center whenever the player's title has changed (if any).
- * \details Discussion The value of aNotification is always an VLCMediaPlayerTitleChanged notification. You can retrieve
+ * \details Discussion The value of aNotification is always an VLCMediaPlayerTitleSelectionChanged notification. You can retrieve
  * the VLCMediaPlayer object in question by sending object to aNotification.
  * \note this is about a title in the navigation sense, not about metadata
  */
-- (void)mediaPlayerTitleChanged:(NSNotification *)aNotification;
+- (void)mediaPlayerTitleSelectionChanged:(NSNotification *)aNotification;
+
 
 /**
  * Sent by the default notification center whenever the player's chapter has changed (if any).
