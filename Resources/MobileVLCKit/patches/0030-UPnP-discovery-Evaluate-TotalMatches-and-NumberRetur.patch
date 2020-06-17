@@ -1,0 +1,169 @@
+From c356f5e68356c64c3d6bfb7828c64fefb83db98c Mon Sep 17 00:00:00 2001
+From: Andreas Krug <akrug@arcor.de>
+Date: Fri, 1 May 2020 12:21:34 +0200
+Subject: [PATCH 30/30] UPnP discovery: Evaluate "TotalMatches" and
+ "NumberReturned"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Browse again with increased "StartingIndex" and adapted "RequestCount".
+    Solves
+    #21381 Panasonic Viera returns maximal 20 items on uPnP
+    #22496 DLNA/UPnP - Panasonic recorder 12 records limit
+
+Fixes #15876
+
+Signed-off-by: Felix Paul Kühne <felix@feepk.net>
+Signed-off-by: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
+(cherry picked from commit a1ef204f51c9b7bd3881931305c140c519081a6e)
+---
+ modules/services_discovery/upnp.cpp | 93 +++++++++++++++++------------
+ modules/services_discovery/upnp.hpp |  2 +-
+ 2 files changed, 57 insertions(+), 38 deletions(-)
+
+diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
+index d51a533b47..13c1eb7971 100644
+--- a/modules/services_discovery/upnp.cpp
++++ b/modules/services_discovery/upnp.cpp
+@@ -1142,6 +1142,7 @@ int MediaServer::sendActionCb( Upnp_EventType eventType,
+ IXML_Document* MediaServer::_browseAction( const char* psz_object_id_,
+                                            const char* psz_browser_flag_,
+                                            const char* psz_filter_,
++                                           const char* psz_starting_index,
+                                            const char* psz_requested_count_,
+                                            const char* psz_sort_criteria_ )
+ {
+@@ -1186,7 +1187,7 @@ IXML_Document* MediaServer::_browseAction( const char* psz_object_id_,
+     }
+ 
+     i_res = UpnpAddToAction( &p_action, "Browse",
+-            CONTENT_DIRECTORY_SERVICE_TYPE, "StartingIndex", "0" );
++            CONTENT_DIRECTORY_SERVICE_TYPE, "StartingIndex", psz_starting_index );
+     if ( i_res != UPNP_E_SUCCESS )
+     {
+         msg_Dbg( m_access, "AddToAction 'StartingIndex' failed: %s",
+@@ -1242,53 +1243,71 @@ browseActionCleanup:
+  */
+ bool MediaServer::fetchContents()
+ {
+-    IXML_Document* p_response = _browseAction( m_psz_objectId,
+-                                      "BrowseDirectChildren",
+-                                      "*",
+-                                      // Some servers don't understand "0" as "no-limit"
+-                                      "5000", /* RequestedCount */
+-                                      "" /* SortCriteria */
+-                                      );
+-    if ( !p_response )
++    std::string StartingIndex = "0";
++    std::string RequestedCount = "5000";
++    const char* psz_TotalMatches = "0";
++    const char* psz_NumberReturned = "0";
++    long  l_reqCount = 0;
++
++    do
+     {
+-        msg_Err( m_access, "No response from browse() action" );
+-        return false;
+-    }
++        IXML_Document* p_response = _browseAction( m_psz_objectId,
++                                                  "BrowseDirectChildren",
++                                                  "*",
++                                                  StartingIndex.c_str(),
++                                                  // Some servers don't understand "0" as "no-limit"
++                                                  RequestedCount.c_str(), /* RequestedCount */
++                                                  "" /* SortCriteria */
++                                                  );
++        if ( !p_response )
++        {
++            msg_Err( m_access, "No response from browse() action" );
++            return false;
++        }
+ 
+-    IXML_Document* p_result = parseBrowseResult( p_response );
++        psz_TotalMatches = xml_getChildElementValue( (IXML_Element*)p_response, "TotalMatches" );
++        psz_NumberReturned = xml_getChildElementValue( (IXML_Element*)p_response, "NumberReturned" );
+ 
+-    ixmlDocument_free( p_response );
++        StartingIndex = std::to_string(  std::stol(psz_NumberReturned) + std::stol(StartingIndex) );
++        l_reqCount = std::stol(psz_TotalMatches) - std::stol(StartingIndex) ;
++        RequestedCount = std::to_string(l_reqCount);
+ 
+-    if ( !p_result )
+-    {
+-        msg_Err( m_access, "browse() response parsing failed" );
+-        return false;
+-    }
++        IXML_Document* p_result = parseBrowseResult( p_response );
++
++        ixmlDocument_free( p_response );
++
++        if ( !p_result )
++        {
++            msg_Err( m_access, "browse() response parsing failed" );
++            return false;
++        }
+ 
+ #ifndef NDEBUG
+-    msg_Dbg( m_access, "Got DIDL document: %s", ixmlPrintDocument( p_result ) );
++        msg_Dbg( m_access, "Got DIDL document: %s", ixmlPrintDocument( p_result ) );
+ #endif
+ 
+-    IXML_NodeList* containerNodeList =
+-                ixmlDocument_getElementsByTagName( p_result, "container" );
++        IXML_NodeList* containerNodeList =
++        ixmlDocument_getElementsByTagName( p_result, "container" );
+ 
+-    if ( containerNodeList )
+-    {
+-        for ( unsigned int i = 0; i < ixmlNodeList_length( containerNodeList ); i++ )
+-            addContainer( (IXML_Element*)ixmlNodeList_item( containerNodeList, i ) );
+-        ixmlNodeList_free( containerNodeList );
+-    }
++        if ( containerNodeList )
++        {
++            for ( unsigned int i = 0; i < ixmlNodeList_length( containerNodeList ); i++)
++                addContainer( (IXML_Element*)ixmlNodeList_item( containerNodeList, i ) );
++            ixmlNodeList_free( containerNodeList );
++        }
+ 
+-    IXML_NodeList* itemNodeList = ixmlDocument_getElementsByTagName( p_result,
+-                                                                     "item" );
+-    if ( itemNodeList )
+-    {
+-        for ( unsigned int i = 0; i < ixmlNodeList_length( itemNodeList ); i++ )
+-            addItem( (IXML_Element*)ixmlNodeList_item( itemNodeList, i ) );
+-        ixmlNodeList_free( itemNodeList );
+-    }
++        IXML_NodeList* itemNodeList = ixmlDocument_getElementsByTagName( p_result,
++                                                                        "item" );
++        if ( itemNodeList )
++        {
++            for ( unsigned int i = 0; i < ixmlNodeList_length( itemNodeList ); i++)
++                addItem( (IXML_Element*)ixmlNodeList_item( itemNodeList, i ) );
++            ixmlNodeList_free( itemNodeList );
++        }
+ 
+-    ixmlDocument_free( p_result );
++        ixmlDocument_free( p_result );
++    }
++    while( l_reqCount );
+     return true;
+ }
+ 
+diff --git a/modules/services_discovery/upnp.hpp b/modules/services_discovery/upnp.hpp
+index 93de05b8a1..682ac96879 100644
+--- a/modules/services_discovery/upnp.hpp
++++ b/modules/services_discovery/upnp.hpp
+@@ -157,7 +157,7 @@ private:
+     bool addContainer( IXML_Element* containerElement );
+     bool addItem( IXML_Element* itemElement );
+ 
+-    IXML_Document* _browseAction(const char*, const char*,
++    IXML_Document* _browseAction(const char*, const char*, const char*,
+             const char*, const char*, const char* );
+     static int sendActionCb( Upnp_EventType, UpnpEventPtr, void *);
+ 
+-- 
+2.21.1 (Apple Git-122.3)
+
