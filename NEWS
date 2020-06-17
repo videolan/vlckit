@@ -1,5 +1,19 @@
+Version 3.3.13:
+---------------
+
+- browsing:
+    - Enable UPnP discovery based on libupnp
+
+- demux:
+    - Fix MKV module loading by resolving underlying optimization problem
+    - Fix OPUS playback when using the avcodec demuxer
+    - Fix HLS playback regression
+
+- packetizer:
+    - Fix buffer overflow in H26X packetizer (CVE-2020-13428)
+
 Version 3.3.12:
---------------
+---------------
 
 - coreaudio: fix invalid delay after a unpause
 
@@ -18,13 +32,17 @@ Version 3.3.12:
         - set current segment start time on init
         - fix invalid offset on start
 
+- browsing:
+    - Include libvlc's demuxdump module
+    - Fix browsing the FTP server included in Mac OS X Leopard
+
 - contrib:
     - bump faad to 2.9.2
     - bump libarchive to 3.4.2
     - bump dav1d to 0.7.0
 
 Version 3.3.11:
---------------
+---------------
 
 - Fix missing modulemap for iOS and tvOS releases
 
@@ -53,7 +71,7 @@ Version 3.3.11:
     - update fribidi to 1.0.9
 
 Version 3.3.10:
---------------
+---------------
 
 - Allow http bearer tokens
 - Publish statistics on iOS and tvOS
