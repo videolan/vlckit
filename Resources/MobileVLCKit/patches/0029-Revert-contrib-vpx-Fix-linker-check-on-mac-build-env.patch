@@ -1,7 +1,7 @@
-From 5942f2b9ae7b4f67ccb454404d4c199112c2fe82 Mon Sep 17 00:00:00 2001
+From 907481726ec063663ef093cadab6488196b5847a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 28 May 2020 11:12:42 +0200
-Subject: [PATCH 29/29] Revert "contrib: vpx: Fix linker check on mac build
+Subject: [PATCH 29/30] Revert "contrib: vpx: Fix linker check on mac build
  environment"
 
 This reverts commit 9832addb1d0dec26b464db41bce11f1e058b3d63.
@@ -29,7 +29,7 @@ index c69709f7a4..0000000000
 -     # append any user defined extra cflags
 -     if [ -n "${extra_cflags}" ] ; then
 diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
-index fe3dc1538c..7e899d898e 100644
+index ffd2b1a07f..6470a8050e 100644
 --- a/contrib/src/vpx/rules.mak
 +++ b/contrib/src/vpx/rules.mak
 @@ -20,9 +20,6 @@ ifdef HAVE_ANDROID
