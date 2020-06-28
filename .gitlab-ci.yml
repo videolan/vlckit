@@ -4,6 +4,7 @@ stages:
 
 variables:
     VLC_VERSION: "3.0"
+    VLC_DEBIAN_IMAGE: registry.videolan.org/vlc-debian-unstable:20200229201904
 
 ####################
 ## Nightly builds ##
@@ -51,6 +52,24 @@ nightly-VLCKit:
         BUILD_PARAM: "vx"
         PACKAGING_PARAM: "v"
         JOB_NAME: "VLCKit"
+
+#########
+## doc ##
+#########
+
+pages:
+    stage: nightly
+    image:
+        name: $VLC_DEBIAN_IMAGE
+    only:
+        - schedules
+    script:
+        - doxygen doxygen.conf
+        - mkdir public
+        - cp -r doc/html/* public/
+    artifacts:
+        paths:
+            - public
 
 ####################
 ## Release builds ##
