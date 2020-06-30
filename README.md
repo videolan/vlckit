@@ -139,7 +139,9 @@ Note that the following system dependencies are required and need to be linked i
 * CoreVideo.framework
 * Foundation.framework
 * libbz2.tbd
+* libc++.tbd
 * libiconv.tbd
+* libxml2.tbd
 * OpenGLES.framework
 * QuartzCore.framework
 * Security.framework
