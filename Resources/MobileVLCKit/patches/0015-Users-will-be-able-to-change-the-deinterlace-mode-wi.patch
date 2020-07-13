@@ -1,4 +1,4 @@
-From 78de37f98f8946999f45833cf5af991f23a37a22 Mon Sep 17 00:00:00 2001
+From bc30d56835f4fbf498a5b2c1b3fac9bce04aac53 Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Wed, 9 May 2018 10:44:43 +0100
 Subject: [PATCH 15/30] Users will be able to change the deinterlace mode
@@ -87,5 +87,5 @@ index a3e5b248e9..9bc0f634f5 100644
      }
      free (pp_vouts);
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

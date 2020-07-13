@@ -1,4 +1,4 @@
-From c356f5e68356c64c3d6bfb7828c64fefb83db98c Mon Sep 17 00:00:00 2001
+From 0be499b7fa03d4ec937303ee2c6c2082e59c33e3 Mon Sep 17 00:00:00 2001
 From: Andreas Krug <akrug@arcor.de>
 Date: Fri, 1 May 2020 12:21:34 +0200
 Subject: [PATCH 30/30] UPnP discovery: Evaluate "TotalMatches" and
@@ -23,7 +23,7 @@ Signed-off-by: Hugo Beauzée-Luyssen <hugo@beauzee.fr>
  2 files changed, 57 insertions(+), 38 deletions(-)
 
 diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
-index d51a533b47..13c1eb7971 100644
+index c00f2ea533..99f0ee830b 100644
 --- a/modules/services_discovery/upnp.cpp
 +++ b/modules/services_discovery/upnp.cpp
 @@ -1142,6 +1142,7 @@ int MediaServer::sendActionCb( Upnp_EventType eventType,
@@ -165,5 +165,5 @@ index 93de05b8a1..682ac96879 100644
      static int sendActionCb( Upnp_EventType, UpnpEventPtr, void *);
  
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

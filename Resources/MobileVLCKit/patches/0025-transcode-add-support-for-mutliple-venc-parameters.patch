@@ -1,4 +1,4 @@
-From 06275496a4ef207903797c760f045be2afbe0973 Mon Sep 17 00:00:00 2001
+From f48bae6c6f5fc07f0f352a4c8d661221809024c4 Mon Sep 17 00:00:00 2001
 From: Alexandre Janniaux <alexandre.janniaux@gmail.com>
 Date: Wed, 28 Nov 2018 18:27:16 +0100
 Subject: [PATCH 25/30] transcode: add support for mutliple venc parameters
@@ -371,5 +371,5 @@ index 1b5e886d94..e2ba426030 100644
      char            *psz_venc;
      config_chain_t  *p_video_cfg;
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

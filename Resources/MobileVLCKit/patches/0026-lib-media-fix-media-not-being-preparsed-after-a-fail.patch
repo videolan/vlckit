@@ -1,4 +1,4 @@
-From 28046471465b2b263cce206111dc7f7b6012b221 Mon Sep 17 00:00:00 2001
+From 2c9b818f917f33df38e06eb5cc208fd03503d486 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Sep 2019 14:41:31 +0200
 Subject: [PATCH 26/30] lib: media: fix media not being preparsed after a
@@ -35,5 +35,5 @@ index 843f3747dc..b0090c6679 100644
  
      if (needed)
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

@@ -1,4 +1,4 @@
-From 907481726ec063663ef093cadab6488196b5847a Mon Sep 17 00:00:00 2001
+From be358dd60de6b974a6697d3492cf001d55f07215 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 28 May 2020 11:12:42 +0200
 Subject: [PATCH 29/30] Revert "contrib: vpx: Fix linker check on mac build
@@ -29,7 +29,7 @@ index c69709f7a4..0000000000
 -     # append any user defined extra cflags
 -     if [ -n "${extra_cflags}" ] ; then
 diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
-index ffd2b1a07f..6470a8050e 100644
+index 5610b1a1e7..0320661d4b 100644
 --- a/contrib/src/vpx/rules.mak
 +++ b/contrib/src/vpx/rules.mak
 @@ -20,9 +20,6 @@ ifdef HAVE_ANDROID
@@ -43,5 +43,5 @@ index ffd2b1a07f..6470a8050e 100644
  	$(MOVE)
  
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

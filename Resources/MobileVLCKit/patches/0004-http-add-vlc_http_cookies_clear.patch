@@ -1,4 +1,4 @@
-From 72479c0c9518b48d4bd4ff5a5b80ab27e52340ca Mon Sep 17 00:00:00 2001
+From 089bdd129e0f5b3f5ea8ee94975b24df7555d10d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
 Subject: [PATCH 04/30] http: add vlc_http_cookies_clear
@@ -61,5 +61,5 @@ index 77ab852b15..f229b85dea 100644
  }
  
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

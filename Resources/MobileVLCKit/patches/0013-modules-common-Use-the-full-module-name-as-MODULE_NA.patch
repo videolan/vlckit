@@ -1,4 +1,4 @@
-From 5eb65e3b30d0281d8d550b6696f8b1f6dad968b9 Mon Sep 17 00:00:00 2001
+From b73028e36fb298c3aa2b3cfce2e3b47d94a55e04 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Mon, 26 Mar 2018 16:44:44 +0200
 Subject: [PATCH 13/30] modules:common: Use the full module name as MODULE_NAME
@@ -29,5 +29,5 @@ index 1b9117c98d..fc67a39bca 100644
  AM_CFLAGS =
  AM_CXXFLAGS =
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

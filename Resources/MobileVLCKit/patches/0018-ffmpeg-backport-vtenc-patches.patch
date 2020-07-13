@@ -1,4 +1,4 @@
-From 42bc4fe97b6d79545fa6db9444abdfe5ed929e71 Mon Sep 17 00:00:00 2001
+From c0e96deb6013533d81ca906a7e3e585bde922661 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
 Subject: [PATCH 18/30] ffmpeg: backport vtenc patches
@@ -355,5 +355,5 @@ index f8052e76fc..0226af35eb 100644
  ifdef USE_LIBAV
  	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

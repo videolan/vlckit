@@ -1,4 +1,4 @@
-From c27f5c513d17bb87f7c8dcd9847b0028f955c53f Mon Sep 17 00:00:00 2001
+From dcacdfc840146776d785f9c0eeda148844c79814 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
 Subject: [PATCH 07/30] contrib/gcrypt: fix tvOS compilation
@@ -32,7 +32,7 @@ index 0000000000..f1d3ccc71f
 +    *	%rdi: ctx, CTX
 +    *	%rsi: data (64 bytes)
 diff --git a/contrib/src/gcrypt/rules.mak b/contrib/src/gcrypt/rules.mak
-index 97a5e0481b..5067a6dd3c 100644
+index 25f8628a87..6f5a5fd724 100644
 --- a/contrib/src/gcrypt/rules.mak
 +++ b/contrib/src/gcrypt/rules.mak
 @@ -16,6 +16,7 @@ gcrypt: libgcrypt-$(GCRYPT_VERSION).tar.bz2 .sum-gcrypt
@@ -56,5 +56,5 @@ index 97a5e0481b..5067a6dd3c 100644
  GCRYPT_CONF += --disable-aesni-support
  else
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

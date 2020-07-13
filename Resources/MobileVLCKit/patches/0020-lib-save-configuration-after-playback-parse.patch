@@ -1,4 +1,4 @@
-From 9bbbfdcea64db6e989206f0540904e7c1b4e7e99 Mon Sep 17 00:00:00 2001
+From 1d21fe6b2e6ba626bb1fb04cabdb07cf5d0e977f Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
 Subject: [PATCH 20/30] lib: save configuration after playback/parse
@@ -38,5 +38,5 @@ index 7b4050164f..29285065f0 100644
  
  /*
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 
