@@ -308,7 +308,7 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     spushd ${ROOT_DIR}/libvlc/vlc/extras/tools
     ./bootstrap
     make
-    make .gas
+    make .buildgas
     spopd #libvlc/vlc/extras/tools
 fi
 
