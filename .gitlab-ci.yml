@@ -4,7 +4,7 @@ stages:
 
 variables:
     VLC_VERSION: "3.0"
-    VLC_DEBIAN_IMAGE: registry.videolan.org/vlc-debian-unstable:20200229201904
+    VLC_DEBIAN_IMAGE: registry.videolan.org/vlc-debian-unstable:20200529132440
 
 ####################
 ## Nightly builds ##
