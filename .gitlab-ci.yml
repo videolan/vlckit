@@ -58,6 +58,9 @@ nightly-VLCKit:
 #########
 
 pages:
+    tags:
+        - docker
+        - amd64
     stage: nightly
     image:
         name: $VLC_DEBIAN_IMAGE
