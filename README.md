@@ -18,6 +18,7 @@
 - [Installation](#installation)
     - [Cocoapods](#cocoapods)
     - [Carthage](#carthage)
+- [Documentation](#documentation)
 - [Build](#build)
     - [Default](#default)
     - [Build with your own VLC repository](#build-with-your-own-vlc-repository)
@@ -150,6 +151,9 @@ Note that the following system dependencies are required and need to be linked i
 On iOS and tvOS, you also need to link:
 
 * UIKit.framework
+
+## Documentation
+API documentation of VLCKit is available [online](https://videolan.videolan.me/VLCKit) and within both the source code as well as binary downloads. Except as indicated, all the APIs are the same on macOS, iOS and tvOS.
 
 ## Build
 
