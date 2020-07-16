@@ -4,11 +4,11 @@
 
 **VLCKit** is a generic multimedia library for any audio or video playback needs on macOS, iOS and tvOS.
 
-|              | Platform                                                     | Master                                                       | Cocoapods                                                    |
-| ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| VLCKit       | ![Platform](https://img.shields.io/cocoapods/p/VLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![VLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/VLCKit.svg)](https://cocoapods.org/pods/VLCKit) |
-| MobileVLCKit | ![Platform](https://img.shields.io/cocoapods/p/MobileVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![MobileVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/MobileVLCKit.svg)](https://cocoapods.org/pods/MobileVLCKit) |
-| TVVLCKit     | ![Platform](https://img.shields.io/cocoapods/p/TVVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![TVVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/TVVLCKit.svg)](https://cocoapods.org/pods/TVVLCKit) |
+|              | Platform                                                     | Cocoapods                                                    |
+| ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| VLCKit       | ![Platform](https://img.shields.io/cocoapods/p/VLCKit.svg?style=flat) | [![VLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/VLCKit.svg)](https://cocoapods.org/pods/VLCKit) |
+| MobileVLCKit | ![Platform](https://img.shields.io/cocoapods/p/MobileVLCKit.svg?style=flat) | [![MobileVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/MobileVLCKit.svg)](https://cocoapods.org/pods/MobileVLCKit) |
+| TVVLCKit     | ![Platform](https://img.shields.io/cocoapods/p/TVVLCKit.svg?style=flat) | [![TVVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/TVVLCKit.svg)](https://cocoapods.org/pods/TVVLCKit) |
 
 ## Table of content
 
