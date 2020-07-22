@@ -1314,6 +1314,32 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return self;
 }
 
+static const struct event_handler_entry
+{
+    libvlc_event_type_t type;
+    libvlc_callback_t callback;
+} event_entries[] =
+{
+    { libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged },
+    { libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged },
+    { libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged },
+    { libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged },
+    { libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged },
+    { libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged },
+    { libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged },
+    { libvlc_MediaPlayerESAdded,          HandleMediaInstanceStateChanged },
+
+    { libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged },
+    { libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged },
+    { libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged  },
+
+    { libvlc_MediaPlayerTitleSelectionChanged, HandleMediaTitleSelectionChanged },
+    { libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged },
+
+    { libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot },
+    { libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord },
+};
+
 - (void)registerObservers
 {
     // Attach event observers into the media instance
@@ -1324,24 +1350,12 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     /* We need the caller to wait until this block is done.
      * The initialized object shall not be returned until the event attachments are done. */
     dispatch_sync(_libVLCBackgroundQueue,^{
-        libvlc_event_attach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerESAdded,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-
-        libvlc_event_attach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
-
-        libvlc_event_attach(p_em, libvlc_MediaPlayerTitleSelectionChanged, HandleMediaTitleSelectionChanged,     (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
-
-        libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
+        size_t entry_count = sizeof(event_entries)/sizeof(event_entries[0]);
+        for (size_t i=0; i<entry_count; ++i)
+        {
+            const struct event_handler_entry *entry = &event_entries[i];
+            libvlc_event_attach(p_em, entry->type, entry->callback, (__bridge void *)(self));
+        }
     });
 }
 
@@ -1351,24 +1365,12 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     if (!p_em)
         return;
 
-    libvlc_event_detach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged, (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerESAdded,          HandleMediaInstanceStateChanged, (__bridge void *)(self));
-
-    libvlc_event_detach(p_em, libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged,      (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged,          (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged,   (__bridge void *)(self));
-
-    libvlc_event_detach(p_em, libvlc_MediaPlayerTitleSelectionChanged, HandleMediaTitleSelectionChanged,     (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
-
-    libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
-    libvlc_event_detach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
+    size_t entry_count = sizeof(event_entries)/sizeof(event_entries[0]);
+    for (size_t i=0; i<entry_count; ++i)
+    {
+        const struct event_handler_entry *entry = &event_entries[i];
+        libvlc_event_detach(p_em, entry->type, entry->callback, (__bridge void *)(self));
+    }
 }
 
 - (dispatch_queue_t)libVLCBackgroundQueue
