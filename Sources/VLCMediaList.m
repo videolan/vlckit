@@ -89,7 +89,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 {
     if (self = [super init]) {
         // Create a new libvlc media list instance
-        p_mlist = libvlc_media_list_new([VLCLibrary sharedLibrary].instance);
+        p_mlist = libvlc_media_list_new();
 
         // Initialize internals to defaults
         _mediaObjects = [[NSMutableArray alloc] init];
