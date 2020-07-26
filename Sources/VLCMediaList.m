@@ -291,6 +291,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     NSInteger start = [arrayOfArgs[0][@"index"] intValue];
     NSInteger end = [arrayOfArgs[[arrayOfArgs count]-1][@"index"] intValue];
     NSRange range = NSMakeRange(start, end-start);
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
     [self willChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] forKey:@"media"];
     for (NSDictionary *args in arrayOfArgs) {
@@ -316,6 +317,9 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
         }
         if (delegate && [delegate respondsToSelector:@selector(mediaList:mediaAdded:atIndex:)])
             [delegate mediaList:self mediaAdded:foundMedia atIndex:index];
+        [notificationCenter postNotificationName:VLCMediaListItemAdded
+                                          object:self
+                                        userInfo:@{@"index": @(index)}];
     }
     [self didChange:NSKeyValueChangeInsertion valuesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:range] forKey:@"media"];
 }
