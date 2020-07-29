@@ -563,6 +563,7 @@
 		7D34F5551C909DF6008A39F0 /* VLCCustomDialogProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCCustomDialogProvider.h; path = Headers/Internal/VLCCustomDialogProvider.h; sourceTree = "<group>"; };
 		7D5F8009185B72EB00C2CD75 /* VLCMediaListPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaListPlayer.m; path = Sources/VLCMediaListPlayer.m; sourceTree = "<group>"; };
 		7D5F800B185B730F00C2CD75 /* VLCMediaListPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaListPlayer.h; path = Headers/Public/VLCMediaListPlayer.h; sourceTree = "<group>"; };
+		7D66193624D1F5DC00781E5D /* Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = Headers/PCH/Prefix.pch; sourceTree = "<group>"; };
 		7D6C891F1C0CA81F00321894 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7D797FB21DF41E8400AD93ED /* TVVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TVVLCKit.h; path = Headers/Public/TVVLCKit.h; sourceTree = SOURCE_ROOT; };
 		7D797FB41DF41EBA00AD93ED /* StaticLibVLC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StaticLibVLC.m; path = Sources/StaticLibVLC.m; sourceTree = SOURCE_ROOT; };
@@ -646,11 +647,9 @@
 		8D2CE648203DCC48004BB7F6 /* VLCRendererDiscoverer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VLCRendererDiscoverer.m; path = Sources/VLCRendererDiscoverer.m; sourceTree = "<group>"; };
 		8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VLCRendererItem.h; path = Headers/Public/VLCRendererItem.h; sourceTree = "<group>"; };
 		8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VLCRendererItem.m; path = Sources/VLCRendererItem.m; sourceTree = "<group>"; };
-		AA747D9E0F9514B9006C5449 /* MobilePrefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobilePrefix.pch; path = Headers/PCH/MobilePrefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CA0301CB20ADFD2500452BB8 /* MobileVLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileVLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA0301CF20ADFD2500452BB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA08590420F7184A00B3AB69 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = macros.h; path = Headers/Internal/macros.h; sourceTree = "<group>"; };
 		CA1E134D21087D750066F32F /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		CA1E135221087D8E0066F32F /* german.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = german.srt; sourceTree = "<group>"; };
 		CA1E135321087D8E0066F32F /* slovak.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = slovak.srt; sourceTree = "<group>"; };
@@ -957,8 +956,7 @@
 			isa = PBXGroup;
 			children = (
 				3F7CC79721D69D9A0094B074 /* module.modulemap */,
-				CA08590420F7184A00B3AB69 /* macros.h */,
-				AA747D9E0F9514B9006C5449 /* MobilePrefix.pch */,
+				7D66193624D1F5DC00781E5D /* Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
