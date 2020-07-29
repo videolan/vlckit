@@ -968,7 +968,6 @@
 			children = (
 				7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */,
 				7D988CEF24C72F5700279703 /* VLCKit.h */,
-				7D988D0024C7307A00279703 /* vlc-plugins-MacOSX.h */,
 				7D988CFD24C7304800279703 /* VLCVideoCommon.h */,
 				7D988CF724C72FCE00279703 /* VLCVideoLayer.h */,
 				7D988CF124C72F8C00279703 /* VLCStreamOutput.h */,
@@ -996,6 +995,7 @@
 		7A5ECAE311DE8FDF00F66AF3 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				7D988D0024C7307A00279703 /* vlc-plugins-MacOSX.h */,
 				7D1329761BA306DE00BE647E /* vlc-plugins-iPhone.h */,
 				7D1329771BA306E600BE647E /* vlc-plugins-AppleTV.h */,
 				7A5ECAE411DE8FEF00F66AF3 /* VLCLibVLCBridging.h */,
@@ -1569,7 +1569,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "MobileVLCKit" */;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "VLCKit" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -1959,7 +1959,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
@@ -2009,7 +2009,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2055,7 +2055,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2105,7 +2105,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
@@ -2145,7 +2145,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2207,7 +2207,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2483,7 +2483,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -2546,7 +2546,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = Headers/PCH/MobilePrefix.pch;
+				GCC_PREFIX_HEADER = Headers/PCH/Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -3261,7 +3261,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "MobileVLCKit" */ = {
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "VLCKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB922408733DC00010E9CD /* Release */,
