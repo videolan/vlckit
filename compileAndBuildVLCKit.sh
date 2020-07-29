@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (C) Pierre d'Herbemont, 2010
-# Copyright (C) Felix Paul Kühne, 2012-2019
+# Copyright (C) Felix Paul Kühne, 2012-2020
 
 set -e
 
@@ -470,12 +470,12 @@ if [ "$TVOS" = "yes" ]; then
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="appletvos"
-        buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
+        buildxcodeproj VLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
-        buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
+        buildxcodeproj VLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
     fi
 
@@ -498,12 +498,12 @@ if [ "$IOS" = "yes" ]; then
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="iphoneos"
-        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
+        buildxcodeproj VLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="iphonesimulator"
-        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
+        buildxcodeproj VLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
     fi
 
@@ -526,11 +526,6 @@ if [ "$MACOS" = "yes" ]; then
     info "Building VLCKit.framework in ${CURRENT_DIR}"
 
     buildxcodeproj VLCKit "VLCKit" "macosx"
-
-    # remove intermediate build result we don't need to keep
-    spushd build
-    rm ${CONFIGURATION}/libStaticLibVLC.a
-    spopd # build
 
     info "Build of VLCKit.framework completed"
 fi
