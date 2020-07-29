@@ -594,7 +594,7 @@
 		7D8938FD1B5009D2008F2B14 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		7D8939011B5009DD008F2B14 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		7D8939271B500D1C008F2B14 /* DynamicMobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DynamicMobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D89392A1B500D1C008F2B14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/DynamicMobileVLCKit/Info.plist; sourceTree = "<group>"; };
+		7D89392A1B500D1C008F2B14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		7D89394E1B500DBC008F2B14 /* libStaticLibVLCForiOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLibVLCForiOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D988CCD24C72EB800279703 /* VLCStreamSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCStreamSession.m; path = Sources/VLCStreamSession.m; sourceTree = "<group>"; };
 		7D988CCE24C72EB900279703 /* VLCVideoCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCVideoCommon.m; path = Sources/VLCVideoCommon.m; sourceTree = "<group>"; };
@@ -624,7 +624,7 @@
 		7D988D1D24C7318B00279703 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
 		7D988D2E24C7320600279703 /* libStaticLibVLCFormacOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLibVLCFormacOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB6837F1C995D39000C70BE /* DynamicTVVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DynamicTVVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7DB683831C995D39000C70BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/DynamicTVVLCKit/Info.plist; sourceTree = "<group>"; };
+		7DB683831C995D39000C70BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		7DB683C61C995E9A000C70BE /* libStaticLibVLCFortvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLibVLCFortvOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB683D31C996187000C70BE /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCHelperCode.m; path = Sources/VLCHelperCode.m; sourceTree = "<group>"; };
 		7DB683D91C9961BA000C70BE /* VLCHelperCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCHelperCode.h; path = Headers/Internal/VLCHelperCode.h; sourceTree = "<group>"; };
@@ -2156,7 +2156,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicMobileVLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2223,7 +2223,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicMobileVLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2493,7 +2493,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicTVVLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2560,7 +2560,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/libvlc/vlc/include",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/DynamicTVVLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2692,7 +2692,7 @@
 					"$(SRCROOT)/libvlc/vlc/include",
 					"Headers/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
@@ -2725,7 +2725,7 @@
 					"$(SRCROOT)/libvlc/vlc/include",
 					"Headers/**",
 				);
-				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
