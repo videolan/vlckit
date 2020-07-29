@@ -121,6 +121,11 @@ buildxcodeproj()
         bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
     fi
 
+    local verboseflag=""
+    if [ "$VERBOSE" = "yes" ]; then
+        verboseflag="-verbose"
+    fi
+
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
 
     xcodebuild -project "$1.xcodeproj" \
@@ -131,6 +136,7 @@ buildxcodeproj()
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
                GCC_PREPROCESSOR_DEFINITIONS="$defs" \
                ${bitcodeflag} \
+               ${verboseflag} \
                > ${out}
 }
 
