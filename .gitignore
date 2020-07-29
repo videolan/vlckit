@@ -14,13 +14,10 @@ Pods
 # Others
 !Makefile
 project.xcworkspace
-MobileVLCKit/vlc-plugins-AppleTV.h
-MobileVLCKit/vlc-plugins-AppleTV.xcconfig
-MobileVLCKit/vlc-plugins-iPhone.h
-MobileVLCKit/vlc-plugins-iPhone.xcconfig
 build
 /vlc-unstable
 DerivedData
 MobileVLCKit/ImportedSources
 /libvlc/vlc
 Tests/Assets
+Headers/Internal/vlc-plugins-*

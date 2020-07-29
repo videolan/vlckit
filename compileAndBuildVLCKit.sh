@@ -242,8 +242,8 @@ build_universal_static_lib() {
     info "building universal static libs for $OSSTYLE"
 
     # remove old module list
-    rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    rm -f $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
+    touch $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
 
     spushd ${VLCROOT}
     rm -rf install-$OSSTYLE
@@ -280,7 +280,7 @@ build_universal_static_lib() {
 
     lipo $VLCSTATICLIBS -create -output install-$OSSTYLE/libvlc-full-static.a
 
-    cp $VLCSTATICMODULELIST $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
 
     spopd # VLCROOT
 }
