@@ -145,7 +145,7 @@
 		7D988CFC24C7303200279703 /* VLCCustomDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D34F5551C909DF6008A39F0 /* VLCCustomDialogProvider.h */; };
 		7D988CFE24C7304800279703 /* VLCVideoCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D988CFD24C7304800279703 /* VLCVideoCommon.h */; };
 		7D988CFF24C7306000279703 /* VLCEmbeddedDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D803EC31C8F2AEF00864A9C /* VLCEmbeddedDialogProvider.h */; };
-		7D988D0124C7307A00279703 /* vlc-plugins-MacOSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D988D0024C7307A00279703 /* vlc-plugins-MacOSX.h */; };
+		7D988D0124C7307A00279703 /* vlc-plugins-macosx.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D988D0024C7307A00279703 /* vlc-plugins-macosx.h */; };
 		7D988D0424C730A200279703 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D988D0324C730A100279703 /* AudioToolbox.framework */; };
 		7D988D0624C730A600279703 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D988D0524C730A600279703 /* AudioUnit.framework */; };
 		7D988D0824C730AD00279703 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D988D0724C730AD00279703 /* QuartzCore.framework */; };
@@ -554,8 +554,8 @@
 		7A5ECAE511DE8FEF00F66AF3 /* VLCEventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEventManager.h; path = Headers/Internal/VLCEventManager.h; sourceTree = "<group>"; };
 		7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobileVLCKit.h; path = Headers/Public/MobileVLCKit.h; sourceTree = "<group>"; };
 		7D1329591BA304D900BE647E /* libTVVLCKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libTVVLCKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D1329761BA306DE00BE647E /* vlc-plugins-iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-iPhone.h"; path = "Headers/Internal/vlc-plugins-iPhone.h"; sourceTree = "<group>"; };
-		7D1329771BA306E600BE647E /* vlc-plugins-AppleTV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-AppleTV.h"; path = "Headers/Internal/vlc-plugins-AppleTV.h"; sourceTree = "<group>"; };
+		7D1329761BA306DE00BE647E /* vlc-plugins-iphone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-iphone.h"; path = "Headers/Internal/vlc-plugins-iphone.h"; sourceTree = "<group>"; };
+		7D1329771BA306E600BE647E /* vlc-plugins-appletv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-appletv.h"; path = "Headers/Internal/vlc-plugins-appletv.h"; sourceTree = "<group>"; };
 		7D24C2B51EC0A3390047E700 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
 		7D24C2B71EC0A3400047E700 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		7D24C2B91EC0A3460047E700 /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.2.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
@@ -607,7 +607,7 @@
 		7D988CF324C72F8C00279703 /* VLCStreamSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCStreamSession.h; path = Headers/Public/VLCStreamSession.h; sourceTree = "<group>"; };
 		7D988CF724C72FCE00279703 /* VLCVideoLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoLayer.h; path = Headers/Public/VLCVideoLayer.h; sourceTree = "<group>"; };
 		7D988CFD24C7304800279703 /* VLCVideoCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCVideoCommon.h; path = Headers/Internal/VLCVideoCommon.h; sourceTree = "<group>"; };
-		7D988D0024C7307A00279703 /* vlc-plugins-MacOSX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-MacOSX.h"; path = "Headers/Internal/vlc-plugins-MacOSX.h"; sourceTree = "<group>"; };
+		7D988D0024C7307A00279703 /* vlc-plugins-macosx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "vlc-plugins-macosx.h"; path = "Headers/Internal/vlc-plugins-macosx.h"; sourceTree = "<group>"; };
 		7D988D0324C730A100279703 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		7D988D0524C730A600279703 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
 		7D988D0724C730AD00279703 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -989,9 +989,9 @@
 		7A5ECAE311DE8FDF00F66AF3 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				7D988D0024C7307A00279703 /* vlc-plugins-MacOSX.h */,
-				7D1329761BA306DE00BE647E /* vlc-plugins-iPhone.h */,
-				7D1329771BA306E600BE647E /* vlc-plugins-AppleTV.h */,
+				7D988D0024C7307A00279703 /* vlc-plugins-macosx.h */,
+				7D1329761BA306DE00BE647E /* vlc-plugins-iphone.h */,
+				7D1329771BA306E600BE647E /* vlc-plugins-appletv.h */,
 				7A5ECAE411DE8FEF00F66AF3 /* VLCLibVLCBridging.h */,
 				7A5ECAE511DE8FEF00F66AF3 /* VLCEventManager.h */,
 				7D803EC31C8F2AEF00864A9C /* VLCEmbeddedDialogProvider.h */,
@@ -1266,7 +1266,7 @@
 				7D988CEE24C72F4000279703 /* VLCRendererItem.h in Headers */,
 				7D988CEA24C72F4000279703 /* VLCDialogProvider.h in Headers */,
 				7D988CFF24C7306000279703 /* VLCEmbeddedDialogProvider.h in Headers */,
-				7D988D0124C7307A00279703 /* vlc-plugins-MacOSX.h in Headers */,
+				7D988D0124C7307A00279703 /* vlc-plugins-macosx.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1950,7 +1950,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iphone/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
 			name = Release;
@@ -2004,7 +2004,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-appletv/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2055,7 +2055,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-appletv/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2096,7 +2096,7 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/libvlc/vlc/include";
 				INSTALL_PATH = /usr/local/lib;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a $(OTHER_CFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iphone/libvlc-full-static.a $(OTHER_CFLAGS)";
 				PRODUCT_NAME = MobileVLCKit;
 			};
 			name = Debug;
@@ -2264,7 +2264,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iphone/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				VALIDATE_PRODUCT = YES;
@@ -2309,7 +2309,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iPhone/libvlc-full-static.a";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-iphone/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -2365,7 +2365,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/libvlc-full-static.a";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-macosx/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2430,7 +2430,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/libvlc-full-static.a";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-macosx/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -2599,7 +2599,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-appletv/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
@@ -2648,7 +2648,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-AppleTV/libvlc-full-static.a";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-appletv/libvlc-full-static.a";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;

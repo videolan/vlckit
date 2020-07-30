@@ -451,10 +451,10 @@ DEVICEARCHS=""
 SIMULATORARCHS=""
 
 if [ "$TVOS" = "yes" ]; then
-    build_universal_static_lib "AppleTV"
+    build_universal_static_lib "appletv"
 fi
 if [ "$MACOS" = "yes" ]; then
-    build_universal_static_lib "MacOSX"
+    build_universal_static_lib "macosx"
 fi
 if [ "$IOS" = "yes" ]; then
     build_universal_static_lib "iphone"
