@@ -142,7 +142,7 @@ mkdir -p "${DMGFOLDERNAME}/Sample Code"
 if [ "$MOBILE" = "no" ]; then
     cp -R build/Release/VLCKit.framework "${DMGFOLDERNAME}"
     cp -R Examples/macOS/* "${DMGFOLDERNAME}/Sample Code"
-    cp -R doc "${DMGFOLDERNAME}"
+    cp -R Documentation "${DMGFOLDERNAME}"
     cp COPYING "${DMGFOLDERNAME}"
 else
     if [ "$TV" = "yes" ]; then
@@ -151,7 +151,7 @@ else
         cp -R build/MobileVLCKit.framework "${DMGFOLDERNAME}"
         cp -R Examples/iOS/* "${DMGFOLDERNAME}/Sample Code"
     fi
-    cp -R doc "${DMGFOLDERNAME}"
+    cp -R Documentation "${DMGFOLDERNAME}"
     cp COPYING "${DMGFOLDERNAME}"
 fi
 cp NEWS "${DMGFOLDERNAME}"
