@@ -26,7 +26,7 @@ nightly-MobileVLCKit-main:
         - .nightly-build-base-main
     variables:
         BUILD_PARAM: "vf"
-        PACKAGING_PARAM: "m"
+        PACKAGING_PARAM: "vm"
         JOB_NAME: "MobileVLCKit"
 
 nightly-TVVLCKit-main:
@@ -35,7 +35,7 @@ nightly-TVVLCKit-main:
         - .nightly-build-base-main
     variables:
         BUILD_PARAM: "vft"
-        PACKAGING_PARAM: "t"
+        PACKAGING_PARAM: "vt"
         JOB_NAME: "TVVLCKit"
 
 nightly-VLCKit-main:
@@ -44,7 +44,7 @@ nightly-VLCKit-main:
         - .nightly-build-base-main
     variables:
         BUILD_PARAM: "vx"
-        PACKAGING_PARAM: ""
+        PACKAGING_PARAM: "v"
         JOB_NAME: "VLCKit"
 
 ####################
