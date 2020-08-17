@@ -1,7 +1,7 @@
-From 70f85e6e168b2f22e0f8c8892e922ea102b51fc4 Mon Sep 17 00:00:00 2001
+From bc18a28dd11c75b595463e0f6c37a1aa262e4d53 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 22/35] libvlc: media_player: Add record method
+Subject: [PATCH 22/38] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -33,7 +33,7 @@ index 4e951292c9..363779fd3d 100644
  /** @} audio */
  
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 29285065f0..7e714d247b 100644
+index bff796eaba..1a33a342b3 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -622,6 +622,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -44,7 +44,7 @@ index 29285065f0..7e714d247b 100644
      var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
  
      /* Video */
-@@ -2092,3 +2093,23 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
+@@ -2088,3 +2089,23 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
      free(str);
      return ret;
  }

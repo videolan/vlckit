@@ -1,7 +1,7 @@
-From 45d9ef7fe324c3592f1e1b080692d491dbb393d8 Mon Sep 17 00:00:00 2001
+From afea25cb00b35636011745b689d6ff6406257a5b Mon Sep 17 00:00:00 2001
 From: Francois Cartegnie <fcvlcdev@free.fr>
 Date: Mon, 28 Sep 2020 17:52:16 +0200
-Subject: [PATCH 31/35] httpd: update activity time before processing timeout
+Subject: [PATCH 31/38] httpd: update activity time before processing timeout
  (#25151)
 
 as connection state handling block has moved in
@@ -12,10 +12,10 @@ sockets can now timeout when still active.
  1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/src/network/httpd.c b/src/network/httpd.c
-index 3197fb2ec9..d9c19c2c29 100644
+index 69e6399483..f4a7638477 100644
 --- a/src/network/httpd.c
 +++ b/src/network/httpd.c
-@@ -1730,6 +1730,11 @@ static void httpdLoop(httpd_host_t *host)
+@@ -1735,6 +1735,11 @@ static void httpdLoop(httpd_host_t *host)
                  break;
          }
  
@@ -27,7 +27,7 @@ index 3197fb2ec9..d9c19c2c29 100644
          if (cl->i_ref < 0 || (cl->i_ref == 0 &&
                      (cl->i_state == HTTPD_CLIENT_DEAD ||
                        (cl->i_activity_timeout > 0 &&
-@@ -1740,11 +1745,6 @@ static void httpdLoop(httpd_host_t *host)
+@@ -1745,11 +1750,6 @@ static void httpdLoop(httpd_host_t *host)
              continue;
          }
  

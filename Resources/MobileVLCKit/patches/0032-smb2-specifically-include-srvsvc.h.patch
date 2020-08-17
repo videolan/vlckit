@@ -1,7 +1,7 @@
-From 0e12071ab4f8e5137db7a18389ad5c0253d782b8 Mon Sep 17 00:00:00 2001
+From e17259edf7e560236797d17c3ed6681ad04e9e94 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 9 Oct 2020 09:18:23 +0200
-Subject: [PATCH 33/35] smb2: specifically include srvsvc.h
+Subject: [PATCH 32/38] smb2: specifically include srvsvc.h
 
 This is needed by newest version of libsmb2.
 ---
@@ -9,7 +9,7 @@ This is needed by newest version of libsmb2.
  1 file changed, 1 insertion(+)
 
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 25268cd90f..5adc4e3181 100644
+index b2747f172e..8c4b298042 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -46,6 +46,7 @@
