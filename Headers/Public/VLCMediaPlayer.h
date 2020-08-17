@@ -48,6 +48,7 @@ extern NSString *const VLCMediaPlayerTimeChanged;
 extern NSString *const VLCMediaPlayerStateChanged;
 extern NSString *const VLCMediaPlayerTitleChanged;
 extern NSString *const VLCMediaPlayerChapterChanged;
+extern NSString *const VLCMediaPlayerLoudnessChanged;
 
 /**
  * VLCMediaPlayerState describes the state of the media player.
@@ -85,6 +86,25 @@ typedef NS_ENUM(NSInteger, VLCDeinterlace)
     VLCDeinterlaceOn = 1,
     VLCDeinterlaceOff = 0
 };
+
+/**
+ * VLCMediaLoudness describes the loudness of a certain interval of decoded media data
+ */
+@interface VLCMediaLoudness : NSObject
+
+/**
+ * Returns the momentary loudness in LUFS / dBFS for the last 400ms
+ * \return montary loudness or 0 if there is no loudness yet
+ */
+@property (readonly) double loudnessValue;
+
+/**
+ * returns the absolute date of the measurement analog to mach_absolute_time()
+ * It is most likely in the future (0 to 2seconds) depending on the audio output buffer size.
+ */
+@property (readonly) int64_t date;
+
+@end
 
 /**
  * Returns the name of the player state as a string.
@@ -128,6 +148,13 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * the VLCMediaPlayer object in question by sending object to aNotification.
  */
 - (void)mediaPlayerChapterChanged:(NSNotification *)aNotification;
+
+/**
+ * Sent by the default notification center whenever the player's loundess has changed (if any).
+ * \details Discussion The value of aNotification is always an VLCMediaPlayerLoudnessChanged notification. You can retrieve
+ * the VLCMediaPlayer object in question by sending object to aNotification.
+ */
+- (void)mediaPlayerLoudnessChanged:(NSNotification *)aNotification;
 
 /**
  * Sent by the default notification center whenever a new snapshot is taken.
@@ -617,6 +644,11 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \return time (in microseconds) the audio playback is being delayed
  */
 @property (readwrite) NSInteger currentAudioPlaybackDelay;
+
+/**
+ * Get the last available loudness description for the current media (last 400ms)
+ */
+@property (readonly) VLCMediaLoudness *momentaryLoudness;
 
 #pragma mark -
 #pragma mark equalizer

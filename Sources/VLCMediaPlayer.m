@@ -55,6 +55,7 @@ NSString *const VLCMediaPlayerTimeChanged       = @"VLCMediaPlayerTimeChanged";
 NSString *const VLCMediaPlayerStateChanged      = @"VLCMediaPlayerStateChanged";
 NSString *const VLCMediaPlayerTitleChanged       = @"VLCMediaPlayerTitleChanged";
 NSString *const VLCMediaPlayerChapterChanged      = @"VLCMediaPlayerChapterChanged";
+NSString *const VLCMediaPlayerLoudnessChanged    = @"VLCMediaPlayerLoudnessChanged";
 NSString *const VLCMediaPlayerSnapshotTaken     = @"VLCMediaPlayerSnapshotTaken";
 
 /* title keys */
@@ -98,9 +99,14 @@ const int64_t VLC_AUDIO_DELAY_MAX = 1000000ULL;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
 - (void)mediaPlayerTitleChanged:(NSNumber *)newTitle;
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
+- (void)mediaPlayerLoudnessChanged:(NSNumber *)newLoudness;
 
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
 - (void)mediaPlayerRecordChanged:(NSArray *)arguments;
+@end
+
+@interface VLCMediaLoudness (Private)
++ (VLCMediaLoudness *)loudnessDescriptionWithValue:(double)value andDate:(int64_t)date;
 @end
 
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
@@ -193,6 +199,21 @@ static void HandleMediaChapterChanged(const libvlc_event_t * event, void * self)
     }
 }
 
+static void HandleMediaLoudnessChanged(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        VLCMediaLoudness *loudness = [VLCMediaLoudness loudnessDescriptionWithValue:event->u.media_player_loudness_changed.momentary_loudness
+                                                                            andDate:event->u.media_player_loudness_changed.date];
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerLoudnessChanged:)
+                                           withArgumentAsObject:loudness];
+
+        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
+                                                       withDelegateMethod:@selector(mediaPlayerLoudnessChanged:)
+                                                     withNotificationName:VLCMediaPlayerLoudnessChanged];
+    }
+}
+
 static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
@@ -236,6 +257,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
     int64_t _extraDelay;
+    VLCMediaLoudness *_momentaryLoudness;        ///< Last loudness value received
 }
 @end
 
@@ -276,6 +298,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
         _extraDelay = 0.0f;
+        _momentaryLoudness = nil;
 
         _privateLibrary = library;
         libvlc_retain([_privateLibrary instance]);
@@ -1000,6 +1023,11 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_audio_get_delay(_playerInstance) - _extraDelay;
 }
 
+- (VLCMediaLoudness *)momentaryLoudness
+{
+    return _momentaryLoudness;
+}
+
 #pragma mark -
 #pragma mark equalizer
 
@@ -1455,6 +1483,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
         libvlc_event_attach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
+        libvlc_event_attach(p_em, libvlc_MediaPlayerLoudnessChanged,  HandleMediaLoudnessChanged,      (__bridge void *)(self));
 
         libvlc_event_attach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
@@ -1484,6 +1513,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
     libvlc_event_detach(p_em, libvlc_MediaPlayerTitleChanged,     HandleMediaTitleChanged,         (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged,       (__bridge void *)(self));
+    libvlc_event_detach(p_em, libvlc_MediaPlayerLoudnessChanged,  HandleMediaLoudnessChanged,      (__bridge void *)(self));
 
     libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       (__bridge void *)(self));
     libvlc_event_detach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         (__bridge void *)(self));
@@ -1579,6 +1609,13 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     [self didChangeValueForKey:@"currentChapterIndex"];
 }
 
+- (void)mediaPlayerLoudnessChanged:(VLCMediaLoudness *)newLoudness
+{
+    [self willChangeValueForKey:@"momentaryLoudness"];
+    _momentaryLoudness = newLoudness;
+    [self didChangeValueForKey:@"momentaryLoudness"];
+}
+
 - (void)mediaPlayerSnapshot:(NSString *)fileName
 {
     @synchronized(_snapshots) {
@@ -1618,5 +1655,30 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 
 #endif
+
+@end
+
+@implementation VLCMediaLoudness
+
++ (VLCMediaLoudness *)loudnessDescriptionWithValue:(double)value andDate:(int64_t)date
+{
+    VLCMediaLoudness *loudness = [[VLCMediaLoudness alloc] initLoudnessDescriptionWithValue:(double)value andDate:(int64_t)date];
+    return loudness;
+}
+
+- (instancetype)initLoudnessDescriptionWithValue:(double)value andDate:(int64_t)date
+{
+    self = [super init];
+    if (self) {
+        _loudnessValue = value;
+        _date = date;
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@: value: %2.f, date: %lli", NSStringFromClass([self class]), self.loudnessValue, self.date];
+}
 
 @end
