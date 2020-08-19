@@ -672,6 +672,11 @@ typedef int VLCMediaParsingOptions;
  * \return a NSInteger with the total number of lost pictures
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfLostPictures;
+/**
+ * returns the total number of pictures late during the current media session
+ * \return a NSInteger with the total number of late pictures
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfLatePictures;
 
 /**
  * returns the total number of played audio buffers during the current media session
