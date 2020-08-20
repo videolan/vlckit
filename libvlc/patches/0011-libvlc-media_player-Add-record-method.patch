@@ -1,7 +1,7 @@
-From 10b2bba36b7f2b2d6756ae779f91cd79c2e23a64 Mon Sep 17 00:00:00 2001
+From d70004312e59b6995cddeda434f53e46901b1519 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 13/17] libvlc: media_player: Add record method
+Subject: [PATCH 11/16] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -9,10 +9,10 @@ Subject: [PATCH 13/17] libvlc: media_player: Add record method
  2 files changed, 33 insertions(+)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index d4597e3353..fcb7e23ce6 100644
+index dc5942afd0..61943a349b 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -2480,6 +2480,19 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
+@@ -2572,6 +2572,19 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
   */
  LIBVLC_API int libvlc_media_player_set_role(libvlc_media_player_t *p_mi,
                                              unsigned role);
@@ -33,10 +33,10 @@ index d4597e3353..fcb7e23ce6 100644
  /** @} audio */
  
 diff --git a/lib/media_player.c b/lib/media_player.c
-index ec56b4bc6a..58eec27ae9 100644
+index f292b7158d..68b1d4765b 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -576,6 +576,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -614,6 +614,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
      var_Create (mp, "sout", VLC_VAR_STRING);
      var_Create (mp, "demux-filter", VLC_VAR_STRING);
@@ -44,7 +44,7 @@ index ec56b4bc6a..58eec27ae9 100644
      var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
  
      /* Video */
-@@ -1907,6 +1908,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
+@@ -2082,6 +2083,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
      return ret;
  }
  
@@ -71,5 +71,5 @@ index ec56b4bc6a..58eec27ae9 100644
  
  /* make sure surface structures from libvlc can be passed as such to vlc
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

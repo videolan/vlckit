@@ -1,0 +1,32 @@
+From d56618f6b044c979504756df3c7a802884f7a59b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Thu, 20 Aug 2020 13:56:14 +0200
+Subject: [PATCH 15/16] src/threads: add hack to retain compilation support for
+ i386
+
+This leads to potentially undefined behavior when using the 32bit iOS Simulator. This code path never ends-up in production.
+---
+ src/misc/threads.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/src/misc/threads.c b/src/misc/threads.c
+index 196e0dc1d0..c8dbe0697c 100644
+--- a/src/misc/threads.c
++++ b/src/misc/threads.c
+@@ -130,7 +130,12 @@ void vlc_mutex_init_recursive(vlc_mutex_t *mtx)
+     vlc_mutex_init_common(mtx, true);
+ }
+ 
+-static _Thread_local char thread_self[1];
++
++#ifdef __i386__
++ static char thread_self[1];
++#else
++ static _Thread_local char thread_self[1];
++#endif
+ #define THREAD_SELF ((const void *)thread_self)
+ 
+ bool vlc_mutex_held(const vlc_mutex_t *mtx)
+-- 
+2.24.3 (Apple Git-128)
+
