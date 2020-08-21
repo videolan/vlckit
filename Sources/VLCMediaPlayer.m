@@ -512,24 +512,25 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 
 #if TARGET_OS_IPHONE
+#warning text renderer API needs to be reimplemented in libvlc (#294)
 - (void)setTextRendererFontSize:(NSNumber *)fontSize
 {
-    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontsize, [fontSize intValue]);
+//    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontsize, [fontSize intValue]);
 }
 
 - (void)setTextRendererFont:(NSString *)fontname
 {
-    libvlc_video_set_textrenderer_string(_playerInstance, libvlc_textrender_font, [fontname UTF8String]);
+//    libvlc_video_set_textrenderer_string(_playerInstance, libvlc_textrender_font, [fontname UTF8String]);
 }
 
 - (void)setTextRendererFontColor:(NSNumber *)fontColor
 {
-    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontcolor, [fontColor intValue]);
+//    libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontcolor, [fontColor intValue]);
 }
 
 - (void)setTextRendererFontForceBold:(NSNumber *)fontForceBold
 {
-    libvlc_video_set_textrenderer_bool(_playerInstance, libvlc_textrender_fontforcebold, [fontForceBold boolValue]);
+//    libvlc_video_set_textrenderer_bool(_playerInstance, libvlc_textrender_fontforcebold, [fontForceBold boolValue]);
 }
 #endif
 
