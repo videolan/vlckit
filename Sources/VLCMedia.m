@@ -514,6 +514,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         @"displayedPictures" : @(p_stats.i_displayed_pictures),
         @"lostAbuffers" : @(p_stats.i_lost_abuffers),
         @"lostPictures" : @(p_stats.i_lost_pictures),
+        @"latePictures" : @(p_stats.i_late_pictures),
         @"playedAbuffers" : @(p_stats.i_played_abuffers),
         @"readBytes" : @(p_stats.i_read_bytes)
     };
@@ -606,6 +607,18 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
     return p_stats.i_lost_pictures;
 }
+
+- (NSInteger)numberOfLatePictures
+{
+    if (!p_md)
+        return 0;
+
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+
+    return p_stats.i_late_pictures;
+}
+
 
 - (NSInteger)numberOfPlayedAudioBuffers
 {

@@ -41,14 +41,17 @@ typedef NS_ENUM(unsigned, VLCMediaDiscovererCategoryType)
 };
 
 /* discoverer keys */
-extern NSString *const VLCMediaDiscovererName;
-extern NSString *const VLCMediaDiscovererLongName;
-extern NSString *const VLCMediaDiscovererCategory;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaDiscovererName;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaDiscovererLongName;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaDiscovererCategory;
 
 /**
  * VLCMediaDiscoverer
  */
-
+OBJC_VISIBLE
 @interface VLCMediaDiscoverer : NSObject
 
 /**

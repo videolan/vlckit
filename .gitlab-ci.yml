@@ -1,0 +1,87 @@
+variables:
+    VLC_VERSION: "4.0"
+
+####################
+## Nightly builds ##
+####################
+
+.nightly-job-base-main:
+    tags:
+        - macos
+    only:
+        - schedules
+    artifacts:
+        paths:
+            - ./*.tar.xz
+
+.nightly-build-base-main:
+    script:
+        - ./compileAndBuildVLCKit.sh -${BUILD_PARAM}
+        - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
+        - mv ${JOB_NAME}-*.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
+
+nightly-MobileVLCKit-main:
+    extends:
+        - .nightly-job-base-main
+        - .nightly-build-base-main
+    variables:
+        BUILD_PARAM: "vf"
+        PACKAGING_PARAM: "vm"
+        JOB_NAME: "MobileVLCKit"
+
+nightly-TVVLCKit-main:
+    extends:
+        - .nightly-job-base-main
+        - .nightly-build-base-main
+    variables:
+        BUILD_PARAM: "vft"
+        PACKAGING_PARAM: "vt"
+        JOB_NAME: "TVVLCKit"
+
+nightly-VLCKit-main:
+    extends:
+        - .nightly-job-base-main
+        - .nightly-build-base-main
+    variables:
+        BUILD_PARAM: "vx"
+        PACKAGING_PARAM: "v"
+        JOB_NAME: "VLCKit"
+
+####################
+## Release builds ##
+####################
+
+.release-job-base-main:
+    tags:
+        - macos
+    only:
+        - tags
+    artifacts:
+        paths:
+            - ./*.tar.xz
+
+.release-build-base-main:
+    script:
+        - cd Packaging
+        - ./buildAndDeployFrameworks.sh -${BUILD_PARAM}
+
+MobileVLCKit-main:
+    extends:
+        - .release-job-base-main
+        - .release-build-base-main
+    variables:
+        BUILD_PARAM: "m"
+
+TVVLCKit-main:
+    extends:
+        - .release-job-base-main
+        - .release-build-base-main
+    variables:
+        BUILD_PARAM: "t"
+
+VLCKit-main:
+    extends:
+        - .release-job-base-main
+        - .release-build-base-main
+    variables:
+        BUILD_PARAM: "x"

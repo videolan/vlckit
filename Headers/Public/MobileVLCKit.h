@@ -36,7 +36,6 @@
 #import <MobileVLCKit/VLCRendererItem.h>
 
 @class VLCMedia;
-@class VLCMediaLibrary;
 @class VLCMediaList;
 @class VLCTime;
 @class VLCVideoView;

@@ -27,6 +27,7 @@
 /**
  * Provides an object to define VLCMedia's time.
  */
+OBJC_VISIBLE
 @interface VLCTime : NSObject
 
 /**
