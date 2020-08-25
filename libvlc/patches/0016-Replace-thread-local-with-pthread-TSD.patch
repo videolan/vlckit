@@ -1,16 +1,15 @@
-From c7ef2e5b008b7a91559a202f3a27c570aa0e7fa5 Mon Sep 17 00:00:00 2001
+From 0e096a03fbfe99861a07d12991e7dc3799e4cb1b Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 10/17] Replace thread local with pthread TSD
+Subject: [PATCH 16/16] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
- src/misc/sort.c      |  4 +++
  src/misc/variables.c | 19 ++++++++++++++
- 3 files changed, 82 insertions(+)
+ 2 files changed, 78 insertions(+)
 
 diff --git a/src/misc/interrupt.c b/src/misc/interrupt.c
-index d2a04a72b3..75edb2d7c1 100644
+index 972c01ebf5..ad743c8695 100644
 --- a/src/misc/interrupt.c
 +++ b/src/misc/interrupt.c
 @@ -43,13 +43,26 @@
@@ -40,7 +39,7 @@ index d2a04a72b3..75edb2d7c1 100644
      vlc_mutex_init(&ctx->lock);
      ctx->interrupted = false;
      atomic_init(&ctx->killed, false);
-@@ -98,9 +111,15 @@ void vlc_interrupt_raise(vlc_interrupt_t *ctx)
+@@ -97,9 +110,15 @@ void vlc_interrupt_raise(vlc_interrupt_t *ctx)
  
  vlc_interrupt_t *vlc_interrupt_set(vlc_interrupt_t *newctx)
  {
@@ -56,7 +55,7 @@ index d2a04a72b3..75edb2d7c1 100644
      return oldctx;
  }
  
-@@ -115,7 +134,11 @@ static void vlc_interrupt_prepare(vlc_interrupt_t *ctx,
+@@ -114,7 +133,11 @@ static void vlc_interrupt_prepare(vlc_interrupt_t *ctx,
                                    void (*cb)(void *), void *data)
  {
      assert(ctx != NULL);
@@ -68,7 +67,7 @@ index d2a04a72b3..75edb2d7c1 100644
  
      vlc_mutex_lock(&ctx->lock);
      assert(ctx->callback == NULL);
-@@ -143,7 +166,11 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
+@@ -142,7 +165,11 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
      int ret = 0;
  
      assert(ctx != NULL);
@@ -80,7 +79,7 @@ index d2a04a72b3..75edb2d7c1 100644
  
      /* Wait for pending callbacks to prevent access by other threads. */
      vlc_mutex_lock(&ctx->lock);
-@@ -159,14 +186,22 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
+@@ -158,14 +185,22 @@ static int vlc_interrupt_finish(vlc_interrupt_t *ctx)
  
  void vlc_interrupt_register(void (*cb)(void *), void *opaque)
  {
@@ -103,7 +102,7 @@ index d2a04a72b3..75edb2d7c1 100644
      return (ctx != NULL) ? vlc_interrupt_finish(ctx) : 0;
  }
  
-@@ -185,7 +220,11 @@ void vlc_interrupt_kill(vlc_interrupt_t *ctx)
+@@ -184,7 +219,11 @@ void vlc_interrupt_kill(vlc_interrupt_t *ctx)
  
  bool vlc_killed(void)
  {
@@ -115,7 +114,7 @@ index d2a04a72b3..75edb2d7c1 100644
  
      return (ctx != NULL) && atomic_load(&ctx->killed);
  }
-@@ -197,7 +236,11 @@ static void vlc_interrupt_sem(void *opaque)
+@@ -196,7 +235,11 @@ static void vlc_interrupt_sem(void *opaque)
  
  int vlc_sem_wait_i11e(vlc_sem_t *sem)
  {
@@ -127,7 +126,7 @@ index d2a04a72b3..75edb2d7c1 100644
      if (ctx == NULL)
          return vlc_sem_wait(sem), 0;
  
-@@ -227,7 +270,11 @@ static void vlc_mwait_i11e_cleanup(void *opaque)
+@@ -224,7 +267,11 @@ static void vlc_mwait_i11e_cleanup(void *opaque)
  
  int vlc_mwait_i11e(vlc_tick_t deadline)
  {
@@ -139,7 +138,7 @@ index d2a04a72b3..75edb2d7c1 100644
      if (ctx == NULL)
          return vlc_tick_wait(deadline), 0;
  
-@@ -262,7 +309,11 @@ void vlc_interrupt_forward_start(vlc_interrupt_t *to, void *data[2])
+@@ -257,7 +304,11 @@ void vlc_interrupt_forward_start(vlc_interrupt_t *to, void *data[2])
  {
      data[0] = data[1] = NULL;
  
@@ -151,7 +150,7 @@ index d2a04a72b3..75edb2d7c1 100644
      if (from == NULL)
          return;
  
-@@ -371,7 +422,11 @@ static int vlc_poll_i11e_inner(struct pollfd *restrict fds, unsigned nfds,
+@@ -366,7 +417,11 @@ static int vlc_poll_i11e_inner(struct pollfd *restrict fds, unsigned nfds,
  
  int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
  {
@@ -163,7 +162,7 @@ index d2a04a72b3..75edb2d7c1 100644
      if (ctx == NULL)
          return poll(fds, nfds, timeout);
  
-@@ -570,7 +625,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
+@@ -565,7 +620,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
  
  int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
  {
@@ -175,22 +174,6 @@ index d2a04a72b3..75edb2d7c1 100644
      if (ctx == NULL)
          return vlc_poll(fds, nfds, timeout);
  
-diff --git a/src/misc/sort.c b/src/misc/sort.c
-index fc62eb7fff..a96fb0104c 100644
---- a/src/misc/sort.c
-+++ b/src/misc/sort.c
-@@ -26,7 +26,11 @@
- #include <vlc_common.h>
- #include <vlc_sort.h>
- 
-+#ifdef I_CAN_HAZ_TSD
- static thread_local struct
-+#else
-+static struct
-+#endif
- {
-     int (*compar)(const void *, const void *, void *);
-     void *arg;
 diff --git a/src/misc/variables.c b/src/misc/variables.c
 index ed284cf4f4..15f6dfe096 100644
 --- a/src/misc/variables.c
@@ -239,5 +222,5 @@ index ed284cf4f4..15f6dfe096 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

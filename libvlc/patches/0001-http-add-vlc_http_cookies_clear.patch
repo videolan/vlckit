@@ -1,14 +1,14 @@
-From e4f9f7b73e6f833b9696ebe03a0a655d20e30d06 Mon Sep 17 00:00:00 2001
+From 8ef0adef571f037913aacb168cd7f30d2973c54a Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
-Subject: [PATCH 01/17] http: add vlc_http_cookies_clear
+Subject: [PATCH 01/16] http: add vlc_http_cookies_clear
 
 Clear all cookies without deleting the jar.
 ---
  include/vlc_http.h     | 1 +
  src/libvlccore.sym     | 1 +
- src/misc/httpcookies.c | 7 +++++--
- 3 files changed, 7 insertions(+), 2 deletions(-)
+ src/misc/httpcookies.c | 6 +++++-
+ 3 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/include/vlc_http.h b/include/vlc_http.h
 index 383a1ed354..33d04eb749 100644
@@ -23,10 +23,10 @@ index 383a1ed354..33d04eb749 100644
  
  /**
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index b704d24f28..7c5c68c581 100644
+index ed43c17715..b284ad5a40 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -134,6 +134,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
+@@ -129,6 +129,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
  vlc_http_auth_FormatAuthorizationHeader
  vlc_http_cookies_new
  vlc_http_cookies_destroy
@@ -35,7 +35,7 @@ index b704d24f28..7c5c68c581 100644
  vlc_http_cookies_fetch
  httpd_ClientIP
 diff --git a/src/misc/httpcookies.c b/src/misc/httpcookies.c
-index f4c9682a9e..0e2898f4f6 100644
+index 2049b1b62c..0e2898f4f6 100644
 --- a/src/misc/httpcookies.c
 +++ b/src/misc/httpcookies.c
 @@ -280,7 +280,7 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
@@ -47,11 +47,10 @@ index f4c9682a9e..0e2898f4f6 100644
  {
      if ( !p_jar )
          return;
-@@ -289,8 +289,11 @@ void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
+@@ -289,7 +289,11 @@ void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
          cookie_destroy( vlc_array_item_at_index( &p_jar->cookies, i ) );
  
      vlc_array_clear( &p_jar->cookies );
--    vlc_mutex_destroy( &p_jar->lock );
 +}
  
 +void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
@@ -61,5 +60,5 @@ index f4c9682a9e..0e2898f4f6 100644
  }
  
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

@@ -110,8 +110,9 @@ typedef NS_ENUM(NSUInteger, VLCDialogQuestionType) {
 
 /**
  * dialog provider base class
- * \note For iOS and tvOS, there are useable implementations available which don't require the use of a custom renderer 
+ * \note For iOS and tvOS, there are useable implementations available which don't require the use of a custom renderer
  */
+OBJC_VISIBLE
 @interface VLCDialogProvider : NSObject
 
 /**

@@ -42,6 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Renderer Discoverer description
  */
+OBJC_VISIBLE
 @interface VLCRendererDiscovererDescription : NSObject
 
 /**
@@ -67,6 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Renderer Discoverer
  */
+OBJC_VISIBLE
 @interface VLCRendererDiscoverer : NSObject
 
 /**

@@ -33,6 +33,7 @@ typedef NS_OPTIONS(NSInteger, VLCRendererPlay) {
 /**
  * Renderer Item
  */
+OBJC_VISIBLE
 @interface VLCRendererItem : NSObject
 
 /**

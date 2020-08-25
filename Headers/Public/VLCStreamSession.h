@@ -29,6 +29,7 @@
 /**
  * control class for streaming sessions
  */
+OBJC_VISIBLE
 @interface VLCStreamSession : VLCMediaPlayer
 
 /**

@@ -3,7 +3,13 @@
 //
 
 #ifdef __OBJC__
-#  import <Cocoa/Cocoa.h>
+#  import <TargetConditionals.h>
+#  if TARGET_OS_OSX
+#    import <Cocoa/Cocoa.h>
+#  else
+#    import <Foundation/Foundation.h>
+#    import <UIKit/UIKit.h>
+#  endif
 #  import "VLCHelperCode.h"
 #endif
 
@@ -13,4 +19,3 @@
 
 #include <vlc/vlc.h>
 #include <vlc/libvlc.h>
-#include "macros.h"

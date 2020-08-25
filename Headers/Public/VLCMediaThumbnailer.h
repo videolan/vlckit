@@ -32,6 +32,7 @@
 /**
  * a facility allowing you to do thumbnails in an efficient manner
  */
+OBJC_VISIBLE
 @interface VLCMediaThumbnailer : NSObject
 
 /**

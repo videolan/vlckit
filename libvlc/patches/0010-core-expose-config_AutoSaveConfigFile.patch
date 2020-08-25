@@ -1,7 +1,7 @@
-From d13a39d5551db4943e1cedb72b7e39869cbf14e0 Mon Sep 17 00:00:00 2001
+From c83d509ffce758b3ec56b43932c140cabe1290b8 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 12/17] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 10/16] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
@@ -36,10 +36,10 @@ index ec19abc89e..c1bf31fc46 100644
  void config_Free (module_config_t *, size_t);
  
 diff --git a/src/config/file.c b/src/config/file.c
-index e6b10e5c02..4275a7ad00 100644
+index ae6e8b9ce5..a81f9164e9 100644
 --- a/src/config/file.c
 +++ b/src/config/file.c
-@@ -527,6 +527,7 @@ error:
+@@ -526,6 +526,7 @@ error:
      return -1;
  }
  
@@ -48,10 +48,10 @@ index e6b10e5c02..4275a7ad00 100644
  {
      int ret = 0;
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index 7c5c68c581..77c2034c6d 100644
+index b284ad5a40..3443836f47 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -48,6 +48,7 @@ block_Realloc
+@@ -44,6 +44,7 @@ block_Realloc
  block_Release
  block_TryRealloc
  config_AddIntf
@@ -60,5 +60,5 @@ index 7c5c68c581..77c2034c6d 100644
  config_ChainDestroy
  config_ChainDuplicate
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

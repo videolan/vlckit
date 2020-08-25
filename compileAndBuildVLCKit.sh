@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (C) Pierre d'Herbemont, 2010
-# Copyright (C) Felix Paul Kühne, 2012-2019
+# Copyright (C) Felix Paul Kühne, 2012-2020
 
 set -e
 
@@ -24,7 +24,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="361ad729d" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="05738f575b51b71b6e27cda3127bfdf8195c5073" # libvlc hash that this version of VLCKit is build on
 
 usage()
 {
@@ -121,6 +121,11 @@ buildxcodeproj()
         bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
     fi
 
+    local verboseflag=""
+    if [ "$VERBOSE" = "yes" ]; then
+        verboseflag="-verbose"
+    fi
+
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
 
     xcodebuild -project "$1.xcodeproj" \
@@ -131,6 +136,7 @@ buildxcodeproj()
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
                GCC_PREPROCESSOR_DEFINITIONS="$defs" \
                ${bitcodeflag} \
+               ${verboseflag} \
                > ${out}
 }
 
@@ -236,8 +242,8 @@ build_universal_static_lib() {
     info "building universal static libs for $OSSTYLE"
 
     # remove old module list
-    rm -f $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    rm -f $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
+    touch $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
 
     spushd ${VLCROOT}
     rm -rf install-$OSSTYLE
@@ -274,7 +280,7 @@ build_universal_static_lib() {
 
     lipo $VLCSTATICLIBS -create -output install-$OSSTYLE/libvlc-full-static.a
 
-    cp $VLCSTATICMODULELIST $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
+    cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
 
     spopd # VLCROOT
 }
@@ -445,10 +451,10 @@ DEVICEARCHS=""
 SIMULATORARCHS=""
 
 if [ "$TVOS" = "yes" ]; then
-    build_universal_static_lib "AppleTV"
+    build_universal_static_lib "appletv"
 fi
 if [ "$MACOS" = "yes" ]; then
-    build_universal_static_lib "MacOSX"
+    build_universal_static_lib "macosx"
 fi
 if [ "$IOS" = "yes" ]; then
     build_universal_static_lib "iphone"
@@ -464,12 +470,12 @@ if [ "$TVOS" = "yes" ]; then
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="appletvos"
-        buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
+        buildxcodeproj VLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
-        buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
+        buildxcodeproj VLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
     fi
 
@@ -492,12 +498,12 @@ if [ "$IOS" = "yes" ]; then
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="iphoneos"
-        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
+        buildxcodeproj VLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="iphonesimulator"
-        buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
+        buildxcodeproj VLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
     fi
 
@@ -520,11 +526,6 @@ if [ "$MACOS" = "yes" ]; then
     info "Building VLCKit.framework in ${CURRENT_DIR}"
 
     buildxcodeproj VLCKit "VLCKit" "macosx"
-
-    # remove intermediate build result we don't need to keep
-    spushd build
-    rm ${CONFIGURATION}/libStaticLibVLC.a
-    spopd # build
 
     info "Build of VLCKit.framework completed"
 fi

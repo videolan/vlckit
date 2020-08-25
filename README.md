@@ -4,11 +4,11 @@
 
 **VLCKit** is a generic multimedia library for any audio or video playback needs on macOS, iOS and tvOS.
 
-|              | Platform                                                     | Master                                                       | Cocoapods                                                    |
-| ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| VLCKit       | ![Platform](https://img.shields.io/cocoapods/p/VLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![VLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/VLCKit.svg)](https://cocoapods.org/pods/VLCKit) |
-| MobileVLCKit | ![Platform](https://img.shields.io/cocoapods/p/MobileVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![MobileVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/MobileVLCKit.svg)](https://cocoapods.org/pods/MobileVLCKit) |
-| TVVLCKit     | ![Platform](https://img.shields.io/cocoapods/p/TVVLCKit.svg?style=flat) | ![CircleCI](https://img.shields.io/circleci/project/github/videolan/vlckit/master.svg) | [![TVVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/TVVLCKit.svg)](https://cocoapods.org/pods/TVVLCKit) |
+|              | Platform                                                     | Cocoapods                                                    |
+| ------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| VLCKit       | ![Platform](https://img.shields.io/cocoapods/p/VLCKit.svg?style=flat) | [![VLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/VLCKit.svg)](https://cocoapods.org/pods/VLCKit) |
+| MobileVLCKit | ![Platform](https://img.shields.io/cocoapods/p/MobileVLCKit.svg?style=flat) | [![MobileVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/MobileVLCKit.svg)](https://cocoapods.org/pods/MobileVLCKit) |
+| TVVLCKit     | ![Platform](https://img.shields.io/cocoapods/p/TVVLCKit.svg?style=flat) | [![TVVLCKit is CocoaPods Compatible](https://img.shields.io/cocoapods/v/TVVLCKit.svg)](https://cocoapods.org/pods/TVVLCKit) |
 
 ## Table of content
 
@@ -18,6 +18,7 @@
 - [Installation](#installation)
     - [Cocoapods](#cocoapods)
     - [Carthage](#carthage)
+- [Documentation](#documentation)
 - [Build](#build)
     - [Default](#default)
     - [Build with your own VLC repository](#build-with-your-own-vlc-repository)
@@ -139,7 +140,9 @@ Note that the following system dependencies are required and need to be linked i
 * CoreVideo.framework
 * Foundation.framework
 * libbz2.tbd
+* libc++.tbd
 * libiconv.tbd
+* libxml2.tbd
 * OpenGLES.framework
 * QuartzCore.framework
 * Security.framework
@@ -148,6 +151,9 @@ Note that the following system dependencies are required and need to be linked i
 On iOS and tvOS, you also need to link:
 
 * UIKit.framework
+
+## Documentation
+API documentation of VLCKit is available [online](https://videolan.videolan.me/VLCKit) and within both the source code as well as binary downloads. Except as indicated, all the APIs are the same on macOS, iOS and tvOS.
 
 ## Build
 

@@ -1,17 +1,17 @@
-From 59fc6445a393bd696b69b239fd2146af1ebb97fc Mon Sep 17 00:00:00 2001
+From 53235ab385b41cd20829e716c35f11a4d9abdac1 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Mon, 1 Oct 2018 15:37:57 +0200
-Subject: [PATCH 09/17] access_output: file: Add error dialog for write/open
+Subject: [PATCH 09/16] access_output: file: Add error dialog for write/open
 
 ---
  modules/access_output/file.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/modules/access_output/file.c b/modules/access_output/file.c
-index c983e3a8f0..8a690fc41f 100644
+index 9e7e5c2f6b..76e94b1ab3 100644
 --- a/modules/access_output/file.c
 +++ b/modules/access_output/file.c
-@@ -87,6 +87,9 @@ static ssize_t Write( sout_access_out_t *p_access, block_t *p_buffer )
+@@ -86,6 +86,9 @@ static ssize_t Write( sout_access_out_t *p_access, block_t *p_buffer )
          {
              if (errno == EINTR)
                  continue;
@@ -21,7 +21,7 @@ index c983e3a8f0..8a690fc41f 100644
              block_ChainRelease (p_buffer);
              msg_Err( p_access, "cannot write: %s", vlc_strerror_c(errno) );
              return -1;
-@@ -304,8 +307,13 @@ static int Open( vlc_object_t *p_this )
+@@ -303,8 +306,13 @@ static int Open( vlc_object_t *p_this )
              if (fd != -1)
                  break;
              if (fd == -1)
@@ -36,5 +36,5 @@ index c983e3a8f0..8a690fc41f 100644
                  break;
              flags &= ~O_EXCL;
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

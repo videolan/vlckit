@@ -1,7 +1,7 @@
-From f72729af3b7015a5b98817ec1813b60ed5405663 Mon Sep 17 00:00:00 2001
+From d8cf800ca5dcfd336fb4ff2fdd453b0e787f8756 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 08/17] http access: retain auth struct for the runtime of the
+Subject: [PATCH 08/16] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
@@ -52,10 +52,10 @@ index 4384e2b0a3..1a112b9ec1 100644
      p_sys->psz_mime = NULL;
      p_sys->i_icy_meta = 0;
 diff --git a/src/network/http_auth.c b/src/network/http_auth.c
-index ff1796c25d..939e493b76 100644
+index 599fda6286..752e059005 100644
 --- a/src/network/http_auth.c
 +++ b/src/network/http_auth.c
-@@ -242,7 +242,10 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
+@@ -224,7 +224,10 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
          /* 2 Basic Authentication Scheme */
          msg_Dbg( p_this, "Using Basic Authentication" );
          psz_header += sizeof( psz_basic_prefix ) - 1;
@@ -66,7 +66,7 @@ index ff1796c25d..939e493b76 100644
          if ( p_auth->psz_realm == NULL )
              msg_Warn( p_this, "Basic Authentication: "
                        "Mandatory 'realm' parameter is missing" );
-@@ -258,12 +261,24 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
+@@ -240,12 +243,24 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
              return;
  
          psz_header += sizeof( psz_digest_prefix ) - 1;
@@ -93,5 +93,5 @@ index ff1796c25d..939e493b76 100644
          p_auth->i_nonce = 0;
  
 -- 
-2.21.1 (Apple Git-122.3)
+2.24.3 (Apple Git-128)
 

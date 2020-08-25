@@ -44,10 +44,14 @@
 @class VLCRendererItem;
 
 /* Notification Messages */
-extern NSString *const VLCMediaPlayerTimeChanged;
-extern NSString *const VLCMediaPlayerStateChanged;
-extern NSString *const VLCMediaPlayerTitleChanged;
-extern NSString *const VLCMediaPlayerChapterChanged;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaPlayerTimeChanged;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaPlayerStateChanged;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaPlayerTitleSelectionChanged;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaPlayerChapterChanged;
 
 /**
  * VLCMediaPlayerState describes the state of the media player.
@@ -91,7 +95,8 @@ typedef NS_ENUM(NSInteger, VLCDeinterlace)
  * \param state The player state.
  * \return A string containing the name of state. If state is not a valid state, returns nil.
  */
-extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
+OBJC_VISIBLE OBJC_EXTERN
+NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Formal protocol declaration for playback delegates.  Allows playback messages
@@ -116,11 +121,12 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 /**
  * Sent by the default notification center whenever the player's title has changed (if any).
- * \details Discussion The value of aNotification is always an VLCMediaPlayerTitleChanged notification. You can retrieve
+ * \details Discussion The value of aNotification is always an VLCMediaPlayerTitleSelectionChanged notification. You can retrieve
  * the VLCMediaPlayer object in question by sending object to aNotification.
  * \note this is about a title in the navigation sense, not about metadata
  */
-- (void)mediaPlayerTitleChanged:(NSNotification *)aNotification;
+- (void)mediaPlayerTitleSelectionChanged:(NSNotification *)aNotification;
+
 
 /**
  * Sent by the default notification center whenever the player's chapter has changed (if any).
@@ -155,6 +161,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * The player base class needed to do any playback
  */
+OBJC_VISIBLE
 @interface VLCMediaPlayer : NSObject
 
 /**
@@ -478,15 +485,18 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
 /**
  * dictionary value for the user-facing chapter name
  */
-extern NSString *const VLCChapterDescriptionName;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCChapterDescriptionName;
 /**
  * dictionary value for the chapter's time offset
  */
-extern NSString *const VLCChapterDescriptionTimeOffset;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCChapterDescriptionTimeOffset;
 /**
  * dictionary value for the chapter's duration
  */
-extern NSString *const VLCChapterDescriptionDuration;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCChapterDescriptionDuration;
 
 /**
  * chapter descriptions
@@ -514,15 +524,18 @@ extern NSString *const VLCChapterDescriptionDuration;
 /**
  * dictionary value for the user-facing title name
  */
-extern NSString *const VLCTitleDescriptionName;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCTitleDescriptionName;
 /**
  * dictionary value for the title's duration
  */
-extern NSString *const VLCTitleDescriptionDuration;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCTitleDescriptionDuration;
 /**
  * dictionary value whether the title is a menu or not
  */
-extern NSString *const VLCTitleDescriptionIsMenu;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCTitleDescriptionIsMenu;
 
 /**
  * title descriptions
