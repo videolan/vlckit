@@ -67,7 +67,9 @@ typedef NS_ENUM(NSInteger, VLCMediaPlayerState)
     VLCMediaPlayerStateError,          ///< Player has generated an error
     VLCMediaPlayerStatePlaying,        ///< Stream is playing
     VLCMediaPlayerStatePaused,         ///< Stream is paused
-    VLCMediaPlayerStateESAdded         ///< Elementary Stream added
+    VLCMediaPlayerStateESAdded,        ///< Elementary Stream added
+    VLCMediaPlayerStateESDeleted,      ///< Elementary Stream deleted
+    VLCMediaPlayerStateLengthChanged   ///< Length changed
 };
 
 /**

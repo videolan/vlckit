@@ -153,6 +153,12 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
         case libvlc_MediaPlayerESAdded:
             newState = VLCMediaPlayerStateESAdded;
             break;
+        case libvlc_MediaPlayerESDeleted:
+            newState = VLCMediaPlayerStateESDeleted;
+            break;
+        case libvlc_MediaPlayerLengthChanged:
+            newState = VLCMediaPlayerStateLengthChanged;
+            break;
 
         default:
             VKLog(@"%s: Unknown event", __FUNCTION__);
