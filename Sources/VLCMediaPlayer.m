@@ -2,8 +2,8 @@
  * VLCMediaPlayer.m: VLCKit.framework VLCMediaPlayer implementation
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2019 VLC authors and VideoLAN
- * Partial Copyright (C) 2009-2019 Felix Paul Kühne
+ * Copyright (C) 2007-2020 VLC authors and VideoLAN
+ * Partial Copyright (C) 2009-2020 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -93,7 +93,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
 - (void)mediaPlayerStateChanged:(NSNumber *)newState;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
-- (void)mediaPlayerTitleChanged:(NSNumber *)newTitle;
+- (void)mediaPlayerTitleSelectionChanged:(NSNumber *)newTitle;
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
 - (void)mediaPlayerTitleListChanged:(NSString *)newTitleList;
 
@@ -176,6 +176,9 @@ static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * s
 static void HandleMediaTitleSelectionChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerTitleSelectionChanged:)
+                                           withArgumentAsObject:@(event->u.media_player_title_selection_changed.index)];
         [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
                                                        withDelegateMethod:@selector(mediaPlayerTitleSelectionChanged:)
                                                      withNotificationName:VLCMediaPlayerTitleSelectionChanged];
