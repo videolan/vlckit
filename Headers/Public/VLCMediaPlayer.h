@@ -2,8 +2,8 @@
  * VLCMediaPlayer.h: VLCKit.framework VLCMediaPlayer header
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2015 VLC authors and VideoLAN
- * Copyright (C) 2009-2015 Felix Paul Kühne
+ * Copyright (C) 2007-2020 VLC authors and VideoLAN
+ * Copyright (C) 2009-2020 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -50,6 +50,8 @@ OBJC_VISIBLE OBJC_EXTERN
 NSString *const VLCMediaPlayerStateChanged;
 OBJC_VISIBLE OBJC_EXTERN
 NSString *const VLCMediaPlayerTitleSelectionChanged;
+OBJC_VISIBLE OBJC_EXTERN
+NSString *const VLCMediaPlayerTitleListChanged;
 OBJC_VISIBLE OBJC_EXTERN
 NSString *const VLCMediaPlayerChapterChanged;
 
@@ -127,6 +129,13 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  */
 - (void)mediaPlayerTitleSelectionChanged:(NSNotification *)aNotification;
 
+/**
+* Sent by the default notification center whenever the player's list of titles has changed.
+* \details Discussion The value of aNotification is always an VLCMediaPlayerTitleListChanged notification. You can retrieve
+* the VLCMediaPlayer object in question by sending object to aNotification. Request titleDescriptions to get the actual list.
+* \note this is about a title in the navigation sense, not about metadata.
+*/
+- (void)mediaPlayerTitleListChanged:(NSNotification *)aNotification;
 
 /**
  * Sent by the default notification center whenever the player's chapter has changed (if any).

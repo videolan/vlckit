@@ -52,6 +52,7 @@
 NSString *const VLCMediaPlayerTimeChanged       = @"VLCMediaPlayerTimeChanged";
 NSString *const VLCMediaPlayerStateChanged      = @"VLCMediaPlayerStateChanged";
 NSString *const VLCMediaPlayerTitleSelectionChanged  = @"VLCMediaPlayerTitleSelectionChanged";
+NSString *const VLCMediaPlayerTitleListChanged  = @"VLCMediaPlayerTitleListChanged";
 NSString *const VLCMediaPlayerChapterChanged      = @"VLCMediaPlayerChapterChanged";
 NSString *const VLCMediaPlayerSnapshotTaken     = @"VLCMediaPlayerSnapshotTaken";
 
@@ -94,6 +95,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
 - (void)mediaPlayerTitleChanged:(NSNumber *)newTitle;
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
+- (void)mediaPlayerTitleListChanged:(NSString *)newTitleList;
 
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
 - (void)mediaPlayerRecordChanged:(NSArray *)arguments;
@@ -177,6 +179,18 @@ static void HandleMediaTitleSelectionChanged(const libvlc_event_t * event, void 
         [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
                                                        withDelegateMethod:@selector(mediaPlayerTitleSelectionChanged:)
                                                      withNotificationName:VLCMediaPlayerTitleSelectionChanged];
+    }
+}
+
+static void HandleMediaTitleListChanged(const libvlc_event_t * event, void * self)
+{
+    @autoreleasepool {
+        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
+                                                     withMethod:@selector(mediaPlayerTitleListChanged:)
+                                           withArgumentAsObject:VLCMediaPlayerTitleListChanged];
+        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
+                                                       withDelegateMethod:@selector(mediaPlayerTitleListChanged:)
+                                                     withNotificationName:VLCMediaPlayerTitleListChanged];
     }
 }
 
@@ -1336,6 +1350,7 @@ static const struct event_handler_entry
 
     { libvlc_MediaPlayerTitleSelectionChanged, HandleMediaTitleSelectionChanged },
     { libvlc_MediaPlayerChapterChanged,   HandleMediaChapterChanged },
+    { libvlc_MediaPlayerTitleListChanged, HandleMediaTitleListChanged },
 
     { libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot },
     { libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord },
@@ -1453,6 +1468,12 @@ static const struct event_handler_entry
 {
     [self willChangeValueForKey:@"currentTitleIndex"];
     [self didChangeValueForKey:@"currentTitleIndex"];
+}
+
+- (void)mediaPlayerTitleListChanged:(NSString *)string
+{
+    [self willChangeValueForKey:@"titleDescriptions"];
+    [self didChangeValueForKey:@"titleDescriptions"];
 }
 
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter
