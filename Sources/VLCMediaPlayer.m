@@ -128,25 +128,35 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
 {
     VLCMediaPlayerState newState;
 
-    if (event->type == libvlc_MediaPlayerPlaying)
-        newState = VLCMediaPlayerStatePlaying;
-    else if (event->type == libvlc_MediaPlayerPaused)
-        newState = VLCMediaPlayerStatePaused;
-    else if (event->type == libvlc_MediaPlayerStopped)
-        newState = VLCMediaPlayerStateStopped;
-    else if (event->type == libvlc_MediaPlayerEncounteredError)
-        newState = VLCMediaPlayerStateError;
-    else if (event->type == libvlc_MediaPlayerBuffering)
-        newState = VLCMediaPlayerStateBuffering;
-    else if (event->type == libvlc_MediaPlayerOpening)
-        newState = VLCMediaPlayerStateOpening;
-    else if (event->type == libvlc_MediaPlayerEndReached)
-        newState = VLCMediaPlayerStateEnded;
-    else if (event->type == libvlc_MediaPlayerESAdded)
-        newState = VLCMediaPlayerStateESAdded;
-    else {
-        VKLog(@"%s: Unknown event", __FUNCTION__);
-        return;
+    switch (event->type) {
+        case libvlc_MediaPlayerPlaying:
+            newState = VLCMediaPlayerStatePlaying;
+            break;
+        case libvlc_MediaPlayerPaused:
+            newState = VLCMediaPlayerStatePaused;
+            break;
+        case libvlc_MediaPlayerStopped:
+            newState = VLCMediaPlayerStateStopped;
+            break;
+        case libvlc_MediaPlayerEncounteredError:
+            newState = VLCMediaPlayerStateError;
+            break;
+        case libvlc_MediaPlayerBuffering:
+            newState = VLCMediaPlayerStateBuffering;
+            break;
+        case libvlc_MediaPlayerOpening:
+            newState = VLCMediaPlayerStateOpening;
+            break;
+        case libvlc_MediaPlayerEndReached:
+            newState = VLCMediaPlayerStateEnded;
+            break;
+        case libvlc_MediaPlayerESAdded:
+            newState = VLCMediaPlayerStateESAdded;
+            break;
+
+        default:
+            VKLog(@"%s: Unknown event", __FUNCTION__);
+            return;
     }
 
     @autoreleasepool {
