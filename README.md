@@ -225,6 +225,12 @@ Do you have a pressing question or just want to talk? Reach out to us via our IR
 
 If you don't have an IRC client at hand, use the [freenode webchat](http://webchat.freenode.net/).
 
+### Discord
+
+For matters related to the VLCKit and LibVLC APIs, join our LibVLC bindings Community Discord Server!
+
+[![Join the chat at https://discord.gg/3h3K3JF](https://img.shields.io/discord/716939396464508958?label=discord)](https://discord.gg/3h3K3JF)
+
 ## License
 
 VLCKit is under the [LGPLv2.1](http://opensource.org/licenses/LGPL-2.1/) license.
