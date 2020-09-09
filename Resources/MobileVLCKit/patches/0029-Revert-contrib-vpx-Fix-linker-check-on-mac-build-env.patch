@@ -1,14 +1,14 @@
-From be358dd60de6b974a6697d3492cf001d55f07215 Mon Sep 17 00:00:00 2001
+From 58412ca624c39f3f9a0466aaa56b0febd1d72054 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
-Date: Thu, 28 May 2020 11:12:42 +0200
-Subject: [PATCH 29/30] Revert "contrib: vpx: Fix linker check on mac build
+Date: Wed, 9 Sep 2020 11:55:30 +0200
+Subject: [PATCH 29/29] Revert "contrib: vpx: Fix linker check on mac build
  environment"
 
 This reverts commit 9832addb1d0dec26b464db41bce11f1e058b3d63.
 ---
  contrib/src/vpx/darwin-do-not-overwrite-ld.patch | 11 -----------
- contrib/src/vpx/rules.mak                        |  3 ---
- 2 files changed, 14 deletions(-)
+ contrib/src/vpx/rules.mak                        |  1 -
+ 2 files changed, 12 deletions(-)
  delete mode 100644 contrib/src/vpx/darwin-do-not-overwrite-ld.patch
 
 diff --git a/contrib/src/vpx/darwin-do-not-overwrite-ld.patch b/contrib/src/vpx/darwin-do-not-overwrite-ld.patch
@@ -29,19 +29,17 @@ index c69709f7a4..0000000000
 -     # append any user defined extra cflags
 -     if [ -n "${extra_cflags}" ] ; then
 diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
-index 5610b1a1e7..0320661d4b 100644
+index c1db45ffb7..e08d2f7931 100644
 --- a/contrib/src/vpx/rules.mak
 +++ b/contrib/src/vpx/rules.mak
-@@ -20,9 +20,6 @@ ifdef HAVE_ANDROID
- 	$(APPLY) $(SRC)/vpx/libvpx-android.patch
- 	cp "${ANDROID_NDK}"/sources/android/cpufeatures/cpu-features.c $(UNPACK_DIR)/vpx_ports
+@@ -22,7 +22,6 @@ ifdef HAVE_ANDROID
  	cp "${ANDROID_NDK}"/sources/android/cpufeatures/cpu-features.h $(UNPACK_DIR)
--endif
--ifdef HAVE_MACOSX
--	$(APPLY) $(SRC)/vpx/darwin-do-not-overwrite-ld.patch
  endif
- 	$(MOVE)
- 
+ ifdef HAVE_MACOSX
+-	$(APPLY) $(SRC)/vpx/darwin-do-not-overwrite-ld.patch
+ ifeq ($(ARCH),aarch64)
+ 	$(APPLY) $(SRC)/vpx/libvpx-darwin-aarch64.patch
+ endif
 -- 
-2.24.3 (Apple Git-128)
+2.20.1 (Apple Git-117)
 
