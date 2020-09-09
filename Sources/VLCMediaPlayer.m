@@ -1671,7 +1671,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     self = [super init];
     if (self) {
         _loudnessValue = value;
-        _date = date;
+        _date = date * 1000;
     }
     return self;
 }
