@@ -1,10 +1,48 @@
 stages:
     - nightly
     - release
+    - build
 
 variables:
     VLC_VERSION: "3.0"
     VLC_DEBIAN_IMAGE: registry.videolan.org/vlc-debian-unstable:20200529132440
+
+############
+## Builds ##
+############
+
+.continous-job-base:
+    tags:
+        - macos
+    stage: build
+
+.continous-build-base:
+    script:
+        - ./buildMobileVLCKit.sh -${BUILD_PARAM}
+
+continous-MobileVLCKit:
+    extends:
+        - .continous-job-base
+        - .continous-build-base
+    variables:
+        BUILD_PARAM: "vf"
+        JOB_NAME: "MobileVLCKit"
+
+continous-TVVLCKit:
+    extends:
+        - .continous-job-base
+        - .continous-build-base
+    variables:
+        BUILD_PARAM: "vft"
+        JOB_NAME: "TVVLCKit"
+
+continous-VLCKit:
+    extends:
+        - .continous-job-base
+        - .continous-build-base
+    variables:
+        BUILD_PARAM: "vx"
+        JOB_NAME: "VLCKit"
 
 ####################
 ## Nightly builds ##
