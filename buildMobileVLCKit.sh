@@ -548,6 +548,7 @@ buildLibVLC() {
         ${CUSTOMOSOPTIONS} \
         --enable-taglib > ${out}
 
+    rm -f config.mak
     echo "EXTRA_CFLAGS += ${EXTRA_CFLAGS}" >> config.mak
     echo "EXTRA_LDFLAGS += ${EXTRA_LDFLAGS}" >> config.mak
     make fetch -j$MAKE_JOBS
