@@ -1,7 +1,7 @@
-From 3910192c177d690c9c13d6acea8f65ba77ef3bdf Mon Sep 17 00:00:00 2001
+From da4809fda07acbc37d119de9c4be8f5c65bbf996 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
-Subject: [PATCH 18/29] ffmpeg: backport vtenc patches
+Subject: [PATCH 18/30] ffmpeg: backport vtenc patches
 
 ---
  ...lboxenc-fix-mutex-cond-leak-in-error.patch |  35 ++++++
@@ -355,5 +355,5 @@ index f8052e76fc..0226af35eb 100644
  ifdef USE_LIBAV
  	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
 -- 
-2.20.1 (Apple Git-117)
+2.24.3 (Apple Git-128)
 
