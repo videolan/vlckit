@@ -1,4 +1,4 @@
-From c83d509ffce758b3ec56b43932c140cabe1290b8 Mon Sep 17 00:00:00 2001
+From c7c0752c997cf28af66b64ec6300e141f9f8ccd1 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
 Subject: [PATCH 10/16] core: expose config_AutoSaveConfigFile
@@ -48,10 +48,10 @@ index ae6e8b9ce5..a81f9164e9 100644
  {
      int ret = 0;
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index b284ad5a40..3443836f47 100644
+index b67823c138..bde9b8fc8e 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -44,6 +44,7 @@ block_Realloc
+@@ -51,6 +51,7 @@ block_Realloc
  block_Release
  block_TryRealloc
  config_AddIntf

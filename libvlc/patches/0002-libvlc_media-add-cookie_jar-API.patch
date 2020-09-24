@@ -1,4 +1,4 @@
-From 6e048aae1bf33328f49ea7374af431ce1ec8b170 Mon Sep 17 00:00:00 2001
+From 6c4b033b5884fdb58980973bd5557caabe442932 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
 Subject: [PATCH 02/16] libvlc_media: add cookie_jar API
@@ -12,10 +12,10 @@ Subject: [PATCH 02/16] libvlc_media: add cookie_jar API
  5 files changed, 71 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index 23946f0b16..b92146448b 100644
+index cd203e8eda..fca4ef9e99 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -906,6 +906,41 @@ LIBVLC_API
+@@ -873,6 +873,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -58,10 +58,10 @@ index 23946f0b16..b92146448b 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index e70d6b2e71..08b72bb171 100644
+index ea3e886dbb..2bb67eccf8 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -201,6 +201,8 @@ libvlc_media_set_user_data
+@@ -202,6 +202,8 @@ libvlc_media_set_user_data
  libvlc_media_subitems
  libvlc_media_tracks_get
  libvlc_media_tracks_release
@@ -138,7 +138,7 @@ index e4d0d03fae..8824c02c53 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 6ec6025022..f292b7158d 100644
+index 4db7f96af0..0b22bda55e 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -614,6 +614,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )

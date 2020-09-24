@@ -1,4 +1,4 @@
-From 94020e1eb971a6f293921c024cfa867a7cd31ad9 Mon Sep 17 00:00:00 2001
+From 23e4add37f06ebf954cc6196929d8eb9ddf98a4f Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
 Subject: [PATCH 13/16] Work around lack of __thread storage qualifier on old
@@ -14,7 +14,7 @@ Subject: [PATCH 13/16] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 4f7a46349b..c73cbc8c96 100644
+index 99e4669942..8da89cc732 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -695,8 +695,8 @@ dnl Check for system libs needed
@@ -59,10 +59,10 @@ index d5ce933408..624c22f828 100644
  src/input/decoder.c
  src/input/decoder.h
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 9e7c2931d2..d510cd5790 100644
+index 73ff1b4934..5955e0bf72 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
-@@ -210,6 +210,7 @@ libvlccore_la_SOURCES = \
+@@ -211,6 +211,7 @@ libvlccore_la_SOURCES = \
  	config/getopt.c \
  	config/vlc_getopt.h \
  	extras/libc.c \

@@ -1,4 +1,4 @@
-From bac31105de5c699a6a4960af81e3a1c7a04a4e17 Mon Sep 17 00:00:00 2001
+From 544e6b6cbae01c50454b9db577262af0cf8cd7f8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 20 Aug 2020 13:56:14 +0200
 Subject: [PATCH 15/16] src: add hack to retain compilation support for i386
