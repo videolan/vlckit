@@ -1,4 +1,4 @@
-From 91523db6d5304ff6426dbb139831df0fed939c92 Mon Sep 17 00:00:00 2001
+From 464ec7ada0b7ce4f32b11669d17b72c8ea607be1 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
 Subject: [PATCH 22/30] libvlc: media_player: Add record method

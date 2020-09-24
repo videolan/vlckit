@@ -1,4 +1,4 @@
-From f303c83477464dbad2ead44110ac935f59d24c07 Mon Sep 17 00:00:00 2001
+From 8fe10bae15c674563930da046d4e2eac032839ba Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sun, 7 Dec 2014 20:02:18 +0100
 Subject: [PATCH 06/30] contrib/gcrypt: work-around a libtool limitation

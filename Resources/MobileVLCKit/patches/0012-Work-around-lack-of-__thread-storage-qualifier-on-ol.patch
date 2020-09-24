@@ -1,4 +1,4 @@
-From bc907e13e14304ab5bbba1693f971708879481b0 Mon Sep 17 00:00:00 2001
+From c1d4c7b5994b56b3ae61725e7cd0d81945177524 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
 Subject: [PATCH 12/30] Work around lack of __thread storage qualifier on old
@@ -29,10 +29,10 @@ index 1f74566008..6035af48f5 100644
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 9b9d0087fe..c2f6479a0a 100644
+index a83d0689a3..64219fe750 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
-@@ -495,9 +495,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
+@@ -503,9 +503,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
  void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int depth) );
  void *lfind( const void *key, const void *base, size_t *nmemb,
               size_t size, int(*cmp)(const void *, const void *) );

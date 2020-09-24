@@ -1,4 +1,4 @@
-From cde841f4f9c7eb218e2629641020aa11dd68cf32 Mon Sep 17 00:00:00 2001
+From 1dcf330156f9f371dc76d4c42267a2751be1ed4c Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
 Subject: [PATCH 10/30] contrib: use live555 version that is compatible with

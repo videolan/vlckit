@@ -1,4 +1,4 @@
-From 3e2c604083962cba9bc96d5f3a088f1c4f3e9172 Mon Sep 17 00:00:00 2001
+From 5dfa52a40845a33ba0dc8d76eca5aeb631b2bb80 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 20 May 2020 15:17:37 +0200
 Subject: [PATCH 28/30] ftp: fix directory listing with legacy server

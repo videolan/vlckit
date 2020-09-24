@@ -1,4 +1,4 @@
-From 81b8107fe1210348bccf604cf45ef0e11190772e Mon Sep 17 00:00:00 2001
+From a9173d53eb030a2884e68c4964121e0ae62fb405 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:49:34 +0200
 Subject: [PATCH 16/30] contrib: ffmpeg: enable videotoolbox encoder

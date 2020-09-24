@@ -1,4 +1,4 @@
-From 974dfc4802d842a31e89f59951afae8edb642d4f Mon Sep 17 00:00:00 2001
+From ef61beec47518ef897a80108363698427e3803c3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 19 Sep 2020 13:51:08 +0200
 Subject: [PATCH 30/30] contrib/libvpx: fix tvOS compilation

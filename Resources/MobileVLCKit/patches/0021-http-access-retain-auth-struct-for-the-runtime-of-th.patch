@@ -1,4 +1,4 @@
-From 2eec263925a19a9762684e0430638d09a21602e3 Mon Sep 17 00:00:00 2001
+From 4f65a8fd097801b296175bb5a868e581d06c3ad9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
 Subject: [PATCH 21/30] http access: retain auth struct for the runtime of the
