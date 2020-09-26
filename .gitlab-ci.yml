@@ -1,6 +1,43 @@
 variables:
     VLC_VERSION: "4.0"
 
+############
+## Builds ##
+############
+
+.continous-job-base-main:
+    tags:
+        - macos
+    stage: build
+
+.continous-build-base-main:
+    script:
+        - ./compileAndBuildVLCKit.sh -${BUILD_PARAM}
+
+continous-MobileVLCKit-main:
+    extends:
+        - .continous-job-base-main
+        - .continous-build-base-main
+    variables:
+        BUILD_PARAM: "vf"
+        JOB_NAME: "MobileVLCKit"
+
+continous-TVVLCKit-main:
+    extends:
+        - .continous-job-base-main
+        - .continous-build-base-main
+    variables:
+        BUILD_PARAM: "vft"
+        JOB_NAME: "TVVLCKit"
+
+continous-VLCKit-main:
+    extends:
+        - .continous-job-base-main
+        - .continous-build-base-main
+    variables:
+        BUILD_PARAM: "vx"
+        JOB_NAME: "VLCKit"
+
 ####################
 ## Nightly builds ##
 ####################
