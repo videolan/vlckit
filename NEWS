@@ -1,3 +1,21 @@
+Version 3.3.14:
+---------------
+
+- VLCKit binaries are now compiled using Xcode 12
+    - This fixes linking for the iOS and tvOS simulator using Xcode 12
+    - This adds a hardware requirement to use Xcode 12 for linking VLCKit due to bitcode
+        - You need to compile TVVLCKit yourself if you want to continue to use Xcode 11.x
+
+- VideoToolbox decoder
+    - enforce 8bit video output due to limited OpenGL rendering capabilities
+    - this fixes hardware decoding of AVC and HEVC 10 / 12bit on iOS/tvOS 14
+
+- Chromecast
+    - Stability improvements
+
+- demux:
+    - expose m3u playlist title
+
 Version 3.3.13:
 ---------------
 
