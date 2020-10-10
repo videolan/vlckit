@@ -1,7 +1,7 @@
 From 45298fe889514ac7e741a90bdb1ad096d826abbd Mon Sep 17 00:00:00 2001
 From: Francois Cartegnie <fcvlcdev@free.fr>
 Date: Mon, 28 Sep 2020 17:52:16 +0200
-Subject: [PATCH 31/31] httpd: update activity time before processing timeout
+Subject: [PATCH 31/34] httpd: update activity time before processing timeout
  (#25151)
 
 as connection state handling block has moved in

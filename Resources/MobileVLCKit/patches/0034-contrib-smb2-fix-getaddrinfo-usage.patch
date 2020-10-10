@@ -1,0 +1,543 @@
+From 072fcde65e29d14b8b8d765eeee5d3d3681c3fe0 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Wed, 21 Oct 2020 14:46:12 +0200
+Subject: [PATCH 34/34] contrib: smb2: fix getaddrinfo usage
+
+---
+ ...y-to-connect-to-all-resolved-address.patch | 511 ++++++++++++++++++
+ contrib/src/smb2/rules.mak                    |   1 +
+ 2 files changed, 512 insertions(+)
+ create mode 100644 contrib/src/smb2/0001-socket-try-to-connect-to-all-resolved-address.patch
+
+diff --git a/contrib/src/smb2/0001-socket-try-to-connect-to-all-resolved-address.patch b/contrib/src/smb2/0001-socket-try-to-connect-to-all-resolved-address.patch
+new file mode 100644
+index 0000000000..5654e3dde7
+--- /dev/null
++++ b/contrib/src/smb2/0001-socket-try-to-connect-to-all-resolved-address.patch
+@@ -0,0 +1,511 @@
++From 54a8aef180bd6d6e60e9070385111625a36dc167 Mon Sep 17 00:00:00 2001
++From: Thomas Guillem <thomas@gllm.fr>
++Date: Wed, 21 Oct 2020 14:19:06 +0200
++Subject: [PATCH] socket: try to connect to all resolved address
++
++And not only the first one.
++This fixes connection on some servers that doesn't accept IPV4/IPV6
++connection.
++---
++ lib/socket.c | 348 +++++++++++++++++++++++++++------------------------
++ 1 file changed, 185 insertions(+), 163 deletions(-)
++
++diff --git a/lib/socket.c b/lib/socket.c
++index 1e2adcd..2eaf2c4 100644
++--- a/lib/socket.c
+++++ b/lib/socket.c
++@@ -105,14 +105,14 @@ smb2_get_credit_charge(struct smb2_context *smb2, struct smb2_pdu *pdu)
++ int
++ smb2_which_events(struct smb2_context *smb2)
++ {
++-	int events = smb2->is_connected ? POLLIN : POLLOUT;
+++        int events = smb2->is_connected ? POLLIN : POLLOUT;
++ 
++         if (smb2->outqueue != NULL &&
++             smb2_get_credit_charge(smb2, smb2->outqueue) <= smb2->credits) {
++                 events |= POLLOUT;
++         }
++-        
++-	return events;
+++
+++        return events;
++ }
++ 
++ t_socket smb2_get_fd(struct smb2_context *smb2)
++@@ -124,13 +124,13 @@ static int
++ smb2_write_to_socket(struct smb2_context *smb2)
++ {
++         struct smb2_pdu *pdu;
++-        
++-	if (smb2->fd == -1) {
++-		smb2_set_error(smb2, "trying to write but not connected");
++-		return -1;
++-	}
++ 
++-	while ((pdu = smb2->outqueue) != NULL) {
+++        if (smb2->fd == -1) {
+++                smb2_set_error(smb2, "trying to write but not connected");
+++                return -1;
+++        }
+++
+++        while ((pdu = smb2->outqueue) != NULL) {
++                 struct iovec iov[SMB2_MAX_VECTORS];
++                 struct iovec *tmpiov;
++                 struct smb2_pdu *tmp_pdu;
++@@ -196,7 +196,7 @@ smb2_write_to_socket(struct smb2_context *smb2)
++                                        smb2_get_error(smb2));
++                         return -1;
++                 }
++-                
+++
++                 pdu->out.num_done += count;
++ 
++                 if (pdu->out.num_done == SMB2_SPL_SIZE + spl) {
++@@ -217,8 +217,8 @@ smb2_write_to_socket(struct smb2_context *smb2)
++                                 pdu = tmp_pdu;
++                         }
++                 }
++-	}
++-	return 0;
+++        }
+++        return 0;
++ }
++ 
++ typedef ssize_t (*read_func)(struct smb2_context *smb2,
++@@ -232,11 +232,11 @@ int smb2_read_data(struct smb2_context *smb2, read_func func)
++         size_t num_done;
++         static char smb3tfrm[4] = {0xFD, 'S', 'M', 'B'};
++         struct smb2_pdu *pdu = smb2->pdu;
++-	ssize_t count, len;
+++        ssize_t count, len;
++ 
++ read_more_data:
++         num_done = smb2->in.num_done;
++-        
+++
++         /* Copy all the current vectors to our work vector */
++         niov = smb2->in.niov;
++         for (i = 0; i < niov; i++) {
++@@ -244,14 +244,14 @@ read_more_data:
++                 iov[i].iov_len = smb2->in.iov[i].len;
++         }
++         tmpiov = iov;
++-        
+++
++         /* Skip the vectors we have already read */
++         while (num_done >= tmpiov->iov_len) {
++                 num_done -= tmpiov->iov_len;
++                 tmpiov++;
++                 niov--;
++         }
++-        
+++
++         /* Adjust the first vector to read */
++         tmpiov->iov_base = (char *)tmpiov->iov_base + num_done;
++         tmpiov->iov_len -= num_done;
++@@ -529,9 +529,9 @@ read_more_data:
++         /* We are all done now with this chain. Reset num_done to 0
++          * and restart with a new SPL for the next chain.
++          */
++-        smb2->in.num_done = 0;        
+++        smb2->in.num_done = 0;
++ 
++-	return 0;
+++        return 0;
++ }
++ 
++ static ssize_t smb2_readv_from_socket(struct smb2_context *smb2,
++@@ -588,79 +588,79 @@ smb2_service(struct smb2_context *smb2, int revents)
++ {
++         int ret = 0;
++ 
++-	if (smb2->fd < 0) {
+++        if (smb2->fd < 0) {
++                 goto out;
++-	}
+++        }
++ 
++         if (revents & POLLERR) {
++-		int err = 0;
++-		socklen_t err_size = sizeof(err);
++-
++-		if (getsockopt(smb2->fd, SOL_SOCKET, SO_ERROR,
++-			       (char *)&err, &err_size) != 0 || err != 0) {
++-			if (err == 0) {
++-				err = errno;
++-			}
++-			smb2_set_error(smb2, "smb2_service: socket error "
++-					"%s(%d).",
++-					strerror(err), err);
++-		} else {
++-			smb2_set_error(smb2, "smb2_service: POLLERR, "
++-					"Unknown socket error.");
++-		}
++-		ret = -1;
+++                int err = 0;
+++                socklen_t err_size = sizeof(err);
+++
+++                if (getsockopt(smb2->fd, SOL_SOCKET, SO_ERROR,
+++                               (char *)&err, &err_size) != 0 || err != 0) {
+++                        if (err == 0) {
+++                                err = errno;
+++                        }
+++                        smb2_set_error(smb2, "smb2_service: socket error "
+++                                        "%s(%d).",
+++                                        strerror(err), err);
+++                } else {
+++                        smb2_set_error(smb2, "smb2_service: POLLERR, "
+++                                        "Unknown socket error.");
+++                }
+++                ret = -1;
++                 goto out;
++-	}
++-	if (revents & POLLHUP) {
++-		smb2_set_error(smb2, "smb2_service: POLLHUP, "
++-				"socket error.");
+++        }
+++        if (revents & POLLHUP) {
+++                smb2_set_error(smb2, "smb2_service: POLLHUP, "
+++                                "socket error.");
++                 ret = -1;
++                 goto out;
++-	}
++-
++-	if (smb2->is_connected == 0 && revents & POLLOUT) {
++-		int err = 0;
++-		socklen_t err_size = sizeof(err);
++-
++-		if (getsockopt(smb2->fd, SOL_SOCKET, SO_ERROR,
++-			       (char *)&err, &err_size) != 0 || err != 0) {
++-			if (err == 0) {
++-				err = errno;
++-			}
++-			smb2_set_error(smb2, "smb2_service: socket error "
++-					"%s(%d) while connecting.",
++-					strerror(err), err);
++-			if (smb2->connect_cb) {
++-				smb2->connect_cb(smb2, err,
+++        }
+++
+++        if (smb2->is_connected == 0 && revents & POLLOUT) {
+++                int err = 0;
+++                socklen_t err_size = sizeof(err);
+++
+++                if (getsockopt(smb2->fd, SOL_SOCKET, SO_ERROR,
+++                               (char *)&err, &err_size) != 0 || err != 0) {
+++                        if (err == 0) {
+++                                err = errno;
+++                        }
+++                        smb2_set_error(smb2, "smb2_service: socket error "
+++                                        "%s(%d) while connecting.",
+++                                        strerror(err), err);
+++                        if (smb2->connect_cb) {
+++                                smb2->connect_cb(smb2, err,
++                                                  NULL, smb2->connect_data);
++-				smb2->connect_cb = NULL;
++-			}
+++                                smb2->connect_cb = NULL;
+++                        }
++                         ret = -1;
++                         goto out;
++-		}
+++                }
++ 
++-		smb2->is_connected = 1;
+++                smb2->is_connected = 1;
++                 smb2_change_events(smb2, smb2->fd, smb2_which_events(smb2));
++-		if (smb2->connect_cb) {
++-			smb2->connect_cb(smb2, 0, NULL,	smb2->connect_data);
++-			smb2->connect_cb = NULL;
++-		}
++-		goto out;
++-	}
++-
++-	if (revents & POLLIN) {
++-		if (smb2_read_from_socket(smb2) != 0) {
+++                if (smb2->connect_cb) {
+++                        smb2->connect_cb(smb2, 0, NULL,        smb2->connect_data);
+++                        smb2->connect_cb = NULL;
+++                }
+++                goto out;
+++        }
+++
+++        if (revents & POLLIN) {
+++                if (smb2_read_from_socket(smb2) != 0) {
++                         ret = -1;
++                         goto out;
++-		}
++-	}
++-        
++-	if (revents & POLLOUT && smb2->outqueue != NULL) {
++-		if (smb2_write_to_socket(smb2) != 0) {
+++                }
+++        }
+++
+++        if (revents & POLLOUT && smb2->outqueue != NULL) {
+++                if (smb2_write_to_socket(smb2) != 0) {
++                         ret = -1;
++                         goto out;
++-		}
++-	}
+++                }
+++        }
++ 
++  out:
++         if (smb2->timeout) {
++@@ -673,32 +673,103 @@ static void
++ set_nonblocking(t_socket fd)
++ {
++ #if defined(WIN32)
++-	unsigned long opt = 1;
++-	ioctlsocket(fd, FIONBIO, &opt);
+++        unsigned long opt = 1;
+++        ioctlsocket(fd, FIONBIO, &opt);
++ #else
++-	unsigned v;
++-	v = fcntl(fd, F_GETFL, 0);
++-	fcntl(fd, F_SETFL, v | O_NONBLOCK);
+++        unsigned v;
+++        v = fcntl(fd, F_GETFL, 0);
+++        fcntl(fd, F_SETFL, v | O_NONBLOCK);
++ #endif
++ }
++ 
++ static int
++ set_tcp_sockopt(t_socket sockfd, int optname, int value)
++ {
++-	int level;
+++        int level;
++ #ifndef SOL_TCP
++-	struct protoent *buf;
+++        struct protoent *buf;
++ 
++-	if ((buf = getprotobyname("tcp")) != NULL) {
++-		level = buf->p_proto;
+++        if ((buf = getprotobyname("tcp")) != NULL) {
+++                level = buf->p_proto;
++         } else {
++-		return -1;
+++                return -1;
++         }
++ #else
++         level = SOL_TCP;
++ #endif
++ 
++-	return setsockopt(sockfd, level, optname, (char *)&value, sizeof(value));
+++        return setsockopt(sockfd, level, optname, (char *)&value, sizeof(value));
+++}
+++
+++static int
+++connect_async_ai(struct smb2_context *smb2, struct addrinfo *ai,
+++                 smb2_command_cb cb, void *private_data)
+++{
+++        int family;
+++        socklen_t socksize;
+++        struct sockaddr_storage ss;
+++
+++        memset(&ss, 0, sizeof(ss));
+++        switch (ai->ai_family) {
+++        case AF_INET:
+++                socksize = sizeof(struct sockaddr_in);
+++                memcpy(&ss, ai->ai_addr, socksize);
+++#ifdef HAVE_SOCK_SIN_LEN
+++                ((struct sockaddr_in *)&ss)->sin_len = socksize;
+++#endif
+++                break;
+++        case AF_INET6:
+++                socksize = sizeof(struct sockaddr_in6);
+++                memcpy(&ss, ai->ai_addr, socksize);
+++#ifdef HAVE_SOCK_SIN_LEN
+++                ((struct sockaddr_in6 *)&ss)->sin6_len = socksize;
+++#endif
+++                break;
+++        default:
+++                smb2_set_error(smb2, "Unknown address family :%d. "
+++                                "Only IPv4/IPv6 supported so far.",
+++                                ai->ai_family);
+++                return -EINVAL;
+++
+++        }
+++        family = ai->ai_family;
+++
+++        smb2->fd = socket(family, SOCK_STREAM, 0);
+++        if (smb2->fd == -1) {
+++                smb2_set_error(smb2, "Failed to open smb2 socket. "
+++                               "Errno:%s(%d).", strerror(errno), errno);
+++                return -EIO;
+++        }
+++
+++        smb2->connect_cb   = cb;
+++        smb2->connect_data = private_data;
+++
+++        set_nonblocking(smb2->fd);
+++        set_tcp_sockopt(smb2->fd, TCP_NODELAY, 1);
+++
+++        if (connect(smb2->fd, (struct sockaddr *)&ss, socksize) != 0
+++#ifndef _MSC_VER
+++                  && errno != EINPROGRESS) {
+++#else
+++                  && WSAGetLastError() != WSAEWOULDBLOCK) {
+++#endif
+++                smb2_set_error(smb2, "Connect failed with errno : "
+++                        "%s(%d)", strerror(errno), errno);
+++                close(smb2->fd);
+++                smb2->fd = -1;
+++                smb2->connect_cb = NULL;
+++                smb2->connect_data = NULL;
+++                return -EIO;
+++        }
+++
+++        if (smb2->fd && smb2->change_fd) {
+++                smb2->change_fd(smb2, smb2->fd, SMB2_ADD_FD);
+++        }
+++        if (smb2->fd && smb2->change_fd) {
+++                smb2_change_events(smb2, smb2->fd, POLLOUT);
+++        }
+++
+++        return 0;
++ }
++ 
++ int
++@@ -706,10 +777,8 @@ smb2_connect_async(struct smb2_context *smb2, const char *server,
++                    smb2_command_cb cb, void *private_data)
++ {
++         char *addr, *host, *port;
++-        struct addrinfo *ai = NULL;
++-        struct sockaddr_storage ss;
++-        socklen_t socksize;
++-        int family, err;
+++        struct addrinfo *ai_res = NULL;
+++        int err;
++ 
++         if (smb2->fd != -1) {
++                 smb2_set_error(smb2, "Trying to connect but already "
++@@ -729,7 +798,7 @@ smb2_connect_async(struct smb2_context *smb2, const char *server,
++         /* ipv6 in [...] form ? */
++         if (host[0] == '[') {
++                 char *str;
++-                
+++
++                 host++;
++                 str = strchr(host, ']');
++                 if (str == NULL) {
++@@ -750,22 +819,22 @@ smb2_connect_async(struct smb2_context *smb2, const char *server,
++         }
++ 
++         /* is it a hostname ? */
++-        err = getaddrinfo(host, port, NULL, &ai);
+++        err = getaddrinfo(host, port, NULL, &ai_res);
++         if (err != 0) {
++                 free(addr);
++ #ifdef _WINDOWS
++-				if (err == WSANOTINITIALISED)
++-				{
++-					smb2_set_error(smb2, "Winsock was not initialized. "
++-						"Please call WSAStartup().");
++-					return -WSANOTINITIALISED; 
++-				}
++-				else
+++                if (err == WSANOTINITIALISED)
+++                {
+++                        smb2_set_error(smb2, "Winsock was not initialized. "
+++                                "Please call WSAStartup().");
+++                        return -WSANOTINITIALISED; 
+++                }
+++                else
++ #endif
++-				{
++-					smb2_set_error(smb2, "Invalid address:%s  "
++-						"Can not resolv into IPv4/v6.", server);
++-				}
+++                {
+++                        smb2_set_error(smb2, "Invalid address:%s  "
+++                                "Can not resolv into IPv4/v6.", server);
+++                }
++                 switch (err) {
++                     case EAI_AGAIN:
++                         return -EAGAIN;
++@@ -793,68 +862,21 @@ smb2_connect_async(struct smb2_context *smb2, const char *server,
++         }
++         free(addr);
++ 
++-        memset(&ss, 0, sizeof(ss));
++-        switch (ai->ai_family) {
++-        case AF_INET:
++-                socksize = sizeof(struct sockaddr_in);
++-                memcpy(&ss, ai->ai_addr, socksize);
++-#ifdef HAVE_SOCK_SIN_LEN
++-                ((struct sockaddr_in *)&ss)->sin_len = socksize;
++-#endif
++-                break;
++-        case AF_INET6:
++-                socksize = sizeof(struct sockaddr_in6);
++-                memcpy(&ss, ai->ai_addr, socksize);
++-#ifdef HAVE_SOCK_SIN_LEN
++-                ((struct sockaddr_in6 *)&ss)->sin6_len = socksize;
++-#endif
++-                break;
++-        default:
++-                smb2_set_error(smb2, "Unknown address family :%d. "
++-                                "Only IPv4/IPv6 supported so far.",
++-                                ai->ai_family);
++-                freeaddrinfo(ai);
++-                return -EINVAL;
++-
++-        }
++-        family = ai->ai_family;
++-        freeaddrinfo(ai);
+++        for (struct addrinfo *ai = ai_res; ai != NULL; ai = ai->ai_next)
+++        {
+++            err = connect_async_ai(smb2, ai, cb, private_data);
++ 
++-        smb2->connect_cb   = cb;
++-        smb2->connect_data = private_data;
++-
++-      
++-	smb2->fd = socket(family, SOCK_STREAM, 0);
++-	if (smb2->fd == -1) {
++-		smb2_set_error(smb2, "Failed to open smb2 socket. "
++-                               "Errno:%s(%d).", strerror(errno), errno);
++-		return -EIO;
++-	}
++-
++-	set_nonblocking(smb2->fd);
++-	set_tcp_sockopt(smb2->fd, TCP_NODELAY, 1);
++-        
++-	if (connect(smb2->fd, (struct sockaddr *)&ss, socksize) != 0
++-#ifndef _MSC_VER
++-		  && errno != EINPROGRESS) {
++-#else
++-		  && WSAGetLastError() != WSAEWOULDBLOCK) {
++-#endif
++-		smb2_set_error(smb2, "Connect failed with errno : "
++-			"%s(%d)", strerror(errno), errno);
++-		close(smb2->fd);
++-		smb2->fd = -1;
++-		return -EIO;
++-	}
++-
++-        if (smb2->fd && smb2->change_fd) {
++-                smb2->change_fd(smb2, smb2->fd, SMB2_ADD_FD);
++-        }
++-        if (smb2->fd && smb2->change_fd) {
++-                smb2_change_events(smb2, smb2->fd, POLLOUT);
+++            if (err == 0)
+++            {
+++                /* clear the error that could be set by a previous ai
+++                 * connection */
+++                smb2_set_error(smb2, "");
+++                break;
+++            }
++         }
+++        freeaddrinfo(ai_res);
++ 
++-        return 0;
+++        return err;
++ }
++ 
++ void smb2_change_events(struct smb2_context *smb2, int fd, int events)
++-- 
++2.28.0
++
+diff --git a/contrib/src/smb2/rules.mak b/contrib/src/smb2/rules.mak
+index 7128d06ff5..89ba5e3781 100644
+--- a/contrib/src/smb2/rules.mak
++++ b/contrib/src/smb2/rules.mak
+@@ -14,6 +14,7 @@ $(TARBALLS)/libsmb2-$(SMB2_VERSION).zip:
+ smb2: libsmb2-$(SMB2_VERSION).zip .sum-smb2
+ 	$(UNPACK)
+ 	$(APPLY) $(SRC)/smb2/0001-md5-prefix-symbols-with-smb2_.patch
++	$(APPLY) $(SRC)/smb2/0001-socket-try-to-connect-to-all-resolved-address.patch
+ 	$(MOVE)
+ 
+ .smb2: smb2
+-- 
+2.24.3 (Apple Git-128)
+

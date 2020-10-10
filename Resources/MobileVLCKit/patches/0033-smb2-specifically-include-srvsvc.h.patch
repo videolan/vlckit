@@ -1,0 +1,25 @@
+From fae37c4f4cf1105b8af2f1e8d22d2001680cdda1 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Fri, 9 Oct 2020 09:18:23 +0200
+Subject: [PATCH 33/34] smb2: specifically include srvsvc.h
+
+This is needed by newest version of libsmb2.
+---
+ modules/access/smb2.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/modules/access/smb2.c b/modules/access/smb2.c
+index 25268cd90f..5adc4e3181 100644
+--- a/modules/access/smb2.c
++++ b/modules/access/smb2.c
+@@ -46,6 +46,7 @@
+ #include <smb2/smb2.h>
+ #include <smb2/libsmb2.h>
+ #include <smb2/libsmb2-raw.h>
++#include <smb2/libsmb2-dcerpc-srvsvc.h>
+ 
+ #ifdef HAVE_DSM
+ # include <bdsm/netbios_ns.h>
+-- 
+2.24.3 (Apple Git-128)
+
