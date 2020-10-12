@@ -473,7 +473,7 @@ if [ "$TVOS" = "yes" ]; then
         buildxcodeproj VLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
     fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $ARCH);then
         platform="appletvsimulator"
         buildxcodeproj VLCKit "TVVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
@@ -501,7 +501,7 @@ if [ "$IOS" = "yes" ]; then
         buildxcodeproj VLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
     fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $ARCH);then
         platform="iphonesimulator"
         buildxcodeproj VLCKit "MobileVLCKit" ${platform}
         lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
