@@ -469,6 +469,9 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
  */
 @property (readwrite) NSInteger currentVideoSubTitleDelay;
 
+/** Set / get the subtitle font scale. */
+@property (readwrite) float currentSubTitleFontScale;
+
 /**
  * Chapter selection and enumeration, it is bound
  * to a title option.

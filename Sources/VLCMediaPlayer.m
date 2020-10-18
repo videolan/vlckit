@@ -544,6 +544,16 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_video_get_spu_delay(_playerInstance);
 }
 
+- (void)setCurrentSubTitleFontScale:(float)scale
+{
+    libvlc_video_set_spu_text_scale(_playerInstance, scale);
+}
+
+- (float)currentSubTitleFontScale
+{
+    return libvlc_video_get_spu_text_scale(_playerInstance);
+}
+
 #if TARGET_OS_IPHONE
 #warning text renderer API needs to be reimplemented in libvlc (#294)
 - (void)setTextRendererFontSize:(NSNumber *)fontSize
