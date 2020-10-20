@@ -341,7 +341,11 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     if (_viewpoint)
         libvlc_free(_viewpoint);
 
-    libvlc_media_player_release(_playerInstance);
+    libvlc_media_player_t *player = _playerInstance;
+
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0), ^{
+        libvlc_media_player_release(player);
+    });
 
     if (_privateLibrary != [VLCLibrary sharedLibrary])
         libvlc_release(_privateLibrary.instance);
@@ -1097,7 +1101,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
         _media = value;
 
-        libvlc_media_player_set_media(_playerInstance, [_media libVLCMediaDescriptor]);
+        libvlc_media_player_set_media_async(_playerInstance, [_media libVLCMediaDescriptor]);
     }
 }
 
@@ -1111,24 +1115,17 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)play
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_player_play(_playerInstance);
-    });
+    libvlc_media_player_play(_playerInstance);
 }
 
 - (void)pause
 {
-    // Pause the stream
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_player_set_pause(_playerInstance, 1);
-    });
+    libvlc_media_player_set_pause(_playerInstance, 1);
 }
 
 - (void)stop
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_player_stop(_playerInstance);
-    });
+    libvlc_media_player_stop_async(_playerInstance);
 }
 
 - (libvlc_video_viewpoint_t *)viewPoint

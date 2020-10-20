@@ -203,30 +203,22 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 
 - (void)playMedia:(VLCMedia *)media
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_list_player_play_item(instance, [media libVLCMediaDescriptor]);
-    });
+    libvlc_media_list_player_play_item(instance, [media libVLCMediaDescriptor]);
 }
 
 - (void)play
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_list_player_play(instance);
-    });
+    libvlc_media_list_player_play(instance);
 }
 
 - (void)pause
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_list_player_set_pause(instance, 1);
-    });
+    libvlc_media_list_player_set_pause(instance, 1);
 }
 
 - (void)stop
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_list_player_stop(instance);
-    });
+    libvlc_media_list_player_stop(instance);
 }
 
 - (BOOL)next
@@ -246,9 +238,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 
 - (void)playItemAtNumber:(NSNumber *)index
 {
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_list_player_play_item_at_index(instance, [index intValue]);
-    });
+    libvlc_media_list_player_play_item_at_index(instance, [index intValue]);
 }
 
 - (void)setRepeatMode:(VLCRepeatMode)repeatMode

@@ -44,7 +44,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
     libvlc_media_discoverer_t *_mdis;
 
     VLCLibrary *_privateLibrary;
-    dispatch_queue_t _libVLCBackgroundQueue;
 }
 @end
 
@@ -93,7 +92,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
     if (self = [super init]) {
         _localizedName = nil;
         _discoveredMedia = nil;
-        _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL);
 
         if (libraryInstance != nil) {
             _privateLibrary = libraryInstance;
@@ -151,9 +149,7 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
         return;
     }
 
-    dispatch_async(_libVLCBackgroundQueue, ^{
-        libvlc_media_discoverer_stop(_mdis);
-    });
+    libvlc_media_discoverer_stop(_mdis);
 }
 
 - (VLCMediaList *)discoveredMedia
