@@ -1,3 +1,8 @@
+Version 3.3.15:
+---------------
+
+- Updated libsmb2 to add support for SMBv3, fixed authentication and lookup regressions
+
 Version 3.3.14:
 ---------------
 
