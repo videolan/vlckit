@@ -1,7 +1,7 @@
-From 495f789c515051fa36e0537c15b00b68095b8594 Mon Sep 17 00:00:00 2001
+From 7aae92fce6a1b1eb61c9669b96a34df0903a9a0e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 9 Oct 2020 14:51:05 +0200
-Subject: [PATCH 32/34] contrib: smb2: update to master
+Subject: [PATCH 32/35] contrib: smb2: update to master
 
 ---
  .../0001-md5-prefix-symbols-with-smb2_.patch  | 189 +++++++++++++++

@@ -1,7 +1,7 @@
-From 288dd5d00e100a9a1dda498f4b00d22ecf1a8ea0 Mon Sep 17 00:00:00 2001
+From 2473278a7cbe2e464255a5f235b0e07ad095ec6d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:49:34 +0200
-Subject: [PATCH 16/34] contrib: ffmpeg: enable videotoolbox encoder
+Subject: [PATCH 16/35] contrib: ffmpeg: enable videotoolbox encoder
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit

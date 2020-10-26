@@ -1,7 +1,7 @@
-From 7124d8a89c9df12690a7d2dcdbe6c7bac836be31 Mon Sep 17 00:00:00 2001
+From e3d81f38bedb40a802946b9e79fe75793811d0e2 Mon Sep 17 00:00:00 2001
 From: Alexandre Janniaux <alexandre.janniaux@gmail.com>
 Date: Wed, 28 Nov 2018 18:27:16 +0100
-Subject: [PATCH 25/34] transcode: add support for mutliple venc parameters
+Subject: [PATCH 25/35] transcode: add support for mutliple venc parameters
 
 Add support for multiple venc parameters for transcoding. Venc
 parameters are tested in th given order and fallback if the encoder

@@ -1,7 +1,7 @@
-From 072fcde65e29d14b8b8d765eeee5d3d3681c3fe0 Mon Sep 17 00:00:00 2001
+From 69cfae07d433982ebc1ed6d120272eac81e8aa43 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 21 Oct 2020 14:46:12 +0200
-Subject: [PATCH 34/34] contrib: smb2: fix getaddrinfo usage
+Subject: [PATCH 34/35] contrib: smb2: fix getaddrinfo usage
 
 ---
  ...y-to-connect-to-all-resolved-address.patch | 511 ++++++++++++++++++

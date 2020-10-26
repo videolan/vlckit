@@ -1,7 +1,7 @@
-From a23338afd2e62e03a456a3514b2ac1cd68a76220 Mon Sep 17 00:00:00 2001
+From 7fab7df5b25968b95034714251bc7d2d4a81009e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 20 May 2020 15:17:37 +0200
-Subject: [PATCH 28/34] ftp: fix directory listing with legacy server
+Subject: [PATCH 28/35] ftp: fix directory listing with legacy server
 
 A legacy ftp server included in macOS 10.6 and earlier tried to be clever and gives the keys as Uppercase so VLC failed to determine the item type.
 ---

@@ -1,7 +1,7 @@
-From ef787623ec5937cc9df04d8479db10cf441d2dc4 Mon Sep 17 00:00:00 2001
+From 2faeb6d6ad7ffa96a5b8244dff1effd45606902d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 21/34] http access: retain auth struct for the runtime of the
+Subject: [PATCH 21/35] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
