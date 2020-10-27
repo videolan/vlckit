@@ -1,3 +1,8 @@
+stages:
+    - nightly
+    - release
+    - build
+
 variables:
     VLC_VERSION: "4.0"
 
@@ -9,6 +14,8 @@ variables:
     tags:
         - macos
     stage: build
+    only:
+        - merge_requests
 
 .continous-build-base-main:
     script:
@@ -50,6 +57,7 @@ continous-VLCKit-main:
     artifacts:
         paths:
             - ./*.tar.xz
+    stage: nightly
 
 .nightly-build-base-main:
     script:
@@ -91,6 +99,7 @@ nightly-VLCKit-main:
 .release-job-base-main:
     tags:
         - macos
+    stage: release
     only:
         - tags
     artifacts:
