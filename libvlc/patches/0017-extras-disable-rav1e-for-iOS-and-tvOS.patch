@@ -1,0 +1,31 @@
+From 1031f4f61f8610ae64e91f119c849197f9a24d5a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Mon, 26 Oct 2020 15:47:13 +0100
+Subject: [PATCH 17/18] extras: disable rav1e for iOS and tvOS
+
+---
+ extras/package/apple/build.conf | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/extras/package/apple/build.conf b/extras/package/apple/build.conf
+index fe91097ca0..cd475d1147 100644
+--- a/extras/package/apple/build.conf
++++ b/extras/package/apple/build.conf
+@@ -84,12 +84,14 @@ export VLC_CONTRIB_OPTIONS_MACOSX=(
+ # Additional contrib bootstrap options for iOS
+ export VLC_CONTRIB_OPTIONS_IOS=(
+     --disable-aom
++    --disable-rav1e
+ )
+ 
+ # Additional contrib bootstrap options for tvOS
+ export VLC_CONTRIB_OPTIONS_TVOS=(
+     --disable-libarchive
+     --disable-aom
++    --disable-rav1e
+ )
+ 
+ #
+-- 
+2.24.3 (Apple Git-128)
+
