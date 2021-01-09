@@ -427,7 +427,7 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     info "Building tools"
 
     fetch_python3_path
-    export PATH="${PYTHON3_PATH}:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+    export PATH="${PYTHON3_PATH}:${VLCROOT}/extras/tools/build/bin:${VLCROOT}/contrib/${TARGET}/bin:$VLC_PATH:/usr/bin:/bin:/usr/sbin:/sbin"
 
     spushd ${VLCROOT}/extras/tools
     ./bootstrap

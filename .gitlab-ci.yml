@@ -5,6 +5,7 @@ stages:
 
 variables:
     VLC_VERSION: "4.0"
+    VLC_PATH: "/Users/videolanci/sandbox/bin"
 
 ############
 ## Builds ##
