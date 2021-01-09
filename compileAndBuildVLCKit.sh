@@ -167,7 +167,7 @@ buildLibVLC() {
     mkdir -p ${BUILDDIR}
     spushd ${BUILDDIR}
 
-    ../extras/package/apple/build.sh --arch=$ARCH --sdk=${PLATFORM}${SDK_VERSION} ${DEBUGFLAG} ${VERBOSEFLAG} ${BITCODEFLAG}
+    ../extras/package/apple/build.sh --arch=$ARCH --sdk=${PLATFORM}${SDK_VERSION} ${DEBUGFLAG} ${VERBOSEFLAG} ${BITCODEFLAG} -j$(sysctl -n machdep.cpu.core_count)
 
     spopd # builddir
 
