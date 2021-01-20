@@ -289,6 +289,28 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return [self initWithDrawable:nil options:nil];
 }
 
+- (instancetype)initWithLibrary:(VLCLibrary *)library
+{
+    if (self = [super init]) {
+        _cachedTime = [VLCTime nullTime];
+        _cachedRemainingTime = [VLCTime nullTime];
+        _position = 0.0f;
+        _cachedState = VLCMediaPlayerStateStopped;
+        _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
+        _privateLibrary = library;
+        _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
+        if (_playerInstance == NULL) {
+            NSAssert(0, @"%s: player initialization failed", __PRETTY_FUNCTION__);
+            libvlc_release([_privateLibrary instance]);
+            return nil;
+        }
+
+        [self registerObservers];
+    }
+    return self;
+
+}
+
 - (instancetype)initWithLibVLCInstance:(void *)playerInstance andLibrary:(VLCLibrary *)library
 {
     if (self = [super init]) {

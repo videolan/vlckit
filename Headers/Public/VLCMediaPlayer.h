@@ -209,6 +209,11 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (instancetype)initWithVideoLayer:(VLCVideoLayer *)aVideoLayer;
 #endif
 /**
+ * initialize player with a given initialized VLCLibrary
+ * \param library an instance of VLCLibrary to create the player against
+ */
+- (instancetype)initWithLibrary:(VLCLibrary *)library;
+/**
  * initialize player with a given set of options
  * \param options an array of private options
  * \note This will allocate a new libvlc and VLCLibrary instance, which will have a memory impact
