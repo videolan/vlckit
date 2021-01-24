@@ -1,7 +1,7 @@
-From 84778ca33bfef962177a1116e8abcfdc349f2589 Mon Sep 17 00:00:00 2001
+From baa50188d829e7949e894b0f46a0e606af10a19b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Mon, 26 Mar 2018 16:44:44 +0200
-Subject: [PATCH 07/16] modules:common: Use the full module name as MODULE_NAME
+Subject: [PATCH 07/18] modules:common: Use the full module name as MODULE_NAME
 
 This avoid conflicts when linking modules staticly on platforms that don't have objdump
 ---

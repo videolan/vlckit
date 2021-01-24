@@ -1,0 +1,80 @@
+From acb9d961a168d3d5ac1cff3003ad2b1615bc1e9b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Mon, 25 Jan 2021 19:56:01 +0100
+Subject: [PATCH 18/18] webservices: avoid symbol conflict
+
+---
+ modules/misc/webservices/json.c                   | 2 +-
+ modules/misc/webservices/json.h                   | 2 +-
+ modules/stream_out/chromecast/chromecast_ctrl.cpp | 8 ++++----
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/modules/misc/webservices/json.c b/modules/misc/webservices/json.c
+index ae7044601d..d2b5f763d2 100644
+--- a/modules/misc/webservices/json.c
++++ b/modules/misc/webservices/json.c
+@@ -779,7 +779,7 @@ e_failed:
+    return 0;
+ }
+ 
+-json_value * json_parse (const json_char * json)
++json_value * json_parse_simple (const json_char * json)
+ {
+    json_settings settings;
+    memset (&settings, 0, sizeof (json_settings));
+diff --git a/modules/misc/webservices/json.h b/modules/misc/webservices/json.h
+index a4da78ade3..8e34640071 100644
+--- a/modules/misc/webservices/json.h
++++ b/modules/misc/webservices/json.h
+@@ -209,7 +209,7 @@ typedef struct _json_value
+ 
+ } json_value;
+ 
+-json_value * json_parse
++json_value * json_parse_simple
+    (const json_char * json);
+ 
+ json_value * json_parse_ex
+diff --git a/modules/stream_out/chromecast/chromecast_ctrl.cpp b/modules/stream_out/chromecast/chromecast_ctrl.cpp
+index 34cdb6ae33..d0bae40217 100644
+--- a/modules/stream_out/chromecast/chromecast_ctrl.cpp
++++ b/modules/stream_out/chromecast/chromecast_ctrl.cpp
+@@ -672,7 +672,7 @@ void intf_sys_t::processAuthMessage( const castchannel::CastMessage& msg )
+ 
+ void intf_sys_t::processHeartBeatMessage( const castchannel::CastMessage& msg )
+ {
+-    json_value *p_data = json_parse(msg.payload_utf8().c_str());
++    json_value *p_data = json_parse_simple(msg.payload_utf8().c_str());
+     std::string type((*p_data)["type"]);
+ 
+     if (type == "PING")
+@@ -695,7 +695,7 @@ void intf_sys_t::processHeartBeatMessage( const castchannel::CastMessage& msg )
+ 
+ bool intf_sys_t::processReceiverMessage( const castchannel::CastMessage& msg )
+ {
+-    json_value *p_data = json_parse(msg.payload_utf8().c_str());
++    json_value *p_data = json_parse_simple(msg.payload_utf8().c_str());
+     std::string type((*p_data)["type"]);
+ 
+     bool ret = true;
+@@ -799,7 +799,7 @@ bool intf_sys_t::processReceiverMessage( const castchannel::CastMessage& msg )
+ 
+ void intf_sys_t::processMediaMessage( const castchannel::CastMessage& msg )
+ {
+-    json_value *p_data = json_parse(msg.payload_utf8().c_str());
++    json_value *p_data = json_parse_simple(msg.payload_utf8().c_str());
+     std::string type((*p_data)["type"]);
+     int64_t requestId = (json_int_t) (*p_data)["requestId"];
+ 
+@@ -946,7 +946,7 @@ void intf_sys_t::processMediaMessage( const castchannel::CastMessage& msg )
+ 
+ void intf_sys_t::processConnectionMessage( const castchannel::CastMessage& msg )
+ {
+-    json_value *p_data = json_parse(msg.payload_utf8().c_str());
++    json_value *p_data = json_parse_simple(msg.payload_utf8().c_str());
+     std::string type((*p_data)["type"]);
+     json_value_free(p_data);
+ 
+-- 
+2.24.3 (Apple Git-128)
+

@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (C) Pierre d'Herbemont, 2010
-# Copyright (C) Felix Paul Kühne, 2012-2020
+# Copyright (C) Felix Paul Kühne, 2012-2021
 
 set -e
 
@@ -24,7 +24,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="e33c290b36af06dd587bf64ac659b1fd820535cf" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="f86b34707976b963270c781267378d0693abcd90" # libvlc hash that this version of VLCKit is build on
 
 usage()
 {

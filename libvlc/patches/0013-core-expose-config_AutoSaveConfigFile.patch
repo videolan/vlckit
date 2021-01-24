@@ -1,17 +1,17 @@
-From c7c0752c997cf28af66b64ec6300e141f9f8ccd1 Mon Sep 17 00:00:00 2001
+From ac962d0dd1f5c9f6d9a2a4e8b6fe2e9860f72a16 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 10/16] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 13/18] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
- src/config/configuration.h  | 1 -
+ src/config/configuration.h  | 2 --
  src/config/file.c           | 1 +
  src/libvlccore.sym          | 1 +
- 4 files changed, 4 insertions(+), 1 deletion(-)
+ 4 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/include/vlc_configuration.h b/include/vlc_configuration.h
-index d4b8fc2473..155081b37b 100644
+index c6075c334a..961114b064 100644
 --- a/include/vlc_configuration.h
 +++ b/include/vlc_configuration.h
 @@ -243,6 +243,8 @@ VLC_API ssize_t config_GetPszChoices(const char *,
@@ -24,22 +24,23 @@ index d4b8fc2473..155081b37b 100644
  /**
   * Resets the configuration.
 diff --git a/src/config/configuration.h b/src/config/configuration.h
-index ec19abc89e..c1bf31fc46 100644
+index ecf96ef4d8..3473b20042 100644
 --- a/src/config/configuration.h
 +++ b/src/config/configuration.h
-@@ -28,7 +28,6 @@ extern "C" {
+@@ -27,8 +27,6 @@ extern "C" {
+ 
  /* Internal configuration prototypes and structures */
  
- int  config_CreateDir( vlc_object_t *, const char * );
 -int  config_AutoSaveConfigFile( vlc_object_t * );
- 
+-
  void config_Free (module_config_t *, size_t);
  
+ int config_LoadCmdLine   ( vlc_object_t *, int, const char *[], int * );
 diff --git a/src/config/file.c b/src/config/file.c
-index ae6e8b9ce5..a81f9164e9 100644
+index 10f8973f0c..69c6113db5 100644
 --- a/src/config/file.c
 +++ b/src/config/file.c
-@@ -526,6 +526,7 @@ error:
+@@ -525,6 +525,7 @@ error:
      return -1;
  }
  
@@ -48,7 +49,7 @@ index ae6e8b9ce5..a81f9164e9 100644
  {
      int ret = 0;
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index b67823c138..bde9b8fc8e 100644
+index 960e2b6111..1b5c680f39 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
 @@ -51,6 +51,7 @@ block_Realloc

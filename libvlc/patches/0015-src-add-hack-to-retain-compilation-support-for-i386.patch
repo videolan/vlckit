@@ -1,7 +1,7 @@
-From 544e6b6cbae01c50454b9db577262af0cf8cd7f8 Mon Sep 17 00:00:00 2001
+From 6923e2999469946319905c275323ee897ebd2534 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 20 Aug 2020 13:56:14 +0200
-Subject: [PATCH 15/16] src: add hack to retain compilation support for i386
+Subject: [PATCH 15/18] src: add hack to retain compilation support for i386
 
 This leads to potentially undefined behavior when using the 32bit iOS Simulator. This code path never ends-up in production.
 ---
@@ -26,7 +26,7 @@ index fc62eb7fff..fa87f72ec5 100644
      int (*compar)(const void *, const void *, void *);
      void *arg;
 diff --git a/src/misc/threads.c b/src/misc/threads.c
-index 196e0dc1d0..c8dbe0697c 100644
+index dcb604c0aa..8e120774b0 100644
 --- a/src/misc/threads.c
 +++ b/src/misc/threads.c
 @@ -130,7 +130,12 @@ void vlc_mutex_init_recursive(vlc_mutex_t *mtx)

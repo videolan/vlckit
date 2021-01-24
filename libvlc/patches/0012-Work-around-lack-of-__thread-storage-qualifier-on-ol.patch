@@ -1,7 +1,7 @@
-From 23e4add37f06ebf954cc6196929d8eb9ddf98a4f Mon Sep 17 00:00:00 2001
+From 84829e2b8e7fc1f7011da46e185a1f3290a927f5 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 13/16] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 12/18] Work around lack of __thread storage qualifier on old
  macOS
 
 ---
@@ -14,22 +14,22 @@ Subject: [PATCH 13/16] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 99e4669942..8da89cc732 100644
+index d3ea76c423..4ec8914bf8 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -695,8 +695,8 @@ dnl Check for system libs needed
+@@ -696,8 +696,8 @@ dnl Check for system libs needed
  need_libc=false
  
  dnl Check for usual libc functions
--AC_CHECK_FUNCS([accept4 fcntl flock fstatat fstatvfs fork getmntent_r getenv getpwuid_r isatty memalign mkostemp mmap open_memstream newlocale pipe2 pread posix_fadvise posix_madvise setlocale stricmp strnicmp strptime uselocale])
+-AC_CHECK_FUNCS([accept4 dup3 fcntl flock fstatat fstatvfs fork getmntent_r getenv getpwuid_r isatty memalign mkostemp mmap open_memstream newlocale pipe2 pread posix_fadvise posix_madvise setlocale stricmp strnicmp strptime uselocale wordexp])
 -AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll posix_memalign recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tdestroy tfind timegm timespec_get strverscmp pathconf])
-+AC_CHECK_FUNCS([accept4 fcntl flock fstatat fstatvfs fork getmntent_r getenv getpwuid_r isatty memalign mkostemp mmap open_memstream pipe2 pread posix_fadvise posix_madvise setlocale stricmp strnicmp strptime uselocale])
++AC_CHECK_FUNCS([accept4 dup3 fcntl flock fstatat fstatvfs fork getmntent_r getenv getpwuid_r isatty memalign mkostemp mmap open_memstream pipe2 pread posix_fadvise posix_madvise setlocale stricmp strnicmp strptime uselocale wordexp])
 +AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll posix_memalign recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tfind timegm timespec_get strverscmp pathconf])
  AC_REPLACE_FUNCS([gettimeofday])
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 51286f56d6..32a3e804c3 100644
+index 9149c7519f..2a8d32a1da 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
 @@ -521,9 +521,11 @@ void *lfind( const void *key, const void *base, size_t *nmemb,
@@ -47,7 +47,7 @@ index 51286f56d6..32a3e804c3 100644
  /* Random numbers */
  #ifndef HAVE_NRAND48
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index d5ce933408..624c22f828 100644
+index 0377c783bb..5fffa20513 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
 @@ -64,6 +64,7 @@ src/config/help.c
@@ -59,10 +59,10 @@ index d5ce933408..624c22f828 100644
  src/input/decoder.c
  src/input/decoder.h
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 73ff1b4934..5955e0bf72 100644
+index 49947dc6be..6452a8f86a 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
-@@ -211,6 +211,7 @@ libvlccore_la_SOURCES = \
+@@ -212,6 +212,7 @@ libvlccore_la_SOURCES = \
  	config/getopt.c \
  	config/vlc_getopt.h \
  	extras/libc.c \

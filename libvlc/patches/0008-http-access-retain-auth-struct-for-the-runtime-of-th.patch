@@ -1,7 +1,7 @@
-From 90e81dae142d0b68e150b3ba7728437fd79de73c Mon Sep 17 00:00:00 2001
+From 159f5346548f8934015c5713bec51527cf88f2a6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 08/16] http access: retain auth struct for the runtime of the
+Subject: [PATCH 08/18] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
@@ -52,10 +52,10 @@ index 4384e2b0a3..1a112b9ec1 100644
      p_sys->psz_mime = NULL;
      p_sys->i_icy_meta = 0;
 diff --git a/src/network/http_auth.c b/src/network/http_auth.c
-index 599fda6286..752e059005 100644
+index 76f91fe7d9..89732fdc3d 100644
 --- a/src/network/http_auth.c
 +++ b/src/network/http_auth.c
-@@ -224,7 +224,10 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
+@@ -222,7 +222,10 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
          /* 2 Basic Authentication Scheme */
          msg_Dbg( p_this, "Using Basic Authentication" );
          psz_header += sizeof( psz_basic_prefix ) - 1;
@@ -66,7 +66,7 @@ index 599fda6286..752e059005 100644
          if ( p_auth->psz_realm == NULL )
              msg_Warn( p_this, "Basic Authentication: "
                        "Mandatory 'realm' parameter is missing" );
-@@ -240,12 +243,24 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
+@@ -238,12 +241,24 @@ void vlc_http_auth_ParseWwwAuthenticateHeader(
              return;
  
          psz_header += sizeof( psz_digest_prefix ) - 1;

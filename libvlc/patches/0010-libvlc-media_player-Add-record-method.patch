@@ -1,7 +1,7 @@
-From 224d2d63831b40bd9c2f1e2ca08c47d773baf6fe Mon Sep 17 00:00:00 2001
+From dd2c76d3d6dc304da8f89bec2da04031ef021cf3 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 11/16] libvlc: media_player: Add record method
+Subject: [PATCH 10/18] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -9,10 +9,10 @@ Subject: [PATCH 11/16] libvlc: media_player: Add record method
  2 files changed, 33 insertions(+)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 7dec44f1af..fea7034644 100644
+index 77cebe6d57..bcb111688e 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -2465,6 +2465,19 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
+@@ -2616,6 +2616,19 @@ LIBVLC_API int libvlc_media_player_get_role(libvlc_media_player_t *p_mi);
   */
  LIBVLC_API int libvlc_media_player_set_role(libvlc_media_player_t *p_mi,
                                              unsigned role);
@@ -33,10 +33,10 @@ index 7dec44f1af..fea7034644 100644
  /** @} audio */
  
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 0b22bda55e..cdb6f23e31 100644
+index 02c4bdf1fc..8bffccb507 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -614,6 +614,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -592,6 +592,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
      var_Create (mp, "sout", VLC_VAR_STRING);
      var_Create (mp, "demux-filter", VLC_VAR_STRING);
@@ -44,7 +44,7 @@ index 0b22bda55e..cdb6f23e31 100644
      var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
  
      /* Video */
-@@ -2085,6 +2086,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
+@@ -2190,6 +2191,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
      return ret;
  }
  
