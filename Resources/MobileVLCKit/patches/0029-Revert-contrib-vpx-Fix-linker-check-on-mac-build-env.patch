@@ -1,7 +1,7 @@
-From f76ba4b237fa5bfeeb4ca79b76afb5b0283c573f Mon Sep 17 00:00:00 2001
+From 4f19d6977900da7dc6c0c96ee5ff0d7575cb1e3d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 9 Sep 2020 11:55:30 +0200
-Subject: [PATCH 29/38] Revert "contrib: vpx: Fix linker check on mac build
+Subject: [PATCH 29/41] Revert "contrib: vpx: Fix linker check on mac build
  environment"
 
 This reverts commit 9832addb1d0dec26b464db41bce11f1e058b3d63.

@@ -648,7 +648,7 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -674,7 +674,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
@@ -683,7 +682,7 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -708,7 +707,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 				VLC_BUILD_DIR = "$(SYMROOT)/$(CONFIGURATION)/vlc_build_dir";
 				VLC_SRC_DIR = "$(SRCROOT)/vlc-unstable";
 			};
@@ -751,7 +749,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/vlc/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -788,7 +786,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/x86_64/lib/vlc/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -797,7 +795,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -823,7 +821,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -832,7 +829,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -856,7 +853,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = macosx;
-				VALID_ARCHS = x86_64;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

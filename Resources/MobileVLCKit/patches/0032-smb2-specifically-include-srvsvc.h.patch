@@ -1,7 +1,7 @@
-From e17259edf7e560236797d17c3ed6681ad04e9e94 Mon Sep 17 00:00:00 2001
+From 8305ca85342e5d54616c9d942bdecb7e9d12a259 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 9 Oct 2020 09:18:23 +0200
-Subject: [PATCH 32/38] smb2: specifically include srvsvc.h
+Subject: [PATCH 32/41] smb2: specifically include srvsvc.h
 
 This is needed by newest version of libsmb2.
 ---
