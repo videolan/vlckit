@@ -13,7 +13,8 @@ variables:
 
 .continous-job-base:
     tags:
-        - macos
+        - catalina
+        - amd64
     stage: build
     only:
         - merge_requests
@@ -52,7 +53,8 @@ continous-VLCKit:
 
 .nightly-job-base:
     tags:
-        - macos
+        - catalina
+        - amd64
     stage: nightly
     only:
         - schedules
@@ -120,7 +122,8 @@ pages:
 
 .release-job-base:
     tags:
-        - macos
+        - catalina
+        - amd64
     stage: release
     only:
         - tags
