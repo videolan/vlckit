@@ -1,0 +1,26 @@
+From eb00aefe8b82371f636a0b0e5c063e243bfe0910 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Tue, 16 Feb 2021 17:04:59 +0100
+Subject: [PATCH 21/21] contrib/ffmpeg: fix cross-compilation for macOS on
+ macOS
+
+---
+ contrib/src/ffmpeg/rules.mak | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
+index 69d80ec07a..22d27dbbc5 100644
+--- a/contrib/src/ffmpeg/rules.mak
++++ b/contrib/src/ffmpeg/rules.mak
+@@ -156,6 +156,8 @@ FFMPEGCONF += --enable-pic --extra-ldflags="$(EXTRA_CFLAGS) -isysroot $(IOS_SDK)
+ ifdef HAVE_NEON
+ FFMPEGCONF += --as="$(AS)"
+ endif
++else
++FFMPEGCONF += --enable-pic --extra-ldflags="$(EXTRA_CFLAGS) -isysroot $(MACOSX_SDK)"
+ endif
+ endif
+ 
+-- 
+2.24.3 (Apple Git-128)
+

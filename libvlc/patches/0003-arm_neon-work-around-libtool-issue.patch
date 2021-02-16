@@ -1,7 +1,7 @@
-From 4ea8a041f4f25025a9faaab212de1bae63452158 Mon Sep 17 00:00:00 2001
+From 7f56fe20992d455670feaf4c2c084ce91b4af8fe Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 18 Dec 2014 22:14:55 +0100
-Subject: [PATCH 03/20] arm_neon: work-around libtool issue
+Subject: [PATCH 03/21] arm_neon: work-around libtool issue
 
 ---
  modules/arm_neon/Makefile.am | 2 ++

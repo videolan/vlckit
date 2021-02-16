@@ -1,7 +1,7 @@
-From e3e71f1195b381ecf0fe3431cc0ca238f309b2ce Mon Sep 17 00:00:00 2001
+From 4daed88ffa9f148c362589a56babb1464223619b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 15 Feb 2021 13:48:17 +0100
-Subject: [PATCH 20/20] package/apple: fix compilation on ARM-64
+Subject: [PATCH 20/21] package/apple: fix compilation on ARM-64
 
 ---
  extras/package/apple/build.sh | 16 ++++++++++++++++
