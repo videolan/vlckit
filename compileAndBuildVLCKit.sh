@@ -24,6 +24,10 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
+if [ -z "$MAKEFLAGS" ]; then
+    MAKEFLAGS="-j$(sysctl -n machdep.cpu.core_count || nproc)";
+fi
+
 TESTEDHASH="f86b34707976b963270c781267378d0693abcd90" # libvlc hash that this version of VLCKit is build on
 
 usage()
@@ -170,7 +174,7 @@ buildLibVLC() {
     mkdir -p ${BUILDDIR}
     spushd ${BUILDDIR}
 
-    ../extras/package/apple/build.sh --arch=$ARCH --sdk=${PLATFORM}${SDK_VERSION} ${DEBUGFLAG} ${VERBOSEFLAG} ${BITCODEFLAG} -j$(sysctl -n machdep.cpu.core_count)
+    ../extras/package/apple/build.sh --arch=$ARCH --sdk=${PLATFORM}${SDK_VERSION} ${DEBUGFLAG} ${VERBOSEFLAG} ${BITCODEFLAG} ${MAKEFLAGS}
 
     spopd # builddir
 
