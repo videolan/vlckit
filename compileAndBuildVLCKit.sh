@@ -112,6 +112,9 @@ buildxcodeproj()
                 architectures="armv7 arm64"
             fi
         fi
+        if [ "$MACOS" = "yes" ]; then
+            architectures="arm64 x86_64"
+        fi
     else
         architectures=`get_actual_arch $FARCH`
     fi
@@ -187,6 +190,7 @@ buildMobileKit() {
                 fi
             fi
             if [ "$MACOS" = "yes" ]; then
+                buildLibVLC "aarch64" "macosx"
                 buildLibVLC "x86_64" "macosx"
             fi
             if [ "$IOS" = "yes" ]; then
@@ -275,6 +279,10 @@ build_universal_static_lib() {
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-x86_64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-x86_64/static-lib/static-module-list.c"
     fi
+    if [ -d ${VLCROOT}/build-${OSSTYLE}-arm64 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-arm64/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-arm64/static-lib/static-module-list.c"
+    fi
 
     spushd ${VLCROOT}
 
@@ -344,7 +352,6 @@ do
              OSVERSIONMINCFLAG=macosx
              OSVERSIONMINLDFLAG=macosx
              BUILD_DEVICE=yes
-             FARCH=x86_64
              BUILD_DYNAMIC_FRAMEWORK=yes
              BUILD_STATIC_FRAMEWORK=no
              ;;

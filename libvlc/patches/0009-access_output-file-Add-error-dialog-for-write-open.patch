@@ -1,7 +1,7 @@
-From a584241104a061e13979adce64c46c0b5b74253c Mon Sep 17 00:00:00 2001
+From 7f3bd2be23d2798911d12be526089cae952dd57a Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Mon, 1 Oct 2018 15:37:57 +0200
-Subject: [PATCH 09/18] access_output: file: Add error dialog for write/open
+Subject: [PATCH 09/20] access_output: file: Add error dialog for write/open
 
 ---
  modules/access_output/file.c | 8 ++++++++
