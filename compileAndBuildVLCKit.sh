@@ -498,6 +498,7 @@ if [ "$TVOS" = "yes" ]; then
     chmod a+x TVVLCKit.framework/TVVLCKit && \
     cp -pr ${CONFIGURATION}-${platform}/TVVLCKit TVVLCKit.framework/Headers
     cp -pr ${CONFIGURATION}-${platform}/Modules TVVLCKit.framework/Modules
+    cp -pr ${PROJECT_DIR}/Resources/Info.plist TVVLCKit.framework/
     spopd # build
 
     info "Build of static TVVLCKit.framework completed"
@@ -526,6 +527,7 @@ if [ "$IOS" = "yes" ]; then
     chmod a+x MobileVLCKit.framework/MobileVLCKit && \
     cp -pr ${CONFIGURATION}-${platform}/MobileVLCKit MobileVLCKit.framework/Headers
     cp -pr ${CONFIGURATION}-${platform}/Modules MobileVLCKit.framework/Modules
+    cp -pr ${PROJECT_DIR}/Resources/Info.plist MobileVLCKit.framework/
     spopd # build
 
     info "Build of static MobileVLCKit.framework completed"
