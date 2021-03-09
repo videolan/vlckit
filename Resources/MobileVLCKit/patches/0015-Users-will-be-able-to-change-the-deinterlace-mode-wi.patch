@@ -1,7 +1,7 @@
-From 84b39d1afc5c2d9167e55c08fc24ece8032d9fab Mon Sep 17 00:00:00 2001
+From 1766b71827289ceab671922ac65b48737b9af830 Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Wed, 9 May 2018 10:44:43 +0100
-Subject: [PATCH 15/41] Users will be able to change the deinterlace mode
+Subject: [PATCH 15/43] Users will be able to change the deinterlace mode
  without forcing it.
 
 ---

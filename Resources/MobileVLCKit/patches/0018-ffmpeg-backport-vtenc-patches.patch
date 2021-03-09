@@ -1,7 +1,7 @@
-From c47c02bb085b2c1d13a8efba3b9a58a1fa4404c3 Mon Sep 17 00:00:00 2001
+From b1366a4f6d786cbe60c7270ad397c06a3a86ce91 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
-Subject: [PATCH 18/41] ffmpeg: backport vtenc patches
+Subject: [PATCH 18/43] ffmpeg: backport vtenc patches
 
 ---
  ...lboxenc-fix-mutex-cond-leak-in-error.patch |  35 ++++++
