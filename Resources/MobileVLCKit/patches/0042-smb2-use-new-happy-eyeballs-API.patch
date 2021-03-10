@@ -1,7 +1,7 @@
 From fd8bbc34fa38af1457b4d3406083c4755b2884bd Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 9 Nov 2020 18:06:58 +0100
-Subject: [PATCH 42/43] smb2: use new happy eyeballs API
+Subject: [PATCH 42/44] smb2: use new happy eyeballs API
 
 Connect to all resolved addresses in parallel, waiting 100ms between
 each new connection.

@@ -1,7 +1,7 @@
 From 487f11f5dc79acf12c2ca26281946dc1d2fb3eb2 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Sep 2019 14:41:31 +0200
-Subject: [PATCH 26/43] lib: media: fix media not being preparsed after a
+Subject: [PATCH 26/44] lib: media: fix media not being preparsed after a
  failure
 
 After a failure (like when browsing a smb folder with credential), it was

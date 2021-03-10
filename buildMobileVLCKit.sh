@@ -228,14 +228,14 @@ buildxcodeproj()
     if [ "$FARCH" = "all" ];then
         if [ "$TVOS" = "yes" ]; then
             if [ "$PLATFORM" = "appletvsimulator" ]; then
-                architectures="x86_64"
+                architectures="x86_64 arm64"
             else
                 architectures="arm64"
             fi
         fi
         if [ "$IOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                architectures="i386 x86_64"
+                architectures="i386 x86_64 arm64"
             else
                 architectures="armv7 armv7s arm64"
             fi
@@ -392,7 +392,11 @@ buildLibVLC() {
     EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     fi
     else
+    if [ "$MACOS" = "yes" ]; then
     EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+    else
+    EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-simulator-version-min=${SDK_MIN}"
+    fi
     fi
 
     if [ "$BITCODE" = "yes" ]; then
@@ -405,7 +409,7 @@ buildLibVLC() {
     fi
 
     if [ "$PLATFORM" = "Simulator" ]; then
-        EXTRA_CFLAGS+=" -arch ${ARCH}"
+        EXTRA_CFLAGS+=" -arch ${ACTUAL_ARCH}"
         EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG}_simulator_version_min,${SDK_MIN}"
     else
         EXTRA_CFLAGS+=" -arch ${ACTUAL_ARCH}"
@@ -494,7 +498,7 @@ buildLibVLC() {
     export ac_cv_func_timespec_get=no
 
     export USE_FFMPEG=1
-    ../bootstrap --build=${BUILD_TRIPLET} --host=${HOST_TRIPLET} --prefix=${VLCROOT}/contrib/${OSSTYLE}-${HOST_TRIPLET}-${ARCH} --disable-gpl \
+    ../bootstrap --build=${BUILD_TRIPLET} --host=${HOST_TRIPLET} --prefix=${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH} --disable-gpl \
         --enable-ad-clauses \
         --disable-gnuv3 \
         --disable-disc \
@@ -596,7 +600,7 @@ buildLibVLC() {
     ${VLCROOT}/configure \
         --prefix="${PREFIX}" \
         --host="${HOST_TRIPLET}" \
-        --with-contrib="${VLCROOT}/contrib/${OSSTYLE}-${HOST_TRIPLET}-${ARCH}" \
+        --with-contrib="${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH}" \
         --enable-static \
         ${DEBUGFLAG} \
         ${SCARYFLAG} \
@@ -657,7 +661,7 @@ buildLibVLC() {
 
     find ${PREFIX}/lib/vlc/plugins -name *.a -type f -exec cp '{}' ${PREFIX}/lib/vlc/plugins \;
     rm -rf "${PREFIX}/contribs"
-    cp -R "${VLCROOT}/contrib/${OSSTYLE}-${HOST_TRIPLET}-${ARCH}" "${PREFIX}/contribs"
+    cp -R "${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH}" "${PREFIX}/contribs"
 
     info "Removing unneeded modules"
     blacklist="
@@ -802,6 +806,7 @@ buildMobileKit() {
             if [ "$TVOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
                     buildLibVLC "x86_64" "Simulator"
+                    buildLibVLC "aarch64" "Simulator"
                 else
                     buildLibVLC "aarch64" "OS"
                 fi
@@ -814,6 +819,7 @@ buildMobileKit() {
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
                     buildLibVLC "i386" "Simulator"
                     buildLibVLC "x86_64" "Simulator"
+                    buildLibVLC "aarch64" "Simulator"
                 else
                     buildLibVLC "armv7" "OS"
                     buildLibVLC "armv7s" "OS"
@@ -829,7 +835,7 @@ buildMobileKit() {
 
             local buildPlatform=""
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                if [ "$FARCH" == "x86_64" -o "$FARCH" == "i386" ];then
+                if [ "$FARCH" == "x86_64" -o "$FARCH" == "i386" -o "$FARCH" == "aarch64" ];then
                     buildPlatform="Simulator"
                 fi
             else
@@ -889,9 +895,13 @@ doContribLipo() {
 
     info "...$LIBNAME"
 
-    for i in $DEVICEARCHS $SIMULATORARCHS
+    for i in $DEVICEARCHS
     do
-        files="contrib/$OSSTYLE-$i-apple-darwin-$i/lib/$LIBNAME $files"
+        files="contrib/"$OSSTYLE"OS-$i-apple-darwin-$i/lib/$LIBNAME $files"
+    done
+    for i in $SIMULATORARCHS
+    do
+        files="contrib/"$OSSTYLE"Simulator-$i-apple-darwin-$i/lib/$LIBNAME $files"
     done
 
     lipo $files -create -output install-$OSSTYLE/contrib/$LIBNAME
@@ -1009,12 +1019,18 @@ build_universal_static_lib() {
     spushd libvlc/vlc
 
     # collect contrib libraries
-    spushd contrib/$OSSTYLE-$arch-apple-darwin-$arch/lib
+    local contriblocation=""
+    if [ -d ${VLCROOT}/contrib/"$OSSTYLE"Simulator-$arch-apple-darwin-$arch/lib ];then
+        contriblocation="contrib/"$OSSTYLE"Simulator-$arch-apple-darwin-$arch/lib"
+    else
+        contriblocation="contrib/"$OSSTYLE"OS-$arch-apple-darwin-$arch/lib"
+    fi
+    spushd $contriblocation
     for i in `ls *.a`
     do
         CONTRIBLIBS="$i $CONTRIBLIBS"
     done
-    spopd # contrib/$OSSTYLE-$arch-apple-darwin-$arch/lib
+    spopd # contriblocation
 
     # lipo all the vlc libraries and its plugins
     doVLCLipo "" "libvlc.a" "no" $OSSTYLE

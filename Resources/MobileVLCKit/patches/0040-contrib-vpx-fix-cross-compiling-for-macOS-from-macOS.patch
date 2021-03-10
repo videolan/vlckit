@@ -1,7 +1,7 @@
 From d4b91031dfff129f8be625adbb8e735a44e2d889 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 20 Feb 2021 14:05:55 +0100
-Subject: [PATCH 40/43] contrib/vpx: fix cross-compiling for macOS from macOS
+Subject: [PATCH 40/44] contrib/vpx: fix cross-compiling for macOS from macOS
 
 ---
  contrib/src/vpx/rules.mak | 3 +++
