@@ -749,7 +749,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(VLC_PLUGINS_DEVICE_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -786,7 +786,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LIBTOOLFLAGS = "$(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlccore.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libvlc.a $(PROJECT_DIR)/libvlc/vlc/install-MacOSX/core/libcompat.a $(VLC_PLUGINS_LDFLAGS)";
+				OTHER_LIBTOOLFLAGS = "$(VLC_PLUGINS_DEVICE_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

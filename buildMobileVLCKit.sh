@@ -6,7 +6,6 @@ set -e
 
 BUILD_DEVICE=yes
 BUILD_SIMULATOR=yes
-BUILD_STATIC_FRAMEWORK=no
 BUILD_DYNAMIC_FRAMEWORK=no
 BUILD_ARCH=`uname -m | cut -d. -f1`
 SDK_VERSION=`xcrun --sdk iphoneos --show-sdk-version`
@@ -21,7 +20,7 @@ TVOS=no
 MACOS=no
 IOS=yes
 BITCODE=no
-OSVERSIONMINCFLAG=miphoneos
+OSVERSIONMINCFLAG=mios
 OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
@@ -68,12 +67,12 @@ do
          s)
              BUILD_DEVICE=no
              BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=no
+             BUILD_DYNAMIC_FRAMEWORK=no
              ;;
          f)
              BUILD_DEVICE=yes
              BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=yes
+             BUILD_DYNAMIC_FRAMEWORK=yes
              ;;
          d)  CONFIGURATION="Debug"
              DEBUG=yes
@@ -92,7 +91,7 @@ do
          a)
              BUILD_DEVICE=yes
              BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=yes
+             BUILD_DYNAMIC_FRAMEWORK=yes
              FARCH=$OPTARG
              ;;
          b)
@@ -117,7 +116,6 @@ do
              OSVERSIONMINLDFLAG=macosx
              BUILD_DEVICE=yes
              BUILD_DYNAMIC_FRAMEWORK=yes
-             BUILD_STATIC_FRAMEWORK=no
              ;;
          ?)
              usage
@@ -257,14 +255,17 @@ buildxcodeproj()
         defs="$defs NOSCARYCODECS"
     fi
 
-    xcodebuild -project "$1.xcodeproj" \
-               -target "$target" \
+    xcodebuild archive \
+               -project "$1.xcodeproj" \
                -sdk $PLATFORM$SDK \
                -configuration ${CONFIGURATION} \
+               -scheme "$target" \
+               -archivePath build/"$target"-$PLATFORM$SDK.xcarchive \
                ARCHS="${architectures}" \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
                GCC_PREPROCESSOR_DEFINITIONS="$defs" \
                ${bitcodeflag} \
+               SKIP_INSTALL=no \
                > ${out}
 }
 
@@ -860,59 +861,12 @@ fi
 DEVICEARCHS=""
 SIMULATORARCHS=""
 
-doVLCLipo() {
-    FILEPATH="$1"
-    FILE="$2"
-    PLUGIN="$3"
-    OSSTYLE="$4"
-    files=""
-
-    info "...$FILEPATH$FILE"
-
-    for i in $DEVICEARCHS
-    do
-        actual_arch=`get_actual_arch $i`
-        files="install-"$OSSTYLE"OS/$actual_arch/lib/$FILEPATH$FILE $files"
-    done
-
-    for i in $SIMULATORARCHS
-    do
-        actual_arch=`get_actual_arch $i`
-        files="install-"$OSSTYLE"Simulator/$actual_arch/lib/$FILEPATH$FILE $files"
-    done
-
-    if [ "$PLUGIN" != "no" ]; then
-        lipo $files -create -output install-$OSSTYLE/plugins/$FILE
-    else
-        lipo $files -create -output install-$OSSTYLE/core/$FILE
-    fi
-}
-
-doContribLipo() {
-    LIBNAME="$1"
-    OSSTYLE="$2"
-    files=""
-
-    info "...$LIBNAME"
-
-    for i in $DEVICEARCHS
-    do
-        files="contrib/"$OSSTYLE"OS-$i-apple-darwin-$i/lib/$LIBNAME $files"
-    done
-    for i in $SIMULATORARCHS
-    do
-        files="contrib/"$OSSTYLE"Simulator-$i-apple-darwin-$i/lib/$LIBNAME $files"
-    done
-
-    lipo $files -create -output install-$OSSTYLE/contrib/$LIBNAME
-}
-
 get_symbol()
 {
     echo "$1" | grep vlc_entry_$2|cut -d" " -f 3|sed 's/_vlc/vlc/'
 }
 
-build_universal_static_lib() {
+collect_symbols_and_libraries() {
     PROJECT_DIR=`pwd`
     OSSTYLE="$1"
     info "building universal static libs for OS style $OSSTYLE"
@@ -923,19 +877,12 @@ build_universal_static_lib() {
     touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
     touch $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-    spushd libvlc/vlc
-    rm -rf install-$OSSTYLE
-    mkdir install-$OSSTYLE
-    mkdir install-$OSSTYLE/core
-    mkdir install-$OSSTYLE/contrib
-    mkdir install-$OSSTYLE/plugins
-    spopd # vlc
-
     VLCMODULES=""
     VLCNEONMODULES=""
     SIMULATORARCHS=""
     CONTRIBLIBS=""
     DEVICEARCHS=""
+    NEONARCHS=""
 
     # arm64 got the lowest number of modules
     arch="aarch64"
@@ -958,7 +905,7 @@ build_universal_static_lib() {
         done
 
         if (! is_simulator_arch $arch);then
-            echo "IPHONE OS: $arch"
+            info "IPHONE OS: $arch"
             spushd $actual_arch/lib/vlc/plugins
             for i in `ls *.a`
             do
@@ -968,7 +915,7 @@ build_universal_static_lib() {
         fi
 
         if [ "$OSSTYLE" = "MacOSX" ];then
-            echo "macOS: $actual_arch"
+            info "macOS: $actual_arch"
             spushd $actual_arch/lib/vlc/plugins
             for i in `ls *.a`
             do
@@ -981,8 +928,10 @@ build_universal_static_lib() {
             \( "$FARCH" = "all" -o "$FARCH" = "armv7" -o "$FARCH" = "armv7s" \) ]; then
             # collect ARMv7/s specific neon modules
             if [ "$FARCH" = "all" ];then
+                NEONARCHS="armv7 armv7s"
                 spushd armv7/lib/vlc/plugins
             else
+                NEONARCHS=$FARCH
                 spushd $FARCH/lib/vlc/plugins
             fi
             for i in `ls *.a | grep neon`
@@ -1005,7 +954,7 @@ build_universal_static_lib() {
             done
 
             if (is_simulator_arch $arch);then
-                echo "SIMU OS: $arch"
+                info "SIMU OS: $arch"
                 spushd $arch/lib/vlc/plugins
                     for i in `ls *.a`
                     do
@@ -1032,61 +981,77 @@ build_universal_static_lib() {
     done
     spopd # contriblocation
 
-    # lipo all the vlc libraries and its plugins
-    doVLCLipo "" "libvlc.a" "no" $OSSTYLE
-    doVLCLipo "" "libvlccore.a" "no" $OSSTYLE
-    doVLCLipo "vlc/" "libcompat.a" "no" $OSSTYLE
-    for i in $VLCMODULES
-    do
-        doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
-    done
-
-    # lipo contrib libraries
-    for i in $CONTRIBLIBS
-    do
-        doContribLipo $i $OSSTYLE
-    done
-
-    if [ "$OSSTYLE" = "iPhone" ]; then
-        # lipo the remaining NEON plugins
-        DEVICEARCHS=""
-        for i in armv7 armv7s; do
-            local iarch="`get_arch $i`"
-            if [ "$FARCH" == "all" -o "$FARCH" = "$iarch" ];then
-                DEVICEARCHS="$DEVICEARCHS $iarch"
-            fi
-        done
-        SIMULATORARCHS=""
-        for i in $VLCNEONMODULES
-        do
-            doVLCLipo "vlc/plugins/" $i "yes" $OSSTYLE
-        done
-    fi
-
     # create module list
     info "creating module list"
     echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
     echo "// This file is autogenerated by $(basename $0)\n\n" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
-    # arm64 got the lowest number of modules
-    BUILTINS="const void *vlc_static_modules[] = {\n"; \
+    BUILTINS="const void *vlc_static_modules[] = {\n";
+    COREFILES="libvlc.a libvlccore.a vlc/libcompat.a"
 
-    LDFLAGS=""
+    SIMULATORLDFLAGS=""
+    OSLDFLAGS=""
     DEFINITIONS=""
+
+    info "device archs: $DEVICEARCHS"
+    info "simulator archs: $SIMULATORARCHS"
+
+    # add core libraries to LDFLAGS
+    for file in $COREFILES
+    do
+        info "...$file"
+
+        for i in $DEVICEARCHS
+        do
+            actual_arch=`get_actual_arch $i`
+            DEVICELDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"OS/$actual_arch/lib/$file "
+        done
+
+        for i in $SIMULATORARCHS
+        do
+            actual_arch=`get_actual_arch $i`
+            SIMULATORLDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"Simulator/$actual_arch/lib/$file "
+        done
+    done
 
     # add contrib libraries to LDFLAGS
     for file in $CONTRIBLIBS
     do
-        LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/contrib/$file "
+        info "...$file"
+
+        for i in $DEVICEARCHS
+        do
+            actual_arch=`get_actual_arch $i`
+            DEVICELDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"OS/$actual_arch/contribs/lib/$file "
+        done
+
+        for i in $SIMULATORARCHS
+        do
+            actual_arch=`get_actual_arch $i`
+            SIMULATORLDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"Simulator/$actual_arch/contribs/lib/$file "
+        done
     done
 
+    # add VLC plugins to LDFLAGS
     for file in $VLCMODULES
     do
-        symbols=$(nm -g -arch $actual_arch install-$OSSTYLE/plugins/$file)
-        entryname=$(get_symbol "$symbols" _)
-        DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
-        BUILTINS+=" $entryname,\n"
-        LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
+        info "...$file"
+        for i in $DEVICEARCHS
+        do
+            actual_arch=`get_actual_arch $i`
+            DEVICELDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"OS/$actual_arch/lib/vlc/plugins/$file "
+
+            symbols=$(nm -g -arch $actual_arch install-"$OSSTYLE"OS/$actual_arch/lib/vlc/plugins/$file)
+            entryname=$(get_symbol "$symbols" _)
+            DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
+            BUILTINS+=" $entryname,\n"
+        done
+
+        for i in $SIMULATORARCHS
+        do
+            actual_arch=`get_actual_arch $i`
+            SIMULATORLDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"Simulator/$actual_arch/lib/vlc/plugins/$file "
+        done
         info "...$entryname"
     done;
 
@@ -1096,12 +1061,20 @@ build_universal_static_lib() {
         DEFINITIONS+="#ifdef __arm__\n"
         for file in $VLCNEONMODULES
         do
-            symbols=$(nm -g -arch $actual_arch install-$OSSTYLE/plugins/$file)
-            entryname=$(get_symbol "$symbols" _)
-            DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
-            BUILTINS+=" $entryname,\n"
-            LDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"/plugins/$file "
-            info "...$entryname"
+            iter="0"
+            for i in $NEONARCHS
+            do
+                actual_arch=`get_actual_arch $i`
+                DEVICELDFLAGS+="\$(PROJECT_DIR)/libvlc/vlc/install-"$OSSTYLE"OS/$actual_arch/lib/vlc/plugins/$file "
+                if [ "$iter" = "0" ]; then
+                    symbols=$(nm -g -arch $actual_arch install-"$OSSTYLE"OS/$actual_arch/lib/vlc/plugins/$file)
+                    entryname=$(get_symbol "$symbols" _)
+                    DEFINITIONS+="int $entryname (int (*)(void *, void *, int, ...), void *);\n";
+                    BUILTINS+=" $entryname,\n"
+                    iter="1"
+                    info "...$entryname"
+                fi
+            done
         done;
         BUILTINS+="#endif\n"
         DEFINITIONS+="#endif\n"
@@ -1110,92 +1083,93 @@ build_universal_static_lib() {
     BUILTINS="$BUILTINS NULL\n};\n"
 
     echo "$DEFINITIONS\n$BUILTINS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.h
-    echo "VLC_PLUGINS_LDFLAGS=$LDFLAGS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
+    echo "VLC_PLUGINS_DEVICE_LDFLAGS=$DEVICELDFLAGS\nVLC_PLUGINS_SIMULATOR_LDFLAGS=$SIMULATORLDFLAGS" > $PROJECT_DIR/Resources/MobileVLCKit/vlc-plugins-$OSSTYLE.xcconfig
 
     spopd # vlc
 }
 
 if [ "$TVOS" = "yes" ]; then
-    build_universal_static_lib "AppleTV"
+    collect_symbols_and_libraries "AppleTV"
 fi
 if [ "$MACOS" = "yes" ]; then
-    build_universal_static_lib "MacOSX"
+    collect_symbols_and_libraries "MacOSX"
 fi
 if [ "$IOS" = "yes" ]; then
-    build_universal_static_lib "iPhone"
+    collect_symbols_and_libraries "iPhone"
 fi
 
 info "all done"
 
-if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
+if [ "$BUILD_DYNAMIC_FRAMEWORK" != "no" ]; then
 if [ "$TVOS" = "yes" ]; then
-    info "Building static TVVLCKit.framework"
+    info "Building dynamic TVVLCKit.xcframework"
 
-    lipo_libs=""
+    frameworks=""
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="appletvos"
         buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
+        bcsymbolmapfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/BCSymbolMaps
+        spushd $bcsymbolmapfolder
+        for i in `ls *.bcsymbolmap`
+        do
+            bcsymbolmap=$bcsymbolmapfolder/$i
+        done
+        spopd
+        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder -debug-symbols $bcsymbolmap"
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
         buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
+        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder"
     fi
 
     # Assumes both platforms were built currently
     spushd build
-    rm -rf TVVLCKit.framework && \
-    mkdir TVVLCKit.framework && \
-    lipo -create ${lipo_libs} -o TVVLCKit.framework/TVVLCKit && \
-    chmod a+x TVVLCKit.framework/TVVLCKit && \
-    cp -pr ${CONFIGURATION}-${platform}/TVVLCKit TVVLCKit.framework/Headers
-    cp -pr ${CONFIGURATION}-${platform}/Modules TVVLCKit.framework/Modules
-    cp -pr ${PROJECT_DIR}/Resources/DynamicTVVLCKit/Info.plist TVVLCKit.framework/
+    rm -rf TVVLCKit.xcframework
+    xcodebuild -create-xcframework $frameworks -output TVVLCKit.xcframework
     spopd # build
 
-    info "Build of static TVVLCKit.framework completed"
+    info "Build of dynamic TVVLCKit.xcframework completed"
 fi
 if [ "$IOS" = "yes" ]; then
-    info "Building static MobileVLCKit.framework"
+    info "Building dynamic MobileVLCKit.xcframework"
 
-    lipo_libs=""
+    frameworks=""
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="iphoneos"
         buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
+        frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="iphonesimulator"
         buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
+        frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
     fi
 
     # Assumes both platforms were built currently
     spushd build
-    rm -rf MobileVLCKit.framework && \
-    mkdir MobileVLCKit.framework && \
-    lipo -create ${lipo_libs} -o MobileVLCKit.framework/MobileVLCKit && \
-    chmod a+x MobileVLCKit.framework/MobileVLCKit && \
-    cp -pr ${CONFIGURATION}-${platform}/MobileVLCKit MobileVLCKit.framework/Headers
-    cp -pr ${CONFIGURATION}-${platform}/Modules MobileVLCKit.framework/Modules
-	cp -pr ${PROJECT_DIR}/Resources/DynamicTVVLCKit/Info.plist MobileVLCKit.framework/
+    rm -rf MobileVLCKit.xcframework
+    xcodebuild -create-xcframework $frameworks -output MobileVLCKit.xcframework
     spopd # build
 
-    info "Build of static MobileVLCKit.framework completed"
+    info "Build of dynamic MobileVLCKit.xcframework completed"
 fi
 fi
 if [ "$BUILD_DYNAMIC_FRAMEWORK" != "no" ]; then
 if [ "$MACOS" = "yes" ]; then
-    info "Building VLCKit.framework"
+    info "Building dynamic VLCKit.framework"
 
     buildxcodeproj VLCKit "VLCKit" "macosx"
 
     # remove intermediate build result we don't need to keep
     spushd build
-    rm ${CONFIGURATION}/libStaticLibVLC.a
+    mv VLCKit-macosx.xcarchive/Products/Frameworks/VLCKit.framework VLCKit.framework
     spopd # build
 
     info "Build of VLCKit.framework completed"
