@@ -852,6 +852,7 @@
 					suppress,
 				);
 				OTHER_LIBTOOLFLAGS = "-read_only_relocs suppress";
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.mobilevlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -921,6 +922,7 @@
 					suppress,
 				);
 				OTHER_LIBTOOLFLAGS = "-read_only_relocs suppress";
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.mobilevlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
