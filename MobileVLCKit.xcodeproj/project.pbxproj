@@ -825,7 +825,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -846,12 +845,12 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
+				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = (
 					"-ObjC",
 					"-read_only_relocs",
 					suppress,
 				);
-				OTHER_LIBTOOLFLAGS = "-read_only_relocs suppress";
+				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "-read_only_relocs suppress";
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.mobilevlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -888,7 +887,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -916,12 +914,12 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
+				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = (
 					"-ObjC",
 					"-read_only_relocs",
 					suppress,
 				);
-				OTHER_LIBTOOLFLAGS = "-read_only_relocs suppress";
+				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "-read_only_relocs suppress";
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.mobilevlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

@@ -246,8 +246,17 @@ buildxcodeproj()
     fi
 
     local bitcodeflag=""
+    if [ "$IOS" = "yes" ]; then
+    if [ "$BITCODE" = "yes" ]; then
+        bitcodeflag="BITCODE_GENERATION_MODE=bitcode ENABLE_BITCODE=yes"
+    else
+        bitcodeflag="BITCODE_GENERATION_MODE=none ENABLE_BITCODE=no"
+    fi
+    fi
+    if [ "$TVOS" = "yes" ]; then
     if [ "$BITCODE" = "yes" ]; then
         bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
+    fi
     fi
 
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
@@ -1143,7 +1152,17 @@ if [ "$IOS" = "yes" ]; then
         platform="iphoneos"
         buildxcodeproj MobileVLCKit "MobileVLCKit" ${platform}
         dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
+        bcsymbolmapfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/BCSymbolMaps
         frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
+        if [ -d ${bcsymbolmapfolder} ];then
+            info "Bitcode support found"
+            spushd $bcsymbolmapfolder
+            for i in `ls *.bcsymbolmap`
+            do
+                frameworks+=" -debug-symbols $bcsymbolmapfolder/$i"
+            done
+            spopd
+        fi
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="iphonesimulator"
