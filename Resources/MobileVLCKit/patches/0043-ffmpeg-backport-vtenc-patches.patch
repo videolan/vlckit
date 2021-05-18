@@ -1,7 +1,7 @@
-From b1366a4f6d786cbe60c7270ad397c06a3a86ce91 Mon Sep 17 00:00:00 2001
+From 566a3d42483a18f55640cf5f21a6536a0f78caa4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Jun 2018 12:31:13 +0200
-Subject: [PATCH 18/44] ffmpeg: backport vtenc patches
+Subject: [PATCH 43/44] ffmpeg: backport vtenc patches
 
 ---
  ...lboxenc-fix-mutex-cond-leak-in-error.patch |  35 ++++++
@@ -340,13 +340,13 @@ index 0000000000..42f4cce1e6
 +2.18.0
 +
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index f8052e76fc..0226af35eb 100644
+index 77f34bd874..7f0aa28c8c 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -247,6 +247,10 @@ ifdef USE_FFMPEG
- 	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-hevcdec-set-the-SEI-parameters-early-on-the-.patch
- 	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-h264_slice-set-the-SEI-parameters-early-on-t.patch
+@@ -252,6 +252,10 @@ ifdef USE_FFMPEG
  	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-vp9-add-profile-2-10-bit-DXVA2-D3D11-decodin.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-mpeg12dec-don-t-call-hw-end_frame-when-start.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0002-avcodec-mpeg12dec-don-t-end-a-slice-without-first_sl.patch
 +	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-videotoolboxenc-fix-mutex-cond-leak-in-error.patch
 +	$(APPLY) $(SRC)/ffmpeg/0002-avcodec-videotoolboxenc-split-initialization.patch
 +	$(APPLY) $(SRC)/ffmpeg/0003-avcodec-videotoolboxenc-fix-invalid-session-on-iOS.patch
@@ -355,5 +355,5 @@ index f8052e76fc..0226af35eb 100644
  ifdef USE_LIBAV
  	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 

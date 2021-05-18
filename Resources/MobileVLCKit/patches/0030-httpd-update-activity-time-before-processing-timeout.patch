@@ -1,7 +1,7 @@
-From ed5c0660ef2e60260001c1778870a21f36c81d61 Mon Sep 17 00:00:00 2001
+From 2be4e43c1a4e8e584fa8e7aadb416f9f74ad2463 Mon Sep 17 00:00:00 2001
 From: Francois Cartegnie <fcvlcdev@free.fr>
 Date: Mon, 28 Sep 2020 17:52:16 +0200
-Subject: [PATCH 31/44] httpd: update activity time before processing timeout
+Subject: [PATCH 30/44] httpd: update activity time before processing timeout
  (#25151)
 
 as connection state handling block has moved in
@@ -40,5 +40,5 @@ index 69e6399483..f4a7638477 100644
          assert (pufd < ufd + (sizeof (ufd) / sizeof (ufd[0])));
  
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 

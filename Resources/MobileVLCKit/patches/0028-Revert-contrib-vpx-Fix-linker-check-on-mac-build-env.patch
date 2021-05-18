@@ -1,7 +1,7 @@
-From cfa9ef5c2c9c091d021f299df37c7c120dbe6004 Mon Sep 17 00:00:00 2001
+From 781da15042eb7c629b21844fed35f2e016fcb1e9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 9 Sep 2020 11:55:30 +0200
-Subject: [PATCH 29/44] Revert "contrib: vpx: Fix linker check on mac build
+Subject: [PATCH 28/44] Revert "contrib: vpx: Fix linker check on mac build
  environment"
 
 This reverts commit 9832addb1d0dec26b464db41bce11f1e058b3d63.
@@ -41,5 +41,5 @@ index 0dc62d7610..ebd3ec473c 100644
  	$(APPLY) $(SRC)/vpx/libvpx-darwin-aarch64.patch
  endif
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 

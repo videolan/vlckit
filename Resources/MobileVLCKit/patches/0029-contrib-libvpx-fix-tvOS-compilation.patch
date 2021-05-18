@@ -1,7 +1,7 @@
-From 4421fc0eab65d3647a1ceb3e910628a10f3fa369 Mon Sep 17 00:00:00 2001
+From 908e35c884abaea9bfe8e472b2b46f3d3bb8bd85 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 19 Sep 2020 13:51:08 +0200
-Subject: [PATCH 30/44] contrib/libvpx: fix tvOS compilation
+Subject: [PATCH 29/44] contrib/libvpx: fix tvOS compilation
 
 ---
  contrib/src/vpx/libvpx-tvos.patch | 21 +++++++++++++++++++++
@@ -51,5 +51,5 @@ index ebd3ec473c..c8a146e9a9 100644
  	$(MOVE)
  
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 

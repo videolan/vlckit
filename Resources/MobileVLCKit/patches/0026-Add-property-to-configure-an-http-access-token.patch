@@ -1,7 +1,7 @@
-From 295030a7355ad6d936728ba7b4d59e64df9e315c Mon Sep 17 00:00:00 2001
+From 5097ab75a74a81b6bbc10aff8b5d2c3d31c7f886 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
-Subject: [PATCH 27/44] Add property to configure an http access token
+Subject: [PATCH 26/44] Add property to configure an http access token
 
 ---
  modules/access/http/access.c   | 5 +++++
@@ -80,5 +80,5 @@ index 25f7c7d6d2..4c25865df4 100644
      system_Configure( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
  
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 
