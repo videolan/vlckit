@@ -1,7 +1,7 @@
-From d6dd8d3101056a5cd6821a0771d6ccaac0d11b84 Mon Sep 17 00:00:00 2001
+From 39140b357acdf77d024d05fcbee1c1b13b67b78e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 02/21] libvlc_media: add cookie_jar API
+Subject: [PATCH 19/22] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -12,10 +12,10 @@ Subject: [PATCH 02/21] libvlc_media: add cookie_jar API
  5 files changed, 71 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index 904e265561..0f89676aab 100644
+index eb7c53d80a..092cf14dbd 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -876,6 +876,41 @@ LIBVLC_API
+@@ -877,6 +877,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -71,10 +71,10 @@ index 2c145c59d3..d64de05cf8 100644
  libvlc_playlist_play
  libvlc_release
 diff --git a/lib/media.c b/lib/media.c
-index 6f7911e0a2..9c422433bb 100644
+index 6bd8ca1c14..752cfcafe5 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -516,6 +516,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(
+@@ -524,6 +524,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(
      p_md->p_input_item->libvlc_owner = p_md;
  
      libvlc_event_manager_init( &p_md->event_manager, p_md );
@@ -82,17 +82,17 @@ index 6f7911e0a2..9c422433bb 100644
  
      input_item_Hold( p_md->p_input_item );
  
-@@ -657,6 +658,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
+@@ -757,6 +758,9 @@ libvlc_media_set_state( libvlc_media_t *p_md,
  
-     input_item_Release( p_md->p_input_item );
+     p_md->state = state;
  
 +    if( p_md->p_cookie_jar )
 +        vlc_http_cookies_destroy( p_md->p_cookie_jar );
 +
      /* Construct the event */
-     libvlc_event_t event;
-     event.type = libvlc_MediaFreed;
-@@ -1340,3 +1344,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+     event.type = libvlc_MediaStateChanged;
+     event.u.media_state_changed.new_state = state;
+@@ -1357,3 +1361,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
      free( pp_slaves );
  }
@@ -118,7 +118,7 @@ index 6f7911e0a2..9c422433bb 100644
 +        vlc_http_cookies_clear( p_md->p_cookie_jar );
 +}
 diff --git a/lib/media_internal.h b/lib/media_internal.h
-index b8646abce2..f6387efbbc 100644
+index 511a0aad15..fb922aeb13 100644
 --- a/lib/media_internal.h
 +++ b/lib/media_internal.h
 @@ -31,6 +31,7 @@
@@ -129,7 +129,7 @@ index b8646abce2..f6387efbbc 100644
  
  struct libvlc_media_t
  {
-@@ -51,6 +52,7 @@ struct libvlc_media_t
+@@ -57,6 +58,7 @@ struct libvlc_media_t
      libvlc_media_parsed_status_t parsed_status;
      bool is_parsed;
      bool has_asked_preparse;
@@ -138,18 +138,18 @@ index b8646abce2..f6387efbbc 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 9341c49a68..02c4bdf1fc 100644
+index 5fb1fbe7c8..aeccd94a21 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -592,6 +592,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
-     var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
+@@ -616,6 +616,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "sout", VLC_VAR_STRING);
      var_Create (mp, "demux-filter", VLC_VAR_STRING);
+     var_Create (mp, "input-record-path", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
 +    var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
  
      /* Video */
      var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
-@@ -904,6 +905,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -928,6 +929,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
      vlc_player_t *player = p_mi->player;
      vlc_player_Lock(player);
  
@@ -163,5 +163,5 @@ index 9341c49a68..02c4bdf1fc 100644
      if (ret == VLC_SUCCESS)
      {
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 

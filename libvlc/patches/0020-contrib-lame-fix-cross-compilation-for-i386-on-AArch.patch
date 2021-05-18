@@ -1,0 +1,55 @@
+From fe255bd9c1241f993da9a3aa8531568520f0b468 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Fri, 7 May 2021 11:00:25 +0200
+Subject: [PATCH 20/22] contrib/lame: fix cross-compilation for i386 on AArch64
+
+---
+ .../src/lame/lame-fix-i386-on-aarch64.patch   | 21 +++++++++++++++++++
+ contrib/src/lame/rules.mak                    |  3 +++
+ 2 files changed, 24 insertions(+)
+ create mode 100644 contrib/src/lame/lame-fix-i386-on-aarch64.patch
+
+diff --git a/contrib/src/lame/lame-fix-i386-on-aarch64.patch b/contrib/src/lame/lame-fix-i386-on-aarch64.patch
+new file mode 100644
+index 0000000000..9c52d72f6f
+--- /dev/null
++++ b/contrib/src/lame/lame-fix-i386-on-aarch64.patch
+@@ -0,0 +1,21 @@
++diff -ru lame/configure.in lame/configure.in
++--- lame/configure.in	2021-05-07 10:51:04.000000000 +0200
+++++ lame-fixed/configure.in	2021-05-07 10:51:26.000000000 +0200
++@@ -935,7 +935,7 @@
++ 						-mtune=native"
++ 					;;
++ 				*86)
++-					OPTIMIZATION="${OPTIMIZATION} -march=native \
+++					OPTIMIZATION="${OPTIMIZATION} -march=i386 \
++ 						-mtune=native"
++ 					;;
++ 				arm*-gnueabi)
++@@ -986,7 +986,7 @@
++ 				-mtune=native"
++ 			;;
++ 		*86)
++-			OPTIMIZATION="${OPTIMIZATION} -march=native \
+++			OPTIMIZATION="${OPTIMIZATION} -march=i386 \
++ 				-mtune=native"
++ 			;;
++ 		esac
+diff --git a/contrib/src/lame/rules.mak b/contrib/src/lame/rules.mak
+index ab08e93ba9..44457a247d 100644
+--- a/contrib/src/lame/rules.mak
++++ b/contrib/src/lame/rules.mak
+@@ -19,6 +19,9 @@ lame: lame-$(LAME_VERSION).tar.gz .sum-lame
+ 	$(APPLY) $(SRC)/lame/sse.patch
+ ifdef HAVE_VISUALSTUDIO
+ 	$(APPLY) $(SRC)/lame/struct-float-copy.patch
++endif
++ifdef HAVE_DARWIN_OS
++	$(APPLY) $(SRC)/lame/lame-fix-i386-on-aarch64.patch
+ endif
+ 	# Avoid relying on iconv.m4 from gettext, when reconfiguring.
+ 	# This is only used by the frontend which we disable.
+-- 
+2.30.1 (Apple Git-130)
+

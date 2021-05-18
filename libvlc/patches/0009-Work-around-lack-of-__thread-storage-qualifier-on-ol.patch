@@ -1,7 +1,7 @@
-From ec7d39692651b35543a80bf9d713689cf60aa391 Mon Sep 17 00:00:00 2001
+From 57bb50ff916572ea41c1354c42294187c8e35f57 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 12/21] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 09/22] Work around lack of __thread storage qualifier on old
  macOS
 
 ---
@@ -14,7 +14,7 @@ Subject: [PATCH 12/21] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index d3ea76c423..4ec8914bf8 100644
+index c7de27e7fd..f1ba6235dd 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -696,8 +696,8 @@ dnl Check for system libs needed
@@ -47,7 +47,7 @@ index 9149c7519f..2a8d32a1da 100644
  /* Random numbers */
  #ifndef HAVE_NRAND48
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index 0377c783bb..5fffa20513 100644
+index 8cb3df8eaa..5cfffd0241 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
 @@ -64,6 +64,7 @@ src/config/help.c
@@ -203,5 +203,5 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 

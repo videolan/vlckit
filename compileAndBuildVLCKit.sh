@@ -28,7 +28,7 @@ if [ -z "$MAKEFLAGS" ]; then
     MAKEFLAGS="-j$(sysctl -n machdep.cpu.core_count || nproc)";
 fi
 
-TESTEDHASH="f86b34707976b963270c781267378d0693abcd90" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="d0de31d47f553877c5c30c322230ee902e9e3432" # libvlc hash that this version of VLCKit is build on
 
 usage()
 {
@@ -394,7 +394,7 @@ if [ "$VLCROOT" = "" ]; then
 
     if [ "$NONETWORK" != "yes" ]; then
         if ! [ -e vlc ]; then
-            git clone https://git.videolan.org/git/vlc.git vlc
+            git clone https://code.videolan.org/videolan/vlc.git --branch master --single-branch vlc
             info "Applying patches to vlc.git"
             cd vlc
             git checkout -B localBranch ${TESTEDHASH}

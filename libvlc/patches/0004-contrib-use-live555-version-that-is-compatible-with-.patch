@@ -1,7 +1,7 @@
-From 5292a009e79da868bc4b1cda4257e614ca680b7b Mon Sep 17 00:00:00 2001
+From f7080bfea09934ec0feb4512b77dc2da808f4e1a Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
-Subject: [PATCH 06/21] contrib: use live555 version that is compatible with
+Subject: [PATCH 04/22] contrib: use live555 version that is compatible with
  LGPL2
 
 ---
@@ -18,7 +18,7 @@ index f459fb9d16..02b2a69734 100644
 +10846fd6d5482bbea131ae805137077997e9dec242665e3c01d699d5584154c65049e8c520ea855599e554154a148e61fea77b592d97c814a4a98c773658d8f5  live.2016.10.21.tar.gz
 \ No newline at end of file
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index 01aefacef8..ee66eafeb7 100644
+index e62dd1f325..472d442934 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,14 +1,12 @@
@@ -37,7 +37,7 @@ index 01aefacef8..ee66eafeb7 100644
  
  ifeq ($(call need_pkg,"live555"),)
  PKGS_FOUND += live555
-@@ -95,7 +93,6 @@ endif
+@@ -100,7 +98,6 @@ endif
  SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
  
  .live555: live555
@@ -46,5 +46,5 @@ index 01aefacef8..ee66eafeb7 100644
  		echo "PREFIX = $(PREFIX)" >> $$subdir/Makefile.head && \
  		echo "LIBDIR = $(PREFIX)/lib" >> $$subdir/Makefile.head ; done
 -- 
-2.24.3 (Apple Git-128)
+2.30.1 (Apple Git-130)
 

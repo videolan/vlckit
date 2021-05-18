@@ -1,0 +1,26 @@
+From 50af68ffe6c6a0bccb2de48b737d1752040ef952 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Tue, 18 May 2021 11:26:17 +0200
+Subject: [PATCH 21/22] contrib/zvbi: remove no-longer needed hack
+
+---
+ contrib/src/zvbi/rules.mak | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/contrib/src/zvbi/rules.mak b/contrib/src/zvbi/rules.mak
+index a329df7f90..37392cfcba 100644
+--- a/contrib/src/zvbi/rules.mak
++++ b/contrib/src/zvbi/rules.mak
+@@ -43,9 +43,6 @@ ZVBICONF := \
+ ifdef HAVE_WIN32
+ DEPS_upnp += pthreads $(DEPS_pthreads)
+ endif
+-ifdef HAVE_MACOSX
+-ZVBI_CFLAGS += -fnested-functions
+-endif
+ 
+ .zvbi: zvbi
+ 	$(UPDATE_AUTOCONFIG)
+-- 
+2.30.1 (Apple Git-130)
+
