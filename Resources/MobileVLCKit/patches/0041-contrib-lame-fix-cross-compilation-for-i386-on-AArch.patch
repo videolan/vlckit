@@ -1,7 +1,7 @@
 From 502d3dc9f94a0c7d2cfe68556839e2bf82c01720 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 7 May 2021 11:00:25 +0200
-Subject: [PATCH 41/44] contrib/lame: fix cross-compilation for i386 on AArch64
+Subject: [PATCH 41/45] contrib/lame: fix cross-compilation for i386 on AArch64
 
 ---
  .../src/lame/lame-fix-i386-on-aarch64.patch   | 21 +++++++++++++++++++

@@ -1,7 +1,7 @@
 From 8a63d6d211ae33c33514b04f24a60fd93d14c220 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 19/44] lib: save configuration after playback/parse
+Subject: [PATCH 19/45] lib: save configuration after playback/parse
 
 The configuration is also saved when the libvlc instance is terminated but this
 doesn't happen often. Indeed, apps using libvlc will generally hold the libvlc

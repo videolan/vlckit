@@ -1,7 +1,7 @@
 From 6d10d86d151bb4b0975ba0bf0e997214c4ec77f8 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 13 Aug 2020 15:55:24 +0200
-Subject: [PATCH 32/44] aout: add "audio-meter" filter type
+Subject: [PATCH 32/45] aout: add "audio-meter" filter type
 
 ---
  include/vlc_aout.h         | 14 ++++++++++++++

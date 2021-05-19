@@ -1,7 +1,7 @@
 From 46c5f5c4f380869aa7f9916a17875de9cdd9dcd7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 15 Feb 2021 13:57:17 +0100
-Subject: [PATCH 37/44] contrib/gpg-error: remove obj lock hackfor appleOS
+Subject: [PATCH 37/45] contrib/gpg-error: remove obj lock hackfor appleOS
 
 ---
  contrib/src/gpg-error/rules.mak | 6 ------
