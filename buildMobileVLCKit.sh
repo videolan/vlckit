@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="41878ff4" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="bb903dd5" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -303,11 +303,11 @@ echo `pwd`
 
 if [ "$NONETWORK" != "yes" ]; then
     if ! [ -e vlc ]; then
-        git clone https://git.videolan.org/git/vlc/vlc-3.0.git vlc
+        git clone https://code.videolan.org/videolan/vlc.git --branch 3.0.x --single-branch vlc
         info "Applying patches to vlc.git"
         cd vlc
         git checkout -B localBranch ${TESTEDHASH}
-        git branch --set-upstream-to=origin/master localBranch
+        git branch --set-upstream-to=3.0.x localBranch
         git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
         if [ $? -ne 0 ]; then
             git am --abort

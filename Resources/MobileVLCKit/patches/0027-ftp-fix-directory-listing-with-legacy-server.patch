@@ -1,7 +1,7 @@
-From 5bacc4ae15fffcc5bc9bb62127fc063125bc6823 Mon Sep 17 00:00:00 2001
+From ee8e2b23dc80aed037e233205cf4fdf56c4e3cd1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 20 May 2020 15:17:37 +0200
-Subject: [PATCH 27/45] ftp: fix directory listing with legacy server
+Subject: [PATCH 27/41] ftp: fix directory listing with legacy server
 
 A legacy ftp server included in macOS 10.6 and earlier tried to be clever and gives the keys as Uppercase so VLC failed to determine the item type.
 ---
@@ -9,7 +9,7 @@ A legacy ftp server included in macOS 10.6 and earlier tried to be clever and gi
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/modules/access/ftp.c b/modules/access/ftp.c
-index 0aea13ac95..125ba94d5f 100644
+index 3d79bc68a2..d8d5e7610d 100644
 --- a/modules/access/ftp.c
 +++ b/modules/access/ftp.c
 @@ -942,9 +942,9 @@ static int DirRead (stream_t *p_access, input_item_node_t *p_current_node)

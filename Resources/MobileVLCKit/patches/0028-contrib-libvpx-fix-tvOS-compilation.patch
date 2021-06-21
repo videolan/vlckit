@@ -1,7 +1,7 @@
-From 908e35c884abaea9bfe8e472b2b46f3d3bb8bd85 Mon Sep 17 00:00:00 2001
+From 6f35f7839d78e5d4e4f5608b47d05e7b199a4c5a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 19 Sep 2020 13:51:08 +0200
-Subject: [PATCH 29/45] contrib/libvpx: fix tvOS compilation
+Subject: [PATCH 28/41] contrib/libvpx: fix tvOS compilation
 
 ---
  contrib/src/vpx/libvpx-tvos.patch | 21 +++++++++++++++++++++
@@ -37,10 +37,10 @@ index 0000000000..f4a22f56ec
 +               add_cflags -isysroot ${alt_libc}
 +             fi
 diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
-index ebd3ec473c..c8a146e9a9 100644
+index f1e6a149c0..52d80a0b24 100644
 --- a/contrib/src/vpx/rules.mak
 +++ b/contrib/src/vpx/rules.mak
-@@ -25,6 +25,9 @@ ifdef HAVE_MACOSX
+@@ -26,6 +26,9 @@ ifdef HAVE_MACOSX
  ifeq ($(ARCH),aarch64)
  	$(APPLY) $(SRC)/vpx/libvpx-darwin-aarch64.patch
  endif
