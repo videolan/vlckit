@@ -19,8 +19,8 @@ Pod::Spec.new do |s|
   s.frameworks = 'CoreText', 'AVFoundation', 'AudioToolbox', 'OpenGLES', 'VideoToolbox', 'CoreMedia'
   s.libraries = 'c++', 'xml2', 'z', 'bz2', 'iconv'
   s.requires_arc = false
-  s.xcconfig = {
-    'CLANG_CXX_LANGUAGE_STANDARD' => 'c++11',
+  s.pod_target_xcconfig = {
+    'CLANG_CXX_LANGUAGE_STANDARD' => 'c++14',
     'CLANG_CXX_LIBRARY' => 'libc++'
   }
 end

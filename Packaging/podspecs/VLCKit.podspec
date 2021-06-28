@@ -21,8 +21,8 @@ Pod::Spec.new do |s|
   s.frameworks = 'Foundation'
   s.libraries = 'iconv'
   s.requires_arc = false
-  s.xcconfig = {
-    'CLANG_CXX_LANGUAGE_STANDARD' => 'c++11',
+  s.pod_target_xcconfig = {
+    'CLANG_CXX_LANGUAGE_STANDARD' => 'c++14',
     'CLANG_CXX_LIBRARY' => 'libc++'
   }
 end
