@@ -687,7 +687,6 @@ buildLibVLC() {
     rss
     ball
     marq
-    magnify
     audiobargraph_
     clone
     mosaic
@@ -718,7 +717,6 @@ buildLibVLC() {
     stream_filter_record
     speex_resampler
     remoteosd
-    magnify
     gradient
     logger
     visual
