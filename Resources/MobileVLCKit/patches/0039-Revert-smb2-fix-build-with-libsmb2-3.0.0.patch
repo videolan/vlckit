@@ -1,7 +1,7 @@
-From 518ade295672797d4e3b2b5dbe7b151082b935a2 Mon Sep 17 00:00:00 2001
+From ccf7438012de3fb1a245697a05378cdfe8e6dbd6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 18 May 2021 13:18:37 +0200
-Subject: [PATCH 39/41] Revert "smb2: fix build with libsmb2 3.0.0"
+Subject: [PATCH 39/42] Revert "smb2: fix build with libsmb2 3.0.0"
 
 This reverts commit 6f160ae1784364aa9324f9cfcb7fbda592cc3dd9.
 ---
