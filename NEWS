@@ -1,3 +1,14 @@
+Version 3.3.17:
+---------------
+
+- Updated to libvlc 3.0.16
+    - various playback, audio rendering and performance improvements
+- Further SMB compatibility fixes
+- Fixed a live555 RTSP connectivity issue on iOS/tvOS devices (#502)
+- Fixed a crash when setting cookies on http sessions (#494)
+- Updated cocoapods specifications (#498)
+- Added the magnify filter to the default distribution (#473)
+
 Version 3.3.16:
 ---------------
 
