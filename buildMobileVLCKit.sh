@@ -248,8 +248,10 @@ buildxcodeproj()
     local bitcodeflag=""
     if [ "$IOS" = "yes" ]; then
     if [ "$BITCODE" = "yes" ]; then
-        bitcodeflag="BITCODE_GENERATION_MODE=bitcode ENABLE_BITCODE=yes"
+        info "Bitcode enabled"
+        bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
     else
+        info "Bitcode disabled"
         bitcodeflag="BITCODE_GENERATION_MODE=none ENABLE_BITCODE=no"
     fi
     fi
@@ -259,7 +261,6 @@ buildxcodeproj()
     fi
     fi
 
-    local defs="$GCC_PREPROCESSOR_DEFINITIONS"
     if [ "$SCARY" = "no" ]; then
         defs="$defs NOSCARYCODECS"
     fi
@@ -272,7 +273,6 @@ buildxcodeproj()
                -archivePath build/"$target"-$PLATFORM$SDK.xcarchive \
                ARCHS="${architectures}" \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
-               GCC_PREPROCESSOR_DEFINITIONS="$defs" \
                ${bitcodeflag} \
                SKIP_INSTALL=no \
                > ${out}
