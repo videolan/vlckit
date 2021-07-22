@@ -298,6 +298,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
         _privateLibrary = library;
+        libvlc_retain([_privateLibrary instance]);
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
         if (_playerInstance == NULL) {
             NSAssert(0, @"%s: player initialization failed", __PRETTY_FUNCTION__);
