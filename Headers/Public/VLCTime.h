@@ -47,6 +47,16 @@ OBJC_VISIBLE
  * \return the VLCTime object
  */
 + (VLCTime *)timeWithInt:(int)aInt;
+/**
+ * return the libvlc clock time as microseconds
+ */
++ (int64_t)clock;
+/**
+ * return the delay (in microseconds) until a specific timestamp
+ * \param ts the target timestamp
+ * \return negative if timestamp is in the past, positive if it is in the future
+ */
++ (int64_t)delay:(int64_t)ts;
 
 /**
  * init a time object with a given number object

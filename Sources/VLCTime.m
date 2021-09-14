@@ -47,6 +47,16 @@
     return [[VLCTime alloc] initWithInt:aInt];
 }
 
++ (int64_t)clock
+{
+    return libvlc_clock();
+}
+
++ (int64_t)delay:(int64_t)ts
+{
+    return libvlc_delay(ts);
+}
+
 /* Initializers */
 - (instancetype)initWithNumber:(NSNumber *)aNumber
 {
