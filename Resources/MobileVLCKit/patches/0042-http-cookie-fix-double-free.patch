@@ -1,4 +1,4 @@
-From f829a4460ac542ed4c00ac64efbc7b4c9e57411c Mon Sep 17 00:00:00 2001
+From 0fd779164c26a4ae303a651128ee12a2dc5b7c40 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 28 Jun 2021 13:11:15 +0200
 Subject: [PATCH 42/42] http/cookie: fix double-free
@@ -8,10 +8,10 @@ Subject: [PATCH 42/42] http/cookie: fix double-free
  1 file changed, 1 deletion(-)
 
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 31ca3ed301..99d062a3e4 100644
+index b80cf4645b..31f340447e 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -927,7 +927,6 @@ static void libvlc_media_player_destroy( libvlc_media_player_t *p_mi )
+@@ -928,7 +928,6 @@ static void libvlc_media_player_destroy( libvlc_media_player_t *p_mi )
      if ( cookies )
      {
          var_Destroy( p_mi, "http-cookies" );

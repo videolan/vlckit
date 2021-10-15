@@ -1,7 +1,7 @@
-From e403a1c48c879b33bb121252c7cf7e4062a017fb Mon Sep 17 00:00:00 2001
+From c6d4624d9a18acd16badef37e48e199bf2fa8215 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 20 Oct 2020 11:33:23 +0200
-Subject: [PATCH 29/42] lib: media_player: add stop/set_media async support
+Subject: [PATCH 30/42] lib: media_player: add stop/set_media async support
 
 This commit adds 2 new function into 3.0.12:
  - libvlc_media_player_stop_async()
@@ -89,7 +89,7 @@ index 363779fd3d..6cd57bcb5d 100644
   * Set a renderer to the media player
   *
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 55f6400f69..b0d7010c45 100644
+index 9f1e9dade6..a4f36a40b7 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
 @@ -192,6 +192,7 @@ libvlc_media_player_set_chapter
@@ -109,10 +109,10 @@ index 55f6400f69..b0d7010c45 100644
  libvlc_media_player_navigate
  libvlc_media_player_set_video_title_display
 diff --git a/lib/media_list_player.c b/lib/media_list_player.c
-index 7f4d427f63..1e98661280 100644
+index 5f3d4829de..20a928af10 100644
 --- a/lib/media_list_player.c
 +++ b/lib/media_list_player.c
-@@ -459,7 +459,7 @@ set_current_playing_item(libvlc_media_list_player_t * p_mlp, libvlc_media_list_p
+@@ -460,7 +460,7 @@ set_current_playing_item(libvlc_media_list_player_t * p_mlp, libvlc_media_list_p
      /* Make sure media_player_reached_end() won't get called */
      uninstall_media_player_observer(p_mlp);
  
@@ -121,7 +121,7 @@ index 7f4d427f63..1e98661280 100644
  
      install_media_player_observer(p_mlp);
      libvlc_media_release(p_md); /* for libvlc_media_list_item_at_index */
-@@ -738,7 +738,7 @@ static void stop(libvlc_media_list_player_t * p_mlp)
+@@ -739,7 +739,7 @@ static void stop(libvlc_media_list_player_t * p_mlp)
  
      /* We are not interested in getting media stop event now */
      uninstall_media_player_observer(p_mlp);
@@ -131,10 +131,10 @@ index 7f4d427f63..1e98661280 100644
  
      free(p_mlp->current_playing_item_path);
 diff --git a/lib/media_player.c b/lib/media_player.c
-index dd29301abb..62b8ea56c0 100644
+index 5e530182c7..33dc76b971 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -45,6 +45,8 @@
+@@ -46,6 +46,8 @@
  
  #define ES_INIT (-2) /* -1 is reserved for ES deselect */
  
@@ -143,7 +143,7 @@ index dd29301abb..62b8ea56c0 100644
  static int
  input_seekable_changed( vlc_object_t * p_this, char const * psz_cmd,
                          vlc_value_t oldval, vlc_value_t newval,
-@@ -159,13 +161,14 @@ static void media_detach_preparsed_event( libvlc_media_t *p_md )
+@@ -160,13 +162,14 @@ static void media_detach_preparsed_event( libvlc_media_t *p_md )
   * Object lock is NOT held.
   * Input lock is held or instance is being destroyed.
   */
@@ -161,7 +161,7 @@ index dd29301abb..62b8ea56c0 100644
      p_mi->input.p_thread = NULL;
  
      media_detach_preparsed_event( p_mi->p_md );
-@@ -182,8 +185,28 @@ static void release_input_thread( libvlc_media_player_t *p_mi )
+@@ -183,8 +186,28 @@ static void release_input_thread( libvlc_media_player_t *p_mi )
  
      /* We owned this one */
      input_Stop( p_input_thread );
@@ -192,7 +192,7 @@ index dd29301abb..62b8ea56c0 100644
  }
  
  /*
-@@ -799,6 +822,18 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -800,6 +823,18 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_AddCallback(mp->obj.libvlc, "snapshot-file", snapshot_was_taken, mp);
  
      libvlc_retain(instance);
@@ -211,7 +211,7 @@ index dd29301abb..62b8ea56c0 100644
      return mp;
  }
  
-@@ -839,10 +874,16 @@ static void libvlc_media_player_destroy( libvlc_media_player_t *p_mi )
+@@ -840,10 +875,16 @@ static void libvlc_media_player_destroy( libvlc_media_player_t *p_mi )
      var_DelCallback( p_mi, "audio-device", audio_device_changed, NULL );
      var_DelCallback( p_mi, "corks", corks_changed, NULL );
  
@@ -232,7 +232,7 @@ index dd29301abb..62b8ea56c0 100644
      input_resource_Release( p_mi->input.p_resource );
      if( p_mi->input.p_renderer )
          vlc_renderer_item_release( p_mi->input.p_renderer );
-@@ -902,13 +943,13 @@ void libvlc_media_player_retain( libvlc_media_player_t *p_mi )
+@@ -903,13 +944,13 @@ void libvlc_media_player_retain( libvlc_media_player_t *p_mi )
   *
   * Enter without lock -- function will lock the object.
   **************************************************************************/
@@ -249,7 +249,7 @@ index dd29301abb..62b8ea56c0 100644
  
      lock( p_mi );
      set_state( p_mi, libvlc_NothingSpecial, true );
-@@ -933,7 +974,20 @@ void libvlc_media_player_set_media(
+@@ -934,7 +975,20 @@ void libvlc_media_player_set_media(
      event.type = libvlc_MediaPlayerMediaChanged;
      event.u.media_player_media_changed.new_media = p_md;
      libvlc_event_send( &p_mi->event_manager, &event );
@@ -270,7 +270,7 @@ index dd29301abb..62b8ea56c0 100644
  }
  
  /**************************************************************************
-@@ -976,33 +1030,9 @@ static void del_es_callbacks( input_thread_t *p_input_thread, libvlc_media_playe
+@@ -977,33 +1031,9 @@ static void del_es_callbacks( input_thread_t *p_input_thread, libvlc_media_playe
      var_DelListCallback( p_input_thread, "spu-es", input_es_changed, p_mi );
  }
  
@@ -306,7 +306,7 @@ index dd29301abb..62b8ea56c0 100644
      for( size_t i = 0; i < ARRAY_SIZE( p_mi->selected_es ); ++i )
          p_mi->selected_es[i] = ES_INIT;
  
-@@ -1014,16 +1044,13 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -1015,16 +1045,13 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
  
      media_attach_preparsed_event( p_mi->p_md );
  
@@ -327,7 +327,7 @@ index dd29301abb..62b8ea56c0 100644
      }
  
      var_AddCallback( p_input_thread, "can-seek", input_seekable_changed, p_mi );
-@@ -1034,7 +1061,6 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -1035,7 +1062,6 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
  
      if( input_Start( p_input_thread ) )
      {
@@ -335,7 +335,7 @@ index dd29301abb..62b8ea56c0 100644
          del_es_callbacks( p_input_thread, p_mi );
          var_DelCallback( p_input_thread, "intf-event", input_event_changed, p_mi );
          var_DelCallback( p_input_thread, "can-pause", input_pausable_changed, p_mi );
-@@ -1043,11 +1069,54 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -1044,11 +1070,54 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
          input_Close( p_input_thread );
          media_detach_preparsed_event( p_mi->p_md );
          libvlc_printerr( "Input initialization failure" );
@@ -392,7 +392,7 @@ index dd29301abb..62b8ea56c0 100644
  }
  
  void libvlc_media_player_set_pause( libvlc_media_player_t *p_mi, int paused )
-@@ -1088,14 +1157,52 @@ int libvlc_media_player_is_playing( libvlc_media_player_t *p_mi )
+@@ -1089,14 +1158,52 @@ int libvlc_media_player_is_playing( libvlc_media_player_t *p_mi )
      return libvlc_Playing == state;
  }
  
@@ -451,7 +451,7 @@ index dd29301abb..62b8ea56c0 100644
      /* Force to go to stopped state, in case we were in Ended, or Error
       * state. */
      if( p_mi->state != libvlc_Stopped )
-@@ -1107,11 +1214,34 @@ void libvlc_media_player_stop( libvlc_media_player_t *p_mi )
+@@ -1108,11 +1215,34 @@ void libvlc_media_player_stop( libvlc_media_player_t *p_mi )
          event.type = libvlc_MediaPlayerStopped;
          libvlc_event_send( &p_mi->event_manager, &event );
      }

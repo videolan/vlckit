@@ -1,7 +1,7 @@
-From 7ff431a8f86369103c8db903ea5a8f94c6eb86e1 Mon Sep 17 00:00:00 2001
+From b05554dacf3c8c95bceb9d0ffd5d3adf94b09782 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 19/42] lib: save configuration after playback/parse
+Subject: [PATCH 20/42] lib: save configuration after playback/parse
 
 The configuration is also saved when the libvlc instance is terminated but this
 doesn't happen often. Indeed, apps using libvlc will generally hold the libvlc
@@ -13,10 +13,10 @@ case (app killed by OS to free up memory, crashes, reboot, force close...).
  2 files changed, 3 insertions(+)
 
 diff --git a/lib/media.c b/lib/media.c
-index f44a3ea3c3..65f4c06996 100644
+index bf73044d61..a74d57bdbd 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -575,6 +575,8 @@ void libvlc_media_release( libvlc_media_t *p_md )
+@@ -612,6 +612,8 @@ void libvlc_media_release( libvlc_media_t *p_md )
      libvlc_event_send( &p_md->event_manager, &event );
  
      libvlc_event_manager_destroy( &p_md->event_manager );
@@ -26,10 +26,10 @@ index f44a3ea3c3..65f4c06996 100644
      free( p_md );
  }
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 5a3e1dd2b4..bff796eaba 100644
+index e9e84848fa..e3b79eb697 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -183,6 +183,7 @@ static void release_input_thread( libvlc_media_player_t *p_mi )
+@@ -184,6 +184,7 @@ static void release_input_thread( libvlc_media_player_t *p_mi )
      /* We owned this one */
      input_Stop( p_input_thread );
      input_Close( p_input_thread );

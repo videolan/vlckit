@@ -1,7 +1,7 @@
-From 2a4f604813bf2d2a5a9a473be00b0db9a88a3c32 Mon Sep 17 00:00:00 2001
+From 1abd0bb149e1cb11fa678ffda380d8440cde0986 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 12/42] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 13/42] Work around lack of __thread storage qualifier on old
  macOS
 
 ---
@@ -14,7 +14,7 @@ Subject: [PATCH 12/42] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 7db5256a84..ce995540f5 100644
+index 5aed7c4587..0b6d52c06b 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -631,8 +631,8 @@ dnl Check for system libs needed
@@ -29,7 +29,7 @@ index 7db5256a84..ce995540f5 100644
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index a83d0689a3..64219fe750 100644
+index 2e8a1456bb..bd00426972 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
 @@ -503,9 +503,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
@@ -60,7 +60,7 @@ index ffeb3db566..05faf02b13 100644
  src/input/clock.c
  src/input/clock.h
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 502990c70c..044169156c 100644
+index f0b9963801..f2d815c5fc 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -200,6 +200,7 @@ libvlccore_la_SOURCES = \

@@ -1,7 +1,7 @@
-From b0cf84e0fc31f9cf0cc027e39636cfff2b9bef47 Mon Sep 17 00:00:00 2001
+From 05aa822174a617864921e0f147589eaed41f09bd Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 14 Aug 2020 13:22:10 +0200
-Subject: [PATCH 33/42] lib: media_player: add loudness event
+Subject: [PATCH 34/42] lib: media_player: add loudness event
 
 ---
  include/vlc/libvlc_events.h |  6 ++++++
@@ -10,10 +10,10 @@ Subject: [PATCH 33/42] lib: media_player: add loudness event
  3 files changed, 49 insertions(+), 1 deletion(-)
 
 diff --git a/include/vlc/libvlc_events.h b/include/vlc/libvlc_events.h
-index bbc6bc0eec..e8ca43453f 100644
+index a15389e795..fef21ba4fc 100644
 --- a/include/vlc/libvlc_events.h
 +++ b/include/vlc/libvlc_events.h
-@@ -89,6 +89,7 @@ enum libvlc_event_e {
+@@ -95,6 +95,7 @@ enum libvlc_event_e {
      libvlc_MediaPlayerAudioDevice,
      libvlc_MediaPlayerChapterChanged,
      libvlc_MediaPlayerRecordChanged,
@@ -21,7 +21,7 @@ index bbc6bc0eec..e8ca43453f 100644
  
      libvlc_MediaListItemAdded=0x200,
      libvlc_MediaListWillAddItem,
-@@ -209,6 +210,11 @@ typedef struct libvlc_event_t
+@@ -219,6 +220,11 @@ typedef struct libvlc_event_t
              int new_count;
          } media_player_vout;
  
@@ -34,10 +34,10 @@ index bbc6bc0eec..e8ca43453f 100644
          struct
          {
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 62b8ea56c0..fc542f21e0 100644
+index 33dc76b971..d8d1a1b9d6 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -155,6 +155,24 @@ static void media_detach_preparsed_event( libvlc_media_t *p_md )
+@@ -156,6 +156,24 @@ static void media_detach_preparsed_event( libvlc_media_t *p_md )
                        p_md );
  }
  
@@ -62,7 +62,7 @@ index 62b8ea56c0..fc542f21e0 100644
  /*
   * Release the associated input thread.
   *
-@@ -171,6 +189,13 @@ stop_input_thread( libvlc_media_player_t *p_mi )
+@@ -172,6 +190,13 @@ stop_input_thread( libvlc_media_player_t *p_mi )
          return NULL;
      p_mi->input.p_thread = NULL;
  
@@ -76,7 +76,7 @@ index 62b8ea56c0..fc542f21e0 100644
      media_detach_preparsed_event( p_mi->p_md );
  
      var_DelCallback( p_input_thread, "can-seek",
-@@ -773,6 +798,9 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -774,6 +799,9 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "equalizer-vlcfreqs", VLC_VAR_BOOL);
      var_Create (mp, "equalizer-bands", VLC_VAR_STRING);
  
@@ -86,7 +86,7 @@ index 62b8ea56c0..fc542f21e0 100644
      /* Initialize the shared HTTP cookie jar */
      vlc_value_t cookies;
      cookies.p_address = vlc_http_cookies_new();
-@@ -1059,6 +1087,14 @@ create_input_thread( libvlc_media_player_t *p_mi )
+@@ -1060,6 +1088,14 @@ create_input_thread( libvlc_media_player_t *p_mi )
      var_AddCallback( p_input_thread, "intf-event", input_event_changed, p_mi );
      add_es_callbacks( p_input_thread, p_mi );
  
@@ -101,7 +101,7 @@ index 62b8ea56c0..fc542f21e0 100644
      if( input_Start( p_input_thread ) )
      {
          del_es_callbacks( p_input_thread, p_mi );
-@@ -1069,8 +1105,14 @@ create_input_thread( libvlc_media_player_t *p_mi )
+@@ -1070,8 +1106,14 @@ create_input_thread( libvlc_media_player_t *p_mi )
          input_Close( p_input_thread );
          media_detach_preparsed_event( p_mi->p_md );
          libvlc_printerr( "Input initialization failure" );

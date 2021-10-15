@@ -1,4 +1,4 @@
-From 1a40ff6befeef95e95f585ba47f948d1672b6fc0 Mon Sep 17 00:00:00 2001
+From 4cbb763b1be148d9d9fe3592407c47bbbeb7a9f5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
 Subject: [PATCH 07/42] contrib/gcrypt: fix tvOS compilation

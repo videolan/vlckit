@@ -1,7 +1,7 @@
-From 5b7966d6047339f5547317ad7a4bd9f13f1ab649 Mon Sep 17 00:00:00 2001
+From db1d3115f2c9217cca99d4a6a3ceacc78da4da3e Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
-Subject: [PATCH 21/42] libvlc: media_player: Add record method
+Subject: [PATCH 22/42] libvlc: media_player: Add record method
 
 ---
  include/vlc/libvlc_media_player.h | 13 +++++++++++++
@@ -33,10 +33,10 @@ index 4e951292c9..363779fd3d 100644
  /** @} audio */
  
 diff --git a/lib/media_player.c b/lib/media_player.c
-index bff796eaba..1a33a342b3 100644
+index e3b79eb697..c6250f1e4a 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -622,6 +622,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -623,6 +623,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
      var_Create (mp, "sout", VLC_VAR_STRING);
      var_Create (mp, "demux-filter", VLC_VAR_STRING);
@@ -44,7 +44,7 @@ index bff796eaba..1a33a342b3 100644
      var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
  
      /* Video */
-@@ -2088,3 +2089,23 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
+@@ -2089,3 +2090,23 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
      free(str);
      return ret;
  }

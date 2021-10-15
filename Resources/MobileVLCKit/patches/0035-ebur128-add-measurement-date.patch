@@ -1,7 +1,7 @@
-From 6deaac759ca7a2d700927f39f649f1633bbaf1c9 Mon Sep 17 00:00:00 2001
+From b72a954a97f21c9871179abd64558e3c00109eed Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 18 Aug 2020 14:53:43 +0200
-Subject: [PATCH 34/42] ebur128: add measurement date
+Subject: [PATCH 35/42] ebur128: add measurement date
 
 ---
  include/vlc/libvlc_events.h       |  7 +++++++
@@ -11,10 +11,10 @@ Subject: [PATCH 34/42] ebur128: add measurement date
  4 files changed, 24 insertions(+), 10 deletions(-)
 
 diff --git a/include/vlc/libvlc_events.h b/include/vlc/libvlc_events.h
-index e8ca43453f..bb2a647847 100644
+index fef21ba4fc..dfef931136 100644
 --- a/include/vlc/libvlc_events.h
 +++ b/include/vlc/libvlc_events.h
-@@ -212,6 +212,13 @@ typedef struct libvlc_event_t
+@@ -222,6 +222,13 @@ typedef struct libvlc_event_t
  
          struct
          {
@@ -46,10 +46,10 @@ index b4928cc2b2..6bcd1747f9 100644
      double loudness_momentary;
      /** Short term loudness, in LUFS (VLC_PLAYER_AOUT_LOUDNESS_METER_FULL) */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index fc542f21e0..31ca3ed301 100644
+index d8d1a1b9d6..b80cf4645b 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -166,6 +166,7 @@ loudness_meter_changed( vlc_object_t * p_this, char const * psz_cmd,
+@@ -167,6 +167,7 @@ loudness_meter_changed( vlc_object_t * p_this, char const * psz_cmd,
      libvlc_event_t event = {
          .type = libvlc_MediaPlayerLoudnessChanged,
      };

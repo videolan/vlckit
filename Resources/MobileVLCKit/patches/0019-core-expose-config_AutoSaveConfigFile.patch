@@ -1,7 +1,7 @@
-From ce700c85a418b57171db1085769f8926f4a100bb Mon Sep 17 00:00:00 2001
+From a6a945be6ab15091015d05b90162e2f9a4796088 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 18/42] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 19/42] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++
@@ -48,7 +48,7 @@ index 6270a6bc9d..9f3b85494c 100644
  {
      int ret = 0;
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index db7f4030b9..4ad59b1fc0 100644
+index 8454600451..d2960bef6f 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
 @@ -44,6 +44,7 @@ block_shm_Alloc

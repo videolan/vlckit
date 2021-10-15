@@ -1,7 +1,7 @@
-From fe97d372bdf5bd0081b4375628c9cde0f6e9de5f Mon Sep 17 00:00:00 2001
+From 6ee8917ea3a4600e6136f954e164cbae0970fcc3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Dec 2017 18:05:40 +0100
-Subject: [PATCH 11/42] libvlc: add a basic API to change freetype's color,
+Subject: [PATCH 12/42] libvlc: add a basic API to change freetype's color,
  bold, font and size variables on-the-fly
 
 ---
@@ -50,7 +50,7 @@ index c431c235e9..4582688b27 100644
  
  /** \defgroup libvlc_audio LibVLC audio controls
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 8ae5da8d0f..55f6400f69 100644
+index fc68e55f64..9f1e9dade6 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
 @@ -262,6 +262,9 @@ libvlc_video_get_spu_count
@@ -74,10 +74,10 @@ index 8ae5da8d0f..55f6400f69 100644
  libvlc_video_take_snapshot
  libvlc_video_new_viewpoint
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 0b324cc796..5a3e1dd2b4 100644
+index 0a4b3e0a14..e9e84848fa 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -695,6 +695,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -696,6 +696,12 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "saturation", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
      var_Create (mp, "gamma", VLC_VAR_FLOAT | VLC_VAR_DOINHERIT);
  
@@ -182,7 +182,7 @@ index acbba3a30f..035cc0ebf1 100644
 +    return get_string( p_mi, "freetype", textrenderer_option_bynumber(option) );
 +}
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 32f1ea403b..40d0f1367e 100644
+index 8715dd8b53..67a73d98b8 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
 @@ -970,12 +970,36 @@ static inline int RenderAXYZ( filter_t *p_filter,

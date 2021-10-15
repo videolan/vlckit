@@ -1,7 +1,7 @@
-From 18b914f2b07d455daf52231c68720d3ecf3bb379 Mon Sep 17 00:00:00 2001
+From b5253d7ad12502c96a3962e6cdc2ea8926147541 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
-Subject: [PATCH 22/42] libvlc: events: Add callbacks for record
+Subject: [PATCH 23/42] libvlc: events: Add callbacks for record
 
 ---
  include/vlc/libvlc_events.h |  9 +++++++++
@@ -9,7 +9,7 @@ Subject: [PATCH 22/42] libvlc: events: Add callbacks for record
  2 files changed, 25 insertions(+)
 
 diff --git a/include/vlc/libvlc_events.h b/include/vlc/libvlc_events.h
-index f8b0e9b5b2..bbc6bc0eec 100644
+index 2de48565c6..a15389e795 100644
 --- a/include/vlc/libvlc_events.h
 +++ b/include/vlc/libvlc_events.h
 @@ -32,6 +32,8 @@
@@ -21,7 +21,7 @@ index f8b0e9b5b2..bbc6bc0eec 100644
  # endif
  
  typedef struct libvlc_renderer_item_t libvlc_renderer_item_t;
-@@ -86,6 +88,7 @@ enum libvlc_event_e {
+@@ -92,6 +94,7 @@ enum libvlc_event_e {
      libvlc_MediaPlayerAudioVolume,
      libvlc_MediaPlayerAudioDevice,
      libvlc_MediaPlayerChapterChanged,
@@ -29,7 +29,7 @@ index f8b0e9b5b2..bbc6bc0eec 100644
  
      libvlc_MediaListItemAdded=0x200,
      libvlc_MediaListWillAddItem,
-@@ -275,6 +278,12 @@ typedef struct libvlc_event_t
+@@ -285,6 +288,12 @@ typedef struct libvlc_event_t
              const char *device;
          } media_player_audio_device;
  
@@ -43,10 +43,10 @@ index f8b0e9b5b2..bbc6bc0eec 100644
          {
              libvlc_renderer_item_t *item;
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 1a33a342b3..dd29301abb 100644
+index c6250f1e4a..5e530182c7 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -447,6 +447,22 @@ input_event_changed( vlc_object_t * p_this, char const * psz_cmd,
+@@ -448,6 +448,22 @@ input_event_changed( vlc_object_t * p_this, char const * psz_cmd,
              }
          }
      }
