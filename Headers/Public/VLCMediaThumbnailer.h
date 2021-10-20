@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: VLCMediaThumbnailer
  *****************************************************************************
- * Copyright (C) 2010-2012 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2012, 2021 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont
  *
@@ -21,9 +21,7 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#if TARGET_OS_IPHONE
-# import <CoreGraphics/CoreGraphics.h>
-#endif
+#import <CoreGraphics/CoreGraphics.h>
 
 @class VLCMedia;
 @class VLCLibrary;
