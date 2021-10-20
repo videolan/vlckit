@@ -814,6 +814,7 @@
 					"Headers/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
+				INSTALL_PATH = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.vlckitframework;
@@ -845,6 +846,7 @@
 					"Headers/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
+				INSTALL_PATH = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.vlckitframework;

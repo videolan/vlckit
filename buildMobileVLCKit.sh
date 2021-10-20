@@ -1186,7 +1186,7 @@ if [ "$MACOS" = "yes" ]; then
 
     # remove intermediate build result we don't need to keep
     spushd build
-    mv VLCKit-macosx.xcarchive/Products/Library/Frameworks/VLCKit.framework VLCKit.framework
+    mv VLCKit-macosx.xcarchive/Products/Frameworks/VLCKit.framework VLCKit.framework
     spopd # build
 
     info "Build of VLCKit.framework completed"
