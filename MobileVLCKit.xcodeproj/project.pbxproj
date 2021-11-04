@@ -966,6 +966,7 @@
 				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "$(VLC_PLUGINS_SIMULATOR_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1014,6 +1015,7 @@
 				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "$(VLC_PLUGINS_SIMULATOR_LDFLAGS)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
