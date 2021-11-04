@@ -575,6 +575,9 @@ buildLibVLC() {
     mkdir -p ${BUILDDIR}
     spushd ${BUILDDIR}
 
+    # Clang compiler needs -g flag in order to generate complete debug infos for libvlc's symbolication
+    EXTRA_CFLAGS+=" -g"
+    
 	export CPPFLAGS="${EXTRA_CFLAGS}"
 	export CFLAGS="${EXTRA_CFLAGS}"
 	export CXXFLAGS="${EXTRA_CFLAGS}"
