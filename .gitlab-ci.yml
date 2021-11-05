@@ -18,6 +18,7 @@ variables:
     stage: build
     only:
         - merge_requests
+    interruptible: true
 
 .continous-build-base:
     script:
