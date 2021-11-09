@@ -715,6 +715,7 @@ buildLibVLC() {
     export
     smf
     podcast
+    sap
     bluescreen
     erase
     stream_filter_record
