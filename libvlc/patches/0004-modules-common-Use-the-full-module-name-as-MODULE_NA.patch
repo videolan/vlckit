@@ -1,7 +1,7 @@
-From 35f75cfce98f439b2899b13e13e85f45fbfc4df0 Mon Sep 17 00:00:00 2001
+From d325bb5709bb72168c130ccdec76746924c8b455 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Mon, 26 Mar 2018 16:44:44 +0200
-Subject: [PATCH 05/22] modules:common: Use the full module name as MODULE_NAME
+Subject: [PATCH 04/20] modules:common: Use the full module name as MODULE_NAME
 
 This avoid conflicts when linking modules staticly on platforms that don't have objdump
 ---
@@ -9,7 +9,7 @@ This avoid conflicts when linking modules staticly on platforms that don't have 
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/modules/common.am b/modules/common.am
-index b991f6ce2f..d327b23871 100644
+index 79f6ef1577..cc276af545 100644
 --- a/modules/common.am
 +++ b/modules/common.am
 @@ -17,12 +17,13 @@ LTLIBVLCCORE = $(top_builddir)/src/libvlccore.la

@@ -1,7 +1,7 @@
-From ba2d5ccc4780b7ed5a22278be259243cdba71130 Mon Sep 17 00:00:00 2001
+From 57377ce340bfd6c5a7a1b9caacf2e5ef04228452 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 06/22] http access: retain auth struct for the runtime of the
+Subject: [PATCH 05/20] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
@@ -11,10 +11,10 @@ Previously, it was retained for a given connection only, so all information need
  2 files changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http.c b/modules/access/http.c
-index 4384e2b0a3..1a112b9ec1 100644
+index 7c12edf1db..8a4086335f 100644
 --- a/modules/access/http.c
 +++ b/modules/access/http.c
-@@ -271,6 +271,8 @@ static int Open( vlc_object_t *p_this )
+@@ -265,6 +265,8 @@ static int Open( vlc_object_t *p_this )
          p_sys->url.psz_username = (char *) credential.psz_username;
          p_sys->url.psz_password = (char *) credential.psz_password;
      }
@@ -23,7 +23,7 @@ index 4384e2b0a3..1a112b9ec1 100644
  
  connect:
      /* Connect */
-@@ -358,6 +360,8 @@ error:
+@@ -352,6 +354,8 @@ error:
      free( p_sys->psz_referrer );
      free( p_sys->psz_username );
      free( p_sys->psz_password );
@@ -32,7 +32,7 @@ index 4384e2b0a3..1a112b9ec1 100644
  
      return ret;
  }
-@@ -386,6 +390,9 @@ static void Close( vlc_object_t *p_this )
+@@ -380,6 +384,9 @@ static void Close( vlc_object_t *p_this )
      free( p_sys->psz_username );
      free( p_sys->psz_password );
  
@@ -42,7 +42,7 @@ index 4384e2b0a3..1a112b9ec1 100644
      Disconnect( p_access );
  }
  
-@@ -624,8 +631,6 @@ static int Connect( stream_t *p_access )
+@@ -618,8 +625,6 @@ static int Connect( stream_t *p_access )
      free( p_sys->psz_icy_name );
      free( p_sys->psz_icy_title );
  

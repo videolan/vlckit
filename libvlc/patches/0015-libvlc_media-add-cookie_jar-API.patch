@@ -1,7 +1,7 @@
-From 39140b357acdf77d024d05fcbee1c1b13b67b78e Mon Sep 17 00:00:00 2001
+From 417c74f11de967e1fd3eef9505d8f777d81db7ec Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 19/22] libvlc_media: add cookie_jar API
+Subject: [PATCH 15/20] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -12,10 +12,10 @@ Subject: [PATCH 19/22] libvlc_media: add cookie_jar API
  5 files changed, 71 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index eb7c53d80a..092cf14dbd 100644
+index 286c6fa576..b953538fdc 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -877,6 +877,41 @@ LIBVLC_API
+@@ -876,6 +876,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -71,10 +71,10 @@ index 2c145c59d3..d64de05cf8 100644
  libvlc_playlist_play
  libvlc_release
 diff --git a/lib/media.c b/lib/media.c
-index 6bd8ca1c14..752cfcafe5 100644
+index 498502f97f..22c87ba7ea 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -524,6 +524,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(
+@@ -521,6 +521,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(
      p_md->p_input_item->libvlc_owner = p_md;
  
      libvlc_event_manager_init( &p_md->event_manager, p_md );
@@ -82,7 +82,7 @@ index 6bd8ca1c14..752cfcafe5 100644
  
      input_item_Hold( p_md->p_input_item );
  
-@@ -757,6 +758,9 @@ libvlc_media_set_state( libvlc_media_t *p_md,
+@@ -755,6 +756,9 @@ libvlc_media_set_state( libvlc_media_t *p_md,
  
      p_md->state = state;
  
@@ -118,7 +118,7 @@ index 6bd8ca1c14..752cfcafe5 100644
 +        vlc_http_cookies_clear( p_md->p_cookie_jar );
 +}
 diff --git a/lib/media_internal.h b/lib/media_internal.h
-index 511a0aad15..fb922aeb13 100644
+index c531ebf138..914ee1a437 100644
 --- a/lib/media_internal.h
 +++ b/lib/media_internal.h
 @@ -31,6 +31,7 @@
@@ -129,7 +129,7 @@ index 511a0aad15..fb922aeb13 100644
  
  struct libvlc_media_t
  {
-@@ -57,6 +58,7 @@ struct libvlc_media_t
+@@ -56,6 +57,7 @@ struct libvlc_media_t
      libvlc_media_parsed_status_t parsed_status;
      bool is_parsed;
      bool has_asked_preparse;
@@ -138,7 +138,7 @@ index 511a0aad15..fb922aeb13 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 5fb1fbe7c8..aeccd94a21 100644
+index 8b53561791..0f2b5f8bee 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -616,6 +616,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
