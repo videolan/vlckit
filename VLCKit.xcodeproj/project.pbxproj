@@ -76,18 +76,18 @@
 		7DC28D9920194315002D05C4 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D9820194315002D05C4 /* libbz2.tbd */; };
 		7DC28D9B2019431B002D05C4 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D9A2019431A002D05C4 /* AudioUnit.framework */; };
 		7DC28D9D20194324002D05C4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DC28D9C20194324002D05C4 /* AudioToolbox.framework */; };
-		7DEBDACE203C561D000A7D2F /* deprecated.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B73114D9BE800D34AAB /* deprecated.h */; };
-		7DEBDACF203C561D000A7D2F /* libvlc_events.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B74114D9BE800D34AAB /* libvlc_events.h */; };
-		7DEBDAD0203C561D000A7D2F /* libvlc_media_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B75114D9BE800D34AAB /* libvlc_media_discoverer.h */; };
-		7DEBDAD1203C561D000A7D2F /* libvlc_media_library.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B76114D9BE800D34AAB /* libvlc_media_library.h */; };
-		7DEBDAD2203C561D000A7D2F /* libvlc_media_list_player.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B77114D9BE800D34AAB /* libvlc_media_list_player.h */; };
-		7DEBDAD3203C561D000A7D2F /* libvlc_media_list.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B78114D9BE800D34AAB /* libvlc_media_list.h */; };
-		7DEBDAD4203C561D000A7D2F /* libvlc_media_player.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B79114D9BE800D34AAB /* libvlc_media_player.h */; };
-		7DEBDAD5203C561D000A7D2F /* libvlc_media.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7A114D9BE800D34AAB /* libvlc_media.h */; };
-		7DEBDAD6203C561D000A7D2F /* libvlc_renderer_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7B114D9BE800D34AAB /* libvlc_renderer_discoverer.h */; };
-		7DEBDAD7203C561D000A7D2F /* libvlc_vlm.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */; };
-		7DEBDAD8203C561D000A7D2F /* libvlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7D114D9BE800D34AAB /* libvlc.h */; };
-		7DEBDAD9203C561D000A7D2F /* vlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = CCEC5B7E114D9BE800D34AAB /* vlc.h */; };
+		7DEBDACE203C561D000A7D2F /* deprecated.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B73114D9BE800D34AAB /* deprecated.h */; };
+		7DEBDACF203C561D000A7D2F /* libvlc_events.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B74114D9BE800D34AAB /* libvlc_events.h */; };
+		7DEBDAD0203C561D000A7D2F /* libvlc_media_discoverer.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B75114D9BE800D34AAB /* libvlc_media_discoverer.h */; };
+		7DEBDAD1203C561D000A7D2F /* libvlc_media_library.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B76114D9BE800D34AAB /* libvlc_media_library.h */; };
+		7DEBDAD2203C561D000A7D2F /* libvlc_media_list_player.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B77114D9BE800D34AAB /* libvlc_media_list_player.h */; };
+		7DEBDAD3203C561D000A7D2F /* libvlc_media_list.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B78114D9BE800D34AAB /* libvlc_media_list.h */; };
+		7DEBDAD4203C561D000A7D2F /* libvlc_media_player.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B79114D9BE800D34AAB /* libvlc_media_player.h */; };
+		7DEBDAD5203C561D000A7D2F /* libvlc_media.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B7A114D9BE800D34AAB /* libvlc_media.h */; };
+		7DEBDAD6203C561D000A7D2F /* libvlc_renderer_discoverer.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B7B114D9BE800D34AAB /* libvlc_renderer_discoverer.h */; };
+		7DEBDAD7203C561D000A7D2F /* libvlc_vlm.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */; };
+		7DEBDAD8203C561D000A7D2F /* libvlc.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B7D114D9BE800D34AAB /* libvlc.h */; };
+		7DEBDAD9203C561D000A7D2F /* vlc.h in Copy Files */ = {isa = PBXBuildFile; fileRef = CCEC5B7E114D9BE800D34AAB /* vlc.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,25 +101,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7DEBDACD203C5607000A7D2F /* CopyFiles */ = {
+		7DEBDACD203C5607000A7D2F /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = ../Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
-				7DEBDACE203C561D000A7D2F /* deprecated.h in CopyFiles */,
-				7DEBDACF203C561D000A7D2F /* libvlc_events.h in CopyFiles */,
-				7DEBDAD0203C561D000A7D2F /* libvlc_media_discoverer.h in CopyFiles */,
-				7DEBDAD1203C561D000A7D2F /* libvlc_media_library.h in CopyFiles */,
-				7DEBDAD2203C561D000A7D2F /* libvlc_media_list_player.h in CopyFiles */,
-				7DEBDAD3203C561D000A7D2F /* libvlc_media_list.h in CopyFiles */,
-				7DEBDAD4203C561D000A7D2F /* libvlc_media_player.h in CopyFiles */,
-				7DEBDAD5203C561D000A7D2F /* libvlc_media.h in CopyFiles */,
-				7DEBDAD6203C561D000A7D2F /* libvlc_renderer_discoverer.h in CopyFiles */,
-				7DEBDAD7203C561D000A7D2F /* libvlc_vlm.h in CopyFiles */,
-				7DEBDAD8203C561D000A7D2F /* libvlc.h in CopyFiles */,
-				7DEBDAD9203C561D000A7D2F /* vlc.h in CopyFiles */,
+				7DEBDACE203C561D000A7D2F /* deprecated.h in Copy Files */,
+				7DEBDACF203C561D000A7D2F /* libvlc_events.h in Copy Files */,
+				7DEBDAD0203C561D000A7D2F /* libvlc_media_discoverer.h in Copy Files */,
+				7DEBDAD1203C561D000A7D2F /* libvlc_media_library.h in Copy Files */,
+				7DEBDAD2203C561D000A7D2F /* libvlc_media_list_player.h in Copy Files */,
+				7DEBDAD3203C561D000A7D2F /* libvlc_media_list.h in Copy Files */,
+				7DEBDAD4203C561D000A7D2F /* libvlc_media_player.h in Copy Files */,
+				7DEBDAD5203C561D000A7D2F /* libvlc_media.h in Copy Files */,
+				7DEBDAD6203C561D000A7D2F /* libvlc_renderer_discoverer.h in Copy Files */,
+				7DEBDAD7203C561D000A7D2F /* libvlc_vlm.h in Copy Files */,
+				7DEBDAD8203C561D000A7D2F /* libvlc.h in Copy Files */,
+				7DEBDAD9203C561D000A7D2F /* vlc.h in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -546,7 +547,7 @@
 				7DC28D4D20194117002D05C4 /* Headers */,
 				7DC28D6520194117002D05C4 /* Sources */,
 				7DC28D7920194117002D05C4 /* Frameworks */,
-				7DEBDACD203C5607000A7D2F /* CopyFiles */,
+				7DEBDACD203C5607000A7D2F /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -797,14 +798,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@loader_path/../Frameworks";
 				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -815,7 +820,7 @@
 					"Headers/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
-				INSTALL_PATH = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.vlckitframework;
@@ -830,13 +835,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DC28D3C201938D9002D05C4 /* vlc-plugins-MacOSX.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@loader_path/../Frameworks";
 				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -846,7 +855,7 @@
 					"Headers/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/VLCKit/Info.plist";
-				INSTALL_PATH = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(CONFIGURATION_BUILD_DIR)/$(PRODUCT_NAME).$(WRAPPER_EXTENSION)/lib";
 				PRIVATE_HEADERS_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/PrivateHeaders";
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.vlckitframework;
