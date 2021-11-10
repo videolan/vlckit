@@ -1190,7 +1190,8 @@ if [ "$MACOS" = "yes" ]; then
 
     # remove intermediate build result we don't need to keep
     spushd build
-    mv VLCKit-macosx.xcarchive/Products/Frameworks/VLCKit.framework VLCKit.framework
+    rm -rf VLCKit.xcframework
+    xcodebuild -create-xcframework -framework VLCKit-macosx.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $PROJECT_DIR/build/VLCKit-macosx.xcarchive/dSYMs/VLCKit.framework.dSYM -output VLCKit.xcframework
     spopd # build
 
     info "Build of VLCKit.framework completed"
