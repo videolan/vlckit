@@ -293,7 +293,7 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
  * \see metaDictionary
  * \see dictionary keys above
  */
-- (NSString *)metadataForKey:(NSString *)key;
+- (nullable NSString *)metadataForKey:(NSString *)key;
 
 /**
  * set meta property for key
