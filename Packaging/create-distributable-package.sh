@@ -115,7 +115,7 @@ info "checking for distributable binary package"
 
 spushd ${root}
 if [ "$MOBILE" = "no" ]; then
-    if [ ! -e "build/VLCKit.framework" ]; then
+    if [ ! -e "build/VLCKit.xcframework" ]; then
         info "VLCKit not found for distribution, creating... this will take long"
         ./buildMobileVLCKit.sh -x
     fi
@@ -140,7 +140,7 @@ info "Collecting items"
 mkdir -p "${DMGFOLDERNAME}"
 mkdir -p "${DMGFOLDERNAME}/Sample Code"
 if [ "$MOBILE" = "no" ]; then
-    cp -R build/VLCKit.framework "${DMGFOLDERNAME}"
+    cp -R build/VLCKit.xcframework "${DMGFOLDERNAME}"
     cp -R Examples/macOS/* "${DMGFOLDERNAME}/Sample Code"
     cp -R doc "${DMGFOLDERNAME}"
     cp COPYING "${DMGFOLDERNAME}"
