@@ -96,13 +96,13 @@ typedef NS_ENUM(NSInteger, VLCDeinterlace)
  * Returns the momentary loudness in LUFS / dBFS for the last 400ms
  * \return montary loudness or 0 if there is no loudness yet
  */
-@property (readonly) double loudnessValue;
+@property (readonly, atomic) double loudnessValue;
 
 /**
  * returns the absolute date of the measurement analog to mach_absolute_time()
  * It is most likely in the future (0 to 2seconds) depending on the audio output buffer size.
  */
-@property (readonly) int64_t date;
+@property (readonly, atomic) int64_t date;
 
 @end
 
