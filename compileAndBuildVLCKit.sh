@@ -6,8 +6,7 @@ set -e
 
 BUILD_DEVICE=yes
 BUILD_SIMULATOR=yes
-BUILD_STATIC_FRAMEWORK=no
-BUILD_DYNAMIC_FRAMEWORK=no
+BUILD_FRAMEWORK=no
 SDK_VERSION=`xcrun --sdk iphoneos --show-sdk-version`
 SDK_MIN=9.0
 VERBOSE=no
@@ -124,8 +123,19 @@ buildxcodeproj()
     fi
 
     local bitcodeflag=""
+    if [ "$IOS" = "yes" ]; then
+    if [ "$BITCODE" = "yes" ]; then
+        info "Bitcode enabled"
+        bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
+    else
+        info "Bitcode disabled"
+        bitcodeflag="BITCODE_GENERATION_MODE=none ENABLE_BITCODE=no"
+    fi
+    fi
+    if [ "$TVOS" = "yes" ]; then
     if [ "$BITCODE" = "yes" ]; then
         bitcodeflag="BITCODE_GENERATION_MODE=bitcode"
+    fi
     fi
 
     local verboseflag=""
@@ -135,15 +145,17 @@ buildxcodeproj()
 
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
 
-    xcodebuild -project "$1.xcodeproj" \
-               -target "$target" \
+    xcodebuild archive \
+               -project "$1.xcodeproj" \
                -sdk $PLATFORM$SDK \
                -configuration ${CONFIGURATION} \
+               -scheme "$target" \
+               -archivePath build/"$target"-$PLATFORM$SDK.xcarchive \
                ARCHS="${architectures}" \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
-               GCC_PREPROCESSOR_DEFINITIONS="$defs" \
                ${bitcodeflag} \
                ${verboseflag} \
+               SKIP_INSTALL=no \
                > ${out}
 }
 
@@ -310,12 +322,12 @@ do
          s)
              BUILD_DEVICE=no
              BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=no
+             BUILD_FRAMEWORK=no
              ;;
          f)
              BUILD_DEVICE=yes
              BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=yes
+             BUILD_FRAMEWORK=yes
              ;;
          r)  CONFIGURATION="Release"
              DISABLEDEBUG=yes
@@ -332,7 +344,7 @@ do
          a)
              BUILD_DEVICE=yes
              BUILD_SIMULATOR=yes
-             BUILD_STATIC_FRAMEWORK=yes
+             BUILD_FRAMEWORK=yes
              FARCH=$OPTARG
              ;;
          b)
@@ -356,8 +368,7 @@ do
              OSVERSIONMINCFLAG=macosx
              OSVERSIONMINLDFLAG=macosx
              BUILD_DEVICE=yes
-             BUILD_DYNAMIC_FRAMEWORK=yes
-             BUILD_STATIC_FRAMEWORK=no
+             BUILD_FRAMEWORK=yes
              ;;
          e)
              VLCROOT=$OPTARG
@@ -473,73 +484,89 @@ fi
 
 info "all done"
 
-if [ "$BUILD_STATIC_FRAMEWORK" != "no" ]; then
+if [ "$BUILD_FRAMEWORK" != "no" ]; then
 if [ "$TVOS" = "yes" ]; then
-    info "Building static TVVLCKit.framework"
+    info "Building TVVLCKit.xcframework"
 
-    lipo_libs=""
+    frameworks=""
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="appletvos"
         buildxcodeproj VLCKit "TVVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-appletvos/libTVVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
+        bcsymbolmapfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/BCSymbolMaps
+        spushd $bcsymbolmapfolder
+        for i in `ls *.bcsymbolmap`
+        do
+            bcsymbolmap=$bcsymbolmapfolder/$i
+        done
+        spopd
+        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder -debug-symbols $bcsymbolmap"
     fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $ARCH);then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
         buildxcodeproj VLCKit "TVVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-appletvsimulator/libTVVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
+        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder"
     fi
 
     # Assumes both platforms were built currently
     spushd build
-    rm -rf TVVLCKit.framework && \
-    mkdir TVVLCKit.framework && \
-    lipo -create ${lipo_libs} -o TVVLCKit.framework/TVVLCKit && \
-    chmod a+x TVVLCKit.framework/TVVLCKit && \
-    cp -pr ${CONFIGURATION}-${platform}/TVVLCKit TVVLCKit.framework/Headers
-    cp -pr ${CONFIGURATION}-${platform}/Modules TVVLCKit.framework/Modules
-    cp -pr ${PROJECT_DIR}/Resources/Info.plist TVVLCKit.framework/
+    rm -rf TVVLCKit.xcframework
+    xcodebuild -create-xcframework $frameworks -output TVVLCKit.xcframework
     spopd # build
 
-    info "Build of static TVVLCKit.framework completed"
+    info "Build of TVVLCKit.xcframework completed"
 fi
 if [ "$IOS" = "yes" ]; then
-    info "Building static MobileVLCKit.framework"
+    info "Building MobileVLCKit.xcframework"
 
-    lipo_libs=""
+    frameworks=""
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="iphoneos"
         buildxcodeproj VLCKit "MobileVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-iphoneos/libMobileVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
+        bcsymbolmapfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/BCSymbolMaps
+        frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
+        if [ -d ${bcsymbolmapfolder} ];then
+            info "Bitcode support found"
+            spushd $bcsymbolmapfolder
+            for i in `ls *.bcsymbolmap`
+            do
+                frameworks+=" -debug-symbols $bcsymbolmapfolder/$i"
+            done
+            spopd
+        fi
     fi
-    if [ "$FARCH" = "all" ] || (is_simulator_arch $ARCH);then
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="iphonesimulator"
         buildxcodeproj VLCKit "MobileVLCKit" ${platform}
-        lipo_libs="$lipo_libs ${CONFIGURATION}-iphonesimulator/libMobileVLCKit.a"
+        dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
+        frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
     fi
 
     # Assumes both platforms were built currently
     spushd build
-    rm -rf MobileVLCKit.framework && \
-    mkdir MobileVLCKit.framework && \
-    lipo -create ${lipo_libs} -o MobileVLCKit.framework/MobileVLCKit && \
-    chmod a+x MobileVLCKit.framework/MobileVLCKit && \
-    cp -pr ${CONFIGURATION}-${platform}/MobileVLCKit MobileVLCKit.framework/Headers
-    cp -pr ${CONFIGURATION}-${platform}/Modules MobileVLCKit.framework/Modules
-    cp -pr ${PROJECT_DIR}/Resources/Info.plist MobileVLCKit.framework/
+    rm -rf MobileVLCKit.xcframework
+    xcodebuild -create-xcframework $frameworks -output MobileVLCKit.xcframework
     spopd # build
 
-    info "Build of static MobileVLCKit.framework completed"
+    info "Build of MobileVLCKit.xcframework completed"
 fi
 fi
-if [ "$BUILD_DYNAMIC_FRAMEWORK" != "no" ]; then
+if [ "$BUILD_FRAMEWORK" != "no" ]; then
 if [ "$MACOS" = "yes" ]; then
     CURRENT_DIR=`pwd`
-    info "Building VLCKit.framework in ${CURRENT_DIR}"
+    info "Building VLCKit.xcframework in ${CURRENT_DIR}"
 
     buildxcodeproj VLCKit "VLCKit" "macosx"
 
-    info "Build of VLCKit.framework completed"
+    spushd build
+    rm -rf VLCKit.xcframework
+    xcodebuild -create-xcframework -framework VLCKit-macosx.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $PROJECT_DIR/build/VLCKit-macosx.xcarchive/dSYMs/VLCKit.framework.dSYM -output VLCKit.xcframework
+    spopd # build
+
+    info "Build of VLCKit.xcframework completed"
 fi
 fi
