@@ -26,11 +26,19 @@
 #import "VLCLibrary.h"
 
 #if TARGET_OS_TV
-# include "vlc-plugins-appletv.h"
-#elif TARGET_OS_IPHONE
-# include "vlc-plugins-iphone.h"
+#if TARGET_OS_SIMULATOR
+# include "vlc-plugins-appletv-simulator.h"
 #else
-# include "vlc-plugins-macosx.h"
+# include "vlc-plugins-appletv-device.h"
+#endif
+#elif TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR
+# include "vlc-plugins-iphone-simulator.h"
+#else
+# include "vlc-plugins-iphone-device.h"
+#endif
+#else
+# include "vlc-plugins-macosx-device.h"
 #endif
 
 #include <vlc/vlc.h>

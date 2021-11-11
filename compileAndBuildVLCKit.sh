@@ -103,14 +103,14 @@ buildxcodeproj()
     if [ "$FARCH" = "all" ];then
         if [ "$TVOS" = "yes" ]; then
             if [ "$PLATFORM" = "appletvsimulator" ]; then
-                architectures="x86_64"
+                architectures="x86_64 arm64"
             else
                 architectures="arm64"
             fi
         fi
         if [ "$IOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                architectures="i386 x86_64"
+                architectures="i386 x86_64 arm64"
             else
                 architectures="armv7 arm64"
             fi
@@ -201,6 +201,7 @@ buildMobileKit() {
             if [ "$TVOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
                     buildLibVLC "x86_64" "appletvsimulator"
+                    buildLibVLC "aarch64" "appletvsimulator"
                 else
                     buildLibVLC "aarch64" "appletvos"
                 fi
@@ -213,6 +214,7 @@ buildMobileKit() {
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
                     buildLibVLC "i386" $PLATFORM
                     buildLibVLC "x86_64" $PLATFORM
+                    buildLibVLC "aarch64" $PLATFORM
                 else
                     buildLibVLC "armv7" $PLATFORM
                     buildLibVLC "aarch64" $PLATFORM
@@ -256,18 +258,59 @@ get_symbol()
     echo "$1" | grep vlc_entry_$2|cut -d" " -f 3|sed 's/_vlc/vlc/'
 }
 
-build_universal_static_lib() {
+build_simulator_static_lib() {
     PROJECT_DIR=`pwd`
     OSSTYLE="$1"
-    info "building universal static libs for $OSSTYLE"
+    info "building simulator static lib for $OSSTYLE"
 
     # remove old module list
-    rm -f $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
-    touch $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
+    rm -f $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator.h
+    touch $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator.h
 
     spushd ${VLCROOT}
-    rm -rf install-$OSSTYLE
-    mkdir install-$OSSTYLE
+    rm -rf install-$OSSTYLE-simulator
+    mkdir install-$OSSTYLE-simulator
+    spopd # vlc
+
+    VLCSTATICLIBS=""
+    VLCSTATICLIBRARYNAME="static-lib/libvlc-full-static.a"
+    VLCSTATICMODULELIST=""
+
+    # brute-force test the available architectures we could lipo
+    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-x86_64 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-x86_64/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-x86_64/static-lib/static-module-list.c"
+    fi
+    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-i386 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-i386/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-i386/static-lib/static-module-list.c"
+    fi
+    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-arm64 ];then
+        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-arm64/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-arm64/static-lib/static-module-list.c"
+    fi
+
+    spushd ${VLCROOT}
+
+    lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-simulator/libvlc-simulator-static.a
+
+    cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator.h
+
+    spopd # VLCROOT
+}
+
+build_device_static_lib() {
+    PROJECT_DIR=`pwd`
+    OSSTYLE="$1"
+    info "building device static lib for $OSSTYLE"
+
+    # remove old module list
+    rm -f $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device.h
+    touch $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device.h
+
+    spushd ${VLCROOT}
+    rm -rf install-$OSSTYLE-device
+    mkdir install-$OSSTYLE-device
     spopd # vlc
 
     VLCSTATICLIBS=""
@@ -283,14 +326,6 @@ build_universal_static_lib() {
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-armv7/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-armv7/static-lib/static-module-list.c"
     fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-x86_64 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-x86_64/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-x86_64/static-lib/static-module-list.c"
-    fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-i386 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-i386/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-i386/static-lib/static-module-list.c"
-    fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}-x86_64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-x86_64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-x86_64/static-lib/static-module-list.c"
@@ -302,9 +337,9 @@ build_universal_static_lib() {
 
     spushd ${VLCROOT}
 
-    lipo $VLCSTATICLIBS -create -output install-$OSSTYLE/libvlc-full-static.a
+    lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-device/libvlc-device-static.a
 
-    cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE.h
+    cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device.h
 
     spopd # VLCROOT
 }
@@ -473,13 +508,15 @@ DEVICEARCHS=""
 SIMULATORARCHS=""
 
 if [ "$TVOS" = "yes" ]; then
-    build_universal_static_lib "appletv"
+    build_simulator_static_lib "appletv"
+    build_device_static_lib "appletv"
 fi
 if [ "$MACOS" = "yes" ]; then
-    build_universal_static_lib "macosx"
+    build_device_static_lib "macosx"
 fi
 if [ "$IOS" = "yes" ]; then
-    build_universal_static_lib "iphone"
+    build_simulator_static_lib "iphone"
+    build_device_static_lib "iphone"
 fi
 
 info "all done"
