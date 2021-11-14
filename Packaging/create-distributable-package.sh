@@ -115,18 +115,18 @@ info "checking for distributable binary package"
 
 spushd ${root}
 if [ "$MOBILE" = "no" ]; then
-    if [ ! -e "build/Debug/VLCKit.framework" ]; then
+    if [ ! -e "build/VLCKit.xcframework" ]; then
         info "VLCKit not found for distribution, creating... this will take long"
         ./compileAndBuildVLCKit.sh -x
     fi
 else
     if [ "$TV" = "yes" ]; then
-        if [ ! -e "build/TVVLCKit.framework" ]; then
+        if [ ! -e "build/TVVLCKit.xcframework" ]; then
             info "TVVLCKit not found for distribution, creating... this will take long"
             ./compileAndBuildVLCKit.sh -f -t
         fi
     else
-        if [ ! -e "build/MobileVLCKit.framework" ]; then
+        if [ ! -e "build/MobileVLCKit.xcframework" ]; then
             info "MobileVLCKit not found for distribution, creating... this will take long"
             ./compileAndBuildVLCKit.sh -f
         fi
@@ -140,15 +140,15 @@ info "Collecting items"
 mkdir -p "${DMGFOLDERNAME}"
 mkdir -p "${DMGFOLDERNAME}/Sample Code"
 if [ "$MOBILE" = "no" ]; then
-    cp -R build/Debug/VLCKit.framework "${DMGFOLDERNAME}"
+    cp -R build/VLCKit.xcframework "${DMGFOLDERNAME}"
     cp -R Examples/macOS/* "${DMGFOLDERNAME}/Sample Code"
     cp -R Documentation "${DMGFOLDERNAME}"
     cp COPYING "${DMGFOLDERNAME}"
 else
     if [ "$TV" = "yes" ]; then
-        cp -R build/TVVLCKit.framework "${DMGFOLDERNAME}"
+        cp -R build/TVVLCKit.xcframework "${DMGFOLDERNAME}"
     else
-        cp -R build/MobileVLCKit.framework "${DMGFOLDERNAME}"
+        cp -R build/MobileVLCKit.xcframework "${DMGFOLDERNAME}"
         cp -R Examples/iOS/* "${DMGFOLDERNAME}/Sample Code"
     fi
     cp -R Documentation "${DMGFOLDERNAME}"
