@@ -22,10 +22,8 @@
 		7D797FBC1DF41F0300AD93ED /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FBB1DF41F0300AD93ED /* libc++.tbd */; };
 		7D797FBE1DF41F1B00AD93ED /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FBD1DF41F1B00AD93ED /* libiconv.tbd */; };
 		7D797FC01DF41F2000AD93ED /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FBF1DF41F2000AD93ED /* libz.tbd */; };
-		7D797FC21DF41F4900AD93ED /* DynamicTVVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D797FC11DF41F4900AD93ED /* DynamicTVVLCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D797FC41DF41F9100AD93ED /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC31DF41F9100AD93ED /* libc++.tbd */; };
 		7D797FC61DF41F9500AD93ED /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC51DF41F9500AD93ED /* libiconv.tbd */; };
-		7D797FC81DF41FB900AD93ED /* DynamicMobileVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D797FC71DF41FB900AD93ED /* DynamicMobileVLCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7D803EC11C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D803EBE1C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m */; };
 		7D803EC71C8F2AF900864A9C /* VLCiOSLegacyDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D803EC51C8F2AF900864A9C /* VLCiOSLegacyDialogProvider.m */; };
 		7D8939401B500D50008F2B14 /* VLCEventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ECAC411DE8F7300F66AF3 /* VLCEventManager.m */; };
@@ -155,6 +153,9 @@
 		7DB683D81C996187000C70BE /* VLCHelperCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB683D31C996187000C70BE /* VLCHelperCode.m */; };
 		7DB683DA1C9961BA000C70BE /* VLCHelperCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DB683D91C9961BA000C70BE /* VLCHelperCode.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7DB683DB1C9961BA000C70BE /* VLCHelperCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DB683D91C9961BA000C70BE /* VLCHelperCode.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7DD48A792747AC7A00D2F39C /* TVVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6837F1C995D39000C70BE /* TVVLCKit.framework */; };
+		7DD48A7A2747AC8E00D2F39C /* TVVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D797FB21DF41E8400AD93ED /* TVVLCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7DD48A7C2747ACAA00D2F39C /* MobileVLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC020B1B501ECF0078FC84 /* VLCLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD411DE8FAB00F66AF3 /* VLCLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC020C1B501ECF0078FC84 /* VLCMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD511DE8FAB00F66AF3 /* VLCMedia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC020D1B501ECF0078FC84 /* VLCMediaThumbnailer.h in Headers */ = {isa = PBXBuildFile; fileRef = 636E979011EBC96D002FE8A9 /* VLCMediaThumbnailer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -195,35 +196,20 @@
 		7DFDF4E91C9AF25600BA86A6 /* VLCiOSLegacyDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D803EC41C8F2AEF00864A9C /* VLCiOSLegacyDialogProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7DFDF4EA1C9AF25600BA86A6 /* VLCCustomDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D34F5551C909DF6008A39F0 /* VLCCustomDialogProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7DFDF4EB1C9AF27A00BA86A6 /* VLCDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D803EB71C8F21EF00864A9C /* VLCDialogProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CA1E134E21087D750066F32F /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E134D21087D750066F32F /* Video.swift */; };
 		CA1E134F21087D750066F32F /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1E134D21087D750066F32F /* Video.swift */; };
-		CA1E136021087D8E0066F32F /* german.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135221087D8E0066F32F /* german.srt */; };
 		CA1E136121087D8E0066F32F /* german.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135221087D8E0066F32F /* german.srt */; };
-		CA1E136221087D8E0066F32F /* slovak.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135321087D8E0066F32F /* slovak.srt */; };
 		CA1E136321087D8E0066F32F /* slovak.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135321087D8E0066F32F /* slovak.srt */; };
-		CA1E136421087D8E0066F32F /* portuguese.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135421087D8E0066F32F /* portuguese.srt */; };
 		CA1E136521087D8E0066F32F /* portuguese.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135421087D8E0066F32F /* portuguese.srt */; };
-		CA1E136621087D8E0066F32F /* raspberry.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135521087D8E0066F32F /* raspberry.mp4 */; };
 		CA1E136721087D8E0066F32F /* raspberry.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135521087D8E0066F32F /* raspberry.mp4 */; };
-		CA1E136821087D8E0066F32F /* bunny.avi in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135721087D8E0066F32F /* bunny.avi */; };
 		CA1E136921087D8E0066F32F /* bunny.avi in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135721087D8E0066F32F /* bunny.avi */; };
-		CA1E136A21087D8E0066F32F /* sea_lions.mov in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135821087D8E0066F32F /* sea_lions.mov */; };
 		CA1E136B21087D8E0066F32F /* sea_lions.mov in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135821087D8E0066F32F /* sea_lions.mov */; };
-		CA1E136C21087D8E0066F32F /* salmon.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135921087D8E0066F32F /* salmon.mp4 */; };
 		CA1E136D21087D8E0066F32F /* salmon.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135921087D8E0066F32F /* salmon.mp4 */; };
-		CA1E136E21087D8E0066F32F /* bird.m4v in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135A21087D8E0066F32F /* bird.m4v */; };
 		CA1E136F21087D8E0066F32F /* bird.m4v in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135A21087D8E0066F32F /* bird.m4v */; };
-		CA1E137021087D8E0066F32F /* browser.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135C21087D8E0066F32F /* browser.mp4 */; };
 		CA1E137121087D8E0066F32F /* browser.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135C21087D8E0066F32F /* browser.mp4 */; };
-		CA1E137221087D8E0066F32F /* french.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135D21087D8E0066F32F /* french.srt */; };
 		CA1E137321087D8E0066F32F /* french.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135D21087D8E0066F32F /* french.srt */; };
-		CA1E137421087D8E0066F32F /* chinese-traditional.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135E21087D8E0066F32F /* chinese-traditional.srt */; };
 		CA1E137521087D8E0066F32F /* chinese-traditional.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135E21087D8E0066F32F /* chinese-traditional.srt */; };
-		CA1E137621087D8E0066F32F /* english.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135F21087D8E0066F32F /* english.srt */; };
 		CA1E137721087D8E0066F32F /* english.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135F21087D8E0066F32F /* english.srt */; };
-		CA5D5788210B16960099D6D0 /* VLCMediaThumbnailerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5D5787210B16960099D6D0 /* VLCMediaThumbnailerTest.swift */; };
 		CA5D5789210B16960099D6D0 /* VLCMediaThumbnailerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5D5787210B16960099D6D0 /* VLCMediaThumbnailerTest.swift */; };
-		CA7BC89120F4419E00C86820 /* XCTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BC88720F4418000C86820 /* XCTestHelper.swift */; };
 		CA7BC89520F441B500C86820 /* XCTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BC88720F4418000C86820 /* XCTestHelper.swift */; };
 		CAA03D1720C8DE4D001764DA /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D1620C8DE4D001764DA /* libbz2.tbd */; };
 		CAA03D1920C8DE51001764DA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D1820C8DE51001764DA /* libz.tbd */; };
@@ -233,29 +219,17 @@
 		CAA03D2120C8DE6D001764DA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D2020C8DE6D001764DA /* AudioToolbox.framework */; };
 		CAA03D2320C8DE73001764DA /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D2220C8DE73001764DA /* VideoToolbox.framework */; };
 		CAA03D2520C8DE7B001764DA /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAA03D2420C8DE7A001764DA /* CoreMedia.framework */; };
-		CAA9F00320D254AB00CDBB2C /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA9F00120D254A600CDBB2C /* VLCTimeTest.swift */; };
 		CAA9F00420D254AC00CDBB2C /* VLCTimeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA9F00120D254A600CDBB2C /* VLCTimeTest.swift */; };
-		CABCBAE220EB0B080040E2F5 /* VLCAudioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABCBADD20EB0B080040E2F5 /* VLCAudioTest.swift */; };
 		CABCBAE320EB0B080040E2F5 /* VLCAudioTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABCBADD20EB0B080040E2F5 /* VLCAudioTest.swift */; };
-		CABEDAB821095242005FED09 /* VLCLibraryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEDAB721095242005FED09 /* VLCLibraryTest.swift */; };
 		CABEDAB921095242005FED09 /* VLCLibraryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABEDAB721095242005FED09 /* VLCLibraryTest.swift */; };
-		CABF4D4120D8DBA900FCCE29 /* VLCMediaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF4D4020D8DBA900FCCE29 /* VLCMediaTest.swift */; };
 		CABF4D4220D8DBA900FCCE29 /* VLCMediaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF4D4020D8DBA900FCCE29 /* VLCMediaTest.swift */; };
-		CABF4D4620D8DD1B00FCCE29 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC31DF41F9100AD93ED /* libc++.tbd */; };
-		CABF4D4720D8DD2000FCCE29 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B51EC0A3390047E700 /* libbz2.tbd */; };
-		CABF4D4820D8DD2900FCCE29 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC51DF41F9500AD93ED /* libiconv.tbd */; };
-		CABF4D4920D8DD3A00FCCE29 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6C891F1C0CA81F00321894 /* AVFoundation.framework */; };
-		CABF4D4B20D8DD6500FCCE29 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8939011B5009DD008F2B14 /* CoreFoundation.framework */; };
-		CABF4D4D20D8DD7300FCCE29 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938F71B5009BE008F2B14 /* VideoToolbox.framework */; };
-		CABF4D4E20D8DD7B00FCCE29 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938F51B5009B4008F2B14 /* CoreMedia.framework */; };
-		CABF4D4F20D8DD7F00FCCE29 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938F01B5009A2008F2B14 /* AudioToolbox.framework */; };
 		ED25608A21F39FD100396F9B /* VLCTranscoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 41E1959821BEA2AF00F10277 /* VLCTranscoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED25608E21F3A0F200396F9B /* VLCTranscoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E1959621BEA28F00F10277 /* VLCTranscoder.m */; };
 		ED25609321F3A3E800396F9B /* VLCRendererDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2CE648203DCC48004BB7F6 /* VLCRendererDiscoverer.m */; };
 		ED25609421F3A3E800396F9B /* VLCRendererItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */; };
 		ED25609521F3A3F800396F9B /* VLCRendererDiscoverer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D2CE647203DCC48004BB7F6 /* VLCRendererDiscoverer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED25609621F3A3F800396F9B /* VLCRendererItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ED25609C21F3A9FE00396F9B /* DynamicMobileVLCKitTests-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = ED25609A21F3A9FE00396F9B /* DynamicMobileVLCKitTests-Bridging-Header.h */; };
+		ED25609C21F3A9FE00396F9B /* MobileVLCKitTests-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = ED25609A21F3A9FE00396F9B /* MobileVLCKitTests-Bridging-Header.h */; };
 		ED2560A221F3AA4600396F9B /* VLCMediaTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABF4D4020D8DBA900FCCE29 /* VLCMediaTest.swift */; };
 		ED2560A321F3AA4600396F9B /* XCTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7BC88720F4418000C86820 /* XCTestHelper.swift */; };
 		ED2560A421F3AA4600396F9B /* VLCMediaThumbnailerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5D5787210B16960099D6D0 /* VLCMediaThumbnailerTest.swift */; };
@@ -284,7 +258,6 @@
 		ED2560BE21F3AA4600396F9B /* browser.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135C21087D8E0066F32F /* browser.mp4 */; };
 		ED2560BF21F3AA4600396F9B /* slovak.srt in Resources */ = {isa = PBXBuildFile; fileRef = CA1E135321087D8E0066F32F /* slovak.srt */; };
 		ED2560C721F3C72700396F9B /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8939271B500D1C008F2B14 /* MobileVLCKit.framework */; };
-		ED2560C821F3CD7900396F9B /* libStaticLibVLCForiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D89394E1B500DBC008F2B14 /* libStaticLibVLCForiOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -435,10 +408,8 @@
 		7D797FBB1DF41F0300AD93ED /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.0.sdk/usr/lib/libc++.tbd"; sourceTree = DEVELOPER_DIR; };
 		7D797FBD1DF41F1B00AD93ED /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.0.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
 		7D797FBF1DF41F2000AD93ED /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS10.0.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
-		7D797FC11DF41F4900AD93ED /* DynamicTVVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicTVVLCKit.h; path = Headers/Public/DynamicTVVLCKit.h; sourceTree = SOURCE_ROOT; };
 		7D797FC31DF41F9100AD93ED /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		7D797FC51DF41F9500AD93ED /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
-		7D797FC71DF41FB900AD93ED /* DynamicMobileVLCKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DynamicMobileVLCKit.h; path = Headers/Public/DynamicMobileVLCKit.h; sourceTree = SOURCE_ROOT; };
 		7D803EB51C8F21D200864A9C /* VLCDialogProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCDialogProvider.m; path = Sources/VLCDialogProvider.m; sourceTree = "<group>"; };
 		7D803EB71C8F21EF00864A9C /* VLCDialogProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCDialogProvider.h; path = Headers/Public/VLCDialogProvider.h; sourceTree = "<group>"; };
 		7D803EBE1C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCEmbeddedDialogProvider.m; path = Sources/VLCEmbeddedDialogProvider.m; sourceTree = "<group>"; };
@@ -508,8 +479,6 @@
 		8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VLCRendererItem.h; path = Headers/Public/VLCRendererItem.h; sourceTree = "<group>"; };
 		8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = VLCRendererItem.m; path = Sources/VLCRendererItem.m; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		CA0301CB20ADFD2500452BB8 /* MobileVLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileVLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA0301CF20ADFD2500452BB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA1E134D21087D750066F32F /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		CA1E135221087D8E0066F32F /* german.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = german.srt; sourceTree = "<group>"; };
 		CA1E135321087D8E0066F32F /* slovak.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = slovak.srt; sourceTree = "<group>"; };
@@ -525,7 +494,6 @@
 		CA1E135F21087D8E0066F32F /* english.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = english.srt; sourceTree = "<group>"; };
 		CA5D5787210B16960099D6D0 /* VLCMediaThumbnailerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCMediaThumbnailerTest.swift; sourceTree = "<group>"; };
 		CA7BC88720F4418000C86820 /* XCTestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCTestHelper.swift; sourceTree = "<group>"; };
-		CA978D1E20B89F4B00F7E768 /* MobileVLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MobileVLCKitTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		CAA03D0720C8DCDA001764DA /* TVVLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVVLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAA03D1620C8DE4D001764DA /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.4.sdk/usr/lib/libbz2.tbd; sourceTree = DEVELOPER_DIR; };
 		CAA03D1820C8DE51001764DA /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.4.sdk/usr/lib/libz.tbd; sourceTree = DEVELOPER_DIR; };
@@ -541,9 +509,9 @@
 		CABCBADD20EB0B080040E2F5 /* VLCAudioTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCAudioTest.swift; sourceTree = "<group>"; };
 		CABEDAB721095242005FED09 /* VLCLibraryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VLCLibraryTest.swift; sourceTree = "<group>"; };
 		CABF4D4020D8DBA900FCCE29 /* VLCMediaTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VLCMediaTest.swift; sourceTree = "<group>"; };
-		ED25609A21F3A9FE00396F9B /* DynamicMobileVLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DynamicMobileVLCKitTests-Bridging-Header.h"; path = "Tests/DynamicMobileVLCKitTests/DynamicMobileVLCKitTests-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		ED25609A21F3A9FE00396F9B /* MobileVLCKitTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MobileVLCKitTests-Bridging-Header.h"; path = "Tests/DynamicMobileVLCKitTests/MobileVLCKitTests-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		ED25609B21F3A9FE00396F9B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Tests/DynamicMobileVLCKitTests/Info.plist; sourceTree = SOURCE_ROOT; };
-		ED2560C321F3AA4600396F9B /* DynamicMobileVLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DynamicMobileVLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED2560C321F3AA4600396F9B /* MobileVLCKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MobileVLCKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -631,25 +599,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CA0301C820ADFD2500452BB8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CABF4D4920D8DD3A00FCCE29 /* AVFoundation.framework in Frameworks */,
-				CABF4D4B20D8DD6500FCCE29 /* CoreFoundation.framework in Frameworks */,
-				CABF4D4D20D8DD7300FCCE29 /* VideoToolbox.framework in Frameworks */,
-				CABF4D4E20D8DD7B00FCCE29 /* CoreMedia.framework in Frameworks */,
-				CABF4D4F20D8DD7F00FCCE29 /* AudioToolbox.framework in Frameworks */,
-				CABF4D4820D8DD2900FCCE29 /* libiconv.tbd in Frameworks */,
-				CABF4D4720D8DD2000FCCE29 /* libbz2.tbd in Frameworks */,
-				CABF4D4620D8DD1B00FCCE29 /* libc++.tbd in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CAA03D0420C8DCDA001764DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DD48A792747AC7A00D2F39C /* TVVLCKit.framework in Frameworks */,
 				CAA03D2520C8DE7B001764DA /* CoreMedia.framework in Frameworks */,
 				CAA03D2320C8DE73001764DA /* VideoToolbox.framework in Frameworks */,
 				CAA03D2120C8DE6D001764DA /* AudioToolbox.framework in Frameworks */,
@@ -673,7 +627,6 @@
 				ED2560AF21F3AA4600396F9B /* libiconv.tbd in Frameworks */,
 				ED2560B021F3AA4600396F9B /* libbz2.tbd in Frameworks */,
 				ED2560B121F3AA4600396F9B /* libc++.tbd in Frameworks */,
-				ED2560C821F3CD7900396F9B /* libStaticLibVLCForiOS.a in Frameworks */,
 				ED2560C721F3C72700396F9B /* MobileVLCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -688,9 +641,8 @@
 				7D89394E1B500DBC008F2B14 /* libStaticLibVLCForiOS.a */,
 				7DB6837F1C995D39000C70BE /* TVVLCKit.framework */,
 				7DB683C61C995E9A000C70BE /* libStaticLibVLCFortvOS.a */,
-				CA0301CB20ADFD2500452BB8 /* MobileVLCKitTests.xctest */,
 				CAA03D0720C8DCDA001764DA /* TVVLCKitTests.xctest */,
-				ED2560C321F3AA4600396F9B /* DynamicMobileVLCKitTests.xctest */,
+				ED2560C321F3AA4600396F9B /* MobileVLCKitTests.xctest */,
 				7D988D2E24C7320600279703 /* libStaticLibVLCFormacOS.a */,
 			);
 			name = Products;
@@ -705,7 +657,6 @@
 				7D89394F1B500DBC008F2B14 /* StaticLibVLC */,
 				7D66193724D1F6A500781E5D /* MobileVLCKit */,
 				7D13295A1BA304D900BE647E /* TVVLCKit */,
-				7DB683801C995D39000C70BE /* DynamicTVVLCKit */,
 				CAA9EFFC20D2546000CDBB2C /* Tests */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
@@ -879,8 +830,6 @@
 				7A5ECB9D11DE975700F66AF3 /* MobileVLCKit.h */,
 				7D988CEF24C72F5700279703 /* VLCKit.h */,
 				7D797FB21DF41E8400AD93ED /* TVVLCKit.h */,
-				7D797FC71DF41FB900AD93ED /* DynamicMobileVLCKit.h */,
-				7D797FC11DF41F4900AD93ED /* DynamicTVVLCKit.h */,
 			);
 			name = "Umbrella Headers";
 			sourceTree = "<group>";
@@ -913,13 +862,6 @@
 			name = "Streaming & Transcoding";
 			sourceTree = "<group>";
 		};
-		7DB683801C995D39000C70BE /* DynamicTVVLCKit */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DynamicTVVLCKit;
-			sourceTree = "<group>";
-		};
 		7DEBDADE203C56BC000A7D2F /* libvlc */ = {
 			isa = PBXGroup;
 			children = (
@@ -944,15 +886,6 @@
 				8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */,
 			);
 			name = Renderer;
-			sourceTree = "<group>";
-		};
-		CA0301CC20ADFD2500452BB8 /* MobileVLCKitTests */ = {
-			isa = PBXGroup;
-			children = (
-				CA978D1E20B89F4B00F7E768 /* MobileVLCKitTests-Bridging-Header.h */,
-				CA0301CF20ADFD2500452BB8 /* Info.plist */,
-			);
-			path = MobileVLCKitTests;
 			sourceTree = "<group>";
 		};
 		CA1E135021087D790066F32F /* Assets */ = {
@@ -1014,8 +947,7 @@
 				CA7BC88520F4418000C86820 /* Helper */,
 				CAA9F00020D254A600CDBB2C /* Sources */,
 				CAA9EFFD20D2549300CDBB2C /* TVVLCKitTests */,
-				ED25609921F3A98E00396F9B /* DynamicMobileVLCKitTests */,
-				CA0301CC20ADFD2500452BB8 /* MobileVLCKitTests */,
+				ED25609921F3A98E00396F9B /* MobileVLCKitTests */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1041,13 +973,12 @@
 			path = Sources;
 			sourceTree = "<group>";
 		};
-		ED25609921F3A98E00396F9B /* DynamicMobileVLCKitTests */ = {
+		ED25609921F3A98E00396F9B /* MobileVLCKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				ED25609A21F3A9FE00396F9B /* DynamicMobileVLCKitTests-Bridging-Header.h */,
+				ED25609A21F3A9FE00396F9B /* MobileVLCKitTests-Bridging-Header.h */,
 				ED25609B21F3A9FE00396F9B /* Info.plist */,
 			);
-			name = DynamicMobileVLCKitTests;
 			path = MobileVLCKitTests;
 			sourceTree = "<group>";
 		};
@@ -1064,7 +995,7 @@
 				7DDC020C1B501ECF0078FC84 /* VLCMedia.h in Headers */,
 				7DDC020D1B501ECF0078FC84 /* VLCMediaThumbnailer.h in Headers */,
 				7DDC020E1B501ECF0078FC84 /* VLCMediaList.h in Headers */,
-				ED25609C21F3A9FE00396F9B /* DynamicMobileVLCKitTests-Bridging-Header.h in Headers */,
+				ED25609C21F3A9FE00396F9B /* MobileVLCKitTests-Bridging-Header.h in Headers */,
 				7DDC020F1B501ECF0078FC84 /* VLCMediaPlayer.h in Headers */,
 				7DDC02101B501ECF0078FC84 /* VLCMediaListPlayer.h in Headers */,
 				7DDC02111B501ECF0078FC84 /* VLCMediaDiscoverer.h in Headers */,
@@ -1074,11 +1005,11 @@
 				7DDC02151B501ED70078FC84 /* VLCLibVLCBridging.h in Headers */,
 				ED25609521F3A3F800396F9B /* VLCRendererDiscoverer.h in Headers */,
 				ED25609621F3A3F800396F9B /* VLCRendererItem.h in Headers */,
+				7DD48A7C2747ACAA00D2F39C /* MobileVLCKit.h in Headers */,
 				7DDC02161B501ED70078FC84 /* VLCEventManager.h in Headers */,
 				7DFDF4E81C9AF25600BA86A6 /* VLCEmbeddedDialogProvider.h in Headers */,
 				7DFDF4E91C9AF25600BA86A6 /* VLCiOSLegacyDialogProvider.h in Headers */,
 				7DFDF4EA1C9AF25600BA86A6 /* VLCCustomDialogProvider.h in Headers */,
-				7D797FC81DF41FB900AD93ED /* DynamicMobileVLCKit.h in Headers */,
 				7DB683DA1C9961BA000C70BE /* VLCHelperCode.h in Headers */,
 				7D030013273D717700A4981C /* vlc-plugins-iphone-simulator.h in Headers */,
 			);
@@ -1129,8 +1060,8 @@
 				7DB683B81C995E1D000C70BE /* VLCMediaListPlayer.h in Headers */,
 				7DB683B91C995E1D000C70BE /* VLCMediaDiscoverer.h in Headers */,
 				7DB683BA1C995E1D000C70BE /* VLCDialogProvider.h in Headers */,
+				7DD48A7A2747AC8E00D2F39C /* TVVLCKit.h in Headers */,
 				7D030018273D717F00A4981C /* vlc-plugins-appletv-simulator.h in Headers */,
-				7D797FC21DF41F4900AD93ED /* DynamicTVVLCKit.h in Headers */,
 				7DB683BB1C995E1D000C70BE /* VLCTime.h in Headers */,
 				7DB683BC1C995E34000C70BE /* VLCLibVLCBridging.h in Headers */,
 				7DB683BD1C995E34000C70BE /* VLCEventManager.h in Headers */,
@@ -1251,24 +1182,6 @@
 			productName = VLC;
 			productType = "com.apple.product-type.framework";
 		};
-		CA0301CA20ADFD2500452BB8 /* MobileVLCKitTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CA0301D520ADFD2500452BB8 /* Build configuration list for PBXNativeTarget "MobileVLCKitTests" */;
-			buildPhases = (
-				CA738BF020F3487500901B26 /* ShellScript */,
-				CA0301C720ADFD2500452BB8 /* Sources */,
-				CA0301C820ADFD2500452BB8 /* Frameworks */,
-				CA0301C920ADFD2500452BB8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = MobileVLCKitTests;
-			productName = "MobileVLCKit-iOSTests";
-			productReference = CA0301CB20ADFD2500452BB8 /* MobileVLCKitTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		CA23EBBB20BDF02700C0D635 /* VLCKitTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CA23EBC420BDF02700C0D635 /* Build configuration list for PBXNativeTarget "VLCKitTests" */;
@@ -1304,9 +1217,9 @@
 			productReference = CAA03D0720C8DCDA001764DA /* TVVLCKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		ED25609D21F3AA4600396F9B /* DynamicMobileVLCKitTests */ = {
+		ED25609D21F3AA4600396F9B /* MobileVLCKitTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED2560C021F3AA4600396F9B /* Build configuration list for PBXNativeTarget "DynamicMobileVLCKitTests" */;
+			buildConfigurationList = ED2560C021F3AA4600396F9B /* Build configuration list for PBXNativeTarget "MobileVLCKitTests" */;
 			buildPhases = (
 				ED2560A021F3AA4600396F9B /* ShellScript */,
 				ED2560A121F3AA4600396F9B /* Sources */,
@@ -1318,9 +1231,9 @@
 			dependencies = (
 				ED2560C621F3AA6500396F9B /* PBXTargetDependency */,
 			);
-			name = DynamicMobileVLCKitTests;
+			name = MobileVLCKitTests;
 			productName = "MobileVLCKit-iOSTests";
-			productReference = ED2560C321F3AA4600396F9B /* DynamicMobileVLCKitTests.xctest */;
+			productReference = ED2560C321F3AA4600396F9B /* MobileVLCKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1346,11 +1259,6 @@
 					};
 					7DB683C51C995E9A000C70BE = {
 						CreatedOnToolsVersion = 7.3;
-					};
-					CA0301CA20ADFD2500452BB8 = {
-						CreatedOnToolsVersion = 9.3;
-						LastSwiftMigration = 0930;
-						ProvisioningStyle = Automatic;
 					};
 					CAA03D0620C8DCDA001764DA = {
 						CreatedOnToolsVersion = 9.4;
@@ -1379,8 +1287,7 @@
 				7D89394D1B500DBC008F2B14 /* StaticLibVLCForiOS */,
 				7DB6837E1C995D39000C70BE /* TVVLCKit */,
 				7DB683C51C995E9A000C70BE /* StaticLibVLCFortvOS */,
-				CA0301CA20ADFD2500452BB8 /* MobileVLCKitTests */,
-				ED25609D21F3AA4600396F9B /* DynamicMobileVLCKitTests */,
+				ED25609D21F3AA4600396F9B /* MobileVLCKitTests */,
 				CAA03D0620C8DCDA001764DA /* TVVLCKitTests */,
 				7D988D2D24C7320600279703 /* StaticLibVLCFormacOS */,
 				7DC28D4C20194117002D05C4 /* VLCKit */,
@@ -1390,25 +1297,6 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		CA0301C920ADFD2500452BB8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CA1E137621087D8E0066F32F /* english.srt in Resources */,
-				CA1E136C21087D8E0066F32F /* salmon.mp4 in Resources */,
-				CA1E136821087D8E0066F32F /* bunny.avi in Resources */,
-				CA1E136421087D8E0066F32F /* portuguese.srt in Resources */,
-				CA1E136A21087D8E0066F32F /* sea_lions.mov in Resources */,
-				CA1E137421087D8E0066F32F /* chinese-traditional.srt in Resources */,
-				CA1E136021087D8E0066F32F /* german.srt in Resources */,
-				CA1E137221087D8E0066F32F /* french.srt in Resources */,
-				CA1E136621087D8E0066F32F /* raspberry.mp4 in Resources */,
-				CA1E136E21087D8E0066F32F /* bird.m4v in Resources */,
-				CA1E137021087D8E0066F32F /* browser.mp4 in Resources */,
-				CA1E136221087D8E0066F32F /* slovak.srt in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CA23EBBA20BDF02700C0D635 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1457,19 +1345,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		CA738BF020F3487500901B26 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "sh Tests/downloadTestAssets.sh\n";
-		};
 		CA738BF520F34D3400901B26 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1608,20 +1483,6 @@
 				7D988CDE24C72F1300279703 /* VLCRendererItem.m in Sources */,
 				7D988CDF24C72F1B00279703 /* VLCMediaThumbnailer.m in Sources */,
 				7D988CE024C72F2100279703 /* VLCHelperCode.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CA0301C720ADFD2500452BB8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CABF4D4120D8DBA900FCCE29 /* VLCMediaTest.swift in Sources */,
-				CA7BC89120F4419E00C86820 /* XCTestHelper.swift in Sources */,
-				CA5D5788210B16960099D6D0 /* VLCMediaThumbnailerTest.swift in Sources */,
-				CAA9F00320D254AB00CDBB2C /* VLCTimeTest.swift in Sources */,
-				CABCBAE220EB0B080040E2F5 /* VLCAudioTest.swift in Sources */,
-				CABEDAB821095242005FED09 /* VLCLibraryTest.swift in Sources */,
-				CA1E134E21087D750066F32F /* Video.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2098,7 +1959,6 @@
 					"@loader_path/Frameworks",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.DynamicTVVLCKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = NO;
@@ -2165,7 +2025,6 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.DynamicTVVLCKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = NO;
@@ -2342,143 +2201,6 @@
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
-		};
-		CA0301D320ADFD2500452BB8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++11";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = Tests/MobileVLCKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.MobileVLCKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/MobileVLCKitTests/MobileVLCKitTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		CA0301D420ADFD2500452BB8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++11";
-				CLANG_CXX_LIBRARY = "libstdc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = Tests/MobileVLCKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.MobileVLCKitTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OBJC_BRIDGING_HEADER = "Tests/MobileVLCKitTests/MobileVLCKitTests-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
 		};
 		CA23EBC520BDF02700C0D635 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -2920,15 +2642,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA0301D520ADFD2500452BB8 /* Build configuration list for PBXNativeTarget "MobileVLCKitTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CA0301D320ADFD2500452BB8 /* Release */,
-				CA0301D420ADFD2500452BB8 /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		CA23EBC420BDF02700C0D635 /* Build configuration list for PBXNativeTarget "VLCKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2947,7 +2660,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED2560C021F3AA4600396F9B /* Build configuration list for PBXNativeTarget "DynamicMobileVLCKitTests" */ = {
+		ED2560C021F3AA4600396F9B /* Build configuration list for PBXNativeTarget "MobileVLCKitTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED2560C121F3AA4600396F9B /* Release */,

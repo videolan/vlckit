@@ -32,7 +32,7 @@ struct Video {
     #if os(OSX)
         let bundle = Bundle(identifier: "org.videolan.VLCKitTests")!
     #elseif os(iOS)
-    let bundle = Bundle(identifier: "org.videolan.MobileVLCKitTests") != nil ? Bundle(identifier: "org.videolan.MobileVLCKitTests")! : Bundle(identifier: "org.videolan.DynamicMobileVLCKitTests")!
+        let bundle = Bundle(identifier: "org.videolan.MobileVLCKitTests")!
     #elseif os(tvOS)
         let bundle = Bundle(identifier: "org.videolan.TVVLCKitTests")!
     #endif
