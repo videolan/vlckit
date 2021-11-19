@@ -1,0 +1,36 @@
+From 23043f552edd11ea71bcef83bd4f5a7fc1bbe101 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Fri, 19 Nov 2021 13:23:20 +0100
+Subject: [PATCH 43/43] upnp: accept IPv4 interfaces only for iOS and use the
+ last discovered
+
+---
+ modules/services_discovery/upnp.cpp | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
+index 99f0ee830b..0b8e79a210 100644
+--- a/modules/services_discovery/upnp.cpp
++++ b/modules/services_discovery/upnp.cpp
+@@ -1643,10 +1643,14 @@ inline char *getPreferedAdapter()
+ 
+     anInterface = listOfInterfaces;
+     while (anInterface != NULL) {
+-        bool ret = necessaryFlagsSetOnInterface(anInterface);
+-        if (ret) {
+-            adapterName = strdup(anInterface->ifa_name);
+-            break;
++        if (anInterface->ifa_addr->sa_family == AF_INET) {
++            bool ret = necessaryFlagsSetOnInterface(anInterface);
++            if (ret) {
++                if (adapterName) {
++                    FREENULL(adapterName);
++                }
++                adapterName = strdup(anInterface->ifa_name);
++            }
+         }
+ 
+         anInterface = anInterface->ifa_next;
+-- 
+2.30.1 (Apple Git-130)
+
