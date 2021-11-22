@@ -1620,6 +1620,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				"OTHER_LIBTOOLFLAGS[arch=*]" = "";
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.mobilevlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -1693,6 +1694,7 @@
 					suppress,
 				);
 				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "-read_only_relocs suppress";
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.mobilevlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
@@ -1959,6 +1961,7 @@
 					"@loader_path/Frameworks",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.tvvlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = NO;
@@ -2025,6 +2028,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.tvvlckit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				SKIP_INSTALL = NO;
