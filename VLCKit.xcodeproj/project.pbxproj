@@ -21,6 +21,9 @@
 		41657C422059DE7B00AB915B /* VLCRendererDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 41657C402059DE7B00AB915B /* VLCRendererDiscoverer.m */; };
 		41657C432059DE7B00AB915B /* VLCRendererItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 41657C412059DE7B00AB915B /* VLCRendererItem.m */; };
 		41BD71FA21B9666000795629 /* VLCTranscoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4102566E21B56C7500253ECF /* VLCTranscoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7D1908E9274FE44C00A8A947 /* libvlc_picture.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7D1908E6274FE43200A8A947 /* libvlc_picture.h */; };
+		7D1908EA274FE45100A8A947 /* libvlc_version.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7D1908E3274FE42200A8A947 /* libvlc_version.h */; };
+		7D1908EB274FE45800A8A947 /* libvlc_dialog.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7D1908E5274FE43200A8A947 /* libvlc_dialog.h */; };
 		7DC28D4B2019406B002D05C4 /* StaticLibVLC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DC28D4A2019406B002D05C4 /* StaticLibVLC.m */; };
 		7DC28D4E20194117002D05C4 /* VLCEventManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF78BD0D0CAEEEC300354E6E /* VLCEventManager.h */; settings = {ATTRIBUTES = (); }; };
 		7DC28D4F20194117002D05C4 /* VLCKit.h in Headers */ = {isa = PBXBuildFile; fileRef = EF78BD120CAEEEE700354E6E /* VLCKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -107,6 +110,9 @@
 			dstPath = ../Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
+				7D1908EB274FE45800A8A947 /* libvlc_dialog.h in Copy Files */,
+				7D1908EA274FE45100A8A947 /* libvlc_version.h in Copy Files */,
+				7D1908E9274FE44C00A8A947 /* libvlc_picture.h in Copy Files */,
 				7DEBDACE203C561D000A7D2F /* deprecated.h in Copy Files */,
 				7DEBDACF203C561D000A7D2F /* libvlc_events.h in Copy Files */,
 				7DEBDAD0203C561D000A7D2F /* libvlc_media_discoverer.h in Copy Files */,
@@ -160,6 +166,9 @@
 		637D5ADB0CF6F2720073EA45 /* VLCMediaDiscoverer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCMediaDiscoverer.m; sourceTree = "<group>"; };
 		6384FD070D0DBA20005EB1F7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
 		63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaThumbnailer.h; path = Public/VLCMediaThumbnailer.h; sourceTree = "<group>"; };
+		7D1908E3274FE42200A8A947 /* libvlc_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libvlc_version.h; sourceTree = "<group>"; };
+		7D1908E5274FE43200A8A947 /* libvlc_dialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_dialog.h; path = libvlc/vlc/include/vlc/libvlc_dialog.h; sourceTree = SOURCE_ROOT; };
+		7D1908E6274FE43200A8A947 /* libvlc_picture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_picture.h; path = libvlc/vlc/include/vlc/libvlc_picture.h; sourceTree = SOURCE_ROOT; };
 		7D34F5611C90A96C008A39F0 /* VLCDialogProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCDialogProvider.h; path = Public/VLCDialogProvider.h; sourceTree = "<group>"; };
 		7D34F5641C90A98B008A39F0 /* VLCCustomDialogProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCCustomDialogProvider.m; sourceTree = "<group>"; };
 		7D34F5651C90A98B008A39F0 /* VLCDialogProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCDialogProvider.m; sourceTree = "<group>"; };
@@ -427,7 +436,10 @@
 				CCEC5B7A114D9BE800D34AAB /* libvlc_media.h */,
 				CCEC5B7B114D9BE800D34AAB /* libvlc_renderer_discoverer.h */,
 				CCEC5B7C114D9BE800D34AAB /* libvlc_vlm.h */,
+				7D1908E3274FE42200A8A947 /* libvlc_version.h */,
 				CCEC5B7D114D9BE800D34AAB /* libvlc.h */,
+				7D1908E5274FE43200A8A947 /* libvlc_dialog.h */,
+				7D1908E6274FE43200A8A947 /* libvlc_picture.h */,
 				CCEC5B7E114D9BE800D34AAB /* vlc.h */,
 			);
 			name = libvlc;
