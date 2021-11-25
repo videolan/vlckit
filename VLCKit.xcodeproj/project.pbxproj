@@ -329,7 +329,7 @@
 		7DB179BC285C6905006201DB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = ../Headers/vlc;
+			dstPath = Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
 				7DB179BD285C6916006201DB /* deprecated.h in CopyFiles */,
@@ -357,7 +357,7 @@
 		7DEBDAF7203C5701000A7D2F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = ../Headers/vlc;
+			dstPath = Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
 				7DEBDAF8203C5713000A7D2F /* deprecated.h in CopyFiles */,
@@ -376,7 +376,7 @@
 		7DEBDB04203C5722000A7D2F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = ../Headers/vlc;
+			dstPath = Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
 				7DEBDB05203C5727000A7D2F /* deprecated.h in CopyFiles */,
