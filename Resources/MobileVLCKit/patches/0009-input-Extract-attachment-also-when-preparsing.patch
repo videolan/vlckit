@@ -1,7 +1,7 @@
-From 45e0de56df2b63e68f453dd656aa8db1cda3adc2 Mon Sep 17 00:00:00 2001
+From 5b9ce2fff4f1011ad7984ab289b837cafd60afea Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/42] input: Extract attachment also when preparsing
+Subject: [PATCH 09/43] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -1017,10 +1017,10 @@ index 314e1066a8..487a7dbc79 100644
      std::vector<virtual_segment_c*>  used_vsegments;
      virtual_segment_c                *p_current_vsegment;
 diff --git a/modules/demux/mkv/matroska_segment_parse.cpp b/modules/demux/mkv/matroska_segment_parse.cpp
-index c2be5ad52a..3c9c1c8585 100644
+index 13421339d8..40ec3b5303 100644
 --- a/modules/demux/mkv/matroska_segment_parse.cpp
 +++ b/modules/demux/mkv/matroska_segment_parse.cpp
-@@ -1327,33 +1327,31 @@ void matroska_segment_c::ParseAttachments( KaxAttachments *attachments )
+@@ -1333,33 +1333,31 @@ void matroska_segment_c::ParseAttachments( KaxAttachments *attachments )
          char *psz_tmp_utf8 =  ToUTF8( UTFstring( GetChild<KaxFileName>( *attachedFile ) ) );
          std::string attached_filename(psz_tmp_utf8);
          free(psz_tmp_utf8);
@@ -1073,7 +1073,7 @@ index c2be5ad52a..3c9c1c8585 100644
      }
  }
 diff --git a/modules/demux/mkv/mkv.cpp b/modules/demux/mkv/mkv.cpp
-index 44e9fa805f..4f9035d535 100644
+index 91ec8742a1..0039f6b862 100644
 --- a/modules/demux/mkv/mkv.cpp
 +++ b/modules/demux/mkv/mkv.cpp
 @@ -313,14 +313,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )

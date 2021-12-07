@@ -1,7 +1,7 @@
-From 0fd779164c26a4ae303a651128ee12a2dc5b7c40 Mon Sep 17 00:00:00 2001
+From 70ec3d89e6120b7b47e56cc258aec0a2f7ba13ce Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 28 Jun 2021 13:11:15 +0200
-Subject: [PATCH 42/42] http/cookie: fix double-free
+Subject: [PATCH 42/43] http/cookie: fix double-free
 
 ---
  lib/media_player.c | 1 -
