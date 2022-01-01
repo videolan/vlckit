@@ -36,6 +36,8 @@
 #import <VLCKit/VLCTranscoder.h>
 #import <VLCKit/VLCVideoView.h>
 #import <VLCKit/VLCVideoLayer.h>
+#import <VLCKit/VLCRendererDiscoverer.h>
+#import <VLCKit/VLCRendererItem.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
