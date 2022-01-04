@@ -1,4 +1,4 @@
-From 70ec3d89e6120b7b47e56cc258aec0a2f7ba13ce Mon Sep 17 00:00:00 2001
+From 423bd572f27694bc6f739dc0e88480b74e02f026 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 28 Jun 2021 13:11:15 +0200
 Subject: [PATCH 42/43] http/cookie: fix double-free

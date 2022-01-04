@@ -1,4 +1,4 @@
-From 68facbd38e890bbef3cb3ec728aa51af06176020 Mon Sep 17 00:00:00 2001
+From c84553300c748498d2f9233865af51252388dde2 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 14 Aug 2020 13:22:10 +0200
 Subject: [PATCH 34/43] lib: media_player: add loudness event

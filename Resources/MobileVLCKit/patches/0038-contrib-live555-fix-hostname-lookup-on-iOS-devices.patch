@@ -1,4 +1,4 @@
-From af22a8dcbe1f37ca7faeba0e505e6231e69705e6 Mon Sep 17 00:00:00 2001
+From f29d5dc9da28d9a9d4a21f9defd54b6d713d7a78 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 21 Jun 2021 14:03:09 +0200
 Subject: [PATCH 38/43] contrib/live555: fix hostname lookup on iOS devices

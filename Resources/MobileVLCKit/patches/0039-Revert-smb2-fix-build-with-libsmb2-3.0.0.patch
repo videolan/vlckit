@@ -1,4 +1,4 @@
-From af01654d7a1d6ee31f6543141957fc3ae6867ecd Mon Sep 17 00:00:00 2001
+From bf413676d8dedc21b571fa225fe17d6155758867 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 18 May 2021 13:18:37 +0200
 Subject: [PATCH 39/43] Revert "smb2: fix build with libsmb2 3.0.0"

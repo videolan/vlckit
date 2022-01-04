@@ -1,4 +1,4 @@
-From 5b9ce2fff4f1011ad7984ab289b837cafd60afea Mon Sep 17 00:00:00 2001
+From a7b403b33d5ae5cb3d69082fec3d4bb8fc00bd2a Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
 Subject: [PATCH 09/43] input: Extract attachment also when preparsing
@@ -1134,7 +1134,7 @@ index fa9a1e81a5..1270f6a9b5 100644
  struct matroska_stream_c
  {
 diff --git a/modules/demux/mp4/mp4.c b/modules/demux/mp4/mp4.c
-index bc7d741f64..aff13626f8 100644
+index 4d8bcd316e..3db5a3cc58 100644
 --- a/modules/demux/mp4/mp4.c
 +++ b/modules/demux/mp4/mp4.c
 @@ -121,6 +121,8 @@ struct demux_sys_t
@@ -1377,7 +1377,7 @@ index bc7d741f64..aff13626f8 100644
  }
  
 diff --git a/modules/demux/mpeg/ts.c b/modules/demux/mpeg/ts.c
-index 67abfdf44f..5dd989aa27 100644
+index fc7a203ab0..1f12c90765 100644
 --- a/modules/demux/mpeg/ts.c
 +++ b/modules/demux/mpeg/ts.c
 @@ -552,7 +552,7 @@ static int Open( vlc_object_t *p_this )
