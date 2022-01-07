@@ -72,6 +72,11 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     return self;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ - name: %@", NSStringFromClass([self class]), self.name];
+}
+
 @end
 
 #pragma mark - VLCRendererDiscoverer
@@ -102,6 +107,11 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
         }
     }
     return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ - name: %@ number of renderers: %lu", NSStringFromClass([self class]), self.name, _rendererItems.count];
 }
 
 - (BOOL)start
