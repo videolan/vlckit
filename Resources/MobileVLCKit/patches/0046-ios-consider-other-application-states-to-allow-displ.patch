@@ -1,0 +1,29 @@
+From 56cf94c9169c1d13b809c110143df1ba28968798 Mon Sep 17 00:00:00 2001
+From: Maxime Chapelet <umxprime@videolabs.io>
+Date: Fri, 7 Jan 2022 11:39:48 +0100
+Subject: [PATCH 46/46] ios : consider other application states to allow
+ display initialization
+
+the display can be created when the application state is active or inactive
+inactive state actually happens when the application comes back from background and becomes active just after a very short amount of time
+hence we should allow vout initialization only when application state is not background
+---
+ modules/video_output/ios.m | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/video_output/ios.m b/modules/video_output/ios.m
+index 26f84667ea..fe0435a57f 100644
+--- a/modules/video_output/ios.m
++++ b/modules/video_output/ios.m
+@@ -390,7 +390,7 @@ + (void)getNewView:(NSArray *)value
+ 
+ - (id)initWithFrame:(CGRect)frame andVD:(vout_display_t*)vd
+ {
+-    _appActive = ([UIApplication sharedApplication].applicationState == UIApplicationStateActive);
++    _appActive = ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground);
+     if (unlikely(!_appActive))
+         return nil;
+ 
+-- 
+2.32.0 (Apple Git-132)
+

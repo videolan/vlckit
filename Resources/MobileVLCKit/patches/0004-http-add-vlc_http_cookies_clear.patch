@@ -1,7 +1,7 @@
-From 14acee8baa04c36338e82cd5bb2b1d429c3521c9 Mon Sep 17 00:00:00 2001
+From 63efde43088078b8c6c253d7dd96ca361f6e2fbf Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
-Subject: [PATCH 04/43] http: add vlc_http_cookies_clear
+Subject: [PATCH 04/46] http: add vlc_http_cookies_clear
 
 Clear all cookies without deleting the jar.
 ---
@@ -61,5 +61,5 @@ index 77ab852b15..f229b85dea 100644
  }
  
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

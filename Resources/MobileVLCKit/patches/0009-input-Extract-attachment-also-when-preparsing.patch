@@ -1,7 +1,7 @@
-From a7b403b33d5ae5cb3d69082fec3d4bb8fc00bd2a Mon Sep 17 00:00:00 2001
+From ed1a4d8b80a70c19f6d620a8771f77e34f4914c6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/43] input: Extract attachment also when preparsing
+Subject: [PATCH 09/46] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -1835,5 +1835,5 @@ index db7f4030b9..8454600451 100644
 +vlc_input_attachment_Hold
 +vlc_input_attachment_Release
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

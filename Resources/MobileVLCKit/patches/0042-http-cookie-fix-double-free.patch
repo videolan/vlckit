@@ -1,7 +1,7 @@
-From 423bd572f27694bc6f739dc0e88480b74e02f026 Mon Sep 17 00:00:00 2001
+From 3f8e4054213505449755cd6c2cc7d69071aca3d8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 28 Jun 2021 13:11:15 +0200
-Subject: [PATCH 42/43] http/cookie: fix double-free
+Subject: [PATCH 42/46] http/cookie: fix double-free
 
 ---
  lib/media_player.c | 1 -
@@ -20,5 +20,5 @@ index b80cf4645b..31f340447e 100644
  
      libvlc_instance_t *instance = p_mi->p_libvlc_instance;
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

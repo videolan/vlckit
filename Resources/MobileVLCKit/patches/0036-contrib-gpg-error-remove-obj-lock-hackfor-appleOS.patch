@@ -1,7 +1,7 @@
-From 41e7110c0dff09feeca19764315ae44b564dddf6 Mon Sep 17 00:00:00 2001
+From 570a927591d959bad321497d359ed0b78162e5d8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 15 Feb 2021 13:57:17 +0100
-Subject: [PATCH 36/43] contrib/gpg-error: remove obj lock hackfor appleOS
+Subject: [PATCH 36/46] contrib/gpg-error: remove obj lock hackfor appleOS
 
 ---
  contrib/src/gpg-error/rules.mak | 6 ------
@@ -25,5 +25,5 @@ index 6a3e874fb7..21de17c422 100644
  endif
  
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

@@ -1,7 +1,7 @@
-From 56fd7890c2d45bb842e67a76afe2a650a1b41980 Mon Sep 17 00:00:00 2001
+From 64c147f9fcc2b55d85dcfa5564249f723fd47288 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 18 Aug 2020 14:53:43 +0200
-Subject: [PATCH 35/43] ebur128: add measurement date
+Subject: [PATCH 35/46] ebur128: add measurement date
 
 ---
  include/vlc/libvlc_events.h       |  7 +++++++
@@ -128,5 +128,5 @@ index b6e3964f1b..621c28fef0 100644
      if (sys->state == NULL)
      {
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

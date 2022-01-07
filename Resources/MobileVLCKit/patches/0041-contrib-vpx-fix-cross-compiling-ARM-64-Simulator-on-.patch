@@ -1,7 +1,7 @@
-From a43353ced1db8078b090870b4a515996a46a91eb Mon Sep 17 00:00:00 2001
+From 008c83fa0bf4a11b93527f45bafeb4a29b19ae1b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 10 Mar 2021 10:23:13 +0100
-Subject: [PATCH 41/43] contrib/vpx: fix cross-compiling ARM-64 Simulator on
+Subject: [PATCH 41/46] contrib/vpx: fix cross-compiling ARM-64 Simulator on
  x86_64
 
 ---
@@ -26,5 +26,5 @@ index 52d80a0b24..8366d98e69 100644
  ifdef HAVE_MACOSX
  VPX_LDFLAGS := -L$(MACOSX_SDK)/usr/lib -isysroot $(MACOSX_SDK) -mmacosx-version-min=10.7
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

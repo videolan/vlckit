@@ -1,7 +1,7 @@
-From 5f461fea1fb21c4eecec0c331087b648a3594e28 Mon Sep 17 00:00:00 2001
+From eae097180bff49224a18bf7bbbe04d5cf8bd88dd Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 12 Aug 2020 17:58:43 +0200
-Subject: [PATCH 33/43] audio_filter: add ebur128 "audio meter" plugin
+Subject: [PATCH 33/46] audio_filter: add ebur128 "audio meter" plugin
 
 ---
  configure.ac                      |   5 +
@@ -367,5 +367,5 @@ index 0000000000..b6e3964f1b
 +    set_callbacks(Open, Close)
 +vlc_module_end()
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 
