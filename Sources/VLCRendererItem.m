@@ -47,20 +47,20 @@
     self = [super init];
     if (self) {
         if (!item) {
-            NSAssert(!item, @"Renderer item is NULL");
+            NSAssert(item, @"Renderer item is NULL");
             return nil;
         }
 
         _item = libvlc_renderer_item_hold(item);
 
         _name = [NSString stringWithUTF8String:libvlc_renderer_item_name(_item)];
-        NSAssert(!_name, @"VLCRendererItem: name is NULL");
+        NSAssert(_name, @"VLCRendererItem: name is NULL");
 
         _type = [NSString stringWithUTF8String:libvlc_renderer_item_type(_item)];
-        NSAssert(!_type, @"VLCRendererItem: type is NULL");
+        NSAssert(_type, @"VLCRendererItem: type is NULL");
 
         _iconURI = [NSString stringWithUTF8String:libvlc_renderer_item_icon_uri(_item)];
-        NSAssert(!_iconURI, @"VLCRendererItem: iconURI is NULL");
+        NSAssert(_iconURI, @"VLCRendererItem: iconURI is NULL");
 
         _flags = libvlc_renderer_item_flags(_item);
     }

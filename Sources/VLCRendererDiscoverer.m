@@ -63,10 +63,10 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 {
     self = [super init];
     if (self) {
-        NSAssert(!name, @"VLCRendererDiscovererDescription: name is NULL");
+        NSAssert(name, @"VLCRendererDiscovererDescription: name is NULL");
         _name = name;
 
-        NSAssert(!longName, @"VLCRendererDiscovererDescription: longName is NULL");
+        NSAssert(longName, @"VLCRendererDiscovererDescription: longName is NULL");
         _longName = longName;
     }
     return self;
@@ -87,7 +87,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 {
     self = [super init];
     if (self) {
-        NSAssert(!name, @"VLCRendererDiscoverer: name is NULL");
+        NSAssert(name, @"VLCRendererDiscoverer: name is NULL");
         _name = name;
         _rendererDiscoverer = libvlc_renderer_discoverer_new([VLCLibrary sharedLibrary].instance, [name UTF8String]);
 
