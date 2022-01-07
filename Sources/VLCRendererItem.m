@@ -67,6 +67,11 @@
     return self;
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ - name: %@ type: %@ flags: %i", NSStringFromClass([self class]), self.name, self.type, self.flags];
+}
+
 - (void *)libVLCRendererItem
 {
     return _item;
