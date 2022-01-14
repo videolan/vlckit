@@ -1,7 +1,7 @@
-From e19ab4b3ba661172dbb905e3f89a51997bfc2f43 Mon Sep 17 00:00:00 2001
+From 9526b87b12dc3c01fdb0e9f9f6b335069e4ffda8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 21/46] http access: retain auth struct for the runtime of the
+Subject: [PATCH 21/44] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
@@ -103,5 +103,5 @@ index 5c3d165cf8..7270330f9b 100644
          p_auth->i_nonce = 0;
  
 -- 
-2.32.0 (Apple Git-132)
+2.30.1 (Apple Git-130)
 

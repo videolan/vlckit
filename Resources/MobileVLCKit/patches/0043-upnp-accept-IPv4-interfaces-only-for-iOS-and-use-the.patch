@@ -1,7 +1,7 @@
-From c839e7bb05058918d708c0aaf66e354aaee7383f Mon Sep 17 00:00:00 2001
+From 41ffe9fbf5a63d84cdfccb9bb47742d33ac6c9d4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 19 Nov 2021 13:23:20 +0100
-Subject: [PATCH 43/46] upnp: accept IPv4 interfaces only for iOS and use the
+Subject: [PATCH 43/44] upnp: accept IPv4 interfaces only for iOS and use the
  last discovered
 
 ---
@@ -32,5 +32,5 @@ index b862e256bd..baf4fed043 100644
  
          anInterface = anInterface->ifa_next;
 -- 
-2.32.0 (Apple Git-132)
+2.30.1 (Apple Git-130)
 

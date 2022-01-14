@@ -1,7 +1,7 @@
-From ed1a4d8b80a70c19f6d620a8771f77e34f4914c6 Mon Sep 17 00:00:00 2001
+From 2c53a514377312c2fa033f3610ea0a2ee69fb5b7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/46] input: Extract attachment also when preparsing
+Subject: [PATCH 09/44] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -1399,7 +1399,7 @@ index fc7a203ab0..1f12c90765 100644
                  if( (*ppp_attach)[*pi_int] )
                      (*pi_int)++;
 diff --git a/modules/demux/ogg.c b/modules/demux/ogg.c
-index 59c54840f0..a9030b8d66 100644
+index d0d8d14c1b..4cec93dc9d 100644
 --- a/modules/demux/ogg.c
 +++ b/modules/demux/ogg.c
 @@ -835,7 +835,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
@@ -1835,5 +1835,5 @@ index db7f4030b9..8454600451 100644
 +vlc_input_attachment_Hold
 +vlc_input_attachment_Release
 -- 
-2.32.0 (Apple Git-132)
+2.30.1 (Apple Git-130)
 
