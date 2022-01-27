@@ -37,6 +37,8 @@
 #import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCRendererDiscoverer.h>
 #import <VLCKit/VLCRendererItem.h>
+#import <VLCKit/VLCFilter.h>
+#import <VLCKit/VLCAdjustFilter.h>
 #import <VLCKit/VLCMediaMetaData.h>
 #import <VLCKit/VLCLogging.h>
 #import <VLCKit/VLCFileLogger.h>
@@ -52,3 +54,6 @@
 @class VLCFileLogger;
 @class VLCConsoleLogger;
 @class VLCLogMessageFormatter;
+@class VLCFilterParameterValue;
+@class VLCFilterParameter;
+@class VLCAdjustFilter;

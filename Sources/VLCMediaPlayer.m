@@ -2,7 +2,7 @@
  * VLCMediaPlayer.m: VLCKit.framework VLCMediaPlayer implementation
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2020 VLC authors and VideoLAN
+ * Copyright (C) 2007-2022 VLC authors and VideoLAN
  * Partial Copyright (C) 2009-2020 Felix Paul Kühne
  * $Id$
  *
@@ -10,6 +10,8 @@
  *          Faustion Osuna <enrique.osuna # gmail.com>
  *          Felix Paul Kühne <fkuehne # videolan.org>
  *          Soomin Lee <TheHungryBu # gmail.com>
+ *          Maxime Chapelet <umxprime # videolabs.io>
+ *
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -30,6 +32,8 @@
 #import <VLCLibVLCBridging.h>
 #import <VLCMediaPlayer.h>
 #import <VLCTime.h>
+#import <VLCMediaPLayer+Internal.h>
+#import <VLCAdjustFilter.h>
 #if !TARGET_OS_IPHONE
 # import <VLCVideoView.h>
 #endif // !TARGET_OS_IPHONE
@@ -317,9 +321,17 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return [self initWithDrawable:nil options:nil];
 }
 
-- (instancetype)initWithLibrary:(VLCLibrary *)library
+- (instancetype)initCommon
 {
     if (self = [super init]) {
+        _adjustFilter = [VLCAdjustFilter createWithVLCMediaPlayer:self];
+    }
+    return self;
+}
+
+- (instancetype)initWithLibrary:(VLCLibrary *)library
+{
+    if (self = [self initCommon]) {
         _lastTimePoint.ts_us = -1;
         _timeChangeUpdateInterval = 1.0;
         _cachedState = VLCMediaPlayerStateStopped;
@@ -341,7 +353,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (instancetype)initWithLibVLCInstance:(void *)playerInstance andLibrary:(VLCLibrary *)library
 {
-    if (self = [super init]) {
+    if (self = [self initCommon]) {
         _lastTimePoint.ts_us = -1;
         _timeChangeUpdateInterval = 1.0;
         _cachedState = VLCMediaPlayerStateStopped;
@@ -556,76 +568,63 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     libvlc_video_set_deinterlace(_playerInstance, (int)deinterlace, [name UTF8String]);
 }
 
-- (BOOL)adjustFilterEnabled
+#pragma mark - Adjust Video Filter
+
+- (BOOL)isAdjustFilterEnabled
 {
-    return libvlc_video_get_adjust_int(_playerInstance, libvlc_adjust_Enable);
+    return _adjustFilter.isEnabled;
 }
 - (void)setAdjustFilterEnabled:(BOOL)b_value
 {
-    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, b_value);
+    _adjustFilter.enabled = b_value;
 }
+
 - (float)contrast
 {
-    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Contrast);
+    return [_adjustFilter.contrast.value floatValue];
 }
 - (void)setContrast:(float)f_value
 {
-    if (f_value <= 2. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(_playerInstance,libvlc_adjust_Contrast, f_value);
-    }
+    _adjustFilter.contrast.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
 }
+
 - (float)brightness
 {
-    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Brightness);
+    return [_adjustFilter.brightness.value floatValue];
 }
 - (void)setBrightness:(float)f_value
 {
-    if (f_value <= 2. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Brightness, f_value);
-    }
+    _adjustFilter.brightness.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
 }
 
 - (float)hue
 {
-    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Hue);
+    return [_adjustFilter.hue.value floatValue];
 }
 - (void)setHue:(float)f_value
 {
-    if (f_value <= 180. && f_value >= -180.) {
-        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Hue, f_value);
-    }
+    _adjustFilter.hue.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
 }
 
 - (float)saturation
 {
-    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Saturation);
+    return [_adjustFilter.saturation.value floatValue];
 }
 - (void)setSaturation:(float)f_value
 {
-    if (f_value <= 3. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Saturation, f_value);
-    }
+    _adjustFilter.saturation.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
 }
+
 - (float)gamma
 {
-    libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-    return libvlc_video_get_adjust_float(_playerInstance, libvlc_adjust_Gamma);
+    return [_adjustFilter.gamma.value floatValue];
 }
 - (void)setGamma:(float)f_value
 {
-    if (f_value <= 10. && f_value >= 0.) {
-        libvlc_video_set_adjust_int(_playerInstance, libvlc_adjust_Enable, 1);
-        libvlc_video_set_adjust_float(_playerInstance, libvlc_adjust_Gamma, f_value);
-    }
+    _adjustFilter.gamma.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
 }
+
+#pragma mark -
 
 - (void)setRate:(float)value
 {
@@ -1303,7 +1302,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 @implementation VLCMediaPlayer (Private)
 - (instancetype)initWithDrawable:(id)aDrawable options:(NSArray *)options
 {
-    if (self = [super init]) {
+    if (self = [self initCommon]) {
         _lastTimePoint.ts_us = -1;
         _timeChangeUpdateInterval = 1.0;
         _cachedState = VLCMediaPlayerStateStopped;
@@ -1565,6 +1564,10 @@ static const struct event_handler_entry
     }
     libvlc_media_tracklist_delete(tracklist);
     return tracks;
+}
+
+- (void *)playerInstance {
+    return _playerInstance;
 }
 
 @end
