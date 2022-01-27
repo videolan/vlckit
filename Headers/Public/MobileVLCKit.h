@@ -34,6 +34,8 @@
 #import <MobileVLCKit/VLCTranscoder.h>
 #import <MobileVLCKit/VLCRendererDiscoverer.h>
 #import <MobileVLCKit/VLCRendererItem.h>
+#import <MobileVLCKit/VLCFilter.h>
+#import <MobileVLCKit/VLCAdjustFilter.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
@@ -48,3 +50,6 @@
 @class VLCRendererDiscoverer;
 @class VLCRendererDiscovererDescription;
 @class VLCRendererItem;
+@class VLCFilterParameterValue;
+@class VLCFilterParameter;
+@class VLCAdjustFilter;

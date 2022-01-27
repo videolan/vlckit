@@ -2,13 +2,14 @@
  * VLCMediaPlayer.h: VLCKit.framework VLCMediaPlayer header
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2015 VLC authors and VideoLAN
+ * Copyright (C) 2007-2022 VLC authors and VideoLAN
  * Copyright (C) 2009-2015 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org>
  *          Soomin Lee <TheHungryBu # gmail.com>
+ *          Maxime Chapelet <umxprime # videolabs.io>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -42,6 +43,7 @@
 @class VLCLibrary;
 @class VLCMediaPlayer;
 @class VLCRendererItem;
+@class VLCAdjustFilter;
 
 /* Notification Messages */
 extern NSString *const VLCMediaPlayerTimeChanged;
@@ -311,41 +313,46 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (void)setDeinterlace:(VLCDeinterlace)deinterlace withFilter:(NSString *)name;
 
 /**
+ * Access to adjust filter's parameters and properties
+ */
+@property (nonatomic, readonly) VLCAdjustFilter * _Nonnull adjustFilter;
+
+/**
  * Enable or disable adjust video filter (contrast, brightness, hue, saturation, gamma)
  *
  * \return bool value
  */
-@property (nonatomic) BOOL adjustFilterEnabled;
+@property (nonatomic) BOOL adjustFilterEnabled __deprecated_msg("Use -[VLCMediaPlayer adjustFilter].enabled instead");
 /**
  * Set/Get the adjust filter's contrast value
  *
  * \return float value (range: 0-2, default: 1.0)
  */
-@property (nonatomic) float contrast;
+@property (nonatomic) float contrast __deprecated_msg("Use -[VLCMediaPlayer adjustFilter].contrast instead");
 /**
  * Set/Get the adjust filter's brightness value
  *
  * \return float value (range: 0-2, default: 1.0)
  */
-@property (nonatomic) float brightness;
+@property (nonatomic) float brightness __deprecated_msg("Use -[VLCMediaPlayer adjustFilter].brightness instead");
 /**
  * Set/Get the adjust filter's hue value
  *
  * \return float value (range: -180-180, default: 0.)
  */
-@property (nonatomic) float hue;
+@property (nonatomic) float hue __deprecated_msg("Use -[VLCMediaPlayer adjustFilter].hue instead");
 /**
  * Set/Get the adjust filter's saturation value
  *
  * \return float value (range: 0-3, default: 1.0)
  */
-@property (nonatomic) float saturation;
+@property (nonatomic) float saturation __deprecated_msg("Use -[VLCMediaPlayer adjustFilter].saturation instead");
 /**
  * Set/Get the adjust filter's gamma value
  *
  * \return float value (range: 0-10, default: 1.0)
  */
-@property (nonatomic) float gamma;
+@property (nonatomic) float gamma __deprecated_msg("Use -[VLCMediaPlayer adjustFilter].gamma instead");
 
 /**
  * Get the requested movie play rate.
