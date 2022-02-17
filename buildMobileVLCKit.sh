@@ -482,6 +482,10 @@ buildLibVLC() {
     # The following symbols do not exist on the minimal iOS version (7.0), so they are disabled
     # here. This allows compilation also with newer iOS SDKs
 
+    # Added symbols in macOS 10.10 / iOS 8
+    export ac_cv_func_linkat=no
+    export ac_cv_func_unlinkat=no
+
     # Added symbols in macOS 10.12 / iOS 10 / watchOS 3
     export ac_cv_func_basename_r=no
     export ac_cv_func_clock_getres=no
