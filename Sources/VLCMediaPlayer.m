@@ -488,9 +488,12 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 #pragma mark -
 #pragma mark Subtitles
 
-- (void)setCurrentVideoSubTitleIndex:(int)index
-{
-    libvlc_video_set_spu(_playerInstance, index);
+- (void)setCurrentVideoSubTitleIndex:(int)index {
+    if (index == -1) {
+        libvlc_media_player_unselect_track_type(_playerInstance, libvlc_track_text);
+    } else {
+        libvlc_video_set_spu(_playerInstance, index);
+    }
 }
 
 - (int)currentVideoSubTitleIndex
