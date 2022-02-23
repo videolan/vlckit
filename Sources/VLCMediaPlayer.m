@@ -585,7 +585,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 - (void)setContrast:(float)f_value
 {
-    _adjustFilter.contrast.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
+    _adjustFilter.contrast.value = @(f_value);
 }
 
 - (float)brightness
@@ -594,7 +594,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 - (void)setBrightness:(float)f_value
 {
-    _adjustFilter.brightness.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
+    _adjustFilter.brightness.value = @(f_value);
 }
 
 - (float)hue
@@ -603,7 +603,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 - (void)setHue:(float)f_value
 {
-    _adjustFilter.hue.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
+    _adjustFilter.hue.value = @(f_value);
 }
 
 - (float)saturation
@@ -612,7 +612,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 - (void)setSaturation:(float)f_value
 {
-    _adjustFilter.saturation.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
+    _adjustFilter.saturation.value = @(f_value);
 }
 
 - (float)gamma
@@ -621,7 +621,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 }
 - (void)setGamma:(float)f_value
 {
-    _adjustFilter.gamma.value = [[VLCFilterParameterValue alloc] initWithValue:@(f_value)];
+    _adjustFilter.gamma.value = @(f_value);
 }
 
 #pragma mark -

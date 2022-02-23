@@ -24,6 +24,7 @@
 #import <Foundation/Foundation.h>
 #include <vlc/vlc.h>
 #import <VLCAdjustFilter.h>
+#import <VLCFilter+Internal.h>
 #import <VLCMediaPlayer+Internal.h>
 
 NSString * const kVLCAdjustFilterContrastParameterKey = @"Contrast";
@@ -111,7 +112,7 @@ NSString * const kVLCAdjustFilterGammaParameterKey = @"Gamma";
     NSMutableDictionary *extendedProperties = properties.mutableCopy;
     __weak VLCAdjustFilter *weakSelf = self;
     enum libvlc_video_adjust_option_t option = [properties[kVLCFilterParameterPropertyLibVLCFilterOptionKey] intValue];
-    extendedProperties[kVLCFilterParameterPropertyValueChangeActionKey] = ^(id<VLCFilterParameterValue> newValue){
+    extendedProperties[kVLCFilterParameterPropertyValueChangeActionKey] = ^(id newValue){
         weakSelf.enabled = YES;
         libvlc_video_set_adjust_float(weakSelf.mediaPlayer.playerInstance, option, [newValue floatValue]);
     };
