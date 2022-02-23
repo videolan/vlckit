@@ -24,10 +24,10 @@
 #ifndef VLCMediaPlayer_Internal_h
 #define VLCMediaPlayer_Internal_h
 
-#import <VLCMediaPLayer.h>
+#import <VLCMediaPlayer.h>
 
 @interface VLCMediaPlayer (Internal)
-- (void *)playerInstance;
+@property (readonly) libvlc_media_player_t *playerInstance;
 @end
 
 #endif /* VLCMediaPlayer_Internal_h */

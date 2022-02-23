@@ -247,7 +247,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 @interface VLCMediaPlayer ()
 {
     VLCLibrary *_privateLibrary;                ///< Internal
-    void * _playerInstance;                     ///< Internal
+    libvlc_media_player_t * _playerInstance;    ///< Internal
     VLCMedia * _media;                          ///< Current media being played
     VLCTime * _cachedTime;                      ///< Cached time of the media being played
     VLCTime * _cachedRemainingTime;             ///< Cached remaining time of the media being played
@@ -1678,7 +1678,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 #endif
 
-- (void *)playerInstance {
+- (libvlc_media_player_t *)playerInstance {
     return _playerInstance;
 }
 
