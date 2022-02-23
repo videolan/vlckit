@@ -26,6 +26,7 @@
 		6C6ABBCC27C63522008FDB2D /* VLCAdjustFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6ABBCA27C63521008FDB2D /* VLCAdjustFilter.m */; };
 		6C6ABBCD27C63522008FDB2D /* VLCFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C6ABBCB27C63522008FDB2D /* VLCFilter.m */; };
 		6C6ABBCF27C6355B008FDB2D /* VLCMediaPlayer+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C6ABBCE27C6355B008FDB2D /* VLCMediaPlayer+Internal.h */; };
+		6C6ABBD427C6645A008FDB2D /* VLCFilter+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C6ABBD327C6645A008FDB2D /* VLCFilter+Internal.h */; };
 		7D1908E9274FE44C00A8A947 /* libvlc_picture.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7D1908E6274FE43200A8A947 /* libvlc_picture.h */; };
 		7D1908EA274FE45100A8A947 /* libvlc_version.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7D1908E3274FE42200A8A947 /* libvlc_version.h */; };
 		7D1908EB274FE45800A8A947 /* libvlc_dialog.h in Copy Files */ = {isa = PBXBuildFile; fileRef = 7D1908E5274FE43200A8A947 /* libvlc_dialog.h */; };
@@ -176,6 +177,7 @@
 		6C6ABBCA27C63521008FDB2D /* VLCAdjustFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCAdjustFilter.m; sourceTree = "<group>"; };
 		6C6ABBCB27C63522008FDB2D /* VLCFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCFilter.m; sourceTree = "<group>"; };
 		6C6ABBCE27C6355B008FDB2D /* VLCMediaPlayer+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VLCMediaPlayer+Internal.h"; path = "Internal/VLCMediaPlayer+Internal.h"; sourceTree = "<group>"; };
+		6C6ABBD327C6645A008FDB2D /* VLCFilter+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "VLCFilter+Internal.h"; path = "Internal/VLCFilter+Internal.h"; sourceTree = "<group>"; };
 		7D1908E3274FE42200A8A947 /* libvlc_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libvlc_version.h; sourceTree = "<group>"; };
 		7D1908E5274FE43200A8A947 /* libvlc_dialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_dialog.h; path = libvlc/vlc/include/vlc/libvlc_dialog.h; sourceTree = SOURCE_ROOT; };
 		7D1908E6274FE43200A8A947 /* libvlc_picture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_picture.h; path = libvlc/vlc/include/vlc/libvlc_picture.h; sourceTree = SOURCE_ROOT; };
@@ -386,6 +388,7 @@
 		637CFB960D2D281900A041B6 /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				6C6ABBD327C6645A008FDB2D /* VLCFilter+Internal.h */,
 				6C6ABBCE27C6355B008FDB2D /* VLCMediaPlayer+Internal.h */,
 				7DC28D84201942A9002D05C4 /* vlc-plugins-MacOSX.h */,
 				EFD551DC0CC6DD720074CEE1 /* VLCLibVLCBridging.h */,
@@ -517,6 +520,7 @@
 				7DC28D4F20194117002D05C4 /* VLCKit.h in Headers */,
 				41657C322059D63D00AB915B /* VLCHelperCode.h in Headers */,
 				7DC28D5020194117002D05C4 /* VLCMedia.h in Headers */,
+				6C6ABBD427C6645A008FDB2D /* VLCFilter+Internal.h in Headers */,
 				7DC28D5220194117002D05C4 /* VLCMediaLibrary.h in Headers */,
 				7DC28D5320194117002D05C4 /* VLCMediaList.h in Headers */,
 				7DC28D5420194117002D05C4 /* VLCTime.h in Headers */,

@@ -23,6 +23,7 @@
 
 #import <Foundation/Foundation.h>
 #import <VLCFilter.h>
+#import <VLCFilter+Internal.h>
 #import <VLCMediaPLayer+Internal.h>
 
 /// Internal libvlc filter option index
@@ -39,37 +40,6 @@ NSString * const kVLCFilterParameterPropertyMinValueKey = @"MinValue";
 NSString * const kVLCFilterParameterPropertyMaxValueKey = @"MaxValue";
 /// Parameter's change action block
 NSString * const kVLCFilterParameterPropertyValueChangeActionKey = @"ValueChangeAction";
-
-@implementation VLCFilterParameterValue {
-    id _value;
-}
-- (instancetype)initWithValue:(id)value {
-    if(self = [super init]) {
-        _value = value;
-    }
-    return self;
-}
-- (float)floatValue {
-    if (![_value respondsToSelector:@selector(floatValue)]) {
-        return .0f;
-    }
-    return [_value floatValue];
-}
-
-- (int)intValue {
-    if (![_value respondsToSelector:@selector(intValue)]) {
-        return 0;
-    }
-    return [_value intValue];
-}
-
-- (NSString *)stringValue {
-    if (![_value respondsToSelector:@selector(stringValue)]) {
-        return @"";
-    }
-    return [_value stringValue];
-}
-@end
 
 @implementation VLCFilterParameter {
     NSMutableDictionary<NSString *,id> *_properties;
@@ -89,44 +59,45 @@ NSString * const kVLCFilterParameterPropertyValueChangeActionKey = @"ValueChange
     return self;
 }
 
-- (id<VLCFilterParameterValue>)value
+- (id)value
 {
-    return [[VLCFilterParameterValue alloc]
-            initWithValue:_properties[kVLCFilterParameterPropertyValueKey]];
+    return _properties[kVLCFilterParameterPropertyValueKey];
 }
 
-- (void)setValue:(id<VLCFilterParameterValue>)value
+- (void)setValue:(id)value
 {
-    float floatValue = [value floatValue];
+    if (![value respondsToSelector:@selector(floatValue)]) {
+        @throw([NSException exceptionWithName:@"UnexpectedParameter"
+                                       reason:@"Can't call [value floatValue] from [VLCFilterParameter setValue:]"
+                                     userInfo:nil]);
+    }
+    float newValue = [value floatValue];
     float currentValue = [_properties[kVLCFilterParameterPropertyValueKey] floatValue];
-    if (floatValue == currentValue)
+    if (newValue == currentValue)
         return;
     float maxValue = [_properties[kVLCFilterParameterPropertyMaxValueKey] floatValue];
     float minValue = [_properties[kVLCFilterParameterPropertyMinValueKey] floatValue];
-    currentValue = MAX(MIN(floatValue, maxValue), minValue);
-    _properties[kVLCFilterParameterPropertyValueKey] = @(currentValue);
-    void(^valueChangeAction)(id<VLCFilterParameterValue>) = _properties[kVLCFilterParameterPropertyValueChangeActionKey];
+    newValue = MAX(MIN(newValue, maxValue), minValue);
+    _properties[kVLCFilterParameterPropertyValueKey] = @(newValue);
+    VLCFilterParameterValueChangeAction valueChangeAction = _properties[kVLCFilterParameterPropertyValueChangeActionKey];
     if (valueChangeAction) {
         valueChangeAction(self.value);
     }
 }
 
-- (id<VLCFilterParameterValue>)defaultValue
+- (id)defaultValue
 {
-    return [[VLCFilterParameterValue alloc]
-            initWithValue:_properties[kVLCFilterParameterPropertyDefaultValueKey]];
+    return _properties[kVLCFilterParameterPropertyDefaultValueKey];
 }
 
-- (id<VLCFilterParameterValue>)minValue
+- (id)minValue
 {
-    return [[VLCFilterParameterValue alloc]
-            initWithValue:_properties[kVLCFilterParameterPropertyMinValueKey]];
+    return _properties[kVLCFilterParameterPropertyMinValueKey];
 }
 
-- (id<VLCFilterParameterValue>)maxValue
+- (id)maxValue
 {
-    return [[VLCFilterParameterValue alloc]
-            initWithValue:_properties[kVLCFilterParameterPropertyMaxValueKey]];
+    return _properties[kVLCFilterParameterPropertyMaxValueKey];
 }
 
 - (BOOL)isValueSetToDefault {

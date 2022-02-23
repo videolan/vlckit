@@ -50,6 +50,5 @@
 @class VLCRendererDiscoverer;
 @class VLCRendererDiscovererDescription;
 @class VLCRendererItem;
-@class VLCFilterParameterValue;
 @class VLCFilterParameter;
 @class VLCAdjustFilter;

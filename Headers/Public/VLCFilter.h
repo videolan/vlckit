@@ -28,70 +28,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class VLCMediaPlayer;
 
-/**
- * The filter value type protocol where any value should be convertible to float, int or string
- */
-NS_SWIFT_NAME(VLCFilterParameterValueProtocol)
-@protocol VLCFilterParameterValue <NSObject>
-
-@property (readonly) float floatValue;
-@property (readonly) int intValue;
-@property (readonly, copy) NSString *stringValue;
-
-@end
-
-/**
- * A convenience filter parameter value type
- */
-@interface VLCFilterParameterValue : NSObject <VLCFilterParameterValue>
-
-+ (instancetype)new NS_UNAVAILABLE;
-- (instancetype)init NS_UNAVAILABLE;
-
-/**
- * Default initializer
- * \param value Any value that should respond to floatValue, intValue and stringValue selectors.
- * NSString* or NSNumber* are perfect candidates here.
- * If the parameter can't respond to any selector, any value returned for the VLCFilterParameterValue protocol
- * conformance will be zero or an empty string.
- */
-- (instancetype)initWithValue:(id)value NS_DESIGNATED_INITIALIZER;
-
-@end
-
 @protocol VLCFilter;
 
 /**
- * An object get/set a filter parameter's value, get its default value and allowed values range
+ * The protocol used to get/set a filter parameter's value, get its default value and allowed values range
  */
 NS_SWIFT_NAME(VLCFilterParameterProtocol)
 @protocol VLCFilterParameter <NSObject>
-
-/**
- * Get or change the current parameter value
- * A value change is automatically constrained by the minValue and maxValue range
- */
-@property (nonatomic) id<VLCFilterParameterValue> value;
-
-/**
- * The parameter's initial/reset value
- */
-@property (nonatomic, readonly) id<VLCFilterParameterValue> defaultValue;
-
-/**
- * The lowest value allowed for the parameter
- * A value change is automatically contrained by this property
- */
-@property (nonatomic, readonly) id<VLCFilterParameterValue> minValue;
-
-/**
- * The highest value allowed for the parameter
- * A value change is automatically contrained by this property
- */
-@property (nonatomic, readonly) id<VLCFilterParameterValue> maxValue;
-
+@property (nonatomic) id value;
+@property (nonatomic, readonly) id defaultValue;
+@property (nonatomic, readonly) id minValue;
+@property (nonatomic, readonly) id maxValue;
 - (BOOL)isValueSetToDefault;
-
 @end
 
 @protocol VLCFilter <NSObject>
@@ -127,31 +75,6 @@ NS_SWIFT_NAME(VLCFilterParameterProtocol)
  */
 - (void)applyParametersFrom:(id<VLCFilter>)otherFilter;
 
-@end
-
-/// Internal libvlc filter option index
-extern NSString * const kVLCFilterParameterPropertyLibVLCFilterOptionKey;
-/// Parameter's key in filter parameters collection
-extern NSString * const kVLCFilterParameterPropertyParameterKey;
-/// Parameter's default value
-extern NSString * const kVLCFilterParameterPropertyValueKey;
-/// Parameter's default value
-extern NSString * const kVLCFilterParameterPropertyDefaultValueKey;
-/// Parameter's min value
-extern NSString * const kVLCFilterParameterPropertyMinValueKey;
-/// Parameter's max value
-extern NSString * const kVLCFilterParameterPropertyMaxValueKey;
-/// Parameter's change action block
-extern NSString * const kVLCFilterParameterPropertyValueChangeActionKey;
-
-/**
- * An object to control a filter parameter's value, get its default value and allowed values range
- */
-@interface VLCFilterParameter : NSObject<VLCFilterParameter>
-+ (instancetype)new NS_UNAVAILABLE;
-+ (instancetype)createWithProperties:(NSDictionary< NSString*,id > *)properties;
-- (instancetype)init NS_UNAVAILABLE;
-- (instancetype)initWithProperties:(NSDictionary< NSString*,id > *)properties NS_DESIGNATED_INITIALIZER;
 @end
 
 NS_ASSUME_NONNULL_END
