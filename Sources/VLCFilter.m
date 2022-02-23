@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #import <VLCFilter.h>
 #import <VLCFilter+Internal.h>
-#import <VLCMediaPLayer+Internal.h>
+#import <VLCMediaPlayer+Internal.h>
 
 /// Internal libvlc filter option index
 NSString * const kVLCFilterParameterPropertyLibVLCFilterOptionKey = @"LibVLCFilterOption";

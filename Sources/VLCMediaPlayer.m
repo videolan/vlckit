@@ -32,7 +32,7 @@
 #import <VLCLibVLCBridging.h>
 #import <VLCMediaPlayer.h>
 #import <VLCTime.h>
-#import <VLCMediaPLayer+Internal.h>
+#import <VLCMediaPlayer+Internal.h>
 #import <VLCAdjustFilter.h>
 #if !TARGET_OS_IPHONE
 # import <VLCVideoView.h>

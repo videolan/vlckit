@@ -22,7 +22,7 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#include <vlc/vlc.h>
+#import <vlc/vlc.h>
 #import <VLCAdjustFilter.h>
 #import <VLCFilter+Internal.h>
 #import <VLCMediaPlayer+Internal.h>
