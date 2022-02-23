@@ -273,7 +273,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 @interface VLCMediaPlayer ()
 {
     VLCLibrary *_privateLibrary;                ///< Internal
-    void * _playerInstance;                     ///< Internal
+    libvlc_media_player_t * _playerInstance;    ///< Internal
     VLCMedia * _media;                          ///< Current media being played
     libvlc_media_player_time_point_t _lastTimePoint; ///< Cached time point of the media being played
     double _lastInterpolatedPosition;           ///< Cached position of the media being played
@@ -1566,7 +1566,7 @@ static const struct event_handler_entry
     return tracks;
 }
 
-- (void *)playerInstance {
+- (libvlc_media_player_t *)playerInstance {
     return _playerInstance;
 }
 
