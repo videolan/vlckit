@@ -109,7 +109,7 @@ NSString * const kVLCAdjustFilterGammaParameterKey = @"Gamma";
 
 - (void)appendParameterWithProperties:(NSDictionary<NSString *,id> *)properties {
     NSMutableDictionary *extendedProperties = properties.mutableCopy;
-    __weak typeof(self) weakSelf = self;
+    __weak VLCAdjustFilter *weakSelf = self;
     enum libvlc_video_adjust_option_t option = [properties[kVLCFilterParameterPropertyLibVLCFilterOptionKey] intValue];
     extendedProperties[kVLCFilterParameterPropertyValueChangeActionKey] = ^(id<VLCFilterParameterValue> newValue){
         weakSelf.enabled = YES;
