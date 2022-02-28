@@ -31,6 +31,8 @@
 #import <TVVLCKit/VLCMediaThumbnailer.h>
 #import <TVVLCKit/VLCTime.h>
 #import <TVVLCKit/VLCDialogProvider.h>
+#import <TVVLCKit/VLCFilter.h>
+#import <TVVLCKit/VLCAdjustFilter.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
@@ -41,3 +43,5 @@
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
+@class VLCFilterParameter;
+@class VLCAdjustFilter;
