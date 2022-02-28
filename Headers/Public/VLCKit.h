@@ -38,9 +38,13 @@
 #import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCRendererDiscoverer.h>
 #import <VLCKit/VLCRendererItem.h>
+#import <VLCKit/VLCFilter.h>
+#import <VLCKit/VLCAdjustFilter.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
 @class VLCMediaList;
 @class VLCTime;
 @class VLCVideoView;
+@class VLCFilterParameter;
+@class VLCAdjustFilter;
