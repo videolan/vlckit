@@ -1,7 +1,7 @@
-From 7ecdb08ebf8656a80dad25c7f3e15c2ae0103bfb Mon Sep 17 00:00:00 2001
+From 8eaab085200fc34bf2ef93ed20517cfdff4389be Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 03/44] Enable System DL
+Subject: [PATCH 03/55] Enable System DL
 
 ---
  contrib/src/ffmpeg/patch-as-patch-can.patch | 20 ++++++++++++++++++++
@@ -36,7 +36,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 4c74da7af9..0fd5c49517 100644
+index 27fd9b8baa..4d6e85ab9b 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -29,6 +29,9 @@ FFMPEGCONF = \
@@ -49,7 +49,7 @@ index 4c74da7af9..0fd5c49517 100644
  	--disable-debug \
  	--disable-avdevice \
  	--disable-devices \
-@@ -243,6 +246,7 @@ endif
+@@ -244,6 +247,7 @@ endif
  ifdef USE_LIBAV
  	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
  endif
@@ -58,5 +58,5 @@ index 4c74da7af9..0fd5c49517 100644
  
  .ffmpeg: ffmpeg
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

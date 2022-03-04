@@ -1,7 +1,7 @@
-From f6c0ff507f1389a2a42b4e51293a177340eb3e1f Mon Sep 17 00:00:00 2001
+From e2f6a32370007fd19295a1f8e90028fda61d6e55 Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Mon, 30 Apr 2018 14:33:08 +0100
-Subject: [PATCH 15/44] add auto deinterlacer-mode which is also valid
+Subject: [PATCH 15/55] add auto deinterlacer-mode which is also valid
 
 ---
  lib/video.c | 3 ++-
@@ -22,5 +22,5 @@ index 035cc0ebf1..a3e5b248e9 100644
  
      if (*psz_mode)
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

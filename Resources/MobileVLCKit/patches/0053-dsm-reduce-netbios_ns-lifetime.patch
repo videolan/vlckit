@@ -1,0 +1,85 @@
+From 7ef5c59cb4d7e6706226fa40f43ebe58e3a28fc2 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Fri, 7 Jan 2022 14:18:54 +0100
+Subject: [PATCH 53/55] dsm: reduce netbios_ns lifetime
+
+It's only needed from get_address(), from Open().
+---
+ modules/access/dsm/access.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
+
+diff --git a/modules/access/dsm/access.c b/modules/access/dsm/access.c
+index c97d09effa..e3a0dd12bf 100644
+--- a/modules/access/dsm/access.c
++++ b/modules/access/dsm/access.c
+@@ -131,7 +131,6 @@ static int add_item( stream_t *p_access,  struct vlc_readdir_helper *p_rdh,
+ 
+ struct access_sys_t
+ {
+-    netbios_ns         *p_ns;               /**< Netbios name service */
+     smb_session        *p_session;          /**< bdsm SMB Session object */
+ 
+     vlc_url_t           url;
+@@ -190,10 +189,6 @@ static int Open( vlc_object_t *p_this )
+     if( p_access->p_sys == NULL )
+         return VLC_ENOMEM;
+ 
+-    p_sys->p_ns = netbios_ns_new();
+-    if( p_sys->p_ns == NULL )
+-        goto error;
+-
+     p_sys->p_session = smb_session_new();
+     if( p_sys->p_session == NULL )
+         goto error;
+@@ -287,8 +282,6 @@ static void Close( vlc_object_t *p_this )
+     stream_t     *p_access = (stream_t*)p_this;
+     access_sys_t *p_sys = p_access->p_sys;
+ 
+-    if( p_sys->p_ns )
+-        netbios_ns_destroy( p_sys->p_ns );
+     if( p_sys->i_fd )
+         smb_fclose( p_sys->p_session, p_sys->i_fd );
+     vlc_UrlClean( &p_sys->url );
+@@ -315,10 +308,19 @@ static int get_address( stream_t *p_access )
+         /* This is not an ip address, let's try netbios/dns resolve */
+         struct addrinfo *p_info = NULL;
+ 
++        netbios_ns *p_ns = netbios_ns_new();
++        if( p_ns == NULL )
++            return VLC_EGENERIC;
++
+         /* Is this a netbios name on this LAN ? */
+-        if( netbios_ns_resolve( p_sys->p_ns, p_sys->url.psz_host,
+-                                NETBIOS_FILESERVER,
+-                                &p_sys->addr.s_addr) == 0 )
++        uint32_t ip4_addr;
++
++        int ret = netbios_ns_resolve( p_ns, p_sys->url.psz_host,
++                                      NETBIOS_FILESERVER,
++                                      &p_sys->addr.s_addr);
++        netbios_ns_destroy( p_ns );
++
++        if( ret == 0 )
+         {
+             strlcpy( p_sys->netbios_name, p_sys->url.psz_host, 16);
+             return VLC_SUCCESS;
+@@ -342,8 +344,15 @@ static int get_address( stream_t *p_access )
+             return VLC_EGENERIC;
+     }
+ 
++    netbios_ns *p_ns = netbios_ns_new();
++    if( p_ns == NULL )
++        return VLC_EGENERIC;
++
+     /* We have an IP address, let's find the NETBIOS name */
+-    const char *psz_nbt = netbios_ns_inverse( p_sys->p_ns, p_sys->addr.s_addr );
++    const char *psz_nbt = netbios_ns_inverse( p_ns, p_sys->addr.s_addr );
++
++    netbios_ns_destroy( p_ns );
++
+     if( psz_nbt != NULL )
+         strlcpy( p_sys->netbios_name, psz_nbt, 16 );
+     else
+-- 
+2.32.0 (Apple Git-132)
+

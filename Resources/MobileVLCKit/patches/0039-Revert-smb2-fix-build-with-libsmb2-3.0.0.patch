@@ -1,7 +1,7 @@
-From 706efbf702c449f706758640572606a89b1d7282 Mon Sep 17 00:00:00 2001
+From ee5e6534f8cb19accb33c67477bc0980394646f5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 18 May 2021 13:18:37 +0200
-Subject: [PATCH 39/44] Revert "smb2: fix build with libsmb2 3.0.0"
+Subject: [PATCH 39/55] Revert "smb2: fix build with libsmb2 3.0.0"
 
 This reverts commit 6f160ae1784364aa9324f9cfcb7fbda592cc3dd9.
 ---
@@ -48,5 +48,5 @@ index 7d44854655..6575de42d2 100644
  vlc_smb2_mainloop(stream_t *access, bool teardown)
  {
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

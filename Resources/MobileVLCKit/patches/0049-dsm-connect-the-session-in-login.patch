@@ -1,7 +1,7 @@
-From e5fc71d2646bee87dabbfe795cc1e641275a89b5 Mon Sep 17 00:00:00 2001
+From e80edab119b1d95210c02f8d562a4711ed8da6fc Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 10:12:51 +0100
-Subject: [PATCH 49/50] dsm: connect the session in login()
+Subject: [PATCH 49/55] dsm: connect the session in login()
 
 (cherry picked from commit 7dd7780d8fca179b93ec4eb57e9da3c08333af5f)
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>
@@ -51,5 +51,5 @@ index 795872092e..220b3ff7dc 100644
      int connect_err = smb_connect( p_access, psz_login, psz_password, psz_domain );
      if( connect_err == ENOENT )
 -- 
-2.30.2
+2.32.0 (Apple Git-132)
 

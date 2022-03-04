@@ -1,7 +1,7 @@
-From 9c2ac96457cb6b1854f20fe8adf7624b17e03d2a Mon Sep 17 00:00:00 2001
+From fba9e3a83bb459fc2755e78baf3f6dc0bb2364d4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 21 Jan 2022 17:28:13 +0100
-Subject: [PATCH 48/50] smb2: use the cache helper
+Subject: [PATCH 48/55] smb2: use the cache helper
 
 Cache the smb2 session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.
@@ -126,5 +126,5 @@ index ac1664578f..83c1c820da 100644
      vlc_UrlClean(&sys->encoded_url);
  }
 -- 
-2.30.2
+2.32.0 (Apple Git-132)
 

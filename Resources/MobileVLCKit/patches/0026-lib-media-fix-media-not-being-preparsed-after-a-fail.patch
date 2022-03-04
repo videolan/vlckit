@@ -1,7 +1,7 @@
-From ae79ff52aa12e3d40e23e8ad08af61ac7fb64637 Mon Sep 17 00:00:00 2001
+From a82e90c5db9df98ea4607be234129cb8279bd778 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Sep 2019 14:41:31 +0200
-Subject: [PATCH 26/44] lib: media: fix media not being preparsed after a
+Subject: [PATCH 26/55] lib: media: fix media not being preparsed after a
  failure
 
 After a failure (like when browsing a smb folder with credential), it was
@@ -35,5 +35,5 @@ index a74d57bdbd..b46a4c7277 100644
  
      if (needed)
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

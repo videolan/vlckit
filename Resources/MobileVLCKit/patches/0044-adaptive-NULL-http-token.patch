@@ -1,7 +1,7 @@
-From bf1a011508a3f9d3e3590bd57122eb9157890aea Mon Sep 17 00:00:00 2001
+From 46432d0e368be999edd85c945dcad4237a5527fd Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 6 Jan 2022 01:08:11 +0100
-Subject: [PATCH 44/44] adaptive: NULL http-token
+Subject: [PATCH 44/55] adaptive: NULL http-token
 
 The token property is exclusive to VLCKit to allow passing bearer tokens
  to the http stack. However, it is not used for adaptive streaming, but
@@ -24,5 +24,5 @@ index e296897567..8e5f838758 100644
      struct vlc_url_t crd_url;
      vlc_UrlParse(&crd_url, params.getUrl().c_str());
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

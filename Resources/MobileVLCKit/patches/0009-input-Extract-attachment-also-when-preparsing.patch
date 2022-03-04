@@ -1,7 +1,7 @@
-From 2c53a514377312c2fa033f3610ea0a2ee69fb5b7 Mon Sep 17 00:00:00 2001
+From da9b6734960db123f00ce1b1cdff55b60b485c32 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/44] input: Extract attachment also when preparsing
+Subject: [PATCH 09/55] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -913,10 +913,10 @@ index 1e6a64fcd1..87bbc54446 100644
      free( pp_attachments );
  
 diff --git a/modules/demux/avformat/demux.c b/modules/demux/avformat/demux.c
-index 867b4fe037..00b7f8bf84 100644
+index 25baebb623..6ca4559557 100644
 --- a/modules/demux/avformat/demux.c
 +++ b/modules/demux/avformat/demux.c
-@@ -727,7 +727,7 @@ void avformat_CloseDemux( vlc_object_t *p_this )
+@@ -734,7 +734,7 @@ void avformat_CloseDemux( vlc_object_t *p_this )
      }
  
      for( int i = 0; i < p_sys->i_attachments; i++ )
@@ -925,7 +925,7 @@ index 867b4fe037..00b7f8bf84 100644
      TAB_CLEAN( p_sys->i_attachments, p_sys->attachments);
  
      if( p_sys->p_title )
-@@ -1120,9 +1120,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -1127,9 +1127,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
  
              for( i = 0; i < p_sys->i_attachments; i++ )
              {
@@ -1835,5 +1835,5 @@ index db7f4030b9..8454600451 100644
 +vlc_input_attachment_Hold
 +vlc_input_attachment_Release
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

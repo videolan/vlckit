@@ -1,7 +1,7 @@
-From 0c6e4033bd6e4a204cc45e48dc98950ed1f260e6 Mon Sep 17 00:00:00 2001
+From c96f794870d7cdfa4e6d515e05c4f170cca25932 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 10 Mar 2021 10:23:13 +0100
-Subject: [PATCH 41/44] contrib/vpx: fix cross-compiling ARM-64 Simulator on
+Subject: [PATCH 41/55] contrib/vpx: fix cross-compiling ARM-64 Simulator on
  x86_64
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 41/44] contrib/vpx: fix cross-compiling ARM-64 Simulator on
  1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
-index 52d80a0b24..8366d98e69 100644
+index 9fc00c89ed..b20addadc9 100644
 --- a/contrib/src/vpx/rules.mak
 +++ b/contrib/src/vpx/rules.mak
-@@ -134,11 +134,7 @@ ifdef HAVE_DARWIN_OS
+@@ -133,11 +133,7 @@ ifdef HAVE_DARWIN_OS
  VPX_CONF += --enable-vp8-decoder --disable-tools
  VPX_CONF += --extra-cflags="$(CFLAGS) $(EXTRA_CFLAGS)"
  ifdef HAVE_IOS
@@ -26,5 +26,5 @@ index 52d80a0b24..8366d98e69 100644
  ifdef HAVE_MACOSX
  VPX_LDFLAGS := -L$(MACOSX_SDK)/usr/lib -isysroot $(MACOSX_SDK) -mmacosx-version-min=10.7
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 
