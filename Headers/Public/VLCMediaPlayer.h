@@ -35,6 +35,8 @@
 #import "VLCTime.h"
 #import "VLCAudio.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #if !TARGET_OS_IPHONE
 @class VLCVideoView;
 @class VLCVideoLayer;
@@ -264,7 +266,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \return the video aspect ratio or NULL if unspecified
  * (the result must be released with free()).
  */
-@property (NS_NONATOMIC_IOSONLY) char *videoAspectRatio;
+@property (NS_NONATOMIC_IOSONLY, nullable) char *videoAspectRatio;
 
 /**
  * Set/Get current crop filter geometry.
@@ -272,7 +274,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * param: psz_geometry new crop filter geometry (NULL to unset)
  * \return the crop filter geometry or NULL if unset
  */
-@property (NS_NONATOMIC_IOSONLY) char *videoCropGeometry;
+@property (NS_NONATOMIC_IOSONLY, nullable) char *videoCropGeometry;
 
 /**
  * Set/Get the current video scaling factor.
@@ -302,7 +304,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  *
  * \param name of deinterlace filter to use (availability depends on underlying VLC version), NULL to disable.
  */
-- (void)setDeinterlaceFilter: (NSString *)name;
+- (void)setDeinterlaceFilter: (nullable NSString *)name;
 
 /**
  * Enable or disable deinterlace and specify which filter to use
@@ -315,7 +317,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Access to adjust filter's parameters and properties
  */
-@property (nonatomic, readonly) VLCAdjustFilter * _Nonnull adjustFilter;
+@property (nonatomic, readonly) VLCAdjustFilter *adjustFilter;
 
 /**
  * Enable or disable adjust video filter (contrast, brightness, hue, saturation, gamma)
@@ -961,3 +963,4 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 - (BOOL)setRendererItem:(VLCRendererItem *)item;
 
 @end
+NS_ASSUME_NONNULL_END
