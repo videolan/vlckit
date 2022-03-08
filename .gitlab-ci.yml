@@ -1,5 +1,4 @@
 stages:
-    - nightly
     - release
     - build
 
@@ -61,7 +60,7 @@ continous-VLCKit-main:
     artifacts:
         paths:
             - ./*.tar.xz
-    stage: nightly
+    stage: build
 
 .nightly-build-base-main:
     script:
