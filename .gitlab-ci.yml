@@ -56,8 +56,8 @@ continous-VLCKit-main:
     tags:
         - catalina
         - amd64
-    only:
-        - merge_requests
+    rules:
+        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "videolan/VLCKit"'
     artifacts:
         paths:
             - ./*.tar.xz
