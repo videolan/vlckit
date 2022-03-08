@@ -47,11 +47,13 @@ continous-VLCKit-main:
         BUILD_PARAM: "vx"
         JOB_NAME: "VLCKit"
 
-####################
-## Nightly builds ##
-####################
+############################################################
+## Development artifacts builds                           ##
+## These are running every time a merge request is merged ##
+## or a commit gets pushed to the default branch          ##
+############################################################
 
-.nightly-job-base-main:
+.dev-artifacts-job-base-main:
     tags:
         - catalina
         - amd64
@@ -62,34 +64,34 @@ continous-VLCKit-main:
             - ./*.tar.xz
     stage: build
 
-.nightly-build-base-main:
+.dev-artifacts-build-base-main:
     script:
         - ./compileAndBuildVLCKit.sh -${BUILD_PARAM}
         - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
         - mv ${JOB_NAME}-*.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
 
-nightly-MobileVLCKit-main:
+dev-artifacts-MobileVLCKit-main:
     extends:
-        - .nightly-job-base-main
-        - .nightly-build-base-main
+        - .dev-artifacts-job-base-main
+        - .dev-artifacts-build-base-main
     variables:
         BUILD_PARAM: "vf"
         PACKAGING_PARAM: "vm"
         JOB_NAME: "MobileVLCKit"
 
-nightly-TVVLCKit-main:
+dev-artifacts-TVVLCKit-main:
     extends:
-        - .nightly-job-base-main
-        - .nightly-build-base-main
+        - .dev-artifacts-job-base-main
+        - .dev-artifacts-build-base-main
     variables:
         BUILD_PARAM: "vft"
         PACKAGING_PARAM: "vt"
         JOB_NAME: "TVVLCKit"
 
-nightly-VLCKit-main:
+dev-artifacts-VLCKit-main:
     extends:
-        - .nightly-job-base-main
-        - .nightly-build-base-main
+        - .dev-artifacts-job-base-main
+        - .dev-artifacts-build-base-main
     variables:
         BUILD_PARAM: "vx"
         PACKAGING_PARAM: "v"
