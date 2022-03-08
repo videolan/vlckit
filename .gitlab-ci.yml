@@ -57,7 +57,7 @@ continous-VLCKit-main:
         - catalina
         - amd64
     only:
-        - schedules
+        - merge_requests
     artifacts:
         paths:
             - ./*.tar.xz
