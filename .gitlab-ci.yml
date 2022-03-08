@@ -58,7 +58,7 @@ continous-VLCKit:
         - amd64
     stage: nightly
     only:
-        - schedules
+        - merge_requests
     artifacts:
         paths:
             - ./*.tar.xz
