@@ -1,7 +1,7 @@
-From 2503aa93b02cb4aab7e851b693f91ec5f088dba2 Mon Sep 17 00:00:00 2001
+From 412ee59c4896f504809dedd8eace497818ae1441 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Dec 2017 18:05:40 +0100
-Subject: [PATCH 12/55] libvlc: add a basic API to change freetype's color,
+Subject: [PATCH 12/56] libvlc: add a basic API to change freetype's color,
  bold, font and size variables on-the-fly
 
 ---

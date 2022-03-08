@@ -1,14 +1,14 @@
-From eabbd0a445873493b94ee1c9b1b92bf2a74813de Mon Sep 17 00:00:00 2001
+From 01b24c68ed350b6cbb9dc74750e6c2e0c7e0d909 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:33:28 +0100
-Subject: [PATCH 55/55] smb2: make the netbios resolver interruptible
+Subject: [PATCH 55/56] smb2: make the netbios resolver interruptible
 
 ---
  modules/access/smb2.c | 34 ++++++++++++++++++++++++++++++++--
  1 file changed, 32 insertions(+), 2 deletions(-)
 
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 83c1c820da..686f021633 100644
+index 01ecb0edc8..5203abb79f 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -48,8 +48,34 @@
@@ -48,7 +48,7 @@ index 83c1c820da..686f021633 100644
  #endif
  
  #ifdef HAVE_ARPA_INET_H
-@@ -750,6 +776,9 @@ vlc_smb2_resolve(stream_t *access, const char *host, unsigned port)
+@@ -747,6 +773,9 @@ vlc_smb2_resolve(stream_t *access, const char *host, unsigned port)
      /* Test if the host is a netbios name */
      char *out_host = NULL;
      netbios_ns *ns = netbios_ns_new();
@@ -58,7 +58,7 @@ index 83c1c820da..686f021633 100644
      uint32_t ip4_addr;
      if (netbios_ns_resolve(ns, host, NETBIOS_FILESERVER, &ip4_addr) == 0)
      {
-@@ -757,6 +786,7 @@ vlc_smb2_resolve(stream_t *access, const char *host, unsigned port)
+@@ -754,6 +783,7 @@ vlc_smb2_resolve(stream_t *access, const char *host, unsigned port)
          if (inet_ntop(AF_INET, &ip4_addr, ip, sizeof(ip)))
              out_host = strdup(ip);
      }

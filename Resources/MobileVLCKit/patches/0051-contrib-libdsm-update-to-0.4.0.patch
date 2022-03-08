@@ -1,7 +1,7 @@
-From 4c64860c4162e546a786a910b36208d8429c8c26 Mon Sep 17 00:00:00 2001
+From b55fe95e4510c4d9a93f43dde715fe4523a65b74 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 2 Mar 2022 11:40:00 +0100
-Subject: [PATCH 51/55] contrib: libdsm: update to 0.4.0
+Subject: [PATCH 51/56] contrib: libdsm: update to 0.4.0
 
 And switch to meson.
 ---

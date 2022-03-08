@@ -1,7 +1,7 @@
-From 7e1dd8149ea9c7982093f7687b426e28d522d2c0 Mon Sep 17 00:00:00 2001
+From 30ae53bac5698eefaefa2249fb8c6a97237798b4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 6 Jan 2022 12:59:20 +0100
-Subject: [PATCH 52/55] dsm: make the smb_session interruptible
+Subject: [PATCH 52/56] dsm: make the smb_session interruptible
 
 ---
  modules/access/dsm/access.c | 59 ++++++++++++++++++++++++++++++++++++-

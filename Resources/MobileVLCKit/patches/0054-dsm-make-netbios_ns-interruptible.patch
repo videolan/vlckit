@@ -1,7 +1,7 @@
-From 8334aa8a505e1e90cbef9cefb67584ca98a223c2 Mon Sep 17 00:00:00 2001
+From 616b4ffb5169bf96cebe0506a794caf84cb4e3f0 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:28:20 +0100
-Subject: [PATCH 54/55] dsm: make netbios_ns interruptible
+Subject: [PATCH 54/56] dsm: make netbios_ns interruptible
 
 ---
  modules/access/dsm/access.c | 24 ++++++++++++++++++++++++

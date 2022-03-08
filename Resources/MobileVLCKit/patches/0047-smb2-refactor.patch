@@ -1,7 +1,7 @@
-From 709a8b6b092723254b557c1c28a8a8cb7a4022b8 Mon Sep 17 00:00:00 2001
+From 00a3e0c9c31d195216f3fb8d73736945ced4fb69 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 21 Jan 2022 17:03:00 +0100
-Subject: [PATCH 47/55] smb2: refactor
+Subject: [PATCH 47/56] smb2: refactor
 
 No functional changes.
 
@@ -11,11 +11,11 @@ No functional changes.
 (cherry picked from commit e95101836566925d472d78173535e5bf42e9ab4f)
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>
 ---
- modules/access/smb2.c | 323 ++++++++++++++++++++++++------------------
- 1 file changed, 186 insertions(+), 137 deletions(-)
+ modules/access/smb2.c | 325 ++++++++++++++++++++++++------------------
+ 1 file changed, 187 insertions(+), 138 deletions(-)
 
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 6575de42d2..ac1664578f 100644
+index 1183ef448b..64ce2dffba 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -85,7 +85,17 @@ struct access_sys
@@ -230,7 +230,7 @@ index 6575de42d2..ac1664578f 100644
  }
  
  static ssize_t
-@@ -267,18 +285,26 @@ FileRead(stream_t *access, void *buf, size_t len)
+@@ -264,18 +282,26 @@ FileRead(stream_t *access, void *buf, size_t len)
      if (len > 262144)
          len = 262144;
  
@@ -244,16 +244,17 @@ index 6575de42d2..ac1664578f 100644
      {
 -        VLC_SMB2_SET_ERROR(access, "smb2_read_async", 1);
 +        VLC_SMB2_SET_ERROR(&op, "smb2_read_async", 1);
-         return -1;
+         return 0;
      }
  
 -    if (vlc_smb2_mainloop(access, false) < 0)
+-        return 0;
 +    if (vlc_smb2_mainloop(&op, false) < 0)
 +    {
 +        sys->error_status = op.error_status;
-         return -1;
++        return -1;
 +    }
-+
++  
 +    if (op.res.read.len == 0)
 +        sys->eof = true;
  
@@ -262,7 +263,7 @@ index 6575de42d2..ac1664578f 100644
  }
  
  static int
-@@ -289,9 +315,12 @@ FileSeek(stream_t *access, uint64_t i_pos)
+@@ -286,9 +312,12 @@ FileSeek(stream_t *access, uint64_t i_pos)
      if (sys->error_status != 0)
          return VLC_EGENERIC;
  
@@ -277,7 +278,7 @@ index 6575de42d2..ac1664578f 100644
          return VLC_EGENERIC;
      }
      sys->eof = false;
-@@ -440,49 +469,32 @@ ShareEnum(stream_t *access, input_item_node_t *p_node)
+@@ -437,49 +466,32 @@ ShareEnum(stream_t *access, input_item_node_t *p_node)
  }
  
  static int
@@ -286,10 +287,10 @@ index 6575de42d2..ac1664578f 100644
 +                  struct smb2fh *smb2fh)
  {
 -    struct access_sys *sys = access->p_sys;
+-
+-    assert(sys->smb2fh);
 +    struct vlc_smb2_op op = VLC_SMB2_OP(access, smb2);
  
--    assert(sys->smb2fh);
--
 -    if (smb2_close_async(sys->smb2, sys->smb2fh, smb2_generic_cb, access) < 0)
 +    if (smb2_close_async(smb2, smb2fh, smb2_generic_cb, &op) < 0)
      {
@@ -338,7 +339,7 @@ index 6575de42d2..ac1664578f 100644
  }
  
  static void
-@@ -491,16 +503,7 @@ smb2_open_cb(struct smb2_context *smb2, int status, void *data,
+@@ -488,16 +500,7 @@ smb2_open_cb(struct smb2_context *smb2, int status, void *data,
  {
      VLC_SMB2_GENERIC_CB();
  
@@ -356,7 +357,7 @@ index 6575de42d2..ac1664578f 100644
  }
  
  static void
-@@ -536,8 +539,75 @@ vlc_smb2_print_addr(stream_t *access)
+@@ -533,8 +536,75 @@ vlc_smb2_print_addr(stream_t *access)
  }
  
  static int
@@ -434,7 +435,7 @@ index 6575de42d2..ac1664578f 100644
  {
      struct access_sys *sys = access->p_sys;
  
-@@ -547,7 +617,7 @@ vlc_smb2_open_share(stream_t *access, const char *url,
+@@ -544,7 +614,7 @@ vlc_smb2_open_share(stream_t *access, const char *url,
      if (sys->smb2 == NULL)
      {
          msg_Err(access, "smb2_init_context failed");
@@ -443,7 +444,7 @@ index 6575de42d2..ac1664578f 100644
      }
      smb2_url = smb2_parse_url(sys->smb2, url);
  
-@@ -573,66 +643,43 @@ vlc_smb2_open_share(stream_t *access, const char *url,
+@@ -570,66 +640,43 @@ vlc_smb2_open_share(stream_t *access, const char *url,
      smb2_set_password(sys->smb2, password);
      smb2_set_domain(sys->smb2, domain ? domain : "");
  
@@ -527,7 +528,7 @@ index 6575de42d2..ac1664578f 100644
          smb2_destroy_context(sys->smb2);
          sys->smb2 = NULL;
      }
-@@ -730,7 +777,7 @@ Open(vlc_object_t *p_obj)
+@@ -727,7 +774,7 @@ Open(vlc_object_t *p_obj)
       * keystore/user interaction) */
      vlc_credential_get(&credential, access, "smb-user", "smb-pwd", NULL,
                         NULL);
@@ -536,7 +537,7 @@ index 6575de42d2..ac1664578f 100644
  
      while (ret == -1
          && (!sys->error_status || VLC_SMB2_STATUS_DENIED(sys->error_status))
-@@ -739,7 +786,7 @@ Open(vlc_object_t *p_obj)
+@@ -736,7 +783,7 @@ Open(vlc_object_t *p_obj)
                                sys->encoded_url.psz_host))
      {
          sys->error_status = 0;
@@ -545,7 +546,7 @@ index 6575de42d2..ac1664578f 100644
      }
      free(resolved_host);
      free(url);
-@@ -807,7 +854,7 @@ Close(vlc_object_t *p_obj)
+@@ -804,7 +851,7 @@ Close(vlc_object_t *p_obj)
      struct access_sys *sys = access->p_sys;
  
      if (sys->smb2fh != NULL)
@@ -554,7 +555,7 @@ index 6575de42d2..ac1664578f 100644
      else if (sys->smb2dir != NULL)
          smb2_closedir(sys->smb2, sys->smb2dir);
      else if (sys->share_enum != NULL)
-@@ -815,7 +862,9 @@ Close(vlc_object_t *p_obj)
+@@ -812,7 +859,9 @@ Close(vlc_object_t *p_obj)
      else
          vlc_assert_unreachable();
  
