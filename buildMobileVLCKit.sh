@@ -409,10 +409,6 @@ buildLibVLC() {
     fi
     fi
 
-    if [ "$BITCODE" = "yes" ]; then
-    EXTRA_CFLAGS+=" -fembed-bitcode"
-    fi
-
     if [ "$PLATFORM" = "Simulator" ]; then
         # Use the new ABI on simulator, else we can't build
         export OBJCFLAGS="-fobjc-abi-version=2 -fobjc-legacy-dispatch ${OBJCFLAGS}"
@@ -446,6 +442,11 @@ buildLibVLC() {
         if [ "$ARCH" = "aarch64" ]; then
             export GASPP_FIX_XCODE5=1
         fi
+        if [ "$BITCODE" = "yes" ]; then
+            export BUILDWITHBITCODE="yes"
+        fi
+    else
+        export BUILDWITHBITCODE=""
     fi
 
     if [ "$TVOS" = "yes" ]; then
@@ -570,6 +571,17 @@ buildLibVLC() {
     make -j$MAKE_JOBS > ${out}
 
     spopd # ${VLCROOT}/contrib
+
+    # add this after the contrib step as we are using its native bitcode support
+    if [ "$BITCODE" = "yes" ]; then
+        if [ "$PLATFORM" = "OS" ]; then
+            EXTRA_CFLAGS+=" -fembed-bitcode"
+            export CFLAGS="${EXTRA_CFLAGS}"
+            export CPPFLAGS="${EXTRA_CFLAGS}"
+            export CXXFLAGS="${EXTRA_CFLAGS}"
+            export OBJCFLAGS="${EXTRA_CFLAGS}"
+        fi
+    fi
 
     if ! [ -e ${VLCROOT}/configure ]; then
         info "Bootstraping vlc"
