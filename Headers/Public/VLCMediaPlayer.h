@@ -195,7 +195,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * the delegate object implementing the optional protocol
  */
-@property (weak, nonatomic) id<VLCMediaPlayerDelegate> delegate;
+@property (weak, nonatomic, nullable) id<VLCMediaPlayerDelegate> delegate;
 
 #if !TARGET_OS_IPHONE
 /* Initializers */
@@ -256,7 +256,7 @@ extern NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * set/retrieve a video view for rendering
  * This can be any UIView or NSView or instances of VLCVideoView / VLCVideoLayer if running on macOS
  */
-@property (strong) id drawable; /* The videoView or videoLayer */
+@property (strong, nullable) id drawable; /* The videoView or videoLayer */
 
 /**
  * Set/Get current video aspect ratio.
@@ -662,7 +662,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 /**
  * Get the last available loudness description for the current media (last 400ms)
  */
-@property (readonly) VLCMediaLoudness *momentaryLoudness;
+@property (readonly, nullable) VLCMediaLoudness *momentaryLoudness;
 
 #pragma mark -
 #pragma mark equalizer
@@ -726,7 +726,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 /**
  * The currently media instance set to play
  */
-@property (NS_NONATOMIC_IOSONLY, strong) VLCMedia *media;
+@property (NS_NONATOMIC_IOSONLY, strong, nullable) VLCMedia *media;
 
 #pragma mark -
 #pragma mark playback operations
@@ -916,7 +916,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \return a NSArray of NSString instances containing the names
  * \note This property is not available to macOS
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *snapshots;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy, nullable) NSArray *snapshots;
 
 #if TARGET_OS_IPHONE
 /**
@@ -925,7 +925,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \note return value is nil if there is no snapshot
  * \note This property is not available to macOS
  */
-@property (NS_NONATOMIC_IOSONLY, readonly) UIImage *lastSnapshot;
+@property (NS_NONATOMIC_IOSONLY, readonly, nullable) UIImage *lastSnapshot;
 #else
 /**
  * Get last snapshot available.
@@ -933,7 +933,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \note return value is nil if there is no snapshot
  * \note This property is not available to iOS and tvOS
  */
-@property (NS_NONATOMIC_IOSONLY, readonly) NSImage *lastSnapshot;
+@property (NS_NONATOMIC_IOSONLY, readonly, nullable) NSImage *lastSnapshot;
 #endif
 
 /**
@@ -960,7 +960,7 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  * \see VLCRendererDiscoverer
  * \see VLCRendererItem
  */
-- (BOOL)setRendererItem:(VLCRendererItem *)item;
+- (BOOL)setRendererItem:(nullable VLCRendererItem *)item;
 
 @end
 NS_ASSUME_NONNULL_END
