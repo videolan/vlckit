@@ -106,10 +106,10 @@ pages:
         - docker
         - amd64
     stage: build
+    rules:
+        - if: '$CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "videolan/VLCKit"'
     image:
         name: $VLC_DEBIAN_IMAGE
-    only:
-        - schedules
     script:
         - doxygen doxygen.conf
         - mkdir public
