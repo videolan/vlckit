@@ -60,6 +60,9 @@ continous-VLCKit:
     stage: build
     rules:
         - if: '$CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "videolan/VLCKit"'
+        - if: '$CI_COMMIT_TAG'
+          when: never
+
     artifacts:
         paths:
             - ./*.tar.xz
