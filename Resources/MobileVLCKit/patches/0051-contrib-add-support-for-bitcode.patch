@@ -1,7 +1,7 @@
 From 664e02ef53497c4e5f75957a0ce4010cbac3f817 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 9 Mar 2022 08:15:53 +0100
-Subject: [PATCH 51/51] contrib: add support for bitcode
+Subject: [PATCH 51/58] contrib: add support for bitcode
 
 ---
  contrib/bootstrap    | 4 ++++

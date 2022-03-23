@@ -1,0 +1,98 @@
+From 46cff4c76c6c7e151c871cff54994af0cc6b1c1a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Wed, 23 Mar 2022 12:58:32 +0100
+Subject: [PATCH 58/58] contrib/libdsm: apply PR 160 from upstream
+
+---
+ contrib/src/libdsm/160.patch | 66 ++++++++++++++++++++++++++++++++++++
+ contrib/src/libdsm/rules.mak |  1 +
+ 2 files changed, 67 insertions(+)
+ create mode 100644 contrib/src/libdsm/160.patch
+
+diff --git a/contrib/src/libdsm/160.patch b/contrib/src/libdsm/160.patch
+new file mode 100644
+index 0000000000..ea02da1929
+--- /dev/null
++++ b/contrib/src/libdsm/160.patch
+@@ -0,0 +1,66 @@
++From 090e023cc486170ea5b039ff1c6420307bb60524 Mon Sep 17 00:00:00 2001
++From: Thomas Guillem <thomas@gllm.fr>
++Date: Tue, 22 Mar 2022 16:36:54 +0100
++Subject: [PATCH] netbios_session: fix nonblocking connection
++
++connect() might return an error with errno = EINPROGRESS, cf. man connect(2).
++---
++ src/netbios_session.c | 44 ++++++++++++++++++++++++++++++++++++++++++-
++ 1 file changed, 43 insertions(+), 1 deletion(-)
++
++diff --git a/src/netbios_session.c b/src/netbios_session.c
++index 59fd629..ab3cccf 100644
++--- a/src/netbios_session.c
+++++ b/src/netbios_session.c
++@@ -74,8 +74,50 @@ static int open_socket_and_connect(netbios_session *s)
++         goto error;
++ #endif
++     if (connect(s->socket, (struct sockaddr *)&s->remote_addr, sizeof(s->remote_addr)) <0)
++-        goto error;
+++    {
+++        if (errno != EINPROGRESS && errno != EINTR)
+++            goto error;
+++
+++        /* Wait for connection, cf. EINPROGRESS in man connect(2) */
+++        while (true)
+++        {
+++            fd_set read_fds, write_fds;
+++            int nfds, ret;
+++
+++            FD_ZERO(&read_fds);
+++            FD_ZERO(&write_fds);
+++            FD_SET(s->socket, &write_fds);
+++#ifdef NS_ABORT_USE_PIPE
+++            FD_SET(s->abort_ctx.pipe[0], &read_fds);
+++            nfds = (s->socket > s->abort_ctx.pipe[0] ? s->socket : s->abort_ctx.pipe[0]) + 1;
+++#else
+++            nfds = s->socket + 1;
+++#endif
++ 
+++            ret = select(nfds, &read_fds, &write_fds, NULL, NULL);
+++            if (ret < 0)
+++                goto error;
+++
+++#ifdef NS_ABORT_USE_PIPE
+++            if (FD_ISSET(s->abort_ctx.pipe[0], &read_fds))
+++                return DSM_ERROR_GENERIC;
+++#else
+++            if (netbios_abort_ctx_is_aborted(&s->abort_ctx))
+++                return DSM_ERROR_GENERIC;
+++#endif
+++
+++            if (FD_ISSET(s->socket, &write_fds))
+++            {
+++                if (getsockopt(s->socket, SOL_SOCKET, SO_ERROR, &ret,
+++                               &(socklen_t){ sizeof (ret) }) || ret)
+++                {
+++                    errno = ret;
+++                    goto error;
+++                }
+++                break; /* Success */
+++            }
+++        }
+++    }
++     return DSM_SUCCESS;
++ 
++ error:
+diff --git a/contrib/src/libdsm/rules.mak b/contrib/src/libdsm/rules.mak
+index 7ef5743c1d..744d8388ad 100644
+--- a/contrib/src/libdsm/rules.mak
++++ b/contrib/src/libdsm/rules.mak
+@@ -19,6 +19,7 @@ endif
+ 
+ libdsm: libdsm-$(LIBDSM_VERSION).tar.xz .sum-libdsm
+ 	$(UNPACK)
++	$(APPLY) $(SRC)/libdsm/160.patch
+ 	$(MOVE)
+ 
+ DEPS_libdsm = libtasn1 iconv
+-- 
+2.32.0 (Apple Git-132)
+
