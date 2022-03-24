@@ -22,12 +22,17 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCLibrary.h"
+#import <VLCLibrary.h>
 #if !TARGET_OS_IPHONE
-#import "VLCStreamOutput.h"
-#endif
-#import "VLCMediaPlayer.h"
-#import "VLCRendererItem.h"
+#import <VLCStreamOutput.h>
+#endif // !TARGET_OS_IPHONE
+#import <VLCMediaPlayer.h>
+#import <VLCMediaList.h>
+#import <VLCMedia.h>
+#import <VLCAudio.h>
+#if !TARGET_OS_TV
+#import <VLCRendererItem.h>
+#endif // !TARGET_OS_TV
 
 /**
  * Bridges functionality between libvlc and VLCMediaList implementation.
@@ -147,6 +152,7 @@
 - (id)initWithMediaPlayer:(VLCMediaPlayer *)mediaPlayer;
 @end
 
+#if !TARGET_OS_TV
 /**
  * Bridges functionality between libvlc and VLCRendererItem implementation.
  */
@@ -167,7 +173,7 @@
 - (void *)libVLCRendererItem;
 
 @end
-
+#endif // !TARGET_OS_TV
 /**
  * TODO: Documentation
  */

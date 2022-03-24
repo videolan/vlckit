@@ -25,13 +25,13 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCMediaListPlayer.h"
-#import "VLCMedia.h"
-#import "VLCMediaPlayer.h"
-#import "VLCMediaList.h"
-#import "VLCLibVLCBridging.h"
-#import "VLCLibrary.h"
-#import "VLCEventManager.h"
+#import <VLCMediaListPlayer.h>
+#import <VLCMedia.h>
+#import <VLCMediaPlayer.h>
+#import <VLCMediaList.h>
+#import <VLCLibVLCBridging.h>
+#import <VLCLibrary.h>
+#import <VLCEventManager.h>
 
 @interface VLCMediaListPlayer () {
     void *instance;

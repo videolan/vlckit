@@ -25,12 +25,8 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#import "VLCMediaList.h"
 
-@class VLCLibrary;
-@class VLCMediaList;
-@class VLCMediaDiscoverer;
-
+@class VLCLibrary, VLCMediaList;
 
 typedef NS_ENUM(unsigned, VLCMediaDiscovererCategoryType)
 {

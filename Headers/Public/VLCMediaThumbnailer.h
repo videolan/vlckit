@@ -23,8 +23,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-@class VLCMedia;
-@class VLCLibrary;
+@class VLCMedia, VLCLibrary;
 @protocol VLCMediaThumbnailerDelegate;
 
 /**

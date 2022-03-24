@@ -21,8 +21,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-@class VLCRendererItem;
-@class VLCRendererDiscoverer;
+@class VLCRendererItem, VLCRendererDiscoverer;
 
 NS_ASSUME_NONNULL_BEGIN
 

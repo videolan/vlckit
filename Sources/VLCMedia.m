@@ -25,11 +25,12 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCMedia.h"
-#import "VLCMediaList.h"
-#import "VLCEventManager.h"
-#import "VLCLibrary.h"
-#import "VLCLibVLCBridging.h"
+#import <VLCMedia.h>
+#import <VLCMediaList.h>
+#import <VLCEventManager.h>
+#import <VLCLibrary.h>
+#import <VLCLibVLCBridging.h>
+#import <VLCTime.h>
 #import <vlc/libvlc.h>
 #import <sys/sysctl.h> // for sysctlbyname
 

@@ -24,7 +24,6 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#import "VLCMedia.h"
 
 /**
  * notification name if a list item was added

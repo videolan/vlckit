@@ -24,11 +24,8 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#import "VLCAudio.h"
-#import "VLCMediaList.h"
-#import "VLCMedia.h"
 
-@class VLCAudio;
+@class VLCAudio, VLCMediaList, VLCMedia;
 
 NS_ASSUME_NONNULL_BEGIN
 

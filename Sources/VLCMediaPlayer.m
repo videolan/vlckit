@@ -28,15 +28,15 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCLibrary.h"
-#import "VLCMediaPlayer.h"
-#import "VLCEventManager.h"
-#import "VLCLibVLCBridging.h"
+#import <VLCLibrary.h>
+#import <VLCEventManager.h>
+#import <VLCLibVLCBridging.h>
 #import <VLCMediaPlayer+Internal.h>
 #import <VLCAdjustFilter.h>
+#import <VLCTime.h>
 #if !TARGET_OS_IPHONE
-# import "VLCVideoView.h"
-#endif
+# import <VLCVideoView.h>
+#endif // !TARGET_OS_IPHONE
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -49,7 +49,7 @@
 #  import <CoreServices/../Frameworks/OSServices.framework/Headers/Power.h>
 # endif
 #else
-#import "AVKit/AVKit.h"
+#import <AVKit/AVKit.h>
 #endif // !TARGET_OS_IPHONE
 
 #include <vlc/vlc.h>
@@ -1429,12 +1429,12 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 #pragma mark -
 #pragma mark - Renderer
-
+#if !TARGET_OS_TV
 - (BOOL)setRendererItem:(VLCRendererItem *)item
 {
     return libvlc_media_player_set_renderer(_playerInstance, item.libVLCRendererItem) == 0;
 }
-
+#endif // !TARGET_OS_TV
 @end
 
 @implementation VLCMediaPlayer (Private)

@@ -21,13 +21,13 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCDialogProvider.h"
-#import "VLCCustomDialogProvider.h"
+#import <VLCDialogProvider.h>
+#import <VLCCustomDialogProvider.h>
 
 #if TARGET_OS_IPHONE
-#import "VLCiOSLegacyDialogProvider.h"
-#import "VLCEmbeddedDialogProvider.h"
-#endif
+#import <VLCiOSLegacyDialogProvider.h>
+#import <VLCEmbeddedDialogProvider.h>
+#endif // !TARGET_OS_IPHONE
 
 /* We are the root of a class cluster, not much to see */
 
