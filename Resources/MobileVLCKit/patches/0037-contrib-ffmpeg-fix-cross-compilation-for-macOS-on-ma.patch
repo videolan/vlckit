@@ -1,7 +1,7 @@
-From 71d4229f0f746b598c3d3823e5643cffe1996316 Mon Sep 17 00:00:00 2001
+From 288bdb65a0a1b623c0e85d9af0f0f1731b24172d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 20 Feb 2021 13:19:24 +0100
-Subject: [PATCH 37/58] contrib/ffmpeg: fix cross-compilation for macOS on
+Subject: [PATCH 37/59] contrib/ffmpeg: fix cross-compilation for macOS on
  macOS
 
 ---

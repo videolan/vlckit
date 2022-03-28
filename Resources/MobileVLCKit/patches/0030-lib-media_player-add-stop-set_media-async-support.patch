@@ -1,7 +1,7 @@
-From de6f1fef4b831de7ab4b1fee6cd1e423958f3e89 Mon Sep 17 00:00:00 2001
+From e626b38412b5dc607c5e979bc0721c97f0f83807 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 20 Oct 2020 11:33:23 +0200
-Subject: [PATCH 30/58] lib: media_player: add stop/set_media async support
+Subject: [PATCH 30/59] lib: media_player: add stop/set_media async support
 
 This commit adds 2 new function into 3.0.12:
  - libvlc_media_player_stop_async()

@@ -1,0 +1,87 @@
+From 6beef87c03c4e17ff14335febd4e7e84e06479fa Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Mon, 28 Mar 2022 10:31:01 +0200
+Subject: [PATCH 59/59] upnp: implement IPv4 host IP lookup for AppleOS
+
+This adds an additional info line to match the IPv6 implementation.
+---
+ modules/services_discovery/upnp.cpp | 49 +++++++++++++++++++++++++++++
+ 1 file changed, 49 insertions(+)
+
+diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
+index 1f3b982e39..610dfac491 100644
+--- a/modules/services_discovery/upnp.cpp
++++ b/modules/services_discovery/upnp.cpp
+@@ -1677,6 +1677,52 @@ inline char *getPreferedAdapter()
+ #endif
+ #else
+ 
++#ifdef __APPLE__
++
++inline bool necessaryFlagsSetOnInterface(struct ifaddrs *anInterface)
++{
++    unsigned int flags = anInterface->ifa_flags;
++    if( (flags & IFF_UP) && (flags & IFF_RUNNING) && !(flags & IFF_LOOPBACK) && !(flags & IFF_POINTOPOINT) ) {
++        return true;
++    }
++    return false;
++}
++
++static char *getIpv4ForMulticast()
++{
++    struct ifaddrs *listOfInterfaces;
++    struct ifaddrs *anInterface;
++    int ret = getifaddrs(&listOfInterfaces);
++    char *bestIP = NULL;
++
++    if (ret != 0) {
++        return NULL;
++    }
++
++    anInterface = listOfInterfaces;
++    while (anInterface != NULL) {
++        if (anInterface->ifa_addr->sa_family == AF_INET) {
++            bool ret = necessaryFlagsSetOnInterface(anInterface);
++            if (ret) {
++                /* ignore sockets connecting to the touchbar on MacBooks */
++                if (strncmp(anInterface->ifa_name, "bridge", 6) != 0) {
++                    if (bestIP) {
++                        FREENULL(bestIP);
++                    }
++                    bestIP = strdup(inet_ntoa(((struct sockaddr_in *)anInterface->ifa_addr)->sin_addr));
++                }
++            }
++        }
++
++        anInterface = anInterface->ifa_next;
++    }
++    freeifaddrs(listOfInterfaces);
++
++    return bestIP;
++}
++
++#else
++
+ static char *getIpv4ForMulticast()
+ {
+     return NULL;
+@@ -1684,6 +1730,8 @@ static char *getIpv4ForMulticast()
+ 
+ #endif
+ 
++#endif
++
+ #endif /* _WIN32 */
+ 
+ UpnpInstanceWrapper *UpnpInstanceWrapper::get(vlc_object_t *p_obj, services_discovery_t *p_sd)
+@@ -1720,6 +1768,7 @@ UpnpInstanceWrapper *UpnpInstanceWrapper::get(vlc_object_t *p_obj, services_disc
+         /* If UpnpInit2 isnt available, initialize on first IPv4-capable interface */
+         char *psz_hostip = getIpv4ForMulticast();
+         int i_res = UpnpInit( psz_hostip, 0 );
++        msg_Info( p_obj, "Initializing libupnp with host IP '%s'", psz_hostip ? psz_hostip : "default" );
+         free(psz_hostip);
+     #endif /* UPNP_ENABLE_IPV6 */
+         if( i_res != UPNP_E_SUCCESS )
+-- 
+2.32.0 (Apple Git-132)
+

@@ -1,7 +1,7 @@
-From 157fe121f436e49d593dd6d501b1e031425190aa Mon Sep 17 00:00:00 2001
+From f2799c05ac2327ab30e461d7bc23d30edcc087ec Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:18:54 +0100
-Subject: [PATCH 55/58] dsm: reduce netbios_ns lifetime
+Subject: [PATCH 55/59] dsm: reduce netbios_ns lifetime
 
 It's only needed from get_address(), from Open().
 ---

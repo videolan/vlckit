@@ -1,7 +1,7 @@
-From 5fd9d97f848cb10d9d2c4be745068265273313ed Mon Sep 17 00:00:00 2001
+From fcf486f0a76ddb56cec10fb474ae8aaf4e484c79 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
-Subject: [PATCH 07/58] contrib/gcrypt: fix tvOS compilation
+Subject: [PATCH 07/59] contrib/gcrypt: fix tvOS compilation
 
 ---
  .../src/gcrypt/fix-sha1-ssse3-for-clang.patch    | 16 ++++++++++++++++
