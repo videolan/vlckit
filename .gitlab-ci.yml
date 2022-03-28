@@ -12,8 +12,7 @@ variables:
 
 .continous-job-base:
     tags:
-        - catalina
-        - amd64
+        - monterey-m1-lasvegas
     stage: build
     only:
         - merge_requests
@@ -55,8 +54,7 @@ continous-VLCKit:
 
 .dev-artifacts-job-base:
     tags:
-        - catalina
-        - amd64
+        - monterey-m1-lasvegas
     stage: build
     rules:
         - if: '$CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "videolan/VLCKit"'
@@ -127,8 +125,7 @@ pages:
 
 .release-job-base:
     tags:
-        - catalina
-        - amd64
+        - monterey-m1-lasvegas
     stage: release
     only:
         - tags
