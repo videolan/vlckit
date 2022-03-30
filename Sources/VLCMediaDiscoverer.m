@@ -24,10 +24,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCMediaDiscoverer.h"
-#import "VLCLibrary.h"
-#import "VLCLibVLCBridging.h"
-#import "VLCEventManager.h"
+#import <VLCMediaDiscoverer.h>
+#import <VLCLibrary.h>
+#import <VLCLibVLCBridging.h>
+#import <VLCEventManager.h>
 
 #include <vlc/vlc.h>
 #include <vlc/libvlc.h>

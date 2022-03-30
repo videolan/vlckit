@@ -29,19 +29,16 @@
 #if TARGET_OS_IPHONE
 # import <CoreGraphics/CoreGraphics.h>
 # import <UIKit/UIKit.h>
-#endif
-#import "VLCMedia.h"
-#import "VLCTime.h"
-#import "VLCAudio.h"
+#endif // TARGET_OS_IPHONE
 
+
+@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer;
 #if !TARGET_OS_IPHONE
-@class VLCVideoView;
-@class VLCVideoLayer;
-#endif
-
-@class VLCLibrary;
-@class VLCMediaPlayer;
+@class VLCVideoView, VLCVideoLayer;
+#endif // !TARGET_OS_IPHONE
+#if !TARGET_OS_TV
 @class VLCRendererItem;
+#endif // !TARGET_OS_TV
 
 /* Notification Messages */
 OBJC_VISIBLE OBJC_EXTERN
@@ -900,7 +897,7 @@ NSString *const VLCTitleDescriptionIsMenu;
 
 #pragma mark -
 #pragma mark Renderer
-
+#if !TARGET_OS_TV
 /**
  * Sets a `VLCRendererItem` to the current media player
  * \param item `VLCRendererItem` discovered by `VLCRendererDiscoverer`
@@ -909,6 +906,6 @@ NSString *const VLCTitleDescriptionIsMenu;
  * \see VLCRendererDiscoverer
  * \see VLCRendererItem
  */
-- (BOOL)setRendererItem:(VLCRendererItem *)item;
-
+- (BOOL)setRendererItem:(nullable VLCRendererItem *)item;
+#endif // !TARGET_OS_TV
 @end

@@ -22,7 +22,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCEventManager.h"
+#import <VLCEventManager.h>
 #import <pthread.h>
 
 /**

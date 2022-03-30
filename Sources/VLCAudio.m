@@ -22,8 +22,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCAudio.h"
-#import "VLCLibVLCBridging.h"
+#import <VLCAudio.h>
+#import <VLCLibVLCBridging.h>
 
 #define VOLUME_STEP                6
 #define VOLUME_MAX                 200

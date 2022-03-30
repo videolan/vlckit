@@ -26,8 +26,8 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#import "VLCMediaList.h"
-#import "VLCTime.h"
+
+@class VLCTime;
 
 NS_ASSUME_NONNULL_BEGIN
 

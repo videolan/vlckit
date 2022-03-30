@@ -25,10 +25,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCMediaList.h"
-#import "VLCLibrary.h"
-#import "VLCEventManager.h"
-#import "VLCLibVLCBridging.h"
+#import <VLCMediaList.h>
+#import <VLCLibrary.h>
+#import <VLCEventManager.h>
+#import <VLCLibVLCBridging.h>
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif

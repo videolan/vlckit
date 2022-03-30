@@ -21,10 +21,10 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCEmbeddedDialogProvider.h"
-#import "VLCLibrary.h"
-#import "VLCiOSLegacyDialogProvider.h"
-#import "VLCEmbeddedDialogProvider.h"
+#import <VLCEmbeddedDialogProvider.h>
+#import <VLCLibrary.h>
+#import <VLCiOSLegacyDialogProvider.h>
+#import <VLCEmbeddedDialogProvider.h>
 
 @interface VLCEmbeddedDialogProvider ()
 {

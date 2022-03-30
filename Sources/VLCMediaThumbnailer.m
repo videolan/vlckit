@@ -22,9 +22,9 @@
 
 #import <vlc/vlc.h>
 
-#import "VLCMediaThumbnailer.h"
-#import "VLCLibVLCBridging.h"
-
+#import <VLCMediaThumbnailer.h>
+#import <VLCLibVLCBridging.h>
+#import <VLCTime.h>
 
 @interface VLCMediaThumbnailer ()
 {

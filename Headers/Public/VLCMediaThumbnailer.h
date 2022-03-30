@@ -25,8 +25,7 @@
 # import <CoreGraphics/CoreGraphics.h>
 #endif
 
-@class VLCMedia;
-@class VLCLibrary;
+@class VLCMedia, VLCLibrary;
 @protocol VLCMediaThumbnailerDelegate;
 
 /**

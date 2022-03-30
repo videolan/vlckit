@@ -24,8 +24,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import "VLCLibrary.h"
-#import "VLCiOSLegacyDialogProvider.h"
+#import <VLCLibrary.h>
+#import <VLCiOSLegacyDialogProvider.h>
 
 @interface VLCiOSLegacyDialogProvider ()
 {
