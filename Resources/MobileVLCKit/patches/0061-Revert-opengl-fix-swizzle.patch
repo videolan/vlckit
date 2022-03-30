@@ -1,0 +1,26 @@
+From 4315ad819c7c04b2dc5788f67d6ebd72a9c04c11 Mon Sep 17 00:00:00 2001
+From: Soomin Lee <soomin@videolabs.io>
+Date: Wed, 30 Mar 2022 10:54:58 +0200
+Subject: [PATCH 61/61] Revert "opengl: fix swizzle"
+
+This reverts commit 4082f4f2f46b60fd4c7d4d31ba26c3d890ad03a4.
+---
+ modules/video_output/opengl/fragment_shaders.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/video_output/opengl/fragment_shaders.c b/modules/video_output/opengl/fragment_shaders.c
+index 2d86a6b32f..cfe08473f5 100644
+--- a/modules/video_output/opengl/fragment_shaders.c
++++ b/modules/video_output/opengl/fragment_shaders.c
+@@ -206,7 +206,7 @@ tc_yuv_base_init(opengl_tex_converter_t *tc, GLenum tex_target,
+         else
+         {
+             swizzle_per_tex[0] = "x";
+-            swizzle_per_tex[1] = "xy";
++            swizzle_per_tex[1] = "xa";
+         }
+     }
+     else if (desc->plane_count == 1)
+-- 
+2.32.0 (Apple Git-132)
+
