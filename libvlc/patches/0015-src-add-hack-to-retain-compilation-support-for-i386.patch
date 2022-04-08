@@ -1,7 +1,7 @@
-From 956fc64498e8e628811e5bb9e20deae41ca48b7d Mon Sep 17 00:00:00 2001
+From 4d38d80cd2cccfad4a91338f8ed9da85461a74e3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 20 Aug 2020 13:56:14 +0200
-Subject: [PATCH 19/20] src: add hack to retain compilation support for i386
+Subject: [PATCH 15/24] src: add hack to retain compilation support for i386
 
 This leads to potentially undefined behavior when using the 32bit iOS
 Simulator. This code path never ends-up in production.
@@ -27,7 +27,7 @@ index fc62eb7fff..fa87f72ec5 100644
      int (*compar)(const void *, const void *, void *);
      void *arg;
 diff --git a/src/posix/thread.c b/src/posix/thread.c
-index 5e193e0a80..a4ca1d18d9 100644
+index 78045d9746..99ef90eeba 100644
 --- a/src/posix/thread.c
 +++ b/src/posix/thread.c
 @@ -200,7 +200,11 @@ void vlc_join(vlc_thread_t th, void **result)
@@ -43,5 +43,5 @@ index 5e193e0a80..a4ca1d18d9 100644
       static_assert (UINTPTR_MAX <= ULONG_MAX, "Type size mismatch");
       return (uintptr_t)(void *)&dummy;
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

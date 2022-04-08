@@ -1,7 +1,7 @@
-From e023168fba33289eac92823158b1bbb31d824e6d Mon Sep 17 00:00:00 2001
+From 21b472e2f2d32e0fe7f8245ba2d431991ed35062 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 26 Oct 2020 15:47:13 +0100
-Subject: [PATCH 10/20] extras: disable rav1e for iOS and tvOS
+Subject: [PATCH 09/24] extras: disable rav1e for iOS and tvOS
 
 ---
  extras/package/apple/build.conf | 2 ++
@@ -27,5 +27,5 @@ index fe91097ca0..cd475d1147 100644
  
  #
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

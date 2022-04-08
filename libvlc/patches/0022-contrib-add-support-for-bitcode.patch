@@ -1,0 +1,54 @@
+From eb827132cdfcb797b78b3e3e845f36ae6b4cf171 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Wed, 9 Mar 2022 08:15:53 +0100
+Subject: [PATCH 22/24] contrib: add support for bitcode
+
+---
+ contrib/bootstrap    | 4 ++++
+ contrib/src/main.mak | 8 ++++++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/contrib/bootstrap b/contrib/bootstrap
+index 68db3fbf7c..9cdb8e6076 100755
+--- a/contrib/bootstrap
++++ b/contrib/bootstrap
+@@ -306,6 +306,10 @@ case "${OS}" in
+ 		then
+ 			add_make_enabled "HAVE_TVOS"
+ 		fi
++		if test "$BUILDWITHBITCODE"
++		then
++			add_make_enabled "HAVE_BITCODE_ENABLED"
++		fi
+ 		;;
+ 	*bsd*)
+ 		add_make_enabled "HAVE_BSD"
+diff --git a/contrib/src/main.mak b/contrib/src/main.mak
+index 570d24bea5..3e7acc7cab 100644
+--- a/contrib/src/main.mak
++++ b/contrib/src/main.mak
+@@ -350,6 +350,11 @@ CFLAGS := $(CFLAGS) -g -O2
+ CXXFLAGS := $(CXXFLAGS) -g -O2
+ endif
+ 
++ifdef HAVE_BITCODE_ENABLED
++CFLAGS := $(CFLAGS) -fembed-bitcode
++CXXFLAGS := $(CXXFLAGS) -fembed-bitcode
++endif
++
+ HOSTVARS := $(HOSTTOOLS) \
+ 	CPPFLAGS="$(CPPFLAGS)" \
+ 	CFLAGS="$(CFLAGS)" \
+@@ -463,6 +468,9 @@ MESONFLAGS += --buildtype debug
+ else
+ MESONFLAGS += --buildtype debugoptimized
+ endif
++ifdef HAVE_BITCODE_ENABLED
++MESONFLAGS += -Db_bitcode=true
++endif
+ 
+ ifdef HAVE_CROSS_COMPILE
+ # When cross-compiling meson uses the env vars like
+-- 
+2.32.0 (Apple Git-132)
+

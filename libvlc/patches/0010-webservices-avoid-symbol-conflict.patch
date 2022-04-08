@@ -1,7 +1,7 @@
-From 95667eed9fc95cf29d5a1846c5db2627d7586a9b Mon Sep 17 00:00:00 2001
+From e38fda89669f11777c9d5ff9165228af85ea9f4e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 25 Jan 2021 19:56:01 +0100
-Subject: [PATCH 11/20] webservices: avoid symbol conflict
+Subject: [PATCH 10/24] webservices: avoid symbol conflict
 
 ---
  modules/misc/webservices/json.c                   | 2 +-
@@ -36,7 +36,7 @@ index a4da78ade3..8e34640071 100644
  
  json_value * json_parse_ex
 diff --git a/modules/stream_out/chromecast/chromecast_ctrl.cpp b/modules/stream_out/chromecast/chromecast_ctrl.cpp
-index 34cdb6ae33..d0bae40217 100644
+index e0b3ef7a9a..81721fd639 100644
 --- a/modules/stream_out/chromecast/chromecast_ctrl.cpp
 +++ b/modules/stream_out/chromecast/chromecast_ctrl.cpp
 @@ -672,7 +672,7 @@ void intf_sys_t::processAuthMessage( const castchannel::CastMessage& msg )
@@ -76,5 +76,5 @@ index 34cdb6ae33..d0bae40217 100644
      json_value_free(p_data);
  
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

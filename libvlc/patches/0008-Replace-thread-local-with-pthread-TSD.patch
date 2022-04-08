@@ -1,7 +1,7 @@
-From ee1fd591c2441f28e867932c092c0273b3a2dbf1 Mon Sep 17 00:00:00 2001
+From 5afd2adf9c9b88d51dba2bb927d70d3966def31e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 09/20] Replace thread local with pthread TSD
+Subject: [PATCH 08/24] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
@@ -9,7 +9,7 @@ Subject: [PATCH 09/20] Replace thread local with pthread TSD
  2 files changed, 78 insertions(+)
 
 diff --git a/src/misc/interrupt.c b/src/misc/interrupt.c
-index a5a5281788..f1f9eec5db 100644
+index 806375d287..229c566123 100644
 --- a/src/misc/interrupt.c
 +++ b/src/misc/interrupt.c
 @@ -43,13 +43,26 @@
@@ -162,7 +162,7 @@ index a5a5281788..f1f9eec5db 100644
      if (ctx == NULL)
          return poll(fds, nfds, timeout);
  
-@@ -565,7 +620,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
+@@ -561,7 +616,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
  
  int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
  {
@@ -175,7 +175,7 @@ index a5a5281788..f1f9eec5db 100644
          return vlc_poll(fds, nfds, timeout);
  
 diff --git a/src/misc/variables.c b/src/misc/variables.c
-index 74404e71bf..21f748ca1d 100644
+index 630d359ba5..a93a10d1ad 100644
 --- a/src/misc/variables.c
 +++ b/src/misc/variables.c
 @@ -1137,7 +1137,17 @@ error:
@@ -222,5 +222,5 @@ index 74404e71bf..21f748ca1d 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

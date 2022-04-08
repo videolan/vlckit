@@ -1,7 +1,7 @@
-From bfc496ec8b0290739dbc6a535c7a6b9129b41fa1 Mon Sep 17 00:00:00 2001
+From 22a1ccd1bfbed4eec50201c82f5904a184c14ec1 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 08/20] lib: save configuration after playback/parse
+Subject: [PATCH 07/24] lib: save configuration after playback/parse
 
 The configuration is also saved when the libvlc instance is terminated but this doesn't happen often. Indeed, apps using libvlc will generally hold the libvlc instance during all its lifetime and won't be able to clean it up in a lot of case (app killed by OS to free up memory, crashes, reboot, force close...).
 ---
@@ -10,10 +10,10 @@ The configuration is also saved when the libvlc instance is terminated but this 
  2 files changed, 4 insertions(+)
 
 diff --git a/lib/media.c b/lib/media.c
-index 85ae45e11d..498502f97f 100644
+index 0cba403598..741aef3821 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -670,6 +670,8 @@ void libvlc_media_release( libvlc_media_t *p_md )
+@@ -668,6 +668,8 @@ void libvlc_media_release( libvlc_media_t *p_md )
      input_item_Release( p_md->p_input_item );
  
      libvlc_event_manager_destroy( &p_md->event_manager );
@@ -23,10 +23,10 @@ index 85ae45e11d..498502f97f 100644
      free( p_md );
  }
 diff --git a/lib/media_player.c b/lib/media_player.c
-index e4ad60f945..aa43b2cf9e 100644
+index 5a76610d89..0156ebc9e3 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -969,6 +969,8 @@ void libvlc_media_player_pause( libvlc_media_player_t *p_mi )
+@@ -970,6 +970,8 @@ void libvlc_media_player_pause( libvlc_media_player_t *p_mi )
      vlc_player_TogglePause(player);
  
      vlc_player_Unlock(player);
@@ -36,5 +36,5 @@ index e4ad60f945..aa43b2cf9e 100644
  
  /**************************************************************************
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

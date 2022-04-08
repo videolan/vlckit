@@ -1,19 +1,22 @@
-From 572a4b180be9c01e66073c1565bdbf35b3e1034c Mon Sep 17 00:00:00 2001
+From 7e4499756ac3b8d67432c3008dc88c8a395436e4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 17/20] Enable System DL
+Subject: [PATCH 17/24] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
 
+This enforces the use of the audiotoolbox decoders for AC-3 and E-AC-3
+as introduced in iOS 9 and disables the use of the MLP decoder to be in
+compliance with the App Store ToS.
 ---
- contrib/src/ffmpeg/patch-as-patch-can.patch | 20 ++++++++++++++++++++
- contrib/src/ffmpeg/rules.mak                |  4 ++++
- 2 files changed, 24 insertions(+)
- create mode 100644 contrib/src/ffmpeg/patch-as-patch-can.patch
+ .../avcodec-enable-audiotoolbox-ac3.patch     | 20 +++++++++++++++++++
+ contrib/src/ffmpeg/rules.mak                  |  9 +++++++++
+ 2 files changed, 29 insertions(+)
+ create mode 100644 contrib/src/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
 
-diff --git a/contrib/src/ffmpeg/patch-as-patch-can.patch b/contrib/src/ffmpeg/patch-as-patch-can.patch
+diff --git a/contrib/src/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch b/contrib/src/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
 new file mode 100644
 index 0000000000..2d60cf7140
 --- /dev/null
-+++ b/contrib/src/ffmpeg/patch-as-patch-can.patch
++++ b/contrib/src/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
 @@ -0,0 +1,20 @@
 +Only in ffmpeg: .DS_Store
 +diff -ru ffmpeg/libavcodec/audiotoolboxdec.c ffmpeg-fix/libavcodec/audiotoolboxdec.c
@@ -36,27 +39,32 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index e1efe53a14..51a4b87ec3 100644
+index c30eeb5a4c..d5557c4ca1 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -27,6 +27,9 @@ FFMPEGCONF = \
- 	--disable-encoder=vorbis \
- 	--disable-decoder=opus \
- 	--enable-libgsm \
+@@ -34,6 +34,12 @@ FFMPEGCONF = \
+ ifdef HAVE_DARWIN_OS
+ FFMPEGCONF += \
+ 	--disable-securetransport
++ifdef HAVE_IOS
++FFMPEGCONF += \
 +	--disable-decoder=mlp \
 +	--disable-demuxer=mlp \
-+	--disable-parser=mlp \
- 	--disable-debug \
- 	--disable-avdevice \
- 	--disable-devices \
-@@ -250,6 +253,7 @@ ifdef USE_LIBAV
- 	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
++	--disable-parser=mlp
++endif
  endif
+ 
+ DEPS_ffmpeg = zlib gsm
+@@ -223,6 +229,9 @@ ffmpeg: ffmpeg-$(FFMPEG_BASENAME).tar.xz .sum-ffmpeg
+ 	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-vp9-Do-not-destroy-uninitialized-mutexes-con.patch
  	$(APPLY) $(SRC)/ffmpeg/0001-ffmpeg-add-target_os-support-for-emscripten.patch
-+	$(APPLY) $(SRC)/ffmpeg/patch-as-patch-can.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0001-dxva2_hevc-don-t-use-frames-as-reference-if-they-are.patch
++ifdef HAVE_IOS
++	$(APPLY) $(SRC)/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
++endif
  	$(MOVE)
  
  .ffmpeg: ffmpeg
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

@@ -1,0 +1,188 @@
+From 094011e30b84f9b0d7d27315a135c6eadf3cec0f Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Fri, 8 Apr 2022 22:33:01 +0200
+Subject: [PATCH 21/24] Fix compilation for 32bit runtimes without thread_local
+
+---
+ compat/tdestroy.c    | 67 ++++++++++++++++++++++++++------------------
+ include/vlc_fixups.h | 10 ++++---
+ src/misc/rcu.c       |  5 ++++
+ 3 files changed, 50 insertions(+), 32 deletions(-)
+
+diff --git a/compat/tdestroy.c b/compat/tdestroy.c
+index 6bb3480957..5c54881553 100644
+--- a/compat/tdestroy.c
++++ b/compat/tdestroy.c
+@@ -3,7 +3,7 @@
+  * @brief replacement for GNU tdestroy()
+  */
+ /*****************************************************************************
+- * Copyright (C) 2009, 2018 Rémi Denis-Courmont
++ * Copyright (C) 2009 Rémi Denis-Courmont
+  *
+  * This program is free software; you can redistribute it and/or modify it
+  * under the terms of the GNU Lesser General Public License as published by
+@@ -24,77 +24,88 @@
+ # include "config.h"
+ #endif
+ 
+-#include <assert.h>
++#if defined(HAVE_SEARCH_H) && !defined(HAVE_TDESTROY) && defined(HAVE_TFIND)
++
+ #include <stdlib.h>
+-#ifdef HAVE_SEARCH_H
+-# include <search.h>
+-#endif
++#include <assert.h>
+ 
+-#ifdef HAVE_TFIND
+-static __thread struct
++#include <vlc_common.h>
++#include <search.h>
++
++static struct
+ {
+     const void **tab;
+     size_t count;
+-} list = { NULL, 0 };
++    vlc_mutex_t lock;
++} list = { NULL, 0, VLC_STATIC_MUTEX };
+ 
+-static void list_nodes(const void *node, const VISIT which, const int depth)
++static void list_nodes (const void *node, const VISIT which, const int depth)
+ {
+     (void) depth;
+ 
+     if (which != postorder && which != leaf)
+         return;
+ 
+-    const void **tab = realloc(list.tab, sizeof (*tab) * (list.count + 1));
+-    if (tab == NULL)
+-        abort();
++    const void **tab = realloc (list.tab, sizeof (*tab) * (list.count + 1));
++    if (unlikely(tab == NULL))
++        abort ();
+ 
+     tab[list.count] = *(const void **)node;
+     list.tab = tab;
+     list.count++;
+ }
+ 
+-static __thread const void *smallest;
++static struct
++{
++    const void *node;
++    vlc_mutex_t lock;
++} smallest = { NULL, VLC_STATIC_MUTEX };
+ 
+-static int cmp_smallest(const void *a, const void *b)
++static int cmp_smallest (const void *a, const void *b)
+ {
+     if (a == b)
+         return 0;
+-    if (a == smallest)
++    if (a == smallest.node)
+         return -1;
+-    if (b == smallest)
++    if (likely(b == smallest.node))
+         return +1;
+-    abort();
++    abort ();
+ }
+ 
+-void tdestroy(void *root, void (*freenode)(void *))
++void vlc_tdestroy (void *root, void (*freenode) (void *))
+ {
+     const void **tab;
+     size_t count;
+ 
+-    assert(freenode != NULL);
++    assert (freenode != NULL);
+ 
+     /* Enumerate nodes in order */
+-    assert(list.count == 0);
+-    twalk(root, list_nodes);
++    vlc_mutex_lock (&list.lock);
++    assert (list.count == 0);
++    twalk (root, list_nodes);
+     tab = list.tab;
+     count = list.count;
+     list.tab = NULL;
+     list.count = 0;
++    vlc_mutex_unlock (&list.lock);
+ 
+     /* Destroy the tree */
++    vlc_mutex_lock (&smallest.lock);
+     for (size_t i = 0; i < count; i++)
+     {
+-         void *node = (void *)(tab[i]);
++         void *node  = tab[i];
+ 
+-         smallest = node;
+-         node = tdelete(node, &root, cmp_smallest);
+-         assert(node != NULL);
++         smallest.node = node;
++         node = tdelete (node, &root, cmp_smallest);
++         assert (node != NULL);
+     }
++    vlc_mutex_unlock (&smallest.lock);
+     assert (root == NULL);
+ 
+     /* Destroy the nodes */
+     for (size_t i = 0; i < count; i++)
+-         freenode((void *)(tab[i]));
+-    free(tab);
++         freenode ((void *)(tab[i]));
++    free (tab);
+ }
+-#endif /* HAVE_TFIND */
++
++#endif
+diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
+index a8481e4b53..69647ad553 100644
+--- a/include/vlc_fixups.h
++++ b/include/vlc_fixups.h
+@@ -488,6 +488,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
+ void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int depth) );
+ void *lfind( const void *key, const void *base, size_t *nmemb,
+              size_t size, int(*cmp)(const void *, const void *) );
++void tdestroy( void *root, void (*free_node)(void *nodep) );
++#else // HAVE_SEARCH_H
++# ifndef HAVE_TDESTROY
++void vlc_tdestroy( void *, void (*)(void *) );
++#  define tdestroy vlc_tdestroy
++# endif
+ #endif /* HAVE_SEARCH_H */
+ 
+ #ifdef _WIN64
+@@ -499,10 +505,6 @@ void *lfind( const void *key, const void *base, size_t *nmemb,
+          lfind((a),(b), &(unsigned){ (*(c) > UINT_MAX) ? UINT_MAX : *(c) }, (d),(e))
+ #endif /* _WIN64 */
+ 
+-#ifndef HAVE_TDESTROY
+-void tdestroy( void *root, void (*free_node)(void *nodep) );
+-#endif
+-
+ /* sys/auxv.h */
+ #ifndef HAVE_GETAUXVAL
+ unsigned long getauxval(unsigned long);
+diff --git a/src/misc/rcu.c b/src/misc/rcu.c
+index 63d913c247..0577f431bb 100644
+--- a/src/misc/rcu.c
++++ b/src/misc/rcu.c
+@@ -40,7 +40,12 @@ struct vlc_rcu_thread {
+     uintptr_t recursion;
+ };
+ 
++
++#if defined (__i386__)
++static struct vlc_rcu_thread current;
++#else
+ static _Thread_local struct vlc_rcu_thread current;
++#endif
+ 
+ bool vlc_rcu_read_held(void)
+ {
+-- 
+2.32.0 (Apple Git-132)
+

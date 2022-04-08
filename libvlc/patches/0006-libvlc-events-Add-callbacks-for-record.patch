@@ -1,7 +1,7 @@
-From 4a7578e45e9340b01ab8513fb7c6f27d585b7608 Mon Sep 17 00:00:00 2001
+From 6a571b61af7fc3ceb2aef27699d4efe357259130 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
-Subject: [PATCH 07/20] libvlc: events: Add callbacks for record
+Subject: [PATCH 06/24] libvlc: events: Add callbacks for record
 
 ---
  include/vlc/libvlc_events.h |  9 +++++++++
@@ -9,7 +9,7 @@ Subject: [PATCH 07/20] libvlc: events: Add callbacks for record
  2 files changed, 32 insertions(+)
 
 diff --git a/include/vlc/libvlc_events.h b/include/vlc/libvlc_events.h
-index 3bfa63eda6..e754335901 100644
+index 7dceea9ac7..d42789f9a8 100644
 --- a/include/vlc/libvlc_events.h
 +++ b/include/vlc/libvlc_events.h
 @@ -31,6 +31,8 @@
@@ -21,7 +21,7 @@ index 3bfa63eda6..e754335901 100644
  # endif
  
  typedef struct libvlc_renderer_item_t libvlc_renderer_item_t;
-@@ -152,6 +154,7 @@ enum libvlc_event_e {
+@@ -147,6 +149,7 @@ enum libvlc_event_e {
       */
      libvlc_MediaPlayerTitleSelectionChanged,
      libvlc_MediaPlayerChapterChanged,
@@ -29,7 +29,7 @@ index 3bfa63eda6..e754335901 100644
  
      /**
       * A \link #libvlc_media_t media item\endlink was added to a
-@@ -405,6 +408,12 @@ typedef struct libvlc_event_t
+@@ -400,6 +403,12 @@ typedef struct libvlc_event_t
              const char *device;
          } media_player_audio_device;
  
@@ -43,10 +43,10 @@ index 3bfa63eda6..e754335901 100644
          {
              libvlc_renderer_item_t *item;
 diff --git a/lib/media_player.c b/lib/media_player.c
-index de9a9c5b34..e4ad60f945 100644
+index 6a1731e274..5a76610d89 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -110,6 +110,28 @@ on_state_changed(vlc_player_t *player, enum vlc_player_state new_state,
+@@ -109,6 +109,28 @@ on_state_changed(vlc_player_t *player, enum vlc_player_state new_state,
      libvlc_event_send(&mp->event_manager, &event);
  }
  
@@ -75,7 +75,7 @@ index de9a9c5b34..e4ad60f945 100644
  static void
  on_error_changed(vlc_player_t *player, enum vlc_player_error error, void *data)
  {
-@@ -504,6 +526,7 @@ static const struct vlc_player_cbs vlc_player_cbs = {
+@@ -503,6 +525,7 @@ static const struct vlc_player_cbs vlc_player_cbs = {
      .on_media_subitems_changed = on_media_subitems_changed,
      .on_cork_changed = on_cork_changed,
      .on_vout_changed = on_vout_changed,
@@ -84,5 +84,5 @@ index de9a9c5b34..e4ad60f945 100644
  
  static const struct vlc_player_aout_cbs vlc_player_aout_cbs = {
 -- 
-2.30.1 (Apple Git-130)
+2.32.0 (Apple Git-132)
 

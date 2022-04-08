@@ -1,0 +1,24 @@
+From a73e002cd531ce3b06f02332bc4ad9aab4917f8a Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Tue, 12 Apr 2022 08:00:23 +0200
+Subject: [PATCH 24/24] appleOS build script: disable decklink
+
+---
+ extras/package/apple/build.conf | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/extras/package/apple/build.conf b/extras/package/apple/build.conf
+index cd475d1147..e24903ab8e 100644
+--- a/extras/package/apple/build.conf
++++ b/extras/package/apple/build.conf
+@@ -72,6 +72,7 @@ export VLC_CONTRIB_OPTIONS_BASE=(
+     --enable-taglib
+     --disable-medialibrary
+     --disable-sqlite
++    --disable-decklink
+ )
+ 
+ # Additional contrib bootstrap options for macOS
+-- 
+2.32.0 (Apple Git-132)
+
