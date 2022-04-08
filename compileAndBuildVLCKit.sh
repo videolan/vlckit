@@ -492,8 +492,6 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     make .buildgas
     make .buildxz
     make .buildtar
-    make .buildmeson
-    make .buildninja
     spopd #${VLCROOT}/extras/tools
 fi
 
