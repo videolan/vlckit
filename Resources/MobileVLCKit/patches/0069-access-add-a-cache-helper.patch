@@ -1,7 +1,7 @@
-From f8c09e28ac230ccd0c39f73bc91506d1f960cc46 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi@remlab.net>
+From b7111d64bdf650dbddb681517ab99c3c1b5f2b50 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
 Date: Sun, 10 Jun 2018 20:36:06 +0300
-Subject: [PATCH 46/61] access: add a cache helper
+Subject: [PATCH 69/71] access: add a cache helper
 
 Helper that can be used by any accesses, that will save up to 5 contexts
 up to 5 seconds (both configurable with a define).
@@ -21,10 +21,10 @@ Signed-off-by: Thomas Guillem <thomas@gllm.fr>
 ---
  include/vlc_list.h         | 381 +++++++++++++++++++++++++++++++++++++
  modules/access/Makefile.am |   8 +
- modules/access/cache.c     | 207 ++++++++++++++++++++
- modules/access/cache.h     | 134 +++++++++++++
+ modules/access/cache.c     | 211 ++++++++++++++++++++
+ modules/access/cache.h     | 135 +++++++++++++
  src/Makefile.am            |   1 +
- 5 files changed, 731 insertions(+)
+ 5 files changed, 736 insertions(+)
  create mode 100644 include/vlc_list.h
  create mode 100644 modules/access/cache.c
  create mode 100644 modules/access/cache.h
@@ -434,10 +434,10 @@ index f295947233..8be84055fa 100644
 +noinst_LTLIBRARIES += libvlc_access_cache.la
 diff --git a/modules/access/cache.c b/modules/access/cache.c
 new file mode 100644
-index 0000000000..19c79cf4c3
+index 0000000000..a50cd4206a
 --- /dev/null
 +++ b/modules/access/cache.c
-@@ -0,0 +1,207 @@
+@@ -0,0 +1,211 @@
 +/*****************************************************************************
 + * cache.c: access cache helper
 + *****************************************************************************
@@ -478,7 +478,6 @@ index 0000000000..19c79cf4c3
 +    free(entry->url);
 +    free(entry->username);
 +
-+    entry->free_cb(entry->context);
 +    free(entry);
 +}
 +
@@ -526,6 +525,7 @@ index 0000000000..19c79cf4c3
 +
 +                vlc_mutex_unlock(&cache->lock);
 +
++                entry->free_cb(entry->context);
 +                vlc_access_cache_entry_Delete(entry);
 +
 +                vlc_mutex_lock(&cache->lock);
@@ -576,7 +576,10 @@ index 0000000000..19c79cf4c3
 +
 +    struct vlc_access_cache_entry *entry;
 +    vlc_list_foreach(entry, &cache->entries, node)
++    {
++        entry->free_cb(entry->context);
 +        vlc_access_cache_entry_Delete(entry);
++    }
 +
 +    vlc_mutex_destroy(&cache->lock);
 +    vlc_cond_destroy(&cache->cond);
@@ -593,6 +596,7 @@ index 0000000000..19c79cf4c3
 +    if (!cache->running)
 +    {
 +        vlc_mutex_unlock(&cache->lock);
++        entry->free_cb(entry->context);
 +        vlc_access_cache_entry_Delete(entry);
 +        return;
 +    }
@@ -647,10 +651,10 @@ index 0000000000..19c79cf4c3
 +}
 diff --git a/modules/access/cache.h b/modules/access/cache.h
 new file mode 100644
-index 0000000000..4908a6384b
+index 0000000000..4c1c136719
 --- /dev/null
 +++ b/modules/access/cache.h
-@@ -0,0 +1,134 @@
+@@ -0,0 +1,135 @@
 +/*****************************************************************************
 + * cache.h: access cache helper
 + *****************************************************************************
@@ -737,6 +741,7 @@ index 0000000000..4908a6384b
 +    return entry;
 +}
 +
++/* Delete the cache entry without firing the free_cb */
 +void
 +vlc_access_cache_entry_Delete(struct vlc_access_cache_entry *entry);
 +

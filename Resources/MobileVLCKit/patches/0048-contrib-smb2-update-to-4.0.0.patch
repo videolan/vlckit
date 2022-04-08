@@ -1,0 +1,51 @@
+From 7e5f7d7e420f42634b31e6df2e87c22c9f3fbe3a Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Mon, 17 Jan 2022 11:03:13 +0100
+Subject: [PATCH 48/71] contrib: smb2: update to 4.0.0
+
+Changelog since 3.0.0:
+ - Add support for SMB3 encryption
+ - Add support for Anonymous NTLMSSP logins
+ - Add support for readlink.
+ - Add API to notify application of changes to which filehandles are used by
+ libsmb2.
+ - Add suppport for Big Endian DCERPC and allow it to be controlled from the
+ URL.
+ - Add support for 3.1.1 signing
+ - Add support for PS2(EE) and PS3
+ - Fixes to UCS2 when compose characters are used.
+ - Various MacOS fixes
+ - Fix a few NULL dereferences
+
+All theses fixes were already included in the contrib version.
+
+(cherry picked from commit 1cf1991b648df877d7138ef79a3381026be2dd80)
+Signed-off-by: Thomas Guillem <thomas@gllm.fr>
+---
+ contrib/src/smb2/SHA512SUMS | 2 +-
+ contrib/src/smb2/rules.mak  | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/src/smb2/SHA512SUMS b/contrib/src/smb2/SHA512SUMS
+index 03ec9b27c3..7fc28ae10e 100644
+--- a/contrib/src/smb2/SHA512SUMS
++++ b/contrib/src/smb2/SHA512SUMS
+@@ -1 +1 @@
+-ba70459966ec2a927058d16870f5dd73960d38a36c28500b9f1186ad7aca94449b0e8908e4c7ce46cafb8d05a8e93517df615c3ef2dbd559fd409ba98bd3a824  libsmb2-08c1682f44b00fa694836703ed16ec74987f77d2.tar.gz
++d62d05f946d104995faefa8e4fdb3a9121f697a29aac031ddd6f2c3ec9ce97edbd18d84ace56103c19e0f56356b531f7d2db826428aff52abb4930603a5fb50f  libsmb2-4.0.0.tar.gz
+diff --git a/contrib/src/smb2/rules.mak b/contrib/src/smb2/rules.mak
+index b66804d936..811a665c05 100644
+--- a/contrib/src/smb2/rules.mak
++++ b/contrib/src/smb2/rules.mak
+@@ -1,6 +1,6 @@
+ # SMB2
+-SMB2_VERSION := 08c1682f44b00fa694836703ed16ec74987f77d2
+-SMB2_URL := https://github.com/sahlberg/libsmb2/archive/$(SMB2_VERSION).tar.gz
++SMB2_VERSION := 4.0.0
++SMB2_URL := https://github.com/sahlberg/libsmb2/archive/v$(SMB2_VERSION).tar.gz
+ 
+ ifeq ($(call need_pkg,"smb2"),)
+ PKGS_FOUND += smb2
+-- 
+2.32.0 (Apple Git-132)
+

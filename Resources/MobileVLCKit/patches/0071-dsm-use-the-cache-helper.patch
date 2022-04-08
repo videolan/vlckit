@@ -1,7 +1,7 @@
-From d3a11ec98096b5ec91477daae1410b6cef75d928 Mon Sep 17 00:00:00 2001
+From fc3c7b25533414e64dedb2d426940a4c4f35fe23 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 13:17:02 +0100
-Subject: [PATCH 50/61] dsm: use the cache helper
+Subject: [PATCH 71/71] dsm: use the cache helper
 
 Cache the dsm session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.
@@ -14,8 +14,8 @@ Small benchmark, time to open the dsm access:
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>
 ---
  modules/access/Makefile.am  |  2 +-
- modules/access/dsm/access.c | 72 +++++++++++++++++++++++++++++++++++--
- 2 files changed, 71 insertions(+), 3 deletions(-)
+ modules/access/dsm/access.c | 75 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 74 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/Makefile.am b/modules/access/Makefile.am
 index 2e75013bad..eb6ba6f3ff 100644
@@ -31,7 +31,7 @@ index 2e75013bad..eb6ba6f3ff 100644
  access_LTLIBRARIES += $(LTLIBdsm)
  EXTRA_LTLIBRARIES += libdsm_plugin.la
 diff --git a/modules/access/dsm/access.c b/modules/access/dsm/access.c
-index 220b3ff7dc..15b677109b 100644
+index 349b423785..d75ee72eef 100644
 --- a/modules/access/dsm/access.c
 +++ b/modules/access/dsm/access.c
 @@ -49,6 +49,7 @@
@@ -58,7 +58,7 @@ index 220b3ff7dc..15b677109b 100644
  static ssize_t Read( stream_t *, void *, size_t );
  static int Seek( stream_t *, uint64_t );
  static int Control( stream_t *, int, va_list );
-@@ -134,6 +144,8 @@ struct access_sys_t
+@@ -133,6 +143,8 @@ struct access_sys_t
  
      smb_fd              i_fd;               /**< SMB fd for the file we're reading */
      smb_tid             i_tid;              /**< SMB Tree ID we're connected to */
@@ -66,8 +66,8 @@ index 220b3ff7dc..15b677109b 100644
 +    struct vlc_access_cache_entry *cache_entry;
  };
  
- /*****************************************************************************
-@@ -233,6 +245,7 @@ static int OpenNotForced( vlc_object_t *p_this )
+ #if BDSM_VERSION_CURRENT >= 5
+@@ -282,6 +294,7 @@ static int OpenNotForced( vlc_object_t *p_this )
  /*****************************************************************************
   * Close: free unused data structures
   *****************************************************************************/
@@ -75,8 +75,8 @@ index 220b3ff7dc..15b677109b 100644
  static void Close( vlc_object_t *p_this )
  {
      stream_t     *p_access = (stream_t*)p_this;
-@@ -242,11 +255,12 @@ static void Close( vlc_object_t *p_this )
-         netbios_ns_destroy( p_sys->p_ns );
+@@ -289,11 +302,12 @@ static void Close( vlc_object_t *p_this )
+ 
      if( p_sys->i_fd )
          smb_fclose( p_sys->p_session, p_sys->i_fd );
 -    if( p_sys->p_session )
@@ -90,7 +90,7 @@ index 220b3ff7dc..15b677109b 100644
      free( p_sys );
  }
  
-@@ -339,6 +353,14 @@ error:
+@@ -406,6 +420,14 @@ error:
          == NT_STATUS_ACCESS_DENIED ? EACCES : ENOENT;
  }
  
@@ -105,7 +105,7 @@ index 220b3ff7dc..15b677109b 100644
  /* Performs login with existing credentials and ask the user for new ones on
     failure */
  static int login( stream_t *p_access )
-@@ -370,6 +392,30 @@ static int login( stream_t *p_access )
+@@ -437,6 +459,33 @@ static int login( stream_t *p_access )
      }
      psz_domain = credential.psz_realm ? credential.psz_realm : p_sys->netbios_name;
  
@@ -117,8 +117,11 @@ index 220b3ff7dc..15b677109b 100644
 +    {
 +        struct dsm_cache_context *context = cache_entry->context;
 +
++        smb_session_interrupt_register( p_sys );
 +        int ret = smb_fopen( context->session, context->tid,
 +                             p_sys->psz_path, SMB_MOD_RO, &p_sys->i_fd );
++        smb_session_interrupt_unregister();
++
 +        if( ret == DSM_SUCCESS )
 +        {
 +            p_sys->cache_entry = cache_entry;
@@ -133,10 +136,10 @@ index 220b3ff7dc..15b677109b 100644
 +        }
 +    }
 +
+     smb_session_interrupt_register( p_sys );
+ 
      /* Now that we have the required data, let's establish a session */
-     int status = smb_session_connect( p_sys->p_session, p_sys->netbios_name,
-                                       p_sys->addr.s_addr, SMB_TRANSPORT_TCP );
-@@ -426,6 +472,28 @@ static int login( stream_t *p_access )
+@@ -504,6 +553,28 @@ static int login( stream_t *p_access )
      if( !b_guest )
          vlc_credential_store( &credential, p_access );
  
