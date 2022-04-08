@@ -1,18 +1,21 @@
-From 80ba8d217a0c011d2fe9e68f2e4f6fc4297328b6 Mon Sep 17 00:00:00 2001
+From c444dd9d1b1d1cf042b0ade35dbe3ebdd4a98ce4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:18:54 +0100
-Subject: [PATCH 55/61] dsm: reduce netbios_ns lifetime
+Subject: [PATCH 57/71] dsm: reduce netbios_ns lifetime
 
 It's only needed from get_address(), from Open().
+
+(cherry picked from commit d0ffce0f8c6e5f56e0b21f5229d2f14e89f08e79)
+Signed-off-by: Thomas Guillem <thomas@gllm.fr>
 ---
- modules/access/dsm/access.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ modules/access/dsm/access.c | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
 diff --git a/modules/access/dsm/access.c b/modules/access/dsm/access.c
-index c97d09effa..e3a0dd12bf 100644
+index 1c60725de5..8e918d17eb 100644
 --- a/modules/access/dsm/access.c
 +++ b/modules/access/dsm/access.c
-@@ -131,7 +131,6 @@ static int add_item( stream_t *p_access,  struct vlc_readdir_helper *p_rdh,
+@@ -121,7 +121,6 @@ static int add_item( stream_t *p_access,  struct vlc_readdir_helper *p_rdh,
  
  struct access_sys_t
  {
@@ -20,7 +23,7 @@ index c97d09effa..e3a0dd12bf 100644
      smb_session        *p_session;          /**< bdsm SMB Session object */
  
      vlc_url_t           url;
-@@ -190,10 +189,6 @@ static int Open( vlc_object_t *p_this )
+@@ -178,10 +177,6 @@ static int Open( vlc_object_t *p_this )
      if( p_access->p_sys == NULL )
          return VLC_ENOMEM;
  
@@ -31,7 +34,7 @@ index c97d09effa..e3a0dd12bf 100644
      p_sys->p_session = smb_session_new();
      if( p_sys->p_session == NULL )
          goto error;
-@@ -287,8 +282,6 @@ static void Close( vlc_object_t *p_this )
+@@ -274,8 +269,6 @@ static void Close( vlc_object_t *p_this )
      stream_t     *p_access = (stream_t*)p_this;
      access_sys_t *p_sys = p_access->p_sys;
  
@@ -39,8 +42,8 @@ index c97d09effa..e3a0dd12bf 100644
 -        netbios_ns_destroy( p_sys->p_ns );
      if( p_sys->i_fd )
          smb_fclose( p_sys->p_session, p_sys->i_fd );
-     vlc_UrlClean( &p_sys->url );
-@@ -315,10 +308,19 @@ static int get_address( stream_t *p_access )
+     if( p_sys->p_session )
+@@ -301,11 +294,18 @@ static int get_address( stream_t *p_access )
          /* This is not an ip address, let's try netbios/dns resolve */
          struct addrinfo *p_info = NULL;
  
@@ -49,21 +52,20 @@ index c97d09effa..e3a0dd12bf 100644
 +            return VLC_EGENERIC;
 +
          /* Is this a netbios name on this LAN ? */
+         uint32_t ip4_addr;
 -        if( netbios_ns_resolve( p_sys->p_ns, p_sys->url.psz_host,
 -                                NETBIOS_FILESERVER,
--                                &p_sys->addr.s_addr) == 0 )
-+        uint32_t ip4_addr;
+-                                &ip4_addr) == 0 )
 +
 +        int ret = netbios_ns_resolve( p_ns, p_sys->url.psz_host,
-+                                      NETBIOS_FILESERVER,
-+                                      &p_sys->addr.s_addr);
++                                      NETBIOS_FILESERVER, &ip4_addr);
 +        netbios_ns_destroy( p_ns );
 +
 +        if( ret == 0 )
          {
+             p_sys->addr.s_addr = ip4_addr;
              strlcpy( p_sys->netbios_name, p_sys->url.psz_host, 16);
-             return VLC_SUCCESS;
-@@ -342,8 +344,15 @@ static int get_address( stream_t *p_access )
+@@ -330,8 +330,15 @@ static int get_address( stream_t *p_access )
              return VLC_EGENERIC;
      }
  

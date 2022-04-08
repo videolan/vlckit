@@ -1,18 +1,20 @@
-From 3616deb38d3b54e3c55805383abeb52e08d915c3 Mon Sep 17 00:00:00 2001
+From 128b147fdd14a32b24f03095dc48df5a33cc5e29 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 6 Jan 2022 12:59:20 +0100
-Subject: [PATCH 54/61] dsm: make the smb_session interruptible
+Subject: [PATCH 55/71] dsm: make the smb_session interruptible
 
+(cherry picked from commit 36ab008eb5f7b0029512867601f11a7995f3a432)
+Signed-off-by: Thomas Guillem <thomas@gllm.fr>
 ---
  modules/access/dsm/access.c | 59 ++++++++++++++++++++++++++++++++++++-
  1 file changed, 58 insertions(+), 1 deletion(-)
 
 diff --git a/modules/access/dsm/access.c b/modules/access/dsm/access.c
-index 15b677109b..c97d09effa 100644
+index 220b3ff7dc..3281507cc0 100644
 --- a/modules/access/dsm/access.c
 +++ b/modules/access/dsm/access.c
-@@ -148,6 +148,33 @@ struct access_sys_t
-     struct vlc_access_cache_entry *cache_entry;
+@@ -136,6 +136,33 @@ struct access_sys_t
+     smb_tid             i_tid;              /**< SMB Tree ID we're connected to */
  };
  
 +#if BDSM_VERSION_CURRENT >= 5
@@ -45,7 +47,7 @@ index 15b677109b..c97d09effa 100644
  /*****************************************************************************
   * Open: Initialize module's data structures and libdsm
   *****************************************************************************/
-@@ -185,16 +212,22 @@ static int Open( vlc_object_t *p_this )
+@@ -173,16 +200,22 @@ static int Open( vlc_object_t *p_this )
  
      get_path( p_access );
  
@@ -68,7 +70,7 @@ index 15b677109b..c97d09effa 100644
  
      assert(p_sys->i_fd > 0);
  
-@@ -205,9 +238,12 @@ static int Open( vlc_object_t *p_this )
+@@ -193,9 +226,12 @@ static int Open( vlc_object_t *p_this )
      if( smb_stat_get( st, SMB_STAT_ISDIR ) )
      {
          smb_fclose( p_sys->p_session, p_sys->i_fd );
@@ -81,7 +83,7 @@ index 15b677109b..c97d09effa 100644
      msg_Dbg( p_access, "Successfully opened smb://%s", p_access->psz_location );
  
      ACCESS_SET_CALLBACKS( Read, NULL, Control, Seek );
-@@ -572,7 +608,11 @@ static int Seek( stream_t *p_access, uint64_t i_pos )
+@@ -504,7 +540,11 @@ static int Seek( stream_t *p_access, uint64_t i_pos )
  
      msg_Dbg( p_access, "seeking to %"PRId64, i_pos );
  
@@ -94,7 +96,7 @@ index 15b677109b..c97d09effa 100644
          return VLC_EGENERIC;
  
      return VLC_SUCCESS;
-@@ -586,7 +626,10 @@ static ssize_t Read( stream_t *p_access, void *p_buffer, size_t i_len )
+@@ -518,7 +558,10 @@ static ssize_t Read( stream_t *p_access, void *p_buffer, size_t i_len )
      access_sys_t *p_sys = p_access->p_sys;
      int i_read;
  
@@ -105,7 +107,7 @@ index 15b677109b..c97d09effa 100644
      if( i_read < 0 )
      {
          msg_Err( p_access, "read failed" );
-@@ -669,9 +712,16 @@ static int BrowseShare( stream_t *p_access, input_item_node_t *p_node )
+@@ -601,9 +644,16 @@ static int BrowseShare( stream_t *p_access, input_item_node_t *p_node )
      size_t          share_count;
      int             i_ret = VLC_SUCCESS;
  
@@ -122,7 +124,7 @@ index 15b677109b..c97d09effa 100644
  
      struct vlc_readdir_helper rdh;
      vlc_readdir_helper_init( &rdh, p_access, p_node );
-@@ -706,11 +756,18 @@ static int BrowseDirectory( stream_t *p_access, input_item_node_t *p_node )
+@@ -638,11 +688,18 @@ static int BrowseDirectory( stream_t *p_access, input_item_node_t *p_node )
      {
          if( asprintf( &psz_query, "%s\\*", p_sys->psz_path ) == -1 )
              return VLC_ENOMEM;

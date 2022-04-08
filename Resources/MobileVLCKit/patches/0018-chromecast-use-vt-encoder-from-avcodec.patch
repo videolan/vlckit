@@ -1,7 +1,7 @@
-From c131f4e20e1ca94bfacbf3faa622910426bc1ca0 Mon Sep 17 00:00:00 2001
+From 5ebff5098f72031febda6ec3bc87c6e2dc977dda Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:52:35 +0200
-Subject: [PATCH 18/61] chromecast: use vt encoder from avcodec
+Subject: [PATCH 18/71] chromecast: use vt encoder from avcodec
 
 ---
  modules/stream_out/chromecast/cast.cpp | 13 +++++++++++++

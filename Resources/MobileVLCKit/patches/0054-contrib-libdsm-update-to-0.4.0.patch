@@ -1,9 +1,12 @@
-From 78a2d6460d6051da29633bf90a467b4d2c97a681 Mon Sep 17 00:00:00 2001
+From 23e80b95d4bc11324bf315f5ad8059ac495aaf8e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 2 Mar 2022 11:40:00 +0100
-Subject: [PATCH 53/61] contrib: libdsm: update to 0.4.0
+Subject: [PATCH 54/71] contrib: libdsm: update to 0.4.0
 
 And switch to meson.
+
+(cherry picked from commit 305eae38b30be838235577229a7a81aa7885b557)
+Signed-off-by: Thomas Guillem <thomas@gllm.fr>
 ---
  contrib/src/libdsm/SHA512SUMS |  2 +-
  contrib/src/libdsm/rules.mak  | 22 +++++++++-------------
