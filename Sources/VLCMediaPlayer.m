@@ -73,7 +73,6 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
         [VLCMediaPlayerStateStopped]      = @"VLCMediaPlayerStateStopped",
         [VLCMediaPlayerStateOpening]      = @"VLCMediaPlayerStateOpening",
         [VLCMediaPlayerStateBuffering]    = @"VLCMediaPlayerStateBuffering",
-        [VLCMediaPlayerStateEnded]        = @"VLCMediaPlayerStateEnded",
         [VLCMediaPlayerStateError]        = @"VLCMediaPlayerStateError",
         [VLCMediaPlayerStatePlaying]      = @"VLCMediaPlayerStatePlaying",
         [VLCMediaPlayerStatePaused]       = @"VLCMediaPlayerStatePaused",
@@ -147,9 +146,6 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
             break;
         case libvlc_MediaPlayerOpening:
             newState = VLCMediaPlayerStateOpening;
-            break;
-        case libvlc_MediaPlayerEndReached:
-            newState = VLCMediaPlayerStateEnded;
             break;
         case libvlc_MediaPlayerESAdded:
             newState = VLCMediaPlayerStateESAdded;
@@ -1390,7 +1386,6 @@ static const struct event_handler_entry
     { libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerEncounteredError, HandleMediaInstanceStateChanged },
-    { libvlc_MediaPlayerEndReached,       HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged },

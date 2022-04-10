@@ -60,7 +60,6 @@ typedef NS_ENUM(NSInteger, VLCMediaPlayerState)
     VLCMediaPlayerStateStopped,        ///< Player has stopped
     VLCMediaPlayerStateOpening,        ///< Stream is opening
     VLCMediaPlayerStateBuffering,      ///< Stream is buffering
-    VLCMediaPlayerStateEnded,          ///< Stream has ended
     VLCMediaPlayerStateError,          ///< Player has generated an error
     VLCMediaPlayerStatePlaying,        ///< Stream is playing
     VLCMediaPlayerStatePaused,         ///< Stream is paused

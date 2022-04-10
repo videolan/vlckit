@@ -163,7 +163,6 @@ static VLCMediaState libvlc_state_to_media_state[] =
     [libvlc_Stopped]        = VLCMediaStateNothingSpecial,
     [libvlc_Opening]        = VLCMediaStateNothingSpecial,
     [libvlc_Buffering]      = VLCMediaStateBuffering,
-    [libvlc_Ended]          = VLCMediaStateNothingSpecial,
     [libvlc_Error]          = VLCMediaStateError,
     [libvlc_Playing]        = VLCMediaStatePlaying,
     [libvlc_Paused]         = VLCMediaStatePlaying,

@@ -117,7 +117,7 @@
 {
     if([keyPath isEqualToString:@"state"])
     {
-        if( (([self position] == 1.0 || [self state] == VLCMediaPlayerStateEnded || ([self state] == VLCMediaPlayerStateStopped && self.media)) ||
+        if( (([self position] == 1.0 || ([self state] == VLCMediaPlayerStateStopped && self.media)) ||
             [self encounteredError] ) && ![super.media subitems] )
         {
             self.isComplete = YES;
