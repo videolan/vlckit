@@ -174,7 +174,11 @@ buildLibVLC() {
         VERBOSEFLAG=""
     fi
     if [ "$BITCODE" = "yes" ]; then
-        BITCODEFLAG="--enable-bitcode"
+        if [[ "$PLATFORM" == *"os"* ]]; then
+            BITCODEFLAG="--enable-bitcode"
+        else
+            BITCODEFLAG=""
+        fi
     else
         BITCODEFLAG=""
     fi
