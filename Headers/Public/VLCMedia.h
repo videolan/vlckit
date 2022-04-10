@@ -99,13 +99,6 @@ NSString *const VLCMediaMetaChanged;  ///< Notification message for when the med
 @class VLCMediaList;
 @class VLCMedia;
 
-typedef NS_ENUM(NSInteger, VLCMediaState) {
-    VLCMediaStateNothingSpecial,        ///< Nothing
-    VLCMediaStateBuffering,             ///< Stream is buffering
-    VLCMediaStatePlaying,               ///< Stream is playing
-    VLCMediaStateError,                 ///< Can't be played because an error occurred
-};
-
 /**
  * Informal protocol declaration for VLCMedia delegates.  Allows data changes to be
  * trapped.
@@ -336,10 +329,6 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
  */
 @property (nonatomic, readonly, copy) NSDictionary * metaDictionary;
 
-/**
- * The receiver's state, such as Playing, Error, NothingSpecial, Buffering.
- */
-@property (nonatomic, readonly) VLCMediaState state;
 
 /**
  * returns a bool whether is the media is expected to play fluently on this

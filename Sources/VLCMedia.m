@@ -130,7 +130,6 @@ void close_cb(void *opaque) {
 }
 
 /* Make our properties internally readwrite */
-@property (nonatomic, readwrite) VLCMediaState state;
 @property (nonatomic, readwrite, strong) VLCMediaList * subitems;
 
 /* Statics */
@@ -153,25 +152,8 @@ void close_cb(void *opaque) {
 - (void)parsedChanged:(NSNumber *)isParsedAsNumber;
 - (void)metaChanged:(NSString *)metaType;
 - (void)subItemAdded;
-- (void)setStateAsNumber:(NSNumber *)newStateAsNumber;
 
 @end
-
-static VLCMediaState libvlc_state_to_media_state[] =
-{
-    [libvlc_NothingSpecial] = VLCMediaStateNothingSpecial,
-    [libvlc_Stopped]        = VLCMediaStateNothingSpecial,
-    [libvlc_Opening]        = VLCMediaStateNothingSpecial,
-    [libvlc_Buffering]      = VLCMediaStateBuffering,
-    [libvlc_Error]          = VLCMediaStateError,
-    [libvlc_Playing]        = VLCMediaStatePlaying,
-    [libvlc_Paused]         = VLCMediaStatePlaying,
-};
-
-static inline VLCMediaState LibVLCStateToMediaState( libvlc_state_t state )
-{
-    return libvlc_state_to_media_state[state];
-}
 
 /******************************************************************************
  * LibVLC Event Callback
@@ -192,15 +174,6 @@ static void HandleMediaDurationChanged(const libvlc_event_t * event, void * self
                                                      withMethod:@selector(setLength:)
                                            withArgumentAsObject:[VLCTime timeWithNumber:
                                                @(event->u.media_duration_changed.new_duration)]];
-    }
-}
-
-static void HandleMediaStateChanged(const libvlc_event_t * event, void * self)
-{
-    @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(setStateAsNumber:)
-                                           withArgumentAsObject:@(LibVLCStateToMediaState(event->u.media_state_changed.new_state))];
     }
 }
 
@@ -321,7 +294,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         if (p_em) {
             libvlc_event_detach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     (__bridge void *)(self));
             libvlc_event_detach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
-            libvlc_event_detach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
             libvlc_event_detach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
             libvlc_event_detach(p_em, libvlc_MediaParsedChanged,    HandleMediaParsedChanged,   (__bridge void *)(self));
         }
@@ -945,7 +917,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (p_em) {
         libvlc_event_attach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, (__bridge void *)(self));
-        libvlc_event_attach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    (__bridge void *)(self));
         libvlc_event_attach(p_em, libvlc_MediaParsedChanged,    HandleMediaParsedChanged,   (__bridge void *)(self));
         eventsAttached = YES;
@@ -957,8 +928,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         self.subitems = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
         libvlc_media_list_release( p_mlist );
     }
-
-    self.state = LibVLCStateToMediaState(libvlc_media_get_state( p_md ));
 }
 
 - (void)fetchMetaInformationFromLibVLCWithType:(NSString *)metaType
@@ -1050,11 +1019,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
     if ([_delegate respondsToSelector:@selector(mediaDidFinishParsing:)])
         [_delegate mediaDidFinishParsing:self];
-}
-
-- (void)setStateAsNumber:(NSNumber *)newStateAsNumber
-{
-    [self setState: [newStateAsNumber intValue]];
 }
 
 #if TARGET_OS_IPHONE
