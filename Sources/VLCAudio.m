@@ -84,9 +84,9 @@ NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
 - (void)setPassthrough:(BOOL)passthrough
 {
     if (passthrough) {
-        libvlc_audio_output_device_set([self instance], NULL, "encoded");
+        libvlc_audio_output_device_set([self instance], "encoded");
     } else {
-        libvlc_audio_output_device_set([self instance], NULL, "pcm");
+        libvlc_audio_output_device_set([self instance], "pcm");
     }
 }
 
