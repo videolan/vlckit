@@ -1,7 +1,7 @@
-From 5d72c13bd7b6100f679ad9cb2ebeebf302adfd31 Mon Sep 17 00:00:00 2001
+From 7b8b26594d573b12744adbb80b9b3f5f57516f8c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 03/71] Enable System DL
+Subject: [PATCH 03/76] Enable System DL
 
 ---
  contrib/src/ffmpeg/patch-as-patch-can.patch | 20 ++++++++++++++++++++

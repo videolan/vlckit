@@ -1,7 +1,7 @@
-From 4a2b18b3f3fcd355f610f56a5d3b67c19da571b5 Mon Sep 17 00:00:00 2001
+From 7980b3c544833a2dd2cc2ec449151162d7bdb548 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 17 Mar 2022 08:46:59 +0100
-Subject: [PATCH 65/71] smb2: remove teardown handling
+Subject: [PATCH 65/76] smb2: remove teardown handling
 
 If interrupted by the user, just close the connection whitout sending a
 close request and don't save the context in the cache in that case.

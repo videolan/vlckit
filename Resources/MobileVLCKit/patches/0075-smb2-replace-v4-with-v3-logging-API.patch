@@ -1,0 +1,25 @@
+From 84750a22327be8dddd493ade2e540bd60e7400a5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Tue, 12 Apr 2022 09:22:01 +0200
+Subject: [PATCH 75/76] smb2: replace v4 with v3 logging API
+
+---
+ modules/access/smb2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/modules/access/smb2.c b/modules/access/smb2.c
+index 914b0535ae..2d38b6599a 100644
+--- a/modules/access/smb2.c
++++ b/modules/access/smb2.c
+@@ -165,7 +165,7 @@ smb2_set_error(struct vlc_smb2_op *op, const char *psz_func, int err)
+         return;
+ 
+     if (op->log && err != -EINTR)
+-        vlc_error(op->log, "%s failed: %d, %s", psz_func, err, smb2_get_error(op->smb2));
++        msg_Err(op->log, "%s failed: %d, %s", psz_func, err, smb2_get_error(op->smb2));
+ 
+     op->error_status = err;
+ 
+-- 
+2.32.0 (Apple Git-132)
+

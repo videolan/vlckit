@@ -1,7 +1,7 @@
-From 3fafa6df427216a3e159f0fc045a24d2ef4db7cd Mon Sep 17 00:00:00 2001
+From b5050ae285a77fbbb1bfb71f4d8971c9d067ea54 Mon Sep 17 00:00:00 2001
 From: Steve Lhomme <robux4@ycbcr.xyz>
 Date: Mon, 8 Jun 2020 17:13:55 +0200
-Subject: [PATCH 56/71] dsm: fix mismatched pointer
+Subject: [PATCH 56/76] dsm: fix mismatched pointer
 
 Fixes this warning with clang10:
 incompatible pointer types passing 'u_long *' (aka 'unsigned long *') to parameter of type 'uint32_t *' (aka 'unsigned int *')

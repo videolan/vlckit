@@ -1,7 +1,7 @@
-From dd243b4d3c2168bd38e37040d21d64f916ca6898 Mon Sep 17 00:00:00 2001
+From cd5dd5543e4315758e189d024ff5785e07f210ae Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 19 Sep 2020 13:51:08 +0200
-Subject: [PATCH 29/71] contrib/libvpx: fix tvOS compilation
+Subject: [PATCH 29/76] contrib/libvpx: fix tvOS compilation
 
 ---
  contrib/src/vpx/libvpx-tvos.patch | 21 +++++++++++++++++++++

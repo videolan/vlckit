@@ -1,7 +1,7 @@
-From a043b38b3e8c6b9d606672930876e3d3775216be Mon Sep 17 00:00:00 2001
+From f5817d8f9ce5c02df8f0890770b667be6574d46c Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 13/71] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 13/76] Work around lack of __thread storage qualifier on old
  macOS
 
 ---

@@ -1,7 +1,7 @@
-From 788cc60c8239dc82b950faeb0d4330bb7bda7543 Mon Sep 17 00:00:00 2001
+From 57a326b5de237ad62e24b958fc462d7cb075cb41 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
-Subject: [PATCH 23/71] libvlc: events: Add callbacks for record
+Subject: [PATCH 23/76] libvlc: events: Add callbacks for record
 
 ---
  include/vlc/libvlc_events.h |  9 +++++++++

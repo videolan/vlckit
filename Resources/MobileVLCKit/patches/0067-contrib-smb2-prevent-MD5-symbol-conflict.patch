@@ -1,7 +1,7 @@
-From 4bac365eee741db902823f77be36fbb392cb6d76 Mon Sep 17 00:00:00 2001
+From c686fb886541b4377959f4a1089b4915186fd574 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 9 Mar 2021 15:24:27 +0100
-Subject: [PATCH 67/71] contrib/smb2: prevent MD5 symbol conflict
+Subject: [PATCH 67/76] contrib/smb2: prevent MD5 symbol conflict
 
 ---
  .../0001-smb2-avoid-MD5-symbol-conflict.patch | 136 ++++++++++++++++++

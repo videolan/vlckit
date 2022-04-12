@@ -1,7 +1,7 @@
-From 972513cef52b413fa5882c5006cdb270f5a68706 Mon Sep 17 00:00:00 2001
+From 204aa31c554dda6a30ea0a811063e337cf552893 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Mar 2019 14:12:56 +0100
-Subject: [PATCH 59/71] smb2: add missing error check
+Subject: [PATCH 59/76] smb2: add missing error check
 
 (cherry picked from commit 014e84a30c54a1831ed4deeac6506d98cde503b8)
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>
