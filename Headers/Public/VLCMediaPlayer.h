@@ -58,6 +58,7 @@ NSString *const VLCMediaPlayerChapterChanged;
 typedef NS_ENUM(NSInteger, VLCMediaPlayerState)
 {
     VLCMediaPlayerStateStopped,        ///< Player has stopped
+    VLCMediaPlayerStateStopping,       ///< Player is stopping
     VLCMediaPlayerStateOpening,        ///< Stream is opening
     VLCMediaPlayerStateBuffering,      ///< Stream is buffering
     VLCMediaPlayerStateError,          ///< Player has generated an error
