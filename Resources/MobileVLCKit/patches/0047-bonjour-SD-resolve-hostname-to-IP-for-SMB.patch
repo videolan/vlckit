@@ -1,4 +1,4 @@
-From dd7fc5ae097759c943425d51f8e42f3b16e98f3e Mon Sep 17 00:00:00 2001
+From 95162a2264ff94eb30f0ecc1def66afb9694288f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 6 Apr 2022 16:16:31 +0200
 Subject: [PATCH 47/76] bonjour SD: resolve hostname to IP for SMB

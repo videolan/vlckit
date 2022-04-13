@@ -1,4 +1,4 @@
-From 3e6f395db5800c45a4cbeac6de7bd0f1fbef4ffb Mon Sep 17 00:00:00 2001
+From 4d6186a1bbfcde76dcdda9266ace23236acad82f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 8 Apr 2022 14:13:52 +0200
 Subject: [PATCH 76/76] smb2: 32-bit compilation fix

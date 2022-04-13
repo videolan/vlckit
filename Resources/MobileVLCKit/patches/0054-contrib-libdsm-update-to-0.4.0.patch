@@ -1,4 +1,4 @@
-From c65b01a0b87bcb51ee1cf84c30484843cb4fa8c4 Mon Sep 17 00:00:00 2001
+From 9caf30dd7602a4ac287cb631d06ab8e68f9d71a0 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 2 Mar 2022 11:40:00 +0100
 Subject: [PATCH 54/76] contrib: libdsm: update to 0.4.0

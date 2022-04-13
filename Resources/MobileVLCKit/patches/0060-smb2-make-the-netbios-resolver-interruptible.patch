@@ -1,4 +1,4 @@
-From c37c4ab4b174e8572011e58d22cf9ca75abfb4d1 Mon Sep 17 00:00:00 2001
+From f3c0f06a2c24b2fe3897fe942a40fcb9c8ec9f0b Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:33:28 +0100
 Subject: [PATCH 60/76] smb2: make the netbios resolver interruptible

@@ -1,4 +1,4 @@
-From 1ffe6714b47eafb06f9a3ab20bcbe959ec2107f3 Mon Sep 17 00:00:00 2001
+From db49edb5917f396b310e29f235ba51145e603fe4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jan 2022 11:03:13 +0100
 Subject: [PATCH 48/76] contrib: smb2: update to 4.0.0

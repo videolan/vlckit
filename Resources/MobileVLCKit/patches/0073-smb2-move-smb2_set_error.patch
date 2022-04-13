@@ -1,4 +1,4 @@
-From c9cdbc656476194b0dd212f11265fb3daf548d69 Mon Sep 17 00:00:00 2001
+From 45cf8d18b7d3bb61c7a64131b3e176494dc8f396 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 11 Apr 2022 14:36:10 +0200
 Subject: [PATCH 73/76] smb2: move smb2_set_error

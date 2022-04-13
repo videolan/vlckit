@@ -1,4 +1,4 @@
-From 204aa31c554dda6a30ea0a811063e337cf552893 Mon Sep 17 00:00:00 2001
+From 2bd57b63ac8a57564073480f9895df573160cfdc Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 18 Mar 2019 14:12:56 +0100
 Subject: [PATCH 59/76] smb2: add missing error check

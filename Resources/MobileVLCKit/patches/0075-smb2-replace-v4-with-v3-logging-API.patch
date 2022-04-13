@@ -1,4 +1,4 @@
-From 84750a22327be8dddd493ade2e540bd60e7400a5 Mon Sep 17 00:00:00 2001
+From d3cc7339d1f5a0f2decfcb835b3140b50ea639cf Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 12 Apr 2022 09:22:01 +0200
 Subject: [PATCH 75/76] smb2: replace v4 with v3 logging API

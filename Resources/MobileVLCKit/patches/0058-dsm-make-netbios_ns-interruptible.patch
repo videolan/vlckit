@@ -1,4 +1,4 @@
-From 63f3aab40386f548d0ea9c66c8027fb3d2142403 Mon Sep 17 00:00:00 2001
+From 82fa9c808712625b085c5cf8a6d610f96556a50e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:28:20 +0100
 Subject: [PATCH 58/76] dsm: make netbios_ns interruptible

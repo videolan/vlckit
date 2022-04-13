@@ -1,4 +1,4 @@
-From e75e0c9a088eabaa1ae4a5b1a26a0c22c83897d3 Mon Sep 17 00:00:00 2001
+From 659846e5fc503223ceedc90cb06e0cd776e464aa Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 22 Mar 2022 12:32:47 +0100
 Subject: [PATCH 46/76] contrib/upnp: disable IPv6 support on iOS
@@ -8,7 +8,7 @@ Subject: [PATCH 46/76] contrib/upnp: disable IPv6 support on iOS
  1 file changed, 4 insertions(+)
 
 diff --git a/contrib/src/upnp/rules.mak b/contrib/src/upnp/rules.mak
-index 8f0f38570d..31dac26ab2 100644
+index 8f0f38570d..972a6860da 100644
 --- a/contrib/src/upnp/rules.mak
 +++ b/contrib/src/upnp/rules.mak
 @@ -20,8 +20,12 @@ endif
@@ -16,7 +16,7 @@ index 8f0f38570d..31dac26ab2 100644
  CONFIGURE_ARGS=--disable-ipv6 --enable-unspecified_server
  else
 +ifdef HAVE_IOS
-+CONFIGURE_ARGS=--disable-ipv6 --enable-unspecified_server
++CONFIGURE_ARGS=--disable-ipv6 --disable-webserver
 +else
  CONFIGURE_ARGS=--enable-ipv6
  endif

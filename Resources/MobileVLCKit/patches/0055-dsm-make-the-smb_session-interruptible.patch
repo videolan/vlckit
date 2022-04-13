@@ -1,4 +1,4 @@
-From 1d2547214d09c45d8eda5f58ad756d015b9b48e2 Mon Sep 17 00:00:00 2001
+From c621335e11bdf0fe4eb2bd996443c466cda28532 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 6 Jan 2022 12:59:20 +0100
 Subject: [PATCH 55/76] dsm: make the smb_session interruptible

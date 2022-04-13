@@ -1,4 +1,4 @@
-From ecb0daa456f6dba2b8378f3fdb4b4260b1a060f6 Mon Sep 17 00:00:00 2001
+From 3dcb33793f497536fb781691dc59f72f2c7cd74e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 10:12:51 +0100
 Subject: [PATCH 53/76] dsm: connect the session in login()

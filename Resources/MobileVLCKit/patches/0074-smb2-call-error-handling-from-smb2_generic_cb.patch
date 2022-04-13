@@ -1,4 +1,4 @@
-From 8598a52e6ea958cf85ccac80b10df1eff68ebe45 Mon Sep 17 00:00:00 2001
+From a590014b86d1b08297e6a9e240bb2a7a804eda1e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 11 Apr 2022 14:43:32 +0200
 Subject: [PATCH 74/76] smb2: call error handling from smb2_generic_cb

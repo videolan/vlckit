@@ -1,4 +1,4 @@
-From beb93672a6f181fcc21ebf7f674c791730b4f608 Mon Sep 17 00:00:00 2001
+From c85c9400d71670e73f0f0ad2749d7bacda686107 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 24 Jan 2022 11:48:03 +0100
 Subject: [PATCH 51/76] smb2: use an operation struct for all operations

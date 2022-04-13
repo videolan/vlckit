@@ -1,4 +1,4 @@
-From 708a391c985e58bd5828ac4f31b77309875c342c Mon Sep 17 00:00:00 2001
+From b2b643f9eafea00d50463dd4e9cf07138ee08bac Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 11 Apr 2022 14:34:30 +0200
 Subject: [PATCH 72/76] smb2: homogenize status and error functions
