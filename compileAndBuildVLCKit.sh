@@ -284,21 +284,24 @@ build_simulator_static_lib() {
     if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-x86_64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-x86_64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-x86_64/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator-x86_64.h
     fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-i386 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-i386/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-i386/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator-i386.h
     fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-arm64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-arm64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-arm64/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator-arm64.h
     fi
 
     spushd ${VLCROOT}
 
     lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-simulator/libvlc-simulator-static.a
 
-    cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator.h
+
 
     spopd # VLCROOT
 }
@@ -309,8 +312,7 @@ build_device_static_lib() {
     info "building device static lib for $OSSTYLE"
 
     # remove old module list
-    rm -f $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device.h
-    touch $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device.h
+    rm -f $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device*
 
     spushd ${VLCROOT}
     rm -rf install-$OSSTYLE-device
@@ -325,25 +327,27 @@ build_device_static_lib() {
     if [ -d ${VLCROOT}/build-${OSSTYLE}os-arm64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-arm64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-arm64/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-arm64.h
     fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}os-armv7 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-armv7/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-armv7/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-armv7.h
     fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}-x86_64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-x86_64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-x86_64/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-x86_64.h
     fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}-arm64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-arm64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-arm64/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-arm64.h
     fi
 
     spushd ${VLCROOT}
 
     lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-device/libvlc-device-static.a
-
-    cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device.h
 
     spopd # VLCROOT
 }

@@ -26,20 +26,45 @@
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
 
+/* VLC features different module lists per platform but also per architecture
+ * so there is not a single slice with the same modules as the other */
 #if TARGET_OS_TV
+
 #if TARGET_OS_SIMULATOR
-# include "vlc-plugins-appletv-simulator.h"
+#if __aarch64__
+# include "vlc-plugins-appletv-simulator-arm64.h"
 #else
-# include "vlc-plugins-appletv-device.h"
-#endif
-#elif TARGET_OS_IPHONE
-#if TARGET_OS_SIMULATOR
-# include "vlc-plugins-iphone-simulator.h"
-#else
-# include "vlc-plugins-iphone-device.h"
+# include "vlc-plugins-appletv-simulator-x86_64.h"
 #endif
 #else
-# include "vlc-plugins-macosx-device.h"
+# include "vlc-plugins-appletv-device-arm64.h"
+#endif
+#endif
+
+#if TARGET_OS_IOS
+#if TARGET_OS_SIMULATOR
+#if __x86_64__
+# include "vlc-plugins-iphone-simulator-x86_64.h"
+#elif __aarch64__
+# include "vlc-plugins-iphone-simulator-arm64.h"
+#else
+# include "vlc-plugins-iphone-simulator-i386.h"
+#endif
+#else
+#if __aarch64__
+# include "vlc-plugins-iphone-device-arm64.h"
+#else
+# include "vlc-plugins-iphone-device-armv7.h"
+#endif
+#endif
+#endif
+
+#if TARGET_OS_OSX
+#if __aarch64__
+# include "vlc-plugins-macosx-device-arm64.h"
+#else
+# include "vlc-plugins-macosx-device-x86_64.h"
+#endif
 #endif
 
 #include <vlc/vlc.h>
