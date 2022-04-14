@@ -37,7 +37,7 @@
     return nullTime;
 }
 
-+ (VLCTime *)timeWithNumber:(NSNumber *)aNumber
++ (VLCTime *)timeWithNumber:(nullable NSNumber *)aNumber
 {
     return [[VLCTime alloc] initWithNumber:aNumber];
 }
@@ -48,7 +48,7 @@
 }
 
 /* Initializers */
-- (instancetype)initWithNumber:(NSNumber *)aNumber
+- (instancetype)initWithNumber:(nullable NSNumber *)aNumber
 {
     if (self = [super init]) {
         _value = aNumber;
@@ -143,6 +143,9 @@
 
 - (int)intValue
 {
+    if (!_value)
+        return 0;
+    
     return [_value intValue];
 }
 
