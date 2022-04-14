@@ -33,7 +33,7 @@
 
 @implementation VLCDialogProvider
 
-- (instancetype)initWithLibrary:(VLCLibrary *)library customUI:(BOOL)customUI
+- (nullable instancetype)initWithLibrary:(nullable VLCLibrary *)library customUI:(BOOL)customUI
 {
 #if TARGET_OS_IPHONE
     if (customUI)
