@@ -24,6 +24,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * a custom layer for rendering video in a CoreAnimation environment
  */
@@ -41,3 +43,5 @@
 @property (nonatomic) BOOL fillScreen;
 
 @end
+
+NS_ASSUME_NONNULL_END
