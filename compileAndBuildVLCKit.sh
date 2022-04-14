@@ -44,7 +44,6 @@ OPTIONS
    -l       Skip libvlc compilation
    -t       Build for tvOS
    -x       Build for macOS / Mac OS X
-   -y       Build universal static libraries
    -b       Enable bitcode
    -a       Build framework for specific arch (all|i386|x86_64|armv7|aarch64)
    -e       External VLC source path
