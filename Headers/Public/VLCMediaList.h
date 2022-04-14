@@ -25,6 +25,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * notification name if a list item was added
  */
@@ -71,7 +73,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \return instance of VLCMediaList equipped with the VLCMedia instances
  * \see VLCMedia
  */
-- (instancetype)initWithArray:(NSArray *)array;
+- (instancetype)initWithArray:(NSArray<VLCMedia *> *)array;
 
 /* Operations */
 /**
@@ -118,7 +120,7 @@ extern NSString *const VLCMediaListItemDeleted;
  * \param index the index of the media you want
  * \return the media object
  */
-- (VLCMedia *)mediaAtIndex:(NSUInteger)index;
+- (nullable VLCMedia *)mediaAtIndex:(NSUInteger)index;
 
 /**
  * retrieve the position of a media item
@@ -139,7 +141,7 @@ extern NSString *const VLCMediaListItemDeleted;
 /**
  * delegate property to listen to addition/removal events
  */
-@property (weak, nonatomic) id delegate;
+@property (weak, nonatomic, nullable) id<VLCMediaListDelegate> delegate;
 
 /**
  * read-only property to check if the media list is writable or not
@@ -148,3 +150,5 @@ extern NSString *const VLCMediaListItemDeleted;
 @property (readonly) BOOL isReadOnly;
 
 @end
+
+NS_ASSUME_NONNULL_END
