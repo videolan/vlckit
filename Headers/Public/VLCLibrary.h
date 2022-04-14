@@ -88,7 +88,7 @@ NS_ASSUME_NONNULL_BEGIN
  * The target will be continously called as new messages arrive from this library instance.
  * \warning when enabling this feature, logging to the console or a file will be stopped automatically
  */
-@property (readwrite, nonatomic) id<VLCLibraryLogReceiverProtocol> debugLoggingTarget;
+@property (readwrite, nonatomic, nullable) id<VLCLibraryLogReceiverProtocol> debugLoggingTarget;
 
 /**
  * Returns the library's version
