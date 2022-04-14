@@ -961,6 +961,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (void)initInternalMediaDescriptor
 {
+    self.state = VLCMediaStateNothingSpecial;
+
     char * p_url = libvlc_media_get_mrl( p_md );
     if (!p_url)
         return;
