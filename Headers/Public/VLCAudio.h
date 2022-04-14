@@ -24,6 +24,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /* Notification Messages */
 /**
  * Standard notification messages that are emitted by VLCAudio object.
@@ -64,3 +66,5 @@ extern NSString *const VLCMediaPlayerVolumeChanged;
 - (void)volumeUp;
 
 @end
+
+NS_ASSUME_NONNULL_END
