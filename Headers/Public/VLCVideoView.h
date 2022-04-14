@@ -25,6 +25,8 @@
 #import <Cocoa/Cocoa.h>
 #import <QuartzCore/QuartzCore.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * a custom view suitable for video rendering in AppKit environments
  */
@@ -48,3 +50,5 @@
 @property (nonatomic) BOOL fillScreen;
 
 @end
+
+NS_ASSUME_NONNULL_END
