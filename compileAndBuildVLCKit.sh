@@ -497,8 +497,6 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     ./bootstrap
     make
     make .buildgas
-    make .buildxz
-    make .buildtar
     spopd #${VLCROOT}/extras/tools
 fi
 
