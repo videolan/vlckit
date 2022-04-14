@@ -106,7 +106,7 @@ static void display(void *opaque, void *picture)
     return obj;
 }
 
-+ (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library
++ (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(nullable VLCLibrary *)library
 {
     id obj = [[[self class] alloc] init];
     [obj setMedia:media];
