@@ -175,7 +175,7 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 
 - (BOOL)isRunning
 {
-    return libvlc_media_discoverer_is_running(_mdis);;
+    return libvlc_media_discoverer_is_running(_mdis);
 }
 
 @end
