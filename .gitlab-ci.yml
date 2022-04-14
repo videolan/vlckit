@@ -5,6 +5,7 @@ stages:
 variables:
     VLC_VERSION: "3.0"
     VLC_DEBIAN_IMAGE: registry.videolan.org/vlc-debian-unstable:20200529132440
+    VLC_PATH: /Users/videolanci/sandbox/bin
 
 ############
 ## Builds ##
@@ -12,7 +13,7 @@ variables:
 
 .continous-job-base:
     tags:
-        - monterey-m1-lasvegas
+        - macos-m1
     stage: build
     only:
         - merge_requests
@@ -54,7 +55,7 @@ continous-VLCKit:
 
 .dev-artifacts-job-base:
     tags:
-        - monterey-m1-lasvegas
+        - macos-m1
     stage: build
     rules:
         - if: '$CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "videolan/VLCKit"'
@@ -125,7 +126,7 @@ pages:
 
 .release-job-base:
     tags:
-        - monterey-m1-lasvegas
+        - macos-m1
     stage: release
     only:
         - tags
