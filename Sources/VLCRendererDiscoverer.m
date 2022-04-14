@@ -83,7 +83,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 
 @implementation VLCRendererDiscoverer
 
-- (instancetype)initWithName:(NSString *)name
+- (nullable instancetype)initWithName:(NSString *)name
 {
     self = [super init];
     if (self) {
@@ -140,7 +140,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     }
 }
 
-+ (NSArray<VLCRendererDiscovererDescription *> *)list
++ (nullable NSArray<VLCRendererDiscovererDescription *> *)list
 {
     size_t i_nb_services = 0;
     libvlc_rd_description_t **pp_services = NULL;
@@ -164,7 +164,7 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
     return [list copy];
 }
 
-- (VLCRendererItem *)discoveredItemsContainItem:(VLCRendererItem *)item
+- (nullable VLCRendererItem *)discoveredItemsContainItem:(VLCRendererItem *)item
 {
     for (VLCRendererItem *rendererItem in _rendererItems) {
         BOOL hasSameName = [rendererItem.name isEqualToString:item.name];
