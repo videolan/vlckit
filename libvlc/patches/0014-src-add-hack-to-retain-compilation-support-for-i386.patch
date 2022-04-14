@@ -1,7 +1,7 @@
-From 4d38d80cd2cccfad4a91338f8ed9da85461a74e3 Mon Sep 17 00:00:00 2001
+From d317e764555a3aa79f63d5f0ba1b77ac4db569ca Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 20 Aug 2020 13:56:14 +0200
-Subject: [PATCH 15/24] src: add hack to retain compilation support for i386
+Subject: [PATCH 14/20] src: add hack to retain compilation support for i386
 
 This leads to potentially undefined behavior when using the 32bit iOS
 Simulator. This code path never ends-up in production.

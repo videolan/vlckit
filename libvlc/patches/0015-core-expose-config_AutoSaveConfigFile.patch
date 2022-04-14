@@ -1,7 +1,7 @@
-From 9dc71494d743fc3a363fbeb430ab813aed947e39 Mon Sep 17 00:00:00 2001
+From 78eaf81b9a2984acc5dea53df31cc083a21af2ce Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
-Subject: [PATCH 16/24] core: expose config_AutoSaveConfigFile
+Subject: [PATCH 15/20] core: expose config_AutoSaveConfigFile
 
 ---
  include/vlc_configuration.h | 2 ++

@@ -1,7 +1,7 @@
-From 7e4499756ac3b8d67432c3008dc88c8a395436e4 Mon Sep 17 00:00:00 2001
+From 44899288c374c1e5402ca72f5c983cf26015014c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 17/24] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
+Subject: [PATCH 16/20] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
 
 This enforces the use of the audiotoolbox decoders for AC-3 and E-AC-3
 as introduced in iOS 9 and disables the use of the MLP decoder to be in
@@ -39,7 +39,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index c30eeb5a4c..d5557c4ca1 100644
+index 8a1951befa..75a7a0d436 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -34,6 +34,12 @@ FFMPEGCONF = \
@@ -55,7 +55,7 @@ index c30eeb5a4c..d5557c4ca1 100644
  endif
  
  DEPS_ffmpeg = zlib gsm
-@@ -223,6 +229,9 @@ ffmpeg: ffmpeg-$(FFMPEG_BASENAME).tar.xz .sum-ffmpeg
+@@ -230,6 +236,9 @@ ffmpeg: ffmpeg-$(FFMPEG_BASENAME).tar.xz .sum-ffmpeg
  	$(APPLY) $(SRC)/ffmpeg/0001-avcodec-vp9-Do-not-destroy-uninitialized-mutexes-con.patch
  	$(APPLY) $(SRC)/ffmpeg/0001-ffmpeg-add-target_os-support-for-emscripten.patch
  	$(APPLY) $(SRC)/ffmpeg/0001-dxva2_hevc-don-t-use-frames-as-reference-if-they-are.patch

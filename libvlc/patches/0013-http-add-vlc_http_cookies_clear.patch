@@ -1,7 +1,7 @@
-From 5cfe57d7ec4f27e9f438ca30f87a15e6fbe48ab0 Mon Sep 17 00:00:00 2001
+From 17daeb38dc40fff1e20478ae86e7df19c0463699 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
-Subject: [PATCH 14/24] http: add vlc_http_cookies_clear
+Subject: [PATCH 13/20] http: add vlc_http_cookies_clear
 
 Clear all cookies without deleting the jar.
 ---
