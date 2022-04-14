@@ -161,7 +161,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
     return _mediaPlayer;
 }
 
-- (void)setMediaList:(VLCMediaList *)mediaList
+- (void)setMediaList:(nullable VLCMediaList *)mediaList
 {
     if (_mediaList == mediaList)
         return;
@@ -173,7 +173,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
     [self didChangeValueForKey:@"rootMedia"];
 }
 
-- (VLCMediaList *)mediaList
+- (nullable VLCMediaList *)mediaList
 {
     return _mediaList;
 }
@@ -196,7 +196,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 
 }
 
-- (VLCMedia *)rootMedia
+- (nullable VLCMedia *)rootMedia
 {
     return _rootMedia;
 }
