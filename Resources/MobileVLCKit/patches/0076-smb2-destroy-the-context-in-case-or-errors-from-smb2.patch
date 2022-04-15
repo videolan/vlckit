@@ -1,0 +1,37 @@
+From eeca799da17e0e55d99857327ee3c896db1ad3bb Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Thu, 14 Apr 2022 14:13:34 +0200
+Subject: [PATCH 76/77] smb2: destroy the context in case or errors from
+ smb2_generic_cb
+
+Errors can also be reported via generic cbs, that will cause the
+vlc_smb2_mainloop to abort. In that case, we should destroy the smb2
+context to fix the issue mentioned by 924c951518f02dd05436d46323301702df516f4f
+---
+ modules/access/smb2.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/modules/access/smb2.c b/modules/access/smb2.c
+index 5ef1c643b1..9b13316c41 100644
+--- a/modules/access/smb2.c
++++ b/modules/access/smb2.c
+@@ -262,6 +262,16 @@ vlc_smb2_mainloop(struct vlc_smb2_op *op)
+         }
+     }
+ 
++    if (op->error_status != 0 && op->smb2 != NULL)
++    {
++        /* An error was signalled from a smb2 cb. Destroy the smb2 context now
++         * since this call might still trigger callbacks using the current op
++         * (that is allocated on the stack). */
++        smb2_destroy_context(op->smb2);
++        op->smb2 = NULL;
++        *op->smb2p = NULL;
++    }
++
+     return op->error_status;
+ }
+ 
+-- 
+2.32.0 (Apple Git-132)
+

@@ -1,0 +1,27 @@
+From 10e43377b534316ce9d7de5d534d135d1c4ae271 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Thu, 14 Apr 2022 14:09:06 +0200
+Subject: [PATCH 74/77] smb2: return errno directly
+
+No changes since this function is only checked for != 0 (for now).
+---
+ modules/access/smb2.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/modules/access/smb2.c b/modules/access/smb2.c
+index 0902ada7b8..63d0a831b2 100644
+--- a/modules/access/smb2.c
++++ b/modules/access/smb2.c
+@@ -261,8 +261,7 @@ vlc_smb2_mainloop(struct vlc_smb2_op *op)
+         }
+     }
+ 
+-    int ret = op->error_status == 0 ? 0 : -1;
+-    return ret;
++    return op->error_status;
+ }
+ 
+ #define VLC_SMB2_GENERIC_CB() \
+-- 
+2.32.0 (Apple Git-132)
+

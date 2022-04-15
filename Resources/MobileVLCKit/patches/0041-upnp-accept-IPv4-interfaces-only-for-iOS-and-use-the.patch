@@ -1,7 +1,7 @@
 From 2725f17004e556731a3e9adddeac633b30342e5b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 19 Nov 2021 13:23:20 +0100
-Subject: [PATCH 41/76] upnp: accept IPv4 interfaces only for iOS and use the
+Subject: [PATCH 41/77] upnp: accept IPv4 interfaces only for iOS and use the
  last discovered
 
 ---

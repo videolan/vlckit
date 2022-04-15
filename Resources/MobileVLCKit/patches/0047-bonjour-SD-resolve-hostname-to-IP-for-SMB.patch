@@ -1,7 +1,7 @@
 From 95162a2264ff94eb30f0ecc1def66afb9694288f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 6 Apr 2022 16:16:31 +0200
-Subject: [PATCH 47/76] bonjour SD: resolve hostname to IP for SMB
+Subject: [PATCH 47/77] bonjour SD: resolve hostname to IP for SMB
 
 The SMB modules cannot do the Bonjour lookup, so resolve the hostname
 and forward the first IP, which typically is the preferred value.

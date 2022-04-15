@@ -1,7 +1,7 @@
 From bcb4af32ff79cad7cd9ff1472f7fc2e3eb4fffcd Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 15:27:31 +0100
-Subject: [PATCH 52/76] smb2: split vlc_smb2_open_share
+Subject: [PATCH 52/77] smb2: split vlc_smb2_open_share
 
 No functional changes.
 

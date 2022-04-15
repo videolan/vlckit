@@ -1,7 +1,7 @@
 From 77ba8e6d606d8eb484239cd07efe14f05082b923 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 17 Mar 2022 15:26:18 +0100
-Subject: [PATCH 63/76] smb2: rework error handling
+Subject: [PATCH 63/77] smb2: rework error handling
 
  - Always call VLC_SMB2_SET_ERROR() in case of error,
  - Don't loose the returned error code

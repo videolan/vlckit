@@ -1,7 +1,7 @@
 From 50e04f0988f71ef08afb072d244150fb61b8be2c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 23 Mar 2022 12:58:32 +0100
-Subject: [PATCH 68/76] contrib/libdsm: apply PR 160 from upstream
+Subject: [PATCH 68/77] contrib/libdsm: apply PR 160 from upstream
 
 ---
  contrib/src/libdsm/160.patch | 66 ++++++++++++++++++++++++++++++++++++

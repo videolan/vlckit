@@ -1,7 +1,7 @@
 From 6f3a26ad65364c1605d7b92a2fc2347e5b3448e2 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 18 Aug 2020 14:53:43 +0200
-Subject: [PATCH 35/76] ebur128: add measurement date
+Subject: [PATCH 35/77] ebur128: add measurement date
 
 ---
  include/vlc/libvlc_events.h       |  7 +++++++

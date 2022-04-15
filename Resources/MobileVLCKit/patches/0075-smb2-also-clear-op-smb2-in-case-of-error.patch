@@ -1,0 +1,25 @@
+From b1f6f2d9ef07437101c43d3071c2260013d354e0 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Thu, 14 Apr 2022 14:15:15 +0200
+Subject: [PATCH 75/77] smb2: also clear op->smb2 in case of error
+
+op->smb2 won't be used in case of error but it is cleaner like that.
+---
+ modules/access/smb2.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/modules/access/smb2.c b/modules/access/smb2.c
+index 63d0a831b2..5ef1c643b1 100644
+--- a/modules/access/smb2.c
++++ b/modules/access/smb2.c
+@@ -183,6 +183,7 @@ smb2_set_error(struct vlc_smb2_op *op, const char *psz_func, int err)
+         op->error_status = err;
+ 
+     smb2_destroy_context(op->smb2);
++    op->smb2 = NULL;
+     *op->smb2p = NULL;
+ }
+ 
+-- 
+2.32.0 (Apple Git-132)
+
