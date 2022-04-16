@@ -24,6 +24,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Provides an object to define VLCMedia's time.
  */
@@ -40,7 +42,7 @@ OBJC_VISIBLE
  * \param aNumber the NSNumber object with a time in milliseconds
  * \return the VLCTime object
  */
-+ (VLCTime *)timeWithNumber:(NSNumber *)aNumber;
++ (VLCTime *)timeWithNumber:(nullable NSNumber *)aNumber;
 /**
  * factorize a time object with a given integer
  * \param aInt the int with a time in milliseconds
@@ -63,7 +65,7 @@ OBJC_VISIBLE
  * \param aNumber the NSNumber object with a time in milliseconds
  * \return the VLCTime object
  */
-- (instancetype)initWithNumber:(NSNumber *)aNumber;
+- (instancetype)initWithNumber:(nullable NSNumber *)aNumber;
 /**
  * init a time object with a given integer
  * \param aInt the int with a time in milliseconds
@@ -76,7 +78,7 @@ OBJC_VISIBLE
  * the current time value as NSNumber
  * \return the NSNumber object
  */
-@property (nonatomic, readonly) NSNumber * value;    ///< Holds, in milliseconds, the VLCTime value
+@property (nonatomic, readonly, nullable) NSNumber * value;    ///< Holds, in milliseconds, the VLCTime value
 
 /**
  * the current time value as string value localized for the current environment
@@ -120,3 +122,5 @@ OBJC_VISIBLE
 - (NSUInteger)hash;
 
 @end
+
+NS_ASSUME_NONNULL_END
