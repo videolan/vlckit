@@ -25,6 +25,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * notification name if a list item was added
  */
@@ -74,7 +76,7 @@ OBJC_VISIBLE
  * \return instance of VLCMediaList equipped with the VLCMedia instances
  * \see VLCMedia
  */
-- (instancetype)initWithArray:(NSArray *)array;
+- (instancetype)initWithArray:(NSArray<VLCMedia *> *)array;
 
 /* Operations */
 /**
@@ -121,7 +123,7 @@ OBJC_VISIBLE
  * \param index the index of the media you want
  * \return the media object
  */
-- (VLCMedia *)mediaAtIndex:(NSUInteger)index;
+- (nullable VLCMedia *)mediaAtIndex:(NSUInteger)index;
 
 /**
  * retrieve the position of a media item
@@ -142,7 +144,7 @@ OBJC_VISIBLE
 /**
  * delegate property to listen to addition/removal events
  */
-@property (weak, nonatomic) id delegate;
+@property (weak, nonatomic, nullable) id<VLCMediaListDelegate> delegate;
 
 /**
  * read-only property to check if the media list is writable or not
@@ -151,3 +153,5 @@ OBJC_VISIBLE
 @property (readonly) BOOL isReadOnly;
 
 @end
+
+NS_ASSUME_NONNULL_END

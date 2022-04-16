@@ -105,7 +105,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     return self;
 }
 
-- (instancetype)initWithArray:(NSArray *)array
+- (instancetype)initWithArray:(NSArray<VLCMedia *> *)array
 {
     if (self = [self init]) {
         /* do something useful with the provided array */
@@ -187,7 +187,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     return ok;
 }
 
-- (VLCMedia *)mediaAtIndex:(NSUInteger)index
+- (nullable VLCMedia *)mediaAtIndex:(NSUInteger)index
 {
     __block VLCMedia *media;
     dispatch_sync(_serialMediaObjectsQueue, ^{
