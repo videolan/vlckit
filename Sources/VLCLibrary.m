@@ -256,6 +256,8 @@ static VLCLibrary * sharedLibrary = nil;
     if (target) {
         libvlc_log_set(_instance, HandleMessageForCustomTarget, (__bridge void *)(self));
         _debugLogging = YES;
+    }else{
+        _debugLogging = NO;
     }
 }
 
