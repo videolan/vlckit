@@ -83,7 +83,7 @@ OBJC_VISIBLE
 /**
  * Receiver's delegate
  */
-@property (nonatomic, weak) id <VLCRendererDiscovererDelegate> _Nullable delegate;
+@property (nonatomic, weak, nullable) id <VLCRendererDiscovererDelegate> delegate;
 
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -92,7 +92,7 @@ OBJC_VISIBLE
  * \param name Name of the renderer discoverer
  * \return A new `VLCRendererDiscoverer` object, only if there were no errors
  */
-- (instancetype _Nullable)initWithName:(NSString *)name;
+- (nullable instancetype)initWithName:(NSString *)name;
 
 
 /**
@@ -119,7 +119,7 @@ OBJC_VISIBLE
  * `VLCRendererDiscoverer`
  * \return An `NSArray` of `VLCRendererDiscovererDescription`
  */
-+ (NSArray<VLCRendererDiscovererDescription *> * _Nullable)list;
++ (nullable NSArray<VLCRendererDiscovererDescription *> *)list;
 
 @end
 
