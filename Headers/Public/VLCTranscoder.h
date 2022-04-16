@@ -51,7 +51,7 @@ OBJC_VISIBLE
 /**
  * the delegate object implementing the optional protocol
  */
-@property (weak, nonatomic) id<VLCTranscoderDelegate> delegate;
+@property (weak, nonatomic, nullable) id<VLCTranscoderDelegate> delegate;
 
 /**
  * Reencode and remuxes an srt and mp4 file to an mkv file with embedded subtitles either with VideoToolbox-based H264 encoding or VP80 is Videotoolbox is not available
