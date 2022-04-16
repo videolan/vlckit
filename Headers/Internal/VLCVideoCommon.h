@@ -24,6 +24,8 @@
 
 #import <QuartzCore/QuartzCore.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * TODO: Documentation
  */
@@ -37,3 +39,5 @@
 @property (nonatomic) CGSize originalVideoSize;
 
 @end
+
+NS_ASSUME_NONNULL_END
