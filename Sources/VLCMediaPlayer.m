@@ -636,7 +636,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         [[NSException exceptionWithName:@"Can't take a video snapshot" reason:@"No video output" userInfo:nil] raise];
 }
 
-- (void)setDeinterlaceFilter:(NSString *)name
+- (void)setDeinterlaceFilter:(nullable NSString *)name
 {
     if (!name || name.length < 1)
         libvlc_video_set_deinterlace(_playerInstance, VLCDeinterlaceOff, NULL);
@@ -1073,7 +1073,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 #pragma mark -
 #pragma mark set/get media
 
-- (void)setMedia:(VLCMedia *)value
+- (void)setMedia:(nullable VLCMedia *)value
 {
     if (_media != value) {
         if (_media && [_media compare:value] == NSOrderedSame)
@@ -1085,7 +1085,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     }
 }
 
-- (VLCMedia *)media
+- (nullable VLCMedia *)media
 {
     return _media;
 }
@@ -1287,13 +1287,16 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return libvlc_media_player_can_pause(_playerInstance);
 }
 
-- (NSArray *)snapshots
+- (nullable NSArray *)snapshots
 {
+    if (!_snapshots)
+        return nil;
+    
     return [_snapshots copy];
 }
 
 #if TARGET_OS_IPHONE
-- (UIImage *)lastSnapshot {
+- (nullable UIImage *)lastSnapshot {
     if (_snapshots == nil) {
         return nil;
     }
@@ -1306,7 +1309,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     }
 }
 #else
-- (NSImage *)lastSnapshot {
+- (nullable NSImage *)lastSnapshot {
     if (_snapshots == nil) {
         return nil;
     }

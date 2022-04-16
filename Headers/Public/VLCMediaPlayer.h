@@ -31,6 +31,7 @@
 # import <UIKit/UIKit.h>
 #endif // TARGET_OS_IPHONE
 
+NS_ASSUME_NONNULL_BEGIN
 
 @class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer;
 #if !TARGET_OS_IPHONE
@@ -179,7 +180,7 @@ OBJC_VISIBLE
 /**
  * the delegate object implementing the optional protocol
  */
-@property (weak, nonatomic) id<VLCMediaPlayerDelegate> delegate;
+@property (weak, nonatomic, nullable) id<VLCMediaPlayerDelegate> delegate;
 
 #if !TARGET_OS_IPHONE
 /* Initializers */
@@ -240,7 +241,7 @@ OBJC_VISIBLE
  * set/retrieve a video view for rendering
  * This can be any UIView or NSView or instances of VLCVideoView / VLCVideoLayer if running on macOS
  */
-@property (strong) id drawable; /* The videoView or videoLayer */
+@property (strong, nullable) id drawable; /* The videoView or videoLayer */
 
 /**
  * Set/Get current video aspect ratio.
@@ -250,7 +251,7 @@ OBJC_VISIBLE
  * \return the video aspect ratio or NULL if unspecified
  * (the result must be released with free()).
  */
-@property (NS_NONATOMIC_IOSONLY) char *videoAspectRatio;
+@property (NS_NONATOMIC_IOSONLY, nullable) char *videoAspectRatio;
 
 /**
  * This function forces a crop ratio on any and all video tracks rendered by
@@ -288,7 +289,7 @@ OBJC_VISIBLE
  *
  * \param name of deinterlace filter to use (availability depends on underlying VLC version), NULL to disable.
  */
-- (void)setDeinterlaceFilter: (NSString *)name;
+- (void)setDeinterlaceFilter: (nullable NSString *)name;
 
 /**
  * Enable or disable deinterlace and specify which filter to use
@@ -678,7 +679,7 @@ NSString *const VLCTitleDescriptionIsMenu;
 /**
  * The currently media instance set to play
  */
-@property (NS_NONATOMIC_IOSONLY, strong) VLCMedia *media;
+@property (NS_NONATOMIC_IOSONLY, strong, nullable) VLCMedia *media;
 
 #pragma mark -
 #pragma mark playback operations
@@ -862,7 +863,7 @@ NSString *const VLCTitleDescriptionIsMenu;
  * \return a NSArray of NSString instances containing the names
  * \note This property is not available to macOS
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *snapshots;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy, nullable) NSArray *snapshots;
 
 #if TARGET_OS_IPHONE
 /**
@@ -871,7 +872,7 @@ NSString *const VLCTitleDescriptionIsMenu;
  * \note return value is nil if there is no snapshot
  * \note This property is not available to macOS
  */
-@property (NS_NONATOMIC_IOSONLY, readonly) UIImage *lastSnapshot;
+@property (NS_NONATOMIC_IOSONLY, readonly, nullable) UIImage *lastSnapshot;
 #else
 /**
  * Get last snapshot available.
@@ -879,7 +880,7 @@ NSString *const VLCTitleDescriptionIsMenu;
  * \note return value is nil if there is no snapshot
  * \note This property is not available to iOS and tvOS
  */
-@property (NS_NONATOMIC_IOSONLY, readonly) NSImage *lastSnapshot;
+@property (NS_NONATOMIC_IOSONLY, readonly, nullable) NSImage *lastSnapshot;
 #endif
 
 /**
@@ -909,3 +910,5 @@ NSString *const VLCTitleDescriptionIsMenu;
 - (BOOL)setRendererItem:(nullable VLCRendererItem *)item;
 #endif // !TARGET_OS_TV
 @end
+
+NS_ASSUME_NONNULL_END
