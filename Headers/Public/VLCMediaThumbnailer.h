@@ -25,6 +25,8 @@
 # import <CoreGraphics/CoreGraphics.h>
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class VLCMedia, VLCLibrary;
 @protocol VLCMediaThumbnailerDelegate;
 
@@ -49,7 +51,7 @@ OBJC_VISIBLE
  * \param library a library instance, potentially configured by you in a special way
  * \return the thumbnailer instance
  */
-+ (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(VLCLibrary *)library;
++ (VLCMediaThumbnailer *)thumbnailerWithMedia:(VLCMedia *)media delegate:(id<VLCMediaThumbnailerDelegate>)delegate andVLCLibrary:(nullable VLCLibrary *)library;
 
 /**
  * Starts the thumbnailing process
@@ -59,7 +61,7 @@ OBJC_VISIBLE
 /**
  * delegate object associated with the thumbnailer instance implementing the required protocol
  */
-@property (readwrite, weak, nonatomic) id<VLCMediaThumbnailerDelegate> delegate;
+@property (readwrite, weak, nonatomic, nullable) id<VLCMediaThumbnailerDelegate> delegate;
 /**
  * the media object that is being thumbnailed
  */
@@ -67,7 +69,7 @@ OBJC_VISIBLE
 /**
  * The thumbnail created for the media object
  */
-@property (readwrite, assign, nonatomic) CGImageRef thumbnail;
+@property (readwrite, assign, nonatomic, nullable) CGImageRef thumbnail;
 /**
  * the libvlc instance used for thumbnailing
  * \note Whatever you do, using this instance is most likely wrong
@@ -117,3 +119,5 @@ OBJC_VISIBLE
  */
 - (void)mediaThumbnailer:(VLCMediaThumbnailer *)mediaThumbnailer didFinishThumbnail:(CGImageRef)thumbnail;
 @end
+
+NS_ASSUME_NONNULL_END
