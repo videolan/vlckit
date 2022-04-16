@@ -235,9 +235,9 @@ static VLCLibrary * sharedLibrary = nil;
     return NO;
 }
 
-- (void)setDebugLoggingTarget:(id<VLCLibraryLogReceiverProtocol>) target
+- (void)setDebugLoggingTarget:(nullable id<VLCLibraryLogReceiverProtocol>) target
 {
-    if (![target respondsToSelector:@selector(handleMessage:debugLevel:)]) {
+    if (target && ![target respondsToSelector:@selector(handleMessage:debugLevel:)]) {
         VKLog(@"%s: target object does not implement required protocol", __func__);
         return;
     }
