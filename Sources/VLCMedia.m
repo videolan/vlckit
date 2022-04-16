@@ -130,7 +130,7 @@ void close_cb(void *opaque) {
 }
 
 /* Make our properties internally readwrite */
-@property (nonatomic, readwrite, strong) VLCMediaList * subitems;
+@property (nonatomic, readwrite, strong, nullable) VLCMediaList * subitems;
 
 /* Statics */
 + (libvlc_meta_t)stringToMetaType:(NSString *)string;
@@ -331,7 +331,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return [NSString stringWithFormat:@"<%@ %p>, md: %p, url: %@", [self class], self, p_md, [[_url absoluteString] stringByRemovingPercentEncoding]];
 }
 
-- (NSComparisonResult)compare:(VLCMedia *)media
+- (NSComparisonResult)compare:(nullable VLCMedia *)media
 {
     if (self == media)
         return NSOrderedSame;
@@ -439,9 +439,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     }
 }
 
-- (int)storeCookie:(NSString * _Nonnull)cookie
-           forHost:(NSString *_Nonnull)host
-              path:(NSString *_Nonnull)path
+- (int)storeCookie:(NSString *)cookie
+           forHost:(NSString *)host
+              path:(NSString *)path
 {
     if (!p_md || cookie == NULL || host == NULL || path == NULL) {
         return -1;
@@ -467,7 +467,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 #endif
 }
 
-- (NSDictionary *)stats
+- (nullable NSDictionary *)stats
 {
     if (!p_md)
         return nil;
@@ -783,7 +783,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     return YES;
 }
 
-- (NSString *)metadataForKey:(NSString *)key
+- (nullable NSString *)metadataForKey:(NSString *)key
 {
     if (!p_md)
         return nil;

@@ -251,13 +251,13 @@ typedef NS_ENUM(NSUInteger, VLCMediaType) {
  * equivalent in lexical value, and NSOrderedDescending if the URL of the
  * receiver follows media. If media is nil, returns NSOrderedDescending.
  */
-- (NSComparisonResult)compare:(VLCMedia *)media;
+- (NSComparisonResult)compare:(nullable VLCMedia *)media;
 
 /* Properties */
 /**
  * Receiver's delegate.
  */
-@property (nonatomic, weak) id<VLCMediaDelegate> delegate;
+@property (nonatomic, weak, nullable) id<VLCMediaDelegate> delegate;
 
 /**
  * A VLCTime object describing the length of the media resource, only if it is
@@ -295,12 +295,12 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 /**
  * The URL for the receiver's media resource.
  */
-@property (nonatomic, readonly, strong) NSURL * url;
+@property (nonatomic, readonly, strong, nullable) NSURL * url;
 
 /**
  * The receiver's sub list.
  */
-@property (nonatomic, readonly, strong) VLCMediaList * subitems;
+@property (nonatomic, readonly, strong, nullable) VLCMediaList * subitems;
 
 /**
  * get meta property for key
@@ -308,7 +308,7 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
  * \see metaDictionary
  * \see dictionary keys above
  */
-- (NSString *)metadataForKey:(NSString *)key;
+- (nullable NSString *)metadataForKey:(NSString *)key;
 
 /**
  * set meta property for key
@@ -596,9 +596,9 @@ typedef int VLCMediaParsingOptions;
  *
  * \return 0 on success, -1 on error.
  */
-- (int)storeCookie:(NSString * _Nonnull)cookie
-           forHost:(NSString * _Nonnull)host
-              path:(NSString * _Nonnull)path;
+- (int)storeCookie:(NSString *)cookie
+           forHost:(NSString *)host
+              path:(NSString *)path;
 
 /**
  * Clear the stored cookies of a media.
