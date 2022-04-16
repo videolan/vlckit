@@ -149,7 +149,7 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
     });
 }
 
-- (VLCMediaList *)discoveredMedia
+- (nullable VLCMediaList *)discoveredMedia
 {
     return _discoveredMedia;
 }

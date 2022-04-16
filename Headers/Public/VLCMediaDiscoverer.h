@@ -28,6 +28,8 @@
 
 @class VLCLibrary, VLCMediaList;
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(unsigned, VLCMediaDiscovererCategoryType)
 {
     VLCMediaDiscovererCategoryTypeDevices = 0,
@@ -91,7 +93,7 @@ OBJC_VISIBLE
 /**
  * a read-only property to retrieve the list of discovered media items
  */
-@property (weak, readonly) VLCMediaList *discoveredMedia;
+@property (weak, readonly, nullable) VLCMediaList *discoveredMedia;
 
 /**
  * read-only property to check if the discovery service is active
@@ -99,3 +101,5 @@ OBJC_VISIBLE
  */
 @property (readonly) BOOL isRunning;
 @end
+
+NS_ASSUME_NONNULL_END
