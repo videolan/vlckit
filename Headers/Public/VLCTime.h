@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
  * \param object the VLCTime instance to compare against
  * \return a BOOL whether the instances are equal or not
  */
-- (BOOL)isEqual:(id)object;
+- (BOOL)isEqual:(nullable id)object;
 /**
  * Calculcate a unique hash for the current time instance
  * \return a hash value
