@@ -1,7 +1,7 @@
-From eeca799da17e0e55d99857327ee3c896db1ad3bb Mon Sep 17 00:00:00 2001
+From 4bfa390189ce7f5b656c58edea77f73884d717a4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 14 Apr 2022 14:13:34 +0200
-Subject: [PATCH 76/77] smb2: destroy the context in case or errors from
+Subject: [PATCH 75/76] smb2: destroy the context in case or errors from
  smb2_generic_cb
 
 Errors can also be reported via generic cbs, that will cause the

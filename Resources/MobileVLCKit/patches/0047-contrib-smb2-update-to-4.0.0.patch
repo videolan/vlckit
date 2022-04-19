@@ -1,7 +1,7 @@
-From db49edb5917f396b310e29f235ba51145e603fe4 Mon Sep 17 00:00:00 2001
+From a5280006d6654fc1eda3f8735af500538fd8da72 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jan 2022 11:03:13 +0100
-Subject: [PATCH 48/77] contrib: smb2: update to 4.0.0
+Subject: [PATCH 47/76] contrib: smb2: update to 4.0.0
 
 Changelog since 3.0.0:
  - Add support for SMB3 encryption

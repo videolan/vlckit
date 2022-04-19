@@ -1,7 +1,7 @@
-From b1f6f2d9ef07437101c43d3071c2260013d354e0 Mon Sep 17 00:00:00 2001
+From dd6457473ae9d89dab5d5725dd370077a6fc5f5e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 14 Apr 2022 14:15:15 +0200
-Subject: [PATCH 75/77] smb2: also clear op->smb2 in case of error
+Subject: [PATCH 74/76] smb2: also clear op->smb2 in case of error
 
 op->smb2 won't be used in case of error but it is cleaner like that.
 ---

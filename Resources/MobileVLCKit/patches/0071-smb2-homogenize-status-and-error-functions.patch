@@ -1,7 +1,7 @@
-From f2e50a7434c43ef89256f3669f8a61bddeb2614d Mon Sep 17 00:00:00 2001
+From a1b9e1bf336b7e30babdd62b97328db73831fc58 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 11 Apr 2022 14:34:30 +0200
-Subject: [PATCH 72/77] smb2: homogenize status and error functions
+Subject: [PATCH 71/76] smb2: homogenize status and error functions
 
 ---
  modules/access/smb2.c | 4 ++--

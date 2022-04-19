@@ -1,7 +1,7 @@
-From 18b3dab2d9438f47a3538fc25dbc8009978ef50b Mon Sep 17 00:00:00 2001
+From 67f0d7102480977b3c9c9665361fdbf756c223d7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/77] input: Extract attachment also when preparsing
+Subject: [PATCH 09/76] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -887,7 +887,7 @@ index 1e47057532..d85fe5dcb6 100644
          return VLC_SUCCESS;
      }
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index 0ed3d7ac55..b60f6946e4 100644
+index 03005b4340..241791c085 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
 @@ -196,7 +196,7 @@ static int Create( vlc_object_t *p_this )
@@ -1017,7 +1017,7 @@ index 314e1066a8..487a7dbc79 100644
      std::vector<virtual_segment_c*>  used_vsegments;
      virtual_segment_c                *p_current_vsegment;
 diff --git a/modules/demux/mkv/matroska_segment_parse.cpp b/modules/demux/mkv/matroska_segment_parse.cpp
-index 13421339d8..40ec3b5303 100644
+index 5c6d8f5f2c..8e182524f8 100644
 --- a/modules/demux/mkv/matroska_segment_parse.cpp
 +++ b/modules/demux/mkv/matroska_segment_parse.cpp
 @@ -1333,33 +1333,31 @@ void matroska_segment_c::ParseAttachments( KaxAttachments *attachments )
@@ -1073,7 +1073,7 @@ index 13421339d8..40ec3b5303 100644
      }
  }
 diff --git a/modules/demux/mkv/mkv.cpp b/modules/demux/mkv/mkv.cpp
-index 91ec8742a1..0039f6b862 100644
+index bd15e7ade1..414aee30a8 100644
 --- a/modules/demux/mkv/mkv.cpp
 +++ b/modules/demux/mkv/mkv.cpp
 @@ -313,14 +313,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
@@ -1421,10 +1421,10 @@ index d0d8d14c1b..4cec93dc9d 100644
  
      for ( int i=0; i < p_ogg->i_seekpoints; i++ )
 diff --git a/modules/text_renderer/freetype/freetype.c b/modules/text_renderer/freetype/freetype.c
-index 80c5e4eacb..8715dd8b53 100644
+index 074c4f2ee5..52786edb35 100644
 --- a/modules/text_renderer/freetype/freetype.c
 +++ b/modules/text_renderer/freetype/freetype.c
-@@ -331,7 +331,7 @@ static int LoadFontsFromAttachments( filter_t *p_filter )
+@@ -333,7 +333,7 @@ static int LoadFontsFromAttachments( filter_t *p_filter )
      if( !p_sys->pp_font_attachments )
      {
          for( int i = 0; i < i_attachments_cnt; ++i )
@@ -1433,7 +1433,7 @@ index 80c5e4eacb..8715dd8b53 100644
          free( pp_attachments );
          return VLC_ENOMEM;
      }
-@@ -397,7 +397,7 @@ static int LoadFontsFromAttachments( filter_t *p_filter )
+@@ -399,7 +399,7 @@ static int LoadFontsFromAttachments( filter_t *p_filter )
          }
          else
          {
@@ -1442,7 +1442,7 @@ index 80c5e4eacb..8715dd8b53 100644
          }
      }
  
-@@ -434,7 +434,7 @@ error:
+@@ -436,7 +436,7 @@ error:
          free( psz_lc );
  
      for( int i = k + 1; i < i_attachments_cnt; ++i )
@@ -1451,7 +1451,7 @@ index 80c5e4eacb..8715dd8b53 100644
  
      free( pp_attachments );
      return VLC_ENOMEM;
-@@ -1534,7 +1534,7 @@ static void Destroy( vlc_object_t *p_this )
+@@ -1536,7 +1536,7 @@ static void Destroy( vlc_object_t *p_this )
      if( p_sys->pp_font_attachments )
      {
          for( int k = 0; k < p_sys->i_font_attachments; k++ )
