@@ -1,7 +1,7 @@
 From a016d98aaba03f620eb8986b51f812220fd78f62 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 24 Jan 2022 11:48:03 +0100
-Subject: [PATCH 50/76] smb2: use an operation struct for all operations
+Subject: [PATCH 50/77] smb2: use an operation struct for all operations
 
 Instead of using the same context from the access_sys struct.
 

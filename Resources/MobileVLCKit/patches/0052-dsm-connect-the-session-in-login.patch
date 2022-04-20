@@ -1,7 +1,7 @@
 From 8fa81fa4dbbc9c90afdb315578e0bf856e9a6bbe Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 10:12:51 +0100
-Subject: [PATCH 52/76] dsm: connect the session in login()
+Subject: [PATCH 52/77] dsm: connect the session in login()
 
 (cherry picked from commit 7dd7780d8fca179b93ec4eb57e9da3c08333af5f)
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>

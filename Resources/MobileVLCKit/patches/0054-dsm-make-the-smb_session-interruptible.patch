@@ -1,7 +1,7 @@
 From 74eba2e954e7b6c8ebccf50dedc86bd6190e099c Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 6 Jan 2022 12:59:20 +0100
-Subject: [PATCH 54/76] dsm: make the smb_session interruptible
+Subject: [PATCH 54/77] dsm: make the smb_session interruptible
 
 (cherry picked from commit 36ab008eb5f7b0029512867601f11a7995f3a432)
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>

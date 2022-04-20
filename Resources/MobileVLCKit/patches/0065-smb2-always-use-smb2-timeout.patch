@@ -1,7 +1,7 @@
 From 6aa42ba71537da9c00557fdaad8b1907747179ef Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 17 Mar 2022 09:17:09 +0100
-Subject: [PATCH 65/76] smb2: always use smb2 timeout
+Subject: [PATCH 65/77] smb2: always use smb2 timeout
 
 If the smb2_timeout was valid, then not valid (infinite), the last value
 was not taken into account.

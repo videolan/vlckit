@@ -1,7 +1,7 @@
 From 2d74669094e0f288dd0325b5f0416a0b645c0f82 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 14 Apr 2022 14:05:48 +0200
-Subject: [PATCH 72/76] smb2: rework error handling from smb2_service_fd
+Subject: [PATCH 72/77] smb2: rework error handling from smb2_service_fd
 
 ---
  modules/access/smb2.c | 9 ++++-----

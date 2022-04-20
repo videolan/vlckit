@@ -1,7 +1,7 @@
 From 46c0ec3a2b5f7e1de0a7c169ef662ab43c1a2dc9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 10 Mar 2021 10:23:13 +0100
-Subject: [PATCH 39/76] contrib/vpx: fix cross-compiling ARM-64 Simulator on
+Subject: [PATCH 39/77] contrib/vpx: fix cross-compiling ARM-64 Simulator on
  x86_64
 
 ---
