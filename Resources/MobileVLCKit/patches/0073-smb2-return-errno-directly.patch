@@ -1,7 +1,7 @@
 From bc58ee92b6353b8254760b1340030dcbab07191b Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 14 Apr 2022 14:09:06 +0200
-Subject: [PATCH 73/77] smb2: return errno directly
+Subject: [PATCH 73/80] smb2: return errno directly
 
 No changes since this function is only checked for != 0 (for now).
 ---

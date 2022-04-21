@@ -1,7 +1,7 @@
 From 345e89f1ddd0d8a5a84ee4cedc57adaa9911c84b Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 20 Apr 2022 17:02:50 +0200
-Subject: [PATCH 77/77] smb2: fix anonymous login
+Subject: [PATCH 77/80] smb2: fix anonymous login
 
 Not sure when this regression happened on the libsmb2 side.
 But setting the password to an empty string do enable anonymous login

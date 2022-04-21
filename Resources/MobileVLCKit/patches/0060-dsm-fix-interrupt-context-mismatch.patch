@@ -1,7 +1,7 @@
 From d545edf3e5daae91b06c9c1838f19e977cf07bd1 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 9 Mar 2022 17:04:12 +0100
-Subject: [PATCH 60/77] dsm: fix interrupt context mismatch
+Subject: [PATCH 60/80] dsm: fix interrupt context mismatch
 
 The dsm interrupt context was also registered when calling the
 credential API that can end up in keystore modules that need to register

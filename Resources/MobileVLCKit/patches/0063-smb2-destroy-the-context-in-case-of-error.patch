@@ -1,7 +1,7 @@
 From 5d634413e4bf9f8adbdbe5b6f0e9046d428ceea0 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 17 Mar 2022 16:10:11 +0100
-Subject: [PATCH 63/77] smb2: destroy the context in case of error
+Subject: [PATCH 63/80] smb2: destroy the context in case of error
 
 This fixes a potential stack-buffer-overflow when destroying a context
 from Close() if an operation was aborted. Indeed, the smb2_destroy()

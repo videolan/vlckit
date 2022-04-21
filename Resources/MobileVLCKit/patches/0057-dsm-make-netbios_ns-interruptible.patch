@@ -1,7 +1,7 @@
 From 6368953005a2de7b7648553c3e4bda9ab243c6e6 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:28:20 +0100
-Subject: [PATCH 57/77] dsm: make netbios_ns interruptible
+Subject: [PATCH 57/80] dsm: make netbios_ns interruptible
 
 (cherry picked from commit 088e3783b3fb9bb580fc80b775ae06de725081a7)
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>

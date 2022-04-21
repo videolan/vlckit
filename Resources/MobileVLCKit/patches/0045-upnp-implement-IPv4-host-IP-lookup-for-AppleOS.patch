@@ -1,7 +1,7 @@
 From 030158821d8d22f726a7aad8b1572bbe133a3b8c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 28 Mar 2022 10:31:01 +0200
-Subject: [PATCH 45/77] upnp: implement IPv4 host IP lookup for AppleOS
+Subject: [PATCH 45/80] upnp: implement IPv4 host IP lookup for AppleOS
 
 This adds an additional info line to match the IPv6 implementation.
 ---

@@ -1,7 +1,7 @@
 From 58891f6d4876a59b9316f298380f305991740291 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 7 Jan 2022 14:33:28 +0100
-Subject: [PATCH 59/77] smb2: make the netbios resolver interruptible
+Subject: [PATCH 59/80] smb2: make the netbios resolver interruptible
 
 (cherry picked from commit f0c6da69cc02051112d2fc60f30a886b1f2aecc4)
 Signed-off-by: Thomas Guillem <thomas@gllm.fr>
