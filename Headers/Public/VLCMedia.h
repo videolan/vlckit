@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class VLCTime;
+@class VLCTime, VLCMediaTracksInformation;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -150,12 +150,22 @@ OBJC_VISIBLE
 + (instancetype)mediaWithPath:(NSString *)aPath;
 
 /**
+ * list of possible track information type.
+ */
+typedef NS_ENUM(NSInteger, VLCMediaTracksInformationType) {
+    VLCMediaTracksInformationTypeUnknown    = -1,
+    VLCMediaTracksInformationTypeAudio      = 0,
+    VLCMediaTracksInformationTypeVideo      = 1,
+    VLCMediaTracksInformationTypeText       = 2
+};
+
+/**
  * convienience method to return a user-readable codec name for the given FourCC
  * \param fourcc the FourCC to process
  * \param trackType a VLC track type if known to speed-up the name search
  * \return a NSString containing the codec name if recognized, else an empty string
  */
-+ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(NSString *)trackType;
++ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(VLCMediaTracksInformationType)trackType;
 
 /**
  * TODO
@@ -336,193 +346,9 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 @property (NS_NONATOMIC_IOSONLY, getter=isMediaSizeSuitableForDevice, readonly) BOOL mediaSizeSuitableForDevice;
 
 /**
- * Tracks information NSDictionary Possible Keys
- */
-
-/**
- * Codec information
- * \note returns a NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationCodec;
-
-/**
- * tracks information ID
- * \note returns a NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationId;
-/**
- * track information type
- * \note returns a NSString
- * \see VLCMediaTracksInformationTypeAudio
- * \see VLCMediaTracksInformationTypeVideo
- * \see VLCMediaTracksInformationTypeText
- * \see VLCMediaTracksInformationTypeUnknown
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationType;
-
-/**
- * codec profile
- * \note returns a NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationCodecProfile;
-/**
- * codec level
- * \note returns a NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationCodecLevel;
-
-/**
- * track bitrate
- * \note returns the bitrate as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationBitrate;
-/**
- * track language
- * \note returns the language as NSString
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationLanguage;
-/**
- * track description
- * \note returns the description as NSString
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationDescription;
-
-/**
- * number of audio channels of a given track
- * \note returns the audio channel number as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationAudioChannelsNumber;
-/**
- * audio rate
- * \note returns the audio rate as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationAudioRate;
-
-/**
- * video track height
- * \note returns the height as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationVideoHeight;
-/**
- * video track width
- * \note the width as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationVideoWidth;
-
-/**
- * video track orientation
- * \note returns the orientation as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationVideoOrientation;
-/**
- * video track projection
- * \note the projection as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationVideoProjection;
-
-/**
- * source aspect ratio
- * \note returns the source aspect ratio as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationSourceAspectRatio;
-/**
- * source aspect ratio denominator
- * \note returns the source aspect ratio denominator as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationSourceAspectRatioDenominator;
-
-/**
- * frame rate
- * \note returns the frame rate as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationFrameRate;
-/**
- * frame rate denominator
- * \note returns the frame rate denominator as NSNumber
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationFrameRateDenominator;
-
-/**
- * text encoding
- * \note returns the text encoding as NSString
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationTextEncoding;
-
-/**
- * audio track information NSDictionary value for VLCMediaTracksInformationType
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationTypeAudio;
-/**
- * video track information NSDictionary value for VLCMediaTracksInformationType
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationTypeVideo;
-/**
- * text / subtitles track information NSDictionary value for VLCMediaTracksInformationType
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationTypeText;
-/**
- * unknown track information NSDictionary value for VLCMediaTracksInformationType
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaTracksInformationTypeUnknown;
-
-/**
  * Returns the tracks information.
- *
- * This is an array of NSDictionary representing each track.
- * It can contain the following keys:
- *
- * \see VLCMediaTracksInformationCodec
- * \see VLCMediaTracksInformationId
- * \see VLCMediaTracksInformationType
- *
- * \see VLCMediaTracksInformationCodecProfile
- * \see VLCMediaTracksInformationCodecLevel
- *
- * \see VLCMediaTracksInformationBitrate
- * \see VLCMediaTracksInformationLanguage
- * \see VLCMediaTracksInformationDescription
- *
- * \see VLCMediaTracksInformationAudioChannelsNumber
- * \see VLCMediaTracksInformationAudioRate
- *
- * \see VLCMediaTracksInformationVideoHeight
- * \see VLCMediaTracksInformationVideoWidth
- * \see VLCMediaTracksInformationVideoOrientation
- * \see VLCMediaTracksInformationVideoProjection
- *
- * \see VLCMediaTracksInformationSourceAspectRatio
- * \see VLCMediaTracksInformationSourceAspectRatioDenominator
- *
- * \see VLCMediaTracksInformationFrameRate
- * \see VLCMediaTracksInformationFrameRateDenominator
- *
- * \see VLCMediaTracksInformationTextEncoding
  */
-
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *tracksInformation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<VLCMediaTracksInformation *> *tracksInformation;
 
 /**
  * enum of available options for use with parseWithOptions
@@ -689,6 +515,178 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
  * \return a NSInteger with the total number of discontinuties
  */
 @property (NS_NONATOMIC_IOSONLY, readonly) NSInteger numberOfDiscontinuties;
+
+@end
+
+
+#pragma mark - VLCMediaTracksInformation
+
+/**
+ * VLCMediaTracksInformationAudio
+ */
+@interface VLCMediaTracksInformationAudio : NSObject
+
+/**
+ * number of audio channels of a given track
+ */
+@property(nonatomic, readonly) unsigned channelsNumber;
+
+/**
+ * audio rate
+ */
+@property(nonatomic, readonly) unsigned rate;
+
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
+
+
+/**
+ * VLCMediaTracksInformationVideo
+ */
+@interface VLCMediaTracksInformationVideo : NSObject
+
+/**
+ * video track height
+ */
+@property(nonatomic, readonly) unsigned height;
+
+/**
+ * video track width
+ */
+@property(nonatomic, readonly) unsigned width;
+
+/**
+ * video track orientation
+ */
+@property(nonatomic, readonly) VLCMediaOrientation orientation;
+
+/**
+ * video track projection
+ */
+@property(nonatomic, readonly) VLCMediaProjection projection;
+
+/**
+ * source aspect ratio
+ */
+@property(nonatomic, readonly) unsigned sourceAspectRatio;
+
+/**
+ * source aspect ratio denominator
+ */
+@property(nonatomic, readonly) unsigned sourceAspectRatioDenominator;
+
+/**
+ * frame rate
+ */
+@property(nonatomic, readonly) unsigned frameRate;
+
+/**
+ * frame rate denominator
+ */
+@property(nonatomic, readonly) unsigned frameRateDenominator;
+
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
+
+
+/**
+ * VLCMediaTracksInformationText
+ */
+@interface VLCMediaTracksInformationText : NSObject
+
+/**
+ * text encoding
+ */
+@property(nonatomic, readonly, copy, nullable) NSString *encoding;
+
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
+
+
+/**
+ * VLCMediaTracksInformation
+ */
+@interface VLCMediaTracksInformation : NSObject
+
+/**
+ * track information type
+ */
+@property(nonatomic, readonly) VLCMediaTracksInformationType type;
+
+/**
+ * codec information
+ */
+@property(nonatomic, readonly) u_int32_t codec;
+
+/**
+ * codec fourcc
+ */
+@property(nonatomic, readonly) u_int32_t fourcc;
+
+/**
+ * tracks information ID
+ */
+@property(nonatomic, readonly) int identifier;
+
+/**
+ * codec profile
+ */
+@property(nonatomic, readonly) int profile;
+
+/**
+ * codec level
+ */
+@property(nonatomic, readonly) int level;
+
+/**
+ * track bitrate
+ */
+@property(nonatomic, readonly) unsigned int bitrate;
+
+/**
+ * track language
+ */
+@property(nonatomic, readonly, copy, nullable) NSString *language;
+
+/**
+ * track description
+ */
+@property(nonatomic, readonly, copy, nullable) NSString *trackDescription;
+
+/**
+ * VLCMediaTracksInformationAudio
+ */
+@property(nonatomic, readonly, nullable) VLCMediaTracksInformationAudio *audio;
+
+/**
+ * VLCMediaTracksInformationVideo
+ */
+@property(nonatomic, readonly, nullable) VLCMediaTracksInformationVideo *video;
+
+/**
+ * VLCMediaTracksInformationText
+ */
+@property(nonatomic, readonly, nullable) VLCMediaTracksInformationText *text;
+
+/**
+ * user readable codec name
+ *
+ * \return codec name or empty string
+ */
+- (NSString *)codecName;
+
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
 
 @end
 

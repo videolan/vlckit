@@ -201,22 +201,11 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
  */
 @implementation VLCMedia
 
-+ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(NSString *)trackType
++ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(VLCMediaTracksInformationType)trackType
 {
-    libvlc_track_type_t track_type = libvlc_track_unknown;
-
-    if ([trackType isEqualToString:VLCMediaTracksInformationTypeAudio])
-        track_type = libvlc_track_audio;
-    else if ([trackType isEqualToString:VLCMediaTracksInformationTypeVideo])
-        track_type = libvlc_track_video;
-    else if ([trackType isEqualToString:VLCMediaTracksInformationTypeText])
-        track_type = libvlc_track_text;
-
+    libvlc_track_type_t track_type = (libvlc_track_type_t)trackType;
     const char *ret = libvlc_media_get_codec_description(track_type, fourcc);
-    if (ret)
-        return [NSString stringWithUTF8String:ret];
-
-    return @"";
+    return ret != NULL ? @(ret) : @"";
 }
 
 + (instancetype)mediaWithURL:(NSURL *)anURL;
@@ -636,95 +625,25 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return p_stats.i_demux_discontinuity;
 }
 
-NSString *const VLCMediaTracksInformationCodec = @"codec"; // NSNumber
-NSString *const VLCMediaTracksInformationId    = @"id";    // NSNumber
-NSString *const VLCMediaTracksInformationType  = @"type";  // NSString
-
-NSString *const VLCMediaTracksInformationCodecProfile  = @"profile"; // NSNumber
-NSString *const VLCMediaTracksInformationCodecLevel    = @"level";   // NSNumber
-
-NSString *const VLCMediaTracksInformationTypeAudio    = @"audio";
-NSString *const VLCMediaTracksInformationTypeVideo    = @"video";
-NSString *const VLCMediaTracksInformationTypeText     = @"text";
-NSString *const VLCMediaTracksInformationTypeUnknown  = @"unknown";
-
-NSString *const VLCMediaTracksInformationBitrate      = @"bitrate"; // NSNumber
-NSString *const VLCMediaTracksInformationLanguage     = @"language"; // NSString
-NSString *const VLCMediaTracksInformationDescription  = @"description"; // NSString
-
-NSString *const VLCMediaTracksInformationAudioChannelsNumber = @"channelsNumber"; // NSNumber
-NSString *const VLCMediaTracksInformationAudioRate           = @"rate";           // NSNumber
-
-NSString *const VLCMediaTracksInformationVideoHeight = @"height"; // NSNumber
-NSString *const VLCMediaTracksInformationVideoWidth  = @"width";  // NSNumber
-NSString *const VLCMediaTracksInformationVideoOrientation = @"orientation"; // NSNumber
-NSString *const VLCMediaTracksInformationVideoProjection = @"projection";   // NSNumber
-
-NSString *const VLCMediaTracksInformationSourceAspectRatio        = @"sar_num"; // NSNumber
-NSString *const VLCMediaTracksInformationSourceAspectRatioDenominator  = @"sar_den";  // NSNumber
-
-NSString *const VLCMediaTracksInformationFrameRate             = @"frame_rate_num"; // NSNumber
-NSString *const VLCMediaTracksInformationFrameRateDenominator  = @"frame_rate_den";  // NSNumber
-
-NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
-
-- (NSArray *)tracksInformation
+- (NSArray<VLCMediaTracksInformation *> *)tracksInformation
 {
-    libvlc_media_track_t **tracksInfo;
-    unsigned int count = libvlc_media_tracks_get(p_md, &tracksInfo);
-    NSMutableArray *array = [NSMutableArray array];
-    for (NSUInteger i = 0; i < count; i++) {
-        NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           @(tracksInfo[i]->i_codec),
-                                           VLCMediaTracksInformationCodec,
-                                           @(tracksInfo[i]->i_id),
-                                           VLCMediaTracksInformationId,
-                                           @(tracksInfo[i]->i_profile),
-                                           VLCMediaTracksInformationCodecProfile,
-                                           @(tracksInfo[i]->i_level),
-                                           VLCMediaTracksInformationCodecLevel,
-                                           @(tracksInfo[i]->i_bitrate),
-                                           VLCMediaTracksInformationBitrate,
-                                           nil];
-        if (tracksInfo[i]->psz_language)
-            dictionary[VLCMediaTracksInformationLanguage] = [NSString stringWithUTF8String:tracksInfo[i]->psz_language];
-
-        if (tracksInfo[i]->psz_description)
-            dictionary[VLCMediaTracksInformationDescription] = [NSString stringWithUTF8String:tracksInfo[i]->psz_description];
-
-        NSString *type;
-        switch (tracksInfo[i]->i_type) {
-            case libvlc_track_audio:
-                type = VLCMediaTracksInformationTypeAudio;
-                dictionary[VLCMediaTracksInformationAudioChannelsNumber] = @(tracksInfo[i]->audio->i_channels);
-                dictionary[VLCMediaTracksInformationAudioRate] = @(tracksInfo[i]->audio->i_rate);
-                break;
-            case libvlc_track_video:
-                type = VLCMediaTracksInformationTypeVideo;
-                dictionary[VLCMediaTracksInformationVideoWidth] = @(tracksInfo[i]->video->i_width);
-                dictionary[VLCMediaTracksInformationVideoHeight] = @(tracksInfo[i]->video->i_height);
-                dictionary[VLCMediaTracksInformationVideoOrientation] = @(tracksInfo[i]->video->i_orientation);
-                dictionary[VLCMediaTracksInformationVideoProjection] = @(tracksInfo[i]->video->i_projection);
-                dictionary[VLCMediaTracksInformationSourceAspectRatio] = @(tracksInfo[i]->video->i_sar_num);
-                dictionary[VLCMediaTracksInformationSourceAspectRatioDenominator] = @(tracksInfo[i]->video->i_sar_den);
-                dictionary[VLCMediaTracksInformationFrameRate] = @(tracksInfo[i]->video->i_frame_rate_num);
-                dictionary[VLCMediaTracksInformationFrameRateDenominator] = @(tracksInfo[i]->video->i_frame_rate_den);
-                break;
-            case libvlc_track_text:
-                type = VLCMediaTracksInformationTypeText;
-                if (tracksInfo[i]->subtitle->psz_encoding)
-                    dictionary[VLCMediaTracksInformationTextEncoding] = [NSString stringWithUTF8String: tracksInfo[i]->subtitle->psz_encoding];
-                break;
-            case libvlc_track_unknown:
-            default:
-                type = VLCMediaTracksInformationTypeUnknown;
-                break;
+    NSMutableArray<VLCMediaTracksInformation *> *array = @[].mutableCopy;
+    
+    // 3 = (libvlc_track_audio = 0 | libvlc_track_video = 1 | libvlc_track_text = 2)
+    for (int i = 0; i < 3; i++) {
+        libvlc_track_type_t type = (libvlc_track_type_t)i;
+        libvlc_media_tracklist_t *tracklist = libvlc_media_get_tracklist(p_md, type);
+        
+        size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
+        for (size_t j = 0; j < tracklistCount; j++) {
+            libvlc_media_track_t *track = libvlc_media_tracklist_at(tracklist, j);
+            VLCMediaTracksInformation *info = [[VLCMediaTracksInformation alloc] initWithMediaTrack: track];
+            [array addObject: info];
         }
-        [dictionary setValue:type forKey:VLCMediaTracksInformationType];
-
-        [array addObject:dictionary];
+        
+        libvlc_media_tracklist_delete(tracklist);
     }
-    libvlc_media_tracks_release(tracksInfo, count);
+    
     return array;
 }
 
@@ -1117,5 +1036,122 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     return p_md;
 }
 
+
+@end
+
+
+/******************************************************************************
+ * Implementation VLCMediaTracksInformation
+ */
+@implementation VLCMediaTracksInformation
+
+- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track
+{
+    if (self = [super init]) {
+        _type = (VLCMediaTracksInformationType)track->i_type;
+        _codec = track->i_codec;
+        _fourcc = track->i_original_fourcc;
+        _identifier = track->i_id;
+        _profile = track->i_profile;
+        _level = track->i_level;
+        _bitrate = track->i_bitrate;
+        
+        if (track->psz_language)
+            _language = @(track->psz_language);
+        
+        if (track->psz_description)
+            _trackDescription = @(track->psz_description);
+        
+        if (track->i_type == libvlc_track_audio && track->audio)
+            _audio = [[VLCMediaTracksInformationAudio alloc] initWithAudioTrack: track->audio];
+        else if (track->i_type == libvlc_track_video && track->video)
+            _video = [[VLCMediaTracksInformationVideo alloc] initWithVideoTrack: track->video];
+        else if (track->i_type == libvlc_track_text && track->subtitle)
+            _text = [[VLCMediaTracksInformationText alloc] initWithSubtitleTrack: track->subtitle];
+    }
+    return self;
+}
+
+- (NSString *)codecName
+{
+    return [VLCMedia codecNameForFourCC: _fourcc trackType: _type];
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@ %p>, codec: %d, fourcc: %d, codecName: %@, identifier: %d, profile: %d, level: %d, bitrate: %d, language: %@, trackDescription: %@, audio: %@, video: %@, text: %@", [self class], self, _codec, _fourcc, [self codecName], _identifier, _profile, _level, _bitrate, _language, _trackDescription, [_audio description], [_video description], [_text description]];
+}
+
+@end
+
+
+/******************************************************************************
+ * Implementation VLCMediaTracksInformationAudio
+ */
+@implementation VLCMediaTracksInformationAudio
+
+- (instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio
+{
+    if (self = [super init]) {
+        _channelsNumber = audio->i_channels;
+        _rate = audio->i_rate;
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@ %p>, channelsNumber: %d, rate: %d", [self class], self, _channelsNumber, _rate];
+}
+
+@end
+
+
+/******************************************************************************
+ * Implementation VLCMediaTracksInformationVideo
+ */
+@implementation VLCMediaTracksInformationVideo
+
+- (instancetype)initWithVideoTrack:(libvlc_video_track_t *)video
+{
+    if (self = [super init]) {
+        _width = video->i_width;
+        _height = video->i_height;
+        _orientation = (VLCMediaOrientation)video->i_orientation;
+        _projection = (VLCMediaProjection)video->i_projection;
+        _sourceAspectRatio = video->i_sar_num;
+        _sourceAspectRatioDenominator = video->i_sar_den;
+        _frameRate = video->i_frame_rate_num;
+        _frameRateDenominator = video->i_frame_rate_den;
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@ %p>, width: %d, height: %d, orientation: %lu, projection: %lu, sourceAspectRatio: %d, sourceAspectRatioDenominator: %d, frameRate: %d, frameRateDenominator: %d", [self class], self, _width, _height, _orientation, _projection, _sourceAspectRatio, _sourceAspectRatioDenominator, _frameRate, _frameRateDenominator];
+}
+
+@end
+
+
+/******************************************************************************
+ * Implementation VLCMediaTracksInformationText
+ */
+@implementation VLCMediaTracksInformationText
+
+- (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle
+{
+    if (self = [super init]) {
+        if (subtitle->psz_encoding)
+            _encoding = @(subtitle->psz_encoding);
+    }
+    return self;
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@ %p>, encoding: %@", [self class], self, _encoding];
+}
 
 @end

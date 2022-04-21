@@ -159,14 +159,13 @@ static void display(void *opaque, void *picture)
 
 - (void)startFetchingThumbnail
 {
-    NSArray *tracks = [_media tracksInformation];
+    NSArray<VLCMediaTracksInformation *> *tracks = [_media tracksInformation];
 
     // Find the video track
-    NSDictionary *videoTrack = nil;
-    for (NSDictionary *track in tracks) {
-        NSString *type = track[VLCMediaTracksInformationType];
-        if ([type isEqualToString:VLCMediaTracksInformationTypeVideo]) {
-            videoTrack = track;
+    VLCMediaTracksInformationVideo *videoTrack = nil;
+    for (VLCMediaTracksInformation *track in tracks) {
+        if (track.type == VLCMediaTracksInformationTypeVideo) {
+            videoTrack = track.video;
             break;
         }
     }
@@ -177,8 +176,8 @@ static void display(void *opaque, void *picture)
 
     /* optimize rendering if we know what's ahead, if not, well not too bad either */
     if (videoTrack) {
-        int videoHeight = [videoTrack[VLCMediaTracksInformationVideoHeight] intValue];
-        int videoWidth = [videoTrack[VLCMediaTracksInformationVideoWidth] intValue];
+        int videoHeight = videoTrack.height;
+        int videoWidth = videoTrack.width;
 
         // Constraining to the aspect ratio of the video.
         double ratio;

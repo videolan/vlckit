@@ -182,3 +182,40 @@
 - (NSString *)representedLibVLCOptions;
 @end
 #endif
+
+
+/**
+ * Bridges functionality between libvlc and VLCMediaTracksInformation implementation.
+ */
+@interface VLCMediaTracksInformation (LibVLCBridging)
+
+- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track;
+
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCMediaTracksInformationAudio implementation.
+ */
+@interface VLCMediaTracksInformationAudio (LibVLCBridging)
+
+- (instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio;
+
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCMediaTracksInformationVideo implementation.
+ */
+@interface VLCMediaTracksInformationVideo (LibVLCBridging)
+
+- (instancetype)initWithVideoTrack:(libvlc_video_track_t *)video;
+
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCMediaTracksInformationText implementation.
+ */
+@interface VLCMediaTracksInformationText (LibVLCBridging)
+
+- (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle;
+
+@end
