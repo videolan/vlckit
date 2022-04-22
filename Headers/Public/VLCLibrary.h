@@ -29,6 +29,27 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(int, VLCLogLevel) {
+    kVLCLogLevelError = 0,
+    kVLCLogLevelWarning,
+    kVLCLogLevelInfo,
+    kVLCLogLevelDebug
+};
+
+typedef NS_OPTIONS(int, VLCLogContextFlag) {
+    kVLCLogLevelContextNone = 0,
+    kVLCLogLevelContextModule = 1,
+    kVLCLogLevelContextFileLocation = 2,
+    kVLCLogLevelContextCallingFunction = 4,
+};
+
+typedef NS_ENUM(int, VLCLogOutput) {
+    kVLCLogOutputDisabled = 0,
+    kVLCLogOutputConsole,
+    kVLCLogOutputFile,
+    kVLCLogOutputExternalHandler
+};
+
 @protocol VLCLibraryLogReceiverProtocol;
 
 /**
@@ -56,13 +77,22 @@ NS_ASSUME_NONNULL_BEGIN
  - (instancetype)initWithOptions:(NSArray *)options;
 
 /**
- * Enables/disables debug logging to console
+ * Enables/disables logging to console
  * \note NSLog is used to log messages
  */
-@property (readwrite, nonatomic) BOOL debugLogging;
+@property (readwrite, nonatomic) BOOL debugLogging __deprecated_msg("Use logOutput instead");
 
 /**
- * Gets/sets the debug logging level
+ * Log output type
+ * Change to enable logging
+ * Defaults to kVLCLogOutputDisabled
+ */
+@property (readonly, nonatomic) VLCLogOutput logOutput;
+
+- (BOOL)changeLoggingOutput:(VLCLogOutput)logOutput;
+
+/**
+ * Gets/sets the logging level
  * \note Logging level
  * 0: info/notice
  * 1: error
@@ -71,24 +101,67 @@ NS_ASSUME_NONNULL_BEGIN
  * \note values set here will be consired only when logging to console
  * \warning If an invalid level is provided, level defaults to 0
  */
-@property (readwrite, nonatomic) int debugLoggingLevel;
+@property (readwrite, nonatomic) int debugLoggingLevel __deprecated_msg("Use logLevel instead");
+
+/**
+ * Gets/sets the logging level
+ * \see VLCLogLevel
+ */
+@property (readwrite, nonatomic) VLCLogLevel logLevel;
+
+/**
+ * Flags for detailed logging context
+ * Defaults to kVLCLogLevelContextNone
+ */
+@property (readwrite, nonatomic) VLCLogContextFlag logContextFlags;
 
 /**
  * Activates debug logging to a file stream
  * If the file already exists, the log will be appended by the end. If it does not exist, will be created.
  * The file will continously updated with new messages from this library instance.
+ * \param filePath The absolute path to the file where logs will be appended
  * \note It is the client app's obligation to ensure that the target file path is writable and all subfolders exist
  * \warning when enabling this feature, logging to the console or an object target will be stopped automatically
  * \return Returns NO on failure
  */
-- (BOOL)setDebugLoggingToFile:(NSString *)filePath;
+- (BOOL)setDebugLoggingToFile:(NSString *)filePath __deprecated_msg("Use enableLoggingToFile instead");
+
+/**
+ * Activates logging to a file stream
+ * If the file already exists, the log will be appended by the end. If it does not exist, will be created.
+ * The file will continously updated with new messages from this library instance.
+ * \param filePath The absolute path to the file where logs will be appended
+ * \note It is the client app's obligation to ensure that the target file path is writable and all subfolders exist
+ * \warning when enabling this feature, logging to the console or an object target will be stopped automatically
+ * \return Returns NO on failure
+ */
+- (BOOL)enableLoggingToFile:(NSString * _Nonnull)filePath;
+
+/**
+ * The file path set with -[VLCLibrary enableLoggingToFile:]
+ */
+@property (readonly, nonatomic, nullable) NSString *loggingFilePath;
 
 /**
  * Activates debug logging to an object target following the VLCLibraryLogReceiverProtocol protocol
  * The target will be continously called as new messages arrive from this library instance.
  * \warning when enabling this feature, logging to the console or a file will be stopped automatically
  */
-@property (readwrite, nonatomic, nullable) id<VLCLibraryLogReceiverProtocol> debugLoggingTarget;
+@property (readwrite, nonatomic, nullable) id<VLCLibraryLogReceiverProtocol> debugLoggingTarget __deprecated_msg("Use enableLoggingWithExternalHandler: instead");
+
+/**
+ * The object set with -[VLCLibrary enableLoggingWithExternalHandler:]
+ */
+@property (readonly, nonatomic, nullable) id<VLCLibraryLogReceiverProtocol> loggingExternalHandler;
+
+/**
+ * Activates debug logging to an object target following the VLCLibraryLogReceiverProtocol protocol
+ * The target will be continously called as new messages arrive from this library instance.
+ * \param loggingTarget The object that conforms to VLCLibraryLogReceiverProtocol
+ * \warning when enabling this feature, logging to the console or a file will be stopped automatically
+ * \return Returns NO on failure
+ */
+- (BOOL)enableLoggingWithExternalHandler:(id<VLCLibraryLogReceiverProtocol>)loggingExternalHandler;
 
 /**
  * Returns the library's version
@@ -132,15 +205,68 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@protocol VLCLibraryLogReceiverProtocol <NSObject>
-@required
+@interface VLCLogContext: NSObject
 /**
- * called when VLC wants to print a debug message
- * \param message the debug message
- * \param level the debug level
+ * Emitter (temporarily) unique object ID or 0
+ */
+@property (nonatomic, readonly) uintptr_t objectId;
+
+/**
+ * Emitter object type name
+ */
+@property (nonatomic, readonly) NSString *objectType;
+
+/**
+ * Emitter module
+ */
+@property (nonatomic, readonly) NSString *module;
+
+/**
+ * Additional header (used by VLM media)
+ */
+@property (nonatomic, readonly) NSString *header;
+
+/**
+ * Source code file name or nil
+ */
+@property (nonatomic, readonly, nullable) NSString *file;
+
+/**
+ * Source code file line number or -1
+ */
+@property (nonatomic, readonly) int line;
+
+/**
+ * Source code calling function name or NULL
+ */
+@property (nonatomic, readonly, nullable) NSString *function;
+
+/**
+ * Emitter thread ID
+ */
+@property (nonatomic, readonly) unsigned long threadId;
+
+@end
+
+@protocol VLCLibraryLogReceiverProtocol <NSObject>
+@optional
+/**
+ * called when VLC wants to print a log message
+ * \param message the log message
+ * \param level the log level
  */
 - (void)handleMessage:(NSString *)message
            debugLevel:(int)level;
+@required
+/**
+ * called when VLC wants to print a log message
+ * \param message the log message
+ * \param level the debug level
+ * \param context the debug level
+ */
+- (void)handleMessage:(NSString *)message
+             logLevel:(VLCLogLevel)level
+              context:(VLCLogContext * _Nullable)context;
 @end
 
 NS_ASSUME_NONNULL_END
