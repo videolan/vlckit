@@ -27,66 +27,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class VLCTime, VLCMediaTracksInformation;
+@class VLCTime, VLCMediaTracksInformation, VLCMediaMetaData;
 
 NS_ASSUME_NONNULL_BEGIN
-
-/* Meta Dictionary Keys */
-/**
- * Standard dictionary keys for retreiving meta data.
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationTitle;          /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationArtist;         /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationGenre;          /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationCopyright;      /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationAlbum;          /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationTrackNumber;    /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationDescription;    /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationRating;         /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationDate;           /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationSetting;        /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationURL;            /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationLanguage;       /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationNowPlaying;     /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationPublisher;      /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationEncodedBy;      /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationArtworkURL;     /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationArtwork;        /* NSImage  */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationTrackID;        /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationTrackTotal;     /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationDirector;       /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationSeason;         /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationEpisode;        /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationShowName;       /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationActors;         /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationAlbumArtist;    /* NSString */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMetaInformationDiscNumber;     /* NSString */
 
 /* Notification Messages */
 /**
@@ -313,32 +256,9 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 @property (nonatomic, readonly, strong, nullable) VLCMediaList * subitems;
 
 /**
- * get meta property for key
- * \note for performance reasons, fetching the metaDictionary will be faster!
- * \see metaDictionary
- * \see dictionary keys above
+ * meta data
  */
-- (nullable NSString *)metadataForKey:(NSString *)key;
-
-/**
- * set meta property for key
- * \param data the metadata to set as NSString
- * \param key the metadata key
- * \see dictionary keys above
- */
-- (void)setMetadata:(NSString *)data forKey:(NSString *)key;
-
-/**
- * Save the previously changed metadata
- * \return true if saving was successful
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL saveMetadata;
-
-/**
- * The receiver's meta data as a NSDictionary object.
- */
-@property (nonatomic, readonly, copy) NSDictionary * metaDictionary;
-
+@property (nonatomic, readonly) VLCMediaMetaData *metaData;
 
 /**
  * returns a bool whether is the media is expected to play fluently on this

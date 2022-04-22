@@ -30,6 +30,7 @@
 #import <VLCMediaList.h>
 #import <VLCMedia.h>
 #import <VLCAudio.h>
+#import <VLCMediaMetaData.h>
 #if !TARGET_OS_TV
 #import <VLCRendererItem.h>
 #endif // !TARGET_OS_TV
@@ -217,5 +218,16 @@
 @interface VLCMediaTracksInformationText (LibVLCBridging)
 
 - (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle;
+
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCMediaMetaData implementation.
+ */
+@interface VLCMediaMetaData (LibVLCBridging)
+
+- (instancetype)initWithMedia:(VLCMedia *)media;
+
+- (void)handleMediaMetaChanged:(libvlc_meta_t)type;
 
 @end

@@ -31,6 +31,7 @@
 #import <TVVLCKit/VLCMediaThumbnailer.h>
 #import <TVVLCKit/VLCTime.h>
 #import <TVVLCKit/VLCDialogProvider.h>
+#import <TVVLCKit/VLCMediaMetaData.h>
 
 @class VLCMedia;
 @class VLCMediaList;
@@ -40,3 +41,4 @@
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
+@class VLCMediaMetaData;

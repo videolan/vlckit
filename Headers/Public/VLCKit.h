@@ -37,8 +37,10 @@
 #import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCRendererDiscoverer.h>
 #import <VLCKit/VLCRendererItem.h>
+#import <VLCKit/VLCMediaMetaData.h>
 
 @class VLCMedia;
 @class VLCMediaList;
 @class VLCTime;
 @class VLCVideoView;
+@class VLCMediaMetaData;

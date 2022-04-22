@@ -34,6 +34,7 @@
 #import <MobileVLCKit/VLCTranscoder.h>
 #import <MobileVLCKit/VLCRendererDiscoverer.h>
 #import <MobileVLCKit/VLCRendererItem.h>
+#import <MobileVLCKit/VLCMediaMetaData.h>
 
 @class VLCMedia;
 @class VLCMediaList;
@@ -47,3 +48,4 @@
 @class VLCRendererDiscoverer;
 @class VLCRendererDiscovererDescription;
 @class VLCRendererItem;
+@class VLCMediaMetaData;
