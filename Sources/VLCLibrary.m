@@ -281,7 +281,7 @@ static VLCLibrary * sharedLibrary = nil;
 @property (nonatomic, readwrite) uintptr_t objectId;
 @property (nonatomic, readwrite) NSString *objectType;
 @property (nonatomic, readwrite) NSString *module;
-@property (nonatomic, readwrite) NSString *header;
+@property (nonatomic, readwrite, nullable) NSString *header;
 @property (nonatomic, readwrite, nullable) NSString *file;
 @property (nonatomic, readwrite) int line;
 @property (nonatomic, readwrite, nullable) NSString *function;
@@ -329,7 +329,8 @@ static VLCLogContext* logContextFromLibvlcLogContext(const libvlc_log_t *ctx) {
         context.objectId = ctx->i_object_id;
         context.objectType = [NSString stringWithUTF8String:ctx->psz_object_type];
         context.module = [NSString stringWithUTF8String:ctx->psz_module];
-        context.header = [NSString stringWithUTF8String:ctx->psz_header];
+        if (ctx->psz_header)
+            context.header = [NSString stringWithUTF8String:ctx->psz_header];
         if (ctx->file)
             context.file = [NSString stringWithUTF8String:ctx->file];
         context.line = ctx->line;

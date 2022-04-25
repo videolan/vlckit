@@ -224,7 +224,7 @@ typedef NS_ENUM(int, VLCLogOutput) {
 /**
  * Additional header (used by VLM media)
  */
-@property (nonatomic, readonly) NSString *header;
+@property (nonatomic, readonly, nullable) NSString *header;
 
 /**
  * Source code file name or nil
