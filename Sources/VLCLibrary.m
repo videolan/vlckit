@@ -25,6 +25,8 @@
 
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
+#import <VLCConsoleLogger.h>
+#import <VLCFileLogger.h>
 
 #if TARGET_OS_TV
 # include "vlc-plugins-AppleTV.h"
@@ -49,11 +51,36 @@ static void HandleMessage(void *,
 
 static VLCLibrary * sharedLibrary = nil;
 
-@interface VLCLibrary()
-{
-    FILE *_logFileStream;
-    
+@interface VLCLegacyExternalLogger : NSObject<VLCLogging>
++ (instancetype)new NS_UNAVAILABLE;
++ (instancetype)createWithTarget:(id<VLCLibraryLogReceiverProtocol>)target;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithTarget:(id<VLCLibraryLogReceiverProtocol>)target;
+@end
+
+@implementation VLCLegacyExternalLogger {
+    id<VLCLibraryLogReceiverProtocol> _target;
 }
+@synthesize level = _level;
++ (instancetype)createWithTarget:(id<VLCLibraryLogReceiverProtocol>)target {
+    return [[self alloc] initWithTarget:target];
+}
+- (instancetype)initWithTarget:(id<VLCLibraryLogReceiverProtocol>)target {
+    self = [super init];
+    if (!self) return nil;
+    _target = target;
+    _level = kVLCLogLevelDebug;
+    return self;
+}
+- (void)handleMessage:(NSString *)message
+             logLevel:(VLCLogLevel)level
+              context:(VLCLogContext *)context {
+    if ([_target respondsToSelector:@selector(handleMessage:debugLevel:)])
+        [_target handleMessage:message debugLevel:(int)level];
+}
+@end
+
+@interface VLCLibrary()
 @property (nonatomic, readonly) dispatch_queue_t logSyncQueue;
 @end
 
@@ -91,7 +118,6 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (void)prepareInstanceWithOptions:(NSArray *)options
 {
-    _logContextFlags = kVLCLogLevelContextNone;
     _logSyncQueue = dispatch_queue_create("org.videolan.vlclibrary.logsyncqueue", DISPATCH_QUEUE_SERIAL);
     NSArray *allOptions = options ? [[self _defaultOptions] arrayByAddingObjectsFromArray:options] : [self _defaultOptions];
 
@@ -151,87 +177,56 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (void)setDebugLogging:(BOOL)debugLogging
 {
-    [self changeLoggingOutput:kVLCLogOutputConsole];
+    self.logger = [VLCConsoleLogger new];
 }
 
 - (BOOL)debugLogging {
-    return _logOutput != kVLCLogOutputDisabled;
+    return _logger != nil;
 }
 
-- (BOOL)changeLoggingOutput:(VLCLogOutput)logOutput {
+- (void)setLogger:(id<VLCLogging>)logger {
     if (!_instance)
-        return NO;
+        return;
+    _logger = logger;
     dispatch_sync(_logSyncQueue, ^{
         libvlc_log_unset(_instance);
     });
-    if (_logFileStream)
-        fclose(_logFileStream);
-    _logFileStream = NULL;
-    switch (logOutput) {
-        case kVLCLogOutputDisabled: {
-            _logOutput = logOutput;
-            break;
-        }
-        case kVLCLogOutputFile: {
-            if (self.loggingFilePath == nil) {
-                return NO;
-            }
-            
-            _logFileStream = fopen([self.loggingFilePath UTF8String], "a");
-
-            if (!_logFileStream) {
-                return NO;
-            }
-            libvlc_log_set_file(_instance, _logFileStream);
-            break;
-        }
-        case kVLCLogOutputExternalHandler:
-            if (self.loggingExternalHandler == nil) {
-                return NO;
-            }
-        case kVLCLogOutputConsole:
-        default:
-            libvlc_log_set(_instance, HandleMessage, (__bridge void *)(self));
-            break;
+    if (logger) {
+        libvlc_log_set(_instance, HandleMessage, (__bridge void *)(self));
     }
-    _logOutput = logOutput;
-    return YES;
 }
 
 - (void)setDebugLoggingLevel:(int)debugLoggingLevel
 {
-    debugLoggingLevel = MAX(0, MIN(debugLoggingLevel, 3));
-    _logLevel = debugLoggingLevel;
+    if ([_logger respondsToSelector:@selector(setLevel:)])
+        _logger.level = MAX(0, MIN(debugLoggingLevel, 3));
 }
 
 - (int)debugLoggingLevel {
-    return (int)_logLevel;
+    if ([_logger respondsToSelector:@selector(level)])
+        return (int)_logger.level;
+    return -1;
 }
 
 - (BOOL)setDebugLoggingToFile:(NSString * _Nonnull)filePath
 {
-    return [self enableLoggingToFile:filePath];
-}
-
-- (BOOL)enableLoggingToFile:(NSString * _Nonnull)filePath {
-    _loggingFilePath = filePath;
-    if (![self changeLoggingOutput:kVLCLogOutputFile]) {
-        _loggingFilePath = nil;
-    }
-    return _loggingFilePath != nil;
+    BOOL available = [[NSFileManager defaultManager] createFileAtPath:filePath
+                                                             contents:nil
+                                                           attributes:nil];
+    if (!available) return NO;
+    NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+    if (!fileHandle) return NO;
+    [fileHandle seekToEndOfFile];
+    
+    VLCFileLogger *logger = [VLCFileLogger createWithFileHandle:fileHandle];
+    [self setLogger:logger];
+    return logger != nil;
 }
 
 - (void)setDebugLoggingTarget:(nullable id<VLCLibraryLogReceiverProtocol>) target
 {
-    [self enableLoggingWithExternalHandler:target];
-}
-
-- (BOOL)enableLoggingWithExternalHandler:(id<VLCLibraryLogReceiverProtocol>)loggingExternalHandler {
-    _loggingExternalHandler = loggingExternalHandler;
-    if (![self changeLoggingOutput:kVLCLogOutputExternalHandler]) {
-        _loggingExternalHandler = nil;
-    }
-    return _loggingExternalHandler != nil;
+    VLCLegacyExternalLogger *logger = [VLCLegacyExternalLogger createWithTarget:target];
+    [self setLogger:logger];
 }
 
 - (NSString *)version
@@ -269,10 +264,6 @@ static VLCLibrary * sharedLibrary = nil;
         });
         libvlc_release(_instance);
     }
-
-    if (_logFileStream) {
-        fclose(_logFileStream);
-    }
 }
 
 @end
@@ -307,21 +298,6 @@ static VLCLogLevel logLevelFromLibvlcLevel(int level) {
     }
 }
 
-static const char* logLevelPrefixFromLevel(VLCLogLevel level) {
-    switch (level)
-    {
-        case kVLCLogLevelInfo:
-            return "INF";
-        case kVLCLogLevelError:
-            return "ERR";
-        case kVLCLogLevelWarning:
-            return "WARN";
-        case kVLCLogLevelDebug:
-        default:
-            return "DBG";
-    }
-}
-
 static VLCLogContext* logContextFromLibvlcLogContext(const libvlc_log_t *ctx) {
     VLCLogContext *context = nil;
     if (ctx) {
@@ -352,7 +328,7 @@ static void HandleMessage(void *data,
         @autoreleasepool {
             const VLCLogLevel logLevel = logLevelFromLibvlcLevel(level);
             
-            if (logLevel > libraryInstance.logLevel)
+            if (logLevel > libraryInstance.logger.level)
                 return;
 
             char *messageStr;
@@ -368,6 +344,9 @@ static void HandleMessage(void *data,
                                                              encoding:NSUTF8StringEncoding
                                                          freeWhenDone:YES];
             
+            VLCLogContext *context = logContextFromLibvlcLogContext(ctx);
+            [libraryInstance.logger handleMessage:message logLevel:logLevel context:context];
+            /*
             if (libraryInstance.logOutput == kVLCLogOutputExternalHandler) {
                 id<VLCLibraryLogReceiverProtocol> handler = libraryInstance.loggingExternalHandler;
                 if (!handler) {
@@ -387,7 +366,7 @@ static void HandleMessage(void *data,
                     VLCLogContext *context = logContextFromLibvlcLogContext(ctx);
                     NSString *contextMessage = [NSString new];
                     if (libraryInstance.logContextFlags | kVLCLogLevelContextModule)
-                        contextMessage = [contextMessage stringByAppendingFormat:@" [%@]", context.module];
+                        contextMessage = [contextMessage stringByAppendingFormat:@" [%@/%@]", context.module, context.objectType];
                     if (libraryInstance.logContextFlags | kVLCLogLevelContextFileLocation)
                         contextMessage = [contextMessage stringByAppendingFormat:@" [%@:%d]", context.file, context.line];
                     if (libraryInstance.logContextFlags | kVLCLogLevelContextCallingFunction)
@@ -397,6 +376,7 @@ static void HandleMessage(void *data,
                     VKLog(@"[%s] %s", log_prefix, messageStr);
                 }
             }
+             */
         }
     });
 }
