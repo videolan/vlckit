@@ -178,7 +178,7 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (void)setDebugLogging:(BOOL)debugLogging
 {
-    self.loggers = @[[VLCConsoleLogger new]];
+    self.loggers = debugLogging ? @[[VLCConsoleLogger new]] : nil;
 }
 
 - (BOOL)debugLogging {
