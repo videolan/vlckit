@@ -57,16 +57,18 @@ NS_ASSUME_NONNULL_BEGIN
  - (instancetype)initWithOptions:(NSArray *)options;
 
 /**
- * Enables/disables logging to console
- * \note NSLog is used to log messages
+ * \brief The loggers array
+ * \note Defaults to nil
  */
-@property (readwrite, nonatomic) BOOL debugLogging __deprecated_msg("Set a logger with -[VLCLibrary setLogger:] instead");
+@property (readwrite, nonatomic, nullable) NSArray< id<VLCLogging> > *loggers;
 
 /**
- * The current logger
- * Defaults to nil
+ * \brief Enables/disables logging to console
+ * \discussion Setting this to YES will assign a single VLCConsoleLogger to -[VLCLibrary loggers] array.
+ * Setting this to NO will assign nil to -[VLCLibrary loggers]
+ * \note NSLog is used to log messages
  */
-@property (readwrite, nonatomic) NSArray< id<VLCLogging> > *loggers;
+@property (readwrite, nonatomic) BOOL debugLogging __deprecated_msg("Set loggers with -[VLCLibrary setLoggers:] instead");
 
 /**
  * Gets/sets the logging level
