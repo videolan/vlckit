@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
  * The current logger
  * Defaults to nil
  */
-@property (readwrite, nonatomic, nullable) id<VLCLogging> logger;
+@property (readwrite, nonatomic) NSArray< id<VLCLogging> > *loggers;
 
 /**
  * Gets/sets the logging level
