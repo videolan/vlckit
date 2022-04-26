@@ -40,6 +40,10 @@
 #import <VLCKit/VLCRendererItem.h>
 #import <VLCKit/VLCFilter.h>
 #import <VLCKit/VLCAdjustFilter.h>
+#import <VLCKit/VLCLogging.h>
+#import <VLCKit/VLCFileLogger.h>
+#import <VLCKit/VLCConsoleLogger.h>
+#import <VLCKit/VLCLogMessageFormatter.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
@@ -48,3 +52,6 @@
 @class VLCVideoView;
 @class VLCFilterParameter;
 @class VLCAdjustFilter;
+@class VLCFileLogger;
+@class VLCConsoleLogger;
+@class VLCLogMessageFormatter;
