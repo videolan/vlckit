@@ -34,7 +34,7 @@ typedef NS_ENUM(int, VLCLogLevel) {
 @property (nonatomic, readonly) NSString *module;
 
 /**
- * Additional header (used by VLM media)
+ * Additional header (used by VLM media) or nil
  */
 @property (nonatomic, readonly, nullable) NSString *header;
 
@@ -60,22 +60,30 @@ typedef NS_ENUM(int, VLCLogLevel) {
 
 @end
 
+/**
+ * Flags used by VLCLogMessageFormatting protocol's contextFlags property
+ */
 typedef NS_OPTIONS(int, VLCLogContextFlag) {
-    kVLCLogLevelContextNone = 0,
-    kVLCLogLevelContextModule = 1,
-    kVLCLogLevelContextFileLocation = 2,
-    kVLCLogLevelContextCallingFunction = 4,
-    kVLCLogLevelContextCustom = 8,
-    kVLCLogLevelContextAll = 15
+    kVLCLogLevelContextNone = 0,                /// Log no additionnal context
+    kVLCLogLevelContextModule = 0<<1,           /// Log responsible module and object type
+    kVLCLogLevelContextFileLocation = 1<<1,     /// Log file path and line number if available
+    kVLCLogLevelContextCallingFunction = 2<<1,  /// Log calling function name
+    kVLCLogLevelContextCustom = 3<<1,           /// Log custom context, see -[VLCLogMessageFormatting customContext] property
+    kVLCLogLevelContextAll = 0xF                /// Log all available additional context
 };
 
 @protocol VLCLogMessageFormatting <NSObject>
 
 /**
  * Flags for detailed logging context
+ * \see VLCLogContextFlag
  */
 @property (readwrite, nonatomic) VLCLogContextFlag contextFlags;
 
+/**
+ * Custom infos that will be appended to log messages.
+ * Ideally the customContext object should respond to the `description` selector in order to return a `NSString`
+ */
 @property (readwrite, nonatomic, nullable) id customContext;
 
 - (NSString *)formatWithMessage:(NSString *)message
