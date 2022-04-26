@@ -34,7 +34,8 @@
 
 - (instancetype)initWithFileHandle:(NSFileHandle *)fileHandle {
     self = [super init];
-    if (!self) return nil;
+    if (!self)
+        return nil;
     _fileHandle = fileHandle;
     _formatter = [VLCLogMessageFormatter new];
     return self;

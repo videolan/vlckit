@@ -67,7 +67,8 @@ static VLCLibrary * sharedLibrary = nil;
 }
 - (instancetype)initWithTarget:(id<VLCLibraryLogReceiverProtocol>)target {
     self = [super init];
-    if (!self) return nil;
+    if (!self)
+        return nil;
     _target = target;
     _level = kVLCLogLevelDebug;
     return self;
@@ -191,9 +192,8 @@ static VLCLibrary * sharedLibrary = nil;
     dispatch_sync(_logSyncQueue, ^{
         libvlc_log_unset(_instance);
     });
-    if (_loggers && _loggers.count > 0) {
+    if (_loggers && _loggers.count > 0)
         libvlc_log_set(_instance, HandleMessage, (__bridge void *)(self));
-    }
 }
 
 - (void)setDebugLoggingLevel:(int)debugLoggingLevel
@@ -219,9 +219,11 @@ static VLCLibrary * sharedLibrary = nil;
     BOOL available = [[NSFileManager defaultManager] createFileAtPath:filePath
                                                              contents:nil
                                                            attributes:nil];
-    if (!available) return NO;
+    if (!available)
+        return NO;
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
-    if (!fileHandle) return NO;
+    if (!fileHandle)
+        return NO;
     [fileHandle seekToEndOfFile];
     
     VLCFileLogger *logger = [VLCFileLogger createWithFileHandle:fileHandle];
@@ -342,9 +344,8 @@ static void HandleMessage(void *data,
                 
                 char *messageStr;
                 if (vasprintf(&messageStr, fmt, args) == -1) {
-                    if (messageStr) {
+                    if (messageStr)
                         free(messageStr);
-                    }
                     return;
                 }
                 

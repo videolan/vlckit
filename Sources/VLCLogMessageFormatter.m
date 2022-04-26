@@ -43,9 +43,8 @@
 }
 
 - (void)setCustomContext:(id)customContext {
-    if (customContext) {
+    if (customContext)
         _contextFlags |= kVLCLogLevelContextCustom;
-    }
     _customContext = customContext;
 }
 

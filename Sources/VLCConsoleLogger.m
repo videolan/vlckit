@@ -30,7 +30,8 @@
 
 - (instancetype)init {
     self = [super init];
-    if (!self) return nil;
+    if (!self)
+        return nil;
     _formatter = [VLCLogMessageFormatter new];
     return self;
 }
