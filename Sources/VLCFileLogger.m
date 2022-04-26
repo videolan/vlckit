@@ -44,8 +44,21 @@
 - (void)handleMessage:(nonnull NSString *)message
              logLevel:(VLCLogLevel)level
               context:(VLCLogContext * _Nullable)context {
-    NSString *formattedMessage = [_formatter formatWithMessage:message logLevel:level context:context];
-    [_fileHandle writeData:[formattedMessage dataUsingEncoding:NSUTF8StringEncoding]];
+    NSString *formattedMessage = [_formatter formatWithMessage:message
+                                                      logLevel:level
+                                                       context:context];
+    NSData *messageData = [formattedMessage dataUsingEncoding:NSUTF8StringEncoding];
+    if (@available(iOS 13.0, tvOS 13.0, macOS 10.15, *)) {
+        [_fileHandle writeData:messageData error:nil];
+    } else {
+        @try {
+            [_fileHandle writeData:messageData];
+        } @catch (NSException *exception) {
+            
+        } @finally {
+            
+        }
+    }
 }
 
 @end
