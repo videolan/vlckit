@@ -81,10 +81,10 @@ typedef NS_ENUM(int, VLCLogLevel) {
  */
 typedef NS_OPTIONS(int, VLCLogContextFlag) {
     kVLCLogLevelContextNone = 0,                /// Log no additionnal context
-    kVLCLogLevelContextModule = 1,              /// Log responsible module and object type
+    kVLCLogLevelContextModule = 1<<0,           /// Log responsible module and object type
     kVLCLogLevelContextFileLocation = 1<<1,     /// Log file path and line number if available
-    kVLCLogLevelContextCallingFunction = 2<<1,  /// Log calling function name
-    kVLCLogLevelContextCustom = 3<<1,           /// Log custom context, see -[VLCLogMessageFormatting customContext] property
+    kVLCLogLevelContextCallingFunction = 1<<2,  /// Log calling function name
+    kVLCLogLevelContextCustom = 1<<3,           /// Log custom context, see -[VLCLogMessageFormatting customContext] property
     kVLCLogLevelContextAll = 0xF                /// Log all available additional context
 };
 
