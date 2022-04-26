@@ -186,31 +186,31 @@ static VLCLibrary * sharedLibrary = nil;
 }
 
 - (void)setLoggers:(NSArray< id<VLCLogging> > *)loggers {
-    if (!_instance)
+    if (_instance == NULL)
         return;
     _loggers = [loggers copy];
     dispatch_sync(_logSyncQueue, ^{
         libvlc_log_unset(_instance);
     });
-    if (_loggers && _loggers.count > 0)
+    if (_loggers.count > 0)
         libvlc_log_set(_instance, HandleMessage, (__bridge void *)(self));
 }
 
 - (void)setDebugLoggingLevel:(int)debugLoggingLevel
 {
-    if (_loggers.count == 0 ||
-        ![_loggers[0] respondsToSelector:@selector(setLevel:)])
+    id<VLCLogging> logger = _loggers.firstObject;
+    if (![logger respondsToSelector:@selector(setLevel:)])
         return;
     
-    _loggers[0].level = MAX(0, MIN(debugLoggingLevel, 3));
+    logger.level = MAX(0, MIN(debugLoggingLevel, 3));
 }
 
 - (int)debugLoggingLevel {
-    if (_loggers.count == 0 ||
-        ![_loggers[0] respondsToSelector:@selector(level)])
+    id<VLCLogging> logger = _loggers.firstObject;
+    if (![logger respondsToSelector:@selector(level)])
         return -1;
     
-    return (int)_loggers[0].level;
+    return (int)logger.level;
     
 }
 
@@ -222,7 +222,7 @@ static VLCLibrary * sharedLibrary = nil;
     if (!available)
         return NO;
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
-    if (!fileHandle)
+    if (fileHandle == nil)
         return NO;
     [fileHandle seekToEndOfFile];
     
@@ -266,7 +266,7 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (void)dealloc
 {
-    if (_instance) {
+    if (_instance != NULL) {
         dispatch_sync(_logSyncQueue, ^{
             libvlc_log_unset(_instance);
         });
@@ -313,12 +313,12 @@ static VLCLogContext* logContextFromLibvlcLogContext(const libvlc_log_t *ctx) {
         context.objectId = ctx->i_object_id;
         context.objectType = [NSString stringWithUTF8String:ctx->psz_object_type];
         context.module = [NSString stringWithUTF8String:ctx->psz_module];
-        if (ctx->psz_header)
+        if (ctx->psz_header != NULL)
             context.header = [NSString stringWithUTF8String:ctx->psz_header];
-        if (ctx->file)
+        if (ctx->file != NULL)
             context.file = [NSString stringWithUTF8String:ctx->file];
         context.line = ctx->line;
-        if (ctx->func)
+        if (ctx->func != NULL)
             context.function = [NSString stringWithUTF8String:ctx->func];
         context.threadId = ctx->tid;
     }
@@ -344,7 +344,7 @@ static void HandleMessage(void *data,
                 
                 char *messageStr;
                 if (vasprintf(&messageStr, fmt, args) == -1) {
-                    if (messageStr)
+                    if (messageStr != NULL)
                         free(messageStr);
                     return;
                 }
