@@ -62,9 +62,7 @@
         @try {
             [_fileHandle writeData:messageData];
         } @catch (NSException *exception) {
-            
-        } @finally {
-            
+            ///Silently fails
         }
     }
 }
