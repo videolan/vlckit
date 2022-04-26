@@ -198,8 +198,7 @@ static VLCLibrary * sharedLibrary = nil;
 
 - (void)setDebugLoggingLevel:(int)debugLoggingLevel
 {
-    if (_loggers == nil ||
-        _loggers.count == 0 ||
+    if (_loggers.count == 0 ||
         ![_loggers[0] respondsToSelector:@selector(setLevel:)])
         return;
     
@@ -207,8 +206,7 @@ static VLCLibrary * sharedLibrary = nil;
 }
 
 - (int)debugLoggingLevel {
-    if (_loggers == nil ||
-        _loggers.count == 0 ||
+    if (_loggers.count == 0 ||
         ![_loggers[0] respondsToSelector:@selector(level)])
         return -1;
     
