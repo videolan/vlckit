@@ -27,19 +27,42 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VLCFileLogger : NSObject<VLCLogging>
+/**
+ * \brief A file logger to be used with a library instance
+ * \see -[VLCLibrary loggers]
+ */
+@interface VLCFileLogger : NSObject<VLCFormattedMessageLogging>
 
+/**
+ * \brief The file handle used to write or update the log file
+ */
 @property (nonatomic, readonly) NSFileHandle *fileHandle;
 
-@property (nonatomic, readonly) id<VLCLogMessageFormatting> formatter;
+/**
+ * \brief Formatter used
+ * \note Set to an instance of `VLCLogMessageFormatter` by default
+ * \warning Won't accept nil value
+ * \see VLCLogMessageFormatting
+ */
+@property (nonatomic, readwrite) id<VLCLogMessageFormatting> formatter;
 
 + (instancetype)new NS_UNAVAILABLE;
 
+/**
+ * \brief Class default initializer
+ * \param fileHandle The file handle that was created for write or update access
+ * \note The writing will silently fail if the file handle wasn't opened for write or update access
+ */
 + (instancetype)createWithFileHandle:(NSFileHandle *)fileHandle;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)initWithFileHandle:(NSFileHandle *)fileHandle;
+/**
+ * \brief Default initializer
+ * \param fileHandle The file handle that was created for write or update access
+ * \note The writing will silently fail if the file handle wasn't opened for write or update access
+ */
+- (instancetype)initWithFileHandle:(NSFileHandle *)fileHandle NS_DESIGNATED_INITIALIZER;
 @end
 
 NS_ASSUME_NONNULL_END

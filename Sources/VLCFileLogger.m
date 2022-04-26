@@ -41,6 +41,14 @@
     return self;
 }
 
+- (void)setFormatter:(id<VLCLogMessageFormatting>)formatter {
+    if (formatter == nil) {
+        NSLog(@"Set a nil formatter isn't allowed, keeping previous formatter");
+        return;
+    }
+    _formatter = formatter;
+}
+
 - (void)handleMessage:(nonnull NSString *)message
              logLevel:(VLCLogLevel)level
               context:(VLCLogContext * _Nullable)context {

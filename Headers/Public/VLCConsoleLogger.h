@@ -27,9 +27,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface VLCConsoleLogger : NSObject<VLCLogging>
+@interface VLCConsoleLogger : NSObject<VLCFormattedMessageLogging>
 
-@property (nonatomic, readonly) id<VLCLogMessageFormatting> formatter;
+/**
+ * \brief Used to format handled log infos
+ * \note Set to an instance of `VLCLogMessageFormatter` by default
+ * \warning Won't accept nil value
+ * \see VLCLogMessageFormatting
+ */
+@property (nonatomic, readwrite) id<VLCLogMessageFormatting> formatter;
 
 @end
 

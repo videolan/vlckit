@@ -26,11 +26,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * \brief Levels to filter logged message
+ * \see VLCLogging
+ */
 typedef NS_ENUM(int, VLCLogLevel) {
-    kVLCLogLevelError = 0,
-    kVLCLogLevelWarning,
-    kVLCLogLevelInfo,
-    kVLCLogLevelDebug
+    kVLCLogLevelError = 0,  /// To only print errors
+    kVLCLogLevelWarning,    /// To only print errors and warnings
+    kVLCLogLevelInfo,       /// To only print infos, errors and warnings
+    kVLCLogLevelDebug       /// To print all messages
 };
 
 @interface VLCLogContext: NSObject
@@ -91,40 +95,63 @@ typedef NS_OPTIONS(int, VLCLogContextFlag) {
 @protocol VLCLogMessageFormatting <NSObject>
 
 /**
- * Flags for detailed logging context
+ * Enable/disable logging context options
  * \see VLCLogContextFlag
  */
 @property (readwrite, nonatomic) VLCLogContextFlag contextFlags;
 
 /**
- * Custom infos that will be appended to log messages.
- * Ideally the customContext object should respond to the `description` selector in order to return a `NSString`
+ * \brief Custom infos that might be appended to log messages.
+ * \discussion Ideally the customContext object should respond to the `description` selector in order to return a `NSString`
+ * This is expected by VLCLogMessageFormatter
  */
 @property (readwrite, nonatomic, nullable) id customContext;
 
+@required
+/**
+ * \brief The implementation should convert log infos to a string that will be used by a logger
+ * \discussion This must be implemented by any formatter to be called each time a logger handles a message
+ */
 - (NSString *)formatWithMessage:(NSString *)message
                        logLevel:(VLCLogLevel)level
                         context:(nullable VLCLogContext *)context;
 
 @end
 
+/**
+ * \brief Protocol implemented by any logger used in -[VLCLibrary loggers]
+ * \see -[VLCLibrary loggers]
+ */
 @protocol VLCLogging <NSObject>
 @required
 /**
- * Gets/sets the logging level
+ * Gets/sets this to filter in/out messages to handle
  * \see VLCLogLevel
  */
 @property (readwrite, nonatomic) VLCLogLevel level;
 
 /**
- * called when VLC wants to print a log message
- * \param message the log message
- * \param level the log level
- * \param context the log context
+ * \brief Called when VLC wants to print a log message
+ * \param message The log message
+ * \param level The log level
+ * \param context The log context, can be nil
  */
 - (void)handleMessage:(NSString *)message
              logLevel:(VLCLogLevel)level
               context:(nullable VLCLogContext *)context;
+@end
+
+/**
+ * \brief Protocol implemented by any logger that use a formatter
+ * \see -[VLCLibrary loggers]
+ * \see VLCConsoleLogger
+ * \see VLCFileLogger
+ */
+@protocol VLCFormattedMessageLogging <VLCLogging>
+@required
+
+@property (nonatomic, readwrite) id<VLCLogMessageFormatting> formatter;
+
 @end
 
 NS_ASSUME_NONNULL_END
