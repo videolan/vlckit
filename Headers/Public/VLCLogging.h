@@ -27,7 +27,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * \brief Levels to filter logged message
+ * \brief Levels to filter log messages
  * \see VLCLogging
  */
 typedef NS_ENUM(int, VLCLogLevel) {
@@ -37,6 +37,9 @@ typedef NS_ENUM(int, VLCLogLevel) {
     kVLCLogLevelDebug       /// To print all messages
 };
 
+/**
+ * Detailed infos associated with a log message
+ */
 @interface VLCLogContext: NSObject
 /**
  * Emitter (temporarily) unique object ID or 0
@@ -92,10 +95,15 @@ typedef NS_OPTIONS(int, VLCLogContextFlag) {
     kVLCLogLevelContextAll = 0xF                /// Log all available additional context
 };
 
+/**
+ * \brief Protocol implemented by any object that may format log messages with their context
+ * \discussion Its use is optional for any custom logger implementation but is actually being used in VLCKit loggers
+ * \see VLCFormattedMessageLogging
+ */
 @protocol VLCLogMessageFormatting <NSObject>
 
 /**
- * Enable/disable logging context options
+ * \brief Enable/disable logging context options
  * \see VLCLogContextFlag
  */
 @property (readwrite, nonatomic) VLCLogContextFlag contextFlags;
@@ -103,7 +111,8 @@ typedef NS_OPTIONS(int, VLCLogContextFlag) {
 /**
  * \brief Custom infos that might be appended to log messages.
  * \discussion Ideally the customContext object should respond to the `description` selector in order to return a `NSString`
- * This is expected by VLCLogMessageFormatter
+ *
+ * \note A `description` method implementation is expected by VLCLogMessageFormatter
  */
 @property (readwrite, nonatomic, nullable) id customContext;
 
@@ -125,13 +134,13 @@ typedef NS_OPTIONS(int, VLCLogContextFlag) {
 @protocol VLCLogging <NSObject>
 @required
 /**
- * Gets/sets this to filter in/out messages to handle
+ * \brief Gets/sets this to filter in/out messages to handle
  * \see VLCLogLevel
  */
 @property (readwrite, nonatomic) VLCLogLevel level;
 
 /**
- * \brief Called when VLC wants to print a log message
+ * \brief Called by the VLCLibrary logging handler when a log message is delivered
  * \param message The log message
  * \param level The log level
  * \param context The log context, can be nil
@@ -143,6 +152,7 @@ typedef NS_OPTIONS(int, VLCLogContextFlag) {
 
 /**
  * \brief Protocol implemented by any logger that use a formatter
+ * \note Its use is optional for any custom logger implementation but is actually being used in VLCKit loggers
  * \see -[VLCLibrary loggers]
  * \see VLCConsoleLogger
  * \see VLCFileLogger

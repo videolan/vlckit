@@ -27,6 +27,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * \brief A simple log message formatter
+ * \discussion This formatter will format a message like "[level] message context"
+ * \warning Any customContext object not responding to the `description` message will be ignored
+ */
 @interface VLCLogMessageFormatter : NSObject<VLCLogMessageFormatting>
 
 @end

@@ -27,6 +27,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ * \brief A simple console logger to be used with a library instance
+ * \see -[VLCLibrary loggers]
+ */
 @interface VLCConsoleLogger : NSObject<VLCFormattedMessageLogging>
 
 /**

@@ -28,7 +28,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- * \brief A file logger to be used with a library instance
+ * \brief A simple file logger to be used with a library instance
  * \see -[VLCLibrary loggers]
  */
 @interface VLCFileLogger : NSObject<VLCFormattedMessageLogging>
