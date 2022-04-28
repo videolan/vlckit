@@ -1,7 +1,7 @@
-From 278a437926e44f08649685e43bf1af94317b8154 Mon Sep 17 00:00:00 2001
+From c47e772e839d3ae2999d856faa23b1b9c4a45e03 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 21 Jan 2022 17:28:13 +0100
-Subject: [PATCH 69/80] smb2: use the cache helper
+Subject: [PATCH 50/51] smb2: use the cache helper
 
 Cache the smb2 session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.
@@ -31,7 +31,7 @@ index 8be84055fa..2e75013bad 100644
  if HAVE_DSM
  libsmb2_plugin_la_CFLAGS += $(DSM_CFLAGS) -DHAVE_DSM
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 12591465fd..3032627505 100644
+index 66df992cfb..178e30909e 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -83,6 +83,7 @@ netbios_ns_interrupt_unregister(void)
@@ -60,7 +60,7 @@ index 12591465fd..3032627505 100644
  };
  
  struct vlc_smb2_op
-@@ -621,6 +626,16 @@ error:
+@@ -609,6 +614,16 @@ error:
      return op.error_status;
  }
  
@@ -77,8 +77,8 @@ index 12591465fd..3032627505 100644
  static int
  vlc_smb2_connect_open_share(stream_t *access, const char *url,
                              const vlc_credential *credential)
-@@ -655,6 +670,30 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
-         password = NULL;
+@@ -643,6 +658,30 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
+         password = "";
      }
  
 +    struct vlc_access_cache_entry *cache_entry =
@@ -108,7 +108,7 @@ index 12591465fd..3032627505 100644
      smb2_set_security_mode(sys->smb2, SMB2_NEGOTIATE_SIGNING_ENABLED);
      smb2_set_password(sys->smb2, password);
      smb2_set_domain(sys->smb2, domain ? domain : "");
-@@ -681,6 +720,15 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
+@@ -669,6 +708,15 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
          goto error;
      }
  
@@ -124,7 +124,7 @@ index 12591465fd..3032627505 100644
      smb2_destroy_url(smb2_url);
      return 0;
  
-@@ -886,11 +934,9 @@ Close(vlc_object_t *p_obj)
+@@ -874,11 +922,9 @@ Close(vlc_object_t *p_obj)
      assert(sys->smb2_connected);
  
      if (sys->smb2 != NULL)

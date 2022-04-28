@@ -1,7 +1,7 @@
-From 81cf3d7696f8ddb77e53f034b02af9a5541625d6 Mon Sep 17 00:00:00 2001
+From 9191f3b0d82d8dec5438bbcafe5f42f61a0a025e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 12 Aug 2020 17:58:43 +0200
-Subject: [PATCH 33/80] audio_filter: add ebur128 "audio meter" plugin
+Subject: [PATCH 33/51] audio_filter: add ebur128 "audio meter" plugin
 
 ---
  configure.ac                      |   5 +
