@@ -108,7 +108,7 @@ int seek_cb(void *opaque, uint64_t offset) {
 }
 
 void close_cb(void *opaque) {
-    NSInputStream *stream = (__bridge NSInputStream *)(opaque);
+    NSInputStream *stream = (__bridge_transfer NSInputStream *)(opaque);
     if (stream && stream.streamStatus != NSStreamStatusClosed && stream.streamStatus != NSStreamStatusNotOpen) {
         [stream close];
     }
@@ -293,7 +293,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         NSAssert(stream.streamStatus != NSStreamStatusClosed, @"Passing closed stream to VLCMedia.init does not work");
         
         self->stream = stream;
-        p_md = libvlc_media_new_callbacks(library.instance, open_cb, read_cb, seek_cb, close_cb, (__bridge void *)(stream));
+        p_md = libvlc_media_new_callbacks(library.instance, open_cb, read_cb, seek_cb, close_cb, (__bridge_retained void *)(stream));
         
         _metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
         
