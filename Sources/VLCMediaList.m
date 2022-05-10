@@ -27,7 +27,6 @@
 
 #import <VLCMediaList.h>
 #import <VLCLibrary.h>
-#import <VLCEventManager.h>
 #import <VLCLibVLCBridging.h>
 #ifdef HAVE_CONFIG_H
 # include "config.h"
@@ -121,7 +120,6 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
         libvlc_event_detach(em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
         libvlc_event_detach(em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
     }
-    [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     // Release allocated memory
     delegate = nil;

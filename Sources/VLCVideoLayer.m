@@ -24,7 +24,6 @@
 
 #import "VLCVideoLayer.h"
 #import "VLCLibrary.h"
-#import "VLCEventManager.h"
 #import "VLCVideoCommon.h"
 
 /* Libvlc */

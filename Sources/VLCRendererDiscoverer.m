@@ -23,7 +23,6 @@
 
 #import <VLCRendererDiscoverer.h>
 #import <VLCLibrary.h>
-#import <VLCEventManager.h>
 #import <VLCLibVLCBridging.h>
 
 @interface VLCRendererDiscoverer()
@@ -31,6 +30,11 @@
     libvlc_renderer_discoverer_t *_rendererDiscoverer;
     NSMutableArray<VLCRendererItem *> *_rendererItems;
 }
+
+- (void)itemAdded:(VLCRendererItem *)item;
+
+- (void)itemDeleted:(VLCRendererItem *)item;
+
 @end
 
 #pragma mark - LibVLC event callbacks
@@ -39,9 +43,10 @@ static void HandleRendererDiscovererItemAdded(const libvlc_event_t *event, void 
 {
     @autoreleasepool {
         VLCRendererItem *renderer = [[VLCRendererItem alloc] initWithRendererItem:event->u.renderer_discoverer_item_added.item];
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(itemAdded:)
-                                           withArgumentAsObject:renderer];
+        VLCRendererDiscoverer *rendererDiscoverer = (__bridge VLCRendererDiscoverer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [rendererDiscoverer itemAdded: renderer];
+        });
     }
 }
 
@@ -49,9 +54,10 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
 {
     @autoreleasepool {
         VLCRendererItem *renderer = [[VLCRendererItem alloc] initWithRendererItem:event->u.renderer_discoverer_item_deleted.item];
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(itemDeleted:)
-                                           withArgumentAsObject:renderer];
+        VLCRendererDiscoverer *rendererDiscoverer = (__bridge VLCRendererDiscoverer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [rendererDiscoverer itemDeleted: renderer];
+        });
     }
 }
 

@@ -27,7 +27,6 @@
 #import <VLCMediaDiscoverer.h>
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
-#import <VLCEventManager.h>
 
 #include <vlc/vlc.h>
 #include <vlc/libvlc.h>
@@ -113,8 +112,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
 
 - (void)dealloc
 {
-    [[VLCEventManager sharedManager] cancelCallToObject:self];
-
     _discoveredMedia = nil;
 
     if (_mdis) {

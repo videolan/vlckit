@@ -31,7 +31,6 @@
 #import <VLCMediaList.h>
 #import <VLCLibVLCBridging.h>
 #import <VLCLibrary.h>
-#import <VLCEventManager.h>
 
 @interface VLCMediaListPlayer () {
     void *instance;
@@ -49,9 +48,10 @@
 static void HandleMediaListPlayerPlayed(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaListPlayerPlayed)
-                                           withArgumentAsObject:nil];
+        VLCMediaListPlayer *mediaListPlayer = (__bridge VLCMediaListPlayer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaListPlayer mediaListPlayerPlayed];
+        });
     }
 }
 
@@ -60,19 +60,20 @@ static void HandleMediaListPlayerNextItemSet(const libvlc_event_t * event, void 
     @autoreleasepool {
         VLCMedia *media = [[VLCMedia alloc]
                            initWithLibVLCMediaDescriptor:event->u.media_list_player_next_item_set.item];
-
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaListPlayerNextItemSet:)
-                                           withArgumentAsObject:media];
+        VLCMediaListPlayer *mediaListPlayer = (__bridge VLCMediaListPlayer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaListPlayer mediaListPlayerNextItemSet: media];
+        });
     }
 }
 
 static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaListPlayerStopped)
-                                           withArgumentAsObject:nil];
+        VLCMediaListPlayer *mediaListPlayer = (__bridge VLCMediaListPlayer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaListPlayer mediaListPlayerStopped];
+        });
     }
 }
 
