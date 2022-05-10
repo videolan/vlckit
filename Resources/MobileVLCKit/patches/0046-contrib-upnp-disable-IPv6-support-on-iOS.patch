@@ -1,7 +1,7 @@
-From c687827c0b9d2d85dbcb2fa51279a614ae0f1b01 Mon Sep 17 00:00:00 2001
+From e639a4efd525a34e84eebf5f58aae7cd495ef889 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 22 Mar 2022 12:32:47 +0100
-Subject: [PATCH 46/51] contrib/upnp: disable IPv6 support on iOS
+Subject: [PATCH 46/52] contrib/upnp: disable IPv6 support on iOS
 
 ---
  contrib/src/upnp/rules.mak | 4 ++++

@@ -1,7 +1,7 @@
-From b0443bf9678702e6fa2ec43c26c318eb97339320 Mon Sep 17 00:00:00 2001
+From c9263f1726125591b2a6898703daa795f33d5894 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 12 Aug 2020 14:43:56 +0200
-Subject: [PATCH 32/51] contrib: add libebur128
+Subject: [PATCH 32/52] contrib: add libebur128
 
 EBU R128 standard for loudness normalisation. It will be used for a future
 ebur128 audio-filter that will measure loudness.

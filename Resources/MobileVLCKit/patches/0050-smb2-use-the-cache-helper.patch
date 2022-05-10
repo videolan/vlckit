@@ -1,7 +1,7 @@
-From c47e772e839d3ae2999d856faa23b1b9c4a45e03 Mon Sep 17 00:00:00 2001
+From 3aa0711ad0e78746d754c6ee99ba66cd2b2fe5b1 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 21 Jan 2022 17:28:13 +0100
-Subject: [PATCH 50/51] smb2: use the cache helper
+Subject: [PATCH 50/52] smb2: use the cache helper
 
 Cache the smb2 session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.
