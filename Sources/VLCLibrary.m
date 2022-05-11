@@ -332,8 +332,20 @@ static void HandleMessage(void *data,
                           va_list args)
 {
     VLCLibrary *libraryInstance = (__bridge VLCLibrary *)data;
+    
+    char *messageStr;
+    int len = vasprintf(&messageStr, fmt, args);
+    if (len == -1) {
+        return;
+    }
+    
+    NSString *message = [[NSString alloc] initWithBytesNoCopy:messageStr
+                                                       length:len
+                                                     encoding:NSUTF8StringEncoding
+                                                 freeWhenDone:YES];
+    const VLCLogLevel logLevel = logLevelFromLibvlcLevel(level);
+    VLCLogContext *context = logContextFromLibvlcLogContext(ctx);
     dispatch_sync(libraryInstance.logSyncQueue, ^{
-        const VLCLogLevel logLevel = logLevelFromLibvlcLevel(level);
         [libraryInstance.loggers enumerateObjectsWithOptions:NSEnumerationConcurrent
                                                   usingBlock:^(id<VLCLogging>  _Nonnull logger,
                                                                NSUInteger idx,
@@ -341,20 +353,6 @@ static void HandleMessage(void *data,
             @autoreleasepool {
                 if (logLevel > logger.level)
                     return;
-                
-                char *messageStr;
-                if (vasprintf(&messageStr, fmt, args) == -1) {
-                    if (messageStr != NULL)
-                        free(messageStr);
-                    return;
-                }
-                
-                NSString *message = [[NSString alloc] initWithBytesNoCopy:messageStr
-                                                                   length:strlen(messageStr)
-                                                                 encoding:NSUTF8StringEncoding
-                                                             freeWhenDone:YES];
-                
-                VLCLogContext *context = logContextFromLibvlcLogContext(ctx);
                 [logger handleMessage:message logLevel:logLevel context:context];
             }
         }];
