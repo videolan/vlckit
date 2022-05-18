@@ -405,6 +405,14 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 #endif
 }
 
+- (VLCMediaFileStatReturnType)fileStatValueForType:(const VLCMediaFileStatType)type value:(uint64_t *)value
+{
+    if (!p_md || !value)
+        return VLCMediaFileStatReturnTypeError;
+    
+    return libvlc_media_get_filestat(p_md, type, value);
+}
+
 - (nullable NSDictionary *)stats
 {
     if (!p_md)

@@ -271,6 +271,34 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<VLCMediaTracksInformation *> *tracksInformation;
 
 /**
+ * list of possible libvlc_media_filestat type.
+ */
+typedef NS_ENUM(unsigned, VLCMediaFileStatType) {
+    VLCMediaFileStatTypeMtime   = 0,
+    VLCMediaFileStatTypeSize    = 1
+} NS_SWIFT_NAME(VLCMedia.FileStatType);
+
+/**
+ * list of possible libvlc_media_filestat return type.
+ */
+typedef NS_ENUM(int, VLCMediaFileStatReturnType) {
+    VLCMediaFileStatReturnTypeError     = -1,
+    VLCMediaFileStatReturnTypeNotFound  = 0,
+    VLCMediaFileStatReturnTypeSuccess   = 1
+} NS_SWIFT_NAME(VLCMedia.FileStatReturnType);
+
+/**
+ * Get a 'filestat' value
+ *
+ * 'stat' values are currently only parsed by directory accesses. This mean that only sub medias of a directory media,
+ * parsed with libvlc_media_parse_with_options() can have valid 'stat' properties.
+ * \param type VLCMediaFileStatType
+ * \param value field in which the value will be stored
+ * \return VLCMediaFileStatReturnType
+ */
+- (VLCMediaFileStatReturnType)fileStatValueForType:(const VLCMediaFileStatType)type value:(uint64_t *)value;
+
+/**
  * enum of available options for use with parseWithOptions
  * \note you may pipe multiple values for the single parameter
  */
