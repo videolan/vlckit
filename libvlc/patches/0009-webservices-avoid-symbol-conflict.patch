@@ -1,4 +1,4 @@
-From dc4fd7d5753980216667dc449bbb84aa716857a3 Mon Sep 17 00:00:00 2001
+From 9b3e6714a3c2895a091f328bd78b01f3460dd8d8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 25 Jan 2021 19:56:01 +0100
 Subject: [PATCH 09/20] webservices: avoid symbol conflict
@@ -36,10 +36,10 @@ index a4da78ade3..8e34640071 100644
  
  json_value * json_parse_ex
 diff --git a/modules/stream_out/chromecast/chromecast_ctrl.cpp b/modules/stream_out/chromecast/chromecast_ctrl.cpp
-index e0b3ef7a9a..81721fd639 100644
+index 3a1a32552b..2055d7aea0 100644
 --- a/modules/stream_out/chromecast/chromecast_ctrl.cpp
 +++ b/modules/stream_out/chromecast/chromecast_ctrl.cpp
-@@ -672,7 +672,7 @@ void intf_sys_t::processAuthMessage( const castchannel::CastMessage& msg )
+@@ -673,7 +673,7 @@ void intf_sys_t::processAuthMessage( const castchannel::CastMessage& msg )
  
  void intf_sys_t::processHeartBeatMessage( const castchannel::CastMessage& msg )
  {
@@ -48,7 +48,7 @@ index e0b3ef7a9a..81721fd639 100644
      std::string type((*p_data)["type"]);
  
      if (type == "PING")
-@@ -695,7 +695,7 @@ void intf_sys_t::processHeartBeatMessage( const castchannel::CastMessage& msg )
+@@ -696,7 +696,7 @@ void intf_sys_t::processHeartBeatMessage( const castchannel::CastMessage& msg )
  
  bool intf_sys_t::processReceiverMessage( const castchannel::CastMessage& msg )
  {
@@ -57,7 +57,7 @@ index e0b3ef7a9a..81721fd639 100644
      std::string type((*p_data)["type"]);
  
      bool ret = true;
-@@ -799,7 +799,7 @@ bool intf_sys_t::processReceiverMessage( const castchannel::CastMessage& msg )
+@@ -800,7 +800,7 @@ bool intf_sys_t::processReceiverMessage( const castchannel::CastMessage& msg )
  
  void intf_sys_t::processMediaMessage( const castchannel::CastMessage& msg )
  {
@@ -66,7 +66,7 @@ index e0b3ef7a9a..81721fd639 100644
      std::string type((*p_data)["type"]);
      int64_t requestId = (json_int_t) (*p_data)["requestId"];
  
-@@ -946,7 +946,7 @@ void intf_sys_t::processMediaMessage( const castchannel::CastMessage& msg )
+@@ -947,7 +947,7 @@ void intf_sys_t::processMediaMessage( const castchannel::CastMessage& msg )
  
  void intf_sys_t::processConnectionMessage( const castchannel::CastMessage& msg )
  {

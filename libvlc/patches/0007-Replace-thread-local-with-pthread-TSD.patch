@@ -1,4 +1,4 @@
-From d17c83737d7da1e24f7def43d5618d6892e04c30 Mon Sep 17 00:00:00 2001
+From 7ff359c983ff0d04c5fdd3ce29b5f11d5f1c530e Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
 Subject: [PATCH 07/20] Replace thread local with pthread TSD
@@ -175,7 +175,7 @@ index 806375d287..229c566123 100644
          return vlc_poll(fds, nfds, timeout);
  
 diff --git a/src/misc/variables.c b/src/misc/variables.c
-index 630d359ba5..a93a10d1ad 100644
+index c07134fc2d..33b4fcb34c 100644
 --- a/src/misc/variables.c
 +++ b/src/misc/variables.c
 @@ -1137,7 +1137,17 @@ error:

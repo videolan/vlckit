@@ -1,4 +1,4 @@
-From 78eaf81b9a2984acc5dea53df31cc083a21af2ce Mon Sep 17 00:00:00 2001
+From 88173b506a87bb047891ba30434c656c45294448 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
 Subject: [PATCH 15/20] core: expose config_AutoSaveConfigFile
@@ -52,7 +52,7 @@ index 755cd9ee8e..c7b7f095a0 100644
      assert( p_this );
  
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index 1ec160d473..05a0840d4a 100644
+index 5fd495628e..a9cd3ff0f2 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
 @@ -58,6 +58,7 @@ vlc_frame_Realloc

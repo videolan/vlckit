@@ -1,4 +1,4 @@
-From e72eb69a4a17ebe60b58cc6606bcab19e8e2f2ac Mon Sep 17 00:00:00 2001
+From 6e97932266a17b9d6df5ad049e06dc85eaa614dc Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Wed, 31 Oct 2018 10:08:55 +0100
 Subject: [PATCH 12/20] libvlc: media_player: Add record method
@@ -33,10 +33,10 @@ index 966fcf18d6..ee16395807 100644
  /** @} audio */
  
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 0156ebc9e3..c2b220a697 100644
+index a72e341a4e..812afb3b15 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -614,6 +614,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -616,6 +616,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
      var_Create (mp, "sout", VLC_VAR_STRING);
      var_Create (mp, "demux-filter", VLC_VAR_STRING);
@@ -44,7 +44,7 @@ index 0156ebc9e3..c2b220a697 100644
  
      /* Video */
      var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
-@@ -2208,6 +2209,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
+@@ -2216,6 +2217,25 @@ int libvlc_media_player_get_role(libvlc_media_player_t *mp)
      return ret;
  }
  

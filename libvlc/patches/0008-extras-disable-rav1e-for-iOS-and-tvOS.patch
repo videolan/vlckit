@@ -1,4 +1,4 @@
-From 5637dcc91432f79ee1675ad4a2650ef7e04e8c10 Mon Sep 17 00:00:00 2001
+From 71bc0c3fea418826c42ab3294d9df956fb3a1ff2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 26 Oct 2020 15:47:13 +0100
 Subject: [PATCH 08/20] extras: disable rav1e for iOS and tvOS

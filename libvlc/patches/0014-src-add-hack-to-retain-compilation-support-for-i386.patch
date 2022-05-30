@@ -1,4 +1,4 @@
-From d317e764555a3aa79f63d5f0ba1b77ac4db569ca Mon Sep 17 00:00:00 2001
+From 4229b81e508f23744bfdeea5345982bdcfb40fa7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 20 Aug 2020 13:56:14 +0200
 Subject: [PATCH 14/20] src: add hack to retain compilation support for i386
@@ -27,10 +27,10 @@ index fc62eb7fff..fa87f72ec5 100644
      int (*compar)(const void *, const void *, void *);
      void *arg;
 diff --git a/src/posix/thread.c b/src/posix/thread.c
-index 78045d9746..99ef90eeba 100644
+index cbd6996d1d..da9758d357 100644
 --- a/src/posix/thread.c
 +++ b/src/posix/thread.c
-@@ -200,7 +200,11 @@ void vlc_join(vlc_thread_t th, void **result)
+@@ -198,7 +198,11 @@ void vlc_join(vlc_thread_t th, void **result)
  
  VLC_WEAK unsigned long vlc_thread_id(void)
  {

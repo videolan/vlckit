@@ -1,4 +1,4 @@
-From b10905e01378209d18e6ce0d9e40fdb81390a596 Mon Sep 17 00:00:00 2001
+From 62e3c94d621f93e1c30b6f108aa904921b2537e2 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
 Subject: [PATCH 05/20] libvlc: events: Add callbacks for record
@@ -43,10 +43,10 @@ index 7dceea9ac7..d42789f9a8 100644
          {
              libvlc_renderer_item_t *item;
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 6a1731e274..5a76610d89 100644
+index 5382eaf377..34b34f40a5 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -109,6 +109,28 @@ on_state_changed(vlc_player_t *player, enum vlc_player_state new_state,
+@@ -110,6 +110,28 @@ on_state_changed(vlc_player_t *player, enum vlc_player_state new_state,
      libvlc_event_send(&mp->event_manager, &event);
  }
  
@@ -75,7 +75,7 @@ index 6a1731e274..5a76610d89 100644
  static void
  on_error_changed(vlc_player_t *player, enum vlc_player_error error, void *data)
  {
-@@ -503,6 +525,7 @@ static const struct vlc_player_cbs vlc_player_cbs = {
+@@ -504,6 +526,7 @@ static const struct vlc_player_cbs vlc_player_cbs = {
      .on_media_subitems_changed = on_media_subitems_changed,
      .on_cork_changed = on_cork_changed,
      .on_vout_changed = on_vout_changed,

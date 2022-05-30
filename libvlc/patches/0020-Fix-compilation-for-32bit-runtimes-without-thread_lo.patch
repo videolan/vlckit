@@ -1,4 +1,4 @@
-From 9cce17ee2b64b0592888e0c4f2bc5957aa9a46fe Mon Sep 17 00:00:00 2001
+From bd3a1221a756c3369cfd8282e088b26630ea0855 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 8 Apr 2022 22:33:01 +0200
 Subject: [PATCH 20/20] Fix compilation for 32bit runtimes without thread_local
@@ -139,7 +139,7 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index a8481e4b53..69647ad553 100644
+index 6b838f72c6..77e4c828bd 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
 @@ -488,6 +488,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void

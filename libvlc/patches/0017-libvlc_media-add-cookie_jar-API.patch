@@ -1,4 +1,4 @@
-From 1d75e10c704ca86d50c6ab89cb6dae94065bebab Mon Sep 17 00:00:00 2001
+From cd68107aaf0058454ab1566d00bde98289aa1b76 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
 Subject: [PATCH 17/20] libvlc_media: add cookie_jar API
@@ -58,10 +58,10 @@ index e14810d4c3..2953f98d16 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 320185a373..d06fbc7954 100644
+index e28a0ec8e3..5e1dc2e0fe 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -207,6 +207,8 @@ libvlc_media_set_user_data
+@@ -208,6 +208,8 @@ libvlc_media_set_user_data
  libvlc_media_subitems
  libvlc_media_tracks_get
  libvlc_media_tracks_release
@@ -138,10 +138,10 @@ index e131d81c33..07d07f3237 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index c2b220a697..4111fdc938 100644
+index 812afb3b15..c70736763a 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -615,6 +615,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+@@ -617,6 +617,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
      var_Create (mp, "sout", VLC_VAR_STRING);
      var_Create (mp, "demux-filter", VLC_VAR_STRING);
      var_Create (mp, "input-record-path", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
@@ -149,7 +149,7 @@ index c2b220a697..4111fdc938 100644
  
      /* Video */
      var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
-@@ -929,6 +930,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -937,6 +938,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
      vlc_player_t *player = p_mi->player;
      vlc_player_Lock(player);
  
