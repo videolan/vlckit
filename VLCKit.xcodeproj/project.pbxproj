@@ -13,6 +13,27 @@
 		3C4A7E1E281C53AF00577290 /* VLCMediaMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A7E1D281C53AF00577290 /* VLCMediaMetaData.m */; };
 		3C4A7E1F281C53AF00577290 /* VLCMediaMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A7E1D281C53AF00577290 /* VLCMediaMetaData.m */; };
 		3C4A7E20281C53AF00577290 /* VLCMediaMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A7E1D281C53AF00577290 /* VLCMediaMetaData.m */; };
+		6C218374285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */; };
+		6C218375285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */; };
+		6C218376285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */; };
+		6C218377285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */; };
+		6C218378285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */; };
+		6C218379285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */; };
+		6C21837A285090F2000C4AC9 /* VLCFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218373285090F2000C4AC9 /* VLCFileLogger.m */; };
+		6C21837B285090F2000C4AC9 /* VLCFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218373285090F2000C4AC9 /* VLCFileLogger.m */; };
+		6C21837C285090F2000C4AC9 /* VLCFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218373285090F2000C4AC9 /* VLCFileLogger.m */; };
+		6C21838128509122000C4AC9 /* VLCFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837D28509122000C4AC9 /* VLCFileLogger.h */; };
+		6C21838228509122000C4AC9 /* VLCFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837D28509122000C4AC9 /* VLCFileLogger.h */; };
+		6C21838328509122000C4AC9 /* VLCFileLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837D28509122000C4AC9 /* VLCFileLogger.h */; };
+		6C21838428509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837E28509122000C4AC9 /* VLCLogMessageFormatter.h */; };
+		6C21838528509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837E28509122000C4AC9 /* VLCLogMessageFormatter.h */; };
+		6C21838628509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837E28509122000C4AC9 /* VLCLogMessageFormatter.h */; };
+		6C21838728509122000C4AC9 /* VLCLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837F28509122000C4AC9 /* VLCLogging.h */; };
+		6C21838828509122000C4AC9 /* VLCLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837F28509122000C4AC9 /* VLCLogging.h */; };
+		6C21838928509122000C4AC9 /* VLCLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837F28509122000C4AC9 /* VLCLogging.h */; };
+		6C21838A28509122000C4AC9 /* VLCConsoleLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21838028509122000C4AC9 /* VLCConsoleLogger.h */; };
+		6C21838B28509122000C4AC9 /* VLCConsoleLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21838028509122000C4AC9 /* VLCConsoleLogger.h */; };
+		6C21838C28509122000C4AC9 /* VLCConsoleLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21838028509122000C4AC9 /* VLCConsoleLogger.h */; };
 		7D030010273D716D00A4981C /* vlc-plugins-macosx-device.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D03000F273D716D00A4981C /* vlc-plugins-macosx-device.h */; };
 		7D030013273D717700A4981C /* vlc-plugins-iphone-simulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D030011273D717700A4981C /* vlc-plugins-iphone-simulator.h */; };
 		7D030014273D717700A4981C /* vlc-plugins-iphone-device.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D030012273D717700A4981C /* vlc-plugins-iphone-device.h */; };
@@ -381,6 +402,13 @@
 		6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaDiscoverer.h; path = Headers/Public/VLCMediaDiscoverer.h; sourceTree = "<group>"; };
 		636E975711EBC67A002FE8A9 /* VLCMediaThumbnailer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaThumbnailer.m; path = Sources/VLCMediaThumbnailer.m; sourceTree = "<group>"; };
 		636E979011EBC96D002FE8A9 /* VLCMediaThumbnailer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaThumbnailer.h; path = Headers/Public/VLCMediaThumbnailer.h; sourceTree = "<group>"; };
+		6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCConsoleLogger.m; path = Sources/VLCConsoleLogger.m; sourceTree = "<group>"; };
+		6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCLogMessageFormatter.m; path = Sources/VLCLogMessageFormatter.m; sourceTree = "<group>"; };
+		6C218373285090F2000C4AC9 /* VLCFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCFileLogger.m; path = Sources/VLCFileLogger.m; sourceTree = "<group>"; };
+		6C21837D28509122000C4AC9 /* VLCFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCFileLogger.h; path = Headers/Public/VLCFileLogger.h; sourceTree = "<group>"; };
+		6C21837E28509122000C4AC9 /* VLCLogMessageFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCLogMessageFormatter.h; path = Headers/Public/VLCLogMessageFormatter.h; sourceTree = "<group>"; };
+		6C21837F28509122000C4AC9 /* VLCLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCLogging.h; path = Headers/Public/VLCLogging.h; sourceTree = "<group>"; };
+		6C21838028509122000C4AC9 /* VLCConsoleLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCConsoleLogger.h; path = Headers/Public/VLCConsoleLogger.h; sourceTree = "<group>"; };
 		7A5ECAC411DE8F7300F66AF3 /* VLCEventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCEventManager.m; path = Sources/VLCEventManager.m; sourceTree = "<group>"; };
 		7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCLibrary.m; path = Sources/VLCLibrary.m; sourceTree = "<group>"; };
 		7A5ECAC611DE8F7300F66AF3 /* VLCMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMedia.m; path = Sources/VLCMedia.m; sourceTree = "<group>"; };
@@ -732,6 +760,9 @@
 		08FB77AEFE84172EC02AAC07 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */,
+				6C218373285090F2000C4AC9 /* VLCFileLogger.m */,
+				6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */,
 				4B49C5FB1BC3D7870052D40C /* VLCAudio.m */,
 				7A5ECAC411DE8F7300F66AF3 /* VLCEventManager.m */,
 				7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */,
@@ -764,6 +795,10 @@
 			isa = PBXGroup;
 			children = (
 				7D66193824D1F6CF00781E5D /* Umbrella Headers */,
+				6C21838028509122000C4AC9 /* VLCConsoleLogger.h */,
+				6C21837D28509122000C4AC9 /* VLCFileLogger.h */,
+				6C21837F28509122000C4AC9 /* VLCLogging.h */,
+				6C21837E28509122000C4AC9 /* VLCLogMessageFormatter.h */,
 				7D988CFD24C7304800279703 /* VLCVideoCommon.h */,
 				7D988CF724C72FCE00279703 /* VLCVideoLayer.h */,
 				7D988CF124C72F8C00279703 /* VLCStreamOutput.h */,
@@ -1011,17 +1046,21 @@
 				7DDC02101B501ECF0078FC84 /* VLCMediaListPlayer.h in Headers */,
 				7DDC02111B501ECF0078FC84 /* VLCMediaDiscoverer.h in Headers */,
 				7DFDF4EB1C9AF27A00BA86A6 /* VLCDialogProvider.h in Headers */,
+				6C21838428509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */,
 				7DDC02121B501ECF0078FC84 /* VLCTime.h in Headers */,
 				ED25608A21F39FD100396F9B /* VLCTranscoder.h in Headers */,
 				7DDC02151B501ED70078FC84 /* VLCLibVLCBridging.h in Headers */,
+				6C21838728509122000C4AC9 /* VLCLogging.h in Headers */,
 				ED25609521F3A3F800396F9B /* VLCRendererDiscoverer.h in Headers */,
 				ED25609621F3A3F800396F9B /* VLCRendererItem.h in Headers */,
 				7DD48A7C2747ACAA00D2F39C /* MobileVLCKit.h in Headers */,
+				6C21838A28509122000C4AC9 /* VLCConsoleLogger.h in Headers */,
 				7DDC02161B501ED70078FC84 /* VLCEventManager.h in Headers */,
 				7DFDF4E81C9AF25600BA86A6 /* VLCEmbeddedDialogProvider.h in Headers */,
 				7DFDF4E91C9AF25600BA86A6 /* VLCiOSLegacyDialogProvider.h in Headers */,
 				7DFDF4EA1C9AF25600BA86A6 /* VLCCustomDialogProvider.h in Headers */,
 				7DB683DA1C9961BA000C70BE /* VLCHelperCode.h in Headers */,
+				6C21838128509122000C4AC9 /* VLCFileLogger.h in Headers */,
 				7D030013273D717700A4981C /* vlc-plugins-iphone-simulator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1033,6 +1072,7 @@
 				7D988CF024C72F5700279703 /* VLCKit.h in Headers */,
 				7D988CE424C72F4000279703 /* VLCMedia.h in Headers */,
 				7D988CE624C72F4000279703 /* VLCMediaList.h in Headers */,
+				6C21838928509122000C4AC9 /* VLCLogging.h in Headers */,
 				7D988CEB24C72F4000279703 /* VLCTime.h in Headers */,
 				7D988CF524C72F8C00279703 /* VLCVideoView.h in Headers */,
 				7D988CE724C72F4000279703 /* VLCMediaPlayer.h in Headers */,
@@ -1043,12 +1083,15 @@
 				7D988CE324C72F4000279703 /* VLCLibrary.h in Headers */,
 				7D988CF624C72F8C00279703 /* VLCStreamSession.h in Headers */,
 				7D988CF424C72F8C00279703 /* VLCStreamOutput.h in Headers */,
+				6C21838C28509122000C4AC9 /* VLCConsoleLogger.h in Headers */,
 				7D988CE524C72F4000279703 /* VLCMediaThumbnailer.h in Headers */,
 				7D988CE824C72F4000279703 /* VLCMediaListPlayer.h in Headers */,
 				7D988CF924C7301100279703 /* VLCEventManager.h in Headers */,
 				7D988CFA24C7301E00279703 /* VLCHelperCode.h in Headers */,
 				3C4A7E1C281C538100577290 /* VLCMediaMetaData.h in Headers */,
+				6C21838628509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */,
 				7D988CFB24C7302800279703 /* VLCLibVLCBridging.h in Headers */,
+				6C21838328509122000C4AC9 /* VLCFileLogger.h in Headers */,
 				7D988CFC24C7303200279703 /* VLCCustomDialogProvider.h in Headers */,
 				7D988CED24C72F4000279703 /* VLCRendererDiscoverer.h in Headers */,
 				7D988CFE24C7304800279703 /* VLCVideoCommon.h in Headers */,
@@ -1063,12 +1106,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C21838528509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */,
 				7DB683B21C995E1D000C70BE /* VLCAudio.h in Headers */,
+				6C21838828509122000C4AC9 /* VLCLogging.h in Headers */,
 				7DB683B31C995E1D000C70BE /* VLCLibrary.h in Headers */,
 				3C4A7E1B281C538100577290 /* VLCMediaMetaData.h in Headers */,
 				7DB683B41C995E1D000C70BE /* VLCMedia.h in Headers */,
 				7DB683B51C995E1D000C70BE /* VLCMediaThumbnailer.h in Headers */,
 				7DB683B61C995E1D000C70BE /* VLCMediaList.h in Headers */,
+				6C21838B28509122000C4AC9 /* VLCConsoleLogger.h in Headers */,
 				7DB683B71C995E1D000C70BE /* VLCMediaPlayer.h in Headers */,
 				7DB683B81C995E1D000C70BE /* VLCMediaListPlayer.h in Headers */,
 				7DB683B91C995E1D000C70BE /* VLCMediaDiscoverer.h in Headers */,
@@ -1082,6 +1128,7 @@
 				7DB683BF1C995E34000C70BE /* VLCiOSLegacyDialogProvider.h in Headers */,
 				7DB683DB1C9961BA000C70BE /* VLCHelperCode.h in Headers */,
 				7D030017273D717F00A4981C /* vlc-plugins-appletv-device.h in Headers */,
+				6C21838228509122000C4AC9 /* VLCFileLogger.h in Headers */,
 				7DB683C01C995E34000C70BE /* VLCCustomDialogProvider.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1405,6 +1452,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6C218377285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */,
 				ED25609321F3A3E800396F9B /* VLCRendererDiscoverer.m in Sources */,
 				ED25609421F3A3E800396F9B /* VLCRendererItem.m in Sources */,
 				ED25608E21F3A0F200396F9B /* VLCTranscoder.m in Sources */,
@@ -1414,6 +1462,7 @@
 				3C4A7E1E281C53AF00577290 /* VLCMediaMetaData.m in Sources */,
 				7D803EC71C8F2AF900864A9C /* VLCiOSLegacyDialogProvider.m in Sources */,
 				7D8939411B500D50008F2B14 /* VLCLibrary.m in Sources */,
+				6C218374285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */,
 				7DFDF4E21C9AF17800BA86A6 /* VLCDialogProvider.m in Sources */,
 				7D8939421B500D50008F2B14 /* VLCMedia.m in Sources */,
 				7DB683D71C996187000C70BE /* VLCHelperCode.m in Sources */,
@@ -1422,6 +1471,7 @@
 				7D8939451B500D51008F2B14 /* VLCMediaListPlayer.m in Sources */,
 				7D8939461B500D51008F2B14 /* VLCMediaThumbnailer.m in Sources */,
 				7D8939471B500D51008F2B14 /* VLCMediaDiscoverer.m in Sources */,
+				6C21837A285090F2000C4AC9 /* VLCFileLogger.m in Sources */,
 				7D34F5531C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */,
 				7D8939481B500D51008F2B14 /* VLCTime.m in Sources */,
 			);
@@ -1448,10 +1498,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DB683871C995D76000C70BE /* VLCAudio.m in Sources */,
+				6C21837B285090F2000C4AC9 /* VLCFileLogger.m in Sources */,
 				7DB683881C995D76000C70BE /* VLCEventManager.m in Sources */,
 				7DB683891C995D76000C70BE /* VLCLibrary.m in Sources */,
 				7DB6838A1C995D76000C70BE /* VLCMedia.m in Sources */,
+				6C218378285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */,
 				7DB6838B1C995D76000C70BE /* VLCMediaList.m in Sources */,
+				6C218375285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */,
 				7DB6838C1C995D76000C70BE /* VLCMediaPlayer.m in Sources */,
 				7DB683D81C996187000C70BE /* VLCHelperCode.m in Sources */,
 				3C4A7E1F281C53AF00577290 /* VLCMediaMetaData.m in Sources */,
@@ -1480,12 +1533,14 @@
 				7D988CC724C72E7700279703 /* VLCEventManager.m in Sources */,
 				7D988CC824C72E7A00279703 /* VLCLibrary.m in Sources */,
 				7D988CC924C72E7D00279703 /* VLCMedia.m in Sources */,
+				6C218379285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */,
 				7D988CCA24C72E8000279703 /* VLCMediaList.m in Sources */,
 				7D988CCB24C72E8300279703 /* VLCTime.m in Sources */,
 				7D988CCC24C72E8900279703 /* VLCTranscoder.m in Sources */,
 				7D988CD424C72EB900279703 /* VLCVideoView.m in Sources */,
 				7D988CD724C72EC600279703 /* VLCCustomDialogProvider.m in Sources */,
 				7D988CD824C72ECB00279703 /* VLCRendererDiscoverer.m in Sources */,
+				6C218376285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */,
 				7D988CD924C72ED000279703 /* VLCMediaPlayer.m in Sources */,
 				7D988CDA24C72EE200279703 /* VLCAudio.m in Sources */,
 				7D988CDB24C72EE900279703 /* VLCDialogProvider.m in Sources */,
@@ -1493,6 +1548,7 @@
 				7D988CD624C72EB900279703 /* VLCVideoLayer.m in Sources */,
 				7D988CD324C72EB900279703 /* VLCVideoCommon.m in Sources */,
 				7D988CD224C72EB900279703 /* VLCStreamSession.m in Sources */,
+				6C21837C285090F2000C4AC9 /* VLCFileLogger.m in Sources */,
 				7D988CD524C72EB900279703 /* VLCStreamOutput.m in Sources */,
 				3C4A7E20281C53AF00577290 /* VLCMediaMetaData.m in Sources */,
 				7D988CDD24C72F0E00279703 /* VLCMediaListPlayer.m in Sources */,

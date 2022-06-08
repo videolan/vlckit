@@ -35,6 +35,10 @@
 #import <MobileVLCKit/VLCRendererDiscoverer.h>
 #import <MobileVLCKit/VLCRendererItem.h>
 #import <MobileVLCKit/VLCMediaMetaData.h>
+#import <MobileVLCKit/VLCLogging.h>
+#import <MobileVLCKit/VLCConsoleLogger.h>
+#import <MobileVLCKit/VLCFileLogger.h>
+#import <MobileVLCKit/VLCLogMessageFormatter.h>
 
 @class VLCMedia;
 @class VLCMediaList;
@@ -49,3 +53,6 @@
 @class VLCRendererDiscovererDescription;
 @class VLCRendererItem;
 @class VLCMediaMetaData;
+@class VLCConsoleLogger;
+@class VLCFileLogger;
+@class VLCLogMessageFormatter;

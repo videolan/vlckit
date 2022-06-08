@@ -32,6 +32,10 @@
 #import <TVVLCKit/VLCTime.h>
 #import <TVVLCKit/VLCDialogProvider.h>
 #import <TVVLCKit/VLCMediaMetaData.h>
+#import <TVVLCKit/VLCLogging.h>
+#import <TVVLCKit/VLCConsoleLogger.h>
+#import <TVVLCKit/VLCFileLogger.h>
+#import <TVVLCKit/VLCLogMessageFormatter.h>
 
 @class VLCMedia;
 @class VLCMediaList;
@@ -42,3 +46,6 @@
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
 @class VLCMediaMetaData;
+@class VLCConsoleLogger;
+@class VLCFileLogger;
+@class VLCLogMessageFormatter;

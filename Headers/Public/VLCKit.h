@@ -38,9 +38,16 @@
 #import <VLCKit/VLCRendererDiscoverer.h>
 #import <VLCKit/VLCRendererItem.h>
 #import <VLCKit/VLCMediaMetaData.h>
+#import <VLCKit/VLCLogging.h>
+#import <VLCKit/VLCFileLogger.h>
+#import <VLCKit/VLCConsoleLogger.h>
+#import <VLCKit/VLCLogMessageFormatter.h>
 
 @class VLCMedia;
 @class VLCMediaList;
 @class VLCTime;
 @class VLCVideoView;
 @class VLCMediaMetaData;
+@class VLCFileLogger;
+@class VLCConsoleLogger;
+@class VLCLogMessageFormatter;
