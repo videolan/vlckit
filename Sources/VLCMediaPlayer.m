@@ -27,7 +27,6 @@
  *****************************************************************************/
 
 #import <VLCLibrary.h>
-#import <VLCEventManager.h>
 #import <VLCLibVLCBridging.h>
 #import <VLCMediaPlayer.h>
 #import <VLCTime.h>
@@ -92,9 +91,9 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (dispatch_queue_t)libVLCBackgroundQueue;
 - (void)mediaPlayerTimeChanged:(NSNumber *)newTime;
 - (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
-- (void)mediaPlayerStateChanged:(NSNumber *)newState;
+- (void)mediaPlayerStateChanged:(const VLCMediaPlayerState)newState;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
-- (void)mediaPlayerTitleSelectionChanged:(NSNumber *)newTitle;
+- (void)mediaPlayerTitleSelectionChanged:(const int)newTitle;
 - (void)mediaPlayerChapterChanged:(NSNumber *)newChapter;
 - (void)mediaPlayerTitleListChanged:(NSString *)newTitleList;
 
@@ -105,23 +104,26 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaPlayerTimeChanged:)
-                                           withArgumentAsObject:@(event->u.media_player_time_changed.new_time)];
-
-        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                       withDelegateMethod:@selector(mediaPlayerTimeChanged:)
-                                                     withNotificationName:VLCMediaPlayerTimeChanged];
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        NSNumber *newTime = @(event->u.media_player_time_changed.new_time);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer mediaPlayerTimeChanged: newTime];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTimeChanged object: mediaPlayer];
+            [[NSNotificationCenter defaultCenter] postNotification: notification];
+            if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTimeChanged:)])
+                [mediaPlayer.delegate mediaPlayerTimeChanged: notification];
+        });
     }
 }
 
 static void HandleMediaPositionChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaPlayerPositionChanged:)
-                                           withArgumentAsObject:@(event->u.media_player_position_changed.new_position)];
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        NSNumber *newPosition = @(event->u.media_player_position_changed.new_position);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer mediaPlayerPositionChanged: newPosition];
+        });
     }
 }
 
@@ -167,73 +169,85 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
     }
 
     @autoreleasepool {
-
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaPlayerStateChanged:)
-                                           withArgumentAsObject:@(newState)];
-
-        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                       withDelegateMethod:@selector(mediaPlayerStateChanged:)
-                                                     withNotificationName:VLCMediaPlayerStateChanged];
-
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer mediaPlayerStateChanged: newState];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerStateChanged object: mediaPlayer];
+            [[NSNotificationCenter defaultCenter] postNotification: notification];
+            if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerStateChanged:)])
+                [mediaPlayer.delegate mediaPlayerStateChanged: notification];
+        });
     }
 }
 
 static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaPlayerMediaChanged:)
-                                           withArgumentAsObject:[VLCMedia mediaWithLibVLCMediaDescriptor:event->u.media_player_media_changed.new_media]];
-
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        VLCMedia *newMedia = [VLCMedia mediaWithLibVLCMediaDescriptor: event->u.media_player_media_changed.new_media];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer mediaPlayerMediaChanged: newMedia];
+        });
     }
 }
 
 static void HandleMediaTitleSelectionChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaPlayerTitleSelectionChanged:)
-                                           withArgumentAsObject:@(event->u.media_player_title_selection_changed.index)];
-        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                       withDelegateMethod:@selector(mediaPlayerTitleSelectionChanged:)
-                                                     withNotificationName:VLCMediaPlayerTitleSelectionChanged];
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        const int index = event->u.media_player_title_selection_changed.index;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer mediaPlayerTitleSelectionChanged: index];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTitleSelectionChanged object: mediaPlayer];
+            [[NSNotificationCenter defaultCenter] postNotification: notification];
+            if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTitleSelectionChanged:)])
+                [mediaPlayer.delegate mediaPlayerTitleSelectionChanged: notification];
+        });
     }
 }
 
 static void HandleMediaTitleListChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaPlayerTitleListChanged:)
-                                           withArgumentAsObject:VLCMediaPlayerTitleListChanged];
-        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                       withDelegateMethod:@selector(mediaPlayerTitleListChanged:)
-                                                     withNotificationName:VLCMediaPlayerTitleListChanged];
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            // TODO: - What does it mean to send a notification name?
+            [mediaPlayer mediaPlayerTitleListChanged: VLCMediaPlayerTitleListChanged];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTitleListChanged object: mediaPlayer];
+            [[NSNotificationCenter defaultCenter] postNotification: notification];
+            if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTitleListChanged:)])
+                [mediaPlayer.delegate mediaPlayerTitleListChanged: notification];
+        });
     }
 }
 
 static void HandleMediaChapterChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                       withDelegateMethod:@selector(mediaPlayerChapterChanged:)
-                                                     withNotificationName:VLCMediaPlayerChapterChanged];
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerChapterChanged object: mediaPlayer];
+            [[NSNotificationCenter defaultCenter] postNotification: notification];
+            if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerChapterChanged:)])
+                [mediaPlayer.delegate mediaPlayerChapterChanged: notification];
+        });
     }
 }
 
 static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        if (event->u.media_player_snapshot_taken.psz_filename != NULL) {
-            [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                         withMethod:@selector(mediaPlayerSnapshot:)
-                                               withArgumentAsObject:[NSString stringWithUTF8String:event->u.media_player_snapshot_taken.psz_filename]];
-
-            [[VLCEventManager sharedManager] callOnMainThreadDelegateOfObject:(__bridge id)(self)
-                                                           withDelegateMethod:@selector(mediaPlayerSnapshot:)
-                                                         withNotificationName:VLCMediaPlayerSnapshotTaken];
+        const char *psz_filename = event->u.media_player_snapshot_taken.psz_filename;
+        if (psz_filename) {
+            NSString *fileName = @(psz_filename);
+            VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [mediaPlayer mediaPlayerSnapshot: fileName];
+                NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerSnapshotTaken object: mediaPlayer];
+                [[NSNotificationCenter defaultCenter] postNotification: notification];
+                if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerSnapshot:)])
+                    [mediaPlayer.delegate mediaPlayerSnapshot: notification];
+            });
         }
     }
 }
@@ -241,11 +255,16 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
 static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(mediaPlayerRecordChanged:)
-                                           withArgumentAsObject:@[@{@"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.file_path],
-                                                                    @"isRecording": @(event->u.media_player_record_changed.recording)
-                                                                    }]];
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        NSArray *arg = @[
+            @{
+                @"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.file_path],
+                @"isRecording": @(event->u.media_player_record_changed.recording)
+            }
+        ];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer mediaPlayerRecordChanged: arg];
+        });
     }
 }
 
@@ -367,7 +386,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 - (void)dealloc
 {
     [self unregisterObservers];
-    [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     // Always get rid of the delegate first so we can stop sending messages to it
     // TODO: Should we tell the delegate that we're shutting down?
@@ -1486,10 +1504,10 @@ static const struct event_handler_entry
     [self didChangeValueForKey:@"position"];
 }
 
-- (void)mediaPlayerStateChanged:(NSNumber *)newState
+- (void)mediaPlayerStateChanged:(const VLCMediaPlayerState)newState
 {
     [self willChangeValueForKey:@"state"];
-    _cachedState = [newState intValue];
+    _cachedState = newState;
 
 #if TARGET_OS_IPHONE
     // Disable idle timer if player is playing media
@@ -1519,7 +1537,7 @@ static const struct event_handler_entry
     [self didChangeValueForKey:@"media"];
 }
 
-- (void)mediaPlayerTitleSelectionChanged:(NSNumber *)newTitle
+- (void)mediaPlayerTitleSelectionChanged:(const int)newTitle
 {
     [self willChangeValueForKey:@"currentTitleIndex"];
     [self didChangeValueForKey:@"currentTitleIndex"];

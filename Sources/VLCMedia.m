@@ -27,7 +27,6 @@
 
 #import <VLCMedia.h>
 #import <VLCMediaList.h>
-#import <VLCEventManager.h>
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
 #import <VLCTime.h>
@@ -104,8 +103,8 @@ void close_cb(void *opaque) {
 - (void)parseIfNeeded;
 
 /* Callback Methods */
-- (void)parsedChanged:(NSNumber *)isParsedAsNumber;
-- (void)metaChanged:(NSNumber *)metaType;
+- (void)parsedChanged;
+- (void)metaChanged:(const libvlc_meta_t)metaType;
 - (void)subItemAdded;
 
 @end
@@ -116,37 +115,42 @@ void close_cb(void *opaque) {
 static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(metaChanged:)
-                                           withArgumentAsObject:@(event->u.media_meta_changed.meta_type)];
+        VLCMedia *media = (__bridge VLCMedia *)self;
+        const libvlc_meta_t meta_type = event->u.media_meta_changed.meta_type;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [media metaChanged: meta_type];
+        });
     }
 }
 
 static void HandleMediaDurationChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(setLength:)
-                                           withArgumentAsObject:[VLCTime timeWithNumber:
-                                               @(event->u.media_duration_changed.new_duration)]];
+        VLCMedia *media = (__bridge VLCMedia *)self;
+        VLCTime *time = [VLCTime timeWithNumber: @(event->u.media_duration_changed.new_duration)];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [media setLength: time];
+        });
     }
 }
 
 static void HandleMediaSubItemAdded(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(subItemAdded)
-                                           withArgumentAsObject:nil];
+        VLCMedia *media = (__bridge VLCMedia *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [media subItemAdded];
+        });
     }
 }
 
 static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
-        [[VLCEventManager sharedManager] callOnMainThreadObject:(__bridge id)(self)
-                                                     withMethod:@selector(parsedChanged:)
-                                           withArgumentAsObject:@((BOOL)event->u.media_parsed_changed.new_status)];
+        VLCMedia *media = (__bridge VLCMedia *)self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [media parsedChanged];
+        });
     }
 }
 
@@ -236,8 +240,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
             libvlc_event_detach(p_em, libvlc_MediaParsedChanged,    HandleMediaParsedChanged,   (__bridge void *)(self));
         }
     }
-
-    [[VLCEventManager sharedManager] cancelCallToObject:self];
 
     if (p_md)
         libvlc_media_release(p_md);
@@ -713,10 +715,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         [self parseWithOptions:VLCMediaParseLocal | VLCMediaFetchLocal];
 }
 
-- (void)metaChanged:(NSNumber *)metaType
+- (void)metaChanged:(const libvlc_meta_t)metaType
 {
-    libvlc_meta_t meta = (libvlc_meta_t)metaType.intValue;
-    [self.metaData handleMediaMetaChanged: meta];
+    [self.metaData handleMediaMetaChanged: metaType];
 
     if ([_delegate respondsToSelector:@selector(mediaMetaDataDidChange:)])
         [_delegate mediaMetaDataDidChange:self];
@@ -736,15 +737,12 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     libvlc_media_list_release( p_mlist );
 }
 
-- (void)parsedChanged:(NSNumber *)isParsedAsNumber
+- (void)parsedChanged
 {
     [self willChangeValueForKey:@"parsedStatus"];
     [self parsedStatus];
     [self didChangeValueForKey:@"parsedStatus"];
-
-    if (!_delegate)
-        return;
-
+    
     if ([_delegate respondsToSelector:@selector(mediaDidFinishParsing:)])
         [_delegate mediaDidFinishParsing:self];
 }

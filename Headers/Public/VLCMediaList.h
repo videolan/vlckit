@@ -44,7 +44,7 @@ NSString *const VLCMediaListItemDeleted;
 /**
  * VLCMediaListDelegate
  */
-@protocol VLCMediaListDelegate
+@protocol VLCMediaListDelegate <NSObject>
 @optional
 /**
  * delegate method triggered when a media was added to the list
