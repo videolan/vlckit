@@ -1,7 +1,7 @@
-From b53659accb12dabb0f0d966b4c658ac724d983de Mon Sep 17 00:00:00 2001
+From fb7d4d6ee1750e4e5a394be23709a994fc62d357 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/52] input: Extract attachment also when preparsing
+Subject: [PATCH 09/50] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -981,7 +981,7 @@ index a22e51c17d..e539675f71 100644
      }
      else if( i_query == DEMUX_GET_TITLE_INFO )
 diff --git a/modules/demux/mkv/demux.cpp b/modules/demux/mkv/demux.cpp
-index 6fa2418dd2..403aa48b9e 100644
+index c32ef28f0f..c860e769b2 100644
 --- a/modules/demux/mkv/demux.cpp
 +++ b/modules/demux/mkv/demux.cpp
 @@ -439,8 +439,6 @@ demux_sys_t::~demux_sys_t()

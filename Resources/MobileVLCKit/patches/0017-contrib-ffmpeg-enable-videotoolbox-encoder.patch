@@ -1,7 +1,7 @@
-From f796b1c8413f8546f18fa1848efe12b36dc7e2f8 Mon Sep 17 00:00:00 2001
+From 299e0d2a2f7856c4549a7c00dda98c279736f304 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:49:34 +0200
-Subject: [PATCH 17/52] contrib: ffmpeg: enable videotoolbox encoder
+Subject: [PATCH 17/50] contrib: ffmpeg: enable videotoolbox encoder
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -15,7 +15,7 @@ Signed-off-by: Felix Paul Kühne <felix@feepk.net>
  1 file changed, 1 deletion(-)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 288387627a..769a953388 100644
+index 1bfef407be..21efe43f26 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -53,7 +53,6 @@ FFMPEGCONF += \

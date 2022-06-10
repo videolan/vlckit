@@ -1,7 +1,7 @@
-From 3aa0711ad0e78746d754c6ee99ba66cd2b2fe5b1 Mon Sep 17 00:00:00 2001
+From 09915048232f0c6d8278298363d9c02f476b9257 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 21 Jan 2022 17:28:13 +0100
-Subject: [PATCH 50/52] smb2: use the cache helper
+Subject: [PATCH 48/50] smb2: use the cache helper
 
 Cache the smb2 session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.
@@ -31,10 +31,10 @@ index 8be84055fa..2e75013bad 100644
  if HAVE_DSM
  libsmb2_plugin_la_CFLAGS += $(DSM_CFLAGS) -DHAVE_DSM
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 66df992cfb..178e30909e 100644
+index a6d88a7d9a..90838526eb 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
-@@ -83,6 +83,7 @@ netbios_ns_interrupt_unregister(void)
+@@ -84,6 +84,7 @@ netbios_ns_interrupt_unregister(void)
  #endif
  
  #include "smb_common.h"
@@ -42,7 +42,7 @@ index 66df992cfb..178e30909e 100644
  
  static int Open(vlc_object_t *);
  static void Close(vlc_object_t *);
-@@ -101,6 +102,8 @@ vlc_module_begin()
+@@ -102,6 +103,8 @@ vlc_module_begin()
      set_callbacks(Open, Close)
  vlc_module_end()
  
@@ -51,7 +51,7 @@ index 66df992cfb..178e30909e 100644
  struct access_sys
  {
      struct smb2_context *   smb2;
-@@ -111,6 +114,8 @@ struct access_sys
+@@ -112,6 +115,8 @@ struct access_sys
      vlc_url_t               encoded_url;
      bool                    eof;
      bool                    smb2_connected;
@@ -60,7 +60,7 @@ index 66df992cfb..178e30909e 100644
  };
  
  struct vlc_smb2_op
-@@ -609,6 +614,16 @@ error:
+@@ -623,6 +628,16 @@ error:
      return op.error_status;
  }
  
@@ -77,7 +77,7 @@ index 66df992cfb..178e30909e 100644
  static int
  vlc_smb2_connect_open_share(stream_t *access, const char *url,
                              const vlc_credential *credential)
-@@ -643,6 +658,30 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
+@@ -657,6 +672,30 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
          password = "";
      }
  
@@ -108,7 +108,7 @@ index 66df992cfb..178e30909e 100644
      smb2_set_security_mode(sys->smb2, SMB2_NEGOTIATE_SIGNING_ENABLED);
      smb2_set_password(sys->smb2, password);
      smb2_set_domain(sys->smb2, domain ? domain : "");
-@@ -669,6 +708,15 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
+@@ -683,6 +722,15 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
          goto error;
      }
  
@@ -124,7 +124,7 @@ index 66df992cfb..178e30909e 100644
      smb2_destroy_url(smb2_url);
      return 0;
  
-@@ -874,11 +922,9 @@ Close(vlc_object_t *p_obj)
+@@ -888,11 +936,9 @@ Close(vlc_object_t *p_obj)
      assert(sys->smb2_connected);
  
      if (sys->smb2 != NULL)

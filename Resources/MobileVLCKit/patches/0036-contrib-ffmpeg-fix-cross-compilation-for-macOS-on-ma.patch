@@ -1,7 +1,7 @@
-From e440aeaedde3ec427d32441a553f1c35d17ded4e Mon Sep 17 00:00:00 2001
+From f0c169bb41deb22986ccf91984b360b551ff8df2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 20 Feb 2021 13:19:24 +0100
-Subject: [PATCH 37/52] contrib/ffmpeg: fix cross-compilation for macOS on
+Subject: [PATCH 36/50] contrib/ffmpeg: fix cross-compilation for macOS on
  macOS
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 37/52] contrib/ffmpeg: fix cross-compilation for macOS on
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 769a953388..c1537cde83 100644
+index 21efe43f26..6378d28a73 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -140,7 +140,7 @@ endif
+@@ -145,7 +145,7 @@ endif
  
  # Darwin
  ifdef HAVE_DARWIN_OS
@@ -21,7 +21,7 @@ index 769a953388..c1537cde83 100644
  ifdef USE_FFMPEG
  FFMPEGCONF += --disable-lzma
  endif
-@@ -148,11 +148,14 @@ ifeq ($(ARCH),x86_64)
+@@ -153,11 +153,14 @@ ifeq ($(ARCH),x86_64)
  FFMPEGCONF += --cpu=core2
  endif
  ifdef HAVE_IOS

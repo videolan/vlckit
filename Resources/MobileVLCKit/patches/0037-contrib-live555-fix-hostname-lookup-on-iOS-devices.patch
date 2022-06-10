@@ -1,7 +1,7 @@
-From d1ead6ff2799c7925810bea27d0010f88ffd72f9 Mon Sep 17 00:00:00 2001
+From c2a27064d6740fa588da1e917401de6931aba426 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 21 Jun 2021 14:03:09 +0200
-Subject: [PATCH 38/52] contrib/live555: fix hostname lookup on iOS devices
+Subject: [PATCH 37/50] contrib/live555: fix hostname lookup on iOS devices
 
 This adds a hack to fix the hostname lookup on iOS devices matching our
 approach used within the iOS app. macOS or the iOS simulator are not

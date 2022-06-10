@@ -1,7 +1,7 @@
-From 49627a5d4c303d0b92eccbaea8aa4d5aa6567633 Mon Sep 17 00:00:00 2001
+From fdafaea8ab5a22d4d87712740637cf040a9aa4c4 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 9 Mar 2022 08:15:53 +0100
-Subject: [PATCH 44/52] contrib: add support for bitcode
+Subject: [PATCH 43/50] contrib: add support for bitcode
 
 ---
  contrib/bootstrap    | 4 ++++
@@ -24,10 +24,10 @@ index 4e0fd82a88..16fce10829 100755
  	*bsd*)
  		add_make_enabled "HAVE_BSD"
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
-index f47b37535f..ee34189b45 100644
+index 47f3428c65..4d2f7daacb 100644
 --- a/contrib/src/main.mak
 +++ b/contrib/src/main.mak
-@@ -310,6 +310,11 @@ CFLAGS := $(CFLAGS) -g -O2
+@@ -314,6 +314,11 @@ CFLAGS := $(CFLAGS) -g -O2
  CXXFLAGS := $(CXXFLAGS) -g -O2
  endif
  
@@ -39,7 +39,7 @@ index f47b37535f..ee34189b45 100644
  ifdef ENABLE_PDB
  ifdef HAVE_CLANG
  ifneq ($(findstring $(ARCH),i686 x86_64),)
-@@ -399,6 +404,9 @@ MESONFLAGS += --buildtype debug
+@@ -404,6 +409,9 @@ MESONFLAGS += --buildtype debug
  else
  MESONFLAGS += --buildtype debugoptimized
  endif

@@ -1,7 +1,7 @@
-From 61e57b19346bde55925bcc91ace2b09a362bcb1d Mon Sep 17 00:00:00 2001
+From f65d30cfc5e50426b6525a2bb261d753382f7b07 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 16 Apr 2022 00:44:03 +0200
-Subject: [PATCH 48/52] smb2: remove unneeded compat code
+Subject: [PATCH 46/50] smb2: remove unneeded compat code
 
 thread_local is unavailable to 32bit on iOS and the code in question is
 not needed as we have the latest libsmb2, so let's remove it.
@@ -10,10 +10,10 @@ not needed as we have the latest libsmb2, so let's remove it.
  1 file changed, 28 deletions(-)
 
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 7373e5904a..66df992cfb 100644
+index 2107fe217b..a6d88a7d9a 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
-@@ -190,34 +190,6 @@ smb2_set_error(struct vlc_smb2_op *op, const char *psz_func, int err)
+@@ -191,34 +191,6 @@ smb2_set_error(struct vlc_smb2_op *op, const char *psz_func, int err)
  
  #define VLC_SMB2_STATUS_DENIED(x) (x == -ECONNREFUSED || x == -EACCES)
  
