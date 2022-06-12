@@ -638,4 +638,36 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 
 @end
 
+/**
+ * VLCMediaPlayerTrack
+ */
+NS_SWIFT_NAME(VLCMediaPlayer.Track)
+@interface VLCMediaPlayerTrack : VLCMediaTracksInformation
+
+/**
+ * String identifier of track
+ */
+@property (nonatomic, readonly, copy) NSString *trackId;
+
+/**
+ * A string identifier is stable when it is certified to be the same
+ * across different playback instances for the same track
+ */
+@property (nonatomic, readonly, getter=isIdStable) BOOL idStable;
+
+/**
+ * Name of the track
+ */
+@property (nonatomic, readonly, copy) NSString *trackName;
+
+/**
+ * true if the track is selected
+ */
+@property (nonatomic, getter=isSelected) BOOL selected;
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
+@end
+
 NS_ASSUME_NONNULL_END

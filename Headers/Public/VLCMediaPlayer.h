@@ -33,7 +33,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer;
+@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCMediaPlayerTrack;
 #if !TARGET_OS_IPHONE
 @class VLCVideoView, VLCVideoLayer;
 #endif // !TARGET_OS_IPHONE
@@ -909,6 +909,45 @@ NSString *const VLCTitleDescriptionIsMenu;
  */
 - (BOOL)setRendererItem:(nullable VLCRendererItem *)item;
 #endif // !TARGET_OS_TV
+@end
+
+#pragma mark - VLCMediaPlayer+Tracks
+
+/**
+ * VLCMediaPlayer+Tracks
+ */
+@interface VLCMediaPlayer (Tracks)
+
+/**
+ * audioTracks
+ */
+@property(nonatomic, readonly, copy) NSArray<VLCMediaPlayerTrack *> *audioTracks;
+
+/**
+ * videoTracks
+ */
+@property(nonatomic, readonly, copy) NSArray<VLCMediaPlayerTrack *> *videoTracks;
+
+/**
+ * textTracks
+ */
+@property(nonatomic, readonly, copy) NSArray<VLCMediaPlayerTrack *> *textTracks;
+
+/**
+ * deselect all audio tracks
+ */
+- (void)deselectAllAudioTracks;
+
+/**
+ * deselect all video tracks
+ */
+- (void)deselectAllVideoTracks;
+
+/**
+ * deselect all text tracks
+ */
+- (void)deselectAllTextTracks;
+
 @end
 
 NS_ASSUME_NONNULL_END

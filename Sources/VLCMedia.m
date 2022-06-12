@@ -908,3 +908,107 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 }
 
 @end
+
+/******************************************************************************
+ * Implementation VLCMediaPlayerTrack
+ */
+@implementation VLCMediaPlayerTrack
+{
+    __weak VLCMediaPlayer *_mediaPlayer;
+}
+
+- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track mediaPlayer:(VLCMediaPlayer *)mediaPlayer;
+{
+    if (self = [super initWithMediaTrack: track]) {
+        _mediaPlayer = mediaPlayer;
+        _trackId = @(track->psz_id);
+        _idStable = track->id_stable;
+        _trackName = track->psz_name ? @(track->psz_name) : @"";
+    }
+    return self;
+}
+
+- (BOOL)isSelected
+{
+    libvlc_media_player_t *p_mi = (libvlc_media_player_t *)_mediaPlayer.libVLCMediaPlayer;
+    if (!p_mi)
+        return NO;
+    
+    const char *psz_id = self.trackId.UTF8String;
+    libvlc_media_track_t *track_t = libvlc_media_player_get_track_from_id(p_mi, psz_id);
+    if (!track_t)
+        return NO;
+    
+    const BOOL selected = track_t->selected;
+    libvlc_media_track_release(track_t);
+    return selected;
+}
+
+- (void)setSelected:(BOOL)selected
+{
+    libvlc_media_player_t *p_mi = (libvlc_media_player_t *)_mediaPlayer.libVLCMediaPlayer;
+    if (!p_mi)
+        return;
+    
+    const libvlc_track_type_t type = (libvlc_track_type_t)self.type;
+    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(p_mi, type);
+    if (!tracklist)
+        return;
+    
+    NSString * const ownTrackId = self.trackId;
+    
+    NSMutableArray<NSString *> *selectedTrackIDs = @[].mutableCopy;
+    BOOL isSameTrack = NO;
+    
+    const size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
+    for (size_t i = 0; i < tracklistCount; i++) {
+        libvlc_media_track_t *track_t = libvlc_media_tracklist_at(tracklist, i);
+        if (track_t->selected) {
+            NSString * const selectedTrackId = @(track_t->psz_id);
+            [selectedTrackIDs addObject: selectedTrackId];
+            if (!isSameTrack && [selectedTrackId isEqualToString: ownTrackId]) {
+                isSameTrack = YES;
+            }
+        }
+    }
+    libvlc_media_tracklist_delete(tracklist);
+    
+    // already selected || already deselected
+    if ((selected && isSameTrack) || (!selected && !isSameTrack))
+        return;
+    
+    selected ? [selectedTrackIDs addObject: ownTrackId] : [selectedTrackIDs removeObject: ownTrackId];
+    
+    if (type == libvlc_track_audio && selectedTrackIDs.count >= 2) {
+        VKLog(@"WARNING: selecting multiple audio tracks is currently not supported.");
+        return;
+    }
+    
+    if (!selectedTrackIDs.count) {
+        libvlc_media_player_unselect_track_type(p_mi, type);
+        return;
+    }
+    
+    const char *psz_ids = [selectedTrackIDs componentsJoinedByString: @","].UTF8String;
+    libvlc_media_player_select_tracks_by_ids(p_mi, type, psz_ids);
+}
+
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@, trackId: %@, isIdStable: %d, trackName: %@, isSelected: %d", super.description, self.trackId, self.isIdStable, self.trackName, self.isSelected];
+}
+
+- (BOOL)isEqual:(id)other
+{
+    VLCMediaPlayerTrack *otherTrack = (VLCMediaPlayerTrack *)other;
+    return ([otherTrack isKindOfClass: VLCMediaPlayerTrack.class] &&
+            otherTrack.type == self.type &&
+            [otherTrack.trackId isEqualToString: self.trackId]);
+}
+
+- (NSUInteger)hash
+{
+    return self.description.hash;
+}
+
+@end

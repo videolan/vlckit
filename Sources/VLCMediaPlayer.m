@@ -1583,3 +1583,69 @@ static const struct event_handler_entry
 }
 
 @end
+
+#pragma mark - VLCMediaPlayer+Tracks
+
+/**
+ * VLCMediaPlayer+Tracks
+ */
+@implementation VLCMediaPlayer (Tracks)
+
+#pragma mark - Audio Tracks
+
+- (NSArray<VLCMediaPlayerTrack *> *)audioTracks
+{
+    return [self _tracksForType: libvlc_track_audio];
+}
+
+#pragma mark - Video Tracks
+
+- (NSArray<VLCMediaPlayerTrack *> *)videoTracks
+{
+    return [self _tracksForType: libvlc_track_video];
+}
+
+#pragma mark - Text Tracks
+
+- (NSArray<VLCMediaPlayerTrack *> *)textTracks
+{
+    return [self _tracksForType: libvlc_track_text];
+}
+
+#pragma mark - Track Selection
+
+- (void)deselectAllAudioTracks
+{
+    libvlc_media_player_unselect_track_type(_playerInstance, libvlc_track_audio);
+}
+
+- (void)deselectAllVideoTracks
+{
+    libvlc_media_player_unselect_track_type(_playerInstance, libvlc_track_video);
+}
+
+- (void)deselectAllTextTracks
+{
+    libvlc_media_player_unselect_track_type(_playerInstance, libvlc_track_text);
+}
+
+#pragma mark - Private
+
+- (NSArray<VLCMediaPlayerTrack *> *)_tracksForType:(const libvlc_track_type_t)type
+{
+    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(_playerInstance, type);
+    if (!tracklist)
+        return @[];
+    
+    const size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
+    NSMutableArray<VLCMediaPlayerTrack *> *tracks = [NSMutableArray arrayWithCapacity: (NSUInteger)tracklistCount];
+    for (size_t i = 0; i < tracklistCount; i++) {
+        libvlc_media_track_t *track_t = libvlc_media_tracklist_at(tracklist, i);
+        VLCMediaPlayerTrack *track = [[VLCMediaPlayerTrack alloc] initWithMediaTrack: track_t mediaPlayer: self];
+        [tracks addObject: track];
+    }
+    libvlc_media_tracklist_delete(tracklist);
+    return tracks;
+}
+
+@end

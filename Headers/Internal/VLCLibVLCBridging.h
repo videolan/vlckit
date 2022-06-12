@@ -231,3 +231,14 @@
 - (void)handleMediaMetaChanged:(const libvlc_meta_t)type;
 
 @end
+
+/**
+ * Bridges functionality between libvlc and VLCMediaPlayerTrack implementation.
+ */
+@interface VLCMediaPlayerTrack (LibVLCBridging)
+
+- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track mediaPlayer:(VLCMediaPlayer *)mediaPlayer;
+
+- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track NS_UNAVAILABLE;
+
+@end
