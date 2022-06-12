@@ -228,6 +228,6 @@
 
 - (instancetype)initWithMedia:(VLCMedia *)media;
 
-- (void)handleMediaMetaChanged:(libvlc_meta_t)type;
+- (void)handleMediaMetaChanged:(const libvlc_meta_t)type;
 
 @end

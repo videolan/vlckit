@@ -335,14 +335,14 @@
 }
 
 
-- (void)handleMediaMetaChanged:(libvlc_meta_t)type
+- (void)handleMediaMetaChanged:(const libvlc_meta_t)type
 {
     [self fetchMetaDataForKey: type];
 }
 
 /* fetch and cache */
 
-- (void)fetchMetaDataForKey:(libvlc_meta_t)key
+- (void)fetchMetaDataForKey:(const libvlc_meta_t)key
 {
     switch (key) {
             
@@ -392,7 +392,7 @@
 
 /* cache get */
 
-- (nullable NSString *)stringForKey:(libvlc_meta_t)key
+- (nullable NSString *)stringForKey:(const libvlc_meta_t)key
 {
     NSNumber *cacheKey = @(key);
     id cacheValue = _metaCache[cacheKey];
@@ -406,7 +406,7 @@
     return nil;
 }
 
-- (nullable NSURL *)urlForKey:(libvlc_meta_t)key
+- (nullable NSURL *)urlForKey:(const libvlc_meta_t)key
 {
     NSNumber *cacheKey = @(key);
     id cacheValue = _metaCache[cacheKey];
@@ -420,7 +420,7 @@
     return nil;
 }
 
-- (unsigned)unsignedForKey:(libvlc_meta_t)key
+- (unsigned)unsignedForKey:(const libvlc_meta_t)key
 {
     NSNumber *cacheKey = @(key);
     id cacheValue = _metaCache[cacheKey];
@@ -437,7 +437,7 @@
 
 /* internal meta get */
 
-- (nullable id)metadataStringForKey:(libvlc_meta_t)key
+- (nullable id)metadataStringForKey:(const libvlc_meta_t)key
 {
     if (!_media.libVLCMediaDescriptor)
         return nil;
@@ -452,7 +452,7 @@
     return str;
 }
 
-- (nullable id)metadataURLForKey:(libvlc_meta_t)key
+- (nullable id)metadataURLForKey:(const libvlc_meta_t)key
 {
     if (!_media.libVLCMediaDescriptor)
         return nil;
@@ -467,7 +467,7 @@
     return str ? [NSURL URLWithString: str] : nil;
 }
 
-- (nullable id)metadataNumberForKey:(libvlc_meta_t)key
+- (nullable id)metadataNumberForKey:(const libvlc_meta_t)key
 {
     if (!_media.libVLCMediaDescriptor)
         return nil;
@@ -484,7 +484,7 @@
 
 /* internal meta set */
 
-- (void)setMetadata:(const char *)data forKey:(libvlc_meta_t)key
+- (void)setMetadata:(const char *)data forKey:(const libvlc_meta_t)key
 {
     if (!_media.libVLCMediaDescriptor)
         return;
@@ -492,19 +492,19 @@
     libvlc_media_set_meta(_media.libVLCMediaDescriptor, key, data);
 }
 
-- (void)setString:(nullable NSString *)str forKey:(libvlc_meta_t)key
+- (void)setString:(nullable NSString *)str forKey:(const libvlc_meta_t)key
 {
     [self setMetadata: str.UTF8String forKey: key];
 }
 
-- (void)setURL:(nullable NSURL *)url forKey:(libvlc_meta_t)key
+- (void)setURL:(nullable NSURL *)url forKey:(const libvlc_meta_t)key
 {
     [self setString: url.absoluteString forKey: key];
 }
 
-- (void)setUnsigned:(unsigned)u forKey:(libvlc_meta_t)key
+- (void)setUnsigned:(const unsigned)u forKey:(const libvlc_meta_t)key
 {
-    size_t size = 11;
+    const size_t size = 11;
     char value[size];
     snprintf(value, size, "%u", u);
     [self setMetadata: value forKey: key];
