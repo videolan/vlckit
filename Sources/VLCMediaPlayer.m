@@ -447,122 +447,10 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return _audio;
 }
 
-#pragma mark -
-#pragma mark Video Tracks
-- (void)setCurrentVideoTrackIndex:(int)value
-{
-    libvlc_video_set_track(_playerInstance, value);
-}
 
-- (int)currentVideoTrackIndex
-{
-    int count = libvlc_video_get_track_count(_playerInstance);
-    if (count <= 0)
-        return -1;
-
-    return libvlc_video_get_track(_playerInstance);
-}
-
-- (NSArray *)videoTrackNames
-{
-    NSInteger count = libvlc_video_get_track_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *firstTrack = libvlc_video_get_track_description(_playerInstance);
-    libvlc_track_description_t *currentTrack = firstTrack;
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    while (currentTrack) {
-        [tempArray addObject:@(currentTrack->psz_name)];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray: tempArray];
-}
-
-- (NSArray *)videoTrackIndexes
-{
-    NSInteger count = libvlc_video_get_track_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *firstTrack = libvlc_video_get_track_description(_playerInstance);
-    libvlc_track_description_t *currentTrack = firstTrack;
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    while (currentTrack) {
-        [tempArray addObject:@(currentTrack->i_id)];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray: tempArray];
-}
-
-- (int)numberOfVideoTracks
-{
-    return libvlc_video_get_track_count(_playerInstance);
-}
 
 #pragma mark -
 #pragma mark Subtitles
-
-- (void)setCurrentVideoSubTitleIndex:(int)index
-{
-    libvlc_video_set_spu(_playerInstance, index);
-}
-
-- (int)currentVideoSubTitleIndex
-{
-    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
-
-    if (count <= 0)
-        return -1;
-
-    return libvlc_video_get_spu(_playerInstance);
-}
-
-- (NSArray *)videoSubTitlesNames
-{
-    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *firstTrack = libvlc_video_get_spu_description(_playerInstance);
-    libvlc_track_description_t *currentTrack = firstTrack;
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    while (currentTrack) {
-        NSString *track = @(currentTrack->psz_name);
-        [tempArray addObject:track != nil ? track : @""];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray: tempArray];
-}
-
-- (NSArray *)videoSubTitlesIndexes
-{
-    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *firstTrack = libvlc_video_get_spu_description(_playerInstance);
-    libvlc_track_description_t *currentTrack = firstTrack;
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    while (currentTrack) {
-        [tempArray addObject:@(currentTrack->i_id)];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray: tempArray];
-}
-
-- (int)numberOfSubtitlesTracks
-{
-    return libvlc_video_get_spu_count(_playerInstance);
-}
 
 - (int)addPlaybackSlave:(NSURL *)slaveURL type:(VLCMediaPlaybackSlaveType)slaveType enforce:(BOOL)enforceSelection
 {
@@ -922,61 +810,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 #pragma mark -
 #pragma mark Audio tracks
-- (void)setCurrentAudioTrackIndex:(int)value
-{
-    libvlc_audio_set_track(_playerInstance, value);
-}
-
-- (int)currentAudioTrackIndex
-{
-    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
-    if (count <= 0)
-        return -1;
-
-    return libvlc_audio_get_track(_playerInstance);
-}
-
-- (NSArray *)audioTrackNames
-{
-    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *firstTrack = libvlc_audio_get_track_description(_playerInstance);
-    libvlc_track_description_t *currentTrack = firstTrack;
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    while (currentTrack) {
-        NSString *track = @(currentTrack->psz_name);
-        [tempArray addObject:track != nil ? track : @""];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray: tempArray];
-}
-
-- (NSArray *)audioTrackIndexes
-{
-    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
-    if (count <= 0)
-        return @[];
-
-    libvlc_track_description_t *firstTrack = libvlc_audio_get_track_description(_playerInstance);
-    libvlc_track_description_t *currentTrack = firstTrack;
-
-    NSMutableArray *tempArray = [NSMutableArray array];
-    while (currentTrack) {
-        [tempArray addObject:@(currentTrack->i_id)];
-        currentTrack = currentTrack->p_next;
-    }
-    libvlc_track_description_list_release(firstTrack);
-    return [NSArray arrayWithArray: tempArray];
-}
-
-- (int)numberOfAudioTracks
-{
-    return libvlc_audio_get_track_count(_playerInstance);
-}
 
 - (void)setAudioChannel:(int)value
 {
@@ -1646,6 +1479,173 @@ static const struct event_handler_entry
     }
     libvlc_media_tracklist_delete(tracklist);
     return tracks;
+}
+
+@end
+
+#pragma mark - VLCMediaPlayer+Deprecated
+
+@implementation VLCMediaPlayer (Deprecated)
+
+#pragma mark - Video Tracks
+
+- (void)setCurrentVideoTrackIndex:(int)value
+{
+    libvlc_video_set_track(_playerInstance, value);
+}
+
+- (int)currentVideoTrackIndex
+{
+    return libvlc_video_get_track(_playerInstance);
+}
+
+- (NSArray *)videoTrackNames
+{
+    NSInteger count = libvlc_video_get_track_count(_playerInstance);
+    if (count <= 0)
+        return @[];
+
+    libvlc_track_description_t *firstTrack = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:@(currentTrack->psz_name)];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(firstTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (NSArray *)videoTrackIndexes
+{
+    NSInteger count = libvlc_video_get_track_count(_playerInstance);
+    if (count <= 0)
+        return @[];
+
+    libvlc_track_description_t *firstTrack = libvlc_video_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:@(currentTrack->i_id)];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(firstTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (int)numberOfVideoTracks
+{
+    return libvlc_video_get_track_count(_playerInstance);
+}
+
+#pragma mark - Subtitles
+
+- (void)setCurrentVideoSubTitleIndex:(int)index
+{
+    libvlc_video_set_spu(_playerInstance, index);
+}
+
+- (int)currentVideoSubTitleIndex
+{
+    return libvlc_video_get_spu(_playerInstance);
+}
+
+- (NSArray *)videoSubTitlesNames
+{
+    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
+    if (count <= 0)
+        return @[];
+
+    libvlc_track_description_t *firstTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        NSString *track = @(currentTrack->psz_name);
+        [tempArray addObject:track != nil ? track : @""];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(firstTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (NSArray *)videoSubTitlesIndexes
+{
+    NSInteger count = libvlc_video_get_spu_count(_playerInstance);
+    if (count <= 0)
+        return @[];
+
+    libvlc_track_description_t *firstTrack = libvlc_video_get_spu_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:@(currentTrack->i_id)];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(firstTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (int)numberOfSubtitlesTracks
+{
+    return libvlc_video_get_spu_count(_playerInstance);
+}
+
+#pragma mark - Audio tracks
+
+- (void)setCurrentAudioTrackIndex:(int)value
+{
+    libvlc_audio_set_track(_playerInstance, value);
+}
+
+- (int)currentAudioTrackIndex
+{
+    return libvlc_audio_get_track(_playerInstance);
+}
+
+- (NSArray *)audioTrackNames
+{
+    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
+    if (count <= 0)
+        return @[];
+
+    libvlc_track_description_t *firstTrack = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        NSString *track = @(currentTrack->psz_name);
+        [tempArray addObject:track != nil ? track : @""];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(firstTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (NSArray *)audioTrackIndexes
+{
+    NSInteger count = libvlc_audio_get_track_count(_playerInstance);
+    if (count <= 0)
+        return @[];
+
+    libvlc_track_description_t *firstTrack = libvlc_audio_get_track_description(_playerInstance);
+    libvlc_track_description_t *currentTrack = firstTrack;
+
+    NSMutableArray *tempArray = [NSMutableArray array];
+    while (currentTrack) {
+        [tempArray addObject:@(currentTrack->i_id)];
+        currentTrack = currentTrack->p_next;
+    }
+    libvlc_track_description_list_release(firstTrack);
+    return [NSArray arrayWithArray: tempArray];
+}
+
+- (int)numberOfAudioTracks
+{
+    return libvlc_audio_get_track_count(_playerInstance);
 }
 
 @end

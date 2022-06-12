@@ -392,60 +392,6 @@ OBJC_VISIBLE
 #pragma mark ES track handling
 
 /**
- * Return the current video track index
- *
- * \return current video track index, -1 if none or no media track
- *
- * Pass -1 to disable.
- */
-@property (readwrite) int currentVideoTrackIndex;
-
-/**
- * Returns the video track names, usually a language name or a description
- * It includes the "Disabled" fake track at index 0.
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoTrackNames;
-
-/**
- * Returns the video track IDs
- * those are needed to set the video index
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoTrackIndexes;
-
-/**
- * returns the number of video tracks available in the current media
- * \return number of tracks
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfVideoTracks;
-
-/**
- * Return the current video subtitle index
- *
- * \return current video subtitle index, -1 if none
- *
- * Pass -1 to disable.
- */
-@property (readwrite) int currentVideoSubTitleIndex;
-
-/**
- * Returns the video subtitle track names, usually a language name or a description
- * It includes the "Disabled" fake track at index 0.
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoSubTitlesNames;
-
-/**
- * Returns the video subtitle track IDs
- * those are needed to set the video subtitle index
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoSubTitlesIndexes;
-
-/**
- * returns the number of SPU tracks available in the current media
- * \return number of tracks
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfSubtitlesTracks;
-
-/**
  * VLCMediaPlaybackNavigationAction describes actions which can be performed to navigate an interactive title
  */
 typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
@@ -570,35 +516,6 @@ NSString *const VLCTitleDescriptionIsMenu;
  * \return int matching the title index
  */
 @property (readonly) int indexOfLongestTitle;
-
-/* Audio Options */
-
-/**
- * Return the current audio track index
- *
- * \return current audio track index, -1 if none or no media track
- *
- * Pass -1 to disable.
- */
-@property (readwrite) int currentAudioTrackIndex;
-
-/**
- * Returns the audio track names, usually a language name or a description
- * It includes the "Disabled" fake track at index 0.
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *audioTrackNames;
-
-/**
- * Returns the audio track IDs
- * those are needed to set the video index
- */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *audioTrackIndexes;
-
-/**
- * returns the number of audio tracks available in the current media
- * \return number of tracks
- */
-@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfAudioTracks;
 
 #pragma mark -
 #pragma mark audio functionality
@@ -947,6 +864,97 @@ NSString *const VLCTitleDescriptionIsMenu;
  * deselect all text tracks
  */
 - (void)deselectAllTextTracks;
+
+@end
+
+#pragma mark - VLCMediaPlayer+Deprecated
+
+/**
+ * VLCMediaPlayer+Deprecated
+ */
+@interface VLCMediaPlayer (Deprecated)
+
+/**
+ * Return the current video track index
+ *
+ * \return current video track index, -1 if none or no media track
+ *
+ * Pass -1 to disable.
+ */
+@property (readwrite) int currentVideoTrackIndex DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer videoTracks] instead");
+
+/**
+ * Returns the video track names, usually a language name or a description
+ * It includes the "Disabled" fake track at index 0.
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoTrackNames DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer videoTracks] instead");
+
+/**
+ * Returns the video track IDs
+ * those are needed to set the video index
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoTrackIndexes DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer videoTracks] instead");
+
+/**
+ * returns the number of video tracks available in the current media
+ * \return number of tracks
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfVideoTracks DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer videoTracks] instead");
+
+/**
+ * Return the current video subtitle index
+ *
+ * \return current video subtitle index, -1 if none
+ *
+ * Pass -1 to disable.
+ */
+@property (readwrite) int currentVideoSubTitleIndex DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer textTracks] instead");
+
+/**
+ * Returns the video subtitle track names, usually a language name or a description
+ * It includes the "Disabled" fake track at index 0.
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoSubTitlesNames DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer textTracks] instead");
+
+/**
+ * Returns the video subtitle track IDs
+ * those are needed to set the video subtitle index
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *videoSubTitlesIndexes DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer textTracks] instead");
+
+/**
+ * returns the number of SPU tracks available in the current media
+ * \return number of tracks
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfSubtitlesTracks DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer textTracks] instead");
+
+/**
+ * Return the current audio track index
+ *
+ * \return current audio track index, -1 if none or no media track
+ *
+ * Pass -1 to disable.
+ */
+@property (readwrite) int currentAudioTrackIndex DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer audioTracks] instead");
+
+/**
+ * Returns the audio track names, usually a language name or a description
+ * It includes the "Disabled" fake track at index 0.
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *audioTrackNames DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer audioTracks] instead");
+
+/**
+ * Returns the audio track IDs
+ * those are needed to set the video index
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *audioTrackIndexes DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer audioTracks] instead");
+
+/**
+ * returns the number of audio tracks available in the current media
+ * \return number of tracks
+ */
+@property (NS_NONATOMIC_IOSONLY, readonly) int numberOfAudioTracks DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer audioTracks] instead");
+
 
 @end
 
