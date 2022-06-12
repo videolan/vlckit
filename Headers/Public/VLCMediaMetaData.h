@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * VLCMediaMetaData
  */
+NS_SWIFT_NAME(VLCMedia.MetaData)
 @interface VLCMediaMetaData : NSObject
 
 /**
