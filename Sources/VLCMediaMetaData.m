@@ -313,14 +313,15 @@
 
 - (BOOL)save
 {
-    return _media.libVLCMediaDescriptor ? libvlc_media_save_meta(_media.libVLCMediaDescriptor) != 0 : NO;
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    return media_t ? libvlc_media_save_meta(media_t) != 0 : NO;
 }
 
 - (void)prefetch
 {
     // 26 = `libvlc_meta_t` all count
-    for (int i = 0; i < 26; i++)
-        [self fetchMetaDataForKey: (libvlc_meta_t)i];
+    for (libvlc_meta_t meta_t = 0; meta_t < 26; meta_t++)
+        [self fetchMetaDataForKey: meta_t];
 }
 
 - (void)clearCache
@@ -439,10 +440,11 @@
 
 - (nullable id)metadataStringForKey:(const libvlc_meta_t)key
 {
-    if (!_media.libVLCMediaDescriptor)
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    if (!media_t)
         return nil;
 
-    char *value = libvlc_media_get_meta(_media.libVLCMediaDescriptor, key);
+    char *value = libvlc_media_get_meta(media_t, key);
     if (!value)
         return NSNull.null;
 
@@ -454,10 +456,11 @@
 
 - (nullable id)metadataURLForKey:(const libvlc_meta_t)key
 {
-    if (!_media.libVLCMediaDescriptor)
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    if (!media_t)
         return nil;
 
-    char *value = libvlc_media_get_meta(_media.libVLCMediaDescriptor, key);
+    char *value = libvlc_media_get_meta(media_t, key);
     if (!value)
         return NSNull.null;
 
@@ -469,10 +472,11 @@
 
 - (nullable id)metadataNumberForKey:(const libvlc_meta_t)key
 {
-    if (!_media.libVLCMediaDescriptor)
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    if (!media_t)
         return nil;
 
-    char *value = libvlc_media_get_meta(_media.libVLCMediaDescriptor, key);
+    char *value = libvlc_media_get_meta(media_t, key);
     if (!value)
         return NSNull.null;
 
@@ -486,10 +490,11 @@
 
 - (void)setMetadata:(const char *)data forKey:(const libvlc_meta_t)key
 {
-    if (!_media.libVLCMediaDescriptor)
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    if (!media_t)
         return;
     
-    libvlc_media_set_meta(_media.libVLCMediaDescriptor, key, data);
+    libvlc_media_set_meta(media_t, key, data);
 }
 
 - (void)setString:(nullable NSString *)str forKey:(const libvlc_meta_t)key
