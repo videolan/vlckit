@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,28 +17,13 @@
 		7D11B380183BA71600FF0D25 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B37F183BA71600FF0D25 /* Default-568h@2x.png */; };
 		7D11B383183BA71600FF0D25 /* VDLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D11B382183BA71600FF0D25 /* VDLViewController.m */; };
 		7D11B386183BA71600FF0D25 /* VDLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B384183BA71600FF0D25 /* VDLViewController.xib */; };
-		7D7B6C511B70C45600E879CF /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C501B70C45600E879CF /* libc++.tbd */; };
-		7D7B6C531B70C45B00E879CF /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C521B70C45B00E879CF /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		7D7B6C551B70C45F00E879CF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C541B70C45F00E879CF /* CoreVideo.framework */; };
-		7D7B6C571B70C46400E879CF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C561B70C46400E879CF /* CoreMedia.framework */; };
-		7D8745B5183BA8F900FD09E0 /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */; };
-		7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */; };
-		7D8745BB183BABEE00FD09E0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */; };
-		7D8745BD183BAC0D00FD09E0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BC183BAC0D00FD09E0 /* CFNetwork.framework */; };
-		7D8745BF183BAC1200FD09E0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BE183BAC1200FD09E0 /* CoreText.framework */; };
-		7D8745C1183BAC2300FD09E0 /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C0183BAC2300FD09E0 /* libbz2.dylib */; };
-		7D8745C3183BAC2700FD09E0 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C2183BAC2700FD09E0 /* libiconv.dylib */; };
-		7D8745C7183BACAE00FD09E0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */; };
-		7D8745C8183BACBF00FD09E0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */; };
-		7DF6A7211EBA61B600B9E46E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF6A7201EBA61B600B9E46E /* AVFoundation.framework */; };
-		D4771D95189849C80087441B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4771D94189849C80087441B /* Security.framework */; };
+		7DB6E0DD285A150F004EAF04 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7D11B366183BA71600FF0D25 /* SimplePlayback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplePlayback.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D11B369183BA71600FF0D25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7D11B36B183BA71600FF0D25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		7D11B371183BA71600FF0D25 /* SimplePlayback-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimplePlayback-Info.plist"; sourceTree = "<group>"; };
 		7D11B373183BA71600FF0D25 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7D11B375183BA71600FF0D25 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -51,21 +36,7 @@
 		7D11B381183BA71600FF0D25 /* VDLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDLViewController.h; sourceTree = "<group>"; };
 		7D11B382183BA71600FF0D25 /* VDLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDLViewController.m; sourceTree = "<group>"; };
 		7D11B385183BA71600FF0D25 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VDLViewController.xib; sourceTree = "<group>"; };
-		7D7B6C501B70C45600E879CF /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		7D7B6C521B70C45B00E879CF /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		7D7B6C541B70C45F00E879CF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		7D7B6C561B70C46400E879CF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobileVLCKit.a; path = "../../../build/Release-iphoneos/libMobileVLCKit.a"; sourceTree = "<group>"; };
-		7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		7D8745B7183BABE800FD09E0 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
-		7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		7D8745BC183BAC0D00FD09E0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		7D8745BE183BAC1200FD09E0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		7D8745C0183BAC2300FD09E0 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
-		7D8745C2183BAC2700FD09E0 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
-		7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		7DF6A7201EBA61B600B9E46E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		D4771D94189849C80087441B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MobileVLCKit.xcframework; path = ../../../build/MobileVLCKit.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,23 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DF6A7211EBA61B600B9E46E /* AVFoundation.framework in Frameworks */,
-				7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */,
-				7D7B6C571B70C46400E879CF /* CoreMedia.framework in Frameworks */,
-				7D7B6C551B70C45F00E879CF /* CoreVideo.framework in Frameworks */,
-				7D7B6C531B70C45B00E879CF /* VideoToolbox.framework in Frameworks */,
-				7D7B6C511B70C45600E879CF /* libc++.tbd in Frameworks */,
-				D4771D95189849C80087441B /* Security.framework in Frameworks */,
-				7D8745C8183BACBF00FD09E0 /* CoreGraphics.framework in Frameworks */,
-				7D8745C7183BACAE00FD09E0 /* QuartzCore.framework in Frameworks */,
-				7D8745C3183BAC2700FD09E0 /* libiconv.dylib in Frameworks */,
-				7D8745C1183BAC2300FD09E0 /* libbz2.dylib in Frameworks */,
-				7D8745BF183BAC1200FD09E0 /* CoreText.framework in Frameworks */,
-				7D8745BD183BAC0D00FD09E0 /* CFNetwork.framework in Frameworks */,
-				7D8745BB183BABEE00FD09E0 /* OpenGLES.framework in Frameworks */,
 				7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */,
+				7DB6E0DD285A150F004EAF04 /* MobileVLCKit.xcframework in Frameworks */,
 				7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */,
-				7D8745B5183BA8F900FD09E0 /* libMobileVLCKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,24 +73,9 @@
 		7D11B368183BA71600FF0D25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7DF6A7201EBA61B600B9E46E /* AVFoundation.framework */,
-				7D7B6C561B70C46400E879CF /* CoreMedia.framework */,
-				7D7B6C541B70C45F00E879CF /* CoreVideo.framework */,
-				7D7B6C521B70C45B00E879CF /* VideoToolbox.framework */,
-				7D7B6C501B70C45600E879CF /* libc++.tbd */,
-				D4771D94189849C80087441B /* Security.framework */,
-				7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */,
-				7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */,
-				7D8745C2183BAC2700FD09E0 /* libiconv.dylib */,
-				7D8745C0183BAC2300FD09E0 /* libbz2.dylib */,
-				7D8745BE183BAC1200FD09E0 /* CoreText.framework */,
-				7D8745BC183BAC0D00FD09E0 /* CFNetwork.framework */,
-				7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */,
-				7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */,
-				7D8745B7183BABE800FD09E0 /* AudioUnit.framework */,
 				7D11B369183BA71600FF0D25 /* UIKit.framework */,
 				7D11B36B183BA71600FF0D25 /* Foundation.framework */,
-				7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */,
+				7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -200,6 +142,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7D11B35D183BA71600FF0D25;
@@ -285,7 +228,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -309,7 +251,6 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -323,15 +264,9 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimplePlayback/SimplePlayback-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
-				);
 				INFOPLIST_FILE = "SimplePlayback/SimplePlayback-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
-					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.videolan.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -344,15 +279,9 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SimplePlayback/SimplePlayback-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
-					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
-				);
 				INFOPLIST_FILE = "SimplePlayback/SimplePlayback-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../build/Release-iphoneos\"",
-					"\"$(SRCROOT)/../../../build/Release-iphonesimulator\"",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.videolan.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
