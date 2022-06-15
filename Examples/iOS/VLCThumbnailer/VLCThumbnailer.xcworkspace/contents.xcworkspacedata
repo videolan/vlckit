@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../MobileVLCKit.xcodeproj">
+      location = "group:../../../VLCKit.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:VLCThumbnailer.xcodeproj">
