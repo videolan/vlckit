@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Double-4K.xcodeproj">
+      location = "group:../../../VLCKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Pods/Pods.xcodeproj">
+      location = "group:Double-4K.xcodeproj">
    </FileRef>
 </Workspace>

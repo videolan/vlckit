@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5CDEBFA7614B1D4BA43984F7 /* libPods-Double-4K.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 34BD136E951255CBC0463C5E /* libPods-Double-4K.a */; };
 		7DB63110245C84B0009D6BB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB6310F245C84B0009D6BB4 /* AppDelegate.m */; };
 		7DB6311B245C84B2009D6BB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DB6311A245C84B2009D6BB4 /* Assets.xcassets */; };
 		7DB6311E245C84B2009D6BB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DB6311C245C84B2009D6BB4 /* LaunchScreen.storyboard */; };
@@ -15,6 +14,9 @@
 		7DB6312A245C8970009D6BB4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB63128245C8970009D6BB4 /* ViewController.m */; };
 		7DB6312B245C8970009D6BB4 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DB63129245C8970009D6BB4 /* ViewController.xib */; };
 		7DB6312D245C94EB009D6BB4 /* IMG_1456.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 7DB6312C245C94EB009D6BB4 /* IMG_1456.MOV */; };
+		7DB6E133285A1D2E004EAF04 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E132285A1D2E004EAF04 /* MobileVLCKit.framework */; };
+		7DB6E135285A1D32004EAF04 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E134285A1D32004EAF04 /* UIKit.framework */; };
+		7DB6E137285A1D37004EAF04 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E136285A1D37004EAF04 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +32,9 @@
 		7DB63128245C8970009D6BB4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7DB63129245C8970009D6BB4 /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
 		7DB6312C245C94EB009D6BB4 /* IMG_1456.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = IMG_1456.MOV; path = ../../../../Downloads/IMG_1456.MOV; sourceTree = "<group>"; };
-		C6392FFBD76F0C50983266AA /* Pods-Double-4K.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Double-4K.debug.xcconfig"; path = "Target Support Files/Pods-Double-4K/Pods-Double-4K.debug.xcconfig"; sourceTree = "<group>"; };
-		E0F871AB7B641C5736DD150A /* Pods-Double-4K.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Double-4K.release.xcconfig"; path = "Target Support Files/Pods-Double-4K/Pods-Double-4K.release.xcconfig"; sourceTree = "<group>"; };
+		7DB6E132285A1D2E004EAF04 /* MobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DB6E134285A1D32004EAF04 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7DB6E136285A1D37004EAF04 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,28 +42,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5CDEBFA7614B1D4BA43984F7 /* libPods-Double-4K.a in Frameworks */,
+				7DB6E137285A1D37004EAF04 /* Foundation.framework in Frameworks */,
+				7DB6E135285A1D32004EAF04 /* UIKit.framework in Frameworks */,
+				7DB6E133285A1D2E004EAF04 /* MobileVLCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3867F02A7B37EFEA1E360379 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				C6392FFBD76F0C50983266AA /* Pods-Double-4K.debug.xcconfig */,
-				E0F871AB7B641C5736DD150A /* Pods-Double-4K.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		7DB63102245C84B0009D6BB4 = {
 			isa = PBXGroup;
 			children = (
 				7DB6310D245C84B0009D6BB4 /* Double-4K */,
 				7DB6310C245C84B0009D6BB4 /* Products */,
-				3867F02A7B37EFEA1E360379 /* Pods */,
 				FAEE602B6FA31BF1189C225C /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -93,6 +88,9 @@
 		FAEE602B6FA31BF1189C225C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DB6E136285A1D37004EAF04 /* Foundation.framework */,
+				7DB6E134285A1D32004EAF04 /* UIKit.framework */,
+				7DB6E132285A1D2E004EAF04 /* MobileVLCKit.framework */,
 				34BD136E951255CBC0463C5E /* libPods-Double-4K.a */,
 			);
 			name = Frameworks;
@@ -105,7 +103,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7DB63124245C84B2009D6BB4 /* Build configuration list for PBXNativeTarget "Double-4K" */;
 			buildPhases = (
-				28E46F88C46B03FAF1DDDF13 /* [CP] Check Pods Manifest.lock */,
 				7DB63107245C84B0009D6BB4 /* Sources */,
 				7DB63108245C84B0009D6BB4 /* Frameworks */,
 				7DB63109245C84B0009D6BB4 /* Resources */,
@@ -164,31 +161,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		28E46F88C46B03FAF1DDDF13 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Double-4K-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7DB63107245C84B0009D6BB4 /* Sources */ = {
@@ -327,7 +299,6 @@
 		};
 		7DB63125245C84B2009D6BB4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C6392FFBD76F0C50983266AA /* Pods-Double-4K.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -347,7 +318,6 @@
 		};
 		7DB63126245C84B2009D6BB4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0F871AB7B641C5736DD150A /* Pods-Double-4K.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

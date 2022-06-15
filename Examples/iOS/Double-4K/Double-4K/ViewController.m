@@ -57,7 +57,9 @@
     _mediaPlayerTwo = [[VLCMediaPlayer alloc] init];
     _mediaPlayerTwo.drawable = self.videoViewTwo;
     _mediaPlayerTwo.media = _mediaTwo;
-    _mediaPlayerTwo.libraryInstance.debugLogging = YES;
+    VLCConsoleLogger *consoleLogger = [[VLCConsoleLogger alloc] init];
+    consoleLogger.level = kVLCLogLevelDebug;
+    [_mediaPlayerTwo.libraryInstance setLoggers:@[consoleLogger]];
 
     _mediaThree = [VLCMedia mediaWithURL:mediaURL];
     _mediaPlayerThree = [[VLCMediaPlayer alloc] init];
