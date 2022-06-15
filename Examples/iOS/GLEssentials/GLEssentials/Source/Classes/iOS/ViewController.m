@@ -24,7 +24,9 @@
     /* setup the media player instance, give it a delegate and something to draw into */
     _mediaplayer = [[VLCMediaPlayer alloc] init];
     _mediaplayer.drawable = self.videoView;
-    _mediaplayer.libraryInstance.debugLogging = YES;
+    VLCConsoleLogger *consoleLogger = [[VLCConsoleLogger alloc] init];
+    consoleLogger.level = kVLCLogLevelDebug;
+    [_mediaplayer.libraryInstance setLoggers:@[consoleLogger]];
 
     /* create a media object and give it to the player */
     _mediaplayer.media = [VLCMedia mediaWithURL:[NSURL URLWithString:@"http://streams.videolan.org/streams/mp4/Mr_MrsSmith-h264_aac.mp4"]];

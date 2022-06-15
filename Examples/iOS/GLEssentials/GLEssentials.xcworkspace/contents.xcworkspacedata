@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:GLEssentials.xcodeproj">
+      location = "group:../../../VLCKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../../../MobileVLCKit.xcodeproj">
+      location = "group:GLEssentials.xcodeproj">
    </FileRef>
 </Workspace>

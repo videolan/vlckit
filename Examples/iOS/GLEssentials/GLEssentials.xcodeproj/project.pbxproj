@@ -46,24 +46,9 @@
 		3A622B971A899CF400A12489 /* GLEssentialsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A622B731A899CDE00A12489 /* GLEssentialsWindowController.m */; };
 		3A622B981A899E5000A12489 /* OpenGLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A622B6C1A899CDE00A12489 /* OpenGLRenderer.m */; };
 		7D2F3F2E1BBD8E08008910EE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F3F2D1BBD8E08008910EE /* ViewController.m */; };
-		7D2F3F391BBD9246008910EE /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F381BBD9246008910EE /* libMobileVLCKit.a */; };
-		7D2F3F3B1BBD924F008910EE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F3A1BBD924F008910EE /* CoreVideo.framework */; };
-		7D2F3F3D1BBD9253008910EE /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F3C1BBD9253008910EE /* CoreMedia.framework */; };
-		7D2F3F3F1BBD9258008910EE /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F3E1BBD9258008910EE /* VideoToolbox.framework */; };
-		7D2F3F411BBD925F008910EE /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F401BBD925F008910EE /* libc++.tbd */; };
-		7D2F3F431BBD9264008910EE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F421BBD9264008910EE /* Security.framework */; };
-		7D2F3F451BBD9269008910EE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F441BBD9269008910EE /* AVFoundation.framework */; };
-		7D2F3F471BBD926D008910EE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F461BBD926D008910EE /* MediaPlayer.framework */; };
-		7D2F3F491BBD9272008910EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F481BBD9272008910EE /* CoreGraphics.framework */; };
-		7D2F3F4B1BBD9276008910EE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F4A1BBD9276008910EE /* QuartzCore.framework */; };
-		7D2F3F4D1BBD927C008910EE /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F4C1BBD927C008910EE /* libiconv.tbd */; };
-		7D2F3F4F1BBD9282008910EE /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F4E1BBD9282008910EE /* libbz2.tbd */; };
-		7D2F3F511BBD9288008910EE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F501BBD9288008910EE /* CoreText.framework */; };
-		7D2F3F531BBD928D008910EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F521BBD928D008910EE /* CFNetwork.framework */; };
-		7D2F3F551BBD9293008910EE /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F541BBD9293008910EE /* OpenGLES.framework */; };
-		7D2F3F571BBD9299008910EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F561BBD9298008910EE /* AudioToolbox.framework */; };
 		7D2F3F591BBD929D008910EE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F581BBD929D008910EE /* UIKit.framework */; };
 		7D2F3F5B1BBD92A2008910EE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D2F3F5A1BBD92A2008910EE /* Foundation.framework */; };
+		7DB6E12E285A1AEB004EAF04 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E12D285A1AEB004EAF04 /* MobileVLCKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,6 +116,7 @@
 		7D2F3F561BBD9298008910EE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7D2F3F581BBD929D008910EE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7D2F3F5A1BBD92A2008910EE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7DB6E12D285A1AEB004EAF04 /* MobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,24 +124,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DB6E12E285A1AEB004EAF04 /* MobileVLCKit.framework in Frameworks */,
 				7D2F3F5B1BBD92A2008910EE /* Foundation.framework in Frameworks */,
 				7D2F3F591BBD929D008910EE /* UIKit.framework in Frameworks */,
-				7D2F3F571BBD9299008910EE /* AudioToolbox.framework in Frameworks */,
-				7D2F3F551BBD9293008910EE /* OpenGLES.framework in Frameworks */,
-				7D2F3F531BBD928D008910EE /* CFNetwork.framework in Frameworks */,
-				7D2F3F511BBD9288008910EE /* CoreText.framework in Frameworks */,
-				7D2F3F4F1BBD9282008910EE /* libbz2.tbd in Frameworks */,
-				7D2F3F4D1BBD927C008910EE /* libiconv.tbd in Frameworks */,
-				7D2F3F4B1BBD9276008910EE /* QuartzCore.framework in Frameworks */,
-				7D2F3F491BBD9272008910EE /* CoreGraphics.framework in Frameworks */,
-				7D2F3F471BBD926D008910EE /* MediaPlayer.framework in Frameworks */,
-				7D2F3F451BBD9269008910EE /* AVFoundation.framework in Frameworks */,
-				7D2F3F431BBD9264008910EE /* Security.framework in Frameworks */,
-				7D2F3F411BBD925F008910EE /* libc++.tbd in Frameworks */,
-				7D2F3F3F1BBD9258008910EE /* VideoToolbox.framework in Frameworks */,
-				7D2F3F3D1BBD9253008910EE /* CoreMedia.framework in Frameworks */,
-				7D2F3F3B1BBD924F008910EE /* CoreVideo.framework in Frameworks */,
-				7D2F3F391BBD9246008910EE /* libMobileVLCKit.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +148,7 @@
 				3A622B601A899CDE00A12489 /* Source */,
 				3A4CF88E1A89593700324DBF /* Data */,
 				3A4CF8661A8958DD00324DBF /* Products */,
+				7DB6E12C285A1AEB004EAF04 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -337,6 +309,14 @@
 			name = "iOS Frameworks";
 			sourceTree = "<group>";
 		};
+		7DB6E12C285A1AEB004EAF04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7DB6E12D285A1AEB004EAF04 /* MobileVLCKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -396,6 +376,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
