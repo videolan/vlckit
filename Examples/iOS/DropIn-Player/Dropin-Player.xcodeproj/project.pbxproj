@@ -9,20 +9,8 @@
 /* Begin PBXBuildFile section */
 		7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B369183BA71600FF0D25 /* UIKit.framework */; };
 		7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36B183BA71600FF0D25 /* Foundation.framework */; };
-		7D7B6C491B70C40F00E879CF /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C481B70C40F00E879CF /* libc++.tbd */; };
-		7D7B6C4B1B70C41700E879CF /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C4A1B70C41700E879CF /* VideoToolbox.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		7D7B6C4D1B70C41D00E879CF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C4C1B70C41D00E879CF /* CoreMedia.framework */; };
-		7D7B6C4F1B70C43200E879CF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */; };
-		7D7B6C7D1B70D0BA00E879CF /* libMobileVLCKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */; };
-		7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */; };
-		7D8745BB183BABEE00FD09E0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */; };
-		7D8745BD183BAC0D00FD09E0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BC183BAC0D00FD09E0 /* CFNetwork.framework */; };
-		7D8745BF183BAC1200FD09E0 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745BE183BAC1200FD09E0 /* CoreText.framework */; };
-		7D8745C1183BAC2300FD09E0 /* libbz2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C0183BAC2300FD09E0 /* libbz2.dylib */; };
-		7D8745C3183BAC2700FD09E0 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C2183BAC2700FD09E0 /* libiconv.dylib */; };
-		7D8745C7183BACAE00FD09E0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */; };
-		7D8745C8183BACBF00FD09E0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */; };
-		7DBC87FD1FE2C0BE002A5ADC /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */; };
+		7DB6E130285A1C50004EAF04 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E12F285A1C50004EAF04 /* MobileVLCKit.framework */; };
+		7DB6E131285A1CE3004EAF04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DEBFE80183BF0AA00BC53D5 /* AVFoundation.framework */; };
 		7DEBFE68183BEA9E00BC53D5 /* VDLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE65183BEA9E00BC53D5 /* VDLAppDelegate.m */; };
 		7DEBFE69183BEA9E00BC53D5 /* VDLPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE67183BEA9E00BC53D5 /* VDLPlaybackViewController.m */; };
 		7DEBFE6D183BEAB500BC53D5 /* VDLPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE6B183BEAB500BC53D5 /* VDLPlaybackViewController.xib */; };
@@ -31,11 +19,8 @@
 		7DEBFE78183BEAD500BC53D5 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE72183BEAD500BC53D5 /* Default.png */; };
 		7DEBFE79183BEAD500BC53D5 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE73183BEAD500BC53D5 /* Default@2x.png */; };
 		7DEBFE7B183BEAD500BC53D5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE76183BEAD500BC53D5 /* main.m */; };
-		7DEBFE7F183BEE7500BC53D5 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DEBFE7E183BEE7500BC53D5 /* MediaPlayer.framework */; };
-		7DEBFE81183BF0AA00BC53D5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DEBFE80183BF0AA00BC53D5 /* AVFoundation.framework */; };
 		7DEBFE85183BFC6300BC53D5 /* VDLMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE83183BFC6300BC53D5 /* VDLMainViewController.m */; };
 		7DEBFE86183BFC6300BC53D5 /* VDLMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE84183BFC6300BC53D5 /* VDLMainViewController.xib */; };
-		D4771D93189848E70087441B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4771D92189848E70087441B /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +42,7 @@
 		7D8745C0183BAC2300FD09E0 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
 		7D8745C2183BAC2700FD09E0 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
 		7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7DB6E12F285A1C50004EAF04 /* MobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		7DEBFE64183BEA9E00BC53D5 /* VDLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VDLAppDelegate.h; path = "Dropin-Player/VDLAppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		7DEBFE65183BEA9E00BC53D5 /* VDLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VDLAppDelegate.m; path = "Dropin-Player/VDLAppDelegate.m"; sourceTree = SOURCE_ROOT; };
@@ -83,23 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DBC87FD1FE2C0BE002A5ADC /* CoreImage.framework in Frameworks */,
-				7D7B6C7D1B70D0BA00E879CF /* libMobileVLCKit.a in Frameworks */,
-				7D7B6C4F1B70C43200E879CF /* CoreVideo.framework in Frameworks */,
-				7D7B6C4D1B70C41D00E879CF /* CoreMedia.framework in Frameworks */,
-				7D7B6C4B1B70C41700E879CF /* VideoToolbox.framework in Frameworks */,
-				7D7B6C491B70C40F00E879CF /* libc++.tbd in Frameworks */,
-				D4771D93189848E70087441B /* Security.framework in Frameworks */,
-				7DEBFE81183BF0AA00BC53D5 /* AVFoundation.framework in Frameworks */,
-				7DEBFE7F183BEE7500BC53D5 /* MediaPlayer.framework in Frameworks */,
-				7D8745C8183BACBF00FD09E0 /* CoreGraphics.framework in Frameworks */,
-				7D8745C7183BACAE00FD09E0 /* QuartzCore.framework in Frameworks */,
-				7D8745C3183BAC2700FD09E0 /* libiconv.dylib in Frameworks */,
-				7D8745C1183BAC2300FD09E0 /* libbz2.dylib in Frameworks */,
-				7D8745BF183BAC1200FD09E0 /* CoreText.framework in Frameworks */,
-				7D8745BD183BAC0D00FD09E0 /* CFNetwork.framework in Frameworks */,
-				7D8745BB183BABEE00FD09E0 /* OpenGLES.framework in Frameworks */,
-				7D8745B8183BABE800FD09E0 /* AudioToolbox.framework in Frameworks */,
+				7DB6E131285A1CE3004EAF04 /* AVFoundation.framework in Frameworks */,
+				7DB6E130285A1C50004EAF04 /* MobileVLCKit.framework in Frameworks */,
 				7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */,
 				7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */,
 			);
@@ -128,6 +99,7 @@
 		7D11B368183BA71600FF0D25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DB6E12F285A1C50004EAF04 /* MobileVLCKit.framework */,
 				7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */,
 				7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */,
 				7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */,
@@ -219,6 +191,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7D11B35D183BA71600FF0D25;
@@ -350,6 +323,7 @@
 					"$(CONFIGURATION_BUILD_DIR)",
 				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				PRODUCT_NAME = "Dropin-Player";
 				WRAPPER_EXTENSION = app;
 			};
@@ -366,6 +340,7 @@
 					"$(CONFIGURATION_BUILD_DIR)",
 				);
 				INFOPLIST_FILE = "Dropin-Player/Dropin-Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				PRODUCT_NAME = "Dropin-Player";
 				WRAPPER_EXTENSION = app;
 			};

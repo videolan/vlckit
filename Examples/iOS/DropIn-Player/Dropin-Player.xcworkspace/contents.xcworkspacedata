@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Dropin-Player.xcodeproj">
+      location = "group:../../../VLCKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:../../../MobileVLCKit.xcodeproj">
+      location = "group:Dropin-Player.xcodeproj">
    </FileRef>
 </Workspace>

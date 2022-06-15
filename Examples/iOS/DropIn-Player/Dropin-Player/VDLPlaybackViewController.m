@@ -112,7 +112,9 @@
     _mediaplayer.drawable = self.movieView;
 
     /* enable debug logging from libvlc here */
-    _mediaplayer.libraryInstance.debugLogging = YES;
+    VLCConsoleLogger *consoleLogger = [[VLCConsoleLogger alloc] init];
+    consoleLogger.level = kVLCLogLevelDebug;
+    [_mediaplayer.libraryInstance setLoggers:@[consoleLogger]];
 
     /* listen for notifications from the player */
     [_mediaplayer addObserver:self forKeyPath:@"time" options:0 context:nil];
@@ -211,7 +213,7 @@
         [self performSelector:@selector(closePlayback:) withObject:nil afterDelay:2.];
 
     /* or if playback ended */
-    if (currentState == VLCMediaPlayerStateEnded || currentState == VLCMediaPlayerStateStopped)
+    if (currentState == VLCMediaPlayerStateStopping || currentState == VLCMediaPlayerStateStopped)
         [self performSelector:@selector(closePlayback:) withObject:nil afterDelay:2.];
 
     [self.playPauseButton setTitle:[_mediaplayer isPlaying]? @"Pause" : @"Play" forState:UIControlStateNormal];
