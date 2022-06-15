@@ -131,6 +131,7 @@
 				8DD4AA492167AA3100F3EF5A /* Sources */,
 				8DD4AA4A2167AA3100F3EF5A /* Frameworks */,
 				8DD4AA4B2167AA3100F3EF5A /* Resources */,
+				66040BBBB5F1E282A9A9C020 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -188,6 +189,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		66040BBBB5F1E282A9A9C020 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftSimplePlayback/Pods-SwiftSimplePlayback-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SwiftSimplePlayback/Pods-SwiftSimplePlayback-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SwiftSimplePlayback/Pods-SwiftSimplePlayback-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9A50F34036361C661339757B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
