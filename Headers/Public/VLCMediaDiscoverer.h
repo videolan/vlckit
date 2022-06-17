@@ -77,7 +77,7 @@ OBJC_VISIBLE
  * same as above but with a custom VLCLibrary instance
  * \note Using this mode can lead to a significant performance impact - use only if you know what you are doing
  */
-- (instancetype)initWithName:(NSString *)aServiceName libraryInstance:(VLCLibrary *)libraryInstance;
+- (instancetype)initWithName:(NSString *)aServiceName libraryInstance:(nullable VLCLibrary *)libraryInstance;
 
 /**
  * start media discovery

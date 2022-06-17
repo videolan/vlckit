@@ -81,7 +81,7 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
     return [self initWithName:aServiceName libraryInstance:nil];
 }
 
-- (instancetype)initWithName:(NSString *)aServiceName libraryInstance:(VLCLibrary *)libraryInstance
+- (instancetype)initWithName:(NSString *)aServiceName libraryInstance:(nullable VLCLibrary *)libraryInstance
 {
     if (self = [super init]) {
         _discoveredMedia = nil;
