@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCEmbeddedDialogProvider.m: an implementation of the libvlc dialog API
  *****************************************************************************
- * Copyright (C) 2016 VideoLabs SAS
+ * Copyright (C) 2016, 2022 VideoLabs SAS
  * $Id$
  *
  * Authors: Felix Paul Kühne <fkuehne # videolan.org>
@@ -164,7 +164,6 @@ static void updateProgressCallback(void *p_data,
 
         /* callback setup */
         const libvlc_dialog_cbs cbs = {
-            displayErrorCallback,
             displayLoginCallback,
             displayQuestionCallback,
             displayProgressCallback,
@@ -175,6 +174,10 @@ static void updateProgressCallback(void *p_data,
         libvlc_dialog_set_callbacks(_libraryInstance.instance,
                                     &cbs,
                                     (__bridge void *)self);
+
+        libvlc_dialog_set_error_callback(_libraryInstance.instance,
+                                         &displayErrorCallback,
+                                         (__bridge void *)self);
     }
 
     return self;

@@ -2,8 +2,8 @@
  * VLCiOSLegacyDialogProvider.m: an implementation of the libvlc dialog API
  * Included for compatiblity with iOS 7
  *****************************************************************************
- * Copyright (C) 2009, 2014-2015 VLC authors and VideoLAN
- * Copyright (C) 2016 VideoLabs SAS
+ * Copyright (C) 2009, 2014-2015, 2022 VLC authors and VideoLAN
+ * Copyright (C) 2016, 2022 VideoLabs SAS
  * $Id$
  *
  * Authors: Felix Paul Kühne <fkuehne # videolan org>
@@ -133,7 +133,7 @@ static void cancelCallback(void *p_data,
 {
     @autoreleasepool {
         // FIXME: the saddest NO-OP
-        VKLog(@"%s: %i", __PRETTY_FUNCTION__, (int)p_id);
+        VKLog(@"%s: %lli", __PRETTY_FUNCTION__, (int64_t)p_id);
     }
 }
 
@@ -174,7 +174,6 @@ static void updateProgressCallback(void *p_data,
 
         /* callback setup */
         const libvlc_dialog_cbs cbs = {
-            displayErrorCallback,
             displayLoginCallback,
             displayQuestionCallback,
             displayProgressCallback,
@@ -185,6 +184,10 @@ static void updateProgressCallback(void *p_data,
         libvlc_dialog_set_callbacks(_libraryInstance.instance,
                                     &cbs,
                                     (__bridge void *)self);
+
+        libvlc_dialog_set_error_callback(_libraryInstance.instance,
+                                         &displayErrorCallback,
+                                         (__bridge void *)self);
     }
 
     return self;
