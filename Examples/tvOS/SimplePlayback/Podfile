@@ -1,9 +1,0 @@
-source 'https://github.com/CocoaPods/Specs.git'
-
-platform :tvos, '11.0'
-use_frameworks!
-
-target 'SimplePlayback' do
-  pod 'TVVLCKit', '~> 3.0.2'
-end
-
