@@ -105,7 +105,7 @@ OBJC_VISIBLE
  * \see initWithDrawable
  * \see initWithOptions
  */
-- (instancetype)initWithOptions:(NSArray *)options andDrawable:(id)drawable;
+- (instancetype)initWithOptions:(nullable NSArray *)options andDrawable:(nullable id)drawable;
 
 /**
  * start playback

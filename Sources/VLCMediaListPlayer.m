@@ -79,7 +79,7 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 
 @implementation VLCMediaListPlayer
 
-- (instancetype)initWithOptions:(NSArray *)options andDrawable:(id)drawable
+- (instancetype)initWithOptions:(nullable NSArray *)options andDrawable:(nullable id)drawable
 {
     if (self = [super init]) {
         _libVLCBackgroundQueue = dispatch_queue_create("libvlcQueue", DISPATCH_QUEUE_SERIAL);
