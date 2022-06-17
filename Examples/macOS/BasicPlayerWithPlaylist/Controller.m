@@ -1,7 +1,7 @@
 /*****************************************************************************
  * test: Controller.m
  *****************************************************************************
- * Copyright (C) 2007-2013 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2007-2022 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont
  *          Felix Paul Kühne
@@ -142,9 +142,11 @@
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn
             row:(int)row
 {
-    NSString *title = [(VLCMedia *)[playlist mediaAtIndex:row].metaDictionary valueForKey:VLCMetaInformationTitle];
+    VLCMedia *media = (VLCMedia *)[playlist mediaAtIndex:row];
 
-    return title ? title : [playlist mediaAtIndex:row].url.lastPathComponent;
+    NSString *title = media.metaData.title;
+
+    return title ? title : media.url.lastPathComponent;
 }
 
 - (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id <NSDraggingInfo>)info

@@ -8,23 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		6333027B0BD24CDB00193D7D /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 633302790BD24CDB00193D7D /* Controller.m */; };
-		7D7AF4E4183A813A003CF2E3 /* VLCKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC786BB31715AAB50024EDC0 /* VLCKit.framework */; };
+		7DB17959285C64B6006201DB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB17958285C64B6006201DB /* Cocoa.framework */; };
+		7DB179CE285C6D7D006201DB /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB179C7285C6A31006201DB /* VLCKit.framework */; };
+		7DB179CF285C6D7D006201DB /* VLCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB179C7285C6A31006201DB /* VLCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
-		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		CC786BB41715AAB50024EDC0 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC786BB31715AAB50024EDC0 /* VLCKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7D7AF4E3183A8132003CF2E3 /* CopyFiles */ = {
+		7DB179D0285C6D7D006201DB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7D7AF4E4183A813A003CF2E3 /* VLCKit.framework in CopyFiles */,
+				7DB179CF285C6D7D006201DB /* VLCKit.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -40,18 +41,20 @@
 		32CA4F630368D1EE00C91783 /* test_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = test_Prefix.pch; sourceTree = "<group>"; };
 		633302780BD24CDB00193D7D /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		633302790BD24CDB00193D7D /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		7DB17958285C64B6006201DB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		7DB179C7285C6A31006201DB /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* BasicPlayerWithPlaylist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicPlayerWithPlaylist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC786BB31715AAB50024EDC0 /* VLCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VLCKit.framework; path = ../../../build/Release/VLCKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8D11072E0486CEB800E47090 /* Frameworks */ = {
+		7DB17957285C64AF006201DB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				CC786BB41715AAB50024EDC0 /* VLCKit.framework in Frameworks */,
+				7DB17959285C64B6006201DB /* Cocoa.framework in Frameworks */,
+				7DB179CE285C6D7D006201DB /* VLCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +131,8 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DB179C7285C6A31006201DB /* VLCKit.framework */,
+				7DB17958285C64B6006201DB /* Cocoa.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -143,8 +148,8 @@
 			buildPhases = (
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
-				8D11072E0486CEB800E47090 /* Frameworks */,
-				7D7AF4E3183A8132003CF2E3 /* CopyFiles */,
+				7DB17957285C64AF006201DB /* Frameworks */,
+				7DB179D0285C6D7D006201DB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -168,6 +173,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* test */;
@@ -226,7 +232,6 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -243,13 +248,14 @@
 				LD_FLAGS_LIBINTL = "-dylib_file @loader_path/../lib/vlc_libintl.dylib:$(VLC_FRAMEWORK)/lib/vlc_libintl.dylib";
 				LD_FLAGS_LIBVLC = "-dylib_file @loader_path/lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib -dylib_file @loader_path/../lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib";
 				LD_FLAGS_LIBVLC_CONTROL = "-dylib_file @loader_path/lib/libvlc-control.dylib:$(VLC_FRAMEWORK)/lib/libvlc-control.dylib";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"$(LD_FLAGS_LIBINTL)",
 					"$(LD_FLAGS_LIBVLC)",
 					"$(LD_FLAGS_LIBVLC_CONTROL)",
 				);
 				PRODUCT_NAME = BasicPlayerWithPlaylist;
-				SYMROOT = ../../build;
+				SDKROOT = macosx;
 				VLC_FRAMEWORK = "$(TARGET_BUILD_DIR)/VLC.framework";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -259,7 +265,6 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -273,13 +278,14 @@
 				LD_FLAGS_LIBINTL = "-dylib_file @loader_path/../lib/vlc_libintl.dylib:$(VLC_FRAMEWORK)/lib/vlc_libintl.dylib";
 				LD_FLAGS_LIBVLC = "-dylib_file @loader_path/lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib -dylib_file @loader_path/../lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib";
 				LD_FLAGS_LIBVLC_CONTROL = "-dylib_file @loader_path/lib/libvlc-control.dylib:$(VLC_FRAMEWORK)/lib/libvlc-control.dylib";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"$(LD_FLAGS_LIBINTL)",
 					"$(LD_FLAGS_LIBVLC)",
 					"$(LD_FLAGS_LIBVLC_CONTROL)",
 				);
 				PRODUCT_NAME = BasicPlayerWithPlaylist;
-				SYMROOT = ../../build;
+				SDKROOT = macosx;
 				VLC_FRAMEWORK = "$(TARGET_BUILD_DIR)/VLC.framework";
 				WRAPPER_EXTENSION = app;
 			};
