@@ -3,29 +3,30 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		6333027B0BD24CDB00193D7D /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 633302790BD24CDB00193D7D /* Controller.m */; };
 		7D32D667183E36A000EA4C8B /* GradientBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D32D666183E36A000EA4C8B /* GradientBackgroundView.m */; };
-		7D7AF4E4183A813A003CF2E3 /* VLCKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CC786BB31715AAB50024EDC0 /* VLCKit.framework */; };
+		7DB179CB285C6D58006201DB /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB179C9285C6C2F006201DB /* VLCKit.framework */; };
+		7DB179CC285C6D58006201DB /* VLCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB179C9285C6C2F006201DB /* VLCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8D11072A0486CEB800E47090 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 29B97318FDCFA39411CA2CEA /* MainMenu.nib */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		CC786BB41715AAB50024EDC0 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC786BB31715AAB50024EDC0 /* VLCKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7D7AF4E3183A8132003CF2E3 /* CopyFiles */ = {
+		7DB179CD285C6D58006201DB /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7D7AF4E4183A813A003CF2E3 /* VLCKit.framework in CopyFiles */,
+				7DB179CC285C6D58006201DB /* VLCKit.framework in Embed Frameworks */,
 			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -43,6 +44,7 @@
 		633302790BD24CDB00193D7D /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		7D32D665183E36A000EA4C8B /* GradientBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientBackgroundView.h; sourceTree = "<group>"; };
 		7D32D666183E36A000EA4C8B /* GradientBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GradientBackgroundView.m; sourceTree = "<group>"; };
+		7DB179C9285C6C2F006201DB /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* FlashVideoDownloader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashVideoDownloader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC786BB31715AAB50024EDC0 /* VLCKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VLCKit.framework; path = ../../build/Debug/VLCKit.framework; sourceTree = "<group>"; };
@@ -54,7 +56,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				CC786BB41715AAB50024EDC0 /* VLCKit.framework in Frameworks */,
+				7DB179CB285C6D58006201DB /* VLCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +135,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DB179C9285C6C2F006201DB /* VLCKit.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -149,7 +152,7 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				7D7AF4E3183A8132003CF2E3 /* CopyFiles */,
+				7DB179CD285C6D58006201DB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -166,11 +169,14 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "FlashVideoDownloader" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* test */;
@@ -230,8 +236,10 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -246,14 +254,15 @@
 				LD_FLAGS_LIBINTL = "-dylib_file @loader_path/../lib/vlc_libintl.dylib:$(VLC_FRAMEWORK)/lib/vlc_libintl.dylib";
 				LD_FLAGS_LIBVLC = "-dylib_file @loader_path/lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib -dylib_file @loader_path/../lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib";
 				LD_FLAGS_LIBVLC_CONTROL = "-dylib_file @loader_path/lib/libvlc-control.dylib:$(VLC_FRAMEWORK)/lib/libvlc-control.dylib";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"$(LD_FLAGS_LIBINTL)",
 					"$(LD_FLAGS_LIBVLC)",
 					"$(LD_FLAGS_LIBVLC_CONTROL)",
 				);
 				PRODUCT_NAME = FlashVideoDownloader;
-				SDKROOT = "";
-				SYMROOT = ../../build;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
 				VLC_FRAMEWORK = "$(TARGET_BUILD_DIR)/VLC.framework";
 				WRAPPER_EXTENSION = app;
 				ZERO_LINK = YES;
@@ -263,7 +272,9 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
@@ -276,14 +287,15 @@
 				LD_FLAGS_LIBINTL = "-dylib_file @loader_path/../lib/vlc_libintl.dylib:$(VLC_FRAMEWORK)/lib/vlc_libintl.dylib";
 				LD_FLAGS_LIBVLC = "-dylib_file @loader_path/lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib -dylib_file @loader_path/../lib/libvlc.dylib:$(VLC_FRAMEWORK)/lib/libvlc.dylib";
 				LD_FLAGS_LIBVLC_CONTROL = "-dylib_file @loader_path/lib/libvlc-control.dylib:$(VLC_FRAMEWORK)/lib/libvlc-control.dylib";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"$(LD_FLAGS_LIBINTL)",
 					"$(LD_FLAGS_LIBVLC)",
 					"$(LD_FLAGS_LIBVLC_CONTROL)",
 				);
 				PRODUCT_NAME = FlashVideoDownloader;
-				SDKROOT = "";
-				SYMROOT = ../../build;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
 				VLC_FRAMEWORK = "$(TARGET_BUILD_DIR)/VLC.framework";
 				WRAPPER_EXTENSION = app;
 			};
