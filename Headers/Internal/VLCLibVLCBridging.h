@@ -195,9 +195,9 @@
 @end
 
 /**
- * Bridges functionality between libvlc and VLCMediaTracksInformationAudio implementation.
+ * Bridges functionality between libvlc and VLCMediaAudioTrack implementation.
  */
-@interface VLCMediaTracksInformationAudio (LibVLCBridging)
+@interface VLCMediaAudioTrack (LibVLCBridging)
 
 - (instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio;
 

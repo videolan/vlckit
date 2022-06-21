@@ -816,7 +816,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
             _trackDescription = @(track->psz_description);
         
         if (track->i_type == libvlc_track_audio && track->audio)
-            _audio = [[VLCMediaTracksInformationAudio alloc] initWithAudioTrack: track->audio];
+            _audio = [[VLCMediaAudioTrack alloc] initWithAudioTrack: track->audio];
         else if (track->i_type == libvlc_track_video && track->video)
             _video = [[VLCMediaTracksInformationVideo alloc] initWithVideoTrack: track->video];
         else if (track->i_type == libvlc_track_text && track->subtitle)
@@ -839,9 +839,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 
 /******************************************************************************
- * Implementation VLCMediaTracksInformationAudio
+ * Implementation VLCMediaAudioTrack
  */
-@implementation VLCMediaTracksInformationAudio
+@implementation VLCMediaAudioTrack
 
 - (instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio
 {

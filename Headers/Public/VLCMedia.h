@@ -470,9 +470,10 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 #pragma mark - VLCMediaTrack
 
 /**
- * VLCMediaTracksInformationAudio
+ * VLCMediaAudioTrack
  */
-@interface VLCMediaTracksInformationAudio : NSObject
+NS_SWIFT_NAME(VLCMedia.AudioTrack)
+@interface VLCMediaAudioTrack : NSObject
 
 /**
  * number of audio channels of a given track
@@ -612,9 +613,9 @@ NS_SWIFT_NAME(VLCMedia.Track)
 @property(nonatomic, readonly, copy, nullable) NSString *trackDescription;
 
 /**
- * VLCMediaTracksInformationAudio
+ * VLCMediaAudioTrack
  */
-@property(nonatomic, readonly, nullable) VLCMediaTracksInformationAudio *audio;
+@property(nonatomic, readonly, nullable) VLCMediaAudioTrack *audio;
 
 /**
  * VLCMediaTracksInformationVideo
