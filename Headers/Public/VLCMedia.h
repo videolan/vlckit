@@ -546,9 +546,10 @@ NS_SWIFT_NAME(VLCMedia.VideoTrack)
 
 
 /**
- * VLCMediaTracksInformationText
+ * VLCMediaTextTrack
  */
-@interface VLCMediaTracksInformationText : NSObject
+NS_SWIFT_NAME(VLCMedia.TextTrack)
+@interface VLCMediaTextTrack : NSObject
 
 /**
  * text encoding
@@ -624,9 +625,9 @@ NS_SWIFT_NAME(VLCMedia.Track)
 @property(nonatomic, readonly, nullable) VLCMediaVideoTrack *video;
 
 /**
- * VLCMediaTracksInformationText
+ * VLCMediaTextTrack
  */
-@property(nonatomic, readonly, nullable) VLCMediaTracksInformationText *text;
+@property(nonatomic, readonly, nullable) VLCMediaTextTrack *text;
 
 /**
  * user readable codec name

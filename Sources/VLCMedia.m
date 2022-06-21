@@ -820,7 +820,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         else if (track->i_type == libvlc_track_video && track->video)
             _video = [[VLCMediaVideoTrack alloc] initWithVideoTrack: track->video];
         else if (track->i_type == libvlc_track_text && track->subtitle)
-            _text = [[VLCMediaTracksInformationText alloc] initWithSubtitleTrack: track->subtitle];
+            _text = [[VLCMediaTextTrack alloc] initWithSubtitleTrack: track->subtitle];
     }
     return self;
 }
@@ -889,9 +889,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 
 /******************************************************************************
- * Implementation VLCMediaTracksInformationText
+ * Implementation VLCMediaTextTrack
  */
-@implementation VLCMediaTracksInformationText
+@implementation VLCMediaTextTrack
 
 - (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle
 {

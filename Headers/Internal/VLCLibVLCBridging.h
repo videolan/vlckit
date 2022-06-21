@@ -213,9 +213,9 @@
 @end
 
 /**
- * Bridges functionality between libvlc and VLCMediaTracksInformationText implementation.
+ * Bridges functionality between libvlc and VLCMediaTextTrack implementation.
  */
-@interface VLCMediaTracksInformationText (LibVLCBridging)
+@interface VLCMediaTextTrack (LibVLCBridging)
 
 - (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle;
 
