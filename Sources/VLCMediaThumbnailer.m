@@ -159,11 +159,11 @@ static void display(void *opaque, void *picture)
 
 - (void)startFetchingThumbnail
 {
-    NSArray<VLCMediaTracksInformation *> *tracks = [_media tracksInformation];
+    NSArray<VLCMediaTrack *> *tracks = [_media tracksInformation];
 
     // Find the video track
     VLCMediaTracksInformationVideo *videoTrack = nil;
-    for (VLCMediaTracksInformation *track in tracks) {
+    for (VLCMediaTrack *track in tracks) {
         if (track.type == VLCMediaTracksInformationTypeVideo) {
             videoTrack = track.video;
             break;

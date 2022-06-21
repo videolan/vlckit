@@ -584,9 +584,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return p_stats.i_demux_discontinuity;
 }
 
-- (NSArray<VLCMediaTracksInformation *> *)tracksInformation
+- (NSArray<VLCMediaTrack *> *)tracksInformation
 {
-    NSMutableArray<VLCMediaTracksInformation *> *array = @[].mutableCopy;
+    NSMutableArray<VLCMediaTrack *> *array = @[].mutableCopy;
     
     // 3 = (libvlc_track_audio = 0 | libvlc_track_video = 1 | libvlc_track_text = 2)
     for (int i = 0; i < 3; i++) {
@@ -596,7 +596,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
         for (size_t j = 0; j < tracklistCount; j++) {
             libvlc_media_track_t *track = libvlc_media_tracklist_at(tracklist, j);
-            VLCMediaTracksInformation *info = [[VLCMediaTracksInformation alloc] initWithMediaTrack: track];
+            VLCMediaTrack *info = [[VLCMediaTrack alloc] initWithMediaTrack: track];
             [array addObject: info];
         }
         
@@ -794,9 +794,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 
 /******************************************************************************
- * Implementation VLCMediaTracksInformation
+ * Implementation VLCMediaTrack
  */
-@implementation VLCMediaTracksInformation
+@implementation VLCMediaTrack
 
 - (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track
 {

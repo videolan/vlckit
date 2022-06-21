@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class VLCTime, VLCMediaTracksInformation, VLCMediaMetaData;
+@class VLCTime, VLCMediaTrack, VLCMediaMetaData;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -268,7 +268,7 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 /**
  * Returns the tracks information.
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<VLCMediaTracksInformation *> *tracksInformation;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<VLCMediaTrack *> *tracksInformation;
 
 /**
  * list of possible libvlc_media_filestat type.
@@ -467,7 +467,7 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 @end
 
 
-#pragma mark - VLCMediaTracksInformation
+#pragma mark - VLCMediaTrack
 
 /**
  * VLCMediaTracksInformationAudio
@@ -561,9 +561,10 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 
 
 /**
- * VLCMediaTracksInformation
+ * VLCMediaTrack
  */
-@interface VLCMediaTracksInformation : NSObject
+NS_SWIFT_NAME(VLCMedia.Track)
+@interface VLCMediaTrack : NSObject
 
 /**
  * track information type
@@ -642,7 +643,7 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
  * VLCMediaPlayerTrack
  */
 NS_SWIFT_NAME(VLCMediaPlayer.Track)
-@interface VLCMediaPlayerTrack : VLCMediaTracksInformation
+@interface VLCMediaPlayerTrack : VLCMediaTrack
 
 /**
  * String identifier of track
