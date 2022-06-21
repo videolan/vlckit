@@ -162,7 +162,7 @@ static void display(void *opaque, void *picture)
     NSArray<VLCMediaTrack *> *tracks = [_media tracksInformation];
 
     // Find the video track
-    VLCMediaTracksInformationVideo *videoTrack = nil;
+    VLCMediaVideoTrack *videoTrack = nil;
     for (VLCMediaTrack *track in tracks) {
         if (track.type == VLCMediaTracksInformationTypeVideo) {
             videoTrack = track.video;

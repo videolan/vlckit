@@ -204,9 +204,9 @@
 @end
 
 /**
- * Bridges functionality between libvlc and VLCMediaTracksInformationVideo implementation.
+ * Bridges functionality between libvlc and VLCMediaVideoTrack implementation.
  */
-@interface VLCMediaTracksInformationVideo (LibVLCBridging)
+@interface VLCMediaVideoTrack (LibVLCBridging)
 
 - (instancetype)initWithVideoTrack:(libvlc_video_track_t *)video;
 

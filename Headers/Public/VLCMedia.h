@@ -493,9 +493,10 @@ NS_SWIFT_NAME(VLCMedia.AudioTrack)
 
 
 /**
- * VLCMediaTracksInformationVideo
+ * VLCMediaVideoTrack
  */
-@interface VLCMediaTracksInformationVideo : NSObject
+NS_SWIFT_NAME(VLCMedia.VideoTrack)
+@interface VLCMediaVideoTrack : NSObject
 
 /**
  * video track height
@@ -618,9 +619,9 @@ NS_SWIFT_NAME(VLCMedia.Track)
 @property(nonatomic, readonly, nullable) VLCMediaAudioTrack *audio;
 
 /**
- * VLCMediaTracksInformationVideo
+ * VLCMediaVideoTrack
  */
-@property(nonatomic, readonly, nullable) VLCMediaTracksInformationVideo *video;
+@property(nonatomic, readonly, nullable) VLCMediaVideoTrack *video;
 
 /**
  * VLCMediaTracksInformationText
