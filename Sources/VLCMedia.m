@@ -160,7 +160,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
  */
 @implementation VLCMedia
 
-+ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(VLCMediaTracksInformationType)trackType
++ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(VLCMediaTrackType)trackType
 {
     libvlc_track_type_t track_type = (libvlc_track_type_t)trackType;
     const char *ret = libvlc_media_get_codec_description(track_type, fourcc);
@@ -801,7 +801,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 - (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track
 {
     if (self = [super init]) {
-        _type = (VLCMediaTracksInformationType)track->i_type;
+        _type = (VLCMediaTrackType)track->i_type;
         _codec = track->i_codec;
         _fourcc = track->i_original_fourcc;
         _identifier = track->i_id;

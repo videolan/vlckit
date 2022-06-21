@@ -95,12 +95,13 @@ OBJC_VISIBLE
 /**
  * list of possible track information type.
  */
-typedef NS_ENUM(NSInteger, VLCMediaTracksInformationType) {
-    VLCMediaTracksInformationTypeUnknown    = -1,
-    VLCMediaTracksInformationTypeAudio      = 0,
-    VLCMediaTracksInformationTypeVideo      = 1,
-    VLCMediaTracksInformationTypeText       = 2
-};
+
+typedef NS_ENUM(NSInteger, VLCMediaTrackType) {
+    VLCMediaTrackTypeUnknown    = -1,
+    VLCMediaTrackTypeAudio      = 0,
+    VLCMediaTrackTypeVideo      = 1,
+    VLCMediaTrackTypeText       = 2
+} NS_SWIFT_NAME(VLCMedia.TrackType);
 
 /**
  * convienience method to return a user-readable codec name for the given FourCC
@@ -108,7 +109,7 @@ typedef NS_ENUM(NSInteger, VLCMediaTracksInformationType) {
  * \param trackType a VLC track type if known to speed-up the name search
  * \return a NSString containing the codec name if recognized, else an empty string
  */
-+ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(VLCMediaTracksInformationType)trackType;
++ (NSString *)codecNameForFourCC:(uint32_t)fourcc trackType:(VLCMediaTrackType)trackType;
 
 /**
  * TODO
@@ -572,7 +573,7 @@ NS_SWIFT_NAME(VLCMedia.Track)
 /**
  * track information type
  */
-@property(nonatomic, readonly) VLCMediaTracksInformationType type;
+@property(nonatomic, readonly) VLCMediaTrackType type;
 
 /**
  * codec information

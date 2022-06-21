@@ -26,10 +26,10 @@ import XCTest
 class VLCMediaTest: XCTestCase {
     func testCodecNameForFourCC() {
         let tests: [(input: String, fourcc: UInt32, expected: String)] = [
-            (VLCMediaTracksInformationTypeAudio, 0x414B4D53, "Smacker audio"),
-            (VLCMediaTracksInformationTypeVideo, 0x32564933, "3ivx MPEG-4 Video"),
-            (VLCMediaTracksInformationTypeText, 0x37324353, "SCTE-27 subtitles"),
-            (VLCMediaTracksInformationTypeUnknown, 0x37324353, "SCTE-27 subtitles"),
+            (VLCMediaTrackTypeAudio, 0x414B4D53, "Smacker audio"),
+            (VLCMediaTrackTypeVideo, 0x32564933, "3ivx MPEG-4 Video"),
+            (VLCMediaTrackTypeText, 0x37324353, "SCTE-27 subtitles"),
+            (VLCMediaTrackTypeUnknown, 0x37324353, "SCTE-27 subtitles"),
             ("", 0x0, "")
         ]
         

@@ -164,7 +164,7 @@ static void display(void *opaque, void *picture)
     // Find the video track
     VLCMediaVideoTrack *videoTrack = nil;
     for (VLCMediaTrack *track in tracks) {
-        if (track.type == VLCMediaTracksInformationTypeVideo) {
+        if (track.type == VLCMediaTrackTypeVideo) {
             videoTrack = track.video;
             break;
         }
