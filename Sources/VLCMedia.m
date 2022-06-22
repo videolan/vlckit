@@ -35,7 +35,7 @@
 #import <sys/sysctl.h> // for sysctlbyname
 
 /* Notification Messages */
-NSString *const VLCMediaMetaChanged              = @"VLCMediaMetaChanged";
+NSNotificationName const VLCMediaMetaChangedNotification = @"VLCMediaMetaChangedNotification";
 
 /******************************************************************************
  * VLC callbacks for streaming.

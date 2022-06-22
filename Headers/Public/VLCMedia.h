@@ -35,8 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Available notification messages.
  */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaMetaChanged;  ///< Notification message for when the media's meta data has changed
+FOUNDATION_EXPORT NSNotificationName const VLCMediaMetaChangedNotification NS_SWIFT_NAME(VLCMedia.metaChangedNotification); ///< Notification message for when the media's meta data has changed
 
 // Forward declarations, supresses compiler error messages
 @class VLCMediaList;
