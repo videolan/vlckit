@@ -152,6 +152,12 @@ OBJC_VISIBLE
  */
 @property (readonly) BOOL isReadOnly;
 
+/**
+ * read-only property to check if the media list is empty or not
+ * \return boolean value if the list is empty or not.
+ */
+@property (readonly) BOOL isEmpty;
+
 @end
 
 NS_ASSUME_NONNULL_END

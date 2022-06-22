@@ -270,6 +270,11 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     return libvlc_media_list_is_readonly( p_mlist );
 }
 
+- (BOOL)isEmpty
+{
+    return [self count] == 0;
+}
+
 @end
 
 @implementation VLCMediaList (LibVLCBridging)
