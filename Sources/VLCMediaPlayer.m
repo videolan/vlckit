@@ -49,12 +49,12 @@
 #include <vlc/vlc.h>
 
 /* Notification Messages */
-NSString *const VLCMediaPlayerTimeChanged       = @"VLCMediaPlayerTimeChanged";
-NSString *const VLCMediaPlayerStateChanged      = @"VLCMediaPlayerStateChanged";
-NSString *const VLCMediaPlayerTitleSelectionChanged  = @"VLCMediaPlayerTitleSelectionChanged";
-NSString *const VLCMediaPlayerTitleListChanged  = @"VLCMediaPlayerTitleListChanged";
-NSString *const VLCMediaPlayerChapterChanged      = @"VLCMediaPlayerChapterChanged";
-NSString *const VLCMediaPlayerSnapshotTaken     = @"VLCMediaPlayerSnapshotTaken";
+NSNotificationName const VLCMediaPlayerTimeChangedNotification = @"VLCMediaPlayerTimeChangedNotification";
+NSNotificationName const VLCMediaPlayerStateChangedNotification = @"VLCMediaPlayerStateChangedNotification";
+NSNotificationName const VLCMediaPlayerTitleSelectionChangedNotification = @"VLCMediaPlayerTitleSelectionChangedNotification";
+NSNotificationName const VLCMediaPlayerTitleListChangedNotification = @"VLCMediaPlayerTitleListChangedNotification";
+NSNotificationName const VLCMediaPlayerChapterChangedNotification = @"VLCMediaPlayerChapterChangedNotification";
+NSNotificationName const VLCMediaPlayerSnapshotTakenNotification = @"VLCMediaPlayerSnapshotTakenNotification";
 
 /* title keys */
 NSString *const VLCTitleDescriptionName         = @"VLCTitleDescriptionName";
@@ -108,7 +108,7 @@ static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
         NSNumber *newTime = @(event->u.media_player_time_changed.new_time);
         dispatch_async(dispatch_get_main_queue(), ^{
             [mediaPlayer mediaPlayerTimeChanged: newTime];
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTimeChanged object: mediaPlayer];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTimeChangedNotification object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTimeChanged:)])
                 [mediaPlayer.delegate mediaPlayerTimeChanged: notification];
@@ -172,7 +172,7 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
         VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
         dispatch_async(dispatch_get_main_queue(), ^{
             [mediaPlayer mediaPlayerStateChanged: newState];
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerStateChanged object: mediaPlayer];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerStateChangedNotification object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerStateChanged:)])
                 [mediaPlayer.delegate mediaPlayerStateChanged: notification];
@@ -198,7 +198,7 @@ static void HandleMediaTitleSelectionChanged(const libvlc_event_t * event, void 
         const int index = event->u.media_player_title_selection_changed.index;
         dispatch_async(dispatch_get_main_queue(), ^{
             [mediaPlayer mediaPlayerTitleSelectionChanged: index];
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTitleSelectionChanged object: mediaPlayer];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTitleSelectionChangedNotification object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTitleSelectionChanged:)])
                 [mediaPlayer.delegate mediaPlayerTitleSelectionChanged: notification];
@@ -212,8 +212,8 @@ static void HandleMediaTitleListChanged(const libvlc_event_t * event, void * sel
         VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
         dispatch_async(dispatch_get_main_queue(), ^{
             // TODO: - What does it mean to send a notification name?
-            [mediaPlayer mediaPlayerTitleListChanged: VLCMediaPlayerTitleListChanged];
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTitleListChanged object: mediaPlayer];
+            [mediaPlayer mediaPlayerTitleListChanged: VLCMediaPlayerTitleListChangedNotification];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTitleListChangedNotification object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTitleListChanged:)])
                 [mediaPlayer.delegate mediaPlayerTitleListChanged: notification];
@@ -226,7 +226,7 @@ static void HandleMediaChapterChanged(const libvlc_event_t * event, void * self)
     @autoreleasepool {
         VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerChapterChanged object: mediaPlayer];
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerChapterChangedNotification object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerChapterChanged:)])
                 [mediaPlayer.delegate mediaPlayerChapterChanged: notification];
@@ -243,7 +243,7 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
             VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [mediaPlayer mediaPlayerSnapshot: fileName];
-                NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerSnapshotTaken object: mediaPlayer];
+                NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerSnapshotTakenNotification object: mediaPlayer];
                 [[NSNotificationCenter defaultCenter] postNotification: notification];
                 if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerSnapshot:)])
                     [mediaPlayer.delegate mediaPlayerSnapshot: notification];

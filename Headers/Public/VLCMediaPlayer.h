@@ -42,16 +42,12 @@ NS_ASSUME_NONNULL_BEGIN
 #endif // !TARGET_OS_TV
 
 /* Notification Messages */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaPlayerTimeChanged;
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaPlayerStateChanged;
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaPlayerTitleSelectionChanged;
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaPlayerTitleListChanged;
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaPlayerChapterChanged;
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerTimeChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.timeChangedNotification);
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerStateChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.stateChangedNotification);
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerTitleSelectionChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.titleSelectionChangedNotification);
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerTitleListChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.titleListChangedNotification);
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerChapterChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.chapterChangedNotification);
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerSnapshotTakenNotification NS_SWIFT_NAME(VLCMediaPlayer.snapshotTakenNotification);
 
 /**
  * VLCMediaPlayerState describes the state of the media player.
