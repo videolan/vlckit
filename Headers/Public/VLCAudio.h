@@ -30,9 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Standard notification messages that are emitted by VLCAudio object.
  */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaPlayerVolumeChanged;
-
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerVolumeChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.volumeChangedNotification);
 /**
  * basic class to control audio output
  */

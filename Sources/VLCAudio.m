@@ -36,7 +36,7 @@
 @end
 
 /* Notification Messages */
-NSString *const VLCMediaPlayerVolumeChanged = @"VLCMediaPlayerVolumeChanged";
+NSNotificationName const VLCMediaPlayerVolumeChangedNotification = @"VLCMediaPlayerVolumeChangedNotification";
 
 /* libvlc event callback */
 // TODO: Callbacks
