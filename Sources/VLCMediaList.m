@@ -36,8 +36,8 @@
 #include <vlc/libvlc.h>
 
 /* Notification Messages */
-NSString *const VLCMediaListItemAdded        = @"VLCMediaListItemAdded";
-NSString *const VLCMediaListItemDeleted      = @"VLCMediaListItemDeleted";
+NSNotificationName const VLCMediaListItemAddedNotification = @"VLCMediaListItemAddedNotification";
+NSNotificationName const VLCMediaListItemDeletedNotification = @"VLCMediaListItemDeletedNotification";
 
 // TODO: Documentation
 @interface VLCMediaList (Private)
@@ -75,7 +75,7 @@ static void HandleMediaListItemAdded(const libvlc_event_t * event, void * user_d
             if ([mediaList.delegate respondsToSelector: @selector(mediaList:mediaAdded:atIndex:)])
                 [mediaList.delegate mediaList: mediaList mediaAdded: foundMedia atIndex: index];
             
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaListItemAdded
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaListItemAddedNotification
                                                                          object: mediaList
                                                                        userInfo: @{@"index":@(index)}];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
@@ -107,7 +107,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
             if ([mediaList.delegate respondsToSelector:@selector(mediaList:mediaRemovedAtIndex:)])
                 [mediaList.delegate mediaList: mediaList mediaRemovedAtIndex: index];
             
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaListItemDeleted
+            NSNotification *notification = [NSNotification notificationWithName: VLCMediaListItemDeletedNotification
                                                                          object: mediaList
                                                                        userInfo: @{@"index":@(index)}];
             [[NSNotificationCenter defaultCenter] postNotification: notification];

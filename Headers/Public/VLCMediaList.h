@@ -30,13 +30,11 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * notification name if a list item was added
  */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaListItemAdded;
+FOUNDATION_EXPORT NSNotificationName const VLCMediaListItemAddedNotification NS_SWIFT_NAME(VLCMediaList.itemAddedNotification);
 /**
  * notification name if a list item was deleted
  */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCMediaListItemDeleted;
+FOUNDATION_EXPORT NSNotificationName const VLCMediaListItemDeletedNotification NS_SWIFT_NAME(VLCMediaList.itemDeletedNotification);
 
 @class VLCMedia;
 @class VLCMediaList;
