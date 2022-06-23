@@ -461,6 +461,26 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 
 @end
 
+#pragma mark - VLCMedia+Tracks
+
+@interface VLCMedia (Tracks)
+
+/**
+ * audioTracks
+ */
+@property(nonatomic, readonly, copy) NSArray<VLCMediaTrack *> *audioTracks;
+
+/**
+ * videoTracks
+ */
+@property(nonatomic, readonly, copy) NSArray<VLCMediaTrack *> *videoTracks;
+
+/**
+ * textTracks
+ */
+@property(nonatomic, readonly, copy) NSArray<VLCMediaTrack *> *textTracks;
+
+@end
 
 #pragma mark - VLCMediaTrack
 

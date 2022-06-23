@@ -738,6 +738,56 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 @end
 
+#pragma mark - VLCMedia+Tracks
+
+/**
+ * VLCMedia+Tracks
+ */
+@implementation VLCMedia (Tracks)
+
+#pragma mark - Audio Tracks
+
+- (NSArray<VLCMediaTrack *> *)audioTracks
+{
+    return [self _tracksForType: libvlc_track_audio];
+}
+
+#pragma mark - Video Tracks
+
+- (NSArray<VLCMediaTrack *> *)videoTracks
+{
+    return [self _tracksForType: libvlc_track_video];
+}
+
+#pragma mark - Text Tracks
+
+- (NSArray<VLCMediaTrack *> *)textTracks
+{
+    return [self _tracksForType: libvlc_track_text];
+}
+
+#pragma mark - Private
+
+- (NSArray<VLCMediaTrack *> *)_tracksForType:(const libvlc_track_type_t)type
+{
+    libvlc_media_tracklist_t *tracklist = libvlc_media_get_tracklist(p_md, type);
+    if (!tracklist)
+        return @[];
+    
+    const size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
+    NSMutableArray<VLCMediaTrack *> *tracks = [NSMutableArray arrayWithCapacity: (NSUInteger)tracklistCount];
+    for (size_t i = 0; i < tracklistCount; i++) {
+        libvlc_media_track_t *track_t = libvlc_media_tracklist_at(tracklist, i);
+        VLCMediaTrack *track = [[VLCMediaTrack alloc] initWithMediaTrack: track_t];
+        if (track)
+            [tracks addObject: track];
+    }
+    libvlc_media_tracklist_delete(tracklist);
+    return tracks;
+}
+
+@end
+
 
 /******************************************************************************
  * Implementation VLCMediaTrack
