@@ -159,22 +159,12 @@ static void display(void *opaque, void *picture)
 
 - (void)startFetchingThumbnail
 {
-    NSArray<VLCMediaTrack *> *tracks = [_media tracksInformation];
-
-    // Find the video track
-    VLCMediaVideoTrack *videoTrack = nil;
-    for (VLCMediaTrack *track in tracks) {
-        if (track.type == VLCMediaTrackTypeVideo) {
-            videoTrack = track.video;
-            break;
-        }
-    }
-
     unsigned imageWidth = _thumbnailWidth > 0 ? _thumbnailWidth : kDefaultImageWidth;
     unsigned imageHeight = _thumbnailHeight > 0 ? _thumbnailHeight : kDefaultImageHeight;
     float snapshotPosition = _snapshotPosition > 0 ? _snapshotPosition : kSnapshotPosition;
 
     /* optimize rendering if we know what's ahead, if not, well not too bad either */
+    VLCMediaVideoTrack *videoTrack = _media.videoTracks.firstObject.video;
     if (videoTrack) {
         int videoHeight = videoTrack.height;
         int videoWidth = videoTrack.width;
