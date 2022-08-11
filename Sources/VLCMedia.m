@@ -897,7 +897,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         return;
     
     const libvlc_track_type_t type = (libvlc_track_type_t)self.type;
-    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(p_mi, type);
+    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(p_mi, type, false);
     if (!tracklist)
         return;
     
