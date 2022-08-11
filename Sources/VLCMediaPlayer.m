@@ -89,8 +89,8 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)registerObservers;
 - (void)unregisterObservers;
 - (dispatch_queue_t)libVLCBackgroundQueue;
-- (void)mediaPlayerTimeChanged:(NSNumber *)newTime;
-- (void)mediaPlayerPositionChanged:(NSNumber *)newTime;
+- (void)mediaPlayerLastTimePointUpdated:(const libvlc_media_player_time_point_t *)newTimePoint;
+- (void)mediaPlayerHandleTimeDiscontinuity:(int64_t)systemDate;
 - (void)mediaPlayerStateChanged:(const VLCMediaPlayerState)newState;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)media;
 - (void)mediaPlayerTitleSelectionChanged:(const int)newTitle;
@@ -101,28 +101,22 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerRecordChanged:(NSArray *)arguments;
 @end
 
-static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
+static void HandleWatchTimeUpdate(const libvlc_media_player_time_point_t *value, void *data)
 {
     @autoreleasepool {
-        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
-        NSNumber *newTime = @(event->u.media_player_time_changed.new_time);
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)data;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [mediaPlayer mediaPlayerTimeChanged: newTime];
-            NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTimeChangedNotification object: mediaPlayer];
-            [[NSNotificationCenter defaultCenter] postNotification: notification];
-            if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTimeChanged:)])
-                [mediaPlayer.delegate mediaPlayerTimeChanged: notification];
+            [mediaPlayer mediaPlayerLastTimePointUpdated:value];
         });
     }
 }
 
-static void HandleMediaPositionChanged(const libvlc_event_t * event, void * self)
+static void HandleWatchTimeDiscontinuity(libvlc_time_t system_date, void *data)
 {
     @autoreleasepool {
-        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
-        NSNumber *newPosition = @(event->u.media_player_position_changed.new_position);
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)data;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [mediaPlayer mediaPlayerPositionChanged: newPosition];
+            [mediaPlayer mediaPlayerHandleTimeDiscontinuity:system_date];
         });
     }
 }
@@ -273,10 +267,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     VLCLibrary *_privateLibrary;                ///< Internal
     void * _playerInstance;                     ///< Internal
     VLCMedia * _media;                          ///< Current media being played
-    VLCTime * _cachedTime;                      ///< Cached time of the media being played
-    VLCTime * _cachedRemainingTime;             ///< Cached remaining time of the media being played
+    libvlc_media_player_time_point_t * _lastTimePoint; ///< Cached time of the media being played
+    int64_t _systemDateOfDiscontinuity;
     VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
-    float _position;                            ///< The position of the media being played
     id _drawable;                               ///< The drawable associated to this media player
     NSMutableArray *_snapshots;                 ///< Array with snapshot file names
     VLCAudio *_audio;                           ///< The audio controller
@@ -284,6 +277,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     BOOL _equalizerEnabled;                     ///< Equalizer state
     libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
+    libvlc_time_t _minimalWatchTimePeriod;      ///< Minimal period for the watch timer
 }
 @end
 
@@ -318,11 +312,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 - (instancetype)initWithLibrary:(VLCLibrary *)library
 {
     if (self = [super init]) {
-        _cachedTime = [VLCTime nullTime];
-        _cachedRemainingTime = [VLCTime nullTime];
-        _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
+        _minimalWatchTimePeriod = 500000;
         _privateLibrary = library;
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
         if (_playerInstance == NULL) {
@@ -340,9 +332,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 - (instancetype)initWithLibVLCInstance:(void *)playerInstance andLibrary:(VLCLibrary *)library
 {
     if (self = [super init]) {
-        _cachedTime = [VLCTime nullTime];
-        _cachedRemainingTime = [VLCTime nullTime];
-        _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
 
@@ -659,12 +648,63 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (VLCTime *)time
 {
-    return _cachedTime;
+    NSAssert([NSThread isMainThread], @"Must be called from the main thread.");
+
+    if (!_lastTimePoint) {
+        return [VLCTime nullTime];
+    }
+
+    int64_t interpolatedTime;
+    int64_t systemTime = _systemDateOfDiscontinuity > 0 ? _systemDateOfDiscontinuity : libvlc_clock();
+
+    libvlc_media_player_time_point_interpolate(_lastTimePoint,
+                                               systemTime,
+                                               &interpolatedTime,
+                                               NULL);
+
+    return [VLCTime timeWithNumber:@(interpolatedTime / 1000)];
 }
 
 - (VLCTime *)remainingTime
 {
-    return _cachedRemainingTime;
+    NSAssert([NSThread isMainThread], @"Must be called from the main thread.");
+
+    if (!_lastTimePoint) {
+        return [VLCTime nullTime];
+    }
+
+    if (_lastTimePoint->position > 0. && _lastTimePoint->ts_us > 0) {
+        int64_t interpolatedTime;
+        double interpolatedPosition;
+        int64_t systemTime = _systemDateOfDiscontinuity > 0 ? _systemDateOfDiscontinuity : libvlc_clock();
+
+        libvlc_media_player_time_point_interpolate(_lastTimePoint,
+                                                   systemTime,
+                                                   &interpolatedTime,
+                                                   &interpolatedPosition);
+
+        double remaining = interpolatedTime / interpolatedPosition * (1 - interpolatedPosition);
+        return [VLCTime timeWithNumber:@(-remaining)];
+
+    }
+
+    return [VLCTime nullTime];
+}
+
+- (void)setMinimalTimePeriod:(int64_t)minimalTimePeriod
+{
+    _minimalWatchTimePeriod = minimalTimePeriod;
+    libvlc_media_player_unwatch_time(_playerInstance);
+    libvlc_media_player_watch_time(_playerInstance,
+                                   _minimalWatchTimePeriod,
+                                   &HandleWatchTimeUpdate,
+                                   &HandleWatchTimeDiscontinuity,
+                                   (__bridge void *)(self));
+}
+
+- (int64_t)minimalTimePeriod
+{
+    return _minimalWatchTimePeriod;
 }
 
 #pragma mark -
@@ -1118,12 +1158,27 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return _cachedState;
 }
 
-- (float)position
+- (double)position
 {
-    return _position;
+    NSAssert([NSThread isMainThread], @"Must be called from the main thread.");
+
+    if (!_lastTimePoint) {
+        return 0.;
+    }
+
+    int64_t interpolatedTime;
+    double interpolatedPosition;
+    int64_t systemTime = _systemDateOfDiscontinuity > 0 ? _systemDateOfDiscontinuity : libvlc_clock();
+
+    libvlc_media_player_time_point_interpolate(_lastTimePoint,
+                                               systemTime,
+                                               &interpolatedTime,
+                                               &interpolatedPosition);
+
+    return interpolatedPosition;
 }
 
-- (void)setPosition:(float)newPosition
+- (void)setPosition:(double)newPosition
 {
     libvlc_media_player_set_position(_playerInstance, newPosition, NO);
 }
@@ -1204,9 +1259,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 - (instancetype)initWithDrawable:(id)aDrawable options:(NSArray *)options
 {
     if (self = [super init]) {
-        _cachedTime = [VLCTime nullTime];
-        _cachedRemainingTime = [VLCTime nullTime];
-        _position = 0.0f;
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
 
@@ -1250,8 +1302,6 @@ static const struct event_handler_entry
     { libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerESAdded,          HandleMediaInstanceStateChanged },
 
-    { libvlc_MediaPlayerPositionChanged,  HandleMediaPositionChanged },
-    { libvlc_MediaPlayerTimeChanged,      HandleMediaTimeChanged },
     { libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged  },
 
     { libvlc_MediaPlayerTitleSelectionChanged, HandleMediaTitleSelectionChanged },
@@ -1278,6 +1328,12 @@ static const struct event_handler_entry
             const struct event_handler_entry *entry = &event_entries[i];
             libvlc_event_attach(p_em, entry->type, entry->callback, (__bridge void *)(self));
         }
+
+        libvlc_media_player_watch_time(_playerInstance,
+                                       _minimalWatchTimePeriod,
+                                       &HandleWatchTimeUpdate,
+                                       &HandleWatchTimeDiscontinuity,
+                                       (__bridge void *)(self));
     });
 }
 
@@ -1293,6 +1349,8 @@ static const struct event_handler_entry
         const struct event_handler_entry *entry = &event_entries[i];
         libvlc_event_detach(p_em, entry->type, entry->callback, (__bridge void *)(self));
     }
+
+    libvlc_media_player_unwatch_time(_playerInstance);
 }
 
 - (dispatch_queue_t)libVLCBackgroundQueue
@@ -1303,21 +1361,6 @@ static const struct event_handler_entry
     return  _libVLCBackgroundQueue;
 }
 
-- (void)mediaPlayerTimeChanged:(NSNumber *)newTime
-{
-    [self willChangeValueForKey:@"time"];
-    [self willChangeValueForKey:@"remainingTime"];
-    _cachedTime = [VLCTime timeWithNumber:newTime];
-    double currentTime = [[_cachedTime value] doubleValue];
-    if (currentTime > 0 && _position > 0.) {
-        double remaining = currentTime / _position * (1 - _position);
-        _cachedRemainingTime = [VLCTime timeWithNumber:@(-remaining)];
-    } else
-        _cachedRemainingTime = [VLCTime nullTime];
-    [self didChangeValueForKey:@"remainingTime"];
-    [self didChangeValueForKey:@"time"];
-}
-
 #if !TARGET_OS_IPHONE
 - (void)delaySleep
 {
@@ -1325,16 +1368,37 @@ static const struct event_handler_entry
 }
 #endif
 
-- (void)mediaPlayerPositionChanged:(NSNumber *)newPosition
+- (void)mediaPlayerLastTimePointUpdated:(const libvlc_media_player_time_point_t *)newTimePoint
 {
+    _systemDateOfDiscontinuity = -1;
+    if (_lastTimePoint != NULL) {
+        free(_lastTimePoint);
+    }
+    _lastTimePoint = malloc(sizeof(const libvlc_media_player_time_point_t));
+    memcpy(_lastTimePoint, newTimePoint, sizeof(const libvlc_media_player_time_point_t));
+
+    [self willChangeValueForKey:@"time"];
+    [self willChangeValueForKey:@"remainingTime"];
+    [self didChangeValueForKey:@"remainingTime"];
+    [self didChangeValueForKey:@"time"];
+
+    NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTimeChangedNotification object: self];
+    [[NSNotificationCenter defaultCenter] postNotification: notification];
+    if ([self.delegate respondsToSelector:@selector(mediaPlayerTimeChanged:)])
+        [self.delegate mediaPlayerTimeChanged: notification];
+
 #if !TARGET_OS_IPHONE
     // This seems to be the most relevant place to delay sleeping and screen saver.
     [self delaySleep];
 #endif
 
     [self willChangeValueForKey:@"position"];
-    _position = [newPosition floatValue];
     [self didChangeValueForKey:@"position"];
+}
+
+- (void)mediaPlayerHandleTimeDiscontinuity:(int64_t)systemDate
+{
+    _systemDateOfDiscontinuity = systemDate;
 }
 
 - (void)mediaPlayerStateChanged:(const VLCMediaPlayerState)newState
@@ -1359,9 +1423,6 @@ static const struct event_handler_entry
         [self willChangeValueForKey:@"time"];
         [self willChangeValueForKey:@"remainingTime"];
         [self willChangeValueForKey:@"position"];
-        _cachedTime = [VLCTime nullTime];
-        _cachedRemainingTime = [VLCTime nullTime];
-        _position = 0.0f;
         [self didChangeValueForKey:@"position"];
         [self didChangeValueForKey:@"remainingTime"];
         [self didChangeValueForKey:@"time"];

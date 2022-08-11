@@ -384,6 +384,12 @@ OBJC_VISIBLE
  */
 @property (nonatomic, readonly, weak) VLCTime *remainingTime;
 
+/**
+ * sets and returns the minimum period between time updates
+ * it is 500 ms by default
+ */
+@property (nonatomic) int64_t minimalTimePeriod;
+
 #pragma mark -
 #pragma mark ES track handling
 
@@ -756,7 +762,7 @@ NSString *const VLCTitleDescriptionIsMenu;
  * Returns the receiver's position in the reading.
  * \return movie position as percentage between 0.0 and 1.0.
  */
-@property (NS_NONATOMIC_IOSONLY) float position;
+@property (NS_NONATOMIC_IOSONLY) double position;
 
 /**
  * property whether the current input is seekable or not, e.g. it's a live stream
