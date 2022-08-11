@@ -261,11 +261,6 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 @property (nonatomic, readonly) VLCMediaMetaData *metaData;
 
 /**
- * returns a bool whether is the media is expected to play fluently on this
- * device or not. It always returns YES on a Mac.*/
-@property (NS_NONATOMIC_IOSONLY, getter=isMediaSizeSuitableForDevice, readonly) BOOL mediaSizeSuitableForDevice;
-
-/**
  * Returns the tracks information.
  */
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<VLCMediaTrack *> *tracksInformation;

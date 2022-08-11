@@ -608,62 +608,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return array;
 }
 
-- (BOOL)isMediaSizeSuitableForDevice
-{
-#if TARGET_OS_IPHONE
-    // Trigger parsing if needed
-    VLCMediaParsedStatus parsedStatus = [self parsedStatus];
-    if (parsedStatus == VLCMediaParsedStatusSkipped || parsedStatus == VLCMediaParsedStatusInit) {
-        [self parseWithOptions:VLCMediaParseLocal|VLCMediaParseNetwork];
-        sleep(2);
-    }
-
-    NSUInteger biggestWidth = 0;
-    NSUInteger biggestHeight = 0;
-    libvlc_media_track_t **tracksInfo;
-    unsigned int count = libvlc_media_tracks_get(p_md, &tracksInfo);
-    for (NSUInteger i = 0; i < count; i++) {
-        switch (tracksInfo[i]->i_type) {
-            case libvlc_track_video:
-                if (tracksInfo[i]->video->i_width > biggestWidth)
-                    biggestWidth = tracksInfo[i]->video->i_width;
-                if (tracksInfo[i]->video->i_height > biggestHeight)
-                    biggestHeight = tracksInfo[i]->video->i_height;
-                break;
-            default:
-                break;
-        }
-    }
-
-    if (biggestHeight > 0 && biggestWidth > 0) {
-        size_t size;
-        sysctlbyname("hw.machine", NULL, &size, NULL, 0);
-
-        char *answer = malloc(size);
-        sysctlbyname("hw.machine", answer, &size, NULL, 0);
-
-        NSString *currentMachine = @(answer);
-        free(answer);
-
-        NSUInteger totalNumberOfPixels = biggestWidth * biggestHeight;
-
-        if ([currentMachine hasPrefix:@"iPhone2"] || [currentMachine hasPrefix:@"iPhone3"] || [currentMachine hasPrefix:@"iPad1"] || [currentMachine hasPrefix:@"iPod3"] || [currentMachine hasPrefix:@"iPod4"]) {
-            // iPhone 3GS, iPhone 4, first gen. iPad, 3rd and 4th generation iPod touch
-            return (totalNumberOfPixels < 600000); // between 480p and 720p
-        } else if ([currentMachine hasPrefix:@"iPhone4"] || [currentMachine hasPrefix:@"iPad3,1"] || [currentMachine hasPrefix:@"iPad3,2"] || [currentMachine hasPrefix:@"iPad3,3"] || [currentMachine hasPrefix:@"iPod4"] || [currentMachine hasPrefix:@"iPad2"] || [currentMachine hasPrefix:@"iPod5"]) {
-            // iPhone 4S, iPad 2 and 3, iPod 4 and 5
-            return (totalNumberOfPixels < 922000); // 720p
-        } else {
-            // iPhone 5, iPad 4
-            return (totalNumberOfPixels < 2074000); // 1080p
-        }
-    }
-#endif
-
-    return YES;
-}
-
-
 /******************************************************************************
  * Implementation VLCMedia ()
  */
