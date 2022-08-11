@@ -314,7 +314,7 @@
 - (BOOL)save
 {
     libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
-    return media_t ? libvlc_media_save_meta(media_t) != 0 : NO;
+    return media_t ? libvlc_media_save_meta([VLCLibrary sharedLibrary].instance, media_t) != 0 : NO;
 }
 
 - (void)prefetch
