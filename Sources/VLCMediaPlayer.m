@@ -1466,7 +1466,7 @@ static const struct event_handler_entry
 
 - (NSArray<VLCMediaPlayerTrack *> *)_tracksForType:(const libvlc_track_type_t)type
 {
-    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(_playerInstance, type);
+    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(_playerInstance, type, false);
     if (!tracklist)
         return @[];
     
