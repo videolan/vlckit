@@ -1,29 +1,34 @@
-From c77159b212fa9df51fe6a729fe92ad80d1d10aa6 Mon Sep 17 00:00:00 2001
+From bf8bfb3a0c5a7878a21cc76fdeeedc75c194aa08 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
-Subject: [PATCH 18/20] Add property to configure an http access token
+Subject: [PATCH 15/17] Add property to configure an http access token
 
 ---
- modules/access/http/access.c   | 5 +++++
+ modules/access/http/access.c   | 8 ++++++--
  modules/access/http/resource.c | 5 ++++-
  modules/access/http/resource.h | 1 +
  src/libvlc.c                   | 2 ++
- 4 files changed, 12 insertions(+), 1 deletion(-)
+ 4 files changed, 13 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http/access.c b/modules/access/http/access.c
-index fd805ad65e..664a551638 100644
+index e8417dfb71..4302c0d455 100644
 --- a/modules/access/http/access.c
 +++ b/modules/access/http/access.c
-@@ -190,6 +190,8 @@ static int Open(vlc_object_t *obj)
-     if (sys->resource == NULL)
+@@ -191,10 +191,11 @@ static int Open(vlc_object_t *obj)
          goto error;
  
-+    sys->resource->token = var_InheritString(obj, "http-token");
-+
-     if (vlc_credential_get(&crd, obj, NULL, NULL, NULL, NULL))
+     ret = vlc_credential_get(&crd, obj, NULL, NULL, NULL, NULL);
+-    if (ret == 0)
++    if (ret == 0) {
++        sys->resource->token = var_InheritString(obj, "http-token");
          vlc_http_res_set_login(sys->resource,
                                 crd.psz_username, crd.psz_password);
-@@ -304,4 +306,7 @@ vlc_module_begin()
+-    else if (ret == -EINTR)
++    } else if (ret == -EINTR)
+         goto error;
+ 
+     ret = VLC_EGENERIC;
+@@ -307,4 +308,7 @@ vlc_module_begin()
                    "e.g. \"FooBar/1.2.3\"."))
          change_safe()
          change_private()
@@ -67,10 +72,10 @@ index 66cc215361..92d3091711 100644
  
  int vlc_http_res_init(struct vlc_http_resource *,
 diff --git a/src/libvlc.c b/src/libvlc.c
-index d9fcda878c..a76644fd06 100644
+index 545a0c741b..d54bec5985 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
-@@ -264,6 +264,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
+@@ -263,6 +263,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
      var_Create( p_libvlc, "app-version", VLC_VAR_STRING );
      var_SetString( p_libvlc, "app-version", PACKAGE_VERSION );
  
@@ -80,5 +85,5 @@ index d9fcda878c..a76644fd06 100644
      system_Configure( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
  
 -- 
-2.32.0 (Apple Git-132)
+2.32.1 (Apple Git-133)
 

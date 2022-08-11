@@ -1,0 +1,700 @@
+From 6af49136b38977519e752278c82b374769e99345 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Thu, 11 Aug 2022 11:59:13 +0200
+Subject: [PATCH 01/17] Revert "contrib: live555: update to 2022.07.14"
+
+This reverts commit 78998cab182bbdbd1915deeead1ad4bc945b514e.
+---
+ .../DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch   |  19 ++
+ contrib/src/live555/SHA512SUMS                |   2 +-
+ contrib/src/live555/add-pkgconfig-file.patch  |   2 +-
+ contrib/src/live555/android-no-ifaddrs.patch  |  13 --
+ .../src/live555/expose_server_string.patch    |  56 +++---
+ .../src/live555/in_addr-s_addr-field.patch    |  42 +++++
+ contrib/src/live555/live555-nosignal.patch    | 166 +++++++++++-------
+ contrib/src/live555/no-null-reference.patch   | 128 ++++++++++++++
+ contrib/src/live555/rules.mak                 |  23 ++-
+ contrib/src/live555/winstore.patch            |  30 ++++
+ 10 files changed, 365 insertions(+), 116 deletions(-)
+ create mode 100644 contrib/src/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
+ delete mode 100644 contrib/src/live555/android-no-ifaddrs.patch
+ create mode 100644 contrib/src/live555/in_addr-s_addr-field.patch
+ create mode 100644 contrib/src/live555/no-null-reference.patch
+ create mode 100644 contrib/src/live555/winstore.patch
+
+diff --git a/contrib/src/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch b/contrib/src/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
+new file mode 100644
+index 0000000000..8a2a5e7220
+--- /dev/null
++++ b/contrib/src/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
+@@ -0,0 +1,19 @@
++--- live.orig/groupsock/GroupsockHelper.cpp	2016-11-28 22:42:18.000000000 +0100
+++++ live/groupsock/GroupsockHelper.cpp	2021-02-09 10:27:15.669908139 +0100
++@@ -616,7 +616,7 @@
++     // that other nodes will think our address is the same as we do.)
++     do {
++       loopbackWorks = 0; // until we learn otherwise
++-
+++#ifndef DISABLE_LOOPBACK_IP_ADDRESS_CHECK
++       testAddr.s_addr = our_inet_addr("228.67.43.91"); // arbitrary
++       Port testPort(15947); // ditto
++ 
++@@ -653,6 +653,7 @@
++ 
++       // We use this packet's source address, if it's good:
++       loopbackWorks = !badAddressForUs(fromAddr.sin_addr.s_addr);
+++#endif
++     } while (0);
++ 
++     if (sock >= 0) {
+diff --git a/contrib/src/live555/SHA512SUMS b/contrib/src/live555/SHA512SUMS
+index 53d59ce6c1..f459fb9d16 100644
+--- a/contrib/src/live555/SHA512SUMS
++++ b/contrib/src/live555/SHA512SUMS
+@@ -1 +1 @@
+-382544d9d9fe200699669a1f3301efb4ccec0193499c95b532ea923c380b1ec6fa721a4118d36a447ba9df08575f185498f244293c66bbe97cff0482eab033c7  live.2022.07.14.tar.gz
++319639acef6474b2eec0bdfa3416ca3c88a60f57d9d22911eee018fc494978fde93a241556bc0ea309f0b6a35e0242bd44a8f4de83a845f80d9ca5f94254ade6  live.2016.11.28.tar.gz
+diff --git a/contrib/src/live555/add-pkgconfig-file.patch b/contrib/src/live555/add-pkgconfig-file.patch
+index c4a0e2e9b7..6f477dc71e 100644
+--- a/contrib/src/live555/add-pkgconfig-file.patch
++++ b/contrib/src/live555/add-pkgconfig-file.patch
+@@ -28,7 +28,7 @@ diff --git a/Makefile.tail b/Makefile.tail
+ +Name: live555
+ +Description: multimedia RTSP streaming library
+ +Version: @VERSION@
+-+Cflags: -I${includedir}/liveMedia -I${includedir}/groupsock -I${includedir}/BasicUsageEnvironment -I${includedir}/UsageEnvironment -DNO_OPENSSL=1
+++Cflags: -I${includedir}/liveMedia -I${includedir}/groupsock -I${includedir}/BasicUsageEnvironment -I${includedir}/UsageEnvironment
+ +Libs: -L${libdir} -lliveMedia -lgroupsock -lBasicUsageEnvironment -lUsageEnvironment
+ --- live.2016.07.19/Makefile.head.orig	2017-01-19 18:47:50.376062631 +0100
+ +++ live.2016.07.19/Makefile.head	2017-01-19 18:48:09.940063212 +0100
+diff --git a/contrib/src/live555/android-no-ifaddrs.patch b/contrib/src/live555/android-no-ifaddrs.patch
+deleted file mode 100644
+index 1944a7ba1b..0000000000
+--- a/contrib/src/live555/android-no-ifaddrs.patch
++++ /dev/null
+@@ -1,13 +0,0 @@
+-diff -ur live.orig/groupsock/GroupsockHelper.cpp live/groupsock/GroupsockHelper.cpp
+---- live.orig/groupsock/GroupsockHelper.cpp	2022-07-20 18:02:26.691125894 +0000
+-+++ live/groupsock/GroupsockHelper.cpp	2022-07-20 22:23:47.755304434 +0000
+-@@ -42,6 +42,9 @@
+- #include <signal.h>
+- #define USE_SIGNALS 1
+- #endif
+-+#if (defined(__ANDROID__) && __ANDROID_API__ < 24)
+-+#define NO_GETIFADDRS
+-+#endif
+- #ifndef NO_GETIFADDRS
+- #include <ifaddrs.h>
+- #include <net/if.h>
+diff --git a/contrib/src/live555/expose_server_string.patch b/contrib/src/live555/expose_server_string.patch
+index a041fb59ef..9f34d67342 100644
+--- a/contrib/src/live555/expose_server_string.patch
++++ b/contrib/src/live555/expose_server_string.patch
+@@ -1,7 +1,7 @@
+ diff -Naur live555/liveMedia/include/RTSPClient.hh live555.modified/liveMedia/include/RTSPClient.hh
+---- live555/liveMedia/include/RTSPClient.hh	2022-06-16 11:14:03.000000000 +0000
+-+++ live555.modified/liveMedia/include/RTSPClient.hh	2022-07-16 11:36:23.642103174 +0000
+-@@ -39,6 +39,8 @@
++--- live555/liveMedia/include/RTSPClient.hh	2017-11-30 19:34:25.210638324 +0100
+++++ live555.modified/liveMedia/include/RTSPClient.hh	2017-11-30 19:32:06.322693792 +0100
++@@ -36,6 +36,8 @@
+  #endif
+  #endif
+  
+@@ -10,7 +10,7 @@ diff -Naur live555/liveMedia/include/RTSPClient.hh live555.modified/liveMedia/in
+  class RTSPClient: public Medium {
+  public:
+    static RTSPClient* createNew(UsageEnvironment& env, char const* rtspURL,
+-@@ -194,6 +196,7 @@
++@@ -186,6 +188,7 @@
+    unsigned sessionTimeoutParameter() const { return fSessionTimeoutParameter; }
+  
+    char const* url() const { return fBaseURL; }
+@@ -18,7 +18,7 @@ diff -Naur live555/liveMedia/include/RTSPClient.hh live555.modified/liveMedia/in
+  
+    static unsigned responseBufferSize;
+  
+-@@ -246,6 +249,7 @@
++@@ -238,6 +241,7 @@
+  
+    void reset();
+    void setBaseURL(char const* url);
+@@ -26,7 +26,7 @@ diff -Naur live555/liveMedia/include/RTSPClient.hh live555.modified/liveMedia/in
+    int grabSocket(); // allows a subclass to reuse our input socket, so that it won't get closed when we're deleted
+    virtual unsigned sendRequest(RequestRecord* request);
+    virtual Boolean setRequestFields(RequestRecord* request,
+-@@ -347,6 +351,7 @@
++@@ -334,6 +338,7 @@
+    unsigned fUserAgentHeaderStrLen;
+    int fInputSocketNum, fOutputSocketNum;
+    char* fBaseURL;
+@@ -35,26 +35,26 @@ diff -Naur live555/liveMedia/include/RTSPClient.hh live555.modified/liveMedia/in
+    char* fLastSessionId;
+    unsigned fSessionTimeoutParameter; // optionally set in response "Session:" headers
+ diff -Naur live555/liveMedia/RTSPClient.cpp live555.modified/liveMedia/RTSPClient.cpp
+---- live555/liveMedia/RTSPClient.cpp	2022-06-16 11:14:03.000000000 +0000
+-+++ live555.modified/liveMedia/RTSPClient.cpp	2022-07-16 11:43:31.446232524 +0000
+-@@ -397,7 +397,7 @@
+-     desiredMaxIncomingPacketSize(0), fVerbosityLevel(verbosityLevel), fCSeq(1),
+-     fAllowBasicAuthentication(True), fTunnelOverHTTPPortNum(tunnelOverHTTPPortNum),
++--- live555/liveMedia/RTSPClient.cpp	2017-11-30 19:34:25.210638324 +0100
+++++ live555.modified/liveMedia/RTSPClient.cpp	2017-11-30 19:28:18.691423659 +0100
++@@ -366,7 +366,7 @@
++     fAllowBasicAuthentication(True), fServerAddress(0),
++     fTunnelOverHTTPPortNum(tunnelOverHTTPPortNum),
+      fUserAgentHeaderStr(NULL), fUserAgentHeaderStrLen(0),
+ -    fInputSocketNum(-1), fOutputSocketNum(-1), fBaseURL(NULL), fTCPStreamIdCount(0),
+ +    fInputSocketNum(-1), fOutputSocketNum(-1), fBaseURL(NULL), fserverString(NULL), fTCPStreamIdCount(0),
+-     fLastSessionId(NULL), fSessionTimeoutParameter(0), fRequireStr(NULL),
+-     fSessionCookieCounter(0), fHTTPTunnelingConnectionIsPending(False),
+-     fTLS(*this), fPOSTSocketTLS(*this) {
+-@@ -451,6 +451,7 @@
+-   fRequestsAwaitingResponse.reset();
++     fLastSessionId(NULL), fSessionTimeoutParameter(0), fSessionCookieCounter(0), fHTTPTunnelingConnectionIsPending(False) {
++   setBaseURL(rtspURL);
++ 
++@@ -416,6 +416,7 @@
++   fServerAddress = 0;
+  
+    setBaseURL(NULL);
+ +  setServerString(NULL);
+  
+    fCurrentAuthenticator.reset();
+  
+-@@ -461,6 +462,10 @@
++@@ -426,6 +427,10 @@
+    delete[] fBaseURL; fBaseURL = strDup(url);
+  }
+  
+@@ -64,8 +64,8 @@ diff -Naur live555/liveMedia/RTSPClient.cpp live555.modified/liveMedia/RTSPClien
+ +
+  int RTSPClient::grabSocket() {
+    int inputSocket = fInputSocketNum;
+-   RTPInterface::clearServerRequestAlternativeByteHandler(envir(), fInputSocketNum); // in case we were receiving RTP-over-TCP
+-@@ -1770,6 +1775,7 @@
++   fInputSocketNum = -1;
++@@ -1655,6 +1660,7 @@
+      char const* rtpInfoParamsStr = NULL;
+      char const* wwwAuthenticateParamsStr = NULL;
+      char const* publicParamsStr = NULL;
+@@ -73,12 +73,12 @@ diff -Naur live555/liveMedia/RTSPClient.cpp live555.modified/liveMedia/RTSPClien
+      char* bodyStart = NULL;
+      unsigned numBodyBytes = 0;
+      responseSuccess = False;
+-@@ -1847,6 +1853,8 @@
+- // (see http://live555.com/liveMedia/faq.html#mailing-list-address for details),
+- 				  )) {
+- // to check whether your proposed modification is appropriate/correct,
+-+	} else if (checkForHeader(lineStart, "Server:", 7, serverStr)) {
+-+	  setServerString(serverStr);
+- 	} else if (checkForHeader(lineStart, "Range:",
+- // and, if so, whether instead it could be included in
+- 				  6,
++@@ -1725,6 +1731,8 @@
++ 	} else if (checkForHeader(lineStart, "Transport:", 10, transportParamsStr)) {
++ 	} else if (checkForHeader(lineStart, "Scale:", 6, scaleParamsStr)) {
++ 	} else if (checkForHeader(lineStart, "Speed:", 6, speedParamsStr)) {
+++    } else if (checkForHeader(lineStart, "Server:", 7, serverStr)) {
+++        setServerString(serverStr);
++ 	} else if (checkForHeader(lineStart, "Range:", 6, rangeParamsStr)) {
++ 	} else if (checkForHeader(lineStart, "RTP-Info:", 9, rtpInfoParamsStr)) {
++ 	} else if (checkForHeader(lineStart, "WWW-Authenticate:", 17, headerParamsStr)) {
+diff --git a/contrib/src/live555/in_addr-s_addr-field.patch b/contrib/src/live555/in_addr-s_addr-field.patch
+new file mode 100644
+index 0000000000..d4ff3a9381
+--- /dev/null
++++ b/contrib/src/live555/in_addr-s_addr-field.patch
+@@ -0,0 +1,42 @@
++diff --git a/groupsock/GroupsockHelper.cpp b/groupsock/GroupsockHelper.cpp
++index 0ba2aa5..c675275 100644
++--- a/groupsock/GroupsockHelper.cpp
+++++ b/groupsock/GroupsockHelper.cpp
++@@ -515,15 +515,9 @@ Boolean socketJoinGroupSSM(UsageEnvironment& env, int socket,
++   if (!IsMulticastAddress(groupAddress)) return True; // ignore this case
++ 
++   struct ip_mreq_source imr;
++-#ifdef __ANDROID__
++-    imr.imr_multiaddr = groupAddress;
++-    imr.imr_sourceaddr = sourceFilterAddr;
++-    imr.imr_interface = ReceivingInterfaceAddr;
++-#else
++-    imr.imr_multiaddr.s_addr = groupAddress;
++-    imr.imr_sourceaddr.s_addr = sourceFilterAddr;
++-    imr.imr_interface.s_addr = ReceivingInterfaceAddr;
++-#endif
+++  imr.imr_multiaddr.s_addr = groupAddress;
+++  imr.imr_sourceaddr.s_addr = sourceFilterAddr;
+++  imr.imr_interface.s_addr = ReceivingInterfaceAddr;
++   if (setsockopt(socket, IPPROTO_IP, IP_ADD_SOURCE_MEMBERSHIP,
++ 		 (const char*)&imr, sizeof (struct ip_mreq_source)) < 0) {
++     socketErr(env, "setsockopt(IP_ADD_SOURCE_MEMBERSHIP) error: ");
++@@ -541,15 +535,9 @@ Boolean socketLeaveGroupSSM(UsageEnvironment& /*env*/, int socket,
++   if (!IsMulticastAddress(groupAddress)) return True; // ignore this case
++ 
++   struct ip_mreq_source imr;
++-#ifdef __ANDROID__
++-    imr.imr_multiaddr = groupAddress;
++-    imr.imr_sourceaddr = sourceFilterAddr;
++-    imr.imr_interface = ReceivingInterfaceAddr;
++-#else
++-    imr.imr_multiaddr.s_addr = groupAddress;
++-    imr.imr_sourceaddr.s_addr = sourceFilterAddr;
++-    imr.imr_interface.s_addr = ReceivingInterfaceAddr;
++-#endif
+++  imr.imr_multiaddr.s_addr = groupAddress;
+++  imr.imr_sourceaddr.s_addr = sourceFilterAddr;
+++  imr.imr_interface.s_addr = ReceivingInterfaceAddr;
++   if (setsockopt(socket, IPPROTO_IP, IP_DROP_SOURCE_MEMBERSHIP,
++ 		 (const char*)&imr, sizeof (struct ip_mreq_source)) < 0) {
++     return False;
+diff --git a/contrib/src/live555/live555-nosignal.patch b/contrib/src/live555/live555-nosignal.patch
+index 29648a103f..71c8c33e7c 100644
+--- a/contrib/src/live555/live555-nosignal.patch
++++ b/contrib/src/live555/live555-nosignal.patch
+@@ -2,31 +2,9 @@ Copyright (C) 2015 Rémi Denis-Courmont
+ 
+ Licensed under the terms of the GNU LGPL version 2.1 or later.
+ 
+-diff -ru live555.orig/groupsock/GroupsockHelper.cpp live555/groupsock/GroupsockHelper.cpp
+---- live555.orig/groupsock/GroupsockHelper.cpp	2022-06-16 11:14:03.000000000 +0000
+-+++ live555/groupsock/GroupsockHelper.cpp	2022-07-16 11:04:10.334840299 +0000
+-@@ -47,6 +47,9 @@
+- #include <net/if.h>
+- #endif
+- #include <stdio.h>
+-+#ifndef MSG_NOSIGNAL
+-+# define MSG_NOSIGNAL 0
+-+#endif
+- 
+- // By default, use INADDR_ANY for the sending and receiving interfaces (IPv4 only):
+- ipv4AddressBits SendingInterfaceAddr = INADDR_ANY;
+-@@ -447,7 +450,7 @@
+- 		    unsigned char* buffer, unsigned bufferSize) {
+-   do {
+-     SOCKLEN_T dest_len = addressSize(addressAndPort);
+--    int bytesSent = sendto(socket, (char*)buffer, bufferSize, 0,
+-+    int bytesSent = sendto(socket, (char*)buffer, bufferSize, MSG_NOSIGNAL,
+- 			   (struct sockaddr const*)&addressAndPort, dest_len);
+-     if (bytesSent != (int)bufferSize) {
+-       char tmpBuf[100];
+ diff -ru live555.orig/liveMedia/RTPInterface.cpp live555/liveMedia/RTPInterface.cpp
+---- live555.orig/liveMedia/RTPInterface.cpp	2022-06-16 11:14:03.000000000 +0000
+-+++ live555/liveMedia/RTPInterface.cpp	2022-07-16 11:05:59.904820188 +0000
++--- live555.orig/liveMedia/RTPInterface.cpp	2015-05-21 20:34:45.855307019 +0300
+++++ live555/liveMedia/RTPInterface.cpp	2015-05-21 20:38:10.383305167 +0300
+ @@ -23,6 +23,9 @@
+  #include "RTPInterface.hh"
+  #include <GroupsockHelper.hh>
+@@ -37,27 +15,27 @@ diff -ru live555.orig/liveMedia/RTPInterface.cpp live555/liveMedia/RTPInterface.
+  
+  ////////// Helper Functions - Definition //////////
+  
+-@@ -382,7 +385,7 @@
+- 				      Boolean forceSendToSucceed) {
+-   int sendResult = (tlsState != NULL && tlsState->isNeeded)
+-     ? tlsState->write((char const*)data, dataSize)
+--    : send(socketNum, (char const*)data, dataSize, 0/*flags*/);
+-+    : send(socketNum, (char const*)data, dataSize, MSG_NOSIGNAL);
++@@ -339,7 +339,7 @@
++ #endif
++ 
++ Boolean RTPInterface::sendDataOverTCP(int socketNum, u_int8_t const* data, unsigned dataSize, Boolean forceSendToSucceed) {
++-  int sendResult = send(socketNum, (char const*)data, dataSize, 0/*flags*/);
+++  int sendResult = send(socketNum, (char const*)data, dataSize, MSG_NOSIGNAL);
+    if (sendResult < (int)dataSize) {
+      // The TCP send() failed - at least partially.
+  
+-@@ -398,7 +401,7 @@
++@@ -353,7 +353,7 @@
++       fprintf(stderr, "sendDataOverTCP: resending %d-byte send (blocking)\n", numBytesRemainingToSend); fflush(stderr);
++ #endif
+        makeSocketBlocking(socketNum, RTPINTERFACE_BLOCKING_WRITE_TIMEOUT_MS);
+-       sendResult = (tlsState != NULL && tlsState->isNeeded)
+- 	? tlsState->write((char const*)(&data[numBytesSentSoFar]), numBytesRemainingToSend)
+--	: send(socketNum, (char const*)(&data[numBytesSentSoFar]), numBytesRemainingToSend, 0/*flags*/);
+-+	: send(socketNum, (char const*)(&data[numBytesSentSoFar]), numBytesRemainingToSend, MSG_NOSIGNAL);
+-       makeSocketNonBlocking(socketNum);
++-      sendResult = send(socketNum, (char const*)(&data[numBytesSentSoFar]), numBytesRemainingToSend, 0/*flags*/);
+++      sendResult = send(socketNum, (char const*)(&data[numBytesSentSoFar]), numBytesRemainingToSend, MSG_NOSIGNAL);
+        if ((unsigned)sendResult != numBytesRemainingToSend) {
+  	// The blocking "send()" failed, or timed out.  In either case, we assume that the
++ 	// TCP connection has failed (or is 'hanging' indefinitely), and we stop using it
+ diff -ru live555.orig/liveMedia/RTSPClient.cpp live555/liveMedia/RTSPClient.cpp
+---- live555.orig/liveMedia/RTSPClient.cpp	2022-06-16 11:14:03.000000000 +0000
+-+++ live555/liveMedia/RTSPClient.cpp	2022-07-16 11:09:59.856563940 +0000
++--- live555.orig/liveMedia/RTSPClient.cpp	2015-05-21 20:34:45.855307019 +0300
+++++ live555/liveMedia/RTSPClient.cpp	2015-05-21 20:39:54.327304226 +0300
+ @@ -24,6 +24,9 @@
+  #include "Locale.hh"
+  #include <GroupsockHelper.hh>
+@@ -66,36 +44,96 @@ diff -ru live555.orig/liveMedia/RTSPClient.cpp live555/liveMedia/RTSPClient.cpp
+ +# define MSG_NOSIGNAL 0
+ +#endif
+  
+- RTSPClient* RTSPClient::createNew(UsageEnvironment& env, char const* rtspURL,
+- 				  int verbosityLevel,
+-@@ -2022,7 +2025,7 @@
+-       if (fOutputTLS->isNeeded) {
+- 	return fOutputTLS->write(data, count);
+-       } else {
+--	return send(fOutputSocketNum, data, count, 0);
+-+	return send(fOutputSocketNum, data, count, MSG_NOSIGNAL);
+-       }
++ ////////// RTSPClient implementation //////////
++ 
++@@ -497,7 +500,7 @@
++       delete[] origCmd;
++     }
++ 
++-    if (send(fOutputSocketNum, cmd, strlen(cmd), 0) < 0) {
+++    if (send(fOutputSocketNum, cmd, strlen(cmd), MSG_NOSIGNAL) < 0) {
++       char const* errFmt = "%s send() failed: ";
++       unsigned const errLength = strlen(errFmt) + strlen(request->commandName());
++       char* err = new char[errLength];
++@@ -939,7 +942,7 @@
++     char tmpBuf[2*RTSP_PARAM_STRING_MAX];
++     snprintf((char*)tmpBuf, sizeof tmpBuf,
++              "RTSP/1.0 405 Method Not Allowed\r\nCSeq: %s\r\n\r\n", cseq);
++-    send(fOutputSocketNum, tmpBuf, strlen(tmpBuf), 0);
+++    send(fOutputSocketNum, tmpBuf, strlen(tmpBuf), MSG_NOSIGNAL);
++   }
+  }
+  
+-diff -ru live555.orig/liveMedia/RTSPServer.cpp live555/liveMedia/RTSPServer.cpp
+---- live555.orig/liveMedia/RTSPServer.cpp	2022-06-16 11:14:03.000000000 +0000
+-+++ live555/liveMedia/RTSPServer.cpp	2022-07-16 11:11:37.086888246 +0000
+-@@ -23,6 +23,9 @@
+- #include "RTSPRegisterSender.hh"
+- #include "Base64.hh"
+- #include <GroupsockHelper.hh>
++diff -ru live555.orig/liveMedia/RTSPServerSupportingHTTPStreaming.cpp live555/liveMedia/RTSPServerSupportingHTTPStreaming.cpp
++--- live555.orig/liveMedia/RTSPServerSupportingHTTPStreaming.cpp	2015-05-21 20:34:45.857307019 +0300
+++++ live555/liveMedia/RTSPServerSupportingHTTPStreaming.cpp	2015-05-21 20:39:44.568304314 +0300
++@@ -24,6 +24,9 @@
++ #include <sys/stat.h>
++ #endif
++ #include <time.h>
+++#ifndef MSG_NOSIGNAL
+++# define MSG_NOSIGNAL 0
+++#endif
++ 
++ RTSPServerSupportingHTTPStreaming*
++ RTSPServerSupportingHTTPStreaming::createNew(UsageEnvironment& env, Port rtspPort,
++@@ -140,7 +143,7 @@
++ 	       lastModifiedHeader(streamName),
++ 	       numTSBytesToStream);
++       // Send the response now, because we're about to add more data (from the source):
++-      send(fClientOutputSocket, (char const*)fResponseBuffer, strlen((char*)fResponseBuffer), 0);
+++      send(fClientOutputSocket, (char const*)fResponseBuffer, strlen((char*)fResponseBuffer), MSG_NOSIGNAL);
++       fResponseBuffer[0] = '\0'; // We've already sent the response.  This tells the calling code not to send it again.
++       
++       // Ask the media source to deliver - to the TCP sink - the desired data:
++@@ -234,7 +237,7 @@
++ 	   playlistLen);
++ 
++   // Send the response header now, because we're about to add more data (the playlist):
++-  send(fClientOutputSocket, (char const*)fResponseBuffer, strlen((char*)fResponseBuffer), 0);
+++  send(fClientOutputSocket, (char const*)fResponseBuffer, strlen((char*)fResponseBuffer), MSG_NOSIGNAL);
++   fResponseBuffer[0] = '\0'; // We've already sent the response.  This tells the calling code not to send it again.
++ 
++   // Then, send the playlist.  Because it's large, we don't do so using "send()", because that might not send it all at once.
++--- live/groupsock/GroupsockHelper.cpp.orig	2015-06-22 00:09:17.000000000 +0200
+++++ live/groupsock/GroupsockHelper.cpp	2015-06-22 10:56:08.673912904 +0200
++@@ -35,6 +35,9 @@
++ #define USE_SIGNALS 1
++ #endif
++ #include <stdio.h>
+ +#ifndef MSG_NOSIGNAL
+ +# define MSG_NOSIGNAL 0
+ +#endif
+  
+- ////////// RTSPServer implementation //////////
++ // By default, use INADDR_ANY for the sending and receiving interfaces:
++ netAddressBits SendingInterfaceAddr = INADDR_ANY;
++@@ -342,7 +345,7 @@
++ 		    unsigned char* buffer, unsigned bufferSize) {
++   do {
++     MAKE_SOCKADDR_IN(dest, address.s_addr, portNum);
++-    int bytesSent = sendto(socket, (char*)buffer, bufferSize, 0,
+++    int bytesSent = sendto(socket, (char*)buffer, bufferSize, MSG_NOSIGNAL,
++ 			   (struct sockaddr*)&dest, sizeof dest);
++     if (bytesSent != (int)bufferSize) {
++       char tmpBuf[100];
++--- live/liveMedia/TCPStreamSink.cpp.orig	2015-06-22 00:09:17.000000000 +0200
+++++ live/liveMedia/TCPStreamSink.cpp	2015-06-22 11:01:32.669268927 +0200
++@@ -20,6 +20,9 @@
++ 
++ #include "TCPStreamSink.hh"
++ #include <GroupsockHelper.hh> // for "ignoreSigPipeOnSocket()"
+++#ifndef MSG_NOSIGNAL
+++# define MSG_NOSIGNAL 0
+++#endif
+  
+-@@ -976,7 +979,7 @@
+-     if (fOutputTLS->isNeeded) {
+-         fOutputTLS->write((char const*)fResponseBuffer, numBytesToWrite);
+-     } else {
+--        send(fClientOutputSocket, (char const*)fResponseBuffer, numBytesToWrite, 0);
+-+        send(fClientOutputSocket, (char const*)fResponseBuffer, numBytesToWrite, MSG_NOSIGNAL);
+-    }
+-     
+-     if (playAfterSetup) {
++ TCPStreamSink* TCPStreamSink::createNew(UsageEnvironment& env, int socketNum) {
++   return new TCPStreamSink(env, socketNum);
++@@ -51,7 +54,7 @@
++   // First, try writing data to our output socket, if we can:
++   if (fOutputSocketIsWritable && numUnwrittenBytes() > 0) {
++     int numBytesWritten
++-      = send(fOutputSocketNum, (const char*)&fBuffer[fUnwrittenBytesStart], numUnwrittenBytes(), 0);
+++      = send(fOutputSocketNum, (const char*)&fBuffer[fUnwrittenBytesStart], numUnwrittenBytes(), MSG_NOSIGNAL);
++     if (numBytesWritten < (int)numUnwrittenBytes()) {
++       // The output socket is no longer writable.  Set a handler to be called when it becomes writable again.
++       fOutputSocketIsWritable = False;
+diff --git a/contrib/src/live555/no-null-reference.patch b/contrib/src/live555/no-null-reference.patch
+new file mode 100644
+index 0000000000..a1dea30fbc
+--- /dev/null
++++ b/contrib/src/live555/no-null-reference.patch
+@@ -0,0 +1,128 @@
++--- live555/liveMedia/RTSPClient.cpp.old	2017-11-24 14:34:20.588181348 +0100
+++++ live555/liveMedia/RTSPClient.cpp	2017-11-24 14:56:37.520204839 +0100
++@@ -183,13 +183,13 @@
++   }
++ }
++ 
++-void RTSPClient::setSpeed(MediaSession& session, float speed) { 
+++void RTSPClient::setSpeed(MediaSession* session, float speed) {
++   // Optionally set download speed for session to be used later on PLAY command:
++   // The user should call this function after the MediaSession is instantiated, but before the
++   // first "sendPlayCommand()" is called.
++-  if (&session != NULL) {
++-    session.speed() = speed;
++-    MediaSubsessionIterator iter(session);
+++  if (session != NULL) {
+++    session->speed() = speed;
+++    MediaSubsessionIterator iter(*session);
++     MediaSubsession* subsession;
++ 
++     while ((subsession = iter.next()) != NULL) {
++@@ -1215,26 +1215,26 @@
++   return success;
++ }
++ 
++-Boolean RTSPClient::handlePLAYResponse(MediaSession& session, MediaSubsession& subsession,
+++Boolean RTSPClient::handlePLAYResponse(MediaSession* session, MediaSubsession* subsession,
++                                        char const* scaleParamsStr, char const* speedParamsStr,
++                                        char const* rangeParamsStr, char const* rtpInfoParamsStr) {
++   Boolean scaleOK = False, rangeOK = False, speedOK = False;
++   do {
++-    if (&session != NULL) {
+++    if (session != NULL) {
++       // The command was on the whole session
++-      if (scaleParamsStr != NULL && !parseScaleParam(scaleParamsStr, session.scale())) break;
+++      if (scaleParamsStr != NULL && !parseScaleParam(scaleParamsStr, session->scale())) break;
++       scaleOK = True;
++-      if (speedParamsStr != NULL && !parseSpeedParam(speedParamsStr, session.speed())) break;
+++      if (speedParamsStr != NULL && !parseSpeedParam(speedParamsStr, session->speed())) break;
++       speedOK = True;
++       Boolean startTimeIsNow;
++       if (rangeParamsStr != NULL &&
++ 	  !parseRangeParam(rangeParamsStr,
++-			   session.playStartTime(), session.playEndTime(),
++-			   session._absStartTime(), session._absEndTime(),
+++               session->playStartTime(), session->playEndTime(),
+++               session->_absStartTime(), session->_absEndTime(),
++ 			   startTimeIsNow)) break;
++       rangeOK = True;
++ 
++-      MediaSubsessionIterator iter(session);
+++      MediaSubsessionIterator iter(*session);
++       MediaSubsession* subsession;
++       while ((subsession = iter.next()) != NULL) {
++ 	u_int16_t seqNum; u_int32_t timestamp;
++@@ -1249,27 +1249,27 @@
++       }
++     } else {
++       // The command was on a subsession
++-      if (scaleParamsStr != NULL && !parseScaleParam(scaleParamsStr, subsession.scale())) break;
+++      if (scaleParamsStr != NULL && !parseScaleParam(scaleParamsStr, subsession->scale())) break;
++       scaleOK = True;
++-      if (speedParamsStr != NULL && !parseSpeedParam(speedParamsStr, session.speed())) break;
+++      if (speedParamsStr != NULL && !parseSpeedParam(speedParamsStr, subsession->speed())) break;
++       speedOK = True;
++       Boolean startTimeIsNow;
++       if (rangeParamsStr != NULL &&
++ 	  !parseRangeParam(rangeParamsStr,
++-			   subsession._playStartTime(), subsession._playEndTime(),
++-			   subsession._absStartTime(), subsession._absEndTime(),
+++               subsession->_playStartTime(), subsession->_playEndTime(),
+++               subsession->_absStartTime(), subsession->_absEndTime(),
++ 			   startTimeIsNow)) break;
++       rangeOK = True;
++ 
++       u_int16_t seqNum; u_int32_t timestamp;
++-      subsession.rtpInfo.infoIsNew = False;
+++      subsession->rtpInfo.infoIsNew = False;
++       if (parseRTPInfoParams(rtpInfoParamsStr, seqNum, timestamp)) {
++-	subsession.rtpInfo.seqNum = seqNum;
++-	subsession.rtpInfo.timestamp = timestamp;
++-	subsession.rtpInfo.infoIsNew = True;
+++    subsession->rtpInfo.seqNum = seqNum;
+++    subsession->rtpInfo.timestamp = timestamp;
+++    subsession->rtpInfo.infoIsNew = True;
++       }
++ 
++-      if (subsession.rtpSource() != NULL) subsession.rtpSource()->enableRTCPReports() = True; // start sending RTCP "RR"s now
+++      if (subsession->rtpSource() != NULL) subsession->rtpSource()->enableRTCPReports() = True; // start sending RTCP "RR"s now
++     }
++ 
++     return True;
++@@ -1809,12 +1809,12 @@
++ 	if (responseCode == 200) {
++ 	  // Do special-case response handling for some commands:
++ 	  if (strcmp(foundRequest->commandName(), "SETUP") == 0) {
++-	    if (!handleSETUPResponse(*foundRequest->subsession(), sessionParamsStr, transportParamsStr, foundRequest->booleanFlags()&0x1)) break;
+++        if (!handleSETUPResponse(*foundRequest->subsession(), sessionParamsStr, transportParamsStr, foundRequest->booleanFlags()&0x1)) break;
++ 	  } else if (strcmp(foundRequest->commandName(), "PLAY") == 0) {
++-	    if (!handlePLAYResponse(*foundRequest->session(), *foundRequest->subsession(), scaleParamsStr, speedParamsStr, rangeParamsStr, rtpInfoParamsStr)) break;
+++        if (!handlePLAYResponse(foundRequest->session(), foundRequest->subsession(), scaleParamsStr, speedParamsStr, rangeParamsStr, rtpInfoParamsStr)) break;
++ 	  } else if (strcmp(foundRequest->commandName(), "TEARDOWN") == 0) {
++-	    if (!handleTEARDOWNResponse(*foundRequest->session(), *foundRequest->subsession())) break;
++-	  } else if (strcmp(foundRequest->commandName(), "GET_PARAMETER") == 0) {
+++        if (!handleTEARDOWNResponse(*foundRequest->session(), *foundRequest->subsession())) break;
+++      } else if (strcmp(foundRequest->commandName(), "GET_PARAMETER") == 0) {
++ 	    if (!handleGET_PARAMETERResponse(foundRequest->contentStr(), bodyStart, responseEnd)) break;
++ 	  }
++ 	} else if (responseCode == 401 && handleAuthenticationFailure(wwwAuthenticateParamsStr)) {
++--- live555/liveMedia/include/RTSPClient.hh.old.h	2017-11-24 14:48:30.544196283 +0100
+++++ live555/liveMedia/include/RTSPClient.hh	2017-11-24 14:56:57.836205196 +0100
++@@ -155,7 +155,7 @@
++       // Our implementation automatically does this just prior to sending each "PLAY" command;
++       // You should not call these functions yourself unless you know what you're doing.
++ 
++-  void setSpeed(MediaSession& session, float speed = 1.0f);
+++  void setSpeed(MediaSession* session, float speed = 1.0f);
++       // Set (recorded) media download speed to given value to support faster download using 'Speed:'
++       // option on 'PLAY' command.
++ 
++@@ -286,7 +286,7 @@
++   Boolean parseRTPInfoParams(char const*& paramStr, u_int16_t& seqNum, u_int32_t& timestamp);
++   Boolean handleSETUPResponse(MediaSubsession& subsession, char const* sessionParamsStr, char const* transportParamsStr,
++ 			      Boolean streamUsingTCP);
++-  Boolean handlePLAYResponse(MediaSession& session, MediaSubsession& subsession,
+++  Boolean handlePLAYResponse(MediaSession* session, MediaSubsession* subsession,
++                              char const* scaleParamsStr, const char* speedParamsStr,
++ 			     char const* rangeParamsStr, char const* rtpInfoParamsStr);
++   Boolean handleTEARDOWNResponse(MediaSession& session, MediaSubsession& subsession);
+diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
+index 03b97e776c..e62dd1f325 100644
+--- a/contrib/src/live555/rules.mak
++++ b/contrib/src/live555/rules.mak
+@@ -1,6 +1,6 @@
+ # live555
+ 
+-LIVE555_VERSION := 2022.07.14
++LIVE555_VERSION := 2016.11.28
+ LIVE555_FILE := live.$(LIVE555_VERSION).tar.gz
+ LIVEDOTCOM_URL := http://live555.com/liveMedia/public/$(LIVE555_FILE)
+ 
+@@ -19,7 +19,7 @@ $(TARBALLS)/$(LIVE555_FILE):
+ 
+ .sum-live555: $(LIVE555_FILE)
+ 
+-LIVE_EXTRA_CFLAGS := $(EXTRA_CFLAGS) -fexceptions -DNO_OPENSSL=1 $(CFLAGS)
++LIVE_EXTRA_CFLAGS := $(EXTRA_CFLAGS) -fexceptions $(CFLAGS)
+ 
+ LIVE_TARGET = $(error live555 target not defined!)
+ ifdef HAVE_LINUX
+@@ -31,10 +31,9 @@ LIVE_EXTRA_CFLAGS += -DDISABLE_LOOPBACK_IP_ADDRESS_CHECK=1
+ endif
+ ifdef HAVE_WIN32
+ LIVE_TARGET := mingw
+-LIVE_EXTRA_CFLAGS += -DNO_GETIFADDRS=1
+ endif
+ ifdef HAVE_DARWIN_OS
+-LIVE_TARGET := macosx-bigsur
++LIVE_TARGET := macosx
+ else
+ ifdef HAVE_BSD
+ LIVE_TARGET := freebsd
+@@ -58,9 +57,9 @@ live555: $(LIVE555_FILE) .sum-live555
+ 	# Replace libtool -s by ar cr for macOS only
+ 	cd live && sed -i.orig -e s/"libtool -s -o"/"ar cr"/g config.macosx*
+ 	# Add Extra LDFLAGS for macOS
+-	cd live && sed -i.orig -e 's%$(CXX)%$(CXX)\ $(EXTRA_LDFLAGS)%' config.macosx*
++	cd live && sed -i.orig -e 's%$(CXX)%$(CXX)\ $(EXTRA_LDFLAGS)%' config.macosx
+ 	# Add CXXFLAGS for macOS (force libc++)
+-	cd live && sed -i.orig -e 's%^\(CPLUSPLUS_FLAGS.*\)$$%\1 '"$(CXXFLAGS)%" config.macosx*
++	cd live && sed -i.orig -e 's%^\(CPLUSPLUS_FLAGS.*\)$$%\1 '"$(CXXFLAGS)%" config.macosx
+ 	# Add the Extra_CFLAGS to all config files
+ 	cd live && sed -i.orig \
+ 		-e 's%^\(COMPILE_OPTS.*\)$$%\1 '"$(LIVE_EXTRA_CFLAGS)%" config.*
+@@ -75,6 +74,10 @@ endif
+ 	mv live live.$(LIVE555_VERSION)
+ 	# Patch for MSG_NOSIGNAL
+ 	$(APPLY) $(SRC)/live555/live555-nosignal.patch
++	# Don't use FormatMessageA on WinRT
++	$(APPLY) $(SRC)/live555/winstore.patch
++	# Don't rely on undefined behaviors
++	$(APPLY) $(SRC)/live555/no-null-reference.patch
+ 	# Add a pkg-config file
+ 	$(APPLY) $(SRC)/live555/add-pkgconfig-file.patch
+ 	# Expose Server:
+@@ -83,13 +86,15 @@ endif
+ 	$(APPLY) $(SRC)/live555/mingw-static-libs.patch
+ 	# FormatMessageA is available on all Windows versions, even WinRT
+ 	$(APPLY) $(SRC)/live555/live555-formatmessage.patch
++        # Disable Multicast interface lookup option
++	$(APPLY) $(SRC)/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
+ ifdef HAVE_ANDROID
+-	# ifaddrs.h is supported since API level 24
+-	$(APPLY) $(SRC)/live555/android-no-ifaddrs.patch
++	# Fix in_addr.s_addr field access
++	$(APPLY) $(SRC)/live555/in_addr-s_addr-field.patch
+ 	# Don't use unavailable off64_t functions
+ 	$(APPLY) $(SRC)/live555/file-offset-bits-64.patch
+ endif
+-	cd $(UNPACK_DIR) && sed -i.orig "s,LIBRARY_LINK =.*,LIBRARY_LINK = $(AR) cr ,g" config.macosx*
++	cd $(UNPACK_DIR) && sed -i.orig "s,LIBRARY_LINK =.*,LIBRARY_LINK = $(AR) cr ,g" config.macosx
+ 	mv live.$(LIVE555_VERSION) $@ && touch $@
+ 
+ SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
+diff --git a/contrib/src/live555/winstore.patch b/contrib/src/live555/winstore.patch
+new file mode 100644
+index 0000000000..7723e3ba12
+--- /dev/null
++++ b/contrib/src/live555/winstore.patch
+@@ -0,0 +1,30 @@
++--- a/liveMedia/include/InputFile.hh      2015-06-24 16:32:45.000000000 +0200
+++++ b/liveMedia/include/InputFile.hh   2015-08-04 10:12:13.791494000 +0200
++@@ -50,6 +50,7 @@
++
++ void CloseInputFile(FILE* fid);
++
+++#undef GetFileSize
++ u_int64_t GetFileSize(char const* fileName, FILE* fid);
++     // 0 means zero-length, unbounded, or unknown
++
++
++--- a/BasicUsageEnvironment/BasicUsageEnvironment0.cpp    2015-06-24 16:32:45.000000000 +0200
+++++ b/BasicUsageEnvironment/BasicUsageEnvironment0.cpp 2015-08-04 10:22:41.067003200 +0200
++@@ -68,6 +68,7 @@
++
++   if (err == 0) err = getErrno();
++ #if defined(__WIN32__) || defined(_WIN32) || defined(_WIN32_WCE)
+++#ifndef _UNICODE
++   char errMsg[RESULT_MSG_BUFFER_MAX] = "\0";
++   if (0 != FormatMessageA(FORMAT_MESSAGE_FROM_SYSTEM, NULL, err, 0, errMsg, sizeof(errMsg)/sizeof(errMsg[0]), NULL)) {
++     // Remove all trailing '\r', '\n' and '.'
++@@ -77,6 +78,7 @@
++   } else
++     snprintf(errMsg, sizeof(errMsg)/sizeof(errMsg[0]), "error %d", err);
++   appendToResultMsg(errMsg);
+++#endif
++ #else
++   appendToResultMsg(strerror(err));
++ #endif
++
+-- 
+2.32.1 (Apple Git-133)
+

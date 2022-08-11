@@ -1,29 +1,36 @@
-From ed4d2614df1a1e2abc913a7a14233b8d74a59d47 Mon Sep 17 00:00:00 2001
+From e3f406bf18e8b41ac79c9fd2f6e044abc94e3152 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 03/20] http access: retain auth struct for the runtime of the
+Subject: [PATCH 04/17] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
 ---
- modules/access/http.c   |  9 +++++++--
+ modules/access/http.c   | 11 +++++++++--
  src/network/http_auth.c | 17 ++++++++++++++++-
- 2 files changed, 23 insertions(+), 3 deletions(-)
+ 2 files changed, 25 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http.c b/modules/access/http.c
-index 8a0ae7c104..2a65c771e4 100644
+index 8d7be65388..04fcb0692e 100644
 --- a/modules/access/http.c
 +++ b/modules/access/http.c
-@@ -264,6 +264,8 @@ static int Open( vlc_object_t *p_this )
+@@ -265,11 +265,15 @@ static int Open( vlc_object_t *p_this )
          p_sys->url.psz_username = (char *) credential.psz_username;
          p_sys->url.psz_password = (char *) credential.psz_password;
      }
++
+     else if( ret == -EINTR )
+         goto error;
+ 
+     ret = VLC_EGENERIC;
+ 
 +    vlc_http_auth_Init( &p_sys->auth );
 +    vlc_http_auth_Init( &p_sys->proxy_auth );
- 
++
  connect:
      /* Connect */
-@@ -351,6 +353,8 @@ error:
+     if( Connect( p_access ) )
+@@ -356,6 +360,8 @@ error:
      free( p_sys->psz_referrer );
      free( p_sys->psz_username );
      free( p_sys->psz_password );
@@ -32,7 +39,7 @@ index 8a0ae7c104..2a65c771e4 100644
  
      return ret;
  }
-@@ -379,6 +383,9 @@ static void Close( vlc_object_t *p_this )
+@@ -384,6 +390,9 @@ static void Close( vlc_object_t *p_this )
      free( p_sys->psz_username );
      free( p_sys->psz_password );
  
@@ -42,7 +49,7 @@ index 8a0ae7c104..2a65c771e4 100644
      Disconnect( p_access );
  }
  
-@@ -617,8 +624,6 @@ static int Connect( stream_t *p_access )
+@@ -622,8 +631,6 @@ static int Connect( stream_t *p_access )
      free( p_sys->psz_icy_name );
      free( p_sys->psz_icy_title );
  
@@ -93,5 +100,5 @@ index 76f91fe7d9..89732fdc3d 100644
          p_auth->i_nonce = 0;
  
 -- 
-2.32.0 (Apple Git-132)
+2.32.1 (Apple Git-133)
 

@@ -1,7 +1,7 @@
-From 9b3e6714a3c2895a091f328bd78b01f3460dd8d8 Mon Sep 17 00:00:00 2001
+From 1d06aaaf13eafaa7a06eb52ed432dfbf4f6f0902 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 25 Jan 2021 19:56:01 +0100
-Subject: [PATCH 09/20] webservices: avoid symbol conflict
+Subject: [PATCH 08/17] webservices: avoid symbol conflict
 
 ---
  modules/misc/webservices/json.c                   | 2 +-
@@ -76,5 +76,5 @@ index 3a1a32552b..2055d7aea0 100644
      json_value_free(p_data);
  
 -- 
-2.32.0 (Apple Git-132)
+2.32.1 (Apple Git-133)
 

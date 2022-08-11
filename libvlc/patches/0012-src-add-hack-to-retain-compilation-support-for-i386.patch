@@ -1,7 +1,7 @@
-From 4229b81e508f23744bfdeea5345982bdcfb40fa7 Mon Sep 17 00:00:00 2001
+From 1e6449efd4fa09b3f80099c9226a2aa902e9c101 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 20 Aug 2020 13:56:14 +0200
-Subject: [PATCH 14/20] src: add hack to retain compilation support for i386
+Subject: [PATCH 12/17] src: add hack to retain compilation support for i386
 
 This leads to potentially undefined behavior when using the 32bit iOS
 Simulator. This code path never ends-up in production.
@@ -43,5 +43,5 @@ index cbd6996d1d..da9758d357 100644
       static_assert (UINTPTR_MAX <= ULONG_MAX, "Type size mismatch");
       return (uintptr_t)(void *)&dummy;
 -- 
-2.32.0 (Apple Git-132)
+2.32.1 (Apple Git-133)
 

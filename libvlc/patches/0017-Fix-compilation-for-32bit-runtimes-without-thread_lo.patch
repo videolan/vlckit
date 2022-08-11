@@ -1,7 +1,7 @@
-From bd3a1221a756c3369cfd8282e088b26630ea0855 Mon Sep 17 00:00:00 2001
+From e8a9f7d09c00cc855f2898dd408c817f695ace35 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
-Date: Fri, 8 Apr 2022 22:33:01 +0200
-Subject: [PATCH 20/20] Fix compilation for 32bit runtimes without thread_local
+Date: Thu, 11 Aug 2022 11:48:14 +0200
+Subject: [PATCH 17/17] Fix compilation for 32bit runtimes without thread_local
 
 ---
  compat/tdestroy.c    | 67 ++++++++++++++++++++++++++------------------
@@ -139,14 +139,15 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 6b838f72c6..77e4c828bd 100644
+index 88d9ebd762..1e034cf65c 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
-@@ -488,6 +488,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
- void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int depth) );
+@@ -506,7 +506,13 @@ void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int
+ /* the Win32 prototype of lfind() expects an unsigned* for 'nelp' */
  void *lfind( const void *key, const void *base, size_t *nmemb,
               size_t size, int(*cmp)(const void *, const void *) );
 +void tdestroy( void *root, void (*free_node)(void *nodep) );
+ #endif
 +#else // HAVE_SEARCH_H
 +# ifndef HAVE_TDESTROY
 +void vlc_tdestroy( void *, void (*)(void *) );
@@ -155,7 +156,7 @@ index 6b838f72c6..77e4c828bd 100644
  #endif /* HAVE_SEARCH_H */
  
  #ifdef _WIN64
-@@ -499,10 +505,6 @@ void *lfind( const void *key, const void *base, size_t *nmemb,
+@@ -518,10 +524,6 @@ void *lfind( const void *key, const void *base, size_t *nmemb,
           lfind((a),(b), &(unsigned){ (*(c) > UINT_MAX) ? UINT_MAX : *(c) }, (d),(e))
  #endif /* _WIN64 */
  
@@ -184,5 +185,5 @@ index 63d913c247..0577f431bb 100644
  bool vlc_rcu_read_held(void)
  {
 -- 
-2.32.0 (Apple Git-132)
+2.32.1 (Apple Git-133)
 

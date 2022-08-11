@@ -1,15 +1,15 @@
-From 7ff359c983ff0d04c5fdd3ce29b5f11d5f1c530e Mon Sep 17 00:00:00 2001
+From 6c4569feacb21cfcde4517b07434d329e606a344 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 07/20] Replace thread local with pthread TSD
+Subject: [PATCH 06/17] Replace thread local with pthread TSD
 
 ---
- src/misc/interrupt.c | 59 ++++++++++++++++++++++++++++++++++++++++++++
- src/misc/variables.c | 19 ++++++++++++++
- 2 files changed, 78 insertions(+)
+ src/misc/interrupt.c | 55 ++++++++++++++++++++++++++++++++++++++++++++
+ src/misc/variables.c | 19 +++++++++++++++
+ 2 files changed, 74 insertions(+)
 
 diff --git a/src/misc/interrupt.c b/src/misc/interrupt.c
-index 806375d287..229c566123 100644
+index 38166e9d9b..a7065239df 100644
 --- a/src/misc/interrupt.c
 +++ b/src/misc/interrupt.c
 @@ -43,13 +43,26 @@
@@ -150,7 +150,7 @@ index 806375d287..229c566123 100644
      if (from == NULL)
          return;
  
-@@ -366,7 +417,11 @@ static int vlc_poll_i11e_inner(struct pollfd *restrict fds, unsigned nfds,
+@@ -372,7 +423,11 @@ static int vlc_poll_i11e_inner(struct pollfd *restrict fds, unsigned nfds,
  
  int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
  {
@@ -161,18 +161,6 @@ index 806375d287..229c566123 100644
 +#endif
      if (ctx == NULL)
          return poll(fds, nfds, timeout);
- 
-@@ -561,7 +616,11 @@ static void vlc_poll_i11e_cleanup(void *opaque)
- 
- int vlc_poll_i11e(struct pollfd *fds, unsigned nfds, int timeout)
- {
-+#ifdef I_CAN_HAZ_TSD
-     vlc_interrupt_t *ctx = vlc_interrupt_var;
-+#else
-+    vlc_interrupt_t *ctx = pthread_getspecific(vlc_interrupt_var_key);
-+#endif
-     if (ctx == NULL)
-         return vlc_poll(fds, nfds, timeout);
  
 diff --git a/src/misc/variables.c b/src/misc/variables.c
 index c07134fc2d..33b4fcb34c 100644
@@ -222,5 +210,5 @@ index c07134fc2d..33b4fcb34c 100644
      twalk(priv->var_root, TwalkGetNames);
      vlc_mutex_unlock(&priv->var_lock);
 -- 
-2.32.0 (Apple Git-132)
+2.32.1 (Apple Git-133)
 

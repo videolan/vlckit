@@ -1,0 +1,636 @@
+From 17af215d796de504f848a08e1179a0186497f47a Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Fri, 16 Sep 2016 15:51:11 +0200
+Subject: [PATCH 14/17] libvlc_media: add cookie_jar API
+
+---
+ include/vlc/libvlc_media.h |  35 +++++
+ lib/libvlc.sym             |   2 +
+ lib/libvlc.sym.orig        | 291 +++++++++++++++++++++++++++++++++++++
+ lib/media.c                |  25 ++++
+ lib/media_internal.h       |   2 +
+ lib/media_player.c         |   7 +
+ patch                      | 162 +++++++++++++++++++++
+ 7 files changed, 524 insertions(+)
+ create mode 100644 lib/libvlc.sym.orig
+ create mode 100644 patch
+
+diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
+index 3c3c7ef817..f6c9ef1bc9 100644
+--- a/include/vlc/libvlc_media.h
++++ b/include/vlc/libvlc_media.h
+@@ -863,6 +863,41 @@ LIBVLC_API
+ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+                                   unsigned int i_count );
+ 
++/**
++ * Parse a value of an incoming Set-Cookie header (see RFC 6265) and append the
++ * cookie to the cookie jar if appropriate. The "secure" attribute can be added
++ * to psz_cookie to limit the scope of the cookie to secured channels (https).
++ *
++ * \note must be called before the first call of libvlc_media_player_play() to
++ * take effect. The cookie jar is only used for http/https accesses.
++ *
++ * \version LibVLC 3.0.0 and later.
++ *
++ * \param p_md media descriptor object
++ * \param psz_cookie header field value of Set-Cookie:
++ * "name=value<;attributes>" (must not be NULL)
++ * \param psz_host host to which the cookie will be sent (must not be NULL)
++ * \param psz_path scope of the cookie (must not be NULL)
++ *
++ * \return 0 on success, -1 on error.
++ */
++LIBVLC_API int
++libvlc_media_cookie_jar_store( libvlc_media_t *p_md, const char *psz_cookie,
++                               const char *psz_host, const char *psz_path );
++
++/**
++ * Clear the cookie jar of a media.
++ *
++ * \note must be called before the first call of libvlc_media_player_play() to
++ * take effect.
++ *
++ * \version LibVLC 3.0.0 and later.
++ *
++ * \param p_md media descriptor object
++ */
++LIBVLC_API void
++libvlc_media_cookie_jar_clear( libvlc_media_t *p_md );
++
+ /** @}*/
+ 
+ # ifdef __cplusplus
+diff --git a/lib/libvlc.sym b/lib/libvlc.sym
+index 959bed4cd1..6c23d5f404 100644
+--- a/lib/libvlc.sym
++++ b/lib/libvlc.sym
+@@ -208,6 +208,8 @@ libvlc_media_slaves_release
+ libvlc_media_set_meta
+ libvlc_media_set_user_data
+ libvlc_media_subitems
++libvlc_media_cookie_jar_store
++libvlc_media_cookie_jar_clear
+ libvlc_new
+ libvlc_playlist_play
+ libvlc_release
+diff --git a/lib/libvlc.sym.orig b/lib/libvlc.sym.orig
+new file mode 100644
+index 0000000000..de12fb79fe
+--- /dev/null
++++ b/lib/libvlc.sym.orig
+@@ -0,0 +1,291 @@
++libvlc_errmsg
++libvlc_clearerr
++libvlc_add_intf
++libvlc_audio_equalizer_get_amp_at_index
++libvlc_audio_equalizer_get_band_count
++libvlc_audio_equalizer_get_band_frequency
++libvlc_audio_equalizer_get_preamp
++libvlc_audio_equalizer_get_preset_count
++libvlc_audio_equalizer_get_preset_name
++libvlc_audio_equalizer_new
++libvlc_audio_equalizer_new_from_preset
++libvlc_audio_equalizer_release
++libvlc_audio_equalizer_set_amp_at_index
++libvlc_audio_equalizer_set_preamp
++libvlc_audio_output_device_get
++libvlc_audio_output_device_enum
++libvlc_audio_output_device_list_release
++libvlc_audio_output_device_set
++libvlc_audio_output_list_get
++libvlc_audio_output_list_release
++libvlc_audio_output_set
++libvlc_audio_get_channel
++libvlc_audio_get_delay
++libvlc_audio_get_mute
++libvlc_audio_get_track
++libvlc_audio_get_track_count
++libvlc_audio_get_track_description
++libvlc_audio_get_volume
++libvlc_audio_set_channel
++libvlc_audio_set_delay
++libvlc_audio_set_mute
++libvlc_audio_set_track
++libvlc_audio_set_volume
++libvlc_audio_toggle_mute
++libvlc_audio_set_format
++libvlc_audio_set_format_callbacks
++libvlc_audio_set_callbacks
++libvlc_audio_set_volume_callback
++libvlc_chapter_descriptions_release
++libvlc_clock
++libvlc_dialog_dismiss
++libvlc_dialog_get_context
++libvlc_dialog_post_action
++libvlc_dialog_post_login
++libvlc_dialog_set_callbacks
++libvlc_dialog_set_context
++libvlc_dialog_set_error_callback
++libvlc_event_attach
++libvlc_event_detach
++libvlc_free
++libvlc_get_changeset
++libvlc_get_compiler
++libvlc_get_fullscreen
++libvlc_get_version
++libvlc_log_get_context
++libvlc_log_get_object
++libvlc_log_set
++libvlc_log_set_file
++libvlc_log_unset
++libvlc_media_add_option
++libvlc_media_add_option_flag
++libvlc_media_discoverer_is_running
++libvlc_media_discoverer_media_list
++libvlc_media_discoverer_new
++libvlc_media_discoverer_release
++libvlc_media_discoverer_list_get
++libvlc_media_discoverer_list_release
++libvlc_media_discoverer_start
++libvlc_media_discoverer_stop
++libvlc_media_duplicate
++libvlc_media_event_manager
++libvlc_media_get_codec_description
++libvlc_media_get_duration
++libvlc_media_get_filestat
++libvlc_media_get_meta
++libvlc_media_get_mrl
++libvlc_media_get_stats
++libvlc_media_get_tracklist
++libvlc_media_get_type
++libvlc_media_get_user_data
++libvlc_media_get_parsed_status
++libvlc_media_thumbnail_request_by_time
++libvlc_media_thumbnail_request_by_pos
++libvlc_media_thumbnail_request_cancel
++libvlc_media_thumbnail_request_destroy
++libvlc_media_track_hold
++libvlc_media_track_release
++libvlc_media_tracklist_at
++libvlc_media_tracklist_count
++libvlc_media_tracklist_delete
++libvlc_media_list_add_media
++libvlc_media_list_count
++libvlc_media_list_event_manager
++libvlc_media_list_index_of_item
++libvlc_media_list_insert_media
++libvlc_media_list_is_readonly
++libvlc_media_list_item_at_index
++libvlc_media_list_lock
++libvlc_media_list_media
++libvlc_media_list_new
++libvlc_media_list_player_event_manager
++libvlc_media_list_player_get_media_player
++libvlc_media_list_player_get_state
++libvlc_media_list_player_is_playing
++libvlc_media_list_player_new
++libvlc_media_list_player_next
++libvlc_media_list_player_pause
++libvlc_media_list_player_play
++libvlc_media_list_player_play_item
++libvlc_media_list_player_play_item_at_index
++libvlc_media_list_player_previous
++libvlc_media_list_player_release
++libvlc_media_list_player_retain
++libvlc_media_list_player_set_media_list
++libvlc_media_list_player_set_media_player
++libvlc_media_list_player_set_pause
++libvlc_media_list_player_set_playback_mode
++libvlc_media_list_player_stop_async
++libvlc_media_list_release
++libvlc_media_list_remove_index
++libvlc_media_list_retain
++libvlc_media_list_set_media
++libvlc_media_list_unlock
++libvlc_media_new_callbacks
++libvlc_media_new_fd
++libvlc_media_new_location
++libvlc_media_new_path
++libvlc_media_new_as_node
++libvlc_media_parse_request
++libvlc_media_parse_stop
++libvlc_media_player_add_slave
++libvlc_media_player_can_pause
++libvlc_media_player_program_scrambled
++libvlc_media_player_next_frame
++libvlc_media_player_event_manager
++libvlc_media_player_get_chapter
++libvlc_media_player_get_chapter_count
++libvlc_media_player_get_chapter_count_for_title
++libvlc_media_player_get_full_chapter_descriptions
++libvlc_media_player_get_full_title_descriptions
++libvlc_media_player_get_hwnd
++libvlc_media_player_get_length
++libvlc_media_player_get_media
++libvlc_media_player_get_nsobject
++libvlc_media_player_get_position
++libvlc_media_player_get_rate
++libvlc_media_player_get_role
++libvlc_media_player_get_state
++libvlc_media_player_get_time
++libvlc_media_player_get_title
++libvlc_media_player_get_title_count
++libvlc_media_player_get_xwindow
++libvlc_media_player_has_vout
++libvlc_media_player_is_seekable
++libvlc_media_player_is_playing
++libvlc_media_player_new
++libvlc_media_player_new_from_media
++libvlc_media_player_next_chapter
++libvlc_media_player_set_pause
++libvlc_media_player_pause
++libvlc_media_player_play
++libvlc_media_player_previous_chapter
++libvlc_media_player_release
++libvlc_media_player_retain
++libvlc_media_player_set_android_context
++libvlc_media_player_set_chapter
++libvlc_media_player_set_equalizer
++libvlc_media_player_set_hwnd
++libvlc_media_player_set_media
++libvlc_media_player_set_nsobject
++libvlc_media_player_set_position
++libvlc_media_player_set_rate
++libvlc_media_player_set_renderer
++libvlc_media_player_set_role
++libvlc_media_player_set_time
++libvlc_media_player_set_title
++libvlc_media_player_set_xwindow
++libvlc_media_player_stop_async
++libvlc_media_player_navigate
++libvlc_media_player_set_video_title_display
++libvlc_media_player_get_tracklist
++libvlc_media_player_get_track_from_id
++libvlc_media_player_get_selected_track
++libvlc_media_player_select_track
++libvlc_media_player_unselect_track_type
++libvlc_media_player_select_tracks
++libvlc_media_player_select_tracks_by_ids
++libvlc_player_program_delete
++libvlc_player_programlist_count
++libvlc_player_programlist_at
++libvlc_player_programlist_delete
++libvlc_media_player_select_program_id
++libvlc_media_player_get_selected_program
++libvlc_media_player_get_program_from_id
++libvlc_media_player_get_programlist
++libvlc_media_player_watch_time
++libvlc_media_player_unwatch_time
++libvlc_media_player_time_point_interpolate
++libvlc_media_player_time_point_get_next_date
++libvlc_media_release
++libvlc_media_retain
++libvlc_media_save_meta
++libvlc_media_slaves_add
++libvlc_media_slaves_clear
++libvlc_media_slaves_get
++libvlc_media_slaves_release
++libvlc_media_set_meta
++libvlc_media_set_user_data
++libvlc_media_subitems
++libvlc_new
++libvlc_playlist_play
++libvlc_release
++libvlc_renderer_item_name
++libvlc_renderer_item_type
++libvlc_renderer_item_icon_uri
++libvlc_renderer_item_flags
++libvlc_renderer_item_hold
++libvlc_renderer_item_release
++libvlc_renderer_discoverer_event_manager
++libvlc_renderer_discoverer_list_get
++libvlc_renderer_discoverer_list_release
++libvlc_renderer_discoverer_new
++libvlc_renderer_discoverer_release
++libvlc_renderer_discoverer_start
++libvlc_renderer_discoverer_stop
++libvlc_retain
++libvlc_set_fullscreen
++libvlc_set_user_agent
++libvlc_set_app_id
++libvlc_title_descriptions_release
++libvlc_toggle_fullscreen
++libvlc_track_description_list_release
++libvlc_video_get_adjust_float
++libvlc_video_get_adjust_int
++libvlc_video_get_aspect_ratio
++libvlc_video_get_size
++libvlc_video_get_cursor
++libvlc_video_get_logo_int
++libvlc_video_get_marquee_int
++libvlc_video_get_scale
++libvlc_video_get_spu
++libvlc_video_get_spu_count
++libvlc_video_get_spu_delay
++libvlc_video_get_spu_description
++libvlc_video_get_spu_text_scale
++libvlc_video_get_teletext
++libvlc_video_get_track
++libvlc_video_get_track_count
++libvlc_video_get_track_description
++libvlc_video_set_adjust_float
++libvlc_video_set_adjust_int
++libvlc_video_set_aspect_ratio
++libvlc_video_set_callbacks
++libvlc_video_set_crop_ratio
++libvlc_video_set_crop_window
++libvlc_video_set_crop_border
++libvlc_video_set_deinterlace
++libvlc_video_set_format
++libvlc_video_set_format_callbacks
++libvlc_video_set_output_callbacks
++libvlc_video_set_key_input
++libvlc_video_set_logo_int
++libvlc_video_set_logo_string
++libvlc_video_set_marquee_int
++libvlc_video_set_marquee_string
++libvlc_video_set_mouse_input
++libvlc_video_set_scale
++libvlc_video_set_spu
++libvlc_video_set_spu_delay
++libvlc_video_set_spu_text_scale
++libvlc_video_set_teletext
++libvlc_video_set_track
++libvlc_video_take_snapshot
++libvlc_video_new_viewpoint
++libvlc_video_update_viewpoint
++libvlc_set_exit_handler
++libvlc_audio_filter_list_get
++libvlc_video_filter_list_get
++libvlc_module_description_list_release
++libvlc_picture_retain
++libvlc_picture_release
++libvlc_picture_save
++libvlc_picture_get_buffer
++libvlc_picture_type
++libvlc_picture_get_stride
++libvlc_picture_get_width
++libvlc_picture_get_height
++libvlc_picture_get_time
++libvlc_picture_list_at
++libvlc_picture_list_count
++libvlc_picture_list_destroy
+diff --git a/lib/media.c b/lib/media.c
+index 433de49e84..fc68c178ef 100644
+--- a/lib/media.c
++++ b/lib/media.c
+@@ -497,6 +497,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
+     atomic_init(&p_md->parsed_status, libvlc_media_parsed_status_none);
+ 
+     libvlc_event_manager_init( &p_md->event_manager, p_md );
++    p_md->p_cookie_jar      = NULL;
+ 
+     input_item_Hold( p_md->p_input_item );
+ 
+@@ -636,6 +637,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
+ 
+     input_item_Release( p_md->p_input_item );
+ 
++    if( p_md->p_cookie_jar )
++        vlc_http_cookies_destroy( p_md->p_cookie_jar );
++
+     libvlc_event_manager_destroy( &p_md->event_manager );
+     free( p_md );
+ }
+@@ -1239,3 +1243,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+     }
+     free( pp_slaves );
+ }
++
++int
++libvlc_media_cookie_jar_store( libvlc_media_t *p_md, const char *psz_cookie,
++                               const char *psz_host, const char *psz_path )
++{
++    if( !p_md->p_cookie_jar )
++    {
++        p_md->p_cookie_jar = vlc_http_cookies_new();
++        if( !p_md->p_cookie_jar )
++            return -1;
++    }
++    return vlc_http_cookies_store( p_md->p_cookie_jar, psz_cookie, psz_host,
++                                   psz_path ) ? 0 : -1;
++}
++
++void
++libvlc_media_cookie_jar_clear( libvlc_media_t *p_md )
++{
++    if( p_md->p_cookie_jar )
++        vlc_http_cookies_clear( p_md->p_cookie_jar );
++}
+diff --git a/lib/media_internal.h b/lib/media_internal.h
+index 9c291a6531..e39a48722e 100644
+--- a/lib/media_internal.h
++++ b/lib/media_internal.h
+@@ -31,6 +31,7 @@
+ #include <vlc_input.h>
+ #include <vlc_player.h>
+ #include <vlc_atomic.h>
++#include <vlc_http.h>
+ 
+ struct libvlc_media_t
+ {
+@@ -50,6 +51,7 @@ struct libvlc_media_t
+     atomic_uint worker_count;
+ 
+     _Atomic libvlc_media_parsed_status_t parsed_status;
++    vlc_http_cookie_jar_t *p_cookie_jar;
+ };
+ 
+ /* Media Descriptor */
+diff --git a/lib/media_player.c b/lib/media_player.c
+index 287a8f47ab..6668273021 100644
+--- a/lib/media_player.c
++++ b/lib/media_player.c
+@@ -613,6 +613,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
+     var_Create (mp, "rate", VLC_VAR_FLOAT|VLC_VAR_DOINHERIT);
+     var_Create (mp, "sout", VLC_VAR_STRING);
+     var_Create (mp, "demux-filter", VLC_VAR_STRING);
++    var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
+ 
+     /* Video */
+     var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
+@@ -938,6 +939,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+     vlc_player_t *player = p_mi->player;
+     vlc_player_Lock(player);
+ 
++    if( p_mi->p_md->p_cookie_jar )
++    {
++        vlc_value_t cookies = { .p_address = p_mi->p_md->p_cookie_jar };
++        var_SetChecked( p_mi, "http-cookies", VLC_VAR_ADDRESS, cookies );
++    }
++
+     int ret = vlc_player_Start(player);
+     if (ret == VLC_SUCCESS)
+     {
+diff --git a/patch b/patch
+new file mode 100644
+index 0000000000..0b65b1b445
+--- /dev/null
++++ b/patch
+@@ -0,0 +1,162 @@
++---
++ include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
++ lib/libvlc.sym             |  2 ++
++ lib/media.c                | 25 +++++++++++++++++++++++++
++ lib/media_internal.h       |  2 ++
++ lib/media_player.c         |  7 +++++++
++ 5 files changed, 71 insertions(+)
++
++diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
++index 3c3c7ef817..f6c9ef1bc9 100644
++--- a/include/vlc/libvlc_media.h
+++++ b/include/vlc/libvlc_media.h
++@@ -863,6 +863,41 @@ LIBVLC_API
++ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
++                                   unsigned int i_count );
++ 
+++/**
+++ * Parse a value of an incoming Set-Cookie header (see RFC 6265) and append the
+++ * cookie to the cookie jar if appropriate. The "secure" attribute can be added
+++ * to psz_cookie to limit the scope of the cookie to secured channels (https).
+++ *
+++ * \note must be called before the first call of libvlc_media_player_play() to
+++ * take effect. The cookie jar is only used for http/https accesses.
+++ *
+++ * \version LibVLC 3.0.0 and later.
+++ *
+++ * \param p_md media descriptor object
+++ * \param psz_cookie header field value of Set-Cookie:
+++ * "name=value<;attributes>" (must not be NULL)
+++ * \param psz_host host to which the cookie will be sent (must not be NULL)
+++ * \param psz_path scope of the cookie (must not be NULL)
+++ *
+++ * \return 0 on success, -1 on error.
+++ */
+++LIBVLC_API int
+++libvlc_media_cookie_jar_store( libvlc_media_t *p_md, const char *psz_cookie,
+++                               const char *psz_host, const char *psz_path );
+++
+++/**
+++ * Clear the cookie jar of a media.
+++ *
+++ * \note must be called before the first call of libvlc_media_player_play() to
+++ * take effect.
+++ *
+++ * \version LibVLC 3.0.0 and later.
+++ *
+++ * \param p_md media descriptor object
+++ */
+++LIBVLC_API void
+++libvlc_media_cookie_jar_clear( libvlc_media_t *p_md );
+++
++ /** @}*/
++ 
++ # ifdef __cplusplus
++diff --git a/lib/libvlc.sym b/lib/libvlc.sym
++index 959bed4cd1..6c23d5f404 100644
++--- a/lib/libvlc.sym
+++++ b/lib/libvlc.sym
++@@ -208,6 +208,8 @@ libvlc_media_slaves_release
++ libvlc_media_set_meta
++ libvlc_media_set_user_data
++ libvlc_media_subitems
+++libvlc_media_cookie_jar_store
+++libvlc_media_cookie_jar_clear
++ libvlc_new
++ libvlc_playlist_play
++ libvlc_release
++diff --git a/lib/media.c b/lib/media.c
++index 433de49e84..fc68c178ef 100644
++--- a/lib/media.c
+++++ b/lib/media.c
++@@ -497,6 +497,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
++     atomic_init(&p_md->parsed_status, libvlc_media_parsed_status_none);
++ 
++     libvlc_event_manager_init( &p_md->event_manager, p_md );
+++    p_md->p_cookie_jar      = NULL;
++ 
++     input_item_Hold( p_md->p_input_item );
++ 
++@@ -636,6 +637,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
++ 
++     input_item_Release( p_md->p_input_item );
++ 
+++    if( p_md->p_cookie_jar )
+++        vlc_http_cookies_destroy( p_md->p_cookie_jar );
+++
++     libvlc_event_manager_destroy( &p_md->event_manager );
++     free( p_md );
++ }
++@@ -1239,3 +1243,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
++     }
++     free( pp_slaves );
++ }
+++
+++int
+++libvlc_media_cookie_jar_store( libvlc_media_t *p_md, const char *psz_cookie,
+++                               const char *psz_host, const char *psz_path )
+++{
+++    if( !p_md->p_cookie_jar )
+++    {
+++        p_md->p_cookie_jar = vlc_http_cookies_new();
+++        if( !p_md->p_cookie_jar )
+++            return -1;
+++    }
+++    return vlc_http_cookies_store( p_md->p_cookie_jar, psz_cookie, psz_host,
+++                                   psz_path ) ? 0 : -1;
+++}
+++
+++void
+++libvlc_media_cookie_jar_clear( libvlc_media_t *p_md )
+++{
+++    if( p_md->p_cookie_jar )
+++        vlc_http_cookies_clear( p_md->p_cookie_jar );
+++}
++diff --git a/lib/media_internal.h b/lib/media_internal.h
++index 9c291a6531..e39a48722e 100644
++--- a/lib/media_internal.h
+++++ b/lib/media_internal.h
++@@ -31,6 +31,7 @@
++ #include <vlc_input.h>
++ #include <vlc_player.h>
++ #include <vlc_atomic.h>
+++#include <vlc_http.h>
++ 
++ struct libvlc_media_t
++ {
++@@ -50,6 +51,7 @@ struct libvlc_media_t
++     atomic_uint worker_count;
++ 
++     _Atomic libvlc_media_parsed_status_t parsed_status;
+++    vlc_http_cookie_jar_t *p_cookie_jar;
++ };
++ 
++ /* Media Descriptor */
++diff --git a/lib/media_player.c b/lib/media_player.c
++index ab3f961414..d5507d612c 100644
++--- a/lib/media_player.c
+++++ b/lib/media_player.c
++@@ -614,6 +614,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
++     var_Create (mp, "sout", VLC_VAR_STRING);
++     var_Create (mp, "demux-filter", VLC_VAR_STRING);
++     var_Create (mp, "input-record-path", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
+++    var_Create (mp, "http-cookies", VLC_VAR_ADDRESS);
++ 
++     /* Video */
++     var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
++@@ -939,6 +940,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
++     vlc_player_t *player = p_mi->player;
++     vlc_player_Lock(player);
++ 
+++    if( p_mi->p_md->p_cookie_jar )
+++    {
+++        vlc_value_t cookies = { .p_address = p_mi->p_md->p_cookie_jar };
+++        var_SetChecked( p_mi, "http-cookies", VLC_VAR_ADDRESS, cookies );
+++    }
+++
++     int ret = vlc_player_Start(player);
++     if (ret == VLC_SUCCESS)
++     {
++-- 
++2.32.1 (Apple Git-133)
++
+-- 
+2.32.1 (Apple Git-133)
+
