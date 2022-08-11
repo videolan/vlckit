@@ -101,6 +101,11 @@ OBJC_VISIBLE
  * \return the int
  */
 @property (readonly) int intValue;
+/**
+ * the current time value as string value localized for the current environment including subseconds
+ * \return the NSString object
+ */
+@property (readonly) NSString * subSecondStringValue;
 
 /* Comparators */
 /**

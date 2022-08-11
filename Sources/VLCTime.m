@@ -108,6 +108,36 @@
     }
 }
 
+- (NSString *)subSecondStringValue
+{
+    if (_value) {
+        long long duration = [_value longLongValue];
+        if (duration == INT_MAX || duration == INT_MIN) {
+            // Return a string that represents an undefined time.
+            return @"--:--.---";
+        }
+        duration = duration;
+        long long positiveDuration = llabs(duration);
+
+        long hours = positiveDuration / 3600 / 1000;
+        long minutes = (positiveDuration / 60 / 1000) % 60;
+        long seconds = positiveDuration / 1000 % 60;
+        long milliseconds = positiveDuration - ((hours * 3600 + minutes * 60 + seconds) * 1000);
+
+        if (hours > 1)
+            return [NSString stringWithFormat:@"%s%01ld:%02ld:%02ld.%03ld",
+                        duration < 0 ? "-" : "",
+                    hours, minutes, seconds, milliseconds];
+        else
+            return [NSString stringWithFormat:@"%s%02ld:%02ld.%03ld",
+                            duration < 0 ? "-" : "",
+                    minutes, seconds, milliseconds];
+    } else {
+        // Return a string that represents an undefined time.
+        return @"--:--.---";
+    }
+}
+
 - (NSString *)verboseStringValue
 {
     if (!_value)
