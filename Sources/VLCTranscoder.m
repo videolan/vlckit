@@ -49,7 +49,7 @@
 
 - (BOOL)reencodeAndMuxSRTFile:(NSString *)srtPath toMP4File:(NSString *)mp4Path outputPath:(NSString *)outPath
 {
-    libvlc_media_t* p_media = libvlc_media_new_path([[VLCLibrary sharedLibrary] instance], [mp4Path UTF8String]);
+    libvlc_media_t* p_media = libvlc_media_new_path([mp4Path UTF8String]);
     if (p_media == NULL) {
         NSAssert(0, @"p_media wasn't allocated");
         return NO;
@@ -58,7 +58,7 @@
     libvlc_media_add_option(p_media, [[NSString stringWithFormat:@"--sub-file=%@", srtPath] UTF8String]);
     libvlc_media_add_option(p_media, [transcodingOptions UTF8String]);
 
-    _p_mp = libvlc_media_player_new_from_media( p_media );
+    _p_mp = libvlc_media_player_new_from_media([[VLCLibrary sharedLibrary] instance], p_media);
     if (_p_mp == NULL) {
         NSAssert(0, @"_p_mp wasn't allocated");
         return NO;
