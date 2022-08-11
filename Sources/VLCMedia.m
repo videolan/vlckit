@@ -196,7 +196,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
         url = [[anURL absoluteString] UTF8String];
 
-        p_md = libvlc_media_new_location(library.instance, url);
+        p_md = libvlc_media_new_location(url);
 
         [self initInternalMediaDescriptor];
     }
@@ -209,10 +209,10 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         VLCLibrary *library = [VLCLibrary sharedLibrary];
         NSAssert(library.instance, @"no library instance when creating media");
         NSAssert(stream.streamStatus != NSStreamStatusClosed, @"Passing closed stream to VLCMedia.init does not work");
-        
+
         self->stream = stream;
-        p_md = libvlc_media_new_callbacks(library.instance, open_cb, read_cb, seek_cb, close_cb, (__bridge void *)(stream));
-        
+        p_md = libvlc_media_new_callbacks(open_cb, read_cb, seek_cb, close_cb, (__bridge void *)(stream));
+
         [self initInternalMediaDescriptor];
     }
     return self;
@@ -221,7 +221,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 - (instancetype)initAsNodeWithName:(NSString *)aName
 {
     if (self = [super init]) {
-        p_md = libvlc_media_new_as_node([VLCLibrary sharedInstance], [aName UTF8String]);
+        p_md = libvlc_media_new_as_node([aName UTF8String]);
         
         [self initInternalMediaDescriptor];
     }
