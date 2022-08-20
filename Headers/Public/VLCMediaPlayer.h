@@ -799,15 +799,13 @@ NSString *const VLCTitleDescriptionIsMenu;
 /**
  * Start recording at given **directory** path
  * \param path directory where the recording should go
- * \return an BOOL with the success status
  */
-- (BOOL)startRecordingAtPath:(NSString *)path;
+- (void)startRecordingAtPath:(NSString *)path;
 
 /**
  * Stop current recording
- * \return an BOOL with the success status
  */
-- (BOOL)stopRecording;
+- (void)stopRecording;
 
 #pragma mark -
 #pragma mark Renderer

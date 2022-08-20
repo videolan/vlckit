@@ -258,7 +258,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
         NSArray *arg = @[
             @{
-                @"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.file_path],
+                @"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.recorded_file_path],
                 @"isRecording": @(event->u.media_player_record_changed.recording)
             }
         ];
@@ -1179,14 +1179,14 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     return _playerInstance;
 }
 
-- (BOOL)startRecordingAtPath:(NSString *)path
+- (void)startRecordingAtPath:(NSString *)path
 {
-    return libvlc_media_player_record(_playerInstance, YES, [path UTF8String]);
+    libvlc_media_player_record(_playerInstance, YES, [path UTF8String]);
 }
 
-- (BOOL)stopRecording
+- (void)stopRecording
 {
-    return libvlc_media_player_record(_playerInstance, NO, nil);
+    libvlc_media_player_record(_playerInstance, NO, nil);
 }
 
 
