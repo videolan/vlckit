@@ -385,8 +385,8 @@ OBJC_VISIBLE
 @property (nonatomic, readonly, weak) VLCTime *remainingTime;
 
 /**
- * sets and returns the minimum period between time updates
- * it is 500 ms by default
+ * Minimum period between time updates in microseconds
+ * it is set to 500000 microseconds by default
  */
 @property (nonatomic) int64_t minimalTimePeriod;
 
