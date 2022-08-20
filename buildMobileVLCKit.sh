@@ -25,7 +25,7 @@ OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
 FARCH="all"
 
-TESTEDHASH="095bfffb" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="5c8512df" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -308,7 +308,7 @@ if [ "$NONETWORK" != "yes" ]; then
         cd vlc
         git checkout -B localBranch ${TESTEDHASH}
         git branch --set-upstream-to=3.0.x localBranch
-        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+        git am ${ROOT_DIR}/libvlc/patches/*.patch
         if [ $? -ne 0 ]; then
             git am --abort
             info "Applying the patches failed, aborting git-am"
@@ -319,7 +319,7 @@ if [ "$NONETWORK" != "yes" ]; then
         cd vlc
         git fetch --all
         git reset --hard ${TESTEDHASH}
-        git am ${ROOT_DIR}/Resources/MobileVLCKit/patches/*.patch
+        git am ${ROOT_DIR}/libvlc/patches/*.patch
         cd ..
     fi
 fi

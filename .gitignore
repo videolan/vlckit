@@ -12,4 +12,4 @@ build
 /vlc-unstable
 DerivedData
 MobileVLCKit/ImportedSources
-/libvlc
+/libvlc/vlc

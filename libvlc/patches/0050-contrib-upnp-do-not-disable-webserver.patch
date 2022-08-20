@@ -1,0 +1,27 @@
+From 0e738dff93663544f50fc2df248733268ff90614 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Tue, 10 May 2022 08:24:02 +0200
+Subject: [PATCH 50/50] contrib/upnp: do not disable webserver
+
+This matches the configuration on other platforms. Disabling it leads
+to an implicit activation of a mini server with a busy loop.
+---
+ contrib/src/upnp/rules.mak | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/contrib/src/upnp/rules.mak b/contrib/src/upnp/rules.mak
+index 7c7e6ea7b0..3af3082f0c 100644
+--- a/contrib/src/upnp/rules.mak
++++ b/contrib/src/upnp/rules.mak
+@@ -25,7 +25,7 @@ ifdef HAVE_WINSTORE
+ UPNP_CONF += --disable-ipv6 --enable-unspecified_server
+ else
+ ifdef HAVE_IOS
+-UPNP_CONF += --disable-ipv6 --disable-webserver
++UPNP_CONF += --disable-ipv6
+ else
+ UPNP_CONF += --enable-ipv6
+ endif
+-- 
+2.32.1 (Apple Git-133)
+

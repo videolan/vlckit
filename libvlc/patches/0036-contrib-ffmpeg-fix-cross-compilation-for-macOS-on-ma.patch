@@ -1,0 +1,42 @@
+From d5de4dc100886924b0653e768447e1d2ce7b8764 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Sat, 20 Feb 2021 13:19:24 +0100
+Subject: [PATCH 36/50] contrib/ffmpeg: fix cross-compilation for macOS on
+ macOS
+
+---
+ contrib/src/ffmpeg/rules.mak | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
+index 21efe43f26..6378d28a73 100644
+--- a/contrib/src/ffmpeg/rules.mak
++++ b/contrib/src/ffmpeg/rules.mak
+@@ -145,7 +145,7 @@ endif
+ 
+ # Darwin
+ ifdef HAVE_DARWIN_OS
+-FFMPEGCONF += --arch=$(ARCH) --target-os=darwin --extra-cflags="$(CFLAGS)"
++FFMPEGCONF += --arch=$(ARCH) --target-os=darwin --extra-cflags="$(CFLAGS)" --enable-pic
+ ifdef USE_FFMPEG
+ FFMPEGCONF += --disable-lzma
+ endif
+@@ -153,11 +153,14 @@ ifeq ($(ARCH),x86_64)
+ FFMPEGCONF += --cpu=core2
+ endif
+ ifdef HAVE_IOS
+-FFMPEGCONF += --enable-pic --extra-ldflags="$(EXTRA_CFLAGS) -isysroot $(IOS_SDK)"
++FFMPEGCONF += --extra-ldflags="$(EXTRA_CFLAGS) -isysroot $(IOS_SDK)"
+ ifdef HAVE_NEON
+ FFMPEGCONF += --as="$(AS)"
+ endif
+ endif
++ifdef HAVE_MACOSX
++FFMPEGCONF += --extra-ldflags="$(EXTRA_LDFLAGS) -isysroot $(MACOSX_SDK)"
++endif
+ endif
+ 
+ # Linux
+-- 
+2.32.1 (Apple Git-133)
+
