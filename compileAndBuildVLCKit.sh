@@ -395,7 +395,6 @@ do
          t)
              TVOS=yes
              IOS=no
-             BITCODE=yes
              SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
              SDK_MIN=10.2
              OSVERSIONMINCFLAG=tvos
@@ -535,13 +534,16 @@ if [ "$TVOS" = "yes" ]; then
         buildxcodeproj VLCKit "TVVLCKit" ${platform}
         dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
         bcsymbolmapfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/BCSymbolMaps
-        spushd $bcsymbolmapfolder
-        for i in `ls *.bcsymbolmap`
-        do
-            bcsymbolmap=$bcsymbolmapfolder/$i
-        done
-        spopd
-        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder -debug-symbols $bcsymbolmap"
+        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder"
+        if [ -d ${bcsymbolmapfolder} ];then
+            info "Bitcode support found"
+            spushd $bcsymbolmapfolder
+            for i in `ls *.bcsymbolmap`
+            do
+                frameworks+=" -debug-symbols $bcsymbolmapfolder/$i"
+            done
+            spopd
+        fi
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
