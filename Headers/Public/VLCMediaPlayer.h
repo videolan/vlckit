@@ -390,6 +390,14 @@ OBJC_VISIBLE
  */
 @property (nonatomic) int64_t minimalTimePeriod;
 
+/**
+ * Time interval between mediaPlayerTimeChanged notifications
+ * Can be changed anytime but only taken into account when
+ * -[VLCMediaPlayer play] is called
+ * Defaults to 1.0s
+ */
+@property (nonatomic) NSTimeInterval timeChangeUpdateInterval;
+
 #pragma mark -
 #pragma mark ES track handling
 
