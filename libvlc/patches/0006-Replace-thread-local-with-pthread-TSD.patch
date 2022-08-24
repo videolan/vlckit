@@ -1,7 +1,7 @@
-From 6c4569feacb21cfcde4517b07434d329e606a344 Mon Sep 17 00:00:00 2001
+From 6d1b5dc6700d01c23b61602d3c8412c28a7c2253 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Mon, 17 Jul 2017 17:03:24 +0200
-Subject: [PATCH 06/17] Replace thread local with pthread TSD
+Subject: [PATCH 06/18] Replace thread local with pthread TSD
 
 ---
  src/misc/interrupt.c | 55 ++++++++++++++++++++++++++++++++++++++++++++

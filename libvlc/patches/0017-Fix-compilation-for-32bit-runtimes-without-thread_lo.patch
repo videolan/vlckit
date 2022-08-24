@@ -1,7 +1,7 @@
-From e8a9f7d09c00cc855f2898dd408c817f695ace35 Mon Sep 17 00:00:00 2001
+From 42d17eac763164883a085b75421a219cfdbe4dae Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:48:14 +0200
-Subject: [PATCH 17/17] Fix compilation for 32bit runtimes without thread_local
+Subject: [PATCH 17/18] Fix compilation for 32bit runtimes without thread_local
 
 ---
  compat/tdestroy.c    | 67 ++++++++++++++++++++++++++------------------
