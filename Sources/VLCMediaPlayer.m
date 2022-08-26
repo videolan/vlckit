@@ -1049,11 +1049,8 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)stop
 {
-    __weak VLCMediaPlayer *weak_player = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        VLCMediaPlayer *player = weak_player;
         [_timeChangeUpdateTimer invalidate];
-        [player timeChangeUpdate];
     });
     libvlc_media_player_stop_async(_playerInstance);
 }
@@ -1423,7 +1420,11 @@ static const struct event_handler_entry
 {
     [self willChangeValueForKey:@"state"];
     _cachedState = newState;
-
+    if ( ! [self isPlaying] ) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_timeChangeUpdateTimer invalidate];
+        });
+    }
 #if TARGET_OS_IPHONE
     // Disable idle timer if player is playing media
     // Exclusion can be made for audio only media
