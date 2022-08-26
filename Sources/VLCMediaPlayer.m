@@ -1133,20 +1133,24 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     [self setRate: -rate];
 }
 
-- (void)jumpBackward:(int)interval
-{
+- (void)jumpWithOffset:(int)interval {
     if ([self isSeekable]) {
-        interval = interval * 1000;
-        [self setTime: [VLCTime timeWithInt: ([[self time] intValue] - interval)]];
+        int currentTime = [[self time] intValue];
+        int targetTime = (currentTime + interval);
+        VLCTime *newTime = [VLCTime timeWithInt: targetTime];
+        NSLog(@"%s Seek from %lldms to %lldms", __FUNCTION__, (long long)(currentTime) * 1000, (long long)(targetTime) * 1000);
+        [self setTime: newTime];
     }
 }
 
-- (void)jumpForward:(int)interval
+- (void)jumpBackward:(double)interval
 {
-    if ([self isSeekable]) {
-        interval = interval * 1000;
-        [self setTime: [VLCTime timeWithInt: ([[self time] intValue] + interval)]];
-    }
+    [self jumpWithOffset:-( (int)(interval * 1e3) )];
+}
+
+- (void)jumpForward:(double)interval
+{
+    [self jumpWithOffset:( (int)(interval * 1e3) )];
 }
 
 - (void)extraShortJumpBackward

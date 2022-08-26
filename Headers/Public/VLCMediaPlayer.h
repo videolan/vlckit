@@ -655,16 +655,22 @@ NSString *const VLCTitleDescriptionIsMenu;
 - (void)rewindAtRate:(float)rate;
 
 /**
+ * Jumps in current stream if seeking is supported.
+ * \param offset interval requested from current time, in milliseconds.
+ */
+- (void)jumpWithOffset:(int)offset;
+
+/**
  * Jumps shortly backward in current stream if seeking is supported.
  * \param interval to skip, in sec.
  */
-- (void)jumpBackward:(int)interval;
+- (void)jumpBackward:(double)interval;
 
 /**
  * Jumps shortly forward in current stream if seeking is supported.
  * \param interval to skip, in sec.
  */
-- (void)jumpForward:(int)interval;
+- (void)jumpForward:(double)interval;
 
 /**
  * Jumps shortly backward in current stream if seeking is supported.
