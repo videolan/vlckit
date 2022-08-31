@@ -275,6 +275,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     double _lastInterpolatedPosition;           ///< Cached position of the media being played
     int64_t _lastInterpolatedTime;              ///< Cached time of the media being played
     int64_t _systemDateOfDiscontinuity;
+    BOOL _timeDiscontinuityState;
     VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
     id _drawable;                               ///< The drawable associated to this media player
     NSMutableArray *_snapshots;                 ///< Array with snapshot file names
@@ -983,12 +984,14 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)timeChangeUpdate {
     if ( _lastTimePoint.ts_us == -1 ||
-        _systemDateOfDiscontinuity > 0 ) {
+        _timeDiscontinuityState ) {
         return;
     }
 
+    int64_t system_now_us = _systemDateOfDiscontinuity > 0 ? _systemDateOfDiscontinuity : libvlc_clock();
+
     libvlc_media_player_time_point_interpolate(&_lastTimePoint,
-                                               libvlc_clock(),
+                                               system_now_us,
                                                &_lastInterpolatedTime,
                                                &_lastInterpolatedPosition);
 
@@ -1039,7 +1042,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     dispatch_async(dispatch_get_main_queue(), ^{
         VLCMediaPlayer *player = weak_player;
         [_timeChangeUpdateTimer invalidate];
-        [player timeChangeUpdate];
     });
     // Pause the stream
     dispatch_async(_libVLCBackgroundQueue, ^{
@@ -1138,7 +1140,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         int currentTime = [[self time] intValue];
         int targetTime = (currentTime + interval);
         VLCTime *newTime = [VLCTime timeWithInt: targetTime];
-        NSLog(@"%s Seek from %lldms to %lldms", __FUNCTION__, (long long)(currentTime) * 1000, (long long)(targetTime) * 1000);
         [self setTime: newTime];
     }
 }
@@ -1224,7 +1225,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)setPosition:(double)newPosition
 {
-    NSLog(@"New position = %f", newPosition);
     libvlc_media_player_set_position(_playerInstance, newPosition, NO);
 }
 
@@ -1410,14 +1410,16 @@ static const struct event_handler_entry
 
 - (void)mediaPlayerLastTimePointUpdated:(const libvlc_media_player_time_point_t)newTimePoint
 {
+    _timeDiscontinuityState = NO;
     _systemDateOfDiscontinuity = 0;
     _lastTimePoint = newTimePoint;
 }
 
 - (void)mediaPlayerHandleTimeDiscontinuity:(int64_t)systemDate
 {
-    [self timeChangeUpdate];
     _systemDateOfDiscontinuity = systemDate;
+    [self timeChangeUpdate];
+    _timeDiscontinuityState = YES;
 }
 
 - (void)mediaPlayerStateChanged:(const VLCMediaPlayerState)newState
