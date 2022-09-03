@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3CD168E6287D0A4900E384B1 /* VLCEventObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD168E5287D0A4900E384B1 /* VLCEventObjectManager.m */; };
+		3CD168E8287D0A5700E384B1 /* VLCEventObjectManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD168E7287D0A5700E384B1 /* VLCEventObjectManager.h */; };
 		4102567221B56E6E00253ECF /* VLCTranscoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4102566F21B56C7500253ECF /* VLCTranscoder.m */; };
 		41657C232059D49200AB915B /* VLCRendererDiscoverer.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C212059D49200AB915B /* VLCRendererDiscoverer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41657C242059D49200AB915B /* VLCRendererItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 41657C222059D49200AB915B /* VLCRendererItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -144,6 +146,8 @@
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = Headers/PCH/Prefix.pch; sourceTree = "<group>"; };
+		3CD168E5287D0A4900E384B1 /* VLCEventObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCEventObjectManager.m; sourceTree = "<group>"; };
+		3CD168E7287D0A5700E384B1 /* VLCEventObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCEventObjectManager.h; path = Internal/VLCEventObjectManager.h; sourceTree = "<group>"; };
 		4102566E21B56C7500253ECF /* VLCTranscoder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VLCTranscoder.h; path = Public/VLCTranscoder.h; sourceTree = "<group>"; };
 		4102566F21B56C7500253ECF /* VLCTranscoder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCTranscoder.m; sourceTree = "<group>"; };
 		41657C212059D49200AB915B /* VLCRendererDiscoverer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCRendererDiscoverer.h; path = Public/VLCRendererDiscoverer.h; sourceTree = "<group>"; };
@@ -339,6 +343,7 @@
 				EF73118F0CB5797B009473B4 /* VLCAudio.m */,
 				4102566F21B56C7500253ECF /* VLCTranscoder.m */,
 				7DF7A2041D197E8E0001FF69 /* VLCHelperCode.m */,
+				3CD168E5287D0A4900E384B1 /* VLCEventObjectManager.m */,
 				7D34F56C1C90A990008A39F0 /* Dialogs */,
 				632A0F7B0D38F78500AFC99B /* Stream */,
 			);
@@ -403,6 +408,7 @@
 				41657C3C2059D99E00AB915B /* VLCiOSLegacyDialogProvider.h */,
 				41657C2D2059D5CE00AB915B /* VLCRendererItem+Init.h */,
 				41657C312059D63D00AB915B /* VLCHelperCode.h */,
+				3CD168E7287D0A5700E384B1 /* VLCEventObjectManager.h */,
 			);
 			name = Internal;
 			sourceTree = "<group>";
@@ -522,6 +528,7 @@
 			files = (
 				7DC28D4F20194117002D05C4 /* VLCKit.h in Headers */,
 				41657C322059D63D00AB915B /* VLCHelperCode.h in Headers */,
+				3CD168E8287D0A5700E384B1 /* VLCEventObjectManager.h in Headers */,
 				7DC28D5020194117002D05C4 /* VLCMedia.h in Headers */,
 				6C6ABBD427C6645A008FDB2D /* VLCFilter+Internal.h in Headers */,
 				7DC28D5220194117002D05C4 /* VLCMediaLibrary.h in Headers */,
@@ -671,6 +678,7 @@
 				7DC28D7520194117002D05C4 /* VLCStreamOutput.m in Sources */,
 				7DC28D7620194117002D05C4 /* VLCMediaListPlayer.m in Sources */,
 				41657C432059DE7B00AB915B /* VLCRendererItem.m in Sources */,
+				3CD168E6287D0A4900E384B1 /* VLCEventObjectManager.m in Sources */,
 				7DC28D7720194117002D05C4 /* VLCMediaThumbnailer.m in Sources */,
 				7DC28D7820194117002D05C4 /* VLCHelperCode.m in Sources */,
 				6C633565281843A000AF8CCF /* VLCConsoleLogger.m in Sources */,
