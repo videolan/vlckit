@@ -387,6 +387,8 @@ OBJC_VISIBLE
 /**
  * Minimum period between time updates in microseconds
  * it is set to 500000 microseconds by default
+ * use it to avoid flood from too many source updates,
+ * set it to 0 to receive all updates at the risk of a major performance impact
  */
 @property (nonatomic) int64_t minimalTimePeriod;
 
