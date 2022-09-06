@@ -1,4 +1,4 @@
-From 341babe30826cec8988be154225fab0cb0ae6cfa Mon Sep 17 00:00:00 2001
+From 95c983315faab9ae0910f2b3e2f64293c6da7ae3 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
 Subject: [PATCH 15/18] Add property to configure an http access token
@@ -72,7 +72,7 @@ index 66cc215361..92d3091711 100644
  
  int vlc_http_res_init(struct vlc_http_resource *,
 diff --git a/src/libvlc.c b/src/libvlc.c
-index 545a0c741b..d54bec5985 100644
+index 723a7c94ef..d6749e9702 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
 @@ -263,6 +263,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,

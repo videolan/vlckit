@@ -1,4 +1,4 @@
-From 6a1674e0f1bac406e3264147787484531335d1fd Mon Sep 17 00:00:00 2001
+From c60443b10e89f073524eb6387163a43d1fba79c2 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
 Subject: [PATCH 14/18] libvlc_media: add cookie_jar API

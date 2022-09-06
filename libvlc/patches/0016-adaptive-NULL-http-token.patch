@@ -1,4 +1,4 @@
-From 82ce64de33f338a84bd530d44c6ba1c8f8867bfb Mon Sep 17 00:00:00 2001
+From 65ecd8dca14f630c75fa2f5bccbbe1d600579b05 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 6 Jan 2022 01:08:11 +0100
 Subject: [PATCH 16/18] adaptive: NULL http-token
@@ -11,7 +11,7 @@ needs to be nullified when using libvlchttp to prevent a use-after-free.
  1 file changed, 2 insertions(+)
 
 diff --git a/modules/demux/adaptive/http/HTTPConnection.cpp b/modules/demux/adaptive/http/HTTPConnection.cpp
-index 299bcf3450..de07ee4127 100644
+index 2ba3ea03c8..e00891208a 100644
 --- a/modules/demux/adaptive/http/HTTPConnection.cpp
 +++ b/modules/demux/adaptive/http/HTTPConnection.cpp
 @@ -306,6 +306,8 @@ RequestStatus LibVLCHTTPConnection::request(const std::string &path,

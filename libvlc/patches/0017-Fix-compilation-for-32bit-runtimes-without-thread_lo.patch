@@ -1,4 +1,4 @@
-From 42d17eac763164883a085b75421a219cfdbe4dae Mon Sep 17 00:00:00 2001
+From dac3bf5fd3e9d98677cd733e776ba1d8c0624cd2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:48:14 +0200
 Subject: [PATCH 17/18] Fix compilation for 32bit runtimes without thread_local
