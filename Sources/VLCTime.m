@@ -188,7 +188,7 @@
             NSOrderedSame;
 }
 
-- (BOOL)isEqual:(id)object
+- (BOOL)isEqual:(nullable id)object
 {
     if (![object isKindOfClass:[VLCTime class]])
         return NO;
