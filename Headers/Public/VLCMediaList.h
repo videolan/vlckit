@@ -74,7 +74,7 @@ OBJC_VISIBLE
  * \return instance of VLCMediaList equipped with the VLCMedia instances
  * \see VLCMedia
  */
-- (instancetype)initWithArray:(NSArray<VLCMedia *> *)array;
+- (instancetype)initWithArray:(nullable NSArray<VLCMedia *> *)array;
 
 /* Operations */
 /**
