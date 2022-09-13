@@ -1,7 +1,7 @@
-From e330049ecc9dcf93ad8c9b9c50ccf3613ad2f8a8 Mon Sep 17 00:00:00 2001
+From d5adebb90f57e63dce01882d82b3bb9651e6101b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/50] input: Extract attachment also when preparsing
+Subject: [PATCH 09/49] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -1134,7 +1134,7 @@ index fa9a1e81a5..1270f6a9b5 100644
  struct matroska_stream_c
  {
 diff --git a/modules/demux/mp4/mp4.c b/modules/demux/mp4/mp4.c
-index 5b2d0fce6b..670a29a767 100644
+index 4281bccccb..e8e2eda45b 100644
 --- a/modules/demux/mp4/mp4.c
 +++ b/modules/demux/mp4/mp4.c
 @@ -121,6 +121,8 @@ struct demux_sys_t
@@ -1146,7 +1146,7 @@ index 5b2d0fce6b..670a29a767 100644
  };
  
  #define DEMUX_INCREMENT (CLOCK_FREQ / 4) /* How far the pcr will go, each round */
-@@ -679,6 +681,7 @@ static int Open( vlc_object_t * p_this )
+@@ -740,6 +742,7 @@ static int Open( vlc_object_t * p_this )
      p_demux->pf_control = Control;
  
      p_sys->context.i_lastseqnumber = UINT32_MAX;
@@ -1154,7 +1154,7 @@ index 5b2d0fce6b..670a29a767 100644
  
      p_demux->p_sys = p_sys;
  
-@@ -1931,112 +1934,123 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -1992,112 +1995,123 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
              input_attachment_t ***ppp_attach = va_arg( args, input_attachment_t*** );
              int *pi_int = va_arg( args, int * );
  
@@ -1365,7 +1365,7 @@ index 5b2d0fce6b..670a29a767 100644
              return VLC_SUCCESS;
          }
  
-@@ -2135,6 +2149,10 @@ static void Close ( vlc_object_t * p_this )
+@@ -2196,6 +2210,10 @@ static void Close ( vlc_object_t * p_this )
          MP4_TrackClean( p_demux->out, &p_sys->track[i_track] );
      free( p_sys->track );
  

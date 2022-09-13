@@ -1,7 +1,7 @@
-From 40e88283db10a51366df0eeb5503091aa31f0c5c Mon Sep 17 00:00:00 2001
+From b17721685796114431def21edf15cfc3669ba5dc Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 16 Apr 2022 00:44:03 +0200
-Subject: [PATCH 46/50] smb2: remove unneeded compat code
+Subject: [PATCH 45/49] smb2: remove unneeded compat code
 
 thread_local is unavailable to 32bit on iOS and the code in question is
 not needed as we have the latest libsmb2, so let's remove it.

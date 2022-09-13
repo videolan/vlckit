@@ -1,7 +1,7 @@
-From 0e738dff93663544f50fc2df248733268ff90614 Mon Sep 17 00:00:00 2001
+From 8f3eb6c695bafff5d81bedf65c4f8391839cc070 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 10 May 2022 08:24:02 +0200
-Subject: [PATCH 50/50] contrib/upnp: do not disable webserver
+Subject: [PATCH 49/49] contrib/upnp: do not disable webserver
 
 This matches the configuration on other platforms. Disabling it leads
 to an implicit activation of a mini server with a busy loop.

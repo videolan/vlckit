@@ -1,7 +1,7 @@
-From b3dbfbee85e54f571141998ba0d35ebba3ff981c Mon Sep 17 00:00:00 2001
+From 6c917c1fec1da25ff11e074e6e5664956b4cb7d8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 6 Jan 2022 01:08:11 +0100
-Subject: [PATCH 41/50] adaptive: NULL http-token
+Subject: [PATCH 40/49] adaptive: NULL http-token
 
 The token property is exclusive to VLCKit to allow passing bearer tokens
  to the http stack. However, it is not used for adaptive streaming, but

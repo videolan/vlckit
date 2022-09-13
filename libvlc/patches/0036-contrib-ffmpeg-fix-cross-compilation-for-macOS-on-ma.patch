@@ -1,7 +1,7 @@
-From d5de4dc100886924b0653e768447e1d2ce7b8764 Mon Sep 17 00:00:00 2001
+From 32c19ff0e15720bcd87685c5112e1990a30d3c3d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 20 Feb 2021 13:19:24 +0100
-Subject: [PATCH 36/50] contrib/ffmpeg: fix cross-compilation for macOS on
+Subject: [PATCH 36/49] contrib/ffmpeg: fix cross-compilation for macOS on
  macOS
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 36/50] contrib/ffmpeg: fix cross-compilation for macOS on
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 21efe43f26..6378d28a73 100644
+index 0ae3d85025..ffa014dbba 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -145,7 +145,7 @@ endif
