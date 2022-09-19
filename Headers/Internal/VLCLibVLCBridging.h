@@ -30,6 +30,7 @@
 #import <VLCMediaList.h>
 #import <VLCMedia.h>
 #import <VLCAudio.h>
+#import <VLCMediaMetaData.h>
 #if !TARGET_OS_TV
 #import <VLCRendererItem.h>
 #endif // !TARGET_OS_TV
@@ -182,3 +183,14 @@
 - (NSString *)representedLibVLCOptions;
 @end
 #endif
+
+/**
+ * Bridges functionality between libvlc and VLCMediaMetaData implementation.
+ */
+@interface VLCMediaMetaData (LibVLCBridging)
+
+- (instancetype)initWithMedia:(VLCMedia *)media;
+
+- (void)handleMediaMetaChanged:(libvlc_meta_t)type;
+
+@end

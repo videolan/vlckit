@@ -29,6 +29,7 @@
 #import <TVVLCKit/VLCMediaPlayer.h>
 #import <TVVLCKit/VLCMediaListPlayer.h>
 #import <TVVLCKit/VLCMediaThumbnailer.h>
+#import <TVVLCKit/VLCMediaMetaData.h>
 #import <TVVLCKit/VLCTime.h>
 #import <TVVLCKit/VLCDialogProvider.h>
 #import <TVVLCKit/VLCFilter.h>
@@ -47,6 +48,7 @@
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
+@class VLCMediaMetaData;
 @class VLCFilterParameter;
 @class VLCAdjustFilter;
 @class VLCConsoleLogger;

@@ -30,6 +30,7 @@
 #import <VLCKit/VLCMediaDiscoverer.h>
 #import <VLCKit/VLCMediaPlayer.h>
 #import <VLCKit/VLCMediaThumbnailer.h>
+#import <VLCKit/VLCMediaMetaData.h>
 #import <VLCKit/VLCStreamSession.h>
 #import <VLCKit/VLCStreamOutput.h>
 #import <VLCKit/VLCTime.h>
@@ -49,6 +50,7 @@
 @class VLCMedia;
 @class VLCMediaLibrary;
 @class VLCMediaList;
+@class VLCMediaMetaData;
 @class VLCTime;
 @class VLCVideoView;
 @class VLCFilterParameter;

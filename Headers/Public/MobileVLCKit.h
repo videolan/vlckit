@@ -29,6 +29,7 @@
 #import <MobileVLCKit/VLCMediaPlayer.h>
 #import <MobileVLCKit/VLCMediaListPlayer.h>
 #import <MobileVLCKit/VLCMediaThumbnailer.h>
+#import <MobileVLCKit/VLCMediaMetaData.h>
 #import <MobileVLCKit/VLCDialogProvider.h>
 #import <MobileVLCKit/VLCTime.h>
 #import <MobileVLCKit/VLCTranscoder.h>
@@ -50,6 +51,7 @@
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
+@class VLCMediaMetaData;
 @class VLCDialogProvider;
 @class VLCRendererDiscoverer;
 @class VLCRendererDiscovererDescription;
