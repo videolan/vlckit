@@ -31,6 +31,8 @@
 #import <VLCLibVLCBridging.h>
 #import <VLCTime.h>
 #import <VLCEventObjectManager.h>
+#import <VLCMediaMetaData.h>
+
 #import <vlc/libvlc.h>
 #import <sys/sysctl.h> // for sysctlbyname
 
@@ -151,7 +153,7 @@ void close_cb(void *opaque) {
 
 /* Callback Methods */
 - (void)parsedChanged;
-- (void)metaChanged:(NSString *)metaType;
+- (void)metaChanged:(NSNumber *)metaType;
 - (void)subItemAdded;
 
 @end
@@ -182,11 +184,9 @@ static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
         VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
         __strong VLCMedia *media = (VLCMedia *)eventObject.weakTarget;
         if (!media) return;
-        
-        NSString *metaType = [VLCMedia metaTypeToString:event->u.media_meta_changed.meta_type];
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            [media metaChanged: metaType];
+            [media metaChanged: @(event->u.media_meta_changed.meta_type)];
         });
     }
 }
@@ -982,6 +982,8 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (void)initInternalMediaDescriptor
 {
+    _metaData = [[VLCMediaMetaData alloc] initWithMedia: self];
+
     self.state = VLCMediaStateNothingSpecial;
 
     char * p_url = libvlc_media_get_mrl( p_md );
@@ -1086,9 +1088,16 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         [self parseWithOptions:VLCMediaParseLocal | VLCMediaFetchLocal];
 }
 
-- (void)metaChanged:(NSString *)metaType
+- (void)metaChanged:(NSNumber *)metaType
 {
-    [self fetchMetaInformationFromLibVLCWithType:metaType];
+    /* backported v4 implementation*/
+    libvlc_meta_t meta = (libvlc_meta_t)metaType.intValue;
+    [self.metaData handleMediaMetaChanged: meta];
+
+    /* kept v3 implementation for compatibility */
+    NSString *metaTypeAsString = [VLCMedia metaTypeToString:meta];
+
+    [self fetchMetaInformationFromLibVLCWithType:metaTypeAsString];
 
     if ([_delegate respondsToSelector:@selector(mediaMetaDataDidChange:)])
         [_delegate mediaMetaDataDidChange:self];

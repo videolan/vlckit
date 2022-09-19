@@ -27,7 +27,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class VLCTime;
+@class VLCTime, VLCMediaMetaData;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -35,32 +35,32 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  * Standard dictionary keys for retreiving meta data.
  */
-extern NSString *const VLCMetaInformationTitle;          /* NSString */
-extern NSString *const VLCMetaInformationArtist;         /* NSString */
-extern NSString *const VLCMetaInformationGenre;          /* NSString */
-extern NSString *const VLCMetaInformationCopyright;      /* NSString */
-extern NSString *const VLCMetaInformationAlbum;          /* NSString */
-extern NSString *const VLCMetaInformationTrackNumber;    /* NSString */
-extern NSString *const VLCMetaInformationDescription;    /* NSString */
-extern NSString *const VLCMetaInformationRating;         /* NSString */
-extern NSString *const VLCMetaInformationDate;           /* NSString */
-extern NSString *const VLCMetaInformationSetting;        /* NSString */
-extern NSString *const VLCMetaInformationURL;            /* NSString */
-extern NSString *const VLCMetaInformationLanguage;       /* NSString */
-extern NSString *const VLCMetaInformationNowPlaying;     /* NSString */
-extern NSString *const VLCMetaInformationPublisher;      /* NSString */
-extern NSString *const VLCMetaInformationEncodedBy;      /* NSString */
-extern NSString *const VLCMetaInformationArtworkURL;     /* NSString */
-extern NSString *const VLCMetaInformationArtwork;        /* NSImage  */
-extern NSString *const VLCMetaInformationTrackID;        /* NSString */
-extern NSString *const VLCMetaInformationTrackTotal;     /* NSString */
-extern NSString *const VLCMetaInformationDirector;       /* NSString */
-extern NSString *const VLCMetaInformationSeason;         /* NSString */
-extern NSString *const VLCMetaInformationEpisode;        /* NSString */
-extern NSString *const VLCMetaInformationShowName;       /* NSString */
-extern NSString *const VLCMetaInformationActors;         /* NSString */
-extern NSString *const VLCMetaInformationAlbumArtist;    /* NSString */
-extern NSString *const VLCMetaInformationDiscNumber;     /* NSString */
+extern NSString *const VLCMetaInformationTitle __attribute__((deprecated));          /* NSString */
+extern NSString *const VLCMetaInformationArtist __attribute__((deprecated));         /* NSString */
+extern NSString *const VLCMetaInformationGenre __attribute__((deprecated));          /* NSString */
+extern NSString *const VLCMetaInformationCopyright __attribute__((deprecated));      /* NSString */
+extern NSString *const VLCMetaInformationAlbum __attribute__((deprecated));          /* NSString */
+extern NSString *const VLCMetaInformationTrackNumber __attribute__((deprecated));    /* NSString */
+extern NSString *const VLCMetaInformationDescription __attribute__((deprecated));    /* NSString */
+extern NSString *const VLCMetaInformationRating __attribute__((deprecated));         /* NSString */
+extern NSString *const VLCMetaInformationDate __attribute__((deprecated));           /* NSString */
+extern NSString *const VLCMetaInformationSetting __attribute__((deprecated));        /* NSString */
+extern NSString *const VLCMetaInformationURL __attribute__((deprecated));            /* NSString */
+extern NSString *const VLCMetaInformationLanguage __attribute__((deprecated));       /* NSString */
+extern NSString *const VLCMetaInformationNowPlaying __attribute__((deprecated));     /* NSString */
+extern NSString *const VLCMetaInformationPublisher __attribute__((deprecated));      /* NSString */
+extern NSString *const VLCMetaInformationEncodedBy __attribute__((deprecated));      /* NSString */
+extern NSString *const VLCMetaInformationArtworkURL __attribute__((deprecated));     /* NSString */
+extern NSString *const VLCMetaInformationArtwork __attribute__((deprecated));        /* NSImage  */
+extern NSString *const VLCMetaInformationTrackID __attribute__((deprecated));        /* NSString */
+extern NSString *const VLCMetaInformationTrackTotal __attribute__((deprecated));     /* NSString */
+extern NSString *const VLCMetaInformationDirector __attribute__((deprecated));       /* NSString */
+extern NSString *const VLCMetaInformationSeason __attribute__((deprecated));         /* NSString */
+extern NSString *const VLCMetaInformationEpisode __attribute__((deprecated));        /* NSString */
+extern NSString *const VLCMetaInformationShowName __attribute__((deprecated));       /* NSString */
+extern NSString *const VLCMetaInformationActors __attribute__((deprecated));         /* NSString */
+extern NSString *const VLCMetaInformationAlbumArtist __attribute__((deprecated));    /* NSString */
+extern NSString *const VLCMetaInformationDiscNumber __attribute__((deprecated));     /* NSString */
 
 /* Notification Messages */
 /**
@@ -292,27 +292,36 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
  * \note for performance reasons, fetching the metaDictionary will be faster!
  * \see metaDictionary
  * \see dictionary keys above
+ * \deprecated use the metaData object instead
  */
-- (nullable NSString *)metadataForKey:(NSString *)key;
+- (nullable NSString *)metadataForKey:(NSString *)key __attribute__((deprecated));
 
 /**
  * set meta property for key
  * \param data the metadata to set as NSString
  * \param key the metadata key
  * \see dictionary keys above
+ * \deprecated use metaData's properties instead
  */
-- (void)setMetadata:(NSString *)data forKey:(NSString *)key;
+- (void)setMetadata:(NSString *)data forKey:(NSString *)key __attribute__((deprecated));
 
 /**
  * Save the previously changed metadata
  * \return true if saving was successful
+ * \deprecated use metaData's saving capabilities instead
  */
-@property (NS_NONATOMIC_IOSONLY, readonly) BOOL saveMetadata;
+@property (NS_NONATOMIC_IOSONLY, readonly) BOOL saveMetadata __attribute__((deprecated));
 
 /**
  * The receiver's meta data as a NSDictionary object.
+ *  \deprecated use metaData instead
  */
-@property (nonatomic, readonly, copy) NSDictionary * metaDictionary;
+@property (nonatomic, readonly, copy) NSDictionary * metaDictionary __attribute__((deprecated));
+
+/**
+ * The receiver's metadata as a self-contained object
+ */
+@property (nonatomic, readonly) VLCMediaMetaData *metaData;
 
 /**
  * The receiver's state, such as Playing, Error, NothingSpecial, Buffering.
