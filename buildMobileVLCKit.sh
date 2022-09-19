@@ -447,6 +447,16 @@ buildLibVLC() {
         fi
     else
         export BUILDWITHBITCODE=""
+        if [ "$ARCH" = "aarch64" ]; then
+            export AS="gas-preprocessor.pl ${CC}"
+            export ASCPP="gas-preprocessor.pl ${CC}"
+            export CCAS="gas-preprocessor.pl ${CC}"
+            export GASPP_FIX_XCODE5=1
+        else
+            export AS=""
+            export ASCPP=""
+            export CCAS=""
+        fi
     fi
 
     if [ "$TVOS" = "yes" ]; then
