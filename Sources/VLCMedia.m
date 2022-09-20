@@ -185,8 +185,10 @@ static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
         __strong VLCMedia *media = (VLCMedia *)eventObject.weakTarget;
         if (!media) return;
 
+        NSNumber *metaType = @(event->u.media_meta_changed.meta_type);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [media metaChanged: @(event->u.media_meta_changed.meta_type)];
+            [media metaChanged: metaType];
         });
     }
 }
