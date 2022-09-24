@@ -3,7 +3,189 @@ Version 4.0.0:
 - Remove support for ARMv7s, use the regular ARMv7 slice instead
 - Removed all API deprecated in version 3
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
+- using libvlc HEAD leading to v4
+- unified Xcode project for all 3 flavors of the framework
+- new metadata API
+- new track management and selection API
+- support for two subtitles tracks at the same time
+- new clock, time and position management with much greater precision
+    - this allows subsecond seek intervals
+- removed support to compile VLCKit as a static framework
+- disabled bitcode support by default for tvOS
+- improved nullability annotations
+- improved debug logging API
+- rewritten event management
+- fully exposed libvlc C API
 - Use NSDateComponents API for VLCTime.verboseStringValue
+
+Version 3.5.0:
+--------------
+
+- Updated to libvlc 3.0.18-rc1
+- Update libdsm to 0.4.0 plus upstream PR 160
+- Disable IPv6 mode for UPnP multimedia server handling
+- Fix UPnP IPv4 lookup regression on iOS devices
+- Fix Bonjour lookup of SMB hostnames
+- Update libsmb2 and its integration to prevent crashes and include bugfixes
+- Improve nullability declarations of the VLCKit API
+- Fix heating issue introduced through UPnP
+- Add new debug logging API and deprecate the previous
+- Fix concurrency issues in VLCMediaList
+- Fix ARC issue when handling NSStreams in VLCMedia
+- Fix crashes when using more than one logger with the new API
+- Fix busy loop in UPnP support
+- Replace VLCEventManager with an implementation based on lib dispatch
+- Distribute VLCAudio header on macOS
+- Fix crashes when handling VLCMediaLists with dynamic content
+- Add new metadata API from VLCKitv4 and deprecate the previous implementation
+- Add new VLCEventObjectManager preventing crashes on deallocation
+
+Version 3.4.0:
+--------------
+
+- Updated to libvlc 3.0.17.3
+- Add VLCFilter API to interact with the adjust video filter directly
+- Fix a crash when discovering servers on the local network
+- Fix module compatibility with Xcode 13 on macOS 12
+- Fix UPnP lookup if there more than one interface on iOS/tvOS
+- Fix debug symbols for iOS and tvOS show the full libvlc
+- Fix libvlc header distribution
+- Fix Bonjour discovery of SMB shares
+- Fix umbrella headers to not warn about the libvlc C API
+- Fix macOS umbrella header to include the renderer discoverer API
+- Fix SAT>IP support by updating libvlc
+- Fix UPnP browsing regression from previous beta (vlc-ios#1239)
+- Fix notorious heating issue caused by fallback from VideoToolbox to software
+    decoding (vlc-ios#1240)
+- Fix artwork parsing failure in ogg media (vlc-ios#953)
+- Start do add nullability declarations with more to come in the future
+
+Version 3.3.17:
+---------------
+
+- Updated to libvlc 3.0.16
+    - various playback, audio rendering and performance improvements
+- Further SMB compatibility fixes
+- Fixed a live555 RTSP connectivity issue on iOS/tvOS devices (#502)
+- Fixed a crash when setting cookies on http sessions (#494)
+- Updated cocoapods specifications (#498)
+- Added the magnify filter to the default distribution (#473)
+
+Version 3.3.16:
+---------------
+
+- Added support for Apple Silicon
+    - native execution of VLCKit on the new Macs
+    - native execution of MobileVLCKit/TVVLCKit in simulators on the new Macs
+- Reworked the framework style and distribution of Mobile-/TVVLCKit
+    - switched to dynamic instead of static frameworks
+    - adopted XCFrameworks for distribution
+    - transparent to CocoaPods users, no change needed
+- Further SMB compatibility fixes
+- Updated NFS support
+- Added support for loudness measurement based on EBU R.128
+
+Version 3.3.15:
+---------------
+
+- Updated libsmb2 to add support for SMBv3, fixed authentication and lookup regressions
+
+Version 3.3.14:
+---------------
+
+- VLCKit binaries are now compiled using Xcode 12
+    - This fixes linking for the iOS and tvOS simulator using Xcode 12
+    - This adds a hardware requirement to use Xcode 12 for linking VLCKit due to bitcode
+        - You need to compile TVVLCKit yourself if you want to continue to use Xcode 11.x
+
+- VideoToolbox decoder
+    - enforce 8bit video output due to limited OpenGL rendering capabilities
+    - this fixes hardware decoding of AVC and HEVC 10 / 12bit on iOS/tvOS 14
+
+- Chromecast
+    - Stability improvements
+
+- demux:
+    - expose m3u playlist title
+
+Version 3.3.13:
+---------------
+
+- browsing:
+    - Enable UPnP discovery based on libupnp
+
+- demux:
+    - Fix MKV module loading by resolving underlying optimization problem
+    - Fix OPUS playback when using the avcodec demuxer
+    - Fix HLS playback regression
+
+- packetizer:
+    - Fix buffer overflow in H26X packetizer (CVE-2020-13428)
+
+Version 3.3.12:
+---------------
+
+- coreaudio: fix invalid delay after a unpause
+
+- mp4: no sync table means all sync
+
+- demux:
+    - hls:
+        - remove double update need check
+        - set more accurate update time
+        - do proper schedule on update
+        - handle timescale rounding when matching segment
+    - adaptive:
+        - rely on live offset for edge control
+        - use current segment number when available
+        - fixup AnyURI
+        - set current segment start time on init
+        - fix invalid offset on start
+
+- browsing:
+    - Include libvlc's demuxdump module
+    - Fix browsing the FTP server included in Mac OS X Leopard
+
+- contrib:
+    - bump faad to 2.9.2
+    - bump libarchive to 3.4.2
+    - bump dav1d to 0.7.0
+
+Version 3.3.11:
+---------------
+
+- Fix missing modulemap for iOS and tvOS releases
+
+- demux:
+    - fix some WebVTT styling tags being not applied
+    - fix MP4 interlacing handling
+    - fix MP4 regression with twos/sowt PCM audio
+    - fix some MP4 raw quicktime and ms-PCM audio
+    - Enabled Live seeking for HLS
+    - fix seeking in some cases for HLS
+    - fix multiple adaptive stack (DASH/HLS/Smooth) issues
+    - fix adaptive regression on TS format change (mostly HLS)
+    - fix adaptive unwanted end of stream in some cases
+    - Faster adaptive start and new buffering control options
+    - Improved Live playback for Smooth and DASH
+
+- contrib:
+    - ffmpeg: backport VP9 profile 10-bit support
+    - update dca to 0.0.7
+    - update libdsm to 0.3.2
+    - update faad to 2.9.1
+    - update libebml to 1.3.10
+    - update libmatroska to 1.5.2
+    - update fontconfig to 2.13.1
+    - update freetype to 2.10.1
+    - update fribidi to 1.0.9
+
+Version 3.3.10:
+---------------
+
+- Allow http bearer tokens
+- Publish statistics on iOS and tvOS
+- Minor libvlc improvements
 
 Version 3.3.9:
 --------------
