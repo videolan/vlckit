@@ -69,7 +69,7 @@ continous-VLCKit-main:
     script:
         - ./compileAndBuildVLCKit.sh -${BUILD_PARAM}
         - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
-        - mv ${JOB_NAME}-*.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
+        - mv *.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
 
 dev-artifacts-MobileVLCKit-main:
     extends:
