@@ -155,6 +155,7 @@ buildxcodeproj()
                ${bitcodeflag} \
                ${verboseflag} \
                SKIP_INSTALL=no \
+               ONLY_ACTIVE_ARCH=NO \
                > ${out}
 }
 
