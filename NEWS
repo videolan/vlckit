@@ -1,3 +1,45 @@
+Version 3.5.0:
+--------------
+
+- Updated to libvlc 3.0.18-rc1
+- Update libdsm to 0.4.0 plus upstream PR 160
+- Disable IPv6 mode for UPnP multimedia server handling
+- Fix UPnP IPv4 lookup regression on iOS devices
+- Fix Bonjour lookup of SMB hostnames
+- Update libsmb2 and its integration to prevent crashes and include bugfixes
+- Improve nullability declarations of the VLCKit API
+- Fix heating issue introduced through UPnP
+- Add new debug logging API and deprecate the previous
+- Fix concurrency issues in VLCMediaList
+- Fix ARC issue when handling NSStreams in VLCMedia
+- Fix crashes when using more than one logger with the new API
+- Fix busy loop in UPnP support
+- Replace VLCEventManager with an implementation based on lib dispatch
+- Distribute VLCAudio header on macOS
+- Fix crashes when handling VLCMediaLists with dynamic content
+- Add new metadata API from VLCKitv4 and deprecate the previous implementation
+- Add new VLCEventObjectManager preventing crashes on deallocation
+
+Version 3.4.0:
+--------------
+
+- Updated to libvlc 3.0.17.3
+- Add VLCFilter API to interact with the adjust video filter directly
+- Fix a crash when discovering servers on the local network
+- Fix module compatibility with Xcode 13 on macOS 12
+- Fix UPnP lookup if there more than one interface on iOS/tvOS
+- Fix debug symbols for iOS and tvOS show the full libvlc
+- Fix libvlc header distribution
+- Fix Bonjour discovery of SMB shares
+- Fix umbrella headers to not warn about the libvlc C API
+- Fix macOS umbrella header to include the renderer discoverer API
+- Fix SAT>IP support by updating libvlc
+- Fix UPnP browsing regression from previous beta (vlc-ios#1239)
+- Fix notorious heating issue caused by fallback from VideoToolbox to software
+    decoding (vlc-ios#1240)
+- Fix artwork parsing failure in ogg media (vlc-ios#953)
+- Start do add nullability declarations with more to come in the future
+
 Version 3.3.17:
 ---------------
 
