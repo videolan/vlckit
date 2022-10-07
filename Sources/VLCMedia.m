@@ -594,14 +594,13 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     NSMutableArray<VLCMediaTrack *> *array = @[].mutableCopy;
     
     // 3 = (libvlc_track_audio = 0 | libvlc_track_video = 1 | libvlc_track_text = 2)
-    for (int i = 0; i < 3; i++) {
-        libvlc_track_type_t type = (libvlc_track_type_t)i;
+    for (libvlc_track_type_t type = 0; type < 3; type++) {
         libvlc_media_tracklist_t *tracklist = libvlc_media_get_tracklist(p_md, type);
         if (!tracklist) continue;
         
         size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
-        for (size_t j = 0; j < tracklistCount; j++) {
-            libvlc_media_track_t *track = libvlc_media_tracklist_at(tracklist, j);
+        for (size_t index = 0; index < tracklistCount; index++) {
+            libvlc_media_track_t *track = libvlc_media_tracklist_at(tracklist, index);
             VLCMediaTrack *info = [[VLCMediaTrack alloc] initWithMediaTrack: track];
             if (info)
                 [array addObject: info];
