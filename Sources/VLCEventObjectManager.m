@@ -77,7 +77,7 @@
         
         dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL,
                                                                              QOS_CLASS_BACKGROUND,
-                                                                             0);
+                                                                             QOS_MIN_RELATIVE_PRIORITY);
         _eventObjectsQueue = dispatch_queue_create("VLCKit.VLCEventObjectManager.eventObjectsQueue", attr);
         _dispatchAfterQueue = dispatch_queue_create("VLCKit.VLCEventObjectManager.dispatchAfterQueue", attr);
         
