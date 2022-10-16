@@ -623,21 +623,16 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     if (!p_url)
         return;
 
-    NSString *urlString = [NSString stringWithUTF8String:p_url];
-    if (!urlString) {
-        free(p_url);
-        return;
-    }
-
-    _url = [NSURL URLWithString:urlString];
-    if (!_url) /* Attempt to interpret as a file path then */ {
-         _url = [NSURL fileURLWithPath:urlString];
-         if(!_url) {
-             free(p_url);
-             return;
-         }
-    }
+    NSString *urlString = @(p_url);
     free(p_url);
+    
+    if (!urlString)
+        return;
+    
+    /* Attempt to interpret as a file path then */
+    _url = [NSURL URLWithString: urlString] ?: [NSURL fileURLWithPath: urlString];
+    if (!_url)
+        return;
 
     libvlc_media_set_user_data(p_md, (__bridge void*)self);
 
