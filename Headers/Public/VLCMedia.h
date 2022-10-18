@@ -266,6 +266,11 @@ typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<VLCMediaTrack *> *tracksInformation;
 
 /**
+ * userData is specialized data accessed by the host application.
+ */
+@property (nonatomic, nullable) id userData;
+
+/**
  * list of possible libvlc_media_filestat type.
  */
 typedef NS_ENUM(unsigned, VLCMediaFileStatType) {

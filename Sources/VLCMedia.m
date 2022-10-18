@@ -95,6 +95,7 @@ void close_cb(void *opaque) {
     void *                  p_md;                   ///< Internal media descriptor instance
     BOOL                    eventsAttached;         ///< YES when events are attached
     NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
+    _Nullable id            _userData;              /// libvlc_media_user_data
 }
 
 /* Make our properties internally readwrite */
@@ -610,6 +611,24 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     }
     
     return array;
+}
+
+- (nullable id)userData
+{
+    if (!p_md)
+        return nil;
+    
+    return (__bridge _Nullable id)libvlc_media_get_user_data(p_md);
+}
+
+- (void)setUserData:(nullable id)userData
+{
+    if (!p_md)
+        return;
+    
+    _userData = userData;
+    
+    libvlc_media_set_user_data(p_md, (__bridge void *)userData);
 }
 
 /******************************************************************************
