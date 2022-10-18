@@ -634,7 +634,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     if (!_url)
         return;
 
-    libvlc_media_set_user_data(p_md, (__bridge void*)self);
 
     libvlc_event_manager_t * p_em = libvlc_media_event_manager( p_md );
     if (p_em) {
