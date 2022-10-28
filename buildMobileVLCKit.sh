@@ -1147,14 +1147,17 @@ if [ "$TVOS" = "yes" ]; then
         platform="appletvos"
         buildxcodeproj MobileVLCKit "TVVLCKit" ${platform}
         dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
+        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder"
         bcsymbolmapfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/BCSymbolMaps
-        spushd $bcsymbolmapfolder
-        for i in `ls *.bcsymbolmap`
-        do
-            bcsymbolmap=$bcsymbolmapfolder/$i
-        done
-        spopd
-        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder -debug-symbols $bcsymbolmap"
+        if [ -d ${bcsymbolmapfolder} ];then
+            info "Bitcode support found"
+            spushd $bcsymbolmapfolder
+            for i in `ls *.bcsymbolmap`
+            do
+                frameworks+=" -debug-symbols $bcsymbolmapfolder/$i"
+            done
+            spopd
+        fi
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
