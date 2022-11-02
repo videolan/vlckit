@@ -1,4 +1,4 @@
-From 92e9c4e58c7e57fe69a9285b92f5d7a5604adb6c Mon Sep 17 00:00:00 2001
+From 8bc1d91f08fcba6f453a9b2986a36586c56654e1 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 20 Oct 2020 11:33:23 +0200
 Subject: [PATCH 29/49] lib: media_player: add stop/set_media async support
@@ -573,5 +573,5 @@ index f3198b5bcf..7f9b9d4b83 100644
  
      return 0;
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

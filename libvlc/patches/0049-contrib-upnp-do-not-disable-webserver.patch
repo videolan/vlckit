@@ -1,4 +1,4 @@
-From 8f3eb6c695bafff5d81bedf65c4f8391839cc070 Mon Sep 17 00:00:00 2001
+From 69b279820bf157ddd00dacedfe399ca5e0bc5aef Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 10 May 2022 08:24:02 +0200
 Subject: [PATCH 49/49] contrib/upnp: do not disable webserver
@@ -10,7 +10,7 @@ to an implicit activation of a mini server with a busy loop.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/src/upnp/rules.mak b/contrib/src/upnp/rules.mak
-index 7c7e6ea7b0..3af3082f0c 100644
+index 379e3ab596..5a062e7820 100644
 --- a/contrib/src/upnp/rules.mak
 +++ b/contrib/src/upnp/rules.mak
 @@ -25,7 +25,7 @@ ifdef HAVE_WINSTORE
@@ -23,5 +23,5 @@ index 7c7e6ea7b0..3af3082f0c 100644
  UPNP_CONF += --enable-ipv6
  endif
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

@@ -1,4 +1,4 @@
-From f8ff316bfe8c462a4d6741d39087eae9361816ab Mon Sep 17 00:00:00 2001
+From 96a6b14ac01856dbe736c1d36915289a11cc1274 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 21 Jun 2021 14:03:09 +0200
 Subject: [PATCH 37/49] contrib/live555: fix hostname lookup on iOS devices
@@ -87,5 +87,5 @@ index 6bf42d4b42..d475a13fcc 100644
  	mv live.$(LIVE555_VERSION) $@ && touch $@
  
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

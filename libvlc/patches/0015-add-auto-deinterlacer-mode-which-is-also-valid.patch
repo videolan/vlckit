@@ -1,4 +1,4 @@
-From bb884925ed38c4ab677516882170c425d87cde92 Mon Sep 17 00:00:00 2001
+From 34a237adeff33088af8d658b0c0db605c59b49a9 Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Mon, 30 Apr 2018 14:33:08 +0100
 Subject: [PATCH 15/49] add auto deinterlacer-mode which is also valid
@@ -22,5 +22,5 @@ index 035cc0ebf1..a3e5b248e9 100644
  
      if (*psz_mode)
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

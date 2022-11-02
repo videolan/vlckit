@@ -1,4 +1,4 @@
-From 422e1f5aade33098a6cd549f6fe592493df71b2c Mon Sep 17 00:00:00 2001
+From 46a8fababa8f0985deb72492445f3337867caed6 Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Thu, 27 Sep 2018 18:40:39 +0200
 Subject: [PATCH 23/49] libvlc: events: Add callbacks for record
@@ -70,5 +70,5 @@ index c6250f1e4a..5e530182c7 100644
      return VLC_SUCCESS;
  }
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

@@ -1,4 +1,4 @@
-From c18820365b61697db4cbbe3c91ca852558a15e39 Mon Sep 17 00:00:00 2001
+From ec7c1905a964219583019be2988a7d3559932289 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Mon, 12 Sep 2016 17:03:37 +0200
 Subject: [PATCH 08/49] contrib/gcrypt: update patches
@@ -363,5 +363,5 @@ index df97ffb488..957f268ad2 100644
   
   # Need to include ../src in addition to top_srcdir because gcrypt.h is
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

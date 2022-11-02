@@ -1,4 +1,4 @@
-From 1dbc440b3143717717c618f4c899e299bfcf689f Mon Sep 17 00:00:00 2001
+From 1193e83f4f4ce75d773cbf30c2f79d2722f794c3 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 18 Aug 2020 14:53:43 +0200
 Subject: [PATCH 34/49] ebur128: add measurement date
@@ -128,5 +128,5 @@ index b6e3964f1b..621c28fef0 100644
      if (sys->state == NULL)
      {
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

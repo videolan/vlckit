@@ -1,4 +1,4 @@
-From 5e1766fd92cb84fea335366ea7db7e940689c6fc Mon Sep 17 00:00:00 2001
+From 2b359cd807a6ed2da9ec6fa29bf081922e3623d2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 9 Mar 2022 08:15:53 +0100
 Subject: [PATCH 42/49] contrib: add support for bitcode
@@ -50,5 +50,5 @@ index 47f3428c65..4d2f7daacb 100644
  ifdef HAVE_CROSS_COMPILE
  # When cross-compiling meson uses the env vars like
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

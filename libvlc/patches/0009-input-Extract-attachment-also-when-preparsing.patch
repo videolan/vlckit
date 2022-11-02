@@ -1,4 +1,4 @@
-From d5adebb90f57e63dce01882d82b3bb9651e6101b Mon Sep 17 00:00:00 2001
+From 39128a0873262babc3dc90a08ea424f18c74c06e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
 Subject: [PATCH 09/49] input: Extract attachment also when preparsing
@@ -1399,7 +1399,7 @@ index fc7a203ab0..1f12c90765 100644
                  if( (*ppp_attach)[*pi_int] )
                      (*pi_int)++;
 diff --git a/modules/demux/ogg.c b/modules/demux/ogg.c
-index 5161275870..2b4bdca7d2 100644
+index fc4fe78af3..a0a419aa4a 100644
 --- a/modules/demux/ogg.c
 +++ b/modules/demux/ogg.c
 @@ -835,7 +835,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
@@ -1411,7 +1411,7 @@ index 5161275870..2b4bdca7d2 100644
              return VLC_SUCCESS;
          }
  
-@@ -2293,7 +2293,7 @@ static void Ogg_EndOfStream( demux_t *p_demux )
+@@ -2295,7 +2295,7 @@ static void Ogg_EndOfStream( demux_t *p_demux )
      p_ogg->p_meta = NULL;
  
      for(int i=0; i<p_ogg->i_attachments; i++)
@@ -1835,5 +1835,5 @@ index db7f4030b9..8454600451 100644
 +vlc_input_attachment_Hold
 +vlc_input_attachment_Release
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 

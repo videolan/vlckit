@@ -1,4 +1,4 @@
-From b130a9ebc0ef88729d8c5c6359a7f3184943265b Mon Sep 17 00:00:00 2001
+From 379c2c61432ff18f848813d8ea9c21b9e1793d22 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 22 Mar 2022 12:32:47 +0100
 Subject: [PATCH 43/49] contrib/upnp: disable IPv6 support on iOS
@@ -8,7 +8,7 @@ Subject: [PATCH 43/49] contrib/upnp: disable IPv6 support on iOS
  1 file changed, 4 insertions(+)
 
 diff --git a/contrib/src/upnp/rules.mak b/contrib/src/upnp/rules.mak
-index 0148b0d105..7c7e6ea7b0 100644
+index 02de3bb83c..379e3ab596 100644
 --- a/contrib/src/upnp/rules.mak
 +++ b/contrib/src/upnp/rules.mak
 @@ -24,8 +24,12 @@ endif
@@ -25,5 +25,5 @@ index 0148b0d105..7c7e6ea7b0 100644
  UPNP_CONF += --enable-debug
  endif
 -- 
-2.32.1 (Apple Git-133)
+2.37.1 (Apple Git-137.1)
 
