@@ -556,6 +556,22 @@ typedef NS_ENUM(NSUInteger, VLCAudioStereoMode) {
  */
 @property (nonatomic) VLCAudioStereoMode audioStereoMode;
 
+typedef NS_ENUM(unsigned, VLCAudioMixMode)
+{
+    VLCAudioMixModeUnset = 0,
+    VLCAudioMixModeStereo = 1,
+    VLCAudioMixModeBinaural = 2,
+    VLCAudioMixMode4_0 = 3,
+    VLCAudioMixMode5_1 = 4,
+    VLCAudioMixMode7_1 = 5,
+} NS_SWIFT_NAME(VLCMediaPlayer.AudioMixMode);
+
+/**
+ * sets/ returns the current audio mix mode
+ * \return the currently set audio mix mode
+ */
+@property (nonatomic) VLCAudioMixMode audioMixMode;
+
 /**
  * Get the current audio delay. Positive values means audio is delayed further,
  * negative values less.
