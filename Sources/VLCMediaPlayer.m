@@ -289,8 +289,11 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
     int64_t _minimalWatchTimePeriod;            ///< Minimal period for the watch timer
-    __block NSTimer *_timeChangeUpdateTimer;    ///< Timer used to update time watch point interpolation on regular intervals
 }
+
+/// Timer used to update time watch point interpolation on regular intervals
+@property (nonatomic) NSTimer *timeChangeUpdateTimer;
+
 @end
 
 @implementation VLCMediaPlayer
@@ -358,6 +361,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _timeChangeUpdateInterval = 1.0;
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
+        _minimalWatchTimePeriod = 500000;
 
         _privateLibrary = library;
         libvlc_retain([_privateLibrary instance]);
@@ -1018,30 +1022,10 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     dispatch_async(_libVLCBackgroundQueue, ^{
         libvlc_media_player_play(_playerInstance);
     });
-    __weak VLCMediaPlayer *weak_player = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_timeChangeUpdateTimer invalidate];
-        [weak_player timeChangeUpdate];
-        _timeChangeUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:_timeChangeUpdateInterval
-                                                                 repeats:YES
-                                                                   block:^(NSTimer * _Nonnull timer) {
-            VLCMediaPlayer *player = weak_player;
-            if (player == nil) {
-                [timer invalidate];
-                return;
-            }
-            [player timeChangeUpdate];
-        }];
-    });
 }
 
 - (void)pause
 {
-    __weak VLCMediaPlayer *weak_player = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        VLCMediaPlayer *player = weak_player;
-        [_timeChangeUpdateTimer invalidate];
-    });
     // Pause the stream
     dispatch_async(_libVLCBackgroundQueue, ^{
         libvlc_media_player_set_pause(_playerInstance, 1);
@@ -1050,9 +1034,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)stop
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_timeChangeUpdateTimer invalidate];
-    });
     libvlc_media_player_stop_async(_playerInstance);
 }
 
@@ -1307,6 +1288,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _timeChangeUpdateInterval = 1.0;
         _cachedState = VLCMediaPlayerStateStopped;
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
+        _minimalWatchTimePeriod = 500000;
 
         // Create a media instance, it doesn't matter what library we start off with
         // it will change depending on the media descriptor provided to the media
@@ -1412,6 +1394,8 @@ static const struct event_handler_entry
     _timeDiscontinuityState = NO;
     _systemDateOfDiscontinuity = 0;
     _lastTimePoint = newTimePoint;
+    _lastInterpolatedTime = newTimePoint.ts_us;
+    _lastInterpolatedPosition = newTimePoint.position;
 }
 
 - (void)mediaPlayerHandleTimeDiscontinuity:(int64_t)systemDate
@@ -1425,11 +1409,30 @@ static const struct event_handler_entry
 {
     [self willChangeValueForKey:@"state"];
     _cachedState = newState;
-    if ( ! [self isPlaying] ) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [_timeChangeUpdateTimer invalidate];
-        });
-    }
+    
+    __weak VLCMediaPlayer *weak_player = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __block VLCMediaPlayer *player = weak_player;
+        if (player == nil) {
+            return;
+        }
+        [player.timeChangeUpdateTimer invalidate];
+        [player timeChangeUpdate];
+        if (![player isPlaying])
+            return;
+        player.timeChangeUpdateTimer =
+            [NSTimer scheduledTimerWithTimeInterval:player.timeChangeUpdateInterval
+                                            repeats:YES
+                                              block:^(NSTimer * _Nonnull timer) {
+                player = weak_player;
+                if (player == nil) {
+                    [timer invalidate];
+                    return;
+                }
+                [player timeChangeUpdate];
+            }];
+    });
+    
 #if TARGET_OS_IPHONE
     // Disable idle timer if player is playing media
     // Exclusion can be made for audio only media
