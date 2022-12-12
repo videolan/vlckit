@@ -235,6 +235,7 @@ typedef NS_ENUM(NSUInteger, VLCMediaType) {
 typedef NS_ENUM(unsigned, VLCMediaParsedStatus)
 {
     VLCMediaParsedStatusInit = 0,
+    VLCMediaParsedStatusPending,
     VLCMediaParsedStatusSkipped,
     VLCMediaParsedStatusFailed,
     VLCMediaParsedStatusTimeout,
