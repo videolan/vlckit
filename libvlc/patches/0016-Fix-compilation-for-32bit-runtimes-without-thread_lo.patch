@@ -1,7 +1,7 @@
-From dac3bf5fd3e9d98677cd733e776ba1d8c0624cd2 Mon Sep 17 00:00:00 2001
+From 6d6c9705fc3834d8d63b23a252f751d0b740ecf0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:48:14 +0200
-Subject: [PATCH 17/18] Fix compilation for 32bit runtimes without thread_local
+Subject: [PATCH 16/18] Fix compilation for 32bit runtimes without thread_local
 
 ---
  compat/tdestroy.c    | 67 ++++++++++++++++++++++++++------------------
@@ -139,7 +139,7 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 88d9ebd762..1e034cf65c 100644
+index c41a6c6eea..97c28e053c 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
 @@ -506,7 +506,13 @@ void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int

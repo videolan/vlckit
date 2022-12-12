@@ -1,7 +1,7 @@
-From 864225d55413e016b43d1c8581012217f94ac29f Mon Sep 17 00:00:00 2001
+From 820d16d06f245bcd4b285323f6dea430fbf95ff7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 16 Feb 2021 17:04:59 +0100
-Subject: [PATCH 10/18] contrib/ffmpeg: fix cross-compilation for macOS on
+Subject: [PATCH 18/18] contrib/ffmpeg: fix cross-compilation for macOS on
  macOS
 
 ---
@@ -9,13 +9,13 @@ Subject: [PATCH 10/18] contrib/ffmpeg: fix cross-compilation for macOS on
  1 file changed, 2 insertions(+)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 0aa82fdeac..309b1edc0e 100644
+index 26fa669173..49d0fc3c16 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -139,6 +139,8 @@ FFMPEGCONF += --enable-pic --extra-ldflags="$(EXTRA_CFLAGS) -isysroot $(IOS_SDK)
- ifdef HAVE_NEON
- FFMPEGCONF += --as="$(AS)"
+@@ -144,6 +144,8 @@ FFMPEGCONF += --cpu=core2
  endif
+ ifdef HAVE_IOS
+ FFMPEGCONF += --enable-pic --extra-ldflags="$(EXTRA_CFLAGS) -isysroot $(IOS_SDK)"
 +else
 +FFMPEGCONF += --enable-pic --extra-ldflags="$(EXTRA_CFLAGS) -isysroot $(MACOSX_SDK)"
  endif

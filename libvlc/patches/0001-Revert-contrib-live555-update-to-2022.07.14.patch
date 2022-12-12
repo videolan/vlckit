@@ -1,4 +1,4 @@
-From 74447e5968dd74711368c53106eeef2ca49c63ed Mon Sep 17 00:00:00 2001
+From 13cb8b406cf20d352390006d74373fb3dc354608 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:59:13 +0200
 Subject: [PATCH 01/18] Revert "contrib: live555: update to 2022.07.14"
@@ -585,7 +585,7 @@ index 0000000000..a1dea30fbc
 + 			     char const* rangeParamsStr, char const* rtpInfoParamsStr);
 +   Boolean handleTEARDOWNResponse(MediaSession& session, MediaSubsession& subsession);
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index 03b97e776c..e62dd1f325 100644
+index ed6b873ee1..80fe4ef78c 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,6 +1,6 @@
