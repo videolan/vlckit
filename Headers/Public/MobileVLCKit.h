@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: MobileVLCKit
  *****************************************************************************
- * Copyright (C) 2010-2013 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2022 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org
@@ -29,6 +29,7 @@
 #import <MobileVLCKit/VLCMediaPlayer.h>
 #import <MobileVLCKit/VLCMediaListPlayer.h>
 #import <MobileVLCKit/VLCMediaThumbnailer.h>
+#import <MobileVLCKit/VLCMediaMetaData.h>
 #import <MobileVLCKit/VLCDialogProvider.h>
 #import <MobileVLCKit/VLCTime.h>
 #import <MobileVLCKit/VLCTranscoder.h>
@@ -36,7 +37,6 @@
 #import <MobileVLCKit/VLCRendererItem.h>
 #import <MobileVLCKit/VLCFilter.h>
 #import <MobileVLCKit/VLCAdjustFilter.h>
-#import <MobileVLCKit/VLCMediaMetaData.h>
 #import <MobileVLCKit/VLCLogging.h>
 #import <MobileVLCKit/VLCConsoleLogger.h>
 #import <MobileVLCKit/VLCFileLogger.h>

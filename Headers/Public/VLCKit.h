@@ -26,7 +26,6 @@
 #import <VLCKit/VLCLibrary.h>
 #import <VLCKit/VLCMedia.h>
 #import <VLCKit/VLCMediaDiscoverer.h>
-#import <VLCKit/VLCMediaLibrary.h>
 #import <VLCKit/VLCMediaList.h>
 #import <VLCKit/VLCMediaPlayer.h>
 #import <VLCKit/VLCMediaListPlayer.h>
@@ -49,7 +48,6 @@
 #import <VLCKit/VLCLogMessageFormatter.h>
 
 @class VLCMedia;
-@class VLCMediaLibrary;
 @class VLCMediaList;
 @class VLCTime;
 @class VLCVideoView;
@@ -57,13 +55,13 @@
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
-@class VLCMediaMetaData;
 @class VLCDialogProvider;
 @class VLCRendererDiscoverer;
 @class VLCRendererDiscovererDescription;
 @class VLCRendererItem;
 @class VLCFilterParameter;
 @class VLCAdjustFilter;
+@class VLCMediaMetaData;
 @class VLCConsoleLogger;
 @class VLCFileLogger;
 @class VLCLogMessageFormatter;

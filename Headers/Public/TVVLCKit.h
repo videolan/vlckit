@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: TVVLCKit
  *****************************************************************************
- * Copyright (C) 2010-2013 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2022 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org
@@ -29,9 +29,9 @@
 #import <TVVLCKit/VLCMediaPlayer.h>
 #import <TVVLCKit/VLCMediaListPlayer.h>
 #import <TVVLCKit/VLCMediaThumbnailer.h>
-#import <TVVLCKit/VLCTime.h>
-#import <TVVLCKit/VLCDialogProvider.h>
 #import <TVVLCKit/VLCMediaMetaData.h>
+#import <TVVLCKit/VLCDialogProvider.h>
+#import <TVVLCKit/VLCTime.h>
 #import <TVVLCKit/VLCFilter.h>
 #import <TVVLCKit/VLCAdjustFilter.h>
 #import <TVVLCKit/VLCLogging.h>
@@ -47,10 +47,10 @@
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
+@class VLCDialogProvider;
+@class VLCFilterParameter;
+@class VLCAdjustFilter;
 @class VLCMediaMetaData;
 @class VLCConsoleLogger;
 @class VLCFileLogger;
 @class VLCLogMessageFormatter;
-@class VLCFilterParameterValue;
-@class VLCFilterParameter;
-@class VLCAdjustFilter;
