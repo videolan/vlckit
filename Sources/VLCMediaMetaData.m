@@ -29,6 +29,7 @@
     __weak VLCMedia *_media;
     NSMutableDictionary<NSNumber *, id> *_metaCache;
     VLCPlatformImage * _Nullable _artwork;
+    dispatch_queue_t _metaCacheAccessQueue;
 }
 
 - (instancetype)initWithMedia:(VLCMedia *)media
@@ -36,6 +37,10 @@
     if (self = [super init]) {
         _media = media;
         _metaCache = @{}.mutableCopy;
+        dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_CONCURRENT,
+                                                                             QOS_CLASS_UTILITY,
+                                                                             0);
+        _metaCacheAccessQueue = dispatch_queue_create("VLCKit.VLCMediaMetaData.metaCacheAccessQueue", attr);
     }
     return self;
 }
@@ -326,7 +331,9 @@
 
 - (void)clearCache
 {
-    [_metaCache removeAllObjects];
+    dispatch_barrier_async(_metaCacheAccessQueue, ^{
+        [_metaCache removeAllObjects];
+    });
 }
 
 
@@ -364,8 +371,11 @@
         case libvlc_meta_Director:
         case libvlc_meta_ShowName:
         case libvlc_meta_Actors:
-        case libvlc_meta_AlbumArtist:
-            _metaCache[@(key)] = [self metadataStringForKey: key];
+        case libvlc_meta_AlbumArtist: {
+            dispatch_barrier_async(_metaCacheAccessQueue, ^{
+                _metaCache[@(key)] = [self metadataStringForKey: key];
+            });
+        }
             break;
             
         // NSNumber
@@ -375,14 +385,20 @@
         case libvlc_meta_Season:
         case libvlc_meta_Episode:
         case libvlc_meta_DiscNumber:
-        case libvlc_meta_DiscTotal:
-            _metaCache[@(key)] = [self metadataNumberForKey: key];
+        case libvlc_meta_DiscTotal: {
+            dispatch_barrier_async(_metaCacheAccessQueue, ^{
+                _metaCache[@(key)] = [self metadataNumberForKey: key];
+            });
+        }
             break;
             
         // NSURL
         case libvlc_meta_URL:
-        case libvlc_meta_ArtworkURL:
-            _metaCache[@(key)] = [self metadataURLForKey: key];
+        case libvlc_meta_ArtworkURL: {
+            dispatch_barrier_async(_metaCacheAccessQueue, ^{
+                _metaCache[@(key)] = [self metadataURLForKey: key];
+            });
+        }
             break;
             
         default:
@@ -393,14 +409,26 @@
 
 /* cache get */
 
-- (nullable NSString *)stringForKey:(const libvlc_meta_t)key
+- (nullable id)cacheValueForKey:(const libvlc_meta_t)key
 {
     NSNumber *cacheKey = @(key);
-    id cacheValue = _metaCache[cacheKey];
+    
+    __block id cacheValue = nil;
+    dispatch_sync(_metaCacheAccessQueue, ^{
+        cacheValue = _metaCache[cacheKey];
+    });
     if (!cacheValue) {
         [self fetchMetaDataForKey: key];
-        cacheValue = _metaCache[cacheKey];
+        dispatch_sync(_metaCacheAccessQueue, ^{
+            cacheValue = _metaCache[cacheKey];
+        });
     }
+    return cacheValue;
+}
+
+- (nullable NSString *)stringForKey:(const libvlc_meta_t)key
+{
+    id cacheValue = [self cacheValueForKey: key];
     if ([cacheValue isKindOfClass: NSString.class])
         return (NSString *)cacheValue;
     
@@ -409,12 +437,7 @@
 
 - (nullable NSURL *)urlForKey:(const libvlc_meta_t)key
 {
-    NSNumber *cacheKey = @(key);
-    id cacheValue = _metaCache[cacheKey];
-    if (!cacheValue) {
-        [self fetchMetaDataForKey: key];
-        cacheValue = _metaCache[cacheKey];
-    }
+    id cacheValue = [self cacheValueForKey: key];
     if ([cacheValue isKindOfClass: NSURL.class])
         return (NSURL *)cacheValue;
     
@@ -423,14 +446,9 @@
 
 - (unsigned)unsignedForKey:(const libvlc_meta_t)key
 {
-    NSNumber *cacheKey = @(key);
-    id cacheValue = _metaCache[cacheKey];
-    if (!cacheValue) {
-        [self fetchMetaDataForKey: key];
-        cacheValue = _metaCache[cacheKey];
-    }
+    id cacheValue = [self cacheValueForKey: key];
     if ([cacheValue isKindOfClass: NSNumber.class])
-        return (unsigned)[(NSNumber *)cacheValue intValue];
+        return [(NSNumber *)cacheValue unsignedIntValue];
     
     return 0;
 }
