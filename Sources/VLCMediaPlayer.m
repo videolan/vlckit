@@ -851,14 +851,14 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 #pragma mark -
 #pragma mark Audio tracks
 
-- (void)setAudioChannel:(int)value
+- (void)setAudioStereoMode:(VLCAudioStereoMode)value
 {
-    libvlc_audio_set_channel(_playerInstance, value);
+    libvlc_audio_set_stereomode(_playerInstance, (libvlc_audio_output_stereomode_t)value);
 }
 
-- (int)audioChannel
+- (VLCAudioStereoMode)audioStereoMode
 {
-    return libvlc_audio_get_channel(_playerInstance);
+    return (VLCAudioStereoMode)libvlc_audio_get_stereomode(_playerInstance);
 }
 
 - (void)setCurrentAudioPlaybackDelay:(NSInteger)index

@@ -538,10 +538,23 @@ NSString *const VLCTitleDescriptionIsMenu;
 #pragma mark audio functionality
 
 /**
- * sets / returns the current audio channel
- * \return the currently set audio channel
+ *  Audio output stereo modes to match `libvlc_audio_output_stereomode_t`
  */
-@property (NS_NONATOMIC_IOSONLY) int audioChannel;
+typedef NS_ENUM(NSUInteger, VLCAudioStereoMode) {
+    VLCAudioStereoModeUnset = 0,
+    VLCAudioStereoModeStereo = 1,
+    VLCAudioStereoModeRStereo = 2,
+    VLCAudioStereoModeLeft = 3,
+    VLCAudioStereoModeRight = 4,
+    VLCAudioStereoModeDolbys = 5,
+    VLCAudioStereoModeMono = 7
+} NS_SWIFT_NAME(VLCMediaPlayer.AudioStereoMode);
+
+/**
+ * sets / returns the current audio output stereo mode
+ * \return the currently set audio output stereo mode
+ */
+@property (nonatomic) VLCAudioStereoMode audioStereoMode;
 
 /**
  * Get the current audio delay. Positive values means audio is delayed further,
