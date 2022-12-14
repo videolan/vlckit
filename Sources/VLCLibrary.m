@@ -258,7 +258,10 @@ static VLCLogLevel logLevelFromLibvlcLevel(int level) {
 
 static VLCLogContext* logContextFromLibvlcLogContext(const libvlc_log_t *ctx) {
     VLCLogContext *context = nil;
-    if (ctx) {
+    if (ctx == NULL)
+        return NULL;
+
+    @autoreleasepool {
         context = [VLCLogContext new];
         context.objectId = ctx->i_object_id;
         context.objectType = [NSString stringWithUTF8String:ctx->psz_object_type];
