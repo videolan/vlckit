@@ -742,6 +742,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         libvlc_media_retain(md);
         p_md = md;
         
+        _userData = (__bridge _Nullable id)libvlc_media_get_user_data(p_md);
         [self initInternalMediaDescriptor];
     }
     return self;
