@@ -1007,8 +1007,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
          }
     }
     free(p_url);
-
-    libvlc_media_set_user_data(p_md, (__bridge void*)self);
     
     _eventObject = [VLCEventObjectManager.sharedManager registerEventObjectWithTarget: self descriptor: p_md descriptorReleaseBlock:^(void * _Nonnull descriptor) {
         libvlc_media_release(descriptor);
