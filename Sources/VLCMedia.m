@@ -129,6 +129,7 @@ void close_cb(void *opaque) {
     NSMutableDictionary     *_metaDictionary;       ///< Dictionary to cache metadata read from libvlc
     NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
     VLCEventObject          *_eventObject;
+    _Nullable id            _userData;              /// libvlc_media_user_data
 }
 
 /* Make our properties internally readwrite */
@@ -821,6 +822,24 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     return array;
 }
 
+- (nullable id)userData
+{
+    if (!p_md)
+        return nil;
+    
+    return (__bridge _Nullable id)libvlc_media_get_user_data(p_md);
+}
+
+- (void)setUserData:(nullable id)userData
+{
+    if (!p_md)
+        return;
+    
+    _userData = userData;
+    
+    libvlc_media_set_user_data(p_md, (__bridge void *)userData);
+}
+
 - (BOOL)isMediaSizeSuitableForDevice
 {
 #if TARGET_OS_IPHONE
@@ -1215,7 +1234,7 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
         p_md = md;
 
         _metaDictionary = [[NSMutableDictionary alloc] initWithCapacity:3];
-
+        _userData = (__bridge _Nullable id)libvlc_media_get_user_data(p_md);
         [self initInternalMediaDescriptor];
     }
     return self;

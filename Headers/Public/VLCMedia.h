@@ -500,6 +500,11 @@ extern NSString *const VLCMediaTracksInformationTypeUnknown;
 @property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *tracksInformation;
 
 /**
+ * userData is specialized data accessed by the host application.
+ */
+@property (nonatomic, nullable) id userData;
+
+/**
  * Start asynchronously to parse the media.
  * This will attempt to fetch the meta data and tracks information.
  *
