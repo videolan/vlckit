@@ -513,6 +513,10 @@
         return;
     
     libvlc_media_set_meta(media_t, key, data);
+    
+    dispatch_barrier_async(_metaCacheAccessQueue, ^{
+        [_metaCache removeObjectForKey: @(key)];
+    });
 }
 
 - (void)setString:(nullable NSString *)str forKey:(const libvlc_meta_t)key
