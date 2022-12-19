@@ -816,6 +816,35 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return selected;
 }
 
+- (BOOL)isSelectedExclusively
+{
+    libvlc_media_player_t *p_mi = (libvlc_media_player_t*)_mediaPlayer.libVLCMediaPlayer;
+    assert(p_mi);
+
+    const char *psz_id = [self.trackId UTF8String];
+    libvlc_media_track_t *track_t = libvlc_media_player_get_track_from_id(p_mi, psz_id);
+    if (!track_t)
+        return NO;
+
+    const BOOL selected = track_t->selected;
+    // TODO: check only selected
+    libvlc_media_track_release(track_t);
+    return selected;
+}
+
+- (void)setSelectedExclusively:(BOOL)selected
+{
+    libvlc_media_player_t *p_mi = (libvlc_media_player_t *)_mediaPlayer.libVLCMediaPlayer;
+    if (!p_mi)
+        return;
+
+    const char *psz_id = self.trackId.UTF8String;
+    libvlc_media_track_t *track_t = libvlc_media_player_get_track_from_id(p_mi, psz_id);
+    if (!track_t)
+        return;
+    libvlc_media_player_select_track(p_mi, track_t);
+    libvlc_media_track_release(track_t);
+}
 - (void)setSelected:(BOOL)selected
 {
     libvlc_media_player_t *p_mi = (libvlc_media_player_t *)_mediaPlayer.libVLCMediaPlayer;
