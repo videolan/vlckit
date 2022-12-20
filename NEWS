@@ -1,7 +1,13 @@
+Version 3.5.1:
+--------------
+- Add missing references to the VLCKit umbrella header (macOS only)
+- Ensure thread safety for metadata handling
+- Minor bug fixes
+
 Version 3.5.0:
 --------------
 
-- Updated to libvlc 3.0.18-rc1
+- Updated to libvlc 3.0.18
 - Update libdsm to 0.4.0 plus upstream PR 160
 - Disable IPv6 mode for UPnP multimedia server handling
 - Fix UPnP IPv4 lookup regression on iOS devices
