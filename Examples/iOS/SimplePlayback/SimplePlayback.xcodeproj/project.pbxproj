@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C070B3D296821A30071E861 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */; };
+		6C070B3E296821A30071E861 /* MobileVLCKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B369183BA71600FF0D25 /* UIKit.framework */; };
 		7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36B183BA71600FF0D25 /* Foundation.framework */; };
 		7D11B374183BA71600FF0D25 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B372183BA71600FF0D25 /* InfoPlist.strings */; };
@@ -17,8 +19,21 @@
 		7D11B380183BA71600FF0D25 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B37F183BA71600FF0D25 /* Default-568h@2x.png */; };
 		7D11B383183BA71600FF0D25 /* VDLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D11B382183BA71600FF0D25 /* VDLViewController.m */; };
 		7D11B386183BA71600FF0D25 /* VDLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B384183BA71600FF0D25 /* VDLViewController.xib */; };
-		7DB6E0DD285A150F004EAF04 /* MobileVLCKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6C070B3F296821A30071E861 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				6C070B3E296821A30071E861 /* MobileVLCKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7D11B366183BA71600FF0D25 /* SimplePlayback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplePlayback.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,7 +60,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */,
-				7DB6E0DD285A150F004EAF04 /* MobileVLCKit.xcframework in Frameworks */,
+				6C070B3D296821A30071E861 /* MobileVLCKit.xcframework in Frameworks */,
 				7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,6 +132,7 @@
 				7D11B362183BA71600FF0D25 /* Sources */,
 				7D11B363183BA71600FF0D25 /* Frameworks */,
 				7D11B364183BA71600FF0D25 /* Resources */,
+				6C070B3F296821A30071E861 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -228,6 +244,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -251,6 +268,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
