@@ -965,27 +965,20 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         return;
     
     const libvlc_track_type_t type = (libvlc_track_type_t)self.type;
-    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(p_mi, type, false);
-    if (!tracklist)
+    libvlc_media_tracklist_t *selected_tracklist_t = libvlc_media_player_get_tracklist(p_mi, type, true);
+    if (!selected_tracklist_t)
         return;
     
-    NSString * const ownTrackId = self.trackId;
-    
-    NSMutableArray<NSString *> *selectedTrackIDs = @[].mutableCopy;
-    BOOL isSameTrack = NO;
-    
-    const size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
-    for (size_t i = 0; i < tracklistCount; i++) {
-        libvlc_media_track_t *track_t = libvlc_media_tracklist_at(tracklist, i);
-        if (track_t->selected) {
-            NSString * const selectedTrackId = @(track_t->psz_id);
-            [selectedTrackIDs addObject: selectedTrackId];
-            if (!isSameTrack && [selectedTrackId isEqualToString: ownTrackId]) {
-                isSameTrack = YES;
-            }
-        }
+    const size_t selectedTracklistCount = libvlc_media_tracklist_count(selected_tracklist_t);
+    NSMutableArray<NSString *> *selectedTrackIDs = [NSMutableArray arrayWithCapacity: (NSUInteger)selectedTracklistCount];
+    for (size_t i = 0; i < selectedTracklistCount; i++) {
+        libvlc_media_track_t *selected_track_t = libvlc_media_tracklist_at(selected_tracklist_t, i);
+        [selectedTrackIDs addObject: @(selected_track_t->psz_id)];
     }
-    libvlc_media_tracklist_delete(tracklist);
+    libvlc_media_tracklist_delete(selected_tracklist_t);
+    
+    NSString * const ownTrackId = _trackId;
+    const BOOL isSameTrack = [selectedTrackIDs containsObject: ownTrackId];
     
     // already selected || already deselected
     if ((selected && isSameTrack) || (!selected && !isSameTrack))
