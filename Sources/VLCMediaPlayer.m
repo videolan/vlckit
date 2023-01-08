@@ -531,15 +531,21 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     libvlc_video_set_crop_ratio(_playerInstance, numerator, denominator);
 }
 
-- (void)setVideoAspectRatio:(char *)value
+- (void)setVideoAspectRatio:(nullable NSString *)videoAspectRatio
 {
-    libvlc_video_set_aspect_ratio(_playerInstance, value);
+    libvlc_video_set_aspect_ratio(_playerInstance, videoAspectRatio.UTF8String);
 }
 
-- (char *)videoAspectRatio
+- (nullable NSString *)videoAspectRatio
 {
     char * result = libvlc_video_get_aspect_ratio(_playerInstance);
-    return result;
+    if (!result)
+        return nil;
+    
+    NSString *aspectRatio = @(result);
+    libvlc_free(result);
+    
+    return aspectRatio;
 }
 
 - (void)setScaleFactor:(float)value

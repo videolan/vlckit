@@ -246,9 +246,8 @@ OBJC_VISIBLE
  * param: psz_aspect new video aspect-ratio or NULL to reset to default
  * \note Invalid aspect ratios are ignored.
  * \return the video aspect ratio or NULL if unspecified
- * (the result must be released with free()).
  */
-@property (NS_NONATOMIC_IOSONLY, nullable) char *videoAspectRatio;
+@property (nonatomic, copy, nullable) NSString *videoAspectRatio;
 
 /**
  * This function forces a crop ratio on any and all video tracks rendered by
