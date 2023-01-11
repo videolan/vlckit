@@ -538,6 +538,35 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 #endif
 }
 
+- (VLCMediaStats)statistics
+{
+    if (!p_md) {
+        VLCMediaStats stats = { 0 };
+        return stats;
+    }
+    
+    libvlc_media_stats_t p_stats;
+    libvlc_media_get_stats(p_md, &p_stats);
+    VLCMediaStats stats = {
+        .readBytes          = p_stats.i_read_bytes,
+        .inputBitrate       = p_stats.f_input_bitrate,
+        .demuxReadBytes     = p_stats.i_demux_read_bytes,
+        .demuxBitrate       = p_stats.f_demux_bitrate,
+        .demuxCorrupted     = p_stats.i_demux_corrupted,
+        .demuxDiscontinuity = p_stats.i_demux_discontinuity,
+        .decodedVideo       = p_stats.i_decoded_video,
+        .decodedAudio       = p_stats.i_decoded_audio,
+        .displayedPictures  = p_stats.i_displayed_pictures,
+        .lostPictures       = p_stats.i_lost_pictures,
+        .playedAudioBuffers = p_stats.i_played_abuffers,
+        .lostAudioBuffers   = p_stats.i_lost_abuffers,
+        .sentPackets        = p_stats.i_sent_packets,
+        .sentBytes          = p_stats.i_sent_bytes,
+        .sendBitrate        = p_stats.f_send_bitrate
+    };
+    return stats;
+}
+
 - (nullable NSDictionary *)stats
 {
     if (!p_md)

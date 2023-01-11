@@ -609,6 +609,57 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 - (void)clearStoredCookies;
 
 /**
+ * media statistics information
+ */
+struct VLCMediaStats
+{
+    /* Input */
+    const int         readBytes;
+    const float       inputBitrate;
+    /* Demux */
+    const int         demuxReadBytes;
+    const float       demuxBitrate;
+    const int         demuxCorrupted;
+    const int         demuxDiscontinuity;
+    /* Decoders */
+    const int         decodedVideo;
+    const int         decodedAudio;
+    /* Video Output */
+    const int         displayedPictures;
+    const int         lostPictures;
+    /* Audio output */
+    const int         playedAudioBuffers;
+    const int         lostAudioBuffers;
+    /* Stream output */
+    const int         sentPackets;
+    const int         sentBytes;
+    const float       sendBitrate;
+} NS_SWIFT_NAME(VLCMedia.Stats);
+typedef struct VLCMediaStats VLCMediaStats;
+
+/// media statistics information
+///
+/// - Parameters:
+///   - readBytes: the number of bytes read by the current input module.
+///   - inputBitrate: the current input bitrate. may be 0 if the buffer is full.
+///   - demuxReadBytes: the number of bytes read by the current demux module.
+///   - demuxBitrate: the current demux bitrate. may be 0 if the buffer is empty.
+///   - demuxCorrupted: the total number of corrupted data packets during current sout session.
+///   value is 0 on non-stream-output operations.
+///   - demuxDiscontinuity: the total number of discontinuties during current sout session.
+///   value is 0 on non-stream-output operations.
+///   - decodedVideo: the total number of decoded video blocks in the current media session.
+///   - decodedAudio: the total number of decoded audio blocks in the current media session.
+///   - displayedPictures: the total number of displayed pictures during the current media session.
+///   - lostPictures: the total number of pictures lost during the current media session.
+///   - playedAudioBuffers: the total number of played audio buffers during the current media session.
+///   - lostAudioBuffers: the total number of audio buffers lost during the current media session.
+///   - sentPackets: the total number of packets sent during the current media session.
+///   - sentBytes: the total number of raw bytes sent during the current media session.
+///   - sendBitrate: the current bitrate of sent bytes.
+@property (nonatomic, readonly) VLCMediaStats statistics;
+
+/**
  * Getter for statistics information
  * Returns a NSDictionary with NSNumbers for values.
  *
