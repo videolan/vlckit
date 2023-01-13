@@ -1128,17 +1128,14 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 - (void)resetEqualizerFromProfile:(unsigned)profile
 {
-    BOOL wasactive = NO;
     if (_equalizerInstance) {
         libvlc_media_player_set_equalizer(_playerInstance, NULL);
         libvlc_audio_equalizer_release(_equalizerInstance);
         _equalizerInstance = nil;
-        wasactive = YES;
     }
 
     _equalizerInstance = libvlc_audio_equalizer_new_from_preset(profile);
-    if (wasactive)
-        libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
+    [self setEqualizerEnabled: YES];
 }
 
 - (CGFloat)preAmplification
@@ -1155,7 +1152,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _equalizerInstance = libvlc_audio_equalizer_new();
 
     libvlc_audio_equalizer_set_preamp(_equalizerInstance, preAmplification);
-    libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
+    [self setEqualizerEnabled: YES];
 }
 
 - (unsigned)numberOfBands
@@ -1174,6 +1171,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
         _equalizerInstance = libvlc_audio_equalizer_new();
 
     libvlc_audio_equalizer_set_amp_at_index(_equalizerInstance, amplification, index);
+    [self setEqualizerEnabled: YES];
 }
 
 - (CGFloat)amplificationOfBand:(unsigned int)index
