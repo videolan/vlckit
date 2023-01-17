@@ -193,6 +193,50 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
     }
 }
 
+static VLCMediaTrackType GetMediaTrackType(libvlc_track_type_t trackType)
+{
+    switch (trackType)
+    {
+        case libvlc_track_audio:
+            return VLCMediaTrackTypeAudio;
+        case libvlc_track_text:
+            return VLCMediaTrackTypeText;
+        case libvlc_track_video:
+            return VLCMediaTrackTypeVideo;
+        default:
+            return VLCMediaTrackTypeUnknown;
+    }
+}
+
+static void HandleMediaPlayerTrackChanged(const libvlc_event_t *event, void *self)
+{
+    @autoreleasepool {
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        const char *name = event->u.media_player_es_changed.psz_id;
+        NSString *trackName = [NSString stringWithUTF8String:name];
+        VLCMediaTrackType trackType = GetMediaTrackType(
+            event->u.media_player_es_changed.i_type);
+        libvlc_event_type_t event_type = event->type;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            switch (event->type)
+            {
+                case libvlc_MediaPlayerESAdded:
+                    [mediaPlayer.delegate mediaPlayerTrackAdded:trackName withType:trackType];
+                    break;
+                case libvlc_MediaPlayerESUpdated:
+                    [mediaPlayer.delegate mediaPlayerTrackUpdated:trackName withType:trackType];
+                    break;
+                case libvlc_MediaPlayerESDeleted:
+                    [mediaPlayer.delegate mediaPlayerTrackRemoved:trackName withType:trackType];
+                    break;
+                default:
+                    return; // TODO unreachable
+            }
+        });
+    }
+}
+
 static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
@@ -1273,6 +1317,10 @@ static const struct event_handler_entry
     { libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged },
+
+    { libvlc_MediaPlayerESAdded,          HandleMediaPlayerTrackChanged },
+    { libvlc_MediaPlayerESDeleted,        HandleMediaPlayerTrackChanged },
+    { libvlc_MediaPlayerESUpdated,        HandleMediaPlayerTrackChanged },
 
     { libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged  },
 

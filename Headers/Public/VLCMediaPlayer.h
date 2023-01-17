@@ -34,6 +34,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSInteger, VLCMediaTrackType) NS_SWIFT_NAME(VLCMedia.TrackType);
 @class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCMediaPlayerTrack, VLCAdjustFilter, VLCAudioEqualizer;
 #if !TARGET_OS_IPHONE
 @class VLCVideoView, VLCVideoLayer;
@@ -108,6 +109,32 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * the VLCMediaPlayer object in question by sending object to aNotification.
  */
 - (void)mediaPlayerStateChanged:(NSNotification *)aNotification;
+
+/**
+ * Called when the media player signal that a new track is available
+ * for selection.
+ * \param trackId the track identifier to find the track
+ * \param trackType the type of track, whether it's audio, spu or video
+ */
+- (void)mediaPlayerTrackAdded:(NSString *)trackId
+                     withType:(VLCMediaTrackType)trackType;
+
+/**
+ * Called when the media player signal that a track is not available
+ * anymore for selection.
+ * \param trackId the track identifier to find the track
+ * \param trackType the type of track, whether it's audio, spu or video
+ */
+- (void)mediaPlayerTrackRemoved:(NSString *)trackId
+                       withType:(VLCMediaTrackType)trackType;
+
+/**
+ * Called when the media player signal that a track has been updated.
+ * \param trackId the track identifier to find the track
+ * \param trackType the type of track, whether it's audio, spu or video
+ */
+- (void)mediaPlayerTrackUpdated:(NSString *)trackId
+                       withType:(VLCMediaTrackType)trackType;
 
 /**
  * Sent by the default notification center whenever the player's time has changed.
