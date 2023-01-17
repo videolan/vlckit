@@ -137,6 +137,17 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
                        withType:(VLCMediaTrackType)trackType;
 
 /**
+ * Called when the media player signal some track has been selected or
+ * deselected.
+ * \param selectedId the track identifier to find the track that was selected
+ * \param unselectedId the track identifier to find the track that was unselected
+ * \param trackType the type of track, whether it's audio, spu or video
+ */
+- (void)mediaPlayerTrackSelected:(VLCMediaTrackType)trackType
+                      selectedId:(NSString *)unselectedId
+                    unselectedId:(NSString*)unselectedId;
+
+/**
  * Sent by the default notification center whenever the player's time has changed.
  * \details Discussion The value of aNotification is always an VLCMediaPlayerTimeChanged notification. You can retrieve
  * the VLCMediaPlayer object in question by sending object to aNotification.

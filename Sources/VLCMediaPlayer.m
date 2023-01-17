@@ -237,6 +237,25 @@ static void HandleMediaPlayerTrackChanged(const libvlc_event_t *event, void *sel
     }
 }
 
+static void HandleMediaPlayerTrackSelectionChanged(const libvlc_event_t *event, void *self)
+{
+    @autoreleasepool {
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        const char *selected = event->u.media_player_es_selection_changed.psz_selected_id;
+        NSString *selectedId = selected ? [NSString stringWithUTF8String:selected] : nil;
+        const char *unselected = event->u.media_player_es_selection_changed.psz_unselected_id;
+        NSString *unselectedId = unselected ? [NSString stringWithUTF8String:unselected] : nil;
+        VLCMediaTrackType trackType = GetMediaTrackType(
+            event->u.media_player_es_changed.i_type);
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer.delegate mediaPlayerTrackSelected:trackType
+                                                selectedId:selectedId
+                                              unselectedId:unselectedId];
+        });
+    }
+}
+
 static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * self)
 {
     @autoreleasepool {
@@ -1321,6 +1340,7 @@ static const struct event_handler_entry
     { libvlc_MediaPlayerESAdded,          HandleMediaPlayerTrackChanged },
     { libvlc_MediaPlayerESDeleted,        HandleMediaPlayerTrackChanged },
     { libvlc_MediaPlayerESUpdated,        HandleMediaPlayerTrackChanged },
+    { libvlc_MediaPlayerESSelected,       HandleMediaPlayerTrackSelectionChanged },
 
     { libvlc_MediaPlayerMediaChanged,     HandleMediaPlayerMediaChanged  },
 
