@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (C) Pierre d'Herbemont, 2010
-# Copyright (C) Felix Paul Kühne, 2012-2021
+# Copyright (C) Felix Paul Kühne, 2012-2023
 
 set -e
 
@@ -496,7 +496,6 @@ if [ "$SKIPLIBVLCCOMPILATION" != "yes" ]; then
     spushd ${VLCROOT}/extras/tools
     ./bootstrap
     make
-    make .buildgas
     spopd #${VLCROOT}/extras/tools
 fi
 
