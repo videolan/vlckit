@@ -310,9 +310,11 @@ build_simulator_static_lib() {
     check_lipo "${OSSTYLE}simulator" x86_64
     check_lipo "${OSSTYLE}simulator" arm64
 
-    spushd ${VLCROOT}
-    lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-simulator/libvlc-simulator-static.a
-    spopd # VLCROOT
+    if [ ! -z "${VLCSTATICLIBS}" ]; then
+        spushd ${VLCROOT}
+        lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-simulator/libvlc-simulator-static.a
+        spopd # VLCROOT
+    fi
 }
 
 build_device_static_lib() {
@@ -339,9 +341,11 @@ build_device_static_lib() {
     check_lipo "${OSSTYLE}" x86_64
     check_lipo "${OSSTYLE}" arm64
 
-    spushd ${VLCROOT}
-    lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-device/libvlc-device-static.a
-    spopd # VLCROOT
+    if [ ! -z "${VLCSTATICLIBS}" ]; then
+        spushd ${VLCROOT}
+        lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-device/libvlc-device-static.a
+        spopd # VLCROOT
+    fi
 }
 
 while getopts "hvsfbrxntl7k:a:e:" OPTION
