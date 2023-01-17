@@ -1,7 +1,7 @@
-From 4e29797dee4513c7a161f7923b108da8cad74652 Mon Sep 17 00:00:00 2001
+From 203c30833a3a7112e7b75bb7233bc62715643e1d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 14 Aug 2020 13:22:10 +0200
-Subject: [PATCH 33/49] lib: media_player: add loudness event
+Subject: [PATCH 33/48] lib: media_player: add loudness event
 
 ---
  include/vlc/libvlc_events.h |  6 ++++++
@@ -117,7 +117,7 @@ index 33dc76b971..d8d1a1b9d6 100644
      return p_input_thread;
  }
 diff --git a/src/audio_output/output.c b/src/audio_output/output.c
-index 75d273ad25..adda871139 100644
+index ee835ed9a2..d0ef9a5345 100644
 --- a/src/audio_output/output.c
 +++ b/src/audio_output/output.c
 @@ -334,7 +334,7 @@ audio_output_t *aout_New (vlc_object_t *parent)
@@ -130,5 +130,5 @@ index 75d273ad25..adda871139 100644
      var_Create (aout, "ebur128-fullmeter", VLC_VAR_BOOL);
  
 -- 
-2.37.1 (Apple Git-137.1)
+2.32.1 (Apple Git-133)
 

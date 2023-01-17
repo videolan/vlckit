@@ -1,7 +1,7 @@
-From 1193e83f4f4ce75d773cbf30c2f79d2722f794c3 Mon Sep 17 00:00:00 2001
+From c0296f097840c0f07fee72ed49f31c2122e84d79 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 18 Aug 2020 14:53:43 +0200
-Subject: [PATCH 34/49] ebur128: add measurement date
+Subject: [PATCH 34/48] ebur128: add measurement date
 
 ---
  include/vlc/libvlc_events.h       |  7 +++++++
@@ -29,7 +29,7 @@ index fef21ba4fc..dfef931136 100644
          } media_player_loudness_changed;
  
 diff --git a/include/vlc_aout.h b/include/vlc_aout.h
-index b4928cc2b2..6bcd1747f9 100644
+index a958c1b6d4..4e2e5a251f 100644
 --- a/include/vlc_aout.h
 +++ b/include/vlc_aout.h
 @@ -114,6 +114,12 @@
@@ -128,5 +128,5 @@ index b6e3964f1b..621c28fef0 100644
      if (sys->state == NULL)
      {
 -- 
-2.37.1 (Apple Git-137.1)
+2.32.1 (Apple Git-133)
 

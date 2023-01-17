@@ -1,7 +1,7 @@
-From 8a81c6d70a040ec75fcf10274330e0dc50b579a5 Mon Sep 17 00:00:00 2001
+From 22bd46991a23a68590f3417bc0c6d8dfaa67eff0 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 13 Aug 2020 15:55:24 +0200
-Subject: [PATCH 30/49] aout: add "audio-meter" filter type
+Subject: [PATCH 30/48] aout: add "audio-meter" filter type
 
 ---
  include/vlc_aout.h         | 14 ++++++++++++++
@@ -10,7 +10,7 @@ Subject: [PATCH 30/49] aout: add "audio-meter" filter type
  3 files changed, 37 insertions(+)
 
 diff --git a/include/vlc_aout.h b/include/vlc_aout.h
-index 62338bae4f..b4928cc2b2 100644
+index 5025c70b95..a958c1b6d4 100644
 --- a/include/vlc_aout.h
 +++ b/include/vlc_aout.h
 @@ -112,6 +112,20 @@
@@ -51,7 +51,7 @@ index 585379e7c3..43bd4ff5d4 100644
      output_format.i_rate = input_format.i_rate;
      if (aout_FiltersPipelineCreate (obj, filters->tab, &filters->count,
 diff --git a/src/audio_output/output.c b/src/audio_output/output.c
-index a1294110be..75d273ad25 100644
+index bb8e4c3c9e..ee835ed9a2 100644
 --- a/src/audio_output/output.c
 +++ b/src/audio_output/output.c
 @@ -171,6 +171,18 @@ static int FilterCallback (vlc_object_t *obj, const char *var,
@@ -101,5 +101,5 @@ index a1294110be..75d273ad25 100644
      var_DelCallback (aout, "volume", var_Copy, aout->obj.parent);
      var_DelCallback (aout, "stereo-mode", StereoModeCallback, NULL);
 -- 
-2.37.1 (Apple Git-137.1)
+2.32.1 (Apple Git-133)
 

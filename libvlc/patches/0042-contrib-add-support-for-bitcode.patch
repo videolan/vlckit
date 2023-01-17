@@ -1,7 +1,7 @@
-From 2b359cd807a6ed2da9ec6fa29bf081922e3623d2 Mon Sep 17 00:00:00 2001
+From 871d3fca3bbec5ad34c89c12936a9ed875d53d85 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 9 Mar 2022 08:15:53 +0100
-Subject: [PATCH 42/49] contrib: add support for bitcode
+Subject: [PATCH 42/48] contrib: add support for bitcode
 
 ---
  contrib/bootstrap    | 4 ++++
@@ -24,7 +24,7 @@ index 4e0fd82a88..16fce10829 100755
  	*bsd*)
  		add_make_enabled "HAVE_BSD"
 diff --git a/contrib/src/main.mak b/contrib/src/main.mak
-index 47f3428c65..4d2f7daacb 100644
+index ffa2e01d98..585af01778 100644
 --- a/contrib/src/main.mak
 +++ b/contrib/src/main.mak
 @@ -314,6 +314,11 @@ CFLAGS := $(CFLAGS) -g -O2
@@ -50,5 +50,5 @@ index 47f3428c65..4d2f7daacb 100644
  ifdef HAVE_CROSS_COMPILE
  # When cross-compiling meson uses the env vars like
 -- 
-2.37.1 (Apple Git-137.1)
+2.32.1 (Apple Git-133)
 

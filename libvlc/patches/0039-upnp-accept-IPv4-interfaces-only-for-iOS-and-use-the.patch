@@ -1,7 +1,7 @@
-From d65d8ed1194889ecd4436d28f2e49280195a437c Mon Sep 17 00:00:00 2001
+From 8567db773fe56fe41b98e3331219c17f255e6ded Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 19 Nov 2021 13:23:20 +0100
-Subject: [PATCH 39/49] upnp: accept IPv4 interfaces only for iOS and use the
+Subject: [PATCH 39/48] upnp: accept IPv4 interfaces only for iOS and use the
  last discovered
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 39/49] upnp: accept IPv4 interfaces only for iOS and use the
  1 file changed, 8 insertions(+), 4 deletions(-)
 
 diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
-index 728c727031..5aa5bc038d 100644
+index 899f5ab9ae..f9853334c0 100644
 --- a/modules/services_discovery/upnp.cpp
 +++ b/modules/services_discovery/upnp.cpp
 @@ -1607,10 +1607,14 @@ inline char *getPreferedAdapter()
@@ -32,5 +32,5 @@ index 728c727031..5aa5bc038d 100644
  
          anInterface = anInterface->ifa_next;
 -- 
-2.37.1 (Apple Git-137.1)
+2.32.1 (Apple Git-133)
 
