@@ -63,7 +63,6 @@ typedef NS_ENUM(NSInteger, VLCMediaPlayerState)
     VLCMediaPlayerStateError,          ///< Player has generated an error
     VLCMediaPlayerStatePlaying,        ///< Stream is playing
     VLCMediaPlayerStatePaused,         ///< Stream is paused
-    VLCMediaPlayerStateLengthChanged   ///< Length changed
 };
 
 /**
@@ -146,6 +145,8 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (void)mediaPlayerTrackSelected:(VLCMediaTrackType)trackType
                       selectedId:(NSString *)unselectedId
                     unselectedId:(NSString*)unselectedId;
+
+- (void)mediaPlayerLengthChanged:(int64_t)length;
 
 /**
  * Sent by the default notification center whenever the player's time has changed.

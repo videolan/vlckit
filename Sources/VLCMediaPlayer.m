@@ -172,9 +172,6 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
         case libvlc_MediaPlayerOpening:
             newState = VLCMediaPlayerStateOpening;
             break;
-        case libvlc_MediaPlayerLengthChanged:
-            newState = VLCMediaPlayerStateLengthChanged;
-            break;
 
         default:
             VKLog(@"%s: Unknown event", __FUNCTION__);
@@ -306,6 +303,17 @@ static void HandleMediaChapterChanged(const libvlc_event_t * event, void * self)
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerChapterChanged:)])
                 [mediaPlayer.delegate mediaPlayerChapterChanged: notification];
+        });
+    }
+}
+
+static void HandleMediaPlayerLengthChanged(const libvlc_event_t *event, void *self)
+{
+    @autoreleasepool {
+        VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
+        libvlc_time_t length = event->u.media_player_length_changed.new_length;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [mediaPlayer.delegate mediaPlayerLengthChanged:length];
         });
     }
 }
@@ -1336,6 +1344,8 @@ static const struct event_handler_entry
     { libvlc_MediaPlayerStopped,          HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerOpening,          HandleMediaInstanceStateChanged },
     { libvlc_MediaPlayerBuffering,        HandleMediaInstanceStateChanged },
+
+    { libvlc_MediaPlayerLengthChanged,    HandleMediaPlayerLengthChanged },
 
     { libvlc_MediaPlayerESAdded,          HandleMediaPlayerTrackChanged },
     { libvlc_MediaPlayerESDeleted,        HandleMediaPlayerTrackChanged },
