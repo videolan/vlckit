@@ -268,6 +268,26 @@ get_symbol()
     echo "$1" | grep vlc_entry_$2|cut -d" " -f 3|sed 's/_vlc/vlc/'
 }
 
+function check_lipo {
+    os_style="$1"
+    os_arch="$2"
+    header=""
+    if [ -z "${os_style%%*simulator}" ]; then
+        header=vlc-plugins-${os_style%simulator}-simulator-${os_arch}.h
+    else
+        header=vlc-plugins-${os_style%os}-device-${os_arch}.h
+    fi
+
+    build_dir="${VLCROOT}/build-${os_style}-${os_arch}"
+    if [ -d "${build_dir}" ]; then
+        VLCSTATICLIBS+=" ${build_dir}/${VLCSTATICLIBRARYNAME}"
+        VLCSTATICMODULELIST="${build_dir}/static-lib/static-module-list.c"
+        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/${header}
+    else
+        echo "Directory ${build_dir} doesn't exist"
+    fi
+}
+
 build_simulator_static_lib() {
     PROJECT_DIR=`pwd`
     OSSTYLE="$1"
@@ -287,23 +307,11 @@ build_simulator_static_lib() {
     VLCSTATICMODULELIST=""
 
     # brute-force test the available architectures we could lipo
-    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-x86_64 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-x86_64/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-x86_64/static-lib/static-module-list.c"
-        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator-x86_64.h
-    fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-arm64 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-arm64/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-arm64/static-lib/static-module-list.c"
-        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator-arm64.h
-    fi
+    check_lipo "${OSSTYLE}simulator" x86_64
+    check_lipo "${OSSTYLE}simulator" arm64
 
     spushd ${VLCROOT}
-
     lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-simulator/libvlc-simulator-static.a
-
-
-
     spopd # VLCROOT
 }
 
@@ -325,31 +333,14 @@ build_device_static_lib() {
     VLCSTATICMODULELIST=""
 
     # brute-force test the available architectures we could lipo
-    if [ -d ${VLCROOT}/build-${OSSTYLE}os-arm64 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-arm64/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-arm64/static-lib/static-module-list.c"
-        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-arm64.h
-    fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}os-armv7 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}os-armv7/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}os-armv7/static-lib/static-module-list.c"
-        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-armv7.h
-    fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}-x86_64 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-x86_64/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-x86_64/static-lib/static-module-list.c"
-        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-x86_64.h
-    fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}-arm64 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}-arm64/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}-arm64/static-lib/static-module-list.c"
-        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-device-arm64.h
-    fi
+    check_lipo "${OSSTYLE}os" arm64
+    check_lipo "${OSSTYLE}os" armv7
+    # macosx is not -os or -simulator suffixed in the script unfortunately.
+    check_lipo "${OSSTYLE}" x86_64
+    check_lipo "${OSSTYLE}" arm64
 
     spushd ${VLCROOT}
-
     lipo $VLCSTATICLIBS -create -output install-$OSSTYLE-device/libvlc-device-static.a
-
     spopd # VLCROOT
 }
 
