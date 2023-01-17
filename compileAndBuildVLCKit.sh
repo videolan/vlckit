@@ -427,7 +427,7 @@ if [ "$VERBOSE" = "yes" ]; then
    out="/dev/stdout"
 fi
 
-if [ "x$1" != "x" ]; then
+if [ "$1" != "" ]; then
     usage
     exit 1
 fi
