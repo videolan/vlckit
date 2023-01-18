@@ -241,6 +241,8 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
 - (void)playItemAtNumber:(NSNumber *)index
 {
     dispatch_async(_libVLCBackgroundQueue, ^{
+        VLCMedia *media = [_mediaList mediaAtIndex:[index intValue]];
+        _mediaPlayer.media = media;
         libvlc_media_list_player_play_item_at_index(instance, [index intValue]);
     });
 }
