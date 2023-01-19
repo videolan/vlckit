@@ -34,7 +34,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCAdjustFilter;
+@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCAdjustFilter, VLCAudioEqualizer;
 #if !TARGET_OS_IPHONE
 @class VLCVideoView, VLCVideoLayer;
 #endif // !TARGET_OS_IPHONE
@@ -662,6 +662,9 @@ extern NSString *const VLCTitleDescriptionIsMenu;
 #pragma mark -
 #pragma mark equalizer
 
+/// equalizer
+@property (nonatomic, nullable) VLCAudioEqualizer *equalizer;
+
 /**
  * Get a list of available equalizer profiles
  * \note Current versions do not allow the addition of further profiles
@@ -669,50 +672,50 @@ extern NSString *const VLCTitleDescriptionIsMenu;
  *
  * \return array of equalizer profiles
  */
-@property (weak, readonly) NSArray *equalizerProfiles;
+@property (weak, readonly) NSArray *equalizerProfiles DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 /**
  * Re-set the equalizer to a profile retrieved from the list
  * \note This doesn't enable the Equalizer automagically
  */
-- (void)resetEqualizerFromProfile:(unsigned)profile;
+- (void)resetEqualizerFromProfile:(unsigned)profile DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 /**
  * Toggle equalizer state
  * param: bool value to enable/disable the equalizer
  * \note this can fail, if failed the value will not be changed
  * \return current state */
-@property (readwrite) BOOL equalizerEnabled;
+@property (readwrite) BOOL equalizerEnabled DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 /**
  * Set amplification level
  * param: The supplied amplification value will be clamped to the -20.0 to +20.0 range.
  * \note this will create and enabled an Equalizer instance if not present
  * \return current amplification level */
-@property (readwrite) CGFloat preAmplification;
+@property (readwrite) CGFloat preAmplification DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 /**
  * Number of equalizer bands
  * \return the number of equalizer bands available in the current release */
-@property (readonly) unsigned numberOfBands;
+@property (readonly) unsigned numberOfBands DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 /**
  * frequency of equalizer band
  * \param index the band index
  * \return frequency of the requested equalizer band */
-- (CGFloat)frequencyOfBandAtIndex:(unsigned)index;
+- (CGFloat)frequencyOfBandAtIndex:(unsigned)index DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 /**
  * set amplification for band
  * \param amplification value (clamped to the -20.0 to +20.0 range)
  * \param index of the respective band */
-- (void)setAmplification:(CGFloat)amplification forBand:(unsigned)index;
+- (void)setAmplification:(CGFloat)amplification forBand:(unsigned)index DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 /**
  * amplification of band
  * \param index of the band
  * \return current amplification value (clamped to the -20.0 to +20.0 range) */
-- (CGFloat)amplificationOfBand:(unsigned)index;
+- (CGFloat)amplificationOfBand:(unsigned)index DEPRECATED_MSG_ATTRIBUTE("Use -[VLCMediaPlayer equalizer] instead");
 
 #pragma mark -
 #pragma mark media handling
