@@ -29,6 +29,7 @@
 #import <VLCKit/VLCMediaLibrary.h>
 #import <VLCKit/VLCMediaList.h>
 #import <VLCKit/VLCMediaPlayer.h>
+#import <VLCKit/VLCAudioEqualizer.h>
 #import <VLCKit/VLCMediaListPlayer.h>
 #import <VLCKit/VLCMediaThumbnailer.h>
 #import <VLCKit/VLCMediaMetaData.h>
@@ -57,6 +58,9 @@
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
+@class VLCAudioEqualizer;
+@class VLCAudioEqualizerBand;
+@class VLCAudioEqualizerPreset;
 @class VLCMediaMetaData;
 @class VLCDialogProvider;
 @class VLCRendererDiscoverer;

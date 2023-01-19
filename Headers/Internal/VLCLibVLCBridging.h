@@ -31,6 +31,7 @@
 #import <VLCMedia.h>
 #import <VLCAudio.h>
 #import <VLCMediaMetaData.h>
+#import <VLCAudioEqualizer.h>
 #if !TARGET_OS_TV
 #import <VLCRendererItem.h>
 #endif // !TARGET_OS_TV
@@ -192,5 +193,14 @@
 - (instancetype)initWithMedia:(VLCMedia *)media;
 
 - (void)handleMediaMetaChanged:(libvlc_meta_t)type;
+
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCAudioEqualizer implementation.
+ */
+@interface VLCAudioEqualizer (LibVLCBridging)
+
+- (void)setMediaPlayer:(nullable VLCMediaPlayer *)mediaPlayer;
 
 @end
