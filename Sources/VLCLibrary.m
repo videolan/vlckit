@@ -27,6 +27,7 @@
 #import <VLCLibVLCBridging.h>
 #import <VLCConsoleLogger.h>
 #import <VLCFileLogger.h>
+#import <VLCEventsHandler.h>
 
 #if TARGET_OS_TV
 # include "vlc-plugins-AppleTV.h"
@@ -86,6 +87,22 @@ static VLCLibrary * sharedLibrary = nil;
 @end
 
 @implementation VLCLibrary
+
+static id<VLCEventsConfiguring> _sharedEventsConfiguration = nil;
+
++ (nullable id<VLCEventsConfiguring>)sharedEventsConfiguration
+{
+    return _sharedEventsConfiguration;
+}
+
++ (void)setSharedEventsConfiguration:(nullable id<VLCEventsConfiguring>)value
+{
+    _sharedEventsConfiguration = value;
+}
+
++ (void)load {
+    [self setSharedEventsConfiguration:[VLCEventsDefaultConfiguration new]];
+}
 
 + (VLCLibrary *)sharedLibrary
 {

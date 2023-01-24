@@ -26,7 +26,7 @@
 #import <Foundation/Foundation.h>
 
 @class VLCAudio, VLCMediaList, VLCMedia;
-@protocol VLCLogging;
+@protocol VLCLogging, VLCEventsConfiguring;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -42,6 +42,8 @@ NS_ASSUME_NONNULL_BEGIN
  * Furthermore, you cannot destroy any instance of VLCLibrary; this is done automatically by the dynamic link loader.
  */
 @interface VLCLibrary : NSObject
+
+@property (class, nonatomic, nullable) id<VLCEventsConfiguring> sharedEventsConfiguration;
 
 /**
  * Returns the library's shared instance
