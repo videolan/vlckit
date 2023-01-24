@@ -25,7 +25,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol VLCLogging;
+@protocol VLCLogging, VLCEventsConfiguring;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 OBJC_VISIBLE
 @interface VLCLibrary : NSObject
+
+@property (class, nonatomic, nullable) id<VLCEventsConfiguring> sharedEventsConfiguration;
 
 /**
  * Returns the library's shared instance

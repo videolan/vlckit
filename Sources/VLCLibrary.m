@@ -27,6 +27,7 @@
 #import <VLCLibVLCBridging.h>
 #import <VLCConsoleLogger.h>
 #import <VLCFileLogger.h>
+#import <VLCEventsHandler.h>
 
 /* VLC features different module lists per platform but also per architecture
  * so there is not a single slice with the same modules as the other */
@@ -85,6 +86,22 @@ static VLCLibrary * sharedLibrary = nil;
 @end
 
 @implementation VLCLibrary
+
+static id<VLCEventsConfiguring> _sharedEventsConfiguration = nil;
+
++ (nullable id<VLCEventsConfiguring>)sharedEventsConfiguration
+{
+    return _sharedEventsConfiguration;
+}
+
++ (void)setSharedEventsConfiguration:(nullable id<VLCEventsConfiguring>)value
+{
+    _sharedEventsConfiguration = value;
+}
+
++ (void)load {
+    [self setSharedEventsConfiguration:[VLCEventsDefaultConfiguration new]];
+}
 
 + (VLCLibrary *)sharedLibrary
 {
