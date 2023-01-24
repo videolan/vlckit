@@ -31,6 +31,7 @@
 #import <VLCLibVLCBridging.h>
 #import <VLCTime.h>
 #import <VLCMediaMetaData.h>
+#import <VLCEventsHandler.h>
 #import <vlc/libvlc.h>
 #import <sys/sysctl.h> // for sysctlbyname
 
@@ -93,9 +94,9 @@ void close_cb(void *opaque) {
 @interface VLCMedia()
 {
     void *                  p_md;                   ///< Internal media descriptor instance
-    BOOL                    eventsAttached;         ///< YES when events are attached
     NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
     _Nullable id            _userData;              /// libvlc_media_user_data
+    VLCEventsHandler*       _eventsHandler;          /// handles libvlc callbacks
 }
 
 /* Make our properties internally readwrite */
@@ -113,45 +114,49 @@ void close_cb(void *opaque) {
 /******************************************************************************
  * LibVLC Event Callback
  */
-static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaMetaChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCMedia *media = (__bridge VLCMedia *)self;
         const libvlc_meta_t meta_type = event->u.media_meta_changed.meta_type;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [media metaChanged: meta_type];
-        });
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
+            [media metaChanged:meta_type];
+        }];
     }
 }
 
-static void HandleMediaDurationChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaDurationChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCMedia *media = (__bridge VLCMedia *)self;
         VLCTime *time = [VLCTime timeWithNumber: @(event->u.media_duration_changed.new_duration)];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [media setLength: time];
-        });
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
+            [media setLength:time];
+        }];
     }
 }
 
-static void HandleMediaSubItemAdded(const libvlc_event_t * event, void * self)
+static void HandleMediaSubItemAdded(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCMedia *media = (__bridge VLCMedia *)self;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
             [media subItemAdded];
-        });
+        }];
     }
 }
 
-static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaParsedChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCMedia *media = (__bridge VLCMedia *)self;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
             [media parsedChanged];
-        });
+        }];
     }
 }
 
@@ -242,7 +247,7 @@ static const struct event_handler_entry {
 
 - (void)dealloc
 {
-    if (eventsAttached)
+    if (_eventsHandler)
     {
         /* We unbind each event from the handler defined in the table above. */
         libvlc_event_manager_t * p_em = libvlc_media_event_manager(p_md);
@@ -250,7 +255,7 @@ static const struct event_handler_entry {
         for (size_t i=0; i<entry_count; ++i)
         {
             const struct event_handler_entry *entry = &event_entries[i];
-            libvlc_event_detach(p_em, entry->type, entry->callback, (__bridge void *)(self));
+            libvlc_event_detach(p_em, entry->type, entry->callback, (__bridge void *)(_eventsHandler));
         }
     }
 
@@ -508,10 +513,11 @@ static const struct event_handler_entry {
     /* We bind each event to the handler defined in the table above. */
     libvlc_event_manager_t * p_em = libvlc_media_event_manager(p_md);
     size_t entry_count = sizeof(event_entries)/sizeof(event_entries[0]);
+    _eventsHandler = [VLCEventsHandler handlerWithObject:self configuration:[VLCLibrary sharedEventsConfiguration]];
     for (size_t i=0; i<entry_count; ++i)
     {
-      const struct event_handler_entry *entry = &event_entries[i];
-      libvlc_event_attach(p_em, entry->type, entry->callback, (__bridge void *)(self));
+        const struct event_handler_entry *entry = &event_entries[i];
+        libvlc_event_attach(p_em, entry->type, entry->callback, (__bridge void *)(_eventsHandler));
     }
 
     libvlc_media_list_t * p_mlist = libvlc_media_subitems( p_md );
