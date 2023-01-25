@@ -28,6 +28,7 @@
 #import <VLCMediaList.h>
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
+#import <VLCEventsHandler.h>
 #ifdef HAVE_CONFIG_H
 # include "config.h"
 #endif
@@ -51,7 +52,7 @@ NSNotificationName const VLCMediaListItemDeletedNotification = @"VLCMediaListIte
 @end
 
 /* libvlc event callback */
-static void HandleMediaListItemAdded(const libvlc_event_t * event, void * user_data)
+static void HandleMediaListItemAdded(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
         libvlc_media_t * item = event->u.media_list_item_added.item;
@@ -63,8 +64,9 @@ static void HandleMediaListItemAdded(const libvlc_event_t * event, void * user_d
             return;
         
         const NSUInteger index = (NSUInteger)event->u.media_list_item_added.index;
-        VLCMediaList *mediaList = (__bridge VLCMediaList *)user_data;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaList *mediaList = (VLCMediaList *)object;
             NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex: index];
             [mediaList willChange: NSKeyValueChangeInsertion valuesAtIndexes: indexSet forKey: @"media"];
             
@@ -79,11 +81,11 @@ static void HandleMediaListItemAdded(const libvlc_event_t * event, void * user_d
                                                                          object: mediaList
                                                                        userInfo: @{@"index":@(index)}];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
-        });
+        }];
     }
 }
 
-static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * user_data)
+static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
         libvlc_media_t * item = event->u.media_list_item_added.item;
@@ -95,8 +97,9 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
             return;
         
         const NSUInteger index = (NSUInteger)event->u.media_list_item_deleted.index;
-        VLCMediaList *mediaList = (__bridge VLCMediaList *)user_data;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaList *mediaList = (VLCMediaList *)object;
             NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex: index];
             [mediaList willChange: NSKeyValueChangeRemoval valuesAtIndexes: indexSet forKey: @"media"];
             
@@ -111,7 +114,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
                                                                          object: mediaList
                                                                        userInfo: @{@"index":@(index)}];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
-        });
+        }];
     }
 }
 
@@ -121,6 +124,7 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     /* We need that private copy because of Cocoa Bindings, that need to be working on first thread */
     NSMutableArray<VLCMedia *> *_mediaObjects;                   ///< Private copy of media objects.
     dispatch_queue_t _serialMediaObjectsQueue;      ///< Queue for accessing and modifying the mediaobjects
+    VLCEventsHandler*       _eventsHandler;          /// handles libvlc event callbacks
 }
 @end
 
@@ -161,8 +165,8 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
 {
     libvlc_event_manager_t *em = libvlc_media_list_event_manager(p_mlist);
     if (em) {
-        libvlc_event_detach(em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
-        libvlc_event_detach(em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
+        libvlc_event_detach(em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(_eventsHandler));
+        libvlc_event_detach(em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(_eventsHandler));
     }
     
     // Release allocated memory
@@ -318,12 +322,13 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * use
     libvlc_event_manager_t *em = libvlc_media_list_event_manager(p_mlist);
     if (!em)
         return;
-
+    
+    _eventsHandler = [VLCEventsHandler handlerWithObject:self configuration:[VLCLibrary sharedEventsConfiguration]];
     /* We need the caller to wait until this block is done.
      * The initialized object shall not be returned until the event attachments are done. */
     dispatch_sync(_serialMediaObjectsQueue,^{
-        libvlc_event_attach( em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(self));
-        libvlc_event_attach( em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(self));
+        libvlc_event_attach( em, libvlc_MediaListItemAdded,   HandleMediaListItemAdded,   (__bridge void *)(_eventsHandler));
+        libvlc_event_attach( em, libvlc_MediaListItemDeleted, HandleMediaListItemDeleted, (__bridge void *)(_eventsHandler));
     });
 }
 
