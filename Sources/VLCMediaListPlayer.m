@@ -31,6 +31,7 @@
 #import <VLCMediaList.h>
 #import <VLCLibVLCBridging.h>
 #import <VLCLibrary.h>
+#import <VLCEventsHandler.h>
 
 @interface VLCMediaListPlayer () {
     void *instance;
@@ -39,41 +40,45 @@
     VLCMediaList *_mediaList;
     VLCRepeatMode _repeatMode;
     dispatch_queue_t _libVLCBackgroundQueue;
+    VLCEventsHandler* _eventsHandler;
 }
 - (void)mediaListPlayerPlayed;
 - (void)mediaListPlayerNextItemSet:(VLCMedia *)media;
 - (void)mediaListPlayerStopped;
 @end
 
-static void HandleMediaListPlayerPlayed(const libvlc_event_t * event, void * self)
+static void HandleMediaListPlayerPlayed(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCMediaListPlayer *mediaListPlayer = (__bridge VLCMediaListPlayer *)self;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaListPlayer *mediaListPlayer = (VLCMediaListPlayer *)object;
             [mediaListPlayer mediaListPlayerPlayed];
-        });
+        }];
     }
 }
 
-static void HandleMediaListPlayerNextItemSet(const libvlc_event_t * event, void * self)
+static void HandleMediaListPlayerNextItemSet(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
         VLCMedia *media = [[VLCMedia alloc]
                            initWithLibVLCMediaDescriptor:event->u.media_list_player_next_item_set.item];
-        VLCMediaListPlayer *mediaListPlayer = (__bridge VLCMediaListPlayer *)self;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaListPlayer *mediaListPlayer = (VLCMediaListPlayer *)object;
             [mediaListPlayer mediaListPlayerNextItemSet: media];
-        });
+        }];
     }
 }
 
-static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * self)
+static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCMediaListPlayer *mediaListPlayer = (__bridge VLCMediaListPlayer *)self;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaListPlayer *mediaListPlayer = (VLCMediaListPlayer *)object;
             [mediaListPlayer mediaListPlayerStopped];
-        });
+        }];
     }
 }
 
@@ -108,14 +113,15 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
     if (!p_em) {
         return;
     }
-
+    
+    _eventsHandler = [VLCEventsHandler handlerWithObject:self configuration:[VLCLibrary sharedEventsConfiguration]];
     dispatch_sync(_libVLCBackgroundQueue,^{
         libvlc_event_attach(p_em, libvlc_MediaListPlayerPlayed,
-                            HandleMediaListPlayerPlayed, (__bridge void *)(self));
+                            HandleMediaListPlayerPlayed, (__bridge void *)(_eventsHandler));
         libvlc_event_attach(p_em, libvlc_MediaListPlayerNextItemSet,
-                            HandleMediaListPlayerNextItemSet, (__bridge void *)(self));
+                            HandleMediaListPlayerNextItemSet, (__bridge void *)(_eventsHandler));
         libvlc_event_attach(p_em, libvlc_MediaListPlayerStopped,
-                            HandleMediaListPlayerStopped, (__bridge void *)(self));
+                            HandleMediaListPlayerStopped, (__bridge void *)(_eventsHandler));
     });
 }
 
@@ -128,11 +134,11 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * se
     }
 
     libvlc_event_detach(p_em, libvlc_MediaListPlayerPlayed,
-                        HandleMediaListPlayerPlayed, (__bridge void *)(self));
+                        HandleMediaListPlayerPlayed, (__bridge void *)(_eventsHandler));
     libvlc_event_detach(p_em, libvlc_MediaListPlayerNextItemSet,
-                        HandleMediaListPlayerNextItemSet, (__bridge void *)(self));
+                        HandleMediaListPlayerNextItemSet, (__bridge void *)(_eventsHandler));
     libvlc_event_detach(p_em, libvlc_MediaListPlayerStopped,
-                        HandleMediaListPlayerStopped, (__bridge void *)(self));
+                        HandleMediaListPlayerStopped, (__bridge void *)(_eventsHandler));
 }
 
 - (instancetype)initWithOptions:(NSArray *)options
