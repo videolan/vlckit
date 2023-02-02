@@ -1,4 +1,4 @@
-From c8860955f346a258ab2aa36759c92301ff744063 Mon Sep 17 00:00:00 2001
+From 7cd6dc3b66325c0ca63bee81da226c4e62ce47b3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
 Subject: [PATCH 09/48] input: Extract attachment also when preparsing
