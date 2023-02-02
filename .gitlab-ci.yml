@@ -28,7 +28,7 @@ continous-MobileVLCKit:
         - .continous-job-base
         - .continous-build-base
     variables:
-        BUILD_PARAM: "vf"
+        BUILD_PARAM: "vf3"
         JOB_NAME: "MobileVLCKit"
 
 continous-TVVLCKit:
@@ -77,7 +77,7 @@ dev-artifacts-MobileVLCKit:
         - .dev-artifacts-job-base
         - .dev-artifacts-build-base
     variables:
-        BUILD_PARAM: "vf"
+        BUILD_PARAM: "vf3"
         PACKAGING_PARAM: "vm"
         JOB_NAME: "MobileVLCKit"
 

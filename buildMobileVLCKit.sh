@@ -23,6 +23,7 @@ BITCODE=no
 OSVERSIONMINCFLAG=mios
 OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
+INCLUDE_32BIT=no
 FARCH="all"
 
 TESTEDHASH="4c12f2ea" # libvlc hash that this version of VLCKit is build on
@@ -51,10 +52,11 @@ OPTIONS
    -y       Build universal static libraries
    -b       Enable bitcode
    -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
+   -3       Include optional 32bit slices (i386, ARMv7 and ARMv7s, iOS only)
 EOF
 }
 
-while getopts "hvwsfbdxntlk:a:" OPTION
+while getopts "hvwsfbdx3ntlk:a:" OPTION
 do
      case $OPTION in
          h)
@@ -116,6 +118,9 @@ do
              OSVERSIONMINLDFLAG=macosx
              BUILD_DEVICE=yes
              BUILD_DYNAMIC_FRAMEWORK=yes
+             ;;
+         3)
+             INCLUDE_32BIT=yes
              ;;
          ?)
              usage
@@ -233,9 +238,17 @@ buildxcodeproj()
         fi
         if [ "$IOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                architectures="i386 x86_64 arm64"
+                if [ "$INCLUDE_32BIT" = "yes" ]; then
+                    architectures="i386 x86_64 arm64"
+                else
+                    architectures="arm64"
+                fi
             else
-                architectures="armv7 armv7s arm64"
+                if [ "$INCLUDE_32BIT" = "yes" ]; then
+                    architectures="armv7 armv7s arm64"
+                else
+                    architectures="arm64"
+                fi
             fi
         fi
         if [ "$MACOS" = "yes" ]; then
@@ -855,12 +868,16 @@ buildMobileKit() {
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC "i386" "Simulator"
+                    if [ "$INCLUDE_32BIT" = "yes" ]; then
+                        buildLibVLC "i386" "Simulator"
+                    fi
                     buildLibVLC "x86_64" "Simulator"
                     buildLibVLC "aarch64" "Simulator"
                 else
-                    buildLibVLC "armv7" "OS"
-                    buildLibVLC "armv7s" "OS"
+                    if [ "$INCLUDE_32BIT" = "yes" ]; then
+                        buildLibVLC "armv7" "OS"
+                        buildLibVLC "armv7s" "OS"
+                    fi
                     buildLibVLC "aarch64" "OS"
                 fi
             fi
@@ -961,6 +978,7 @@ collect_symbols_and_libraries() {
             spopd # $actual_arch/lib/vlc/plugins
         fi
 
+        if [ "$INCLUDE_32BIT" = "yes" ]; then
         if [ "$OSSTYLE" = "iPhone" -a \
             \( "$FARCH" = "all" -o "$FARCH" = "armv7" -o "$FARCH" = "armv7s" \) ]; then
             # collect ARMv7/s specific neon modules
@@ -976,6 +994,7 @@ collect_symbols_and_libraries() {
                 VLCNEONMODULES="$i $VLCNEONMODULES"
             done
             spopd # armv7/lib/vlc/plugins
+        fi
         fi
         spopd # vlc-install-"$OSSTYLE"OS
     fi
