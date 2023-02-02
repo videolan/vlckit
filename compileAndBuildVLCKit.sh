@@ -45,7 +45,7 @@ OPTIONS
    -t       Build for tvOS
    -x       Build for macOS / Mac OS X
    -b       Enable bitcode
-   -a       Build framework for specific arch (all|i386|x86_64|armv7|aarch64)
+   -a       Build framework for specific arch (all|x86_64|armv7|aarch64)
    -e       External VLC source path
 EOF
 }
@@ -67,7 +67,7 @@ get_arch() {
 }
 
 is_simulator_arch() {
-    if [ "$1" = "i386" -o "$1" = "x86_64" ];then
+    if [ "$1" = "x86_64" ];then
         return 0
     else
         return 1
@@ -109,7 +109,7 @@ buildxcodeproj()
         fi
         if [ "$IOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                architectures="i386 x86_64 arm64"
+                architectures="x86_64 arm64"
             else
                 architectures="armv7 arm64"
             fi
@@ -216,7 +216,6 @@ buildMobileKit() {
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    buildLibVLC "i386" $PLATFORM
                     buildLibVLC "x86_64" $PLATFORM
                     buildLibVLC "aarch64" $PLATFORM
                 else
@@ -225,8 +224,7 @@ buildMobileKit() {
                 fi
             fi
         else
-            if [ "$FARCH" != "x86_64" -a "$FARCH" != "aarch64" -a "$FARCH" != "i386" \
-              -a "$FARCH" != "armv7" ];then
+            if [ "$FARCH" != "x86_64" -a "$FARCH" != "aarch64" -a "$FARCH" != "armv7" ];then
                 echo "*** Framework ARCH: ${FARCH} is invalid ***"
                 exit 1
             fi
@@ -285,11 +283,6 @@ build_simulator_static_lib() {
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-x86_64/${VLCSTATICLIBRARYNAME}"
         VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-x86_64/static-lib/static-module-list.c"
         cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator-x86_64.h
-    fi
-    if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-i386 ];then
-        VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-i386/${VLCSTATICLIBRARYNAME}"
-        VLCSTATICMODULELIST="${VLCROOT}/build-${OSSTYLE}simulator-i386/static-lib/static-module-list.c"
-        cp $VLCSTATICMODULELIST $PROJECT_DIR/Headers/Internal/vlc-plugins-$OSSTYLE-simulator-i386.h
     fi
     if [ -d ${VLCROOT}/build-${OSSTYLE}simulator-arm64 ];then
         VLCSTATICLIBS+=" ${VLCROOT}/build-${OSSTYLE}simulator-arm64/${VLCSTATICLIBRARYNAME}"
