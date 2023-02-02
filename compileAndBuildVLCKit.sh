@@ -18,6 +18,7 @@ TVOS=no
 MACOS=no
 IOS=yes
 BITCODE=no
+INCLUDE_ARMV7=no
 OSVERSIONMINCFLAG=iphoneos
 OSVERSIONMINLDFLAG=ios
 ROOT_DIR=empty
@@ -47,6 +48,7 @@ OPTIONS
    -b       Enable bitcode
    -a       Build framework for specific arch (all|x86_64|armv7|aarch64)
    -e       External VLC source path
+   -7       Include optional ARMv7 slice (iOS only)
 EOF
 }
 
@@ -111,7 +113,11 @@ buildxcodeproj()
             if [ "$PLATFORM" = "iphonesimulator" ]; then
                 architectures="x86_64 arm64"
             else
-                architectures="armv7 arm64"
+                if [ "$INCLUDE_ARMV7" = "yes" ]; then
+                    architectures="armv7 arm64"
+                else
+                    architectures="arm64"
+                fi
             fi
         fi
         if [ "$MACOS" = "yes" ]; then
@@ -219,7 +225,9 @@ buildMobileKit() {
                     buildLibVLC "x86_64" $PLATFORM
                     buildLibVLC "aarch64" $PLATFORM
                 else
-                    buildLibVLC "armv7" $PLATFORM
+                    if [ "$INCLUDE_ARMV7" = "yes" ]; then
+                        buildLibVLC "armv7" $PLATFORM
+                    fi
                     buildLibVLC "aarch64" $PLATFORM
                 fi
             fi
@@ -345,7 +353,7 @@ build_device_static_lib() {
     spopd # VLCROOT
 }
 
-while getopts "hvsfbrxntlk:a:e:" OPTION
+while getopts "hvsfbrxntl7k:a:e:" OPTION
 do
      case $OPTION in
          h)
@@ -407,6 +415,9 @@ do
              ;;
          e)
              VLCROOT=$OPTARG
+             ;;
+         7)
+             INCLUDE_ARMV7=yes
              ;;
          ?)
              usage
