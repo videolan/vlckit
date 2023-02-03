@@ -302,8 +302,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     id _drawable;                               ///< The drawable associated to this media player
     NSMutableArray *_snapshots;                 ///< Array with snapshot file names
     VLCAudio *_audio;                           ///< The audio controller
-    libvlc_equalizer_t *_equalizerInstance;     ///< The equalizer controller
-    BOOL _equalizerEnabled;                     ///< Equalizer state
     libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
     int64_t _minimalWatchTimePeriod;            ///< Minimal period for the watch timer
@@ -431,11 +429,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     libvlc_media_player_set_nsobject(_playerInstance, nil);
     _drawable = nil;
 
-    if (_equalizerInstance) {
-        libvlc_media_player_set_equalizer(_playerInstance, NULL);
-        libvlc_audio_equalizer_release(_equalizerInstance);
-        _equalizerInstance = nil;
-    }
+    libvlc_media_player_set_equalizer(_playerInstance, NULL);
 
     if (_viewpoint)
         libvlc_free(_viewpoint);
@@ -911,93 +905,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     
     if (_equalizer)
         [_equalizer setMediaPlayer: self];
-}
-
-- (void)setEqualizerEnabled:(BOOL)equalizerEnabled
-{
-    if (!_equalizerInstance && equalizerEnabled) {
-        if (!(_equalizerInstance = libvlc_audio_equalizer_new())) {
-            NSAssert(_equalizerInstance, @"equalizer failed to initialize");
-            return;
-        }
-    }
-
-    _equalizerEnabled = equalizerEnabled;
-    libvlc_media_player_set_equalizer(_playerInstance,
-                                      equalizerEnabled ? _equalizerInstance : NULL);
-}
-
-- (BOOL)equalizerEnabled
-{
-    return _equalizerEnabled;
-}
-
-- (NSArray *)equalizerProfiles
-{
-    unsigned count = libvlc_audio_equalizer_get_preset_count();
-    NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:count];
-    for (unsigned x = 0; x < count; x++)
-        [array addObject:@(libvlc_audio_equalizer_get_preset_name(x))];
-
-    return [NSArray arrayWithArray:array];
-}
-
-- (void)resetEqualizerFromProfile:(unsigned)profile
-{
-    BOOL wasactive = NO;
-    if (_equalizerInstance) {
-        libvlc_media_player_set_equalizer(_playerInstance, NULL);
-        libvlc_audio_equalizer_release(_equalizerInstance);
-        _equalizerInstance = nil;
-        wasactive = YES;
-    }
-
-    _equalizerInstance = libvlc_audio_equalizer_new_from_preset(profile);
-    if (wasactive)
-        libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
-}
-
-- (CGFloat)preAmplification
-{
-    if (!_equalizerInstance)
-        return 0.;
-
-    return libvlc_audio_equalizer_get_preamp(_equalizerInstance);
-}
-
-- (void)setPreAmplification:(CGFloat)preAmplification
-{
-    if (!_equalizerInstance)
-        _equalizerInstance = libvlc_audio_equalizer_new();
-
-    libvlc_audio_equalizer_set_preamp(_equalizerInstance, preAmplification);
-    libvlc_media_player_set_equalizer(_playerInstance, _equalizerInstance);
-}
-
-- (unsigned)numberOfBands
-{
-    return libvlc_audio_equalizer_get_band_count();
-}
-
-- (CGFloat)frequencyOfBandAtIndex:(unsigned int)index
-{
-    return libvlc_audio_equalizer_get_band_frequency(index);
-}
-
-- (void)setAmplification:(CGFloat)amplification forBand:(unsigned int)index
-{
-    if (!_equalizerInstance)
-        _equalizerInstance = libvlc_audio_equalizer_new();
-
-    libvlc_audio_equalizer_set_amp_at_index(_equalizerInstance, amplification, index);
-}
-
-- (CGFloat)amplificationOfBand:(unsigned int)index
-{
-    if (!_equalizerInstance)
-        return 0.;
-
-    return libvlc_audio_equalizer_get_amp_at_index(_equalizerInstance, index);
 }
 
 #pragma mark -

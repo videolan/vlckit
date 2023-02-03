@@ -586,58 +586,6 @@ typedef NS_ENUM(unsigned, VLCAudioMixMode)
 /// equalizer
 @property (nonatomic, nullable) VLCAudioEqualizer *equalizer;
 
-/**
- * Get a list of available equalizer profiles
- * \note Current versions do not allow the addition of further profiles
- *       so you need to handle this in your app.
- *
- * \return array of equalizer profiles
- */
-@property (weak, readonly) NSArray *equalizerProfiles;
-
-/**
- * Re-set the equalizer to a profile retrieved from the list
- * \note This doesn't enable the Equalizer automagically
- */
-- (void)resetEqualizerFromProfile:(unsigned)profile;
-
-/**
- * Toggle equalizer state
- * param: bool value to enable/disable the equalizer
- * \note this can fail, if failed the value will not be changed
- * \return current state */
-@property (readwrite) BOOL equalizerEnabled;
-
-/**
- * Set amplification level
- * param: The supplied amplification value will be clamped to the -20.0 to +20.0 range.
- * \note this will create and enabled an Equalizer instance if not present
- * \return current amplification level */
-@property (readwrite) CGFloat preAmplification;
-
-/**
- * Number of equalizer bands
- * \return the number of equalizer bands available in the current release */
-@property (readonly) unsigned numberOfBands;
-
-/**
- * frequency of equalizer band
- * \param index the band index
- * \return frequency of the requested equalizer band */
-- (CGFloat)frequencyOfBandAtIndex:(unsigned)index;
-
-/**
- * set amplification for band
- * \param amplification value (clamped to the -20.0 to +20.0 range)
- * \param index of the respective band */
-- (void)setAmplification:(CGFloat)amplification forBand:(unsigned)index;
-
-/**
- * amplification of band
- * \param index of the band
- * \return current amplification value (clamped to the -20.0 to +20.0 range) */
-- (CGFloat)amplificationOfBand:(unsigned)index;
-
 #pragma mark -
 #pragma mark media handling
 
