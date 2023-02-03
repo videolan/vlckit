@@ -11,6 +11,12 @@
 		3C4A7E1B281C538100577290 /* VLCMediaMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C4A7E19281C538100577290 /* VLCMediaMetaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C4A7E1E281C53AF00577290 /* VLCMediaMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A7E1D281C53AF00577290 /* VLCMediaMetaData.m */; };
 		3C4A7E1F281C53AF00577290 /* VLCMediaMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A7E1D281C53AF00577290 /* VLCMediaMetaData.m */; };
+		3CD18254298D8C9900E466A3 /* VLCAudioEqualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD18253298D8C9900E466A3 /* VLCAudioEqualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CD18255298D8C9900E466A3 /* VLCAudioEqualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD18253298D8C9900E466A3 /* VLCAudioEqualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CD18256298D8C9900E466A3 /* VLCAudioEqualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD18253298D8C9900E466A3 /* VLCAudioEqualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CD18258298D8CC600E466A3 /* VLCAudioEqualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD18257298D8CC600E466A3 /* VLCAudioEqualizer.m */; };
+		3CD18259298D8CC600E466A3 /* VLCAudioEqualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD18257298D8CC600E466A3 /* VLCAudioEqualizer.m */; };
+		3CD1825A298D8CC600E466A3 /* VLCAudioEqualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD18257298D8CC600E466A3 /* VLCAudioEqualizer.m */; };
 		6C218374285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */; };
 		6C218375285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */; };
 		6C218377285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */; };
@@ -427,6 +433,8 @@
 /* Begin PBXFileReference section */
 		3C4A7E19281C538100577290 /* VLCMediaMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCMediaMetaData.h; path = Headers/Public/VLCMediaMetaData.h; sourceTree = "<group>"; };
 		3C4A7E1D281C53AF00577290 /* VLCMediaMetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCMediaMetaData.m; path = Sources/VLCMediaMetaData.m; sourceTree = "<group>"; };
+		3CD18253298D8C9900E466A3 /* VLCAudioEqualizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCAudioEqualizer.h; path = Headers/Public/VLCAudioEqualizer.h; sourceTree = "<group>"; };
+		3CD18257298D8CC600E466A3 /* VLCAudioEqualizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCAudioEqualizer.m; path = Sources/VLCAudioEqualizer.m; sourceTree = "<group>"; };
 		3F7CC79621D69CB40094B074 /* module.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = Resources/TVVLCKit/module.modulemap; sourceTree = SOURCE_ROOT; };
 		3F7CC79721D69D9A0094B074 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; name = module.modulemap; path = Resources/MobileVLCKit/module.modulemap; sourceTree = "<group>"; };
 		41E1959621BEA28F00F10277 /* VLCTranscoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCTranscoder.m; path = Sources/VLCTranscoder.m; sourceTree = "<group>"; };
@@ -837,6 +845,7 @@
 				6C218373285090F2000C4AC9 /* VLCFileLogger.m */,
 				6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */,
 				4B49C5FB1BC3D7870052D40C /* VLCAudio.m */,
+				3CD18257298D8CC600E466A3 /* VLCAudioEqualizer.m */,
 				7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */,
 				7A5ECAC611DE8F7300F66AF3 /* VLCMedia.m */,
 				7A5ECAC711DE8F7300F66AF3 /* VLCMediaList.m */,
@@ -879,6 +888,7 @@
 				7D988CF324C72F8C00279703 /* VLCStreamSession.h */,
 				7D988CF224C72F8C00279703 /* VLCVideoView.h */,
 				4B49C5FD1BC3D7960052D40C /* VLCAudio.h */,
+				3CD18253298D8C9900E466A3 /* VLCAudioEqualizer.h */,
 				7A5ECAD411DE8FAB00F66AF3 /* VLCLibrary.h */,
 				7A5ECAD511DE8FAB00F66AF3 /* VLCMedia.h */,
 				636E979011EBC96D002FE8A9 /* VLCMediaThumbnailer.h */,
@@ -1131,6 +1141,7 @@
 				7DDC02111B501ECF0078FC84 /* VLCMediaDiscoverer.h in Headers */,
 				7DFDF4EB1C9AF27A00BA86A6 /* VLCDialogProvider.h in Headers */,
 				7DDC02121B501ECF0078FC84 /* VLCTime.h in Headers */,
+				3CD18254298D8C9900E466A3 /* VLCAudioEqualizer.h in Headers */,
 				6C21838428509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */,
 				6C21838728509122000C4AC9 /* VLCLogging.h in Headers */,
 				6C21838A28509122000C4AC9 /* VLCConsoleLogger.h in Headers */,
@@ -1176,6 +1187,7 @@
 				7DB1798A285C6814006201DB /* VLCMediaDiscoverer.h in Headers */,
 				7DFB521628D0AA820020DCDE /* VLCFilter.h in Headers */,
 				7DB17989285C680F006201DB /* VLCAudio.h in Headers */,
+				3CD18256298D8C9900E466A3 /* VLCAudioEqualizer.h in Headers */,
 				7DB17988285C680B006201DB /* VLCTranscoder.h in Headers */,
 				7DB17987285C6804006201DB /* VLCMediaPlayer.h in Headers */,
 				7DB17986285C67FE006201DB /* VLCVideoView.h in Headers */,
@@ -1197,6 +1209,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7DB683B21C995E1D000C70BE /* VLCAudio.h in Headers */,
+				3CD18255298D8C9900E466A3 /* VLCAudioEqualizer.h in Headers */,
 				7DB683B31C995E1D000C70BE /* VLCLibrary.h in Headers */,
 				3C4A7E1B281C538100577290 /* VLCMediaMetaData.h in Headers */,
 				7DB683B41C995E1D000C70BE /* VLCMedia.h in Headers */,
@@ -1556,6 +1569,7 @@
 				7D803EC11C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m in Sources */,
 				7DFB520828D0AA590020DCDE /* VLCFilter.m in Sources */,
 				7D6C89211C0CA90000321894 /* VLCAudio.m in Sources */,
+				3CD18258298D8CC600E466A3 /* VLCAudioEqualizer.m in Sources */,
 				3C4A7E1E281C53AF00577290 /* VLCMediaMetaData.m in Sources */,
 				7D803EC71C8F2AF900864A9C /* VLCiOSLegacyDialogProvider.m in Sources */,
 				7D8939411B500D50008F2B14 /* VLCLibrary.m in Sources */,
@@ -1605,6 +1619,7 @@
 				7DB179A5285C68C5006201DB /* VLCMediaList.m in Sources */,
 				7DB179A6285C68C5006201DB /* VLCMediaPlayer.m in Sources */,
 				7DB179A7285C68C5006201DB /* VLCMediaListPlayer.m in Sources */,
+				3CD1825A298D8CC600E466A3 /* VLCAudioEqualizer.m in Sources */,
 				7DB179A8285C68C5006201DB /* VLCMediaThumbnailer.m in Sources */,
 				7DB179A9285C68C5006201DB /* VLCMediaDiscoverer.m in Sources */,
 				7DB179AA285C68C5006201DB /* VLCTime.m in Sources */,
@@ -1639,6 +1654,7 @@
 				7DB6838C1C995D76000C70BE /* VLCMediaPlayer.m in Sources */,
 				7DB683D81C996187000C70BE /* VLCHelperCode.m in Sources */,
 				3C4A7E1F281C53AF00577290 /* VLCMediaMetaData.m in Sources */,
+				3CD18259298D8CC600E466A3 /* VLCAudioEqualizer.m in Sources */,
 				7DB6838D1C995D76000C70BE /* VLCMediaListPlayer.m in Sources */,
 				7DB6838E1C995D76000C70BE /* VLCMediaThumbnailer.m in Sources */,
 				7DB6838F1C995D76000C70BE /* VLCMediaDiscoverer.m in Sources */,

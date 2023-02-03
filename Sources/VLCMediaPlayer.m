@@ -34,6 +34,7 @@
 #import <VLCTime.h>
 #import <VLCMediaPlayer+Internal.h>
 #import <VLCAdjustFilter.h>
+#import <VLCAudioEqualizer.h>
 #if !TARGET_OS_IPHONE
 # import <VLCVideoView.h>
 #endif // !TARGET_OS_IPHONE
@@ -900,6 +901,17 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
 #pragma mark -
 #pragma mark equalizer
+
+- (void)setEqualizer:(nullable VLCAudioEqualizer *)equalizer
+{
+    if (_equalizer)
+        [_equalizer setMediaPlayer: nil];
+    
+    _equalizer = equalizer;
+    
+    if (_equalizer)
+        [_equalizer setMediaPlayer: self];
+}
 
 - (void)setEqualizerEnabled:(BOOL)equalizerEnabled
 {

@@ -34,7 +34,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCMediaPlayerTrack, VLCAdjustFilter;
+@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCMediaPlayerTrack, VLCAdjustFilter, VLCAudioEqualizer;
 #if !TARGET_OS_IPHONE
 @class VLCVideoView, VLCVideoLayer;
 #endif // !TARGET_OS_IPHONE
@@ -582,6 +582,9 @@ typedef NS_ENUM(unsigned, VLCAudioMixMode)
 
 #pragma mark -
 #pragma mark equalizer
+
+/// equalizer
+@property (nonatomic, nullable) VLCAudioEqualizer *equalizer;
 
 /**
  * Get a list of available equalizer profiles
