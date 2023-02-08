@@ -54,7 +54,7 @@
 		7DC28D5D20194117002D05C4 /* VLCVideoLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6341FCAE0D2C0929002A97B7 /* VLCVideoLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DC28D5E20194117002D05C4 /* VLCLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 637CFB930D2D280800A041B6 /* VLCLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DC28D5F20194117002D05C4 /* VLCVideoCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = A7A0CEA20D2EF13000F2C039 /* VLCVideoCommon.h */; };
-		7DC28D6020194117002D05C4 /* VLCDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D34F5611C90A96C008A39F0 /* VLCDialogProvider.h */; };
+		7DC28D6020194117002D05C4 /* VLCDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D34F5611C90A96C008A39F0 /* VLCDialogProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DC28D6120194117002D05C4 /* VLCStreamSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 632A0E830D3835C400AFC99B /* VLCStreamSession.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DC28D6220194117002D05C4 /* VLCStreamOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 632A0EC10D38392E00AFC99B /* VLCStreamOutput.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DC28D6320194117002D05C4 /* VLCMediaThumbnailer.h in Headers */ = {isa = PBXBuildFile; fileRef = 63D88D92124E9BF600F65FA0 /* VLCMediaThumbnailer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -562,9 +562,9 @@
 				7DC28D5E20194117002D05C4 /* VLCLibrary.h in Headers */,
 				41657C3D2059D99E00AB915B /* VLCCustomDialogProvider.h in Headers */,
 				7DC28D5F20194117002D05C4 /* VLCVideoCommon.h in Headers */,
+				7DC28D6020194117002D05C4 /* VLCDialogProvider.h in Headers */,
 				41657C2E2059D5CE00AB915B /* VLCRendererItem+Init.h in Headers */,
 				7DA7F2F428D87F0F00366EEB /* VLCMediaMetaData.h in Headers */,
-				7DC28D6020194117002D05C4 /* VLCDialogProvider.h in Headers */,
 				41657C242059D49200AB915B /* VLCRendererItem.h in Headers */,
 				7DC28D6120194117002D05C4 /* VLCStreamSession.h in Headers */,
 				7DC28D6220194117002D05C4 /* VLCStreamOutput.h in Headers */,
