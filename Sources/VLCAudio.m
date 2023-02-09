@@ -103,27 +103,18 @@ NSNotificationName const VLCMediaPlayerVolumeChangedNotification = @"VLCMediaPla
 
 - (void)setVolume:(int)value
 {
-    if (value < VOLUME_MIN)
-        value = VOLUME_MIN;
-    else if (value > VOLUME_MAX)
-        value = VOLUME_MAX;
-    libvlc_audio_set_volume([self instance], value);
+    const int volume = MIN(MAX(value, VOLUME_MIN), VOLUME_MAX);
+    libvlc_audio_set_volume([self instance], volume);
 }
 
 - (void)volumeUp
 {
-    int tempVolume = [self volume] + VOLUME_STEP;
-    if (tempVolume > VOLUME_MAX)
-        tempVolume = VOLUME_MAX;
-    [self setVolume: tempVolume];
+    self.volume += VOLUME_STEP;
 }
 
 - (void)volumeDown
 {
-    int tempVolume = [self volume] - VOLUME_STEP;
-    if (tempVolume < VOLUME_MIN)
-        tempVolume = VOLUME_MIN;
-    [self setVolume: tempVolume];
+    self.volume -= VOLUME_STEP;
 }
 
 - (int)volume
