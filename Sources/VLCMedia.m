@@ -325,28 +325,40 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
     return (VLCMediaParsedStatus)status;
 }
 
-- (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue
+- (int)parseWithOptions:(VLCMediaParsingOptions)options
+                timeout:(int)timeoutValue
+                library:(VLCLibrary*)library
 {
     if (!p_md)
         return -1;
 
     // we are using the default time-out value
-    return libvlc_media_parse_request([[VLCLibrary sharedLibrary] instance],
+    return libvlc_media_parse_request([library instance],
                                       p_md,
                                       options,
                                       timeoutValue);
 }
 
+- (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue
+{
+    // we are using the default time-out value
+    return [self parseWithOptions:options
+                          timeout:timeoutValue
+                          library:[[VLCLibrary sharedLibrary] instance]];
+}
+
 - (int)parseWithOptions:(VLCMediaParsingOptions)options
 {
-    if (!p_md)
-        return -1;
+    return [self parseWithOptions:options
+                           timeout:-1
+                          library:[VLCLibrary sharedLibrary]];
+}
 
-    // we are using the default time-out value
-    return libvlc_media_parse_request([[VLCLibrary sharedLibrary] instance],
-                                      p_md,
-                                      options,
-                                      -1);
+- (void)parseStop:(VLCLibrary*)library
+{
+    if (p_md) {
+        libvlc_media_parse_stop([library instance], p_md);
+    }
 }
 
 - (void)parseStop

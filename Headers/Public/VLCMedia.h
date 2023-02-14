@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 FOUNDATION_EXPORT NSNotificationName const VLCMediaMetaChangedNotification NS_SWIFT_NAME(VLCMedia.metaChangedNotification); ///< Notification message for when the media's meta data has changed
 
 // Forward declarations, supresses compiler error messages
+@class VLCLibrary;
 @class VLCMediaList;
 @class VLCMedia;
 
@@ -335,6 +336,8 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
  * will _NOT_ be raised if parsing fails and this method returns an error.
  */
 - (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue;
+
+- (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue library:(VLCLibrary*)library;
 
 /**
  * Stop the parsing of the media
