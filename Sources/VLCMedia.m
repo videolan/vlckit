@@ -195,6 +195,8 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
     const char *url = [[anURL absoluteString] UTF8String];
     p_md = libvlc_media_new_location(url);
+    if (p_md == NULL)
+        return nil;
 
     [self initInternalMediaDescriptor];
     return self;
@@ -208,6 +210,8 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
     self->stream = stream;
     p_md = libvlc_media_new_callbacks(open_cb, read_cb, seek_cb, close_cb, (__bridge void *)(stream));
+    if (p_md == NULL)
+        return nil;
 
     [self initInternalMediaDescriptor];
     return self;
@@ -219,6 +223,8 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
         return nil;
 
     p_md = libvlc_media_new_as_node([aName UTF8String]);
+    if (p_md == NULL)
+        return nil;
 
     [self initInternalMediaDescriptor];
     return self;
@@ -321,8 +327,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (VLCMediaParsedStatus)parsedStatus
 {
-    if (!p_md)
-        return VLCMediaParsedStatusFailed;
     libvlc_media_parsed_status_t status = libvlc_media_get_parsed_status(p_md);
     return (VLCMediaParsedStatus)status;
 }
@@ -331,9 +335,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
                 timeout:(int)timeoutValue
                 library:(VLCLibrary*)library
 {
-    if (!p_md)
-        return -1;
-
     // we are using the default time-out value
     return libvlc_media_parse_request([library instance],
                                       p_md,
@@ -358,42 +359,34 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (void)parseStop:(VLCLibrary*)library
 {
-    if (p_md) {
-        libvlc_media_parse_stop([library instance], p_md);
-    }
+    libvlc_media_parse_stop([library instance], p_md);
 }
 
 - (void)parseStop
 {
-    if (p_md) {
-        libvlc_media_parse_stop([[VLCLibrary sharedLibrary] instance], p_md);
-    }
+    libvlc_media_parse_stop([[VLCLibrary sharedLibrary] instance], p_md);
 }
 
 - (void)addOption:(NSString *)option
 {
-    if (p_md) {
-        libvlc_media_add_option(p_md, [option UTF8String]);
-    }
+    libvlc_media_add_option(p_md, [option UTF8String]);
 }
 
 - (void)addOptions:(NSDictionary*)options
 {
-    if (p_md) {
-        [options enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
-            if (![obj isKindOfClass:[NSNull class]])
-                libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, obj] UTF8String]);
-            else
-                libvlc_media_add_option(p_md, [key UTF8String]);
-        }];
-    }
+    [options enumerateKeysAndObjectsUsingBlock:^(NSString *key, id obj, BOOL *stop) {
+        if (![obj isKindOfClass:[NSNull class]])
+            libvlc_media_add_option(p_md, [[NSString stringWithFormat:@"%@=%@", key, obj] UTF8String]);
+        else
+            libvlc_media_add_option(p_md, [key UTF8String]);
+    }];
 }
 
 - (int)storeCookie:(NSString *)cookie
            forHost:(NSString *)host
               path:(NSString *)path
 {
-    if (!p_md || cookie == NULL || host == NULL || path == NULL) {
+    if (cookie == NULL || host == NULL || path == NULL) {
         return -1;
     }
 #if TARGET_OS_IPHONE
@@ -408,10 +401,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (void)clearStoredCookies
 {
-    if (!p_md) {
-        return;
-    }
-
 #if TARGET_OS_IPHONE
     libvlc_media_cookie_jar_clear(p_md);
 #endif
@@ -419,7 +408,7 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (VLCMediaFileStatReturnType)fileStatValueForType:(const VLCMediaFileStatType)type value:(uint64_t *)value
 {
-    if (!p_md || !value)
+    if (value == NULL)
         return VLCMediaFileStatReturnTypeError;
     
     return libvlc_media_get_filestat(p_md, type, value);
@@ -427,11 +416,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (VLCMediaStats)statistics
 {
-    if (!p_md) {
-        VLCMediaStats stats = { 0 };
-        return stats;
-    }
-    
     libvlc_media_stats_t p_stats;
     libvlc_media_get_stats(p_md, &p_stats);
     VLCMediaStats stats = {
@@ -454,9 +438,6 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (NSArray<VLCMediaTrack *> *)tracksInformation
 {
-    if (!p_md)
-        return @[];
-        
     NSMutableArray<VLCMediaTrack *> *array = @[].mutableCopy;
     
     // 3 = (libvlc_track_audio = 0 | libvlc_track_video = 1 | libvlc_track_text = 2)
@@ -480,17 +461,11 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (nullable id)userData
 {
-    if (!p_md)
-        return nil;
-    
     return (__bridge _Nullable id)libvlc_media_get_user_data(p_md);
 }
 
 - (void)setUserData:(nullable id)userData
 {
-    if (!p_md)
-        return;
-    
     _userData = userData;
     
     libvlc_media_set_user_data(p_md, (__bridge void *)userData);
