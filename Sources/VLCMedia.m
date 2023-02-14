@@ -190,35 +190,37 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (instancetype)initWithURL:(NSURL *)anURL
 {
-    if (self = [super init]) {
-        const char *url = [[anURL absoluteString] UTF8String];
-        p_md = libvlc_media_new_location(url);
+    if ([super init] == nil)
+        return nil;
 
-        [self initInternalMediaDescriptor];
-    }
+    const char *url = [[anURL absoluteString] UTF8String];
+    p_md = libvlc_media_new_location(url);
+
+    [self initInternalMediaDescriptor];
     return self;
 }
 
 - (instancetype)initWithStream:(NSInputStream *)stream
 {
-    if (self = [super init]) {
-        NSAssert(stream.streamStatus != NSStreamStatusClosed, @"Passing closed stream to VLCMedia.init does not work");
+    NSAssert(stream.streamStatus != NSStreamStatusClosed, @"Passing closed stream to VLCMedia.init does not work");
+    if ([super init] == nil)
+        return nil;
 
-        self->stream = stream;
-        p_md = libvlc_media_new_callbacks(open_cb, read_cb, seek_cb, close_cb, (__bridge void *)(stream));
+    self->stream = stream;
+    p_md = libvlc_media_new_callbacks(open_cb, read_cb, seek_cb, close_cb, (__bridge void *)(stream));
 
-        [self initInternalMediaDescriptor];
-    }
+    [self initInternalMediaDescriptor];
     return self;
 }
 
 - (instancetype)initAsNodeWithName:(NSString *)aName
 {
-    if (self = [super init]) {
-        p_md = libvlc_media_new_as_node([aName UTF8String]);
-        
-        [self initInternalMediaDescriptor];
-    }
+    if ([super init] == nil)
+        return nil;
+
+    p_md = libvlc_media_new_as_node([aName UTF8String]);
+
+    [self initInternalMediaDescriptor];
     return self;
 }
 
@@ -601,13 +603,13 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (id)initWithLibVLCMediaDescriptor:(void *)md
 {
-    if (self = [super init]) {
-        libvlc_media_retain(md);
-        p_md = md;
-        
-        _userData = (__bridge _Nullable id)libvlc_media_get_user_data(p_md);
-        [self initInternalMediaDescriptor];
-    }
+    if ([super init] == nil)
+        return nil;
+    libvlc_media_retain(md);
+    p_md = md;
+
+    _userData = (__bridge _Nullable id)libvlc_media_get_user_data(p_md);
+    [self initInternalMediaDescriptor];
     return self;
 }
 
@@ -677,28 +679,29 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track
 {
-    if (self = [super init]) {
-        _type = (VLCMediaTrackType)track->i_type;
-        _codec = track->i_codec;
-        _fourcc = track->i_original_fourcc;
-        _identifier = track->i_id;
-        _profile = track->i_profile;
-        _level = track->i_level;
-        _bitrate = track->i_bitrate;
-        
-        if (track->psz_language)
-            _language = @(track->psz_language);
-        
-        if (track->psz_description)
-            _trackDescription = @(track->psz_description);
-        
-        if (track->i_type == libvlc_track_audio && track->audio)
-            _audio = [[VLCMediaAudioTrack alloc] initWithAudioTrack: track->audio];
-        else if (track->i_type == libvlc_track_video && track->video)
-            _video = [[VLCMediaVideoTrack alloc] initWithVideoTrack: track->video];
-        else if (track->i_type == libvlc_track_text && track->subtitle)
-            _text = [[VLCMediaTextTrack alloc] initWithSubtitleTrack: track->subtitle];
-    }
+    if ([super init] == nil)
+        return nil;
+
+    _type = (VLCMediaTrackType)track->i_type;
+    _codec = track->i_codec;
+    _fourcc = track->i_original_fourcc;
+    _identifier = track->i_id;
+    _profile = track->i_profile;
+    _level = track->i_level;
+    _bitrate = track->i_bitrate;
+
+    if (track->psz_language)
+        _language = @(track->psz_language);
+
+    if (track->psz_description)
+        _trackDescription = @(track->psz_description);
+
+    if (track->i_type == libvlc_track_audio && track->audio)
+        _audio = [[VLCMediaAudioTrack alloc] initWithAudioTrack: track->audio];
+    else if (track->i_type == libvlc_track_video && track->video)
+        _video = [[VLCMediaVideoTrack alloc] initWithVideoTrack: track->video];
+    else if (track->i_type == libvlc_track_text && track->subtitle)
+        _text = [[VLCMediaTextTrack alloc] initWithSubtitleTrack: track->subtitle];
     return self;
 }
 
@@ -722,10 +725,10 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio
 {
-    if (self = [super init]) {
-        _channelsNumber = audio->i_channels;
-        _rate = audio->i_rate;
-    }
+    if ([super init] == nil)
+        return nil;
+    _channelsNumber = audio->i_channels;
+    _rate = audio->i_rate;
     return self;
 }
 
@@ -744,16 +747,16 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (instancetype)initWithVideoTrack:(libvlc_video_track_t *)video
 {
-    if (self = [super init]) {
-        _width = video->i_width;
-        _height = video->i_height;
-        _orientation = (VLCMediaOrientation)video->i_orientation;
-        _projection = (VLCMediaProjection)video->i_projection;
-        _sourceAspectRatio = video->i_sar_num;
-        _sourceAspectRatioDenominator = video->i_sar_den;
-        _frameRate = video->i_frame_rate_num;
-        _frameRateDenominator = video->i_frame_rate_den;
-    }
+    if ([super init] == nil)
+        return nil;
+    _width = video->i_width;
+    _height = video->i_height;
+    _orientation = (VLCMediaOrientation)video->i_orientation;
+    _projection = (VLCMediaProjection)video->i_projection;
+    _sourceAspectRatio = video->i_sar_num;
+    _sourceAspectRatioDenominator = video->i_sar_den;
+    _frameRate = video->i_frame_rate_num;
+    _frameRateDenominator = video->i_frame_rate_den;
     return self;
 }
 
@@ -772,10 +775,11 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle
 {
-    if (self = [super init]) {
-        if (subtitle->psz_encoding)
-            _encoding = @(subtitle->psz_encoding);
-    }
+    if ([super init] == nil)
+        return nil;
+
+    if (subtitle->psz_encoding)
+        _encoding = @(subtitle->psz_encoding);
     return self;
 }
 
@@ -796,12 +800,12 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track mediaPlayer:(VLCMediaPlayer *)mediaPlayer;
 {
-    if (self = [super initWithMediaTrack: track]) {
-        _mediaPlayer = mediaPlayer;
-        _trackId = @(track->psz_id);
-        _idStable = track->id_stable;
-        _trackName = track->psz_name ? @(track->psz_name) : @"";
-    }
+    if ([super initWithMediaTrack: track] == nil)
+        return nil;
+    _mediaPlayer = mediaPlayer;
+    _trackId = @(track->psz_id);
+    _idStable = track->id_stable;
+    _trackName = track->psz_name ? @(track->psz_name) : @"";
     return self;
 }
 
