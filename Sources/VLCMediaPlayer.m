@@ -1385,11 +1385,6 @@ static const struct event_handler_entry
             }];
     });
     
-#if TARGET_OS_IPHONE
-    // Disable idle timer if player is playing media
-    // Exclusion can be made for audio only media
-    [UIApplication sharedApplication].idleTimerDisabled = [self isPlaying];
-#endif
     [self didChangeValueForKey:@"state"];
 }
 
