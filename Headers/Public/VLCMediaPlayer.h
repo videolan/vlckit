@@ -103,11 +103,10 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 
 @optional
 /**
- * Sent by the default notification center whenever the player's state has changed.
- * \details Discussion The value of aNotification is always an VLCMediaPlayerStateChanged notification. You can retrieve
- * the VLCMediaPlayer object in question by sending object to aNotification.
+ * Called when the media player signal that it changed to another playback state.
+ * \param newState the current new state
  */
-- (void)mediaPlayerStateChanged:(NSNotification *)aNotification;
+- (void)mediaPlayerStateChanged:(VLCMediaPlayerState)newState;
 
 /**
  * Called when the media player signal that a new track is available

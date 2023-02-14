@@ -185,7 +185,7 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
             NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerStateChangedNotification object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerStateChanged:)])
-                [mediaPlayer.delegate mediaPlayerStateChanged: notification];
+                [mediaPlayer.delegate mediaPlayerStateChanged:newState];
         });
     }
 }
