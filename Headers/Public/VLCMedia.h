@@ -313,29 +313,56 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 };
 
 /**
- * triggers an asynchronous parse of the media item
- * using the given options
+ * Triggers an asynchronous parse of the media item using the given options.
+ *
+ * This will execute \p VLCMedia::parseWithOptions:timeout:library: with the
+ * default VLCLibrary and the default timeout from this VLCLibrary.
+ *
  * \param options the option mask based on VLCMediaParsingOptions
+ * \return 0 on success, -1 in case of error
+ *
+ * \note Listen to the "parsed" key value or the mediaDidFinishParsing: delegate
+ * method to be notified about parsing results. Those triggers will _NOT_ be
+ * raised if parsing fails and this method returns an error.
+ *
  * \see VLCMediaParsingOptions
- * \return an int. 0 on success, -1 in case of error
- * \note listen to the "parsed" key value or the mediaDidFinishParsing:
- * delegate method to be notified about parsing results. Those triggers
- * will _NOT_ be raised if parsing fails and this method returns an error.
  */
 - (int)parseWithOptions:(VLCMediaParsingOptions)options;
 
 /**
- * triggers an asynchronous parse of the media item
- * using the given options
+ * Triggers an asynchronous parse of the media item using the given options.
+ *
+ * This will execute \p VLCMedia::parseWithOptions:timeout:library: with the
+ * default VLCLibrary.
+ *
  * \param options the option mask based on VLCMediaParsingOptions
  * \param timeoutValue a time-out value in milliseconds (-1 for default, 0 for infinite)
+ * \return 0 on success, -1 in case of error
+ *
+ * \note Listen to the "parsed" key value or the mediaDidFinishParsing: delegate
+ * method to be notified about parsing results. Those triggers will _NOT_ be
+ * raised if parsing fails and this method returns an error.
+ *
  * \see VLCMediaParsingOptions
- * \return an int. 0 on success, -1 in case of error
- * \note listen to the "parsed" key value or the mediaDidFinishParsing:
- * delegate method to be notified about parsing results. Those triggers
- * will _NOT_ be raised if parsing fails and this method returns an error.
  */
 - (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue;
+
+/**
+ * Triggers an asynchronous parse of the media item using the given options.
+ *
+ * The VLCLibrary \p library given in argument will be used to launch the
+ * preparsing request, and releasing this VLCLibrary will cancel it.
+ *
+ * \param options the option mask based on VLCMediaParsingOptions
+ * \param timeoutValue a time-out value in milliseconds (-1 for default, 0 for infinite)
+ * \return 0 on success, -1 in case of error
+ *
+ * \note Listen to the "parsed" key value or the mediaDidFinishParsing:
+ * delegate method to be notified about parsing results. Those triggers
+ * will _NOT_ be raised if parsing fails and this method returns an error.
+ *
+ * \see VLCMediaParsingOptions
+ */
 
 - (int)parseWithOptions:(VLCMediaParsingOptions)options timeout:(int)timeoutValue library:(VLCLibrary*)library;
 
