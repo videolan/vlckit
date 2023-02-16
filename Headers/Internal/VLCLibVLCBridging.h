@@ -72,7 +72,7 @@
  * \param md LibVLC media descriptor pointer.
  * \return Newly created media instance using specified descriptor.
  */
-+ (id)mediaWithLibVLCMediaDescriptor:(void *)md;
++ (nullable instancetype)mediaWithLibVLCMediaDescriptor:(void *)md;
 
 /* Initializers */
 /**
@@ -80,9 +80,9 @@
  * \param md LibVLC media descriptor pointer.
  * \return Newly created media instance using specified descriptor.
  */
-- (id)initWithLibVLCMediaDescriptor:(void *)md;
+- (nullable instancetype)initWithLibVLCMediaDescriptor:(void *)md;
 
-+ (id)mediaWithMedia:(VLCMedia *)media andLibVLCOptions:(NSDictionary *)options;
++ (nullable instancetype)mediaWithMedia:(VLCMedia *)media andLibVLCOptions:(NSDictionary *)options;
 
 /**
  * Returns the receiver's internal media descriptor pointer.
@@ -191,7 +191,7 @@
  */
 @interface VLCMediaTrack (LibVLCBridging)
 
-- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track;
+- (nullable instancetype)initWithMediaTrack:(libvlc_media_track_t *)track;
 
 @end
 
@@ -200,7 +200,7 @@
  */
 @interface VLCMediaAudioTrack (LibVLCBridging)
 
-- (instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio;
+- (nullable instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio;
 
 @end
 
@@ -209,7 +209,7 @@
  */
 @interface VLCMediaVideoTrack (LibVLCBridging)
 
-- (instancetype)initWithVideoTrack:(libvlc_video_track_t *)video;
+- (nullable instancetype)initWithVideoTrack:(libvlc_video_track_t *)video;
 
 @end
 
@@ -218,7 +218,7 @@
  */
 @interface VLCMediaTextTrack (LibVLCBridging)
 
-- (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle;
+- (nullable instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle;
 
 @end
 
@@ -238,9 +238,9 @@
  */
 @interface VLCMediaPlayerTrack (LibVLCBridging)
 
-- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track mediaPlayer:(VLCMediaPlayer *)mediaPlayer;
+- (nullable instancetype)initWithMediaTrack:(libvlc_media_track_t *)track mediaPlayer:(VLCMediaPlayer *)mediaPlayer;
 
-- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track NS_UNAVAILABLE;
+- (nullable instancetype)initWithMediaTrack:(libvlc_media_track_t *)track NS_UNAVAILABLE;
 
 @end
 
