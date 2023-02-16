@@ -178,27 +178,27 @@ static const struct event_handler_entry {
     return ret != NULL ? @(ret) : @"";
 }
 
-+ (instancetype)mediaWithURL:(NSURL *)anURL;
++ (nullable instancetype)mediaWithURL:(NSURL *)anURL;
 {
     return [[VLCMedia alloc] initWithURL:anURL];
 }
 
-+ (instancetype)mediaWithPath:(NSString *)aPath;
++ (nullable instancetype)mediaWithPath:(NSString *)aPath;
 {
     return [[VLCMedia alloc] initWithPath:aPath];
 }
 
-+ (instancetype)mediaAsNodeWithName:(NSString *)aName;
++ (nullable instancetype)mediaAsNodeWithName:(NSString *)aName;
 {
     return [[VLCMedia alloc] initAsNodeWithName:aName];
 }
 
-- (instancetype)initWithPath:(NSString *)aPath
+- (nullable instancetype)initWithPath:(NSString *)aPath
 {
     return [self initWithURL:[NSURL fileURLWithPath:aPath isDirectory:NO]];
 }
 
-- (instancetype)initWithURL:(NSURL *)anURL
+- (nullable instancetype)initWithURL:(NSURL *)anURL
 {
     if ([super init] == nil)
         return nil;
@@ -212,7 +212,7 @@ static const struct event_handler_entry {
     return self;
 }
 
-- (instancetype)initWithStream:(NSInputStream *)stream
+- (nullable instancetype)initWithStream:(NSInputStream *)stream
 {
     NSAssert(stream.streamStatus != NSStreamStatusClosed, @"Passing closed stream to VLCMedia.init does not work");
     if ([super init] == nil)
@@ -227,7 +227,7 @@ static const struct event_handler_entry {
     return self;
 }
 
-- (instancetype)initAsNodeWithName:(NSString *)aName
+- (nullable instancetype)initAsNodeWithName:(NSString *)aName
 {
     if ([super init] == nil)
         return nil;
@@ -568,12 +568,12 @@ static const struct event_handler_entry {
  */
 @implementation VLCMedia (LibVLCBridging)
 
-+ (id)mediaWithLibVLCMediaDescriptor:(void *)md
++ (nullable instancetype)mediaWithLibVLCMediaDescriptor:(void *)md
 {
     return [[VLCMedia alloc] initWithLibVLCMediaDescriptor:md];
 }
 
-+ (id)mediaWithMedia:(VLCMedia *)media andLibVLCOptions:(NSDictionary *)options
++ (nullable instancetype)mediaWithMedia:(VLCMedia *)media andLibVLCOptions:(NSDictionary *)options
 {
     libvlc_media_t * p_md;
     p_md = libvlc_media_duplicate([media libVLCMediaDescriptor]);
@@ -587,7 +587,7 @@ static const struct event_handler_entry {
     return [VLCMedia mediaWithLibVLCMediaDescriptor:p_md];
 }
 
-- (id)initWithLibVLCMediaDescriptor:(void *)md
+- (nullable instancetype)initWithLibVLCMediaDescriptor:(void *)md
 {
     if ([super init] == nil)
         return nil;
@@ -663,7 +663,7 @@ static const struct event_handler_entry {
  */
 @implementation VLCMediaTrack
 
-- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track
+- (nullable instancetype)initWithMediaTrack:(libvlc_media_track_t *)track
 {
     if ([super init] == nil)
         return nil;
@@ -709,7 +709,7 @@ static const struct event_handler_entry {
  */
 @implementation VLCMediaAudioTrack
 
-- (instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio
+- (nullable instancetype)initWithAudioTrack:(libvlc_audio_track_t *)audio
 {
     if ([super init] == nil)
         return nil;
@@ -731,7 +731,7 @@ static const struct event_handler_entry {
  */
 @implementation VLCMediaVideoTrack
 
-- (instancetype)initWithVideoTrack:(libvlc_video_track_t *)video
+- (nullable instancetype)initWithVideoTrack:(libvlc_video_track_t *)video
 {
     if ([super init] == nil)
         return nil;
@@ -759,7 +759,7 @@ static const struct event_handler_entry {
  */
 @implementation VLCMediaTextTrack
 
-- (instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle
+- (nullable instancetype)initWithSubtitleTrack:(libvlc_subtitle_track_t *)subtitle
 {
     if ([super init] == nil)
         return nil;
@@ -784,7 +784,7 @@ static const struct event_handler_entry {
     __weak VLCMediaPlayer *_mediaPlayer;
 }
 
-- (instancetype)initWithMediaTrack:(libvlc_media_track_t *)track mediaPlayer:(VLCMediaPlayer *)mediaPlayer;
+- (nullable instancetype)initWithMediaTrack:(libvlc_media_track_t *)track mediaPlayer:(VLCMediaPlayer *)mediaPlayer;
 {
     if ([super initWithMediaTrack: track] == nil)
         return nil;

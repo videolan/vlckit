@@ -82,7 +82,7 @@ OBJC_VISIBLE
  * \return A new VLCMedia object, only if there were no errors.  This object will be automatically released.
  * \see initWithMediaURL
  */
-+ (instancetype)mediaWithURL:(NSURL *)anURL;
++ (nullable instancetype)mediaWithURL:(NSURL *)anURL;
 
 /**
  * Manufactures a new VLCMedia object using the path specified.
@@ -90,7 +90,7 @@ OBJC_VISIBLE
  * \return A new VLCMedia object, only if there were no errors.  This object will be automatically released.
  * \see initWithPath
  */
-+ (instancetype)mediaWithPath:(NSString *)aPath;
++ (nullable instancetype)mediaWithPath:(NSString *)aPath;
 
 /**
  * list of possible track information type.
@@ -118,7 +118,7 @@ typedef NS_ENUM(NSInteger, VLCMediaTrackType) {
  * will be automatically released.
  * \see initAsNodeWithName
  */
-+ (instancetype)mediaAsNodeWithName:(NSString *)aName;
++ (nullable instancetype)mediaAsNodeWithName:(NSString *)aName;
 
 /* Initializers */
 /**
@@ -126,14 +126,14 @@ typedef NS_ENUM(NSInteger, VLCMediaTrackType) {
  * \param anURL the URL to media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (instancetype)initWithURL:(NSURL *)anURL;
+- (nullable instancetype)initWithURL:(NSURL *)anURL;
 
 /**
  * Initializes a new VLCMedia object to use the specified path.
  * \param aPath Path to media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (instancetype)initWithPath:(NSString *)aPath;
+- (nullable instancetype)initWithPath:(NSString *)aPath;
 
 /**
  * Initializes a new VLCMedia object to use an input stream.
@@ -146,14 +146,14 @@ typedef NS_ENUM(NSInteger, VLCMediaTrackType) {
  * \param stream Input stream for media to be accessed.
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (instancetype)initWithStream:(NSInputStream *)stream;
+- (nullable instancetype)initWithStream:(NSInputStream *)stream;
 
 /**
  * TODO
  * \param aName TODO
  * \return A new VLCMedia object, only if there were no errors.
  */
-- (instancetype)initAsNodeWithName:(NSString *)aName;
+- (nullable instancetype)initAsNodeWithName:(NSString *)aName;
 
 /**
  * list of possible media orientation.
