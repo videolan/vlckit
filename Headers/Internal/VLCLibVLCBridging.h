@@ -36,6 +36,8 @@
 #import <VLCRendererItem.h>
 #endif // !TARGET_OS_TV
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  * Bridges functionality between libvlc and VLCMediaList implementation.
  */
@@ -252,3 +254,5 @@
 - (void)setMediaPlayer:(nullable VLCMediaPlayer *)mediaPlayer;
 
 @end
+
+NS_ASSUME_NONNULL_END
