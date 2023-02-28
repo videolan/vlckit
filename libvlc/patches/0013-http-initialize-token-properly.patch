@@ -1,7 +1,7 @@
-From 4f610713a8d79147dfc1d91371a3a30b0b849ae2 Mon Sep 17 00:00:00 2001
+From be733ee0ff3a8e8b1cdb19ac336ed42c8a961f9c Mon Sep 17 00:00:00 2001
 From: Maxime Chapelet <umxprime@videolabs.io>
 Date: Wed, 24 Aug 2022 10:39:30 +0200
-Subject: [PATCH 17/18] http : initialize token properly
+Subject: [PATCH 13/14] http : initialize token properly
 
 unititialization caused bad access exceptions when resource was deinit or when its authentication bearer header creation was wrongly attempted
 ---

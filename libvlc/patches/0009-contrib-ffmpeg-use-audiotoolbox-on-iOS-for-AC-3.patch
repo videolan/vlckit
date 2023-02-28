@@ -1,7 +1,7 @@
-From 6686d94a8f928f5f40fd8f2e128eb6fbbb30de6b Mon Sep 17 00:00:00 2001
+From f87b4919c4303ef93af324fe71e0dd0310ba8ff1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 12/18] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
+Subject: [PATCH 09/14] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
 
 This enforces the use of the audiotoolbox decoders for AC-3 and E-AC-3
 as introduced in iOS 9 and disables the use of the MLP decoder to be in

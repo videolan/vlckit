@@ -1,7 +1,7 @@
-From ce97c1d6406e5f9ca980f64f1aea07022448b7df Mon Sep 17 00:00:00 2001
+From e37fe5c3dff5f6dda007192cb3954ef8923faf1c Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 13/18] libvlc_media: add cookie_jar API
+Subject: [PATCH 10/14] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h |  35 +++++
@@ -16,10 +16,10 @@ Subject: [PATCH 13/18] libvlc_media: add cookie_jar API
  create mode 100644 patch
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index c095c41010..f75ba251b1 100644
+index 825a7e5f3a..76a32713fe 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -867,6 +867,41 @@ LIBVLC_API
+@@ -857,6 +857,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -62,10 +62,10 @@ index c095c41010..f75ba251b1 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index cfa6cd095c..acd9e04adb 100644
+index 7bdf063d4a..b4cdb56919 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -210,6 +210,8 @@ libvlc_media_slaves_release
+@@ -209,6 +209,8 @@ libvlc_media_slaves_release
  libvlc_media_set_meta
  libvlc_media_set_user_data
  libvlc_media_subitems
@@ -372,7 +372,7 @@ index 0000000000..de12fb79fe
 +libvlc_picture_list_count
 +libvlc_picture_list_destroy
 diff --git a/lib/media.c b/lib/media.c
-index 51655d071e..a9b8e9a2e5 100644
+index 8ba0aeef78..004d3f4c28 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -497,6 +497,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
@@ -393,7 +393,7 @@ index 51655d071e..a9b8e9a2e5 100644
      libvlc_event_manager_destroy( &p_md->event_manager );
      free( p_md );
  }
-@@ -1241,3 +1245,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+@@ -1236,3 +1240,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
      free( pp_slaves );
  }
