@@ -123,7 +123,8 @@ buildMobileVLCKit()
     local option="$1"
 
     if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
-        option=""
+        # enable legacy ARMv7 slice for distribution
+        option="-7"
     fi
 
     if ! $BUILD_MOBILEVLCKIT $option; then
