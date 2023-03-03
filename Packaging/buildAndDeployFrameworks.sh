@@ -123,7 +123,8 @@ buildMobileVLCKit()
     local option="$1"
 
     if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
-        option=""
+        # enable legacy 32bit slices for distribution
+        option="-3"
     fi
 
     if ! $BUILD_MOBILEVLCKIT $option; then
