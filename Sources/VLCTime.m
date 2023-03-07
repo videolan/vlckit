@@ -2,10 +2,11 @@
  * VLCTime.m: VLCKit.framework VLCTime implementation
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007 VLC authors and VideoLAN
+ * Copyright (C) 2007-2023 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
+ *          Felix Paul Kühne <fkuehne # videolan.org>
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -91,7 +92,7 @@
         }
         duration = duration / 1000;
         long long positiveDuration = llabs(duration);
-        if (positiveDuration > 3600)
+        if (positiveDuration >= 3600)
             return [NSString stringWithFormat:@"%s%01ld:%02ld:%02ld",
                         duration < 0 ? "-" : "",
                 (long) (positiveDuration / 3600),
@@ -124,7 +125,7 @@
         long seconds = positiveDuration / 1000 % 60;
         long milliseconds = positiveDuration - ((hours * 3600 + minutes * 60 + seconds) * 1000);
 
-        if (hours > 1)
+        if (hours >= 1)
             return [NSString stringWithFormat:@"%s%01ld:%02ld:%02ld.%03ld",
                         duration < 0 ? "-" : "",
                     hours, minutes, seconds, milliseconds];
