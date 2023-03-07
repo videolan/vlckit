@@ -241,7 +241,7 @@ buildxcodeproj()
                 if [ "$INCLUDE_32BIT" = "yes" ]; then
                     architectures="i386 x86_64 arm64"
                 else
-                    architectures="arm64"
+                    architectures="arm64 x86_64"
                 fi
             else
                 if [ "$INCLUDE_32BIT" = "yes" ]; then
