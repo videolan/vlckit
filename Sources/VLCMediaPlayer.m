@@ -219,13 +219,28 @@ static void HandleMediaPlayerTrackChanged(const libvlc_event_t *event, void *sel
             switch (event->type)
             {
                 case libvlc_MediaPlayerESAdded:
-                    [mediaPlayer.delegate mediaPlayerTrackAdded:trackName withType:trackType];
+                    {
+                        SEL selector = @selector(mediaPlayerTrackAdded:withType:);
+                        if([mediaPlayer.delegate respondsToSelector:selector])
+                            [mediaPlayer.delegate mediaPlayerTrackAdded:trackName
+                                                               withType:trackType];
+                    }
                     break;
                 case libvlc_MediaPlayerESUpdated:
-                    [mediaPlayer.delegate mediaPlayerTrackUpdated:trackName withType:trackType];
+                    {
+                        SEL selector = @selector(mediaPlayerTrackUpdated:withType:);
+                        if([mediaPlayer.delegate respondsToSelector:selector])
+                            [mediaPlayer.delegate mediaPlayerTrackUpdated:trackName
+                                                                 withType:trackType];
+                    }
                     break;
                 case libvlc_MediaPlayerESDeleted:
-                    [mediaPlayer.delegate mediaPlayerTrackRemoved:trackName withType:trackType];
+                    {
+                        SEL selector = @selector(mediaPlayerTrackRemoved:withType:);
+                        if([mediaPlayer.delegate respondsToSelector:selector])
+                            [mediaPlayer.delegate mediaPlayerTrackRemoved:trackName
+                                                                 withType:trackType];
+                    }
                     break;
                 default:
                     return; // TODO unreachable
@@ -246,9 +261,11 @@ static void HandleMediaPlayerTrackSelectionChanged(const libvlc_event_t *event, 
             event->u.media_player_es_changed.i_type);
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            [mediaPlayer.delegate mediaPlayerTrackSelected:trackType
-                                                selectedId:selectedId
-                                              unselectedId:unselectedId];
+            SEL selector = @selector(mediaPlayerTrackSelected:selectedId:unselectedId:);
+            if([mediaPlayer.delegate respondsToSelector:selector])
+                [mediaPlayer.delegate mediaPlayerTrackSelected:trackType
+                                                    selectedId:selectedId
+                                                  unselectedId:unselectedId];
         });
     }
 }
@@ -313,7 +330,8 @@ static void HandleMediaPlayerLengthChanged(const libvlc_event_t *event, void *se
         VLCMediaPlayer *mediaPlayer = (__bridge VLCMediaPlayer *)self;
         libvlc_time_t length = event->u.media_player_length_changed.new_length;
         dispatch_async(dispatch_get_main_queue(), ^{
-            [mediaPlayer.delegate mediaPlayerLengthChanged:length];
+            if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerLengthChanged:)])
+                [mediaPlayer.delegate mediaPlayerLengthChanged:length];
         });
     }
 }
