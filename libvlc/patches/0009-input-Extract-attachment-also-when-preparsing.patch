@@ -1,4 +1,4 @@
-From 7cd6dc3b66325c0ca63bee81da226c4e62ce47b3 Mon Sep 17 00:00:00 2001
+From edfa49dba60fb3d14fab69126badfa5531220f01 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
 Subject: [PATCH 09/48] input: Extract attachment also when preparsing
@@ -1017,7 +1017,7 @@ index dc67c613fd..282b095614 100644
      std::vector<virtual_segment_c*>  used_vsegments;
      virtual_segment_c                *p_current_vsegment;
 diff --git a/modules/demux/mkv/matroska_segment_parse.cpp b/modules/demux/mkv/matroska_segment_parse.cpp
-index 91813a5fb6..07d35a2942 100644
+index 601d12f4a6..87ade76927 100644
 --- a/modules/demux/mkv/matroska_segment_parse.cpp
 +++ b/modules/demux/mkv/matroska_segment_parse.cpp
 @@ -1333,33 +1333,31 @@ void matroska_segment_c::ParseAttachments( KaxAttachments *attachments )
@@ -1597,7 +1597,7 @@ index 0b37545a00..37e5155d67 100644
                      return VLC_SUCCESS;
                  }
 diff --git a/src/input/input.c b/src/input/input.c
-index e41df3e2c1..921df37506 100644
+index fcd3ecbf55..ccfdf2b730 100644
 --- a/src/input/input.c
 +++ b/src/input/input.c
 @@ -98,9 +98,8 @@ static void InputGetExtraFiles( input_thread_t *p_input,
@@ -1612,7 +1612,7 @@ index e41df3e2c1..921df37506 100644
  
  #define SLAVE_ADD_NOFLAG    0
  #define SLAVE_ADD_FORCED    (1<<0)
-@@ -323,7 +322,6 @@ static input_thread_t *Create( vlc_object_t *p_parent, input_item_t *p_item,
+@@ -324,7 +323,6 @@ static input_thread_t *Create( vlc_object_t *p_parent, input_item_t *p_item,
      memset( &priv->bookmark, 0, sizeof(priv->bookmark) );
      TAB_INIT( priv->i_bookmark, priv->pp_bookmark );
      TAB_INIT( priv->i_attachment, priv->attachment );
@@ -1620,7 +1620,7 @@ index e41df3e2c1..921df37506 100644
      priv->p_sout   = NULL;
      priv->b_out_pace_control = false;
      priv->p_renderer = p_renderer && b_preparsing == false ?
-@@ -1248,7 +1246,7 @@ static void LoadSlaves( input_thread_t *p_input )
+@@ -1249,7 +1247,7 @@ static void LoadSlaves( input_thread_t *p_input )
              free( psz_mrl );
              /* Don't update item slaves for attachements */
          }
@@ -1629,7 +1629,7 @@ index e41df3e2c1..921df37506 100644
      }
      free( pp_attachment );
      if( i_attachment > 0 )
-@@ -1567,10 +1565,8 @@ do { \
+@@ -1568,10 +1566,8 @@ do { \
      if( priv->i_attachment > 0 )
      {
          for( int i = 0; i < priv->i_attachment; i++ )
@@ -1641,7 +1641,7 @@ index e41df3e2c1..921df37506 100644
      }
  
      /* clean bookmarks */
-@@ -2838,17 +2834,6 @@ static input_source_t *InputSourceNew( input_thread_t *p_input,
+@@ -2851,17 +2847,6 @@ static input_source_t *InputSourceNew( input_thread_t *p_input,
              in->b_title_demux = true;
          }
  
@@ -1659,7 +1659,7 @@ index e41df3e2c1..921df37506 100644
          demux_Control( in->p_demux, DEMUX_GET_PTS_DELAY, &in->i_pts_delay );
          if( in->i_pts_delay > INPUT_PTS_DELAY_MAX )
              in->i_pts_delay = INPUT_PTS_DELAY_MAX;
-@@ -2856,6 +2841,16 @@ static input_source_t *InputSourceNew( input_thread_t *p_input,
+@@ -2869,6 +2854,16 @@ static input_source_t *InputSourceNew( input_thread_t *p_input,
              in->i_pts_delay = 0;
      }
  
@@ -1676,7 +1676,7 @@ index e41df3e2c1..921df37506 100644
      if( demux_Control( in->p_demux, DEMUX_GET_FPS, &in->f_fps ) )
          in->f_fps = 0.f;
  
-@@ -2929,8 +2924,8 @@ static void InputSourceMeta( input_thread_t *p_input,
+@@ -2942,8 +2937,8 @@ static void InputSourceMeta( input_thread_t *p_input,
          if( p_demux_meta->i_attachments > 0 )
          {
              vlc_mutex_lock( &input_priv(p_input)->p_item->lock );
@@ -1687,7 +1687,7 @@ index e41df3e2c1..921df37506 100644
              vlc_mutex_unlock( &input_priv(p_input)->p_item->lock );
          }
          module_unneed( p_demux, p_id3 );
-@@ -3052,39 +3047,39 @@ static void InputMetaUser( input_thread_t *p_input, vlc_meta_t *p_meta )
+@@ -3065,39 +3060,39 @@ static void InputMetaUser( input_thread_t *p_input, vlc_meta_t *p_meta )
      }
  }
  
@@ -1748,7 +1748,7 @@ index e41df3e2c1..921df37506 100644
      free( pp_new );
  }
  
-@@ -3108,26 +3103,26 @@ static void InputUpdateMeta( input_thread_t *p_input, demux_t *p_demux )
+@@ -3121,26 +3116,26 @@ static void InputUpdateMeta( input_thread_t *p_input, demux_t *p_demux )
      if( !demux_Control( p_demux, DEMUX_GET_ATTACHMENTS,
                          &attachment, &i_attachment ) )
      {
@@ -1790,10 +1790,10 @@ index e41df3e2c1..921df37506 100644
  
      es_out_ControlSetMeta( input_priv(p_input)->p_es_out, p_meta );
 diff --git a/src/input/input_internal.h b/src/input/input_internal.h
-index af9b35967d..b79df99cac 100644
+index d29731edca..231e27030c 100644
 --- a/src/input/input_internal.h
 +++ b/src/input/input_internal.h
-@@ -129,7 +129,6 @@ typedef struct input_thread_private_t
+@@ -130,7 +130,6 @@ typedef struct input_thread_private_t
      /* Input attachment */
      int i_attachment;
      input_attachment_t **attachment;

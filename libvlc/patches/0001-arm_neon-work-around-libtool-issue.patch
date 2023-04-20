@@ -1,4 +1,4 @@
-From 5d9c806e0115a5372f68b895aedb81de89a21da0 Mon Sep 17 00:00:00 2001
+From 4367631d8009ba85812e5feb2d3b17cf4b006484 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Thu, 18 Dec 2014 22:14:55 +0100
 Subject: [PATCH 01/48] arm_neon: work-around libtool issue

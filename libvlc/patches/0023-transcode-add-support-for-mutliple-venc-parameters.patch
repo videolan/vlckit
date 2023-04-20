@@ -1,4 +1,4 @@
-From 40414964beac00a6d4533317f3aa68b98cde4db2 Mon Sep 17 00:00:00 2001
+From b01810991afd0f90324d8c8ef4cb3b8191efd8aa Mon Sep 17 00:00:00 2001
 From: Alexandre Janniaux <alexandre.janniaux@gmail.com>
 Date: Wed, 28 Nov 2018 18:27:16 +0100
 Subject: [PATCH 23/48] transcode: add support for mutliple venc parameters

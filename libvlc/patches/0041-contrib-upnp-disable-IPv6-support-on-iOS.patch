@@ -1,4 +1,4 @@
-From 9ef41c7b38833767c56d0d424558318a6efc06c0 Mon Sep 17 00:00:00 2001
+From 2bfa34c6c83381417ff4c2ce598c565630d1bc94 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 22 Mar 2022 12:32:47 +0100
 Subject: [PATCH 41/48] contrib/upnp: disable IPv6 support on iOS

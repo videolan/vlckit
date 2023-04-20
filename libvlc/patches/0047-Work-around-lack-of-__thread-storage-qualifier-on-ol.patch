@@ -1,4 +1,4 @@
-From 04fea1cb410e38bc765947bd7f7c8fc62c0f3dd4 Mon Sep 17 00:00:00 2001
+From ae12d0e0f973bd37768f0eaf6d78f33ae7039ed0 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
 Subject: [PATCH 47/48] Work around lack of __thread storage qualifier on old

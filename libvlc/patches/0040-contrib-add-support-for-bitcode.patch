@@ -1,4 +1,4 @@
-From 063b1ead9c810b466e36645703e3b277c176a08b Mon Sep 17 00:00:00 2001
+From f865344292884ee82ac2d7fdb13f0a65df2cbc99 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 9 Mar 2022 08:15:53 +0100
 Subject: [PATCH 40/48] contrib: add support for bitcode

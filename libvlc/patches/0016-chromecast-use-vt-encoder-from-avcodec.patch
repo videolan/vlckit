@@ -1,4 +1,4 @@
-From 2c5656b3132b7607ee506a7ec3fd42e6736a8d93 Mon Sep 17 00:00:00 2001
+From 085683f42c77ff2098e02acd2dcc5b3eb74f18fd Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:52:35 +0200
 Subject: [PATCH 16/48] chromecast: use vt encoder from avcodec

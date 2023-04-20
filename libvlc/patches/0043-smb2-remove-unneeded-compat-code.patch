@@ -1,4 +1,4 @@
-From ebfbfbc40c37ea228069a7e1bc33c6e6ce9452f1 Mon Sep 17 00:00:00 2001
+From d8cbf0b07744fa56b16789a662603806f83d0ba2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 16 Apr 2022 00:44:03 +0200
 Subject: [PATCH 43/48] smb2: remove unneeded compat code
