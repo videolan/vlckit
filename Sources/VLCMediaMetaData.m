@@ -350,8 +350,10 @@
 
 /* fetch and cache */
 
-- (void)fetchMetaDataForKey:(const libvlc_meta_t)key
+- (nullable id)fetchMetaDataForKey:(const libvlc_meta_t)key
 {
+    id value = nil;
+    
     switch (key) {
             
         // NSString
@@ -371,11 +373,8 @@
         case libvlc_meta_Director:
         case libvlc_meta_ShowName:
         case libvlc_meta_Actors:
-        case libvlc_meta_AlbumArtist: {
-            dispatch_barrier_async(_metaCacheAccessQueue, ^{
-                _metaCache[@(key)] = [self metadataStringForKey: key];
-            });
-        }
+        case libvlc_meta_AlbumArtist:
+            value = [self metadataStringForKey: key];
             break;
             
         // NSNumber
@@ -385,44 +384,41 @@
         case libvlc_meta_Season:
         case libvlc_meta_Episode:
         case libvlc_meta_DiscNumber:
-        case libvlc_meta_DiscTotal: {
-            dispatch_barrier_async(_metaCacheAccessQueue, ^{
-                _metaCache[@(key)] = [self metadataNumberForKey: key];
-            });
-        }
+        case libvlc_meta_DiscTotal:
+            value = [self metadataNumberForKey: key];
             break;
             
         // NSURL
         case libvlc_meta_URL:
-        case libvlc_meta_ArtworkURL: {
-            dispatch_barrier_async(_metaCacheAccessQueue, ^{
-                _metaCache[@(key)] = [self metadataURLForKey: key];
-            });
-        }
+        case libvlc_meta_ArtworkURL:
+            value = [self metadataURLForKey: key];
             break;
             
         default:
             VKLog(@"WARNING: undefined meta type : %d", key);
             break;
     }
+    
+    if (value)
+        dispatch_barrier_async(_metaCacheAccessQueue, ^{
+            _metaCache[@(key)] = value;
+        });
+    
+    return value;
 }
 
 /* cache get */
 
 - (nullable id)cacheValueForKey:(const libvlc_meta_t)key
 {
-    NSNumber *cacheKey = @(key);
-    
     __block id cacheValue = nil;
     dispatch_sync(_metaCacheAccessQueue, ^{
-        cacheValue = _metaCache[cacheKey];
+        cacheValue = _metaCache[@(key)];
     });
-    if (!cacheValue) {
-        [self fetchMetaDataForKey: key];
-        dispatch_sync(_metaCacheAccessQueue, ^{
-            cacheValue = _metaCache[cacheKey];
-        });
-    }
+    
+    if (!cacheValue)
+        cacheValue = [self fetchMetaDataForKey: key];
+    
     return cacheValue;
 }
 
