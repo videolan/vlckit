@@ -1,0 +1,129 @@
+From ee902bf144037dd9181b3098e805cf65a1c81f98 Mon Sep 17 00:00:00 2001
+From: Thomas Guillem <thomas@gllm.fr>
+Date: Thu, 29 Jun 2023 13:37:29 +0200
+Subject: [PATCH 48/48] contrib: upnp: add patch to fix potential busyloop
+
+Not tested.
+---
+ .../upnp/0001-miniserver-fix-busy-loop.patch  | 96 +++++++++++++++++++
+ contrib/src/upnp/rules.mak                    |  1 +
+ 2 files changed, 97 insertions(+)
+ create mode 100644 contrib/src/upnp/0001-miniserver-fix-busy-loop.patch
+
+diff --git a/contrib/src/upnp/0001-miniserver-fix-busy-loop.patch b/contrib/src/upnp/0001-miniserver-fix-busy-loop.patch
+new file mode 100644
+index 0000000000..75d4381c3c
+--- /dev/null
++++ b/contrib/src/upnp/0001-miniserver-fix-busy-loop.patch
+@@ -0,0 +1,96 @@
++From f6c862ef0e80a9de91545cf8bc21dc5aabbbea3d Mon Sep 17 00:00:00 2001
++From: Thomas Guillem <thomas@gllm.fr>
++Date: Thu, 29 Jun 2023 13:34:13 +0200
++Subject: [PATCH] miniserver: fix busy loop
++
++---
++ upnp/src/genlib/miniserver/miniserver.c | 20 ++++++++++++--------
++ upnp/src/inc/ssdplib.h                  |  4 +++-
++ upnp/src/ssdp/ssdp_server.c             |  7 +++++--
++ 3 files changed, 20 insertions(+), 11 deletions(-)
++
++diff --git a/upnp/src/genlib/miniserver/miniserver.c b/upnp/src/genlib/miniserver/miniserver.c
++index cffe7984..a91a7e60 100644
++--- a/upnp/src/genlib/miniserver/miniserver.c
+++++ b/upnp/src/genlib/miniserver/miniserver.c
++@@ -537,10 +537,14 @@ static void web_server_accept(SOCKET lsock, fd_set *set)
++ 	#endif /* INTERNAL_WEB_SERVER */
++ }
++ 
++-static void ssdp_read(SOCKET rsock, fd_set *set)
+++static void ssdp_read(SOCKET *rsock, fd_set *set)
++ {
++-	if (rsock != INVALID_SOCKET && FD_ISSET(rsock, set)) {
++-		readFromSSDPSocket(rsock);
+++	if (*rsock != INVALID_SOCKET && FD_ISSET(*rsock, set)) {
+++		int ret = readFromSSDPSocket(*rsock);
+++        if (ret != 0) {
+++            sock_close(*rsock);
+++            *rsock = INVALID_SOCKET;
+++        }
++ 	}
++ }
++ 
++@@ -658,12 +662,12 @@ static void RunMiniServer(
++ 			web_server_accept(
++ 				miniSock->miniServerSock6UlaGua, &rdSet);
++ 	#ifdef INCLUDE_CLIENT_APIS
++-			ssdp_read(miniSock->ssdpReqSock4, &rdSet);
++-			ssdp_read(miniSock->ssdpReqSock6, &rdSet);
+++			ssdp_read(&miniSock->ssdpReqSock4, &rdSet);
+++			ssdp_read(&miniSock->ssdpReqSock6, &rdSet);
++ 	#endif /* INCLUDE_CLIENT_APIS */
++-			ssdp_read(miniSock->ssdpSock4, &rdSet);
++-			ssdp_read(miniSock->ssdpSock6, &rdSet);
++-			ssdp_read(miniSock->ssdpSock6UlaGua, &rdSet);
+++			ssdp_read(&miniSock->ssdpSock4, &rdSet);
+++			ssdp_read(&miniSock->ssdpSock6, &rdSet);
+++			ssdp_read(&miniSock->ssdpSock6UlaGua, &rdSet);
++ 			stopSock = receive_from_stopSock(
++ 				miniSock->miniServerStopSock, &rdSet);
++ 		}
++diff --git a/upnp/src/inc/ssdplib.h b/upnp/src/inc/ssdplib.h
++index 64f500c8..3578a245 100644
++--- a/upnp/src/inc/ssdplib.h
+++++ b/upnp/src/inc/ssdplib.h
++@@ -239,8 +239,10 @@ int ssdp_request_type(
++ 
++ /*!
++  * \brief This function reads the data from the ssdp socket.
+++ *
+++ * \return 0 on success; -1 on error.
++  */
++-void readFromSSDPSocket(
+++int readFromSSDPSocket(
++ 	/* [in] SSDP socket. */
++ 	SOCKET socket);
++ 
++diff --git a/upnp/src/ssdp/ssdp_server.c b/upnp/src/ssdp/ssdp_server.c
++index 728f543d..c4f23f40 100644
++--- a/upnp/src/ssdp/ssdp_server.c
+++++ b/upnp/src/ssdp/ssdp_server.c
++@@ -805,7 +805,7 @@ static void ssdp_event_handler_thread(
++ 	free_ssdp_event_handler_data(data);
++ }
++ 
++-void readFromSSDPSocket(SOCKET socket)
+++int readFromSSDPSocket(SOCKET socket)
++ {
++ 	char *requestBuf = NULL;
++ 	char staticBuf[BUFSIZE];
++@@ -896,8 +896,11 @@ void readFromSSDPSocket(SOCKET socket)
++ 			if (ThreadPoolAdd(&gRecvThreadPool, &job, NULL) != 0)
++ 				free_ssdp_event_handler_data(data);
++ 		}
++-	} else
+++		return 0;
+++	} else {
++ 		free_ssdp_event_handler_data(data);
+++		return -1;
+++    }
++ }
++ 
++ /*!
++-- 
++2.39.2
++
+diff --git a/contrib/src/upnp/rules.mak b/contrib/src/upnp/rules.mak
+index 54202e106f..8167611fd7 100644
+--- a/contrib/src/upnp/rules.mak
++++ b/contrib/src/upnp/rules.mak
+@@ -56,6 +56,7 @@ endif
+ ifdef HAVE_IOS
+ 	$(APPLY) $(SRC)/upnp/fix-reuseaddr-option.patch
+ endif
++	$(APPLY) $(SRC)/upnp/0001-miniserver-fix-busy-loop.patch
+ 	$(UPDATE_AUTOCONFIG)
+ 	$(MOVE)
+ 
+-- 
+2.32.1 (Apple Git-133)
+
