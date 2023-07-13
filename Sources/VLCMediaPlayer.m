@@ -34,7 +34,7 @@
 #import <VLCAdjustFilter.h>
 #import <VLCTime.h>
 #import <VLCAudioEqualizer.h>
-#import <VLCEventObjectManager.h>
+#import <VLCEventsHandler.h>
 #if !TARGET_OS_IPHONE
 # import <VLCVideoView.h>
 #endif // !TARGET_OS_IPHONE
@@ -114,41 +114,38 @@ const int64_t VLC_AUDIO_DELAY_MAX = 1000000ULL;
 + (VLCMediaLoudness *)loudnessDescriptionWithValue:(double)value andDate:(int64_t)date;
 @end
 
-static void HandleMediaTimeChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaTimeChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
         NSNumber *newTime = @(event->u.media_player_time_changed.new_time);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerTimeChanged: newTime];
             NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTimeChanged object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTimeChanged:)])
                 [mediaPlayer.delegate mediaPlayerTimeChanged: notification];
-        });
+        }];
     }
 }
 
-static void HandleMediaPositionChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaPositionChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
         
         NSNumber *newPosition = @(event->u.media_player_position_changed.new_position);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerPositionChanged: newPosition];
-        });
+        }];
     }
 }
 
-static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void * opaque)
 {
     VLCMediaPlayerState newState;
 
@@ -174,124 +171,110 @@ static void HandleMediaInstanceStateChanged(const libvlc_event_t * event, void *
     }
 
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerStateChanged: @(newState)];
             NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerStateChanged object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerStateChanged:)])
                 [mediaPlayer.delegate mediaPlayerStateChanged: notification];
-        });
+        }];
     }
 }
 
-static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaPlayerMediaChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
         VLCMedia *newMedia = [VLCMedia mediaWithLibVLCMediaDescriptor: event->u.media_player_media_changed.new_media];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerMediaChanged: newMedia];
-        });
+        }];
     }
 }
 
-static void HandleMediaTitleChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaTitleChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerTitleChanged object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerTitleChanged:)])
                 [mediaPlayer.delegate mediaPlayerTitleChanged: notification];
-        });
+        }];
     }
 }
 
-static void HandleMediaChapterChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaChapterChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerChapterChanged object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerChapterChanged:)])
                 [mediaPlayer.delegate mediaPlayerChapterChanged: notification];
-        });
+        }];
     }
 }
 
-static void HandleMediaLoudnessChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaLoudnessChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
         VLCMediaLoudness *loudness = [VLCMediaLoudness loudnessDescriptionWithValue:event->u.media_player_loudness_changed.momentary_loudness
                                                                             andDate:event->u.media_player_loudness_changed.date];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerLoudnessChanged: loudness];
             NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerLoudnessChanged object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerLoudnessChanged:)])
                 [mediaPlayer.delegate mediaPlayerLoudnessChanged: notification];
-        });
+        }];
     }
 }
 
-static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * self)
+static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
         const char *psz_filename = event->u.media_player_snapshot_taken.psz_filename;
         if (!psz_filename) return;
         
         NSString *fileName = @(psz_filename);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerSnapshot: fileName];
             NSNotification *notification = [NSNotification notificationWithName: VLCMediaPlayerSnapshotTaken object: mediaPlayer];
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerSnapshot:)])
                 [mediaPlayer.delegate mediaPlayerSnapshot: notification];
-        });
+        }];
     }
 }
 
-static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
+static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)eventObject.weakTarget;
-        if (!mediaPlayer) return;
-        
         NSArray *arg = @[
             @{
                 @"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.file_path],
                 @"isRecording": @(event->u.media_player_record_changed.recording)
             }
         ];
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerRecordChanged: arg];
-        });
+        }];
     }
 }
 
@@ -311,7 +294,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
     int64_t _extraDelay;
     VLCMediaLoudness *_momentaryLoudness;        ///< Last loudness value received
-    VLCEventObject *_eventObject;
+    VLCEventsHandler*       _eventsHandler;     ///< Handles libvlc event callbacks
 }
 @end
 
@@ -1530,10 +1513,8 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     if (!p_em)
         return;
 
-    _eventObject = [VLCEventObjectManager.sharedManager registerEventObjectWithTarget: self descriptor: _playerInstance descriptorReleaseBlock:^(void * _Nonnull descriptor) {
-        libvlc_media_player_release(descriptor);
-    }];
-    void * p_user_data = (__bridge void *)_eventObject;
+    _eventsHandler = [VLCEventsHandler handlerWithObject:self configuration:[VLCLibrary sharedEventsConfiguration]];
+    void * p_user_data = (__bridge void *)_eventsHandler;
     
     /* We need the caller to wait until this block is done.
      * The initialized object shall not be returned until the event attachments are done. */
@@ -1568,8 +1549,8 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
     if (!p_em)
         return;
 
-    if (_eventObject) {
-        void * p_user_data = (__bridge void *)_eventObject;
+    if (_eventsHandler) {
+        void * p_user_data = (__bridge void *)_eventsHandler;
         
         libvlc_event_detach(p_em, libvlc_MediaPlayerPlaying,          HandleMediaInstanceStateChanged, p_user_data);
         libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,           HandleMediaInstanceStateChanged, p_user_data);
@@ -1590,8 +1571,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * self)
 
         libvlc_event_detach(p_em, libvlc_MediaPlayerSnapshotTaken,    HandleMediaPlayerSnapshot,       p_user_data);
         libvlc_event_detach(p_em, libvlc_MediaPlayerRecordChanged,    HandleMediaPlayerRecord,         p_user_data);
-        
-        [VLCEventObjectManager.sharedManager unregisterEventObject: _eventObject];
     }
 }
 
