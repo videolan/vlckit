@@ -30,8 +30,8 @@
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
 #import <VLCTime.h>
-#import <VLCEventObjectManager.h>
 #import <VLCMediaMetaData.h>
+#import <VLCEventsHandler.h>
 
 #import <vlc/libvlc.h>
 #import <sys/sysctl.h> // for sysctlbyname
@@ -128,8 +128,8 @@ void close_cb(void *opaque) {
     BOOL                    isArtURLFetched;        ///< Value used to determine of the other meta has been preparsed
     NSMutableDictionary     *_metaDictionary;       ///< Dictionary to cache metadata read from libvlc
     NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
-    VLCEventObject          *_eventObject;
     _Nullable id            _userData;              /// libvlc_media_user_data
+    VLCEventsHandler*       _eventsHandler;         /// handles libvlc callbacks
 }
 
 /* Make our properties internally readwrite */
@@ -179,74 +179,65 @@ static inline VLCMediaState LibVLCStateToMediaState( libvlc_state_t state )
 /******************************************************************************
  * LibVLC Event Callback
  */
-static void HandleMediaMetaChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaMetaChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMedia *media = (VLCMedia *)eventObject.weakTarget;
-        if (!media) return;
-
         NSNumber *metaType = @(event->u.media_meta_changed.meta_type);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [media metaChanged: metaType];
-        });
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
+            [media metaChanged:metaType];
+        }];
+
     }
 }
 
-static void HandleMediaDurationChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaDurationChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMedia *media = (VLCMedia *)eventObject.weakTarget;
-        if (!media) return;
-        
         VLCTime *time = [VLCTime timeWithNumber: @(event->u.media_duration_changed.new_duration)];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [media setLength: time];
-        });
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
+            [media setLength:time];
+        }];
     }
 }
 
-static void HandleMediaStateChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaStateChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMedia *media = (VLCMedia *)eventObject.weakTarget;
-        if (!media) return;
-        
         VLCMediaState state = LibVLCStateToMediaState(event->u.media_state_changed.new_state);
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [media setState: state];
-        });
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
+            [media setState:state];
+        }];
     }
 }
 
-static void HandleMediaSubItemAdded(const libvlc_event_t * event, void * self)
+static void HandleMediaSubItemAdded(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMedia *media = (VLCMedia *)eventObject.weakTarget;
-        if (!media) return;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
             [media subItemAdded];
-        });
+        }];
     }
 }
 
-static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
+static void HandleMediaParsedChanged(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        VLCEventObject *eventObject = (__bridge VLCEventObject *)self;
-        __strong VLCMedia *media = (VLCMedia *)eventObject.weakTarget;
-        if (!media) return;
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMedia *media = (VLCMedia *)object;
             [media parsedChanged];
-        });
+        }];
     }
 }
 
@@ -343,18 +334,17 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * self)
 
 - (void)dealloc
 {
-    if (_eventObject)
+    if (_eventsHandler)
     {
         libvlc_event_manager_t * p_em = libvlc_media_event_manager(p_md);
         if (p_em) {
-            void * p_user_data = (__bridge void *)_eventObject;
+            void * p_user_data = (__bridge void *)_eventsHandler;
             libvlc_event_detach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     p_user_data);
             libvlc_event_detach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, p_user_data);
             libvlc_event_detach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    p_user_data);
             libvlc_event_detach(p_em, libvlc_MediaSubItemAdded,    HandleMediaSubItemAdded,    p_user_data);
             libvlc_event_detach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   p_user_data);
         }
-        [VLCEventObjectManager.sharedManager unregisterEventObject: _eventObject];
     }
 }
 
@@ -864,13 +854,10 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     }
     free(p_url);
     
-    _eventObject = [VLCEventObjectManager.sharedManager registerEventObjectWithTarget: self descriptor: p_md descriptorReleaseBlock:^(void * _Nonnull descriptor) {
-        libvlc_media_release(descriptor);
-    }];
-    
     libvlc_event_manager_t * p_em = libvlc_media_event_manager( p_md );
     if (p_em) {
-        void * p_user_data = (__bridge void *)_eventObject;
+        _eventsHandler = [VLCEventsHandler handlerWithObject:self configuration:[VLCLibrary sharedEventsConfiguration]];
+        void * p_user_data = (__bridge void *)_eventsHandler;
         libvlc_event_attach(p_em, libvlc_MediaMetaChanged,     HandleMediaMetaChanged,     p_user_data);
         libvlc_event_attach(p_em, libvlc_MediaDurationChanged, HandleMediaDurationChanged, p_user_data);
         libvlc_event_attach(p_em, libvlc_MediaStateChanged,    HandleMediaStateChanged,    p_user_data);
