@@ -25,6 +25,7 @@
 
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
+#import <VLCEventsHandler.h>
 
 #include <vlc/vlc.h>
 
@@ -32,6 +33,7 @@
 {
     libvlc_media_player_t *_p_mp; //player instance used for transcoding
     dispatch_queue_t _libVLCTranscoderQueue;
+    VLCEventsHandler* _eventsHandler;
 }
 - (void)registerObserversForMuxWithPlayer:(libvlc_media_player_t *)player;
 - (void)unregisterObserversForMuxWithPlayer:(libvlc_media_player_t *)player;
@@ -79,14 +81,14 @@
     __block libvlc_event_manager_t * p_em = libvlc_media_player_event_manager(player);
     if (!p_em)
         return;
-    CFBridgingRetain(self);
+    _eventsHandler = [VLCEventsHandler handlerWithObject:self configuration:[VLCLibrary sharedEventsConfiguration]];
     dispatch_sync(_libVLCTranscoderQueue,^{
         libvlc_event_attach(p_em, libvlc_MediaPlayerPaused,
-                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
+                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(_eventsHandler));
         libvlc_event_attach(p_em, libvlc_MediaPlayerStopped,
-                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
+                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(_eventsHandler));
         libvlc_event_attach(p_em, libvlc_MediaPlayerEncounteredError,
-                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
+                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(_eventsHandler));
     });
 }
 
@@ -97,11 +99,11 @@
         return;
     dispatch_sync(_libVLCTranscoderQueue,^{
         libvlc_event_detach(p_em, libvlc_MediaPlayerStopped,
-                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
+                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(_eventsHandler));
         libvlc_event_detach(p_em, libvlc_MediaPlayerPaused,
-                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
+                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(_eventsHandler));
         libvlc_event_detach(p_em, libvlc_MediaPlayerEncounteredError,
-                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(self));
+                            HandleMuxMediaInstanceStateChanged, (__bridge void *)(_eventsHandler));
     });
     CFBridgingRelease((__bridge CFTypeRef _Nullable)(self));
 }
@@ -118,7 +120,7 @@
     }
 }
 
-static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, void * self)
+static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, void * opaque)
 {
     VLCMediaPlayerState newState;
     if (event->type == libvlc_MediaPlayerPaused) {
@@ -129,10 +131,11 @@ static void HandleMuxMediaInstanceStateChanged(const libvlc_event_t * event, voi
         newState = VLCMediaPlayerStateError;
     }
     @autoreleasepool {
-        VLCTranscoder *transcoder = (__bridge VLCTranscoder *)self;
-        dispatch_async(dispatch_get_main_queue(), ^{
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCTranscoder *transcoder = (VLCTranscoder *)object;
             [transcoder mediaPlayerStateChangeForMux: @(newState)];
-        });
+        }];
     }
 }
 
