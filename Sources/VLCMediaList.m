@@ -177,6 +177,9 @@ static void HandleMediaListItemDeleted( const libvlc_event_t * event, void * opa
 
     // Release allocated memory
     _delegate = nil;
+    
+    if (p_mlist)
+        libvlc_media_list_release(p_mlist);
 }
 
 - (NSString *)description
