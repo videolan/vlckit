@@ -346,6 +346,9 @@ static void HandleMediaParsedChanged(const libvlc_event_t * event, void * opaque
             libvlc_event_detach(p_em, libvlc_MediaParsedChanged,   HandleMediaParsedChanged,   p_user_data);
         }
     }
+    
+    if (p_md)
+        libvlc_media_release(p_md);
 }
 
 - (VLCMediaType)mediaType
