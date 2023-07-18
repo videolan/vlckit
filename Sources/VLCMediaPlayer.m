@@ -430,6 +430,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 
     if (_privateLibrary != [VLCLibrary sharedLibrary])
         libvlc_release(_privateLibrary.instance);
+    
+    if (_playerInstance)
+        libvlc_media_player_release(_playerInstance);
 }
 
 #if !TARGET_OS_IPHONE
