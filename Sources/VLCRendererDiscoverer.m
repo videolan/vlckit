@@ -145,6 +145,9 @@ static void HandleRendererDiscovererItemDeleted(const libvlc_event_t *event, voi
         libvlc_event_detach(p_em, libvlc_RendererDiscovererItemAdded,   HandleRendererDiscovererItemAdded,   p_user_data);
         libvlc_event_detach(p_em, libvlc_RendererDiscovererItemDeleted, HandleRendererDiscovererItemDeleted, p_user_data);
     }
+    
+    if (_rendererDiscoverer)
+        libvlc_renderer_discoverer_release(_rendererDiscoverer);
 }
 
 + (nullable NSArray<VLCRendererDiscovererDescription *> *)list
