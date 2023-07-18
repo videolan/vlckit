@@ -161,6 +161,8 @@ static void HandleMediaListPlayerStopped(const libvlc_event_t * event, void * op
 {
     [_mediaPlayer stop];
     [self unregisterObservers];
+    if (instance)
+        libvlc_media_list_player_release(instance);
 }
 
 - (VLCMediaPlayer *)mediaPlayer
