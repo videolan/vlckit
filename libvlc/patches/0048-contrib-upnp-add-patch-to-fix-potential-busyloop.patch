@@ -1,37 +1,37 @@
-From ee902bf144037dd9181b3098e805cf65a1c81f98 Mon Sep 17 00:00:00 2001
+From 9188f9e9b285e8f7be9498bbddc420e69b29de8a Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 29 Jun 2023 13:37:29 +0200
 Subject: [PATCH 48/48] contrib: upnp: add patch to fix potential busyloop
 
 Not tested.
 ---
- .../upnp/0001-miniserver-fix-busy-loop.patch  | 96 +++++++++++++++++++
- contrib/src/upnp/rules.mak                    |  1 +
- 2 files changed, 97 insertions(+)
+ .../upnp/0001-miniserver-fix-busy-loop.patch  | 118 ++++++++++++++++++
+ contrib/src/upnp/rules.mak                    |   1 +
+ 2 files changed, 119 insertions(+)
  create mode 100644 contrib/src/upnp/0001-miniserver-fix-busy-loop.patch
 
 diff --git a/contrib/src/upnp/0001-miniserver-fix-busy-loop.patch b/contrib/src/upnp/0001-miniserver-fix-busy-loop.patch
 new file mode 100644
-index 0000000000..75d4381c3c
+index 0000000000..9e81d17ece
 --- /dev/null
 +++ b/contrib/src/upnp/0001-miniserver-fix-busy-loop.patch
-@@ -0,0 +1,96 @@
-+From f6c862ef0e80a9de91545cf8bc21dc5aabbbea3d Mon Sep 17 00:00:00 2001
+@@ -0,0 +1,118 @@
++From d3a50751e1513b912fa968eef1c7f4b290c22937 Mon Sep 17 00:00:00 2001
 +From: Thomas Guillem <thomas@gllm.fr>
 +Date: Thu, 29 Jun 2023 13:34:13 +0200
 +Subject: [PATCH] miniserver: fix busy loop
 +
 +---
-+ upnp/src/genlib/miniserver/miniserver.c | 20 ++++++++++++--------
-+ upnp/src/inc/ssdplib.h                  |  4 +++-
-+ upnp/src/ssdp/ssdp_server.c             |  7 +++++--
-+ 3 files changed, 20 insertions(+), 11 deletions(-)
++ upnp/src/genlib/miniserver/miniserver.c | 35 +++++++++++++++++++------
++ upnp/src/inc/ssdplib.h                  |  4 ++-
++ upnp/src/ssdp/ssdp_server.c             |  7 +++--
++ 3 files changed, 35 insertions(+), 11 deletions(-)
 +
 +diff --git a/upnp/src/genlib/miniserver/miniserver.c b/upnp/src/genlib/miniserver/miniserver.c
-+index cffe7984..a91a7e60 100644
++index cffe7984..f41b03d2 100644
 +--- a/upnp/src/genlib/miniserver/miniserver.c
 ++++ b/upnp/src/genlib/miniserver/miniserver.c
-+@@ -537,10 +537,14 @@ static void web_server_accept(SOCKET lsock, fd_set *set)
++@@ -537,10 +537,20 @@ static void web_server_accept(SOCKET lsock, fd_set *set)
 + 	#endif /* INTERNAL_WEB_SERVER */
 + }
 + 
@@ -42,14 +42,36 @@ index 0000000000..75d4381c3c
 +-		readFromSSDPSocket(rsock);
 ++	if (*rsock != INVALID_SOCKET && FD_ISSET(*rsock, set)) {
 ++		int ret = readFromSSDPSocket(*rsock);
-++        if (ret != 0) {
-++            sock_close(*rsock);
-++            *rsock = INVALID_SOCKET;
-++        }
+++		if (ret != 0) {
+++			UpnpPrintf(UPNP_INFO,
+++				MSERV,
+++				__FILE__,
+++				__LINE__,
+++				"miniserver: Error in readFromSSDPSocket(%d): closing socket\n",
+++                *rsock);
+++			sock_close(*rsock);
+++			*rsock = INVALID_SOCKET;
+++		}
 + 	}
 + }
 + 
-+@@ -658,12 +662,12 @@ static void RunMiniServer(
++@@ -584,6 +594,15 @@ static int receive_from_stopSock(SOCKET ssock, fd_set *set)
++ 				return 1;
++ 			}
++ 		}
+++		else
+++		{
+++			UpnpPrintf(UPNP_INFO,
+++				MSERV,
+++				__FILE__,
+++				__LINE__,
+++				"miniserver: stopSock Error, aborting...\n");
+++			return 1;
+++		}
++ 	}
++ 
++ 	return 0;
++@@ -658,12 +677,12 @@ static void RunMiniServer(
 + 			web_server_accept(
 + 				miniSock->miniServerSock6UlaGua, &rdSet);
 + 	#ifdef INCLUDE_CLIENT_APIS
@@ -125,5 +147,5 @@ index 54202e106f..8167611fd7 100644
  	$(MOVE)
  
 -- 
-2.32.1 (Apple Git-133)
+2.39.2
 
