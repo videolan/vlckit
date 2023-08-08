@@ -1627,7 +1627,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 #if TARGET_OS_IPHONE
     // Disable idle timer if player is playing media
     // Exclusion can be made for audio only media
-    [UIApplication sharedApplication].idleTimerDisabled = [self isPlaying];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIApplication sharedApplication].idleTimerDisabled = [self isPlaying];
+    });
 #endif
     [self didChangeValueForKey:@"state"];
 }
