@@ -47,6 +47,7 @@
 #import <VLCKit/VLCConsoleLogger.h>
 #import <VLCKit/VLCFileLogger.h>
 #import <VLCKit/VLCLogMessageFormatter.h>
+#import <VLCKit/VLCEventsConfiguration.h>
 
 @class VLCMedia;
 @class VLCMediaList;

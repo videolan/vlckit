@@ -28,6 +28,7 @@
 #import <VLCConsoleLogger.h>
 #import <VLCFileLogger.h>
 #import <VLCEventsHandler.h>
+#import <VLCEventsConfiguration.h>
 
 /* VLC features different module lists per platform but also per architecture
  * so there is not a single slice with the same modules as the other */

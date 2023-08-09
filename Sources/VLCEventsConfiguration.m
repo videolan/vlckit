@@ -1,7 +1,7 @@
 /*****************************************************************************
- * VLCEventsHandler.h: [Mobile/TV]VLCKit VLCEventsHandler header
+ * VLCEventsConfiguration.m: [Mobile/TV]VLCKit VLCEventsHandler implementation
  *****************************************************************************
- * Copyright (C) 2022 VLC authors and VideoLAN
+ * Copyright (C) 2023 VLC authors and VideoLAN
  * $Id$
  *
  * Authors: Maxime Chapelet <umxprime # videolabs.io>
@@ -21,26 +21,28 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import <Foundation/Foundation.h>
+#import "../Headers/Public/VLCEventsConfiguration.h"
 
-NS_ASSUME_NONNULL_BEGIN
+@implementation VLCEventsDefaultConfiguration
 
-@protocol VLCEventsConfiguring;
+- (dispatch_queue_t _Nullable)dispatchQueue {
+    return nil;
+}
 
-@interface VLCEventsHandler : NSObject
-
-@property (nonatomic, readonly, weak) id _Nullable object;
-
-+ (instancetype)handlerWithObject:(id)object
-                    configuration:(id<VLCEventsConfiguring> _Nullable)configuration;
-
-- (instancetype)initWithObject:(id)object
-                 configuration:(id<VLCEventsConfiguring> _Nullable)configuration NS_DESIGNATED_INITIALIZER;
-
-- (void)handleEvent:(void (^)(id object))handle;
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+- (BOOL)isAsync {
+    return NO;
+}
 
 @end
 
-NS_ASSUME_NONNULL_END
+@implementation VLCEventsLegacyConfiguration
+
+- (dispatch_queue_t _Nullable)dispatchQueue {
+    return dispatch_get_main_queue();
+}
+
+- (BOOL)isAsync {
+    return YES;
+}
+
+@end
