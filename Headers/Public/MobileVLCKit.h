@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: MobileVLCKit
  *****************************************************************************
- * Copyright (C) 2010-2013 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2023 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org
@@ -42,6 +42,7 @@
 #import <MobileVLCKit/VLCConsoleLogger.h>
 #import <MobileVLCKit/VLCFileLogger.h>
 #import <MobileVLCKit/VLCLogMessageFormatter.h>
+#import <MobileVLCKit/VLCEventConfiguration.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;

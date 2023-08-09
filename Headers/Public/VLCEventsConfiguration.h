@@ -1,5 +1,5 @@
 /*****************************************************************************
- * VLCEventsHandler.h: [Mobile/TV]VLCKit VLCEventsHandler header
+ * VLCEventsConfiguration.h: [Mobile/TV]VLCKit VLCEventsConfiguration header
  *****************************************************************************
  * Copyright (C) 2022 VLC authors and VideoLAN
  * $Id$
@@ -25,21 +25,18 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol VLCEventsConfiguring;
+@protocol VLCEventsConfiguring <NSObject>
 
-@interface VLCEventsHandler : NSObject
+- (dispatch_queue_t _Nullable) dispatchQueue;
+- (BOOL) isAsync;
 
-@property (nonatomic, readonly, weak) id _Nullable object;
+@end
 
-+ (instancetype)handlerWithObject:(id)object
-                    configuration:(id<VLCEventsConfiguring> _Nullable)configuration;
+@interface VLCEventsDefaultConfiguration : NSObject<VLCEventsConfiguring>
 
-- (instancetype)initWithObject:(id)object
-                 configuration:(id<VLCEventsConfiguring> _Nullable)configuration NS_DESIGNATED_INITIALIZER;
+@end
 
-- (void)handleEvent:(void (^)(id object))handle;
-- (instancetype)init NS_UNAVAILABLE;
-+ (instancetype)new NS_UNAVAILABLE;
+@interface VLCEventsLegacyConfiguration : NSObject<VLCEventsConfiguring>
 
 @end
 

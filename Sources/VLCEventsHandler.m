@@ -22,31 +22,7 @@
  *****************************************************************************/
 
 #import "../Headers/Internal/VLCEventsHandler.h"
-
-@implementation VLCEventsDefaultConfiguration
-
-
-- (dispatch_queue_t _Nullable)dispatchQueue {
-    return nil;
-}
-
-- (BOOL)isAsync {
-    return NO;
-}
-
-@end
-
-@implementation VLCEventsLegacyConfiguration
-
-- (dispatch_queue_t _Nullable)dispatchQueue {
-    return dispatch_get_main_queue();
-}
-
-- (BOOL)isAsync {
-    return YES;
-}
-
-@end
+#import "../Headers/Public/VLCEventsConfiguration.h"
 
 @implementation VLCEventsHandler {
     id<VLCEventsConfiguring> _configuration;

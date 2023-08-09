@@ -1,7 +1,7 @@
 /*****************************************************************************
  * VLCKit: TVVLCKit
  *****************************************************************************
- * Copyright (C) 2010-2013 Pierre d'Herbemont and VideoLAN
+ * Copyright (C) 2010-2023 Pierre d'Herbemont and VideoLAN
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org
@@ -39,6 +39,7 @@
 #import <TVVLCKit/VLCConsoleLogger.h>
 #import <TVVLCKit/VLCFileLogger.h>
 #import <TVVLCKit/VLCLogMessageFormatter.h>
+#import <TVVLCKit/VLCEventConfiguration.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;

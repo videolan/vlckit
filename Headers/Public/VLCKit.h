@@ -2,7 +2,7 @@
  * VLCKit.h: VLCKit.framework main header
  *****************************************************************************
  * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007, 2013-2022 VLC authors and VideoLAN
+ * Copyright (C) 2007, 2013-2023 VLC authors and VideoLAN
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org
@@ -48,6 +48,7 @@
 #import <VLCKit/VLCConsoleLogger.h>
 #import <VLCKit/VLCFileLogger.h>
 #import <VLCKit/VLCLogMessageFormatter.h>
+#import <VLCKit/VLCEventConfiguration.h>
 
 @class VLCMedia;
 @class VLCMediaLibrary;
