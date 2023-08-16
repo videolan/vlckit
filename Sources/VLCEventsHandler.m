@@ -43,7 +43,8 @@
     if (self) {
         _object = object;
         _configuration = configuration;
-        dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL, QOS_CLASS_USER_INITIATED, 0);
+        // FIXME: on iOS 10/macOS 10.12/tvOS 10 we could use DISPATCH_QUEUE_SERIAL_WITH_AUTORELEASE_POOL
+        dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_USER_INITIATED, 0);
         _releaseQueue = dispatch_queue_create("handler.releaseQueue", attr);
     }
     return self;
@@ -59,7 +60,10 @@
     dispatch_block_t block = ^{
         handle(object);
         dispatch_async(releaseQueue, ^{
-            object = nil;
+            // TODO: check if autoreleasepool is needed there
+            @autoreleasepool {
+                object = nil;
+            }
         });
     };
     if (_configuration.dispatchQueue) {
