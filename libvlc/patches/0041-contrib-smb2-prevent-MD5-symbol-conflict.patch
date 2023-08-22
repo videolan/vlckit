@@ -1,7 +1,7 @@
-From 3402382f1b6ac8800ae42aeaacdd499122c023cf Mon Sep 17 00:00:00 2001
+From 0f8ddb84c3ab40f8b0c311458b8c6c6d381a3468 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 9 Mar 2021 15:24:27 +0100
-Subject: [PATCH 41/47] contrib/smb2: prevent MD5 symbol conflict
+Subject: [PATCH 41/48] contrib/smb2: prevent MD5 symbol conflict
 
 ---
  .../0001-smb2-avoid-MD5-symbol-conflict.patch | 136 ++++++++++++++++++
@@ -152,7 +152,7 @@ index 0000000000..9a480b67fd
 + 
 + #ifdef __cplusplus
 diff --git a/contrib/src/smb2/rules.mak b/contrib/src/smb2/rules.mak
-index 811a665c05..b2eee8230e 100644
+index 54fbc80d60..dbcebacdee 100644
 --- a/contrib/src/smb2/rules.mak
 +++ b/contrib/src/smb2/rules.mak
 @@ -13,6 +13,7 @@ $(TARBALLS)/libsmb2-$(SMB2_VERSION).tar.gz:
@@ -164,5 +164,5 @@ index 811a665c05..b2eee8230e 100644
  
  .smb2: smb2
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

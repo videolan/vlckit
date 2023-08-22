@@ -1,7 +1,7 @@
-From ae6c34ed60838a94e700c8cf47fc9da4ccf85f94 Mon Sep 17 00:00:00 2001
+From 6cda5bc3d4230059a6ec9e67bddc4b2448f1155b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/47] input: Extract attachment also when preparsing
+Subject: [PATCH 09/48] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -887,10 +887,10 @@ index 8dcfeee3b4..b92c000c2a 100644
          return VLC_SUCCESS;
      }
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index efe268b4e5..0df5c90589 100644
+index 898df14e28..2ec582b123 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
-@@ -196,7 +196,7 @@ static int Create( vlc_object_t *p_this )
+@@ -198,7 +198,7 @@ static int Create( vlc_object_t *p_this )
  
              ass_add_font( p_sys->p_library, p_attach->psz_name, p_attach->p_data, p_attach->i_data );
          }
@@ -1134,7 +1134,7 @@ index 27a1566c43..a78eecd532 100644
  struct matroska_stream_c
  {
 diff --git a/modules/demux/mp4/mp4.c b/modules/demux/mp4/mp4.c
-index 0c024b181e..c8995bc7b7 100644
+index 8290f92c1e..ba0ebf59f2 100644
 --- a/modules/demux/mp4/mp4.c
 +++ b/modules/demux/mp4/mp4.c
 @@ -122,6 +122,8 @@ struct demux_sys_t
@@ -1461,7 +1461,7 @@ index c30749ce29..4c99697a40 100644
          free( p_sys->pp_font_attachments );
      }
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 9b918d2dc5..81d308a0fb 100644
+index 03f68947b2..db7f93a6bb 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -240,6 +240,7 @@ libvlccore_la_SOURCES = \
@@ -1835,5 +1835,5 @@ index db7f4030b9..8454600451 100644
 +vlc_input_attachment_Hold
 +vlc_input_attachment_Release
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

@@ -1,4 +1,4 @@
-From 9188f9e9b285e8f7be9498bbddc420e69b29de8a Mon Sep 17 00:00:00 2001
+From f6e0c08677d2420cea4c0c9b7dea6169e1ad8c29 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 29 Jun 2023 13:37:29 +0200
 Subject: [PATCH 48/48] contrib: upnp: add patch to fix potential busyloop
@@ -147,5 +147,5 @@ index 54202e106f..8167611fd7 100644
  	$(MOVE)
  
 -- 
-2.39.2
+2.32.1 (Apple Git-133)
 

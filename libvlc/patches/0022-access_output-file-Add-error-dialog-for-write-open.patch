@@ -1,7 +1,7 @@
-From 8a35eff9f19fb9070972ae3465243b5a44f06f45 Mon Sep 17 00:00:00 2001
+From a1d14dbdd59d2952857a33650762c4d8966cac7a Mon Sep 17 00:00:00 2001
 From: Soomin Lee <bubu@mikan.io>
 Date: Mon, 1 Oct 2018 15:37:57 +0200
-Subject: [PATCH 22/47] access_output: file: Add error dialog for write/open
+Subject: [PATCH 22/48] access_output: file: Add error dialog for write/open
 
 ---
  modules/access_output/file.c | 8 ++++++++
@@ -36,5 +36,5 @@ index ef4f2d18d1..55e4822b90 100644
                  break;
              flags &= ~O_EXCL;
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

@@ -26,7 +26,7 @@ ROOT_DIR=empty
 INCLUDE_32BIT=no
 FARCH="all"
 
-TESTEDHASH="34cd4a61" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="4733d1cc" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`

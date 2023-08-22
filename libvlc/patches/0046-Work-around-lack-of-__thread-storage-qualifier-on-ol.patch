@@ -1,7 +1,7 @@
-From 3ca88328db32b1c49ad2a73789b6c82cc18a718e Mon Sep 17 00:00:00 2001
+From 0fc8d1050da17d81b7bb89b53c3cf2856edb436d Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 46/47] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 46/48] Work around lack of __thread storage qualifier on old
  macOS
 
 ---
@@ -14,7 +14,7 @@ Subject: [PATCH 46/47] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 03f9ef8656..dfeb0f047a 100644
+index e0f9c10088..0fef924d11 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -631,8 +631,8 @@ dnl Check for system libs needed
@@ -60,7 +60,7 @@ index d4eb3fcce0..f440790396 100644
  src/input/clock.c
  src/input/clock.h
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 5f6c18b555..7fe5e0c077 100644
+index dc19a5473c..9636b06a87 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -201,6 +201,7 @@ libvlccore_la_SOURCES = \
@@ -204,5 +204,5 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

@@ -1,7 +1,7 @@
-From ee88a2e9ae08d12053358682a9a034d72ba41ad7 Mon Sep 17 00:00:00 2001
+From 50a5d3c194e80fcd5cb8a9af866b28212ac2c2f2 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 16 Apr 2022 00:44:03 +0200
-Subject: [PATCH 42/47] smb2: remove unneeded compat code
+Subject: [PATCH 42/48] smb2: remove unneeded compat code
 
 thread_local is unavailable to 32bit on iOS and the code in question is
 not needed as we have the latest libsmb2, so let's remove it.
@@ -10,7 +10,7 @@ not needed as we have the latest libsmb2, so let's remove it.
  1 file changed, 28 deletions(-)
 
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 64bbd1e91a..4a77364086 100644
+index b1bebf0b6b..3f4c96fddb 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -201,34 +201,6 @@ smb2_set_error(struct vlc_smb2_op *op, const char *psz_func, int err)
@@ -49,5 +49,5 @@ index 64bbd1e91a..4a77364086 100644
  vlc_smb2_mainloop(struct vlc_smb2_op *op)
  {
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

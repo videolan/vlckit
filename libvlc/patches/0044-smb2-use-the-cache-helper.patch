@@ -1,7 +1,7 @@
-From 471b7e1cfd8d87aadd6fe2e0e7de824d588631ab Mon Sep 17 00:00:00 2001
+From 5eb4de87dc30b37e22799ec443cf32fe7d2198ba Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 21 Jan 2022 17:28:13 +0100
-Subject: [PATCH 44/47] smb2: use the cache helper
+Subject: [PATCH 44/48] smb2: use the cache helper
 
 Cache the smb2 session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.
@@ -31,7 +31,7 @@ index 8be84055fa..2e75013bad 100644
  if HAVE_DSM
  libsmb2_plugin_la_CFLAGS += $(DSM_CFLAGS) -DHAVE_DSM
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 4a77364086..675a854d92 100644
+index 3f4c96fddb..9c7dc19896 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -94,6 +94,7 @@ netbios_ns_interrupt_unregister(void)
@@ -76,9 +76,9 @@ index 4a77364086..675a854d92 100644
 +
  static int
  vlc_smb2_connect_open_share(stream_t *access, const char *url,
-                             const vlc_credential *credential)
-@@ -667,6 +682,30 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
-         password = NULL;
+                             const vlc_credential *credential,
+@@ -668,6 +683,30 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
+         password = guest_with_valid_passwd ? "" : NULL;
      }
  
 +    struct vlc_access_cache_entry *cache_entry =
@@ -108,7 +108,7 @@ index 4a77364086..675a854d92 100644
      smb2_set_security_mode(sys->smb2, SMB2_NEGOTIATE_SIGNING_ENABLED);
      smb2_set_password(sys->smb2, password);
      smb2_set_domain(sys->smb2, domain ? domain : "");
-@@ -693,6 +732,15 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
+@@ -694,6 +733,15 @@ vlc_smb2_connect_open_share(stream_t *access, const char *url,
          goto error;
      }
  
@@ -124,7 +124,7 @@ index 4a77364086..675a854d92 100644
      smb2_destroy_url(smb2_url);
      return 0;
  
-@@ -912,11 +960,9 @@ Close(vlc_object_t *p_obj)
+@@ -927,11 +975,9 @@ Close(vlc_object_t *p_obj)
      assert(sys->smb2_connected);
  
      if (sys->smb2 != NULL)
@@ -140,5 +140,5 @@ index 4a77364086..675a854d92 100644
      vlc_UrlClean(&sys->encoded_url);
  }
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

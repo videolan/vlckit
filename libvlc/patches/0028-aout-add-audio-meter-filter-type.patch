@@ -1,7 +1,7 @@
-From 23f5484501154d0ce7de510f06f72c28c28a2ad2 Mon Sep 17 00:00:00 2001
+From da0258c76e8ba6c8f6a7d86911f9cf82ba899e7a Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 13 Aug 2020 15:55:24 +0200
-Subject: [PATCH 28/47] aout: add "audio-meter" filter type
+Subject: [PATCH 28/48] aout: add "audio-meter" filter type
 
 ---
  include/vlc_aout.h         | 14 ++++++++++++++
@@ -101,5 +101,5 @@ index bb8e4c3c9e..ee835ed9a2 100644
      var_DelCallback (aout, "volume", var_Copy, aout->obj.parent);
      var_DelCallback (aout, "stereo-mode", StereoModeCallback, NULL);
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

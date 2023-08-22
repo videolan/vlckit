@@ -1,7 +1,7 @@
-From fd59d42edfa03716d415ad4cf4c2dfae5429581c Mon Sep 17 00:00:00 2001
+From b1de01a56ac183965463da0b53231d85e7ff61eb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
-Subject: [PATCH 02/47] disable neon volume plugin
+Subject: [PATCH 02/48] disable neon volume plugin
 
 ---
  modules/arm_neon/Makefile.am | 1 -
@@ -20,5 +20,5 @@ index 0406ded7eb..48aa33332b 100644
  endif
  
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

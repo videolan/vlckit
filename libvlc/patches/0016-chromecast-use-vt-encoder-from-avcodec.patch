@@ -1,7 +1,7 @@
-From e5fa33054e814c2080aaf6ea31609779d0242692 Mon Sep 17 00:00:00 2001
+From f046fc41ada22fea0382fe631442f1dbc94804c3 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:52:35 +0200
-Subject: [PATCH 16/47] chromecast: use vt encoder from avcodec
+Subject: [PATCH 16/48] chromecast: use vt encoder from avcodec
 
 ---
  modules/stream_out/chromecast/cast.cpp | 13 +++++++++++++
@@ -38,5 +38,5 @@ index d7afc90236..ce1f5d8a3e 100644
      { .fcc = VLC_CODEC_VP8,  .get_opt = GetVencVPXOption },
      { .fcc = VLC_CODEC_H264, .get_opt = NULL },
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 

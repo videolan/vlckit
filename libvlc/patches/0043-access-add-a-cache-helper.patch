@@ -1,7 +1,7 @@
-From 82078b4fdbc221d37cd0408e38947e6024e8da69 Mon Sep 17 00:00:00 2001
+From 9abc6585f100a6ad0949a9e6621f645b0fc5624f Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Sun, 10 Jun 2018 20:36:06 +0300
-Subject: [PATCH 43/47] access: add a cache helper
+Subject: [PATCH 43/48] access: add a cache helper
 
 Helper that can be used by any accesses, that will save up to 5 contexts
 up to 5 seconds (both configurable with a define).
@@ -791,7 +791,7 @@ index 0000000000..4c1c136719
 +#warning "can't register access cache"
 +#endif
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 81d308a0fb..5f6c18b555 100644
+index db7f93a6bb..dc19a5473c 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -61,6 +61,7 @@ pluginsinclude_HEADERS = \
@@ -803,5 +803,5 @@ index 81d308a0fb..5f6c18b555 100644
  	../include/vlc_messages.h \
  	../include/vlc_meta.h \
 -- 
-2.39.2 (Apple Git-143)
+2.32.1 (Apple Git-133)
 
