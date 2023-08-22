@@ -954,6 +954,9 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     if (_subitems)
         return; /* Nothing to do */
 
+    if (!p_md)
+        return;
+
     libvlc_media_list_t * p_mlist = libvlc_media_subitems( p_md );
 
     NSAssert( p_mlist, @"The mlist shouldn't be nil, we are receiving a subItemAdded");
