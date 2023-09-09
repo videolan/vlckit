@@ -27,7 +27,7 @@
 @implementation VLCMediaMetaData
 {
     __weak VLCMedia *_media;
-    NSMutableDictionary<NSNumber *, id> *_metaCache;
+    NSMutableDictionary *_metaCache;
     VLCPlatformImage * _Nullable _artwork;
     dispatch_queue_t _metaCacheAccessQueue;
 }
@@ -36,7 +36,7 @@
 {
     if (self = [super init]) {
         _media = media;
-        _metaCache = @{}.mutableCopy;
+        _metaCache = [NSMutableDictionary dictionary];
         dispatch_queue_attr_t attr = dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_CONCURRENT,
                                                                              QOS_CLASS_UTILITY,
                                                                              0);
@@ -316,6 +316,40 @@
     return _artwork;
 }
 
+- (nullable NSString *)extraValueForKey:(NSString *)key
+{
+    return [self extraCacheValueForKey: key];
+}
+
+- (void)setExtraValue:(nullable NSString *)value forKey:(NSString *)key
+{
+    [self setMetaExtra: value forKey: key];
+}
+
+- (nullable NSDictionary<NSString *, NSString *> *)extra
+{
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    if (!media_t)
+        return nil;
+    
+    char **ppsz_names = NULL;
+    const unsigned count = libvlc_media_get_meta_extra_names(media_t, &ppsz_names);
+    if (count == 0)
+        return nil;
+    
+    NSMutableDictionary<NSString *, NSString *> *extra = [NSMutableDictionary dictionaryWithCapacity: (NSUInteger)count];
+    for (unsigned i = 0; i < count; i++) {
+        NSString *key = @(ppsz_names[i]);
+        NSString *value = [self extraCacheValueForKey: key];
+        if (value)
+            extra[key] = value;
+    }
+    
+    libvlc_media_meta_extra_names_release(ppsz_names, count);
+    
+    return extra;
+}
+
 - (BOOL)save
 {
     libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
@@ -339,7 +373,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ %p>, title: %@, artist: %@, genre: %@, copyright: %@, album: %@, trackNumber: %u, metaDescription: %@, rating: %@, date: %@, setting: %@, url: %@, language: %@, nowPlaying: %@, publisher: %@, encodedBy: %@, artworkURL: %@, trackID: %u, trackTotal: %u, director: %@, season: %u, episode: %u, showName: %@, actors: %@, albumArtist: %@, discNumber: %u, discTotal: %u", [self class], self, [self title], [self artist], [self genre], [self copyright], [self album], [self trackNumber], [self metaDescription], [self rating], [self date], [self setting], [self url], [self language], [self nowPlaying], [self publisher], [self encodedBy], [self artworkURL], [self trackID], [self trackTotal], [self director], [self season], [self episode], [self showName], [self actors], [self albumArtist], [self discNumber], [self discTotal]];
+    return [NSString stringWithFormat:@"<%@ %p>, title: %@, artist: %@, genre: %@, copyright: %@, album: %@, trackNumber: %u, metaDescription: %@, rating: %@, date: %@, setting: %@, url: %@, language: %@, nowPlaying: %@, publisher: %@, encodedBy: %@, artworkURL: %@, trackID: %u, trackTotal: %u, director: %@, season: %u, episode: %u, showName: %@, actors: %@, albumArtist: %@, discNumber: %u, discTotal: %u, extra: %@", [self class], self, [self title], [self artist], [self genre], [self copyright], [self album], [self trackNumber], [self metaDescription], [self rating], [self date], [self setting], [self url], [self language], [self nowPlaying], [self publisher], [self encodedBy], [self artworkURL], [self trackID], [self trackTotal], [self director], [self season], [self episode], [self showName], [self actors], [self albumArtist], [self discNumber], [self discTotal], [self extra]];
 }
 
 
@@ -531,6 +565,65 @@
     char value[size];
     snprintf(value, size, "%u", u);
     [self setMetadata: value forKey: key];
+}
+
+/* extra cache get */
+- (nullable NSString *)extraCacheValueForKey:(NSString *)key
+{
+    if (!key)
+        return nil;
+    
+    __block id cacheValue = nil;
+    dispatch_sync(_metaCacheAccessQueue, ^{
+        cacheValue = _metaCache[key];
+    });
+    
+    if (!cacheValue && (cacheValue = [self metaExtraForKey: key]))
+        dispatch_barrier_async(_metaCacheAccessQueue, ^{
+            _metaCache[key] = cacheValue;
+        });
+    
+    if ([cacheValue isKindOfClass: NSString.class])
+        return (NSString *)cacheValue;
+    
+    return nil;
+}
+
+/* internal meta extra get */
+- (nullable id)metaExtraForKey:(NSString *)key
+{
+    if (!key)
+        return nil;
+    
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    if (!media_t)
+        return nil;
+    
+    char *value = libvlc_media_get_meta_extra(media_t, key.UTF8String);
+    if (!value)
+        return NSNull.null;
+    
+    NSString *extraValue = @(value);
+    free(value);
+    
+    return extraValue;
+}
+
+/* internal meta extra set */
+- (void)setMetaExtra:(nullable NSString *)value forKey:(NSString *)key
+{
+    if (!key)
+        return;
+    
+    libvlc_media_t *media_t = (libvlc_media_t *)_media.libVLCMediaDescriptor;
+    if (!media_t)
+        return;
+    
+    libvlc_media_set_meta_extra(media_t, key.UTF8String, value.UTF8String);
+    
+    dispatch_barrier_async(_metaCacheAccessQueue, ^{
+        [_metaCache removeObjectForKey: key];
+    });
 }
 
 @end

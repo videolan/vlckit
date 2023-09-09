@@ -177,6 +177,11 @@ NS_SWIFT_NAME(VLCMedia.MetaData)
  */
 @property(nonatomic, readonly, nullable) VLCPlatformImage *artwork;
 
+/**
+ * extra
+ */
+@property(nonatomic, copy, readonly, nullable) NSDictionary<NSString *, NSString *> *extra;
+
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
@@ -194,6 +199,16 @@ NS_SWIFT_NAME(VLCMedia.MetaData)
 
 
 - (void)clearCache;
+
+/**
+ * Read the meta extra of the media.
+ */
+- (nullable NSString *)extraValueForKey:(NSString *)key;
+
+/**
+ * Set the meta of the media
+ */
+- (void)setExtraValue:(nullable NSString *)value forKey:(NSString *)key;
 
 @end
 
