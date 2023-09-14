@@ -1,4 +1,4 @@
-From 433496f69060039f14fc2af19e22066e26be7835 Mon Sep 17 00:00:00 2001
+From d23b3eb5023dc0a6bf424001dacba0b5ae796320 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
 Subject: [PATCH 08/14] http: add vlc_http_cookies_clear
@@ -11,7 +11,7 @@ Clear all cookies without deleting the jar.
  3 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/include/vlc_http.h b/include/vlc_http.h
-index 383a1ed354..33d04eb749 100644
+index 51a6cd2667..a530c85c43 100644
 --- a/include/vlc_http.h
 +++ b/include/vlc_http.h
 @@ -70,6 +70,7 @@ VLC_API char *vlc_http_auth_FormatAuthorizationHeader
@@ -23,10 +23,10 @@ index 383a1ed354..33d04eb749 100644
  
  /**
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index f61b9cfb22..bd01a0dd4f 100644
+index 3693860eeb..769374437e 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -142,6 +142,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
+@@ -143,6 +143,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
  vlc_http_auth_FormatAuthorizationHeader
  vlc_http_cookies_new
  vlc_http_cookies_destroy
@@ -35,10 +35,10 @@ index f61b9cfb22..bd01a0dd4f 100644
  vlc_http_cookies_fetch
  httpd_ClientIP
 diff --git a/src/misc/httpcookies.c b/src/misc/httpcookies.c
-index 2049b1b62c..0e2898f4f6 100644
+index 0b523bee81..a8abf02164 100644
 --- a/src/misc/httpcookies.c
 +++ b/src/misc/httpcookies.c
-@@ -280,7 +280,7 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
+@@ -282,7 +282,7 @@ vlc_http_cookie_jar_t * vlc_http_cookies_new(void)
      return jar;
  }
  
@@ -47,7 +47,7 @@ index 2049b1b62c..0e2898f4f6 100644
  {
      if ( !p_jar )
          return;
-@@ -289,7 +289,11 @@ void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
+@@ -291,7 +291,11 @@ void vlc_http_cookies_destroy( vlc_http_cookie_jar_t * p_jar )
          cookie_destroy( vlc_array_item_at_index( &p_jar->cookies, i ) );
  
      vlc_array_clear( &p_jar->cookies );
@@ -60,5 +60,5 @@ index 2049b1b62c..0e2898f4f6 100644
  }
  
 -- 
-2.32.1 (Apple Git-133)
+2.39.2 (Apple Git-143)
 

@@ -1,4 +1,4 @@
-From f87b4919c4303ef93af324fe71e0dd0310ba8ff1 Mon Sep 17 00:00:00 2001
+From 2b418cc0ba2b4e53e636c5627751b0435fb60a84 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 09/14] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
@@ -39,10 +39,10 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 12fb917d56..26fa669173 100644
+index d9c9c81fa4..2cac72934c 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -39,6 +39,12 @@ FFMPEGCONF = \
+@@ -38,6 +38,12 @@ FFMPEGCONF = \
  ifdef HAVE_DARWIN_OS
  FFMPEGCONF += \
  	--disable-securetransport
@@ -55,10 +55,10 @@ index 12fb917d56..26fa669173 100644
  endif
  
  DEPS_ffmpeg = zlib $(DEPS_zlib) gsm $(DEPS_gsm) openjpeg $(DEPS_openjpeg)
-@@ -230,6 +236,9 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
- 	$(APPLY) $(SRC)/ffmpeg/0001-ffmpeg-add-target_os-support-for-emscripten.patch
- 	$(APPLY) $(SRC)/ffmpeg/0001-dxva2_hevc-don-t-use-frames-as-reference-if-they-are.patch
- 	$(APPLY) $(SRC)/ffmpeg/0001-lavc-aarch64-fix-relocation-out-of-range-error.patch
+@@ -229,6 +235,9 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
+ 	$(APPLY) $(SRC)/ffmpeg/0001-vulkan-Fix-win-i386-calling-convention.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0002-lavu-vulkan-fix-handle-type-for-32-bit-targets.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0001-w32pthread-fix-signature-of-WinRT-version-of-thread-.patch
 +ifdef HAVE_IOS
 +	$(APPLY) $(SRC)/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
 +endif
@@ -66,5 +66,5 @@ index 12fb917d56..26fa669173 100644
  
  .ffmpeg: ffmpeg
 -- 
-2.32.1 (Apple Git-133)
+2.39.2 (Apple Git-143)
 
