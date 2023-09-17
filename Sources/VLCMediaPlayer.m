@@ -120,7 +120,6 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerTitleListChanged:(NSString *)newTitleList;
 
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
-- (void)mediaPlayerRecordChanged:(NSArray *)arguments;
 @end
 
 static void HandleWatchTimeUpdate(const libvlc_media_player_time_point_t *value, void * opaque)
@@ -369,16 +368,22 @@ static void HandleMediaPlayerSnapshot(const libvlc_event_t * event, void * opaqu
 static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 {
     @autoreleasepool {
-        NSArray *arg = @[
-            @{
-                @"filePath": @(event->u.media_player_record_changed.recorded_file_path),
-                @"isRecording": @(event->u.media_player_record_changed.recording)
-            }
-        ];
+        
+        BOOL isRecording = event->u.media_player_record_changed.recording;
+        
+        const char *psz_file_path = event->u.media_player_record_changed.recorded_file_path;
+        NSString *filePath = psz_file_path ? @(psz_file_path) : nil;
+        
         VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
         [eventsHandler handleEvent:^(id _Nonnull object) {
             VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
-            [mediaPlayer mediaPlayerRecordChanged: arg];
+            if (isRecording) {
+                if ([mediaPlayer.delegate respondsToSelector: @selector(mediaPlayerStartedRecording:)])
+                    [mediaPlayer.delegate mediaPlayerStartedRecording: mediaPlayer];
+            }else{
+                if ([mediaPlayer.delegate respondsToSelector: @selector(mediaPlayer:recordingStoppedAtPath:)] && filePath)
+                    [mediaPlayer.delegate mediaPlayer: mediaPlayer recordingStoppedAtPath: filePath];
+            }
         }];
     }
 }
@@ -1534,22 +1539,6 @@ static const struct event_handler_entry
         }
 
         [_snapshots addObject:fileName];
-    }
-}
-
-- (void)mediaPlayerRecordChanged:(NSArray *)arguments
-{
-    NSString *filePath = arguments.firstObject[@"filePath"];
-    BOOL isRecording = [arguments.firstObject[@"isRecording"] boolValue];
-
-    if (isRecording) {
-        if ([_delegate respondsToSelector:@selector(mediaPlayerStartedRecording:)]) {
-            [_delegate mediaPlayerStartedRecording:self];
-        }
-    } else {
-        if ([_delegate respondsToSelector:@selector(mediaPlayer:recordingStoppedAtPath:)]) {
-            [_delegate mediaPlayer:self recordingStoppedAtPath:filePath];
-        }
     }
 }
 
