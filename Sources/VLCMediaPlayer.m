@@ -266,7 +266,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
     @autoreleasepool {
         NSArray *arg = @[
             @{
-                @"filePath": [NSString stringWithFormat:@"%s", event->u.media_player_record_changed.file_path],
+                @"filePath": @(event->u.media_player_record_changed.file_path),
                 @"isRecording": @(event->u.media_player_record_changed.recording)
             }
         ];
