@@ -44,7 +44,6 @@
 		7D24C2B61EC0A3390047E700 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B51EC0A3390047E700 /* libbz2.tbd */; };
 		7D24C2BA1EC0A3460047E700 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B91EC0A3460047E700 /* libbz2.tbd */; };
 		7D34F5531C909DDF008A39F0 /* VLCCustomDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D34F5501C909DDF008A39F0 /* VLCCustomDialogProvider.m */; };
-		7D6C89201C0CA81F00321894 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6C891F1C0CA81F00321894 /* AVFoundation.framework */; };
 		7D6C89211C0CA90000321894 /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
 		7D797FB51DF41EBA00AD93ED /* StaticLibVLC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D797FB41DF41EBA00AD93ED /* StaticLibVLC.m */; platformFilter = ios; };
 		7D797FB61DF41EBA00AD93ED /* StaticLibVLC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D797FB41DF41EBA00AD93ED /* StaticLibVLC.m */; };
@@ -205,6 +204,8 @@
 		7DDC02111B501ECF0078FC84 /* VLCMediaDiscoverer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6360B0E311E7F0D300EAD790 /* VLCMediaDiscoverer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC02121B501ECF0078FC84 /* VLCTime.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD811DE8FAB00F66AF3 /* VLCTime.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC02151B501ED70078FC84 /* VLCLibVLCBridging.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAE411DE8FEF00F66AF3 /* VLCLibVLCBridging.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7DE57BED2AB84504009EF02B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE57BEC2AB84504009EF02B /* AVFoundation.framework */; };
+		7DE57BEE2AB84753009EF02B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6C891F1C0CA81F00321894 /* AVFoundation.framework */; };
 		7DE9EAD41FB9E00E00859664 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD31FB9E00E00859664 /* CoreMedia.framework */; };
 		7DE9EAD61FB9E01700859664 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD51FB9E01700859664 /* VideoToolbox.framework */; };
 		7DE9EAD81FB9E02200859664 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD71FB9E02200859664 /* AudioToolbox.framework */; };
@@ -568,6 +569,7 @@
 		7DB683C61C995E9A000C70BE /* libStaticLibVLCFortvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libStaticLibVLCFortvOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB683D31C996187000C70BE /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VLCHelperCode.m; path = Sources/VLCHelperCode.m; sourceTree = "<group>"; };
 		7DB683D91C9961BA000C70BE /* VLCHelperCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VLCHelperCode.h; path = Headers/Internal/VLCHelperCode.h; sourceTree = "<group>"; };
+		7DE57BEC2AB84504009EF02B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX13.3.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		7DE9EAD31FB9E00E00859664 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.1.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		7DE9EAD51FB9E01700859664 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.1.sdk/System/Library/Frameworks/VideoToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		7DE9EAD71FB9E02200859664 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS11.1.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
@@ -637,10 +639,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE57BEE2AB84753009EF02B /* AVFoundation.framework in Frameworks */,
 				7D24C2B61EC0A3390047E700 /* libbz2.tbd in Frameworks */,
 				7D797FC61DF41F9500AD93ED /* libiconv.tbd in Frameworks */,
 				7D797FC41DF41F9100AD93ED /* libc++.tbd in Frameworks */,
-				7D6C89201C0CA81F00321894 /* AVFoundation.framework in Frameworks */,
 				7D8939651B500F13008F2B14 /* libStaticLibVLCForiOS.a in Frameworks */,
 				7D8939671B500F38008F2B14 /* CoreFoundation.framework in Frameworks */,
 				7D8939691B500F38008F2B14 /* OpenGLES.framework in Frameworks */,
@@ -676,6 +678,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DE57BED2AB84504009EF02B /* AVFoundation.framework in Frameworks */,
 				7DB179BB285C68F0006201DB /* libiconv.tbd in Frameworks */,
 				7DB179BA285C68EB006201DB /* libbz2.tbd in Frameworks */,
 				7DB179B9285C68E6006201DB /* libc++.tbd in Frameworks */,
@@ -786,6 +789,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DE57BEC2AB84504009EF02B /* AVFoundation.framework */,
 				7DB17981285C655B006201DB /* libiconv.tbd */,
 				7DB1797F285C6550006201DB /* VideoToolbox.framework */,
 				7DB1797D285C654B006201DB /* Security.framework */,
