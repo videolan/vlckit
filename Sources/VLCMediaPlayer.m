@@ -381,8 +381,10 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
                 if ([mediaPlayer.delegate respondsToSelector: @selector(mediaPlayerStartedRecording:)])
                     [mediaPlayer.delegate mediaPlayerStartedRecording: mediaPlayer];
             }else{
-                if ([mediaPlayer.delegate respondsToSelector: @selector(mediaPlayer:recordingStoppedAtPath:)] && filePath)
-                    [mediaPlayer.delegate mediaPlayer: mediaPlayer recordingStoppedAtPath: filePath];
+                if ([mediaPlayer.delegate respondsToSelector: @selector(mediaPlayer:recordingStoppedAtURL:)]) {
+                    NSURL *url = [filePath hasPrefix: @"/"] ? [NSURL fileURLWithPath: filePath isDirectory: NO] : nil;
+                    [mediaPlayer.delegate mediaPlayer: mediaPlayer recordingStoppedAtURL: url];
+                }
             }
         }];
     }

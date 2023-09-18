@@ -193,9 +193,9 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 /**
  * Sent by the default notification center whenever the player stopped recording.
  * @param player the player who stopped recording
- * @param path the path to the file that the player recorded to
+ * @param url the path to the file that the player recorded to
  */
-- (void)mediaPlayer:(VLCMediaPlayer *)player recordingStoppedAtPath:(NSString *)path;
+- (void)mediaPlayer:(VLCMediaPlayer *)player recordingStoppedAtURL:(nullable NSURL *)url;
 
 @end
 
