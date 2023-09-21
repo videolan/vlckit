@@ -35,7 +35,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSInteger, VLCMediaTrackType) NS_SWIFT_NAME(VLCMedia.TrackType);
-@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCMediaPlayerTrack, VLCAdjustFilter, VLCAudioEqualizer;
+@class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCMediaPlayerTrack, VLCAdjustFilter, VLCAudioEqualizer, VLCMediaPlayerTitleDescription, VLCMediaPlayerChapterDescription;
 #if !TARGET_OS_IPHONE
 @class VLCVideoView, VLCVideoLayer;
 #endif // !TARGET_OS_IPHONE
@@ -499,20 +499,10 @@ typedef NS_ENUM(unsigned, VLCMediaPlaybackSlaveType)
 - (int)numberOfChaptersForTitle:(int)titleIndex;
 
 /**
- * dictionary value for the user-facing chapter name
+ * Return the current VLCMediaPlayerChapterDescription object
+ * \return current VLCMediaPlayerChapterDescription object or nil if there is no chapter
  */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCChapterDescriptionName;
-/**
- * dictionary value for the chapter's time offset
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCChapterDescriptionTimeOffset;
-/**
- * dictionary value for the chapter's duration
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCChapterDescriptionDuration;
+@property(nonatomic, nullable) VLCMediaPlayerChapterDescription *currentChapterDescription;
 
 /**
  * chapter descriptions
@@ -520,11 +510,8 @@ NSString *const VLCChapterDescriptionDuration;
  * chapter name, time offset and duration
  * \note if no title value is provided, information about the chapters of the current title is returned
  * \return array describing the titles in details
- * \see VLCChapterDescriptionName
- * \see VLCChapterDescriptionTimeOffset
- * \see VLCChapterDescriptionDuration
  */
-- (NSArray *)chapterDescriptionsOfTitle:(int)titleIndex;
+- (NSArray<VLCMediaPlayerChapterDescription *> *)chapterDescriptionsOfTitle:(int)titleIndex;
 
 /**
  * Return the current title index
@@ -538,31 +525,18 @@ NSString *const VLCChapterDescriptionDuration;
 @property (readonly) int numberOfTitles;
 
 /**
- * dictionary value for the user-facing title name
+ * Return the current VLCMediaPlayerTitleDescription object
+ * \return VLCMediaPlayerTitleDescription object currently playing, or nil if none
  */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCTitleDescriptionName;
-/**
- * dictionary value for the title's duration
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCTitleDescriptionDuration;
-/**
- * dictionary value whether the title is a menu or not
- */
-OBJC_VISIBLE OBJC_EXTERN
-NSString *const VLCTitleDescriptionIsMenu;
+@property(nonatomic, nullable) VLCMediaPlayerTitleDescription *currentTitleDescription;
 
 /**
  * title descriptions
  * an array of all titles of the current media including information
  * of name, duration and potential menu state
  * \return array describing the titles in details
- * \see VLCTitleDescriptionName
- * \see VLCTitleDescriptionDuration
- * \see VLCTitleDescriptionIsMenu
  */
-@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray *titleDescriptions;
+@property (NS_NONATOMIC_IOSONLY, readonly, copy) NSArray<VLCMediaPlayerTitleDescription *> *titleDescriptions;
 
 /**
  * the title with the longest duration
