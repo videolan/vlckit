@@ -40,6 +40,7 @@
 #import <TVVLCKit/VLCFileLogger.h>
 #import <TVVLCKit/VLCLogMessageFormatter.h>
 #import <TVVLCKit/VLCEventsConfiguration.h>
+#import <TVVLCKit/VLCMediaPlayerTitleDescription.h>
 
 @class VLCMedia;
 @class VLCMediaList;
@@ -59,3 +60,5 @@
 @class VLCConsoleLogger;
 @class VLCFileLogger;
 @class VLCLogMessageFormatter;
+@class VLCMediaPlayerChapterDescription;
+@class VLCMediaPlayerTitleDescription;

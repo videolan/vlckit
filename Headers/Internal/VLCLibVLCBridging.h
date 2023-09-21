@@ -32,6 +32,7 @@
 #import <VLCAudio.h>
 #import <VLCMediaMetaData.h>
 #import <VLCAudioEqualizer.h>
+#import <VLCMediaPlayerTitleDescription.h>
 #if !TARGET_OS_TV
 #import <VLCRendererItem.h>
 #endif // !TARGET_OS_TV
@@ -252,6 +253,26 @@ NS_ASSUME_NONNULL_BEGIN
 @interface VLCAudioEqualizer (LibVLCBridging)
 
 - (void)setMediaPlayer:(nullable VLCMediaPlayer *)mediaPlayer;
+
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCMediaPlayerChapterDescription implementation.
+ */
+@interface VLCMediaPlayerChapterDescription (LibVLCBridging)
+
+- (instancetype)initWithMediaPlayer:(VLCMediaPlayer *)mediaPlayer titleIndex:(const int)titleIndex chapterDescription:(libvlc_chapter_description_t *)chapter_description chapterIndex:(const int)chapterIndex;
+
+@end
+
+/**
+ * Bridges functionality between libvlc and VLCMediaPlayerTitleDescription implementation.
+ */
+@interface VLCMediaPlayerTitleDescription (LibVLCBridging)
+
+- (instancetype)initWithMediaPlayer:(VLCMediaPlayer *)mediaPlayer titleDescription:(libvlc_title_description_t *)title_description titleIndex:(const int)titleIndex;
+
+- (void)navigate:(const libvlc_navigate_mode_t)navigate_mode;
 
 @end
 
