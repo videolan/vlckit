@@ -22,9 +22,9 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
-#import <VLCKit/VLCStreamOutput.h>
-#import <VLCKit/VLCMediaPlayer.h>
-#import <VLCKit/VLCMedia.h>
+#import "VLCStreamOutput.h"
+#import "VLCMediaPlayer.h"
+#import "VLCMedia.h"
 
 /**
  * control class for streaming sessions
