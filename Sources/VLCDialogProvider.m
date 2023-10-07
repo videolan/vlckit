@@ -25,9 +25,11 @@
 #import <VLCCustomDialogProvider.h>
 
 #if TARGET_OS_IPHONE
-#import <VLCiOSLegacyDialogProvider.h>
-#import <VLCEmbeddedDialogProvider.h>
-#endif // !TARGET_OS_IPHONE
+    #if !(TARGET_OS_TV || (defined(TARGET_OS_VISION) && TARGET_OS_VISION))
+        #import <VLCiOSLegacyDialogProvider.h>
+    #endif
+    #import <VLCEmbeddedDialogProvider.h>
+#endif // TARGET_OS_IPHONE
 
 /* We are the root of a class cluster, not much to see */
 
@@ -39,7 +41,7 @@
     if (customUI)
         return [[VLCCustomDialogProvider alloc] initWithLibrary:library];
 
-    #if !TARGET_OS_TV
+    #if !(TARGET_OS_TV || (defined(TARGET_OS_VISION) && TARGET_OS_VISION))
         if ([UIAlertController class]) {
             return [[VLCEmbeddedDialogProvider alloc] initWithLibrary:library];
         } else {
