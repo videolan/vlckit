@@ -24,6 +24,8 @@
 #ifndef VLCFilter_h
 #define VLCFilter_h
 
+#import <Foundation/Foundation.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @class VLCMediaPlayer;

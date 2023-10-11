@@ -22,6 +22,11 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
+#if TARGET_OS_IPHONE
+#import <UIKit/UIImage.h>
+#else
+#import <AppKit/NSImage.h>
+#endif
 
 /**
  * UIImage or NSImage

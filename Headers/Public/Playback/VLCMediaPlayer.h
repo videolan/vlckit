@@ -28,8 +28,7 @@
 
 #import <Foundation/Foundation.h>
 #if TARGET_OS_IPHONE
-# import <CoreGraphics/CoreGraphics.h>
-# import <UIKit/UIKit.h>
+# import <UIKit/UIImage.h>
 #endif // TARGET_OS_IPHONE
 
 NS_ASSUME_NONNULL_BEGIN
