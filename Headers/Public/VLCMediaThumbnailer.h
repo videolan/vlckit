@@ -71,12 +71,6 @@ OBJC_VISIBLE
  */
 @property (readwrite, assign, nonatomic, nullable) CGImageRef thumbnail;
 /**
- * the libvlc instance used for thumbnailing
- * \note Whatever you do, using this instance is most likely wrong
- */
-@property (readwrite) void * libVLCinstance;
-
-/**
  * Thumbnail Height
  * You shouldn't change this after -fetchThumbnail
  * has been called.

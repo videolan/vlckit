@@ -25,6 +25,7 @@
 #import <VLCMediaThumbnailer.h>
 #import <VLCLibVLCBridging.h>
 #import <VLCTime.h>
+#import <VLCLibrary.h>
 
 @interface VLCMediaThumbnailer ()
 {
@@ -42,7 +43,7 @@
     int _numberOfReceivedFrames;
     BOOL _shouldRejectFrames;
 
-    void * _internalLibVLCInstance;
+    VLCLibrary * _library;
 }
 
 - (void)didFetchThumbnail;
@@ -102,7 +103,7 @@ static void display(void *opaque, void *picture)
     id obj = [[[self class] alloc] init];
     [obj setMedia:media];
     [obj setDelegate:delegate];
-    [obj setLibVLCinstance:[VLCLibrary sharedInstance]];
+    [obj setVLCLibrary: [VLCLibrary sharedLibrary]];
     return obj;
 }
 
@@ -112,9 +113,9 @@ static void display(void *opaque, void *picture)
     [obj setMedia:media];
     [obj setDelegate:delegate];
     if (library)
-        [obj setLibVLCinstance:library.instance];
+        [obj setVLCLibrary: library];
     else
-        [obj setLibVLCinstance:[VLCLibrary sharedInstance]];
+        [obj setVLCLibrary: [VLCLibrary sharedLibrary]];
     return obj;
 }
 
@@ -126,19 +127,11 @@ static void display(void *opaque, void *picture)
     NSAssert(!_mp, @"Not properly retained");
     if (_thumbnail)
         CGImageRelease(_thumbnail);
-    if (_internalLibVLCInstance)
-        libvlc_release(_internalLibVLCInstance);
 }
 
-- (void)setLibVLCinstance:(void *)libVLCinstance
+- (void)setVLCLibrary:(VLCLibrary *)library
 {
-    _internalLibVLCInstance = libVLCinstance;
-    libvlc_retain(_internalLibVLCInstance);
-}
-
-- (void *)libVLCinstance
-{
-    return _internalLibVLCInstance;
+    _library = library;
 }
 
 - (void)fetchThumbnail
@@ -194,7 +187,7 @@ static void display(void *opaque, void *picture)
     NSAssert(_data, @"Can't create data");
 
     NSAssert(!_mp, @"We are already fetching a thumbnail");
-    _mp = libvlc_media_player_new(self.libVLCinstance);
+    _mp = libvlc_media_player_new(_library.instance);
     if (_mp == NULL) {
         NSAssert(0, @"%s: creating the player instance failed", __PRETTY_FUNCTION__);
         [self endThumbnailing];
