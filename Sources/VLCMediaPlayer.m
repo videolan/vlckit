@@ -454,7 +454,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
         if (_playerInstance == NULL) {
             NSAssert(0, @"%s: player initialization failed", __PRETTY_FUNCTION__);
-            libvlc_release([_privateLibrary instance]);
             return nil;
         }
 
@@ -474,7 +473,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
         _minimalWatchTimePeriod = 500000;
 
         _privateLibrary = library;
-        libvlc_retain([_privateLibrary instance]);
 
         _playerInstance = playerInstance;
 
@@ -529,9 +527,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
         libvlc_free(_viewpoint);
 
     libvlc_media_player_release(_playerInstance);
-
-    if (_privateLibrary != [VLCLibrary sharedLibrary])
-        libvlc_release(_privateLibrary.instance);
 }
 
 #if !TARGET_OS_IPHONE
@@ -1347,11 +1342,10 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
             VKLog(@"creating player instance using shared library");
             _privateLibrary = [VLCLibrary sharedLibrary];
         }
-        libvlc_retain([_privateLibrary instance]);
+        
         _playerInstance = libvlc_media_player_new([_privateLibrary instance]);
         if (_playerInstance == NULL) {
             NSAssert(0, @"%s: player initialization failed", __PRETTY_FUNCTION__);
-            libvlc_release([_privateLibrary instance]);
             return nil;
         }
 
