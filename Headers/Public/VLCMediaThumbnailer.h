@@ -67,11 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
  * The thumbnail created for the media object
  */
 @property (readwrite, assign, nonatomic, nullable) CGImageRef thumbnail;
-/**
- * the libvlc instance used for thumbnailing
- * \note Whatever you do, using this instance is most likely wrong
- */
-@property (readwrite) void * libVLCinstance;
 
 /**
  * Thumbnail Height
