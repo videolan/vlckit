@@ -97,7 +97,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
         } else {
             _privateLibrary = [VLCLibrary sharedLibrary];
         }
-        libvlc_retain([_privateLibrary instance]);
 
         _mdis = libvlc_media_discoverer_new([_privateLibrary instance],
                                             [aServiceName UTF8String]);
@@ -119,8 +118,6 @@ NSString *const VLCMediaDiscovererCategory = @"VLCMediaDiscovererCategory";
             libvlc_media_discoverer_stop(_mdis);
         libvlc_media_discoverer_release(_mdis);
     }
-
-    libvlc_release(_privateLibrary.instance);
 }
 
 - (int)startDiscoverer
