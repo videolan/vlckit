@@ -73,7 +73,7 @@ NS_SWIFT_NAME(VLCFilterParameterProtocol)
 
 /**
  *  Copy all parameters' value from another filter
- * \param anotherFilter
+ * \param otherFilter
  */
 - (void)applyParametersFrom:(id<VLCFilter>)otherFilter;
 

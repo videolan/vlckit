@@ -175,7 +175,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \param trackType the type of track, whether it's audio, spu or video
  */
 - (void)mediaPlayerTrackSelected:(VLCMediaTrackType)trackType
-                      selectedId:(NSString *)unselectedId
+                      selectedId:(NSString *)selectedId
                     unselectedId:(NSString*)unselectedId;
 
 - (void)mediaPlayerLengthChanged:(int64_t)length;
