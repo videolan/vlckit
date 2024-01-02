@@ -426,14 +426,13 @@ buildLibVLC() {
         # Use the new ABI on simulator, else we can't build
         export OBJCFLAGS="-fobjc-abi-version=2 -fobjc-legacy-dispatch ${OBJCFLAGS}"
     fi
-
+    
+    EXTRA_CFLAGS+=" -arch ${ACTUAL_ARCH}"
+    PLATFORM_VERSION="-platform_version,${OSVERSIONMINLDFLAG},${SDK_MIN},${SDK_VERSION}"
     if [ "$PLATFORM" = "Simulator" ]; then
-        EXTRA_CFLAGS+=" -arch ${ACTUAL_ARCH}"
-        EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG}_simulator_version_min,${SDK_MIN}"
-    else
-        EXTRA_CFLAGS+=" -arch ${ACTUAL_ARCH}"
-        EXTRA_LDFLAGS+=" -Wl,-${OSVERSIONMINLDFLAG}_version_min,${SDK_MIN}"
+        PLATFORM_VERSION="-platform_version,${OSVERSIONMINLDFLAG}-simulator,${SDK_MIN},${SDK_VERSION}"
     fi
+    EXTRA_LDFLAGS+=" -Wl,${PLATFORM_VERSION}"
 
     export CFLAGS="${EXTRA_CFLAGS}"
     export CPPFLAGS="${EXTRA_CFLAGS}"
