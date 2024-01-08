@@ -115,7 +115,7 @@ do
              SDK_VERSION=`xcrun --sdk macosx --show-sdk-version`
              SDK_MIN=10.9
              OSVERSIONMINCFLAG=mmacosx
-             OSVERSIONMINLDFLAG=macosx
+             OSVERSIONMINLDFLAG=macos
              BUILD_DEVICE=yes
              BUILD_DYNAMIC_FRAMEWORK=yes
              ;;
