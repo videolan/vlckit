@@ -97,6 +97,7 @@ void close_cb(void *opaque) {
     NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
     _Nullable id            _userData;              /// libvlc_media_user_data
     VLCEventsHandler*       _eventsHandler;          /// handles libvlc callbacks
+    VLCMediaMetaData *_metaData;
 }
 
 /* Make our properties internally readwrite */
@@ -492,8 +493,6 @@ static const struct event_handler_entry {
  */
 - (void)initInternalMediaDescriptor
 {
-    _metaData = [[VLCMediaMetaData alloc] initWithMedia: self];
-    
     char * p_url = libvlc_media_get_mrl( p_md );
     if (!p_url)
         return;
@@ -612,6 +611,21 @@ static const struct event_handler_entry {
 
 
 @end
+
+
+#pragma mark VLCMedia+MetaData
+
+@implementation VLCMedia (MetaData)
+
+- (VLCMediaMetaData *)metaData
+{
+    if (!_metaData)
+        _metaData = [[VLCMediaMetaData alloc] initWithMedia: self];
+    return _metaData;
+}
+
+@end
+
 
 #pragma mark - VLCMedia+Tracks
 
