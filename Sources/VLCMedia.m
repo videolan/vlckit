@@ -130,6 +130,7 @@ void close_cb(void *opaque) {
     NSInputStream           *stream;                ///< Stream object if instance is initialized via NSInputStream to pass to callbacks
     _Nullable id            _userData;              /// libvlc_media_user_data
     VLCEventsHandler*       _eventsHandler;         /// handles libvlc callbacks
+    VLCMediaMetaData *_metaData;
 }
 
 /* Make our properties internally readwrite */
@@ -757,6 +758,13 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
     return NO;
 }
 
+- (VLCMediaMetaData *)metaData
+{
+    if (!_metaData)
+        _metaData = [[VLCMediaMetaData alloc] initWithMedia: self];
+    return _metaData;
+}
+
 /******************************************************************************
  * Implementation VLCMedia ()
  */
@@ -833,8 +841,6 @@ NSString *const VLCMediaTracksInformationTextEncoding = @"encoding"; // NSString
 
 - (void)initInternalMediaDescriptor
 {
-    _metaData = [[VLCMediaMetaData alloc] initWithMedia: self];
-
     self.state = VLCMediaStateNothingSpecial;
 
     char * p_url = libvlc_media_get_mrl( p_md );
