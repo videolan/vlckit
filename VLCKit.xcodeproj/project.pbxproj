@@ -157,7 +157,6 @@
 		7DB179B9285C68E6006201DB /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB17975285C6533006201DB /* libc++.tbd */; };
 		7DB179BA285C68EB006201DB /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB17974285C652B006201DB /* libbz2.tbd */; };
 		7DB179BB285C68F0006201DB /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB17981285C655B006201DB /* libiconv.tbd */; };
-		7DB179BD285C6916006201DB /* deprecated.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE0203C56D4000A7D2F /* deprecated.h */; };
 		7DB179BE285C6916006201DB /* libvlc_events.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE9203C56D5000A7D2F /* libvlc_events.h */; };
 		7DB179BF285C6916006201DB /* libvlc_media_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAEA203C56D5000A7D2F /* libvlc_media_discoverer.h */; };
 		7DB179C0285C6916006201DB /* libvlc_media_list_player.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE2203C56D5000A7D2F /* libvlc_media_list_player.h */; };
@@ -216,7 +215,6 @@
 		7DE9EAD61FB9E01700859664 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD51FB9E01700859664 /* VideoToolbox.framework */; };
 		7DE9EAD81FB9E02200859664 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD71FB9E02200859664 /* AudioToolbox.framework */; };
 		7DE9EADA1FB9E02800859664 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE9EAD91FB9E02700859664 /* AVFoundation.framework */; };
-		7DEBDAF8203C5713000A7D2F /* deprecated.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE0203C56D4000A7D2F /* deprecated.h */; };
 		7DEBDAF9203C5713000A7D2F /* libvlc_events.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE9203C56D5000A7D2F /* libvlc_events.h */; };
 		7DEBDAFA203C5713000A7D2F /* libvlc_media_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAEA203C56D5000A7D2F /* libvlc_media_discoverer.h */; };
 		7DEBDAFC203C5713000A7D2F /* libvlc_media_list_player.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE2203C56D5000A7D2F /* libvlc_media_list_player.h */; };
@@ -226,7 +224,6 @@
 		7DEBDB00203C5713000A7D2F /* libvlc_renderer_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE4203C56D5000A7D2F /* libvlc_renderer_discoverer.h */; };
 		7DEBDB02203C5713000A7D2F /* libvlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE6203C56D5000A7D2F /* libvlc.h */; };
 		7DEBDB03203C5713000A7D2F /* vlc.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE7203C56D5000A7D2F /* vlc.h */; };
-		7DEBDB05203C5727000A7D2F /* deprecated.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE0203C56D4000A7D2F /* deprecated.h */; };
 		7DEBDB06203C5727000A7D2F /* libvlc_events.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE9203C56D5000A7D2F /* libvlc_events.h */; };
 		7DEBDB07203C5727000A7D2F /* libvlc_media_discoverer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAEA203C56D5000A7D2F /* libvlc_media_discoverer.h */; };
 		7DEBDB09203C5727000A7D2F /* libvlc_media_list_player.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DEBDAE2203C56D5000A7D2F /* libvlc_media_list_player.h */; };
@@ -375,7 +372,6 @@
 			dstPath = Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
-				7DB179BD285C6916006201DB /* deprecated.h in CopyFiles */,
 				7DFB522A28D0B2BC0020DCDE /* libvlc_dialog.h in CopyFiles */,
 				7DB179BE285C6916006201DB /* libvlc_events.h in CopyFiles */,
 				7DB179BF285C6916006201DB /* libvlc_media_discoverer.h in CopyFiles */,
@@ -407,7 +403,6 @@
 			dstPath = Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
-				7DEBDAF8203C5713000A7D2F /* deprecated.h in CopyFiles */,
 				7DFB522D28D0B2CF0020DCDE /* libvlc_dialog.h in CopyFiles */,
 				7DEBDAF9203C5713000A7D2F /* libvlc_events.h in CopyFiles */,
 				7DEBDAFA203C5713000A7D2F /* libvlc_media_discoverer.h in CopyFiles */,
@@ -430,7 +425,6 @@
 			dstPath = Headers/vlc;
 			dstSubfolderSpec = 7;
 			files = (
-				7DEBDB05203C5727000A7D2F /* deprecated.h in CopyFiles */,
 				7DFB523028D0B2EA0020DCDE /* libvlc_dialog.h in CopyFiles */,
 				7DEBDB06203C5727000A7D2F /* libvlc_events.h in CopyFiles */,
 				7DEBDB07203C5727000A7D2F /* libvlc_media_discoverer.h in CopyFiles */,
