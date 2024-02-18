@@ -1,7 +1,7 @@
-From 0ee249284023b277a9cf0f95747d17df2c399628 Mon Sep 17 00:00:00 2001
+From e1a524df0583b3e7f03b88323500e4f9055107f7 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
-Subject: [PATCH 11/14] Add property to configure an http access token
+Subject: [PATCH 10/14] Add property to configure an http access token
 
 ---
  modules/access/http/access.c   | 8 ++++++--
@@ -72,10 +72,10 @@ index 66cc215361..92d3091711 100644
  
  int vlc_http_res_init(struct vlc_http_resource *,
 diff --git a/src/libvlc.c b/src/libvlc.c
-index 4736a79824..6bddb78a01 100644
+index a1070fd854..167fc593e6 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
-@@ -263,6 +263,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
+@@ -267,6 +267,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
      var_Create( p_libvlc, "app-version", VLC_VAR_STRING );
      var_SetString( p_libvlc, "app-version", PACKAGE_VERSION );
  
@@ -85,5 +85,5 @@ index 4736a79824..6bddb78a01 100644
      system_Configure( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
  
 -- 
-2.39.2 (Apple Git-143)
+2.39.3 (Apple Git-145)
 
