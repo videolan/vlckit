@@ -103,7 +103,7 @@ static void display(void *opaque, void *picture)
     id obj = [[[self class] alloc] init];
     [obj setMedia:media];
     [obj setDelegate:delegate];
-    [obj setVLCLibrary: [VLCLibrary sharedInstance]];
+    [obj setVLCLibrary: [VLCLibrary sharedLibrary]];
     return obj;
 }
 
@@ -113,9 +113,9 @@ static void display(void *opaque, void *picture)
     [obj setMedia:media];
     [obj setDelegate:delegate];
     if (library)
-        [obj setVLCLibrary: library.instance];
+        [obj setVLCLibrary: library];
     else
-        [obj setVLCLibrary: [VLCLibrary sharedInstance]];
+        [obj setVLCLibrary: [VLCLibrary sharedLibrary]];
     return obj;
 }
 
