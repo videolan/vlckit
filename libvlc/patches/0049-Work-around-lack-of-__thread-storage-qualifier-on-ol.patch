@@ -1,7 +1,7 @@
-From 0fc8d1050da17d81b7bb89b53c3cf2856edb436d Mon Sep 17 00:00:00 2001
+From cfb2ab0ae88d76b778bc9a43420f67a5ce7ac7bc Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
-Subject: [PATCH 46/48] Work around lack of __thread storage qualifier on old
+Subject: [PATCH 49/49] Work around lack of __thread storage qualifier on old
  macOS
 
 ---
@@ -14,7 +14,7 @@ Subject: [PATCH 46/48] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index e0f9c10088..0fef924d11 100644
+index 0eb4210bc1..ba36c6069c 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -631,8 +631,8 @@ dnl Check for system libs needed
@@ -29,13 +29,13 @@ index e0f9c10088..0fef924d11 100644
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])
 diff --git a/include/vlc_fixups.h b/include/vlc_fixups.h
-index 2e8a1456bb..bd00426972 100644
+index 861cb4cc50..d630389600 100644
 --- a/include/vlc_fixups.h
 +++ b/include/vlc_fixups.h
-@@ -503,9 +503,12 @@ void *tdelete( const void *key, void **rootp, int(*cmp)(const void *, const void
- void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int depth) );
+@@ -506,9 +506,12 @@ void twalk( const void *root, void(*action)(const void *nodep, VISIT which, int
  void *lfind( const void *key, const void *base, size_t *nmemb,
               size_t size, int(*cmp)(const void *, const void *) );
+ #endif
 -#endif /* HAVE_SEARCH_H */
 -#ifndef HAVE_TDESTROY
  void tdestroy( void *root, void (*free_node)(void *nodep) );
@@ -204,5 +204,5 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-145)
 

@@ -1,7 +1,7 @@
-From 0cff25724a07aa167a633b728f2d5c69e70396a3 Mon Sep 17 00:00:00 2001
+From 82f58b596a5d554fb91eed4843c000bb9abdef76 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 05/48] libvlc_media: add cookie_jar API
+Subject: [PATCH 05/49] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -12,10 +12,10 @@ Subject: [PATCH 05/48] libvlc_media: add cookie_jar API
  5 files changed, 71 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index 383f366b69..2a5666688d 100644
+index 01950493e9..e5b786fc24 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -884,6 +884,41 @@ LIBVLC_API
+@@ -890,6 +890,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -163,5 +163,5 @@ index fda1091cc8..0b324cc796 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-145)
 

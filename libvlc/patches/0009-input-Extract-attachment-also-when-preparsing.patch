@@ -1,7 +1,7 @@
-From 6cda5bc3d4230059a6ec9e67bddc4b2448f1155b Mon Sep 17 00:00:00 2001
+From f0ccb5272598fdcbc57b743c010c0508c9742779 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/48] input: Extract attachment also when preparsing
+Subject: [PATCH 09/49] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -521,7 +521,7 @@ index 7c93e41d5f..ef763fb1f0 100644
  
  #include <vlc_common.h>
 diff --git a/lib/media_list_player.c b/lib/media_list_player.c
-index 7f4d427f63..5f3d4829de 100644
+index c76cd6934e..64b5c0964e 100644
 --- a/lib/media_list_player.c
 +++ b/lib/media_list_player.c
 @@ -33,6 +33,7 @@
@@ -887,7 +887,7 @@ index 8dcfeee3b4..b92c000c2a 100644
          return VLC_SUCCESS;
      }
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index 898df14e28..2ec582b123 100644
+index e537bed2a0..c70b195f2c 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
 @@ -198,7 +198,7 @@ static int Create( vlc_object_t *p_this )
@@ -1134,7 +1134,7 @@ index 27a1566c43..a78eecd532 100644
  struct matroska_stream_c
  {
 diff --git a/modules/demux/mp4/mp4.c b/modules/demux/mp4/mp4.c
-index 8290f92c1e..ba0ebf59f2 100644
+index bcdb244807..5c9f068b7a 100644
 --- a/modules/demux/mp4/mp4.c
 +++ b/modules/demux/mp4/mp4.c
 @@ -122,6 +122,8 @@ struct demux_sys_t
@@ -1146,7 +1146,7 @@ index 8290f92c1e..ba0ebf59f2 100644
  };
  
  #define DEMUX_INCREMENT (CLOCK_FREQ / 4) /* How far the pcr will go, each round */
-@@ -741,6 +743,7 @@ static int Open( vlc_object_t * p_this )
+@@ -798,6 +800,7 @@ static int Open( vlc_object_t * p_this )
      p_demux->pf_control = Control;
  
      p_sys->context.i_lastseqnumber = UINT32_MAX;
@@ -1154,7 +1154,7 @@ index 8290f92c1e..ba0ebf59f2 100644
  
      p_demux->p_sys = p_sys;
  
-@@ -1994,112 +1997,123 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -2053,112 +2056,123 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
              input_attachment_t ***ppp_attach = va_arg( args, input_attachment_t*** );
              int *pi_int = va_arg( args, int * );
  
@@ -1365,7 +1365,7 @@ index 8290f92c1e..ba0ebf59f2 100644
              return VLC_SUCCESS;
          }
  
-@@ -2198,6 +2212,10 @@ static void Close ( vlc_object_t * p_this )
+@@ -2257,6 +2271,10 @@ static void Close ( vlc_object_t * p_this )
          MP4_TrackClean( p_demux->out, &p_sys->track[i_track] );
      free( p_sys->track );
  
@@ -1790,7 +1790,7 @@ index fcd3ecbf55..ccfdf2b730 100644
  
      es_out_ControlSetMeta( input_priv(p_input)->p_es_out, p_meta );
 diff --git a/src/input/input_internal.h b/src/input/input_internal.h
-index d29731edca..231e27030c 100644
+index ea02f39f5a..3ce907e2de 100644
 --- a/src/input/input_internal.h
 +++ b/src/input/input_internal.h
 @@ -130,7 +130,6 @@ typedef struct input_thread_private_t
@@ -1835,5 +1835,5 @@ index db7f4030b9..8454600451 100644
 +vlc_input_attachment_Hold
 +vlc_input_attachment_Release
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-145)
 

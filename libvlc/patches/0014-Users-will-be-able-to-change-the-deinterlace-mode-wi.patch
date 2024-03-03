@@ -1,7 +1,7 @@
-From f8016294e9756920b436d73e5f43f94fcc33edcd Mon Sep 17 00:00:00 2001
+From 0008a19a58d59b9cb848e7a6d78b42fd5ec16649 Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Wed, 9 May 2018 10:44:43 +0100
-Subject: [PATCH 14/48] Users will be able to change the deinterlace mode
+Subject: [PATCH 14/49] Users will be able to change the deinterlace mode
  without forcing it.
 
 ---
@@ -10,10 +10,10 @@ Subject: [PATCH 14/48] Users will be able to change the deinterlace mode
  2 files changed, 16 insertions(+), 18 deletions(-)
 
 diff --git a/include/vlc/libvlc_media_player.h b/include/vlc/libvlc_media_player.h
-index 4582688b27..4e951292c9 100644
+index 897d183627..6991ce94c7 100644
 --- a/include/vlc/libvlc_media_player.h
 +++ b/include/vlc/libvlc_media_player.h
-@@ -1419,9 +1419,12 @@ int libvlc_video_take_snapshot( libvlc_media_player_t *p_mi, unsigned num,
+@@ -1421,9 +1421,12 @@ int libvlc_video_take_snapshot( libvlc_media_player_t *p_mi, unsigned num,
   * Enable or disable deinterlace filter
   *
   * \param p_mi libvlc media player
@@ -87,5 +87,5 @@ index a3e5b248e9..9bc0f634f5 100644
      }
      free (pp_vouts);
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-145)
 
