@@ -1,0 +1,32 @@
+From ddd641ccf48f558c7b231741d20a297d9434adb5 Mon Sep 17 00:00:00 2001
+From: Marvin Scholz <epirat07@gmail.com>
+Date: Sun, 3 Mar 2024 17:11:34 +0100
+Subject: [PATCH 15/15] package: apple: pass the right platform_version for
+ macOS
+
+The linkers platform_version argument does not support
+the value "macosx" but expects "macos" here instead.
+---
+ extras/package/apple/build.sh | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/extras/package/apple/build.sh b/extras/package/apple/build.sh
+index dd7836b402..7c72316766 100755
+--- a/extras/package/apple/build.sh
++++ b/extras/package/apple/build.sh
+@@ -187,6 +187,12 @@ set_deployment_target()
+     VLC_DEPLOYMENT_TARGET_LDFLAG="${VLC_HOST_OS}"
+     VLC_DEPLOYMENT_TARGET_CFLAG="-m$VLC_HOST_OS"
+ 
++    if [ "$VLC_HOST_OS" = "macosx" ]; then
++        VLC_DEPLOYMENT_TARGET_LDFLAG="macos"
++    else
++        VLC_DEPLOYMENT_TARGET_LDFLAG="${VLC_HOST_OS}"
++    fi
++
+     if [ -n "$VLC_HOST_PLATFORM_SIMULATOR" ]; then
+         VLC_DEPLOYMENT_TARGET_LDFLAG="${VLC_HOST_OS}-simulator"
+         VLC_DEPLOYMENT_TARGET_CFLAG="${VLC_DEPLOYMENT_TARGET_CFLAG}-simulator"
+-- 
+2.32.1 (Apple Git-133)
+
