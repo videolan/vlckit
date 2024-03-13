@@ -616,7 +616,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
     return libvlc_video_get_spu_delay(_playerInstance);
 }
 
-#if TARGET_OS_IPHONE
 - (void)setTextRendererFontSize:(NSNumber *)fontSize
 {
     libvlc_video_set_textrenderer_int(_playerInstance, libvlc_textrender_fontsize, [fontSize intValue]);
@@ -636,7 +635,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 {
     libvlc_video_set_textrenderer_bool(_playerInstance, libvlc_textrender_fontforcebold, [fontForceBold boolValue]);
 }
-#endif
 
 #pragma mark -
 #pragma mark Video Crop geometry
