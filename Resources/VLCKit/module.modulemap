@@ -10,7 +10,6 @@ framework module VLCKit {
   exclude header "vlc/libvlc_events.h"
   exclude header "vlc/vlc.h"
   exclude header "vlc/libvlc_media_discoverer.h"
-  exclude header "vlc/deprecated.h"
   exclude header "vlc/libvlc.h"
   exclude header "vlc/libvlc_media_list.h"
   exclude header "vlc/libvlc_version.h"
