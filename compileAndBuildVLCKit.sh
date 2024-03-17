@@ -125,6 +125,9 @@ buildxcodeproj()
         if [ "$MACOS" = "yes" ]; then
             architectures="arm64 x86_64"
         fi
+        if [ "$XROS" = "yes" ]; then
+            architectures="arm64"
+        fi
     else
         architectures=`get_actual_arch $FARCH`
     fi
@@ -150,6 +153,11 @@ buildxcodeproj()
         verboseflag="-verbose"
     fi
 
+    local deploymentTargetFlag=""
+    if [ "$XROS" != "yes" ]; then
+        deploymentTargetFlag="IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN}"
+    fi
+
     local defs="$GCC_PREPROCESSOR_DEFINITIONS"
 
     xcodebuild archive \
@@ -160,7 +168,7 @@ buildxcodeproj()
                -destination "generic/platform=${PLATFORMNAME}" \
                -archivePath build/VLCKit-$PLATFORM$SDK.xcarchive \
                ARCHS="${architectures}" \
-               IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
+               ${deploymentTargetFlag} \
                ${bitcodeflag} \
                ${verboseflag} \
                SKIP_INSTALL=no \
@@ -554,7 +562,9 @@ fi
 
 info "all done"
 
-if [ "$BUILD_FRAMEWORK" != "no" ]; then
+if [ "$BUILD_FRAMEWORK" = "no" ]; then
+	return 0
+fi
 if [ "$TVOS" = "yes" ]; then
     info "Building VLCKit.xcframework for tvOS"
 
@@ -629,8 +639,33 @@ if [ "$IOS" = "yes" ]; then
 
     info "Build of VLCKit.xcframework for iOS completed"
 fi
+if [ "$XROS" = "yes" ]; then
+    info "Building VLCKit.xcframework for xrOS"
+
+    frameworks=""
+    platform=""
+    if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
+        platform="xros"
+        buildxcodeproj VLCKit ${platform} xrOS
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
+    fi
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+        platform="xrsimulator"
+        buildxcodeproj VLCKit ${platform} "xrOS Simulator"
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
+    fi
+
+    # Assumes both platforms were built currently
+    spushd build
+    rm -rf xrOS
+    mkdir xrOS
+    xcodebuild -create-xcframework $frameworks -output xrOS/VLCKit.xcframework
+    spopd # build
+
+    info "Build of VLCKit.xcframework for xrOS completed"
 fi
-if [ "$BUILD_FRAMEWORK" != "no" ]; then
 if [ "$MACOS" = "yes" ]; then
     CURRENT_DIR=`pwd`
     info "Building VLCKit.xcframework for macOS in ${CURRENT_DIR}"
@@ -644,5 +679,4 @@ if [ "$MACOS" = "yes" ]; then
     spopd # build
 
     info "Build of VLCKit.xcframework for macOS completed"
-fi
 fi

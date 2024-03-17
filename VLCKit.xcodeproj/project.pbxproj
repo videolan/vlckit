@@ -29,7 +29,7 @@
 		7D6C89211C0CA90000321894 /* VLCAudio.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B49C5FB1BC3D7870052D40C /* VLCAudio.m */; };
 		7D797FC41DF41F9100AD93ED /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC31DF41F9100AD93ED /* libc++.tbd */; };
 		7D797FC61DF41F9500AD93ED /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D797FC51DF41F9500AD93ED /* libiconv.tbd */; };
-		7D803EC11C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D803EBE1C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m */; platformFilters = (ios, tvos, ); };
+		7D803EC11C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D803EBE1C8F2AB400864A9C /* VLCEmbeddedDialogProvider.m */; platformFilters = (ios, tvos, xros, ); };
 		7D803EC71C8F2AF900864A9C /* VLCiOSLegacyDialogProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D803EC51C8F2AF900864A9C /* VLCiOSLegacyDialogProvider.m */; platformFilter = ios; };
 		7D8939411B500D50008F2B14 /* VLCLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */; };
 		7D8939421B500D50008F2B14 /* VLCMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A5ECAC611DE8F7300F66AF3 /* VLCMedia.m */; };
@@ -1318,9 +1318,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.vlckit;
 				PRODUCT_NAME = VLCKit;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1388,6 +1388,10 @@
 				MODULEMAP_FILE = Resources/module.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ld_classic",
+				);
 				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = (
 					"-ObjC",
 					"-read_only_relocs",
@@ -1397,9 +1401,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.vlckit;
 				PRODUCT_NAME = VLCKit;
 				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = "1,2,3";
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 				TVOS_DEPLOYMENT_TARGET = 11.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1436,16 +1440,21 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ld_classic",
+				);
 				"OTHER_LIBTOOLFLAGS[sdk=appletvos*]" = "$(PROJECT_DIR)/libvlc/vlc/install-appletv-device/libvlc-device-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=appletvsimulator*]" = "$(PROJECT_DIR)/libvlc/vlc/install-appletv-simulator/libvlc-simulator-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=iphoneos*]" = "$(PROJECT_DIR)/libvlc/vlc/install-iphone-device/libvlc-device-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "$(PROJECT_DIR)/libvlc/vlc/install-iphone-simulator/libvlc-simulator-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=macosx*]" = "$(PROJECT_DIR)/libvlc/vlc/install-macosx-device/libvlc-device-static.a";
+				"OTHER_LIBTOOLFLAGS[sdk=xros*]" = "$(PROJECT_DIR)/libvlc/vlc/install-xros-device/libvlc-device-static.a";
+				"OTHER_LIBTOOLFLAGS[sdk=xrsimulator*]" = "$(PROJECT_DIR)/libvlc/vlc/install-xros-simulator/libvlc-simulator-static.a";
 				PRODUCT_NAME = "static-libvlc";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator xros xrsimulator";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1487,16 +1496,21 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-ld_classic",
+				);
 				"OTHER_LIBTOOLFLAGS[sdk=appletvos*]" = "$(PROJECT_DIR)/libvlc/vlc/install-appletv-device/libvlc-device-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=appletvsimulator*]" = "$(PROJECT_DIR)/libvlc/vlc/install-appletv-simulator/libvlc-simulator-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=iphoneos*]" = "$(PROJECT_DIR)/libvlc/vlc/install-iphone-device/libvlc-device-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "$(PROJECT_DIR)/libvlc/vlc/install-iphone-simulator/libvlc-simulator-static.a";
 				"OTHER_LIBTOOLFLAGS[sdk=macosx*]" = "$(PROJECT_DIR)/libvlc/vlc/install-macosx-device/libvlc-device-static.a";
+				"OTHER_LIBTOOLFLAGS[sdk=xros*]" = "$(PROJECT_DIR)/libvlc/vlc/install-xros-device/libvlc-device-static.a";
+				"OTHER_LIBTOOLFLAGS[sdk=xrsimulator*]" = "$(PROJECT_DIR)/libvlc/vlc/install-xros-simulator/libvlc-simulator-static.a";
 				PRODUCT_NAME = "static-libvlc";
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator";
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx appletvos appletvsimulator xros xrsimulator";
 			};
 			name = Debug;
 		};
