@@ -95,10 +95,10 @@ info()
 
 buildxcodeproj()
 {
-    local target="$2"
-    local PLATFORM="$3"
+    local PLATFORM="$2"
+    local PLATFORMNAME="$3"
 
-    info "Building $1 ($target, ${CONFIGURATION}, $PLATFORM)"
+    info "Building $1 (${CONFIGURATION}, $PLATFORM)"
 
     local architectures=""
     if [ "$FARCH" = "all" ];then
@@ -154,7 +154,8 @@ buildxcodeproj()
                -project "$1.xcodeproj" \
                -sdk $PLATFORM$SDK \
                -configuration ${CONFIGURATION} \
-               -scheme "$target" \
+               -scheme "VLCKit" \
+               -destination "generic/platform=${PLATFORMNAME}" \
                -archivePath build/VLCKit-$PLATFORM$SDK.xcarchive \
                ARCHS="${architectures}" \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
@@ -530,7 +531,7 @@ if [ "$TVOS" = "yes" ]; then
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="appletvos"
-        buildxcodeproj VLCKit "VLCKit (tvOS)" ${platform}
+        buildxcodeproj VLCKit ${platform} tvOS
         dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
         bcsymbolmapfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/BCSymbolMaps
         frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
@@ -546,7 +547,7 @@ if [ "$TVOS" = "yes" ]; then
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
-        buildxcodeproj VLCKit "VLCKit (tvOS)" ${platform}
+        buildxcodeproj VLCKit ${platform} "tvOS Simulator"
         dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
         frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
     fi
@@ -567,7 +568,7 @@ if [ "$IOS" = "yes" ]; then
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="iphoneos"
-        buildxcodeproj VLCKit "VLCKit (iOS)" ${platform}
+        buildxcodeproj VLCKit ${platform} iOS
         dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
         bcsymbolmapfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/BCSymbolMaps
         frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
@@ -583,7 +584,7 @@ if [ "$IOS" = "yes" ]; then
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="iphonesimulator"
-        buildxcodeproj VLCKit "VLCKit (iOS)" ${platform}
+        buildxcodeproj VLCKit ${platform} "iOS Simulator"
         dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
         frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
     fi
@@ -603,7 +604,7 @@ if [ "$MACOS" = "yes" ]; then
     CURRENT_DIR=`pwd`
     info "Building VLCKit.xcframework for macOS in ${CURRENT_DIR}"
 
-    buildxcodeproj VLCKit "VLCKit (macOS)" "macosx"
+    buildxcodeproj VLCKit "macosx" macOS
 
     spushd build
     rm -rf macOS
