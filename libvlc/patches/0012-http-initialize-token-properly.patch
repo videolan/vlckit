@@ -1,4 +1,4 @@
-From b8f3ea70ce946d05cfa23bf884b4595b7de14298 Mon Sep 17 00:00:00 2001
+From 4d4b0b358f452b724bbcf736993cd5c19f7ffdfc Mon Sep 17 00:00:00 2001
 From: Maxime Chapelet <umxprime@videolabs.io>
 Date: Wed, 24 Aug 2022 10:39:30 +0200
 Subject: [PATCH 12/14] http : initialize token properly
@@ -21,5 +21,5 @@ index 85a0186fc8..d15b1decc4 100644
      const char *path = url.psz_path;
      if (path == NULL)
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

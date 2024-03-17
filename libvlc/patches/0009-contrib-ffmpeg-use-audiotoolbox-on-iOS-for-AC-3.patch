@@ -1,4 +1,4 @@
-From c15b757474e745d48acf799e58f8b3d6b37d1915 Mon Sep 17 00:00:00 2001
+From a01cfca7f6f136d4949298e18d68940375a1275b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 09/14] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
@@ -39,7 +39,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index a5d01fb292..80296a0fc8 100644
+index d2e1e12c10..94d8405f30 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -38,6 +38,12 @@ FFMPEGCONF = \
@@ -55,10 +55,10 @@ index a5d01fb292..80296a0fc8 100644
  endif
  
  DEPS_ffmpeg = zlib $(DEPS_zlib) gsm $(DEPS_gsm) openjpeg $(DEPS_openjpeg)
-@@ -229,6 +235,9 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
- 	$(APPLY) $(SRC)/ffmpeg/0001-vulkan-Fix-win-i386-calling-convention.patch
- 	$(APPLY) $(SRC)/ffmpeg/0002-lavu-vulkan-fix-handle-type-for-32-bit-targets.patch
- 	$(APPLY) $(SRC)/ffmpeg/0001-w32pthread-fix-signature-of-WinRT-version-of-thread-.patch
+@@ -227,6 +233,9 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
+ 	$(APPLY) $(SRC)/ffmpeg/0001-fix-mf_utils-compilation-with-mingw64.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0001-ffmpeg-add-target_os-support-for-emscripten.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0011-avcodec-videotoolboxenc-disable-calls-on-unsupported.patch
 +ifdef HAVE_IOS
 +	$(APPLY) $(SRC)/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
 +endif
@@ -66,5 +66,5 @@ index a5d01fb292..80296a0fc8 100644
  
  .ffmpeg: ffmpeg
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

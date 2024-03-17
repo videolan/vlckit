@@ -1,4 +1,4 @@
-From 66d4528db5ede8325d6ee8b85d94480b0df6675c Mon Sep 17 00:00:00 2001
+From e9d7c9293efd1b5f9212b651656c1ecdd8dff035 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 6 Jan 2022 01:08:11 +0100
 Subject: [PATCH 11/14] adaptive: NULL http-token
@@ -24,5 +24,5 @@ index de172200cc..ffb31e998e 100644
      struct vlc_url_t crd_url;
      vlc_UrlParse(&crd_url, params.getUrl().c_str());
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 
