@@ -176,5 +176,5 @@ index 7c72316766..9bdd85e43b 100755
  
  for module in "${VLC_MODULE_REMOVAL_LIST[@]}"; do
 -- 
-2.39.3 (Apple Git-145)
+2.39.3 (Apple Git-146)
 

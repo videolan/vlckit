@@ -85,5 +85,5 @@ index a1070fd854..167fc593e6 100644
      system_Configure( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
  
 -- 
-2.39.3 (Apple Git-145)
+2.39.3 (Apple Git-146)
 
