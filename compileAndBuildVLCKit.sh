@@ -17,6 +17,7 @@ SKIPLIBVLCCOMPILATION=no
 TVOS=no
 MACOS=no
 IOS=yes
+XROS=no
 BITCODE=no
 INCLUDE_ARMV7=no
 OSVERSIONMINCFLAG=iphoneos
@@ -45,6 +46,7 @@ OPTIONS
    -l       Skip libvlc compilation
    -t       Build for tvOS
    -x       Build for macOS / Mac OS X
+   -i       Build for xrOS / visionOS
    -b       Enable bitcode
    -a       Build framework for specific arch (all|x86_64|armv7|aarch64)
    -e       External VLC source path
@@ -221,6 +223,12 @@ buildMobileKit() {
                 buildLibVLC "aarch64" "macosx"
                 buildLibVLC "x86_64" "macosx"
             fi
+            if [ "$XROS" = "yes" ]; then
+	            info "building for xrOS"
+                buildLibVLC "aarch64" "xros"
+                buildLibVLC "aarch64" "xrsimulator"
+                # there is no xrSimulator for the Intel platform
+            fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
                     buildLibVLC "x86_64" $PLATFORM
@@ -247,6 +255,9 @@ buildMobileKit() {
                 if [ "$MACOS" = "yes" ]; then
                     PLATFORM="macosx"
                 fi
+                if [ "$XROS" = "yes" ]; then
+                    PLATFORM="xrsimulator"
+                fi
             else
                 if [ "$TVOS" = "yes" ]; then
                     PLATFORM="appletvos"
@@ -256,6 +267,9 @@ buildMobileKit() {
                 fi
                 if [ "$MACOS" = "yes" ]; then
                     PLATFORM="macosx"
+                fi
+                if [ "$XROS" = "yes" ]; then
+                    PLATFORM="xros"
                 fi
             fi
 
@@ -310,6 +324,8 @@ build_simulator_static_lib() {
     # brute-force test the available architectures we could lipo
     check_lipo "${OSSTYLE}simulator" x86_64
     check_lipo "${OSSTYLE}simulator" arm64
+    # XR is not -simulator suffixed in the script unfortunately.
+    check_lipo "${OSSTYLE}" arm64
 
     if [ ! -z "${VLCSTATICLIBS}" ]; then
         spushd ${VLCROOT}
@@ -338,7 +354,7 @@ build_device_static_lib() {
     # brute-force test the available architectures we could lipo
     check_lipo "${OSSTYLE}os" arm64
     check_lipo "${OSSTYLE}os" armv7
-    # macosx is not -os or -simulator suffixed in the script unfortunately.
+    # macosx and XR are not -os or -simulator suffixed in the script unfortunately.
     check_lipo "${OSSTYLE}" x86_64
     check_lipo "${OSSTYLE}" arm64
 
@@ -349,7 +365,7 @@ build_device_static_lib() {
     fi
 }
 
-while getopts "hvsfbrxntl7k:a:e:" OPTION
+while getopts "hvsfbrxintl7k:a:e:" OPTION
 do
      case $OPTION in
          h)
@@ -406,6 +422,17 @@ do
              SDK_MIN=10.11
              OSVERSIONMINCFLAG=macosx
              OSVERSIONMINLDFLAG=macosx
+             BUILD_DEVICE=yes
+             BUILD_FRAMEWORK=yes
+             ;;
+         i)
+             XROS=yes
+             IOS=no
+             BITCODE=no
+             SDK_VERSION=`xcrun --sdk xros --show-sdk-version`
+             SDK_MIN=1.0
+             OSVERSIONMINCFLAG=xros
+             OSVERSIONMINLDFLAG=xros
              BUILD_DEVICE=yes
              BUILD_FRAMEWORK=yes
              ;;
@@ -512,6 +539,10 @@ SIMULATORARCHS=""
 if [ "$TVOS" = "yes" ]; then
     build_simulator_static_lib "appletv"
     build_device_static_lib "appletv"
+fi
+if [ "$XROS" = "yes" ]; then
+    build_simulator_static_lib "xros"
+    build_device_static_lib "xros"
 fi
 if [ "$MACOS" = "yes" ]; then
     build_device_static_lib "macosx"
