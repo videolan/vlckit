@@ -1,0 +1,339 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B369183BA71600FF0D25 /* UIKit.framework */; };
+		7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36B183BA71600FF0D25 /* Foundation.framework */; };
+		7D11B374183BA71600FF0D25 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B372183BA71600FF0D25 /* InfoPlist.strings */; };
+		7D11B376183BA71600FF0D25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D11B375183BA71600FF0D25 /* main.m */; };
+		7D11B37A183BA71600FF0D25 /* VDLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D11B379183BA71600FF0D25 /* VDLAppDelegate.m */; };
+		7D11B37C183BA71600FF0D25 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B37B183BA71600FF0D25 /* Default.png */; };
+		7D11B37E183BA71600FF0D25 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B37D183BA71600FF0D25 /* Default@2x.png */; };
+		7D11B380183BA71600FF0D25 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B37F183BA71600FF0D25 /* Default-568h@2x.png */; };
+		7D11B383183BA71600FF0D25 /* VDLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D11B382183BA71600FF0D25 /* VDLViewController.m */; };
+		7D11B386183BA71600FF0D25 /* VDLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D11B384183BA71600FF0D25 /* VDLViewController.xib */; };
+		7D41279E2BA749A40027D5E4 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D41279D2BA749A40027D5E4 /* VLCKit.framework */; };
+		7D4127A12BA74AE10027D5E4 /* VDLSceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4127A02BA74AE10027D5E4 /* VDLSceneDelegate.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7D11B366183BA71600FF0D25 /* SimplePlayback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplePlayback.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D11B369183BA71600FF0D25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		7D11B36B183BA71600FF0D25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7D11B371183BA71600FF0D25 /* SimplePlayback-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimplePlayback-Info.plist"; sourceTree = "<group>"; };
+		7D11B373183BA71600FF0D25 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7D11B375183BA71600FF0D25 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7D11B377183BA71600FF0D25 /* SimplePlayback-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimplePlayback-Prefix.pch"; sourceTree = "<group>"; };
+		7D11B378183BA71600FF0D25 /* VDLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDLAppDelegate.h; sourceTree = "<group>"; };
+		7D11B379183BA71600FF0D25 /* VDLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDLAppDelegate.m; sourceTree = "<group>"; };
+		7D11B37B183BA71600FF0D25 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		7D11B37D183BA71600FF0D25 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		7D11B37F183BA71600FF0D25 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		7D11B381183BA71600FF0D25 /* VDLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDLViewController.h; sourceTree = "<group>"; };
+		7D11B382183BA71600FF0D25 /* VDLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDLViewController.m; sourceTree = "<group>"; };
+		7D11B385183BA71600FF0D25 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VDLViewController.xib; sourceTree = "<group>"; };
+		7D41279D2BA749A40027D5E4 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D41279F2BA74AE10027D5E4 /* VDLSceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VDLSceneDelegate.h; sourceTree = "<group>"; };
+		7D4127A02BA74AE10027D5E4 /* VDLSceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VDLSceneDelegate.m; sourceTree = "<group>"; };
+		7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MobileVLCKit.xcframework; path = ../../../build/MobileVLCKit.xcframework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7D11B363183BA71600FF0D25 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D41279E2BA749A40027D5E4 /* VLCKit.framework in Frameworks */,
+				7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */,
+				7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7D11B35D183BA71600FF0D25 = {
+			isa = PBXGroup;
+			children = (
+				7D11B36F183BA71600FF0D25 /* SimplePlayback */,
+				7D11B368183BA71600FF0D25 /* Frameworks */,
+				7D11B367183BA71600FF0D25 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7D11B367183BA71600FF0D25 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7D11B366183BA71600FF0D25 /* SimplePlayback.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7D11B368183BA71600FF0D25 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7D41279D2BA749A40027D5E4 /* VLCKit.framework */,
+				7D11B369183BA71600FF0D25 /* UIKit.framework */,
+				7D11B36B183BA71600FF0D25 /* Foundation.framework */,
+				7DB6E0DC285A150F004EAF04 /* MobileVLCKit.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7D11B36F183BA71600FF0D25 /* SimplePlayback */ = {
+			isa = PBXGroup;
+			children = (
+				7D11B378183BA71600FF0D25 /* VDLAppDelegate.h */,
+				7D11B379183BA71600FF0D25 /* VDLAppDelegate.m */,
+				7D41279F2BA74AE10027D5E4 /* VDLSceneDelegate.h */,
+				7D4127A02BA74AE10027D5E4 /* VDLSceneDelegate.m */,
+				7D11B381183BA71600FF0D25 /* VDLViewController.h */,
+				7D11B382183BA71600FF0D25 /* VDLViewController.m */,
+				7D11B384183BA71600FF0D25 /* VDLViewController.xib */,
+				7D11B370183BA71600FF0D25 /* Supporting Files */,
+			);
+			path = SimplePlayback;
+			sourceTree = "<group>";
+		};
+		7D11B370183BA71600FF0D25 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7D11B371183BA71600FF0D25 /* SimplePlayback-Info.plist */,
+				7D11B372183BA71600FF0D25 /* InfoPlist.strings */,
+				7D11B375183BA71600FF0D25 /* main.m */,
+				7D11B377183BA71600FF0D25 /* SimplePlayback-Prefix.pch */,
+				7D11B37B183BA71600FF0D25 /* Default.png */,
+				7D11B37D183BA71600FF0D25 /* Default@2x.png */,
+				7D11B37F183BA71600FF0D25 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7D11B365183BA71600FF0D25 /* SimplePlayback */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D11B389183BA71600FF0D25 /* Build configuration list for PBXNativeTarget "SimplePlayback" */;
+			buildPhases = (
+				7D11B362183BA71600FF0D25 /* Sources */,
+				7D11B363183BA71600FF0D25 /* Frameworks */,
+				7D11B364183BA71600FF0D25 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimplePlayback;
+			productName = SimplePlayback;
+			productReference = 7D11B366183BA71600FF0D25 /* SimplePlayback.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7D11B35E183BA71600FF0D25 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = VDL;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = VideoLAN;
+				TargetAttributes = {
+					7D11B365183BA71600FF0D25 = {
+						DevelopmentTeam = 75GAHG3SZQ;
+					};
+				};
+			};
+			buildConfigurationList = 7D11B361183BA71600FF0D25 /* Build configuration list for PBXProject "SimplePlayback" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+			);
+			mainGroup = 7D11B35D183BA71600FF0D25;
+			productRefGroup = 7D11B367183BA71600FF0D25 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7D11B365183BA71600FF0D25 /* SimplePlayback */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7D11B364183BA71600FF0D25 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D11B374183BA71600FF0D25 /* InfoPlist.strings in Resources */,
+				7D11B37C183BA71600FF0D25 /* Default.png in Resources */,
+				7D11B37E183BA71600FF0D25 /* Default@2x.png in Resources */,
+				7D11B380183BA71600FF0D25 /* Default-568h@2x.png in Resources */,
+				7D11B386183BA71600FF0D25 /* VDLViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7D11B362183BA71600FF0D25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D4127A12BA74AE10027D5E4 /* VDLSceneDelegate.m in Sources */,
+				7D11B376183BA71600FF0D25 /* main.m in Sources */,
+				7D11B37A183BA71600FF0D25 /* VDLAppDelegate.m in Sources */,
+				7D11B383183BA71600FF0D25 /* VDLViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		7D11B372183BA71600FF0D25 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D11B373183BA71600FF0D25 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7D11B384183BA71600FF0D25 /* VDLViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7D11B385183BA71600FF0D25 /* en */,
+			);
+			name = VDLViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7D11B387183BA71600FF0D25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7D11B388183BA71600FF0D25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7D11B38A183BA71600FF0D25 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 75GAHG3SZQ;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimplePlayback/SimplePlayback-Prefix.pch";
+				INFOPLIST_FILE = "SimplePlayback/SimplePlayback-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.videolan.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7D11B38B183BA71600FF0D25 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = 75GAHG3SZQ;
+				ENABLE_BITCODE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimplePlayback/SimplePlayback-Prefix.pch";
+				INFOPLIST_FILE = "SimplePlayback/SimplePlayback-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.videolan.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				TARGETED_DEVICE_FAMILY = "1,7";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7D11B361183BA71600FF0D25 /* Build configuration list for PBXProject "SimplePlayback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D11B387183BA71600FF0D25 /* Debug */,
+				7D11B388183BA71600FF0D25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D11B389183BA71600FF0D25 /* Build configuration list for PBXNativeTarget "SimplePlayback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D11B38A183BA71600FF0D25 /* Debug */,
+				7D11B38B183BA71600FF0D25 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7D11B35E183BA71600FF0D25 /* Project object */;
+}
