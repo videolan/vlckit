@@ -36,9 +36,6 @@
 #import <VLCKit/VLCMediaMetaData.h>
 #import <VLCKit/VLCDialogProvider.h>
 #import <VLCKit/VLCTime.h>
-#import <VLCKit/VLCTranscoder.h>
-#import <VLCKit/VLCRendererDiscoverer.h>
-#import <VLCKit/VLCRendererItem.h>
 #import <VLCKit/VLCFilter.h>
 #import <VLCKit/VLCAdjustFilter.h>
 #import <VLCKit/VLCLogging.h>
@@ -50,11 +47,17 @@
 
 #if TARGET_OS_IPHONE
 #import <VLCKit/VLCDialogProvider.h>
-#else
+#endif
+#if TARGET_OS_OSX
+#import <VLCKit/VLCTranscoder.h>
 #import <VLCKit/VLCStreamOutput.h>
 #import <VLCKit/VLCStreamSession.h>
 #import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCVideoView.h>
+#endif
+#if TARGET_OS_IOS
+#import <VLCKit/VLCRendererDiscoverer.h>
+#import <VLCKit/VLCRendererItem.h>
 #endif
 
 @class VLCMedia;
