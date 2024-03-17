@@ -145,11 +145,11 @@ getVLCHashes()
 renamePackage()
 {
     if [ "$1" = "-m" ]; then
-        TARGET="MobileVLCKit"
+        TARGET="VLCKit-iOS"
     elif [ "$1" = "-t" ]; then
-        TARGET="TVVLCKit"
+        TARGET="VLCKit-tvOS"
     elif [ "$1" = "-x" ]; then
-        TARGET="VLCKit"
+        TARGET="VLCKit-macOS"
     fi
     getVLCHashes
 

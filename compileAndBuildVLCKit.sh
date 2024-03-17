@@ -155,7 +155,7 @@ buildxcodeproj()
                -sdk $PLATFORM$SDK \
                -configuration ${CONFIGURATION} \
                -scheme "$target" \
-               -archivePath build/"$target"-$PLATFORM$SDK.xcarchive \
+               -archivePath build/VLCKit-$PLATFORM$SDK.xcarchive \
                ARCHS="${architectures}" \
                IPHONEOS_DEPLOYMENT_TARGET=${SDK_MIN} \
                ${bitcodeflag} \
@@ -524,16 +524,16 @@ info "all done"
 
 if [ "$BUILD_FRAMEWORK" != "no" ]; then
 if [ "$TVOS" = "yes" ]; then
-    info "Building TVVLCKit.xcframework"
+    info "Building VLCKit.xcframework for tvOS"
 
     frameworks=""
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="appletvos"
-        buildxcodeproj VLCKit "TVVLCKit" ${platform}
-        dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
-        bcsymbolmapfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/BCSymbolMaps
-        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder"
+        buildxcodeproj VLCKit "VLCKit (tvOS)" ${platform}
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        bcsymbolmapfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/BCSymbolMaps
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
         if [ -d ${bcsymbolmapfolder} ];then
             info "Bitcode support found"
             spushd $bcsymbolmapfolder
@@ -546,30 +546,31 @@ if [ "$TVOS" = "yes" ]; then
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="appletvsimulator"
-        buildxcodeproj VLCKit "TVVLCKit" ${platform}
-        dsymfolder=$PROJECT_DIR/build/TVVLCKit-${platform}.xcarchive/dSYMs/TVVLCKit.framework.dSYM
-        frameworks="$frameworks -framework TVVLCKit-${platform}.xcarchive/Products/Library/Frameworks/TVVLCKit.framework -debug-symbols $dsymfolder"
+        buildxcodeproj VLCKit "VLCKit (tvOS)" ${platform}
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
     fi
 
     # Assumes both platforms were built currently
     spushd build
-    rm -rf TVVLCKit.xcframework
-    xcodebuild -create-xcframework $frameworks -output TVVLCKit.xcframework
+    rm -rf tvOS
+    mkdir tvOS
+    xcodebuild -create-xcframework $frameworks -output tvOS/VLCKit.xcframework
     spopd # build
 
-    info "Build of TVVLCKit.xcframework completed"
+    info "Build of VLCKit.xcframework for tvOS completed"
 fi
 if [ "$IOS" = "yes" ]; then
-    info "Building MobileVLCKit.xcframework"
+    info "Building VLCKit.xcframework for iOS"
 
     frameworks=""
     platform=""
     if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
         platform="iphoneos"
-        buildxcodeproj VLCKit "MobileVLCKit" ${platform}
-        dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
-        bcsymbolmapfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/BCSymbolMaps
-        frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
+        buildxcodeproj VLCKit "VLCKit (iOS)" ${platform}
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        bcsymbolmapfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/BCSymbolMaps
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
         if [ -d ${bcsymbolmapfolder} ];then
             info "Bitcode support found"
             spushd $bcsymbolmapfolder
@@ -582,32 +583,34 @@ if [ "$IOS" = "yes" ]; then
     fi
     if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
         platform="iphonesimulator"
-        buildxcodeproj VLCKit "MobileVLCKit" ${platform}
-        dsymfolder=$PROJECT_DIR/build/MobileVLCKit-${platform}.xcarchive/dSYMs/MobileVLCKit.framework.dSYM
-        frameworks="$frameworks -framework MobileVLCKit-${platform}.xcarchive/Products/Library/Frameworks/MobileVLCKit.framework -debug-symbols $dsymfolder"
+        buildxcodeproj VLCKit "VLCKit (iOS)" ${platform}
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
     fi
 
     # Assumes both platforms were built currently
     spushd build
-    rm -rf MobileVLCKit.xcframework
-    xcodebuild -create-xcframework $frameworks -output MobileVLCKit.xcframework
+    rm -rf iOS
+    mkdir iOS
+    xcodebuild -create-xcframework $frameworks -output iOS/VLCKit.xcframework
     spopd # build
 
-    info "Build of MobileVLCKit.xcframework completed"
+    info "Build of VLCKit.xcframework for iOS completed"
 fi
 fi
 if [ "$BUILD_FRAMEWORK" != "no" ]; then
 if [ "$MACOS" = "yes" ]; then
     CURRENT_DIR=`pwd`
-    info "Building VLCKit.xcframework in ${CURRENT_DIR}"
+    info "Building VLCKit.xcframework for macOS in ${CURRENT_DIR}"
 
-    buildxcodeproj VLCKit "VLCKit" "macosx"
+    buildxcodeproj VLCKit "VLCKit (macOS)" "macosx"
 
     spushd build
-    rm -rf VLCKit.xcframework
-    xcodebuild -create-xcframework -framework VLCKit-macosx.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $PROJECT_DIR/build/VLCKit-macosx.xcarchive/dSYMs/VLCKit.framework.dSYM -output VLCKit.xcframework
+    rm -rf macOS
+    mkdir macOS
+    xcodebuild -create-xcframework -framework VLCKit-macosx.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $PROJECT_DIR/build/VLCKit-macosx.xcarchive/dSYMs/VLCKit.framework.dSYM -output macOS/VLCKit.xcframework
     spopd # build
 
-    info "Build of VLCKit.xcframework completed"
+    info "Build of VLCKit.xcframework for macOS completed"
 fi
 fi

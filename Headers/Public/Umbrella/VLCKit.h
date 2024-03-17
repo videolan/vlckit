@@ -1,8 +1,8 @@
 /*****************************************************************************
  * VLCKit.h: VLCKit.framework main header
  *****************************************************************************
- * Copyright (C) 2007 Pierre d'Herbemont
- * Copyright (C) 2007, 2013-2022 VLC authors and VideoLAN
+ * Copyright (C) 2007-2010 Pierre d'Herbemont
+ * Copyright (C) 2007, 2013-2024 VLC authors and VideoLAN
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
  *          Felix Paul Kühne <fkuehne # videolan.org
@@ -22,6 +22,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston MA 02110-1301, USA.
  *****************************************************************************/
 
+#include <TargetConditionals.h>
+
 #import <VLCKit/VLCAudio.h>
 #import <VLCKit/VLCLibrary.h>
 #import <VLCKit/VLCMedia.h>
@@ -33,12 +35,8 @@
 #import <VLCKit/VLCMediaThumbnailer.h>
 #import <VLCKit/VLCMediaMetaData.h>
 #import <VLCKit/VLCDialogProvider.h>
-#import <VLCKit/VLCStreamSession.h>
-#import <VLCKit/VLCStreamOutput.h>
 #import <VLCKit/VLCTime.h>
 #import <VLCKit/VLCTranscoder.h>
-#import <VLCKit/VLCVideoView.h>
-#import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCRendererDiscoverer.h>
 #import <VLCKit/VLCRendererItem.h>
 #import <VLCKit/VLCFilter.h>
@@ -50,10 +48,18 @@
 #import <VLCKit/VLCEventsConfiguration.h>
 #import <VLCKit/VLCMediaPlayerTitleDescription.h>
 
+#if TARGET_OS_IPHONE
+#import <VLCKit/VLCDialogProvider.h>
+#else
+#import <VLCKit/VLCStreamOutput.h>
+#import <VLCKit/VLCStreamSession.h>
+#import <VLCKit/VLCVideoLayer.h>
+#import <VLCKit/VLCVideoView.h>
+#endif
+
 @class VLCMedia;
 @class VLCMediaList;
 @class VLCTime;
-@class VLCVideoView;
 @class VLCAudio;
 @class VLCMediaThumbnailer;
 @class VLCMediaListPlayer;
@@ -73,3 +79,16 @@
 @class VLCLogMessageFormatter;
 @class VLCMediaPlayerChapterDescription;
 @class VLCMediaPlayerTitleDescription;
+
+#if TARGET_OS_IPHONE
+@class VLCAudio;
+@class VLCDialogProvider;
+@class VLCMediaListPlayer;
+@class VLCMediaPlayer;
+@class VLCMediaThumbnailer;
+@class VLCRendererDiscoverer;
+@class VLCRendererDiscovererDescription;
+@class VLCRendererItem;
+#else
+@class VLCVideoView;
+#endif
