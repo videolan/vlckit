@@ -1,0 +1,28 @@
+From 32717e660c78c4fa0971dbd1b7fcd2af15cdcee1 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Sun, 17 Mar 2024 14:35:16 +0100
+Subject: [PATCH 18/18] videotoolbox: fix compilation for xrOS
+
+---
+ modules/codec/videotoolbox/decoder.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/modules/codec/videotoolbox/decoder.c b/modules/codec/videotoolbox/decoder.c
+index 2e5316853b..04181fd7f0 100644
+--- a/modules/codec/videotoolbox/decoder.c
++++ b/modules/codec/videotoolbox/decoder.c
+@@ -1178,9 +1178,11 @@ static int StartVideoToolbox(decoder_t *p_dec)
+                          kCVPixelBufferIOSurfaceOpenGLTextureCompatibilityKey,
+                          kCFBooleanTrue);
+ #else
++#ifndef TARGET_OS_VISION
+     CFDictionarySetValue(destinationPixelBufferAttributes,
+                          kCVPixelBufferOpenGLESCompatibilityKey,
+                          kCFBooleanTrue);
++#endif
+ #endif
+ 
+     cfdict_set_int32(destinationPixelBufferAttributes,
+-- 
+2.39.3 (Apple Git-145)
+

@@ -1,7 +1,7 @@
-From 4d4b0b358f452b724bbcf736993cd5c19f7ffdfc Mon Sep 17 00:00:00 2001
+From 917732bb182cdf1927c2e09975aedab90ffeca1b Mon Sep 17 00:00:00 2001
 From: Maxime Chapelet <umxprime@videolabs.io>
 Date: Wed, 24 Aug 2022 10:39:30 +0200
-Subject: [PATCH 12/14] http : initialize token properly
+Subject: [PATCH 12/18] http : initialize token properly
 
 unititialization caused bad access exceptions when resource was deinit or when its authentication bearer header creation was wrongly attempted
 ---
@@ -21,5 +21,5 @@ index 85a0186fc8..d15b1decc4 100644
      const char *path = url.psz_path;
      if (path == NULL)
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-145)
 

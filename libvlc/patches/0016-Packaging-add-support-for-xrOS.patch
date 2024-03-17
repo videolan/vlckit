@@ -1,0 +1,180 @@
+From deeaf05c23f85d213c5f6a6836b445e467fdc908 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Sun, 17 Mar 2024 11:41:51 +0100
+Subject: [PATCH 16/18] Packaging: add support for xrOS
+
+---
+ extras/package/apple/build.conf | 40 +++++++++++++++++++++++++++++----
+ extras/package/apple/build.sh   | 25 ++++++++++++++++++++-
+ 2 files changed, 60 insertions(+), 5 deletions(-)
+
+diff --git a/extras/package/apple/build.conf b/extras/package/apple/build.conf
+index 2f73ddbdc6..11c11600ec 100644
+--- a/extras/package/apple/build.conf
++++ b/extras/package/apple/build.conf
+@@ -16,6 +16,8 @@ export VLC_DEPLOYMENT_TARGET_MACOSX="10.11"
+ export VLC_DEPLOYMENT_TARGET_IOS="9.0"
+ # tvOS deployment target
+ export VLC_DEPLOYMENT_TARGET_TVOS="11.0"
++# xrOS deployment target
++export VLC_DEPLOYMENT_TARGET_XROS="1.0"
+ 
+ #
+ # Contrib options
+@@ -49,10 +51,8 @@ export VLC_CONTRIB_OPTIONS_BASE=(
+     --disable-libmpeg2
+     --disable-chromaprint
+     --disable-mad
+-    --enable-fribidi
+     --enable-libxml2
+     --enable-freetype2
+-    --enable-ass
+     --disable-fontconfig
+     --disable-gpg-error
+     --disable-vncclient
+@@ -62,8 +62,6 @@ export VLC_CONTRIB_OPTIONS_BASE=(
+     --disable-aribb24
+     --disable-aribb25
+     --enable-vpx
+-    --enable-libdsm
+-    --enable-libplacebo
+     --disable-sparkle
+     --disable-growl
+     --disable-breakpad
+@@ -81,17 +79,45 @@ export VLC_CONTRIB_OPTIONS_MACOSX=(
+     --disable-twolame
+     --disable-microdns
+     --disable-cddb
++    --enable-fribidi
++    --enable-libdsm
++    --enable-libplacebo
++    --enable-ass
+ )
+ 
+ # Additional contrib bootstrap options for iOS
+ export VLC_CONTRIB_OPTIONS_IOS=(
+     --disable-aom
++    --enable-fribidi
++    --enable-libdsm
++    --enable-libplacebo
++    --enable-ass
+ )
+ 
+ # Additional contrib bootstrap options for tvOS
+ export VLC_CONTRIB_OPTIONS_TVOS=(
+     --disable-libarchive
+     --disable-aom
++    --enable-fribidi
++    --enable-libdsm
++    --enable-libplacebo
++    --enable-ass
++)
++
++# Additional contrib bootstrap options for iOS
++export VLC_CONTRIB_OPTIONS_XROS=(
++    --disable-aom
++    --disable-basu
++    --disable-dav1d
++    --disable-fribidi
++    --disable-glib
++    --disable-harfbuzz
++    --disable-libdsm
++    --disable-libplacebo
++    --disable-librist
++    --disable-microdns
++    --disable-opus
++    --disable-ass
+ )
+ 
+ #
+@@ -142,6 +168,9 @@ export VLC_CONFIG_OPTIONS_IOS=()
+ # Additional configure options for tvOS
+ export VLC_CONFIG_OPTIONS_TVOS=()
+ 
++# Additional configure options for xrOS
++export VLC_CONFIG_OPTIONS_XROS=()
++
+ #
+ # VLC module options
+ #
+@@ -218,3 +247,6 @@ export VLC_MODULE_REMOVAL_LIST_IOS=()
+ 
+ # Additional modules to remove for tvOS
+ export VLC_MODULE_REMOVAL_LIST_TVOS=()
++
++# Additional modules to remove for xrOS
++export VLC_MODULE_REMOVAL_LIST_XROS=()
+diff --git a/extras/package/apple/build.sh b/extras/package/apple/build.sh
+index 7c72316766..9bdd85e43b 100755
+--- a/extras/package/apple/build.sh
++++ b/extras/package/apple/build.sh
+@@ -198,7 +198,11 @@ set_deployment_target()
+         VLC_DEPLOYMENT_TARGET_CFLAG="${VLC_DEPLOYMENT_TARGET_CFLAG}-simulator"
+     fi
+     VLC_DEPLOYMENT_TARGET_LDFLAG="-Wl,-platform_version,${VLC_DEPLOYMENT_TARGET_LDFLAG},${VLC_DEPLOYMENT_TARGET},${VLC_APPLE_SDK_VERSION}"
+-    VLC_DEPLOYMENT_TARGET_CFLAG="${VLC_DEPLOYMENT_TARGET_CFLAG}-version-min=${VLC_DEPLOYMENT_TARGET}"
++    if [ "$VLC_HOST_OS" != "xros" ]; then
++        VLC_DEPLOYMENT_TARGET_CFLAG="${VLC_DEPLOYMENT_TARGET_CFLAG}-version-min=${VLC_DEPLOYMENT_TARGET}"
++    else
++	    VLC_DEPLOYMENT_TARGET_CFLAG=""
++    fi
+ }
+ 
+ # Validates the architecture and sets VLC_HOST_ARCH
+@@ -307,6 +311,17 @@ validate_sdk_name()
+             VLC_HOST_OS="macosx"
+             set_deployment_target "$VLC_DEPLOYMENT_TARGET_MACOSX"
+             ;;
++        xros*)
++            VLC_HOST_PLATFORM="xrOS"
++            VLC_HOST_OS="xros"
++            set_deployment_target "$VLC_DEPLOYMENT_TARGET_XROS"
++            ;;
++        xrsimulator*)
++            VLC_HOST_PLATFORM="xr-Simulator"
++            VLC_HOST_PLATFORM_SIMULATOR="yes"
++            VLC_HOST_OS="xros"
++            set_deployment_target "$VLC_DEPLOYMENT_TARGET_XROS"
++            ;;
+         watch*)
+             abort_err "Building for watchOS is not supported by this script"
+             ;;
+@@ -572,6 +587,8 @@ if [ "$VLC_HOST_OS" = "ios" ]; then
+ elif [ "$VLC_HOST_OS" = "tvos" ]; then
+     export BUILDFORIOS="yes"
+     export BUILDFORTVOS="yes"
++elif [ "$VLC_HOST_OS" = "xros" ]; then
++    export BUILDFORIOS="yes"
+ fi
+ 
+ # Default to "make" if there is no MAKE env variable
+@@ -606,6 +623,8 @@ elif [ "$VLC_HOST_OS" = "ios" ]; then
+     VLC_CONTRIB_OPTIONS+=( "${VLC_CONTRIB_OPTIONS_IOS[@]}" )
+ elif [ "$VLC_HOST_OS" = "tvos" ]; then
+     VLC_CONTRIB_OPTIONS+=( "${VLC_CONTRIB_OPTIONS_TVOS[@]}" )
++elif [ "$VLC_HOST_OS" = "xros" ]; then
++    VLC_CONTRIB_OPTIONS+=( "${VLC_CONTRIB_OPTIONS_XROS[@]}" )
+ fi
+ 
+ # Create dir to build contribs in
+@@ -683,6 +702,8 @@ elif [ "$VLC_HOST_OS" = "ios" ]; then
+     VLC_CONFIG_OPTIONS+=( "${VLC_CONFIG_OPTIONS_IOS[@]}" )
+ elif [ "$VLC_HOST_OS" = "tvos" ]; then
+     VLC_CONFIG_OPTIONS+=( "${VLC_CONFIG_OPTIONS_TVOS[@]}" )
++elif [ "$VLC_HOST_OS" = "xros" ]; then
++    VLC_CONFIG_OPTIONS+=( "${VLC_CONFIG_OPTIONS_XROS[@]}" )
+ fi
+ 
+ if [ "$VLC_DISABLE_DEBUG" -gt "0" ]; then
+@@ -748,6 +769,8 @@ elif [ "$VLC_HOST_OS" = "ios" ]; then
+     VLC_MODULE_REMOVAL_LIST+=( "${VLC_MODULE_REMOVAL_LIST_IOS[@]}" )
+ elif [ "$VLC_HOST_OS" = "tvos" ]; then
+     VLC_MODULE_REMOVAL_LIST+=( "${VLC_MODULE_REMOVAL_LIST_TVOS[@]}" )
++elif [ "$VLC_HOST_OS" = "xros" ]; then
++    VLC_MODULE_REMOVAL_LIST+=( "${VLC_MODULE_REMOVAL_LIST_XROS[@]}" )
+ fi
+ 
+ for module in "${VLC_MODULE_REMOVAL_LIST[@]}"; do
+-- 
+2.39.3 (Apple Git-145)
+
