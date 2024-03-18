@@ -57,6 +57,8 @@
 		7DA7745E2A838BFB006E3273 /* VLCEventsConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DA7745D2A838BFB006E3273 /* VLCEventsConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DB683D71C996187000C70BE /* VLCHelperCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB683D31C996187000C70BE /* VLCHelperCode.m */; };
 		7DB683DA1C9961BA000C70BE /* VLCHelperCode.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DB683D91C9961BA000C70BE /* VLCHelperCode.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		7DB9CEE52BA8B5730086981B /* libvlc_video.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DB9CEE42BA8B5730086981B /* libvlc_video.h */; };
+		7DB9CEE62BA8B57C0086981B /* libvlc_video.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7DB9CEE42BA8B5730086981B /* libvlc_video.h */; };
 		7DDC020B1B501ECF0078FC84 /* VLCLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD411DE8FAB00F66AF3 /* VLCLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC020C1B501ECF0078FC84 /* VLCMedia.h in Headers */ = {isa = PBXBuildFile; fileRef = 7A5ECAD511DE8FAB00F66AF3 /* VLCMedia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DDC020D1B501ECF0078FC84 /* VLCMediaThumbnailer.h in Headers */ = {isa = PBXBuildFile; fileRef = 636E979011EBC96D002FE8A9 /* VLCMediaThumbnailer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -194,6 +196,7 @@
 				7D9A03D12BA8498300EFFA4A /* libvlc_version.h in CopyFiles */,
 				7DEBDB0D203C5727000A7D2F /* libvlc_renderer_discoverer.h in CopyFiles */,
 				7DEBDB0F203C5727000A7D2F /* libvlc.h in CopyFiles */,
+				7DB9CEE62BA8B57C0086981B /* libvlc_video.h in CopyFiles */,
 				7DEBDB10203C5727000A7D2F /* vlc.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +319,7 @@
 		7DB17981285C655B006201DB /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/usr/lib/libiconv.tbd; sourceTree = DEVELOPER_DIR; };
 		7DB683D31C996187000C70BE /* VLCHelperCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCHelperCode.m; sourceTree = "<group>"; };
 		7DB683D91C9961BA000C70BE /* VLCHelperCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCHelperCode.h; sourceTree = "<group>"; };
+		7DB9CEE42BA8B5730086981B /* libvlc_video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvlc_video.h; path = libvlc/vlc/include/vlc/libvlc_video.h; sourceTree = "<group>"; };
 		7DE26F142BA72B70000CC89C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		7DE26F162BA72B93000CC89C /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.2.sdk/System/Library/Frameworks/OpenGL.framework; sourceTree = DEVELOPER_DIR; };
 		7DE26F1D2BA72CBA000CC89C /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS17.2.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
@@ -862,6 +866,7 @@
 				7DEBDAE4203C56D5000A7D2F /* libvlc_renderer_discoverer.h */,
 				7DEBDAE6203C56D5000A7D2F /* libvlc.h */,
 				7D6263122BA5D61D00FAE5E1 /* libvlc_version.h */,
+				7DB9CEE42BA8B5730086981B /* libvlc_video.h */,
 				7DEBDAE7203C56D5000A7D2F /* vlc.h */,
 			);
 			name = libvlc;
@@ -1005,6 +1010,7 @@
 				7DE26F342BA72D98000CC89C /* vlc-plugins-iphone-device-arm64.h in Headers */,
 				7DA7745E2A838BFB006E3273 /* VLCEventsConfiguration.h in Headers */,
 				7DE26F372BA72D98000CC89C /* vlc-plugins-macosx-device-arm64.h in Headers */,
+				7DB9CEE52BA8B5730086981B /* libvlc_video.h in Headers */,
 				6C21838128509122000C4AC9 /* VLCFileLogger.h in Headers */,
 				7DDC02151B501ED70078FC84 /* VLCLibVLCBridging.h in Headers */,
 				ED25609521F3A3F800396F9B /* VLCRendererDiscoverer.h in Headers */,
