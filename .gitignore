@@ -21,3 +21,4 @@ MobileVLCKit/ImportedSources
 /libvlc/vlc
 Tests/Assets
 Headers/Internal/vlc-plugins-*
+VLCKit-*
