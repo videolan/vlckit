@@ -52,6 +52,7 @@
 		7D8939721B500F38008F2B14 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938EA1B50098C008F2B14 /* CFNetwork.framework */; };
 		7D8939731B500F38008F2B14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D8938E81B500984008F2B14 /* QuartzCore.framework */; };
 		7D8939741B500F38008F2B14 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		7D9A03D12BA8498300EFFA4A /* libvlc_version.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D6263122BA5D61D00FAE5E1 /* libvlc_version.h */; };
 		7DA7745A2A838BEB006E3273 /* VLCEventsConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA774592A838BEB006E3273 /* VLCEventsConfiguration.m */; };
 		7DA7745E2A838BFB006E3273 /* VLCEventsConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DA7745D2A838BFB006E3273 /* VLCEventsConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7DB683D71C996187000C70BE /* VLCHelperCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB683D31C996187000C70BE /* VLCHelperCode.m */; };
@@ -190,6 +191,7 @@
 				7DFB523128D0B2EE0020DCDE /* libvlc_media_track.h in CopyFiles */,
 				7DEBDB0C203C5727000A7D2F /* libvlc_media.h in CopyFiles */,
 				7DFB523228D0B2F10020DCDE /* libvlc_picture.h in CopyFiles */,
+				7D9A03D12BA8498300EFFA4A /* libvlc_version.h in CopyFiles */,
 				7DEBDB0D203C5727000A7D2F /* libvlc_renderer_discoverer.h in CopyFiles */,
 				7DEBDB0F203C5727000A7D2F /* libvlc.h in CopyFiles */,
 				7DEBDB10203C5727000A7D2F /* vlc.h in CopyFiles */,
