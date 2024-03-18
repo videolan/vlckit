@@ -1,4 +1,4 @@
-From 1a4f69015bf5b39a2bbf64650f34d68951bbf5c8 Mon Sep 17 00:00:00 2001
+From b697d1255a1ef9083dda5a4e4f3ab69d67039f15 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
 Subject: [PATCH 08/18] http: add vlc_http_cookies_clear

@@ -1,4 +1,4 @@
-From 6b4b0f2aac1162c70729739edd56ad9f68cf7a8d Mon Sep 17 00:00:00 2001
+From 4f9ca3d161771d4f1c1bd77a15ea41bcf7ce329d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Mar 2024 14:34:53 +0100
 Subject: [PATCH 17/18] build system: add support for xrOS
