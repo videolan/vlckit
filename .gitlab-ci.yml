@@ -95,7 +95,7 @@ dev-artifacts-VLCKit-main:
         - .dev-artifacts-build-base-main
     variables:
         BUILD_PARAM: "vx"
-        PACKAGING_PARAM: "v"
+        PACKAGING_PARAM: "vx"
         JOB_NAME: "VLCKit"
 
 ####################
