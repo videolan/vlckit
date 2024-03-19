@@ -1,7 +1,7 @@
-From 70ddc933c68ad0a69608f0efca87c3caf3321760 Mon Sep 17 00:00:00 2001
+From e810d37d8f25838af1b25cb52970c1d4745e6860 Mon Sep 17 00:00:00 2001
 From: Benjamin King <king7532@mac.com>
 Date: Sat, 7 Oct 2023 17:34:41 -0500
-Subject: [PATCH 18/18] codec/videotoolbox: Add support for visionOS
+Subject: [PATCH 18/19] codec/videotoolbox: Add support for visionOS
 
 ---
  modules/codec/videotoolbox/decoder.c | 10 +++++++---
@@ -31,5 +31,5 @@ index 2e5316853b..2110b6296c 100644
                           kCVPixelBufferOpenGLESCompatibilityKey,
                           kCFBooleanTrue);
 -- 
-2.39.3 (Apple Git-146)
+2.32.1 (Apple Git-133)
 
