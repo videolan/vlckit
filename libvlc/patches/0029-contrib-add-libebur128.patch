@@ -1,4 +1,4 @@
-From 38bbc4f95ba89be0868da3fa8e1a3d1d8936a26b Mon Sep 17 00:00:00 2001
+From 6e0f0e4a639ba33a2cc15a07b8fe1357ec1810b6 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 12 Aug 2020 14:43:56 +0200
 Subject: [PATCH 29/49] contrib: add libebur128
@@ -49,5 +49,5 @@ index 0000000000..3ac03e8ce6
 +	cd $< && $(MAKE) install
 +	touch $@
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

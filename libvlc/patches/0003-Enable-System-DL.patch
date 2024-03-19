@@ -1,4 +1,4 @@
-From 5803d40ab02b3a86de6b6cd0b3521f717d226979 Mon Sep 17 00:00:00 2001
+From 5b248c2df92064091421f6ec21b0cae22ec49f60 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 03/49] Enable System DL
@@ -58,5 +58,5 @@ index d0b72a5e4e..710c29369e 100644
  
  .ffmpeg: ffmpeg
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

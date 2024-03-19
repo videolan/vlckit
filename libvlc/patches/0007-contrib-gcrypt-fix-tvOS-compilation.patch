@@ -1,4 +1,4 @@
-From 2cda45f3eb9f2a3627b447b4c920039d6210a6c4 Mon Sep 17 00:00:00 2001
+From 7c093b76f010309de9d31d0bdb13f39e60d0e099 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Sat, 3 Oct 2015 22:45:14 +0200
 Subject: [PATCH 07/49] contrib/gcrypt: fix tvOS compilation
@@ -56,5 +56,5 @@ index b90816f425..e7cc790295 100644
  GCRYPT_CONF += --disable-aesni-support
  ifeq ($(ARCH),aarch64)
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

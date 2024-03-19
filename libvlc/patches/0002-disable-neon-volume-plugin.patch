@@ -1,4 +1,4 @@
-From 821d08f7130a603f46d0710b5e42b7447775a5a8 Mon Sep 17 00:00:00 2001
+From 990be5d065a0c5a4b9bba6e939a8cd3f57f602c0 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
 Date: Wed, 10 Dec 2014 22:14:55 +0100
 Subject: [PATCH 02/49] disable neon volume plugin
@@ -20,5 +20,5 @@ index 0406ded7eb..48aa33332b 100644
  endif
  
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

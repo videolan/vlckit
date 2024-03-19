@@ -1,4 +1,4 @@
-From 141d124e2b819cb46b9b321bc136171441852ae1 Mon Sep 17 00:00:00 2001
+From 928e84c3b704ca9dd03aaf09ebe1d48f1ca545a3 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 27 Mar 2018 16:49:34 +0200
 Subject: [PATCH 15/49] contrib: ffmpeg: enable videotoolbox encoder
@@ -27,5 +27,5 @@ index 710c29369e..189428f29e 100644
  endif
  endif
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

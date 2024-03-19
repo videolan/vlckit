@@ -1,4 +1,4 @@
-From 8b8d47d7cb96577cb60f7ddf9e6ecf22bece3709 Mon Sep 17 00:00:00 2001
+From aaaed3ea2669530fdb3f671237c44ff44bbf0e20 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 21 Aug 2023 14:44:24 +0200
 Subject: [PATCH 47/49] lib/event: remove abort
@@ -19,5 +19,5 @@ index f027754181..8d4f1f2c53 100644
 -    abort();
  }
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

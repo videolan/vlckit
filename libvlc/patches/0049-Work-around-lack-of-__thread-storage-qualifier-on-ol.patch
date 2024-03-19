@@ -1,4 +1,4 @@
-From cfb2ab0ae88d76b778bc9a43420f67a5ce7ac7bc Mon Sep 17 00:00:00 2001
+From 42dcd5971f54d6f109cb257fa193f1d64c078813 Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
 Subject: [PATCH 49/49] Work around lack of __thread storage qualifier on old
@@ -204,5 +204,5 @@ index 6bb3480957..5c54881553 100644
 +
 +#endif
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

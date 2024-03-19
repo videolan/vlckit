@@ -1,4 +1,4 @@
-From 3a78ccabfa5fa006985390e61c04e328c4dbce49 Mon Sep 17 00:00:00 2001
+From bcc71fea18b10fd510bd20396df04bbe82538945 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 13:17:02 +0100
 Subject: [PATCH 45/49] dsm: use the cache helper
@@ -171,5 +171,5 @@ index fcf5625ca7..13e253519e 100644
  error:
      vlc_credential_clean( &credential );
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

@@ -1,4 +1,4 @@
-From b54455e32284299f24794492b68df94013ccc1da Mon Sep 17 00:00:00 2001
+From e784a0a2b2185088c8b2e059d25a5160550d7fe6 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 13 Aug 2020 15:55:24 +0200
 Subject: [PATCH 28/49] aout: add "audio-meter" filter type
@@ -101,5 +101,5 @@ index bb8e4c3c9e..ee835ed9a2 100644
      var_DelCallback (aout, "volume", var_Copy, aout->obj.parent);
      var_DelCallback (aout, "stereo-mode", StereoModeCallback, NULL);
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

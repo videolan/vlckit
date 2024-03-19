@@ -1,4 +1,4 @@
-From 5eaa1074e00e29a957fbcf791e8745b53f908c02 Mon Sep 17 00:00:00 2001
+From f446075f3ec00d5b545d370035f463601845d775 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 16 Apr 2022 00:44:03 +0200
 Subject: [PATCH 42/49] smb2: remove unneeded compat code
@@ -49,5 +49,5 @@ index b1bebf0b6b..3f4c96fddb 100644
  vlc_smb2_mainloop(struct vlc_smb2_op *op)
  {
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

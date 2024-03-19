@@ -1,4 +1,4 @@
-From 604fdbacdf8c960911ecee35c980f7f2f407095b Mon Sep 17 00:00:00 2001
+From 5b39088eb453ac24b7687f3dd19cd9ffc9102f4d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 28 Jun 2021 13:11:15 +0200
 Subject: [PATCH 36/49] http/cookie: fix double-free
@@ -20,5 +20,5 @@ index b80cf4645b..31f340447e 100644
  
      libvlc_instance_t *instance = p_mi->p_libvlc_instance;
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 

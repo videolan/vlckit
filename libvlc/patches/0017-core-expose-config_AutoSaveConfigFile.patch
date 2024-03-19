@@ -1,4 +1,4 @@
-From 4209da4564c9063880c0513259befd9d3277fcae Mon Sep 17 00:00:00 2001
+From 18abf6589a65983f68383ba92abc00f6bf4234b4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
 Subject: [PATCH 17/49] core: expose config_AutoSaveConfigFile
@@ -60,5 +60,5 @@ index 8454600451..d2960bef6f 100644
  config_ChainDestroy
  config_ChainDuplicate
 -- 
-2.39.3 (Apple Git-145)
+2.32.1 (Apple Git-133)
 
