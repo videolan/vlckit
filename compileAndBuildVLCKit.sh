@@ -563,7 +563,7 @@ fi
 info "all done"
 
 if [ "$BUILD_FRAMEWORK" = "no" ]; then
-	return 0
+	exit 0
 fi
 if [ "$TVOS" = "yes" ]; then
     info "Building VLCKit.xcframework for tvOS"
