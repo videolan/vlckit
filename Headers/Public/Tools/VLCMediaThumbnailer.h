@@ -21,9 +21,7 @@
  *****************************************************************************/
 
 #import <Foundation/Foundation.h>
-#if TARGET_OS_IPHONE
-# import <CoreGraphics/CoreGraphics.h>
-#endif
+#import <CoreGraphics/CoreGraphics.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
