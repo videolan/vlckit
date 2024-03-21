@@ -1,5 +1,5 @@
-framework module MobileVLCKit {
-  umbrella header "MobileVLCKit.h"
+framework module VLCKit {
+  umbrella header "VLCKit.h"
 
   exclude header "vlc/libvlc_dialog.h"
   exclude header "vlc/libvlc_renderer_discoverer.h"
@@ -16,6 +16,7 @@ framework module MobileVLCKit {
   exclude header "vlc/libvlc_vlm.h"
   exclude header "vlc/libvlc_picture.h"
   exclude header "vlc/libvlc_media_library.h"
+  exclude header "vlc/libvlc_video.h"
 
   export *
   module * { export * }
