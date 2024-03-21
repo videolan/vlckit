@@ -77,7 +77,7 @@
 		7DE26F1B2BA72BB7000CC89C /* VLCVideoLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D988CD124C72EB900279703 /* VLCVideoLayer.m */; platformFilters = (macos, ); };
 		7DE26F1C2BA72BB7000CC89C /* VLCVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D988CCF24C72EB900279703 /* VLCVideoView.m */; platformFilters = (macos, ); };
 		7DE26F1E2BA72CBA000CC89C /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DE26F1D2BA72CBA000CC89C /* CoreAudio.framework */; platformFilters = (macos, ); };
-		7DE26F1F2BA72CFF000CC89C /* VLCTranscoder.h in Sources */ = {isa = PBXBuildFile; fileRef = 41E1959821BEA2AF00F10277 /* VLCTranscoder.h */; platformFilters = (macos, ); };
+		7DE26F1F2BA72CFF000CC89C /* VLCTranscoder.h in Sources */ = {isa = PBXBuildFile; fileRef = 41E1959821BEA2AF00F10277 /* VLCTranscoder.h */; platformFilters = (ios, macos, ); };
 		7DE26F202BA72D0B000CC89C /* VLCStreamOutput.h in Sources */ = {isa = PBXBuildFile; fileRef = 7D988CF124C72F8C00279703 /* VLCStreamOutput.h */; platformFilters = (macos, ); };
 		7DE26F212BA72D0E000CC89C /* VLCStreamSession.h in Sources */ = {isa = PBXBuildFile; fileRef = 7D988CF324C72F8C00279703 /* VLCStreamSession.h */; platformFilters = (macos, ); };
 		7DE26F2F2BA72D98000CC89C /* vlc-plugins-appletv-simulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DE26F252BA72D98000CC89C /* vlc-plugins-appletv-simulator.h */; platformFilters = (tvos, ); };
@@ -90,7 +90,7 @@
 		7DE26F362BA72D98000CC89C /* vlc-plugins-iphone-simulator.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DE26F2C2BA72D98000CC89C /* vlc-plugins-iphone-simulator.h */; platformFilter = ios; };
 		7DE26F372BA72D98000CC89C /* vlc-plugins-macosx-device-arm64.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DE26F2D2BA72D98000CC89C /* vlc-plugins-macosx-device-arm64.h */; platformFilters = (macos, ); };
 		7DE26F382BA72D98000CC89C /* vlc-plugins-appletv-simulator-x86_64.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DE26F2E2BA72D98000CC89C /* vlc-plugins-appletv-simulator-x86_64.h */; platformFilters = (tvos, ); };
-		7DE26F392BA72DA9000CC89C /* VLCTranscoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 41E1959821BEA2AF00F10277 /* VLCTranscoder.h */; platformFilters = (macos, ); settings = {ATTRIBUTES = (Public, ); }; };
+		7DE26F392BA72DA9000CC89C /* VLCTranscoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 41E1959821BEA2AF00F10277 /* VLCTranscoder.h */; platformFilters = (ios, macos, ); settings = {ATTRIBUTES = (Public, ); }; };
 		7DE26F3A2BA72DB2000CC89C /* VLCStreamOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D988CF124C72F8C00279703 /* VLCStreamOutput.h */; platformFilters = (macos, ); settings = {ATTRIBUTES = (Public, ); }; };
 		7DE26F3B2BA72E28000CC89C /* VLCStreamSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D988CF324C72F8C00279703 /* VLCStreamSession.h */; platformFilters = (macos, ); settings = {ATTRIBUTES = (Public, ); }; };
 		7DE26F3C2BA72F65000CC89C /* libstatic-libvlc.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D89394E1B500DBC008F2B14 /* libstatic-libvlc.a */; };
@@ -125,9 +125,9 @@
 		7DFDF4E91C9AF25600BA86A6 /* VLCiOSLegacyDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D803EC41C8F2AEF00864A9C /* VLCiOSLegacyDialogProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7DFDF4EA1C9AF25600BA86A6 /* VLCCustomDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D34F5551C909DF6008A39F0 /* VLCCustomDialogProvider.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7DFDF4EB1C9AF27A00BA86A6 /* VLCDialogProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D803EB71C8F21EF00864A9C /* VLCDialogProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ED25608E21F3A0F200396F9B /* VLCTranscoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E1959621BEA28F00F10277 /* VLCTranscoder.m */; platformFilter = ios; };
-		ED25609321F3A3E800396F9B /* VLCRendererDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2CE648203DCC48004BB7F6 /* VLCRendererDiscoverer.m */; platformFilter = ios; };
-		ED25609421F3A3E800396F9B /* VLCRendererItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */; platformFilter = ios; };
+		ED25608E21F3A0F200396F9B /* VLCTranscoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E1959621BEA28F00F10277 /* VLCTranscoder.m */; platformFilters = (ios, macos, ); };
+		ED25609321F3A3E800396F9B /* VLCRendererDiscoverer.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2CE648203DCC48004BB7F6 /* VLCRendererDiscoverer.m */; platformFilters = (ios, macos, ); };
+		ED25609421F3A3E800396F9B /* VLCRendererItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */; platformFilters = (ios, macos, ); };
 		ED25609521F3A3F800396F9B /* VLCRendererDiscoverer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D2CE647203DCC48004BB7F6 /* VLCRendererDiscoverer.h */; platformFilters = (ios, macos, ); settings = {ATTRIBUTES = (Public, ); }; };
 		ED25609621F3A3F800396F9B /* VLCRendererItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */; platformFilters = (ios, macos, ); settings = {ATTRIBUTES = (Public, ); }; };
 		ED25609C21F3A9FE00396F9B /* MobileVLCKitTests-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = ED25609A21F3A9FE00396F9B /* MobileVLCKitTests-Bridging-Header.h */; };

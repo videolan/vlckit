@@ -44,18 +44,19 @@
 #import <VLCKit/VLCLogMessageFormatter.h>
 #import <VLCKit/VLCEventsConfiguration.h>
 #import <VLCKit/VLCMediaPlayerTitleDescription.h>
-
-#if TARGET_OS_IPHONE
 #import <VLCKit/VLCDialogProvider.h>
-#endif
+
 #if TARGET_OS_OSX
 #import <VLCKit/VLCTranscoder.h>
 #import <VLCKit/VLCStreamOutput.h>
 #import <VLCKit/VLCStreamSession.h>
 #import <VLCKit/VLCVideoLayer.h>
 #import <VLCKit/VLCVideoView.h>
+#import <VLCKit/VLCRendererDiscoverer.h>
+#import <VLCKit/VLCRendererItem.h>
 #endif
 #if TARGET_OS_IOS
+#import <VLCKit/VLCTranscoder.h>
 #import <VLCKit/VLCRendererDiscoverer.h>
 #import <VLCKit/VLCRendererItem.h>
 #endif
