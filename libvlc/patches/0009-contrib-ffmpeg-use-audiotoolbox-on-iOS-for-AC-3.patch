@@ -1,15 +1,15 @@
-From 3c5b53f0d427da2018333211552f7e3d5c7cde1f Mon Sep 17 00:00:00 2001
+From 96a95bff5d69a436cd5bd76269b7224b752a922f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 09/18] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
+Subject: [PATCH 09/12] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
 
 This enforces the use of the audiotoolbox decoders for AC-3 and E-AC-3
 as introduced in iOS 9 and disables the use of the MLP decoder to be in
 compliance with the App Store ToS.
 ---
  .../avcodec-enable-audiotoolbox-ac3.patch     | 20 +++++++++++++++++++
- contrib/src/ffmpeg/rules.mak                  |  9 +++++++++
- 2 files changed, 29 insertions(+)
+ contrib/src/ffmpeg/rules.mak                  |  7 +++++++
+ 2 files changed, 27 insertions(+)
  create mode 100644 contrib/src/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
 
 diff --git a/contrib/src/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch b/contrib/src/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
@@ -39,7 +39,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index d2e1e12c10..94d8405f30 100644
+index 8501909dec..8e3bd20bd7 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -38,6 +38,12 @@ FFMPEGCONF = \
@@ -54,17 +54,15 @@ index d2e1e12c10..94d8405f30 100644
 +endif
  endif
  
- DEPS_ffmpeg = zlib $(DEPS_zlib) gsm $(DEPS_gsm) openjpeg $(DEPS_openjpeg)
-@@ -227,6 +233,9 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
- 	$(APPLY) $(SRC)/ffmpeg/0001-fix-mf_utils-compilation-with-mingw64.patch
+ ifdef ENABLE_PDB
+@@ -232,6 +238,7 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
  	$(APPLY) $(SRC)/ffmpeg/0001-ffmpeg-add-target_os-support-for-emscripten.patch
  	$(APPLY) $(SRC)/ffmpeg/0011-avcodec-videotoolboxenc-disable-calls-on-unsupported.patch
-+ifdef HAVE_IOS
+ 	$(APPLY) $(SRC)/ffmpeg/avcodec-fix-compilation-visionos.patch
 +	$(APPLY) $(SRC)/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
-+endif
  	$(MOVE)
  
  .ffmpeg: ffmpeg
 -- 
-2.39.3 (Apple Git-146)
+2.32.1 (Apple Git-133)
 

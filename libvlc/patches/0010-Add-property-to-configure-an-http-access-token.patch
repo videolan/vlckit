@@ -1,14 +1,15 @@
-From 542ef981dada74ea59b161f5b1fe3a2af0a0ed54 Mon Sep 17 00:00:00 2001
+From d4f2457a60839bb916e6b3aa8d0a7207c06beea4 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
-Subject: [PATCH 10/18] Add property to configure an http access token
+Subject: [PATCH 10/12] Add property to configure an http access token
 
 ---
- modules/access/http/access.c   | 8 ++++++--
- modules/access/http/resource.c | 5 ++++-
- modules/access/http/resource.h | 1 +
- src/libvlc.c                   | 2 ++
- 4 files changed, 13 insertions(+), 3 deletions(-)
+ modules/access/http/access.c                   | 8 ++++++--
+ modules/access/http/resource.c                 | 6 +++++-
+ modules/access/http/resource.h                 | 1 +
+ modules/demux/adaptive/http/HTTPConnection.cpp | 2 ++
+ src/libvlc.c                                   | 2 ++
+ 5 files changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http/access.c b/modules/access/http/access.c
 index e8417dfb71..4302c0d455 100644
@@ -37,7 +38,7 @@ index e8417dfb71..4302c0d455 100644
 +        change_private()
  vlc_module_end()
 diff --git a/modules/access/http/resource.c b/modules/access/http/resource.c
-index 0f170308ba..85a0186fc8 100644
+index 0f170308ba..d15b1decc4 100644
 --- a/modules/access/http/resource.c
 +++ b/modules/access/http/resource.c
 @@ -58,7 +58,9 @@ vlc_http_res_req(const struct vlc_http_resource *res, void *opaque)
@@ -59,6 +60,14 @@ index 0f170308ba..85a0186fc8 100644
  
      if (res->response != NULL)
          vlc_http_msg_destroy(res->response);
+@@ -205,6 +208,7 @@ int vlc_http_res_init(struct vlc_http_resource *restrict res,
+                                                : NULL;
+     res->agent = (ua != NULL) ? strdup(ua) : NULL;
+     res->referrer = (ref != NULL) ? strdup(ref) : NULL;
++    res->token = NULL;
+ 
+     const char *path = url.psz_path;
+     if (path == NULL)
 diff --git a/modules/access/http/resource.h b/modules/access/http/resource.h
 index 66cc215361..92d3091711 100644
 --- a/modules/access/http/resource.h
@@ -71,8 +80,21 @@ index 66cc215361..92d3091711 100644
  };
  
  int vlc_http_res_init(struct vlc_http_resource *,
+diff --git a/modules/demux/adaptive/http/HTTPConnection.cpp b/modules/demux/adaptive/http/HTTPConnection.cpp
+index de172200cc..ffb31e998e 100644
+--- a/modules/demux/adaptive/http/HTTPConnection.cpp
++++ b/modules/demux/adaptive/http/HTTPConnection.cpp
+@@ -310,6 +310,8 @@ RequestStatus LibVLCHTTPConnection::request(const std::string &path,
+     if(source->create(params.getUrl().c_str(), useragent,referer, range))
+         return RequestStatus::GenericError;
+ 
++    source->http_res->token = NULL;
++
+     struct vlc_credential crd;
+     struct vlc_url_t crd_url;
+     vlc_UrlParse(&crd_url, params.getUrl().c_str());
 diff --git a/src/libvlc.c b/src/libvlc.c
-index a1070fd854..167fc593e6 100644
+index de9537f2d2..be7077c952 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
 @@ -267,6 +267,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
@@ -85,5 +107,5 @@ index a1070fd854..167fc593e6 100644
      system_Configure( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
  
 -- 
-2.39.3 (Apple Git-146)
+2.32.1 (Apple Git-133)
 
