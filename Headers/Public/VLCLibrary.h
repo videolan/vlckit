@@ -44,6 +44,16 @@ OBJC_VISIBLE
 @property (class, nonatomic, nullable) id<VLCEventsConfiguring> sharedEventsConfiguration;
 
 /**
+ * A human-readable error message for the last LibVLC error in the calling
+ * thread. The resulting string is valid until another error occurs (at least
+ * until the next LibVLC call).
+ *
+ * @warning
+ * This will be NULL if there was no error.
+ */
+@property (class, nonatomic, copy, nullable) NSString *currentErrorMessage;
+
+/**
  * Returns the library's shared instance
  * \return The library's shared instance
  */
