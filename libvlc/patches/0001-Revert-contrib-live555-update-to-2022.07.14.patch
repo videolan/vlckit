@@ -1,7 +1,7 @@
-From b84b227fe59b016a02a8636a0376771e9d76df58 Mon Sep 17 00:00:00 2001
+From ed0ddc77e72ce9aee3eebe641c0526f07eab3dcc Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:59:13 +0200
-Subject: [PATCH 01/12] Revert "contrib: live555: update to 2022.07.14"
+Subject: [PATCH 01/13] Revert "contrib: live555: update to 2022.07.14"
 
 This reverts commit 78998cab182bbdbd1915deeead1ad4bc945b514e.
 ---
@@ -13,9 +13,9 @@ This reverts commit 78998cab182bbdbd1915deeead1ad4bc945b514e.
  .../src/live555/in_addr-s_addr-field.patch    |  42 +++++
  contrib/src/live555/live555-nosignal.patch    | 166 +++++++++++-------
  contrib/src/live555/no-null-reference.patch   | 128 ++++++++++++++
- contrib/src/live555/rules.mak                 |  23 ++-
+ contrib/src/live555/rules.mak                 |  15 +-
  contrib/src/live555/winstore.patch            |  30 ++++
- 10 files changed, 365 insertions(+), 116 deletions(-)
+ 10 files changed, 360 insertions(+), 113 deletions(-)
  create mode 100644 contrib/src/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
  delete mode 100644 contrib/src/live555/android-no-ifaddrs.patch
  create mode 100644 contrib/src/live555/in_addr-s_addr-field.patch
@@ -585,7 +585,7 @@ index 0000000000..a1dea30fbc
 + 			     char const* rangeParamsStr, char const* rtpInfoParamsStr);
 +   Boolean handleTEARDOWNResponse(MediaSession& session, MediaSubsession& subsession);
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index ed6b873ee1..80fe4ef78c 100644
+index f6c5a6577e..c1e0d41726 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,6 +1,6 @@
@@ -617,18 +617,6 @@ index ed6b873ee1..80fe4ef78c 100644
  else
  ifdef HAVE_BSD
  LIVE_TARGET := freebsd
-@@ -58,9 +57,9 @@ live555: $(LIVE555_FILE) .sum-live555
- 	# Replace libtool -s by ar cr for macOS only
- 	cd live && sed -i.orig -e s/"libtool -s -o"/"ar cr"/g config.macosx*
- 	# Add Extra LDFLAGS for macOS
--	cd live && sed -i.orig -e 's%$(CXX)%$(CXX)\ $(EXTRA_LDFLAGS)%' config.macosx*
-+	cd live && sed -i.orig -e 's%$(CXX)%$(CXX)\ $(EXTRA_LDFLAGS)%' config.macosx
- 	# Add CXXFLAGS for macOS (force libc++)
--	cd live && sed -i.orig -e 's%^\(CPLUSPLUS_FLAGS.*\)$$%\1 '"$(CXXFLAGS)%" config.macosx*
-+	cd live && sed -i.orig -e 's%^\(CPLUSPLUS_FLAGS.*\)$$%\1 '"$(CXXFLAGS)%" config.macosx
- 	# Add the Extra_CFLAGS to all config files
- 	cd live && sed -i.orig \
- 		-e 's%^\(COMPILE_OPTS.*\)$$%\1 '"$(LIVE_EXTRA_CFLAGS)%" config.*
 @@ -75,6 +74,10 @@ endif
  	mv live live.$(LIVE555_VERSION)
  	# Patch for MSG_NOSIGNAL
@@ -640,25 +628,17 @@ index ed6b873ee1..80fe4ef78c 100644
  	# Add a pkg-config file
  	$(APPLY) $(SRC)/live555/add-pkgconfig-file.patch
  	# Expose Server:
-@@ -83,13 +86,15 @@ endif
+@@ -83,8 +86,8 @@ endif
  	$(APPLY) $(SRC)/live555/mingw-static-libs.patch
  	# FormatMessageA is available on all Windows versions, even WinRT
  	$(APPLY) $(SRC)/live555/live555-formatmessage.patch
-+        # Disable Multicast interface lookup option
-+	$(APPLY) $(SRC)/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
- ifdef HAVE_ANDROID
 -	# ifaddrs.h is supported since API level 24
 -	$(APPLY) $(SRC)/live555/android-no-ifaddrs.patch
-+	# Fix in_addr.s_addr field access
-+	$(APPLY) $(SRC)/live555/in_addr-s_addr-field.patch
++	# Disable Multicast interface lookup option
++	$(APPLY) $(SRC)/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
  	# Don't use unavailable off64_t functions
  	$(APPLY) $(SRC)/live555/file-offset-bits-64.patch
- endif
--	cd $(UNPACK_DIR) && sed -i.orig "s,LIBRARY_LINK =.*,LIBRARY_LINK = $(AR) cr ,g" config.macosx*
-+	cd $(UNPACK_DIR) && sed -i.orig "s,LIBRARY_LINK =.*,LIBRARY_LINK = $(AR) cr ,g" config.macosx
- 	mv live.$(LIVE555_VERSION) $@ && touch $@
- 
- SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
+ 	cd $(UNPACK_DIR) && sed -i.orig "s,LIBRARY_LINK =.*,LIBRARY_LINK = $(AR) cr ,g" config.macosx*
 diff --git a/contrib/src/live555/winstore.patch b/contrib/src/live555/winstore.patch
 new file mode 100644
 index 0000000000..7723e3ba12
@@ -696,5 +676,5 @@ index 0000000000..7723e3ba12
 + #endif
 +
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-146)
 
