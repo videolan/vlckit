@@ -18,7 +18,7 @@ index f459fb9d16..02b2a69734 100644
 +10846fd6d5482bbea131ae805137077997e9dec242665e3c01d699d5584154c65049e8c520ea855599e554154a148e61fea77b592d97c814a4a98c773658d8f5  live.2016.10.21.tar.gz
 \ No newline at end of file
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index c1e0d41726..8ad8057d5a 100644
+index 6a748e76b6..293b34454f 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,14 +1,12 @@
@@ -38,11 +38,11 @@ index c1e0d41726..8ad8057d5a 100644
  ifeq ($(call need_pkg,"live555"),)
  PKGS_FOUND += live555
 @@ -96,7 +94,6 @@ endif
- SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
+ LIVE555_SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
  
  .live555: live555
 -	$(REQUIRE_GNUV3)
- 	cd $< && for subdir in $(SUBDIRS); do \
+ 	cd $< && for subdir in $(LIVE555_SUBDIRS); do \
  		echo "PREFIX = $(PREFIX)" >> $$subdir/Makefile.head && \
  		echo "LIBDIR = $(PREFIX)/lib" >> $$subdir/Makefile.head ; done
 -- 
