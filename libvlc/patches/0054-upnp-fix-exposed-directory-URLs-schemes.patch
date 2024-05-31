@@ -1,0 +1,112 @@
+From 7e55655f221fc4048c6ab30502caa653b2d8b25c Mon Sep 17 00:00:00 2001
+From: Alaric Senat <dev.asenat@posteo.net>
+Date: Mon, 27 May 2024 14:26:16 +0200
+Subject: [PATCH 54/54] upnp: fix exposed directory URLs schemes
+
+Previous implementation generated input item directories with URLs not
+compliant with *RFC 3986* in an attempt to keep the original URL while
+triggering the UPNP directory acces properly. Here's an exemple of a
+previous upnp directory url:
+
+> upnp://http://192.168.1.109:32469/cds?ObjectID=0
+
+The stacking of schemes (`upnp://http://`) is problematic and leads to
+most of the validators failing on those generated URLs (see the
+referenced issue).
+
+This patch fix the issue by simply replacing the original `http://`
+scheme by `upnp://` instead of stacking both. To avoid any potential
+regression with some obscure usage forcing https, a shortcut of the
+directory access is introduced for https specificaly.
+
+The example above would then be fixed like that:
+
+> upnp://192.168.1.109:32469/cds?ObjectID=0
+
+Potential use-cases with https would instead generate the following:
+
+> upnps://192.168.1.109:32469/cds?ObjectID=0
+
+Refs VLCKit#728
+
+(cherry picked from commit 241fed315be92f4a12ced2afdffd79f5fd638ff4)
+---
+ modules/services_discovery/upnp.cpp | 14 ++++++++++----
+ modules/services_discovery/upnp.hpp |  1 +
+ 2 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
+index bb131dd7e3..fe0c5503ee 100644
+--- a/modules/services_discovery/upnp.cpp
++++ b/modules/services_discovery/upnp.cpp
+@@ -139,6 +139,7 @@ vlc_module_begin()
+         set_subcategory( SUBCAT_INPUT_ACCESS )
+         set_callbacks( Access::Open, Access::Close )
+         set_capability( "access", 0 )
++        add_shortcut( "upnp", "upnps" )
+ 
+     VLC_SD_PROBE_SUBMODULE
+ vlc_module_end()
+@@ -361,7 +362,10 @@ bool MediaServerList::addServer( MediaServerDesc* desc )
+             return false;
+         } 
+ 
+-        std::string mrl = std::string("upnp://") + desc->location;
++        std::string mrl = desc->location;
++
++        // Replace the scheme to trigger the directory access.
++        mrl.replace( 0, 4, "upnp" );
+ 
+         // Forge a root object ID in the MRL, this is used in the dir access.
+         if ( desc->location.find( '?' ) == std::string::npos )
+@@ -971,7 +975,7 @@ namespace
+             const char opt_delim = strrchr( psz_root, '?' ) == NULL ? '?' : '&';
+ 
+             char* psz_url;
+-            const int ret = asprintf( &psz_url, "upnp://%s%cObjectID=%s", psz_root,
++            const int ret = asprintf( &psz_url, "%s%cObjectID=%s", psz_root,
+                                       opt_delim, encoded_id );
+             free( encoded_id );
+             if( ret < 0 )
+@@ -1044,7 +1048,7 @@ MediaServer::MediaServer( stream_t *p_access, input_item_node_t *node )
+     , m_node( node )
+ 
+ {
+-    m_psz_root = strdup( p_access->psz_location );
++    m_psz_root = strdup( p_access->psz_url );
+     char* psz_objectid = strstr( m_psz_root, "ObjectID=" );
+     if ( psz_objectid != NULL )
+     {
+@@ -1053,6 +1057,8 @@ MediaServer::MediaServer( stream_t *p_access, input_item_node_t *node )
+         *( psz_objectid - 1) = 0;
+         m_psz_objectId = vlc_uri_decode( &psz_objectid[strlen("ObjectID=")] );
+     }
++
++    m_original_url = std::string( m_psz_root ).replace(0, 4, "http");
+ }
+ 
+ MediaServer::~MediaServer()
+@@ -1244,7 +1250,7 @@ IXML_Document* MediaServer::_browseAction( const char* psz_object_id_,
+      * interrupted by vlc_interrupt_kill */
+     i11eCb = new Upnp_i11e_cb( sendActionCb, &p_response );
+     i_res = UpnpSendActionAsync( sys->p_upnp->handle(),
+-              m_psz_root,
++              m_original_url.c_str(),
+               CONTENT_DIRECTORY_SERVICE_TYPE,
+               NULL, /* ignored in SDK, must be NULL */
+               p_action,
+diff --git a/modules/services_discovery/upnp.hpp b/modules/services_discovery/upnp.hpp
+index 682ac96879..b90e3cf009 100644
+--- a/modules/services_discovery/upnp.hpp
++++ b/modules/services_discovery/upnp.hpp
+@@ -164,6 +164,7 @@ private:
+ private:
+     char* m_psz_root;
+     char* m_psz_objectId;
++    std::string m_original_url;
+     stream_t* m_access;
+     input_item_node_t* m_node;
+ };
+-- 
+2.39.3 (Apple Git-146)
+

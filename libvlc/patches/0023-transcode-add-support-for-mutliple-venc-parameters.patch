@@ -1,7 +1,7 @@
-From 4ee10a2026674b4f2f0da1c07d2098b6d8e5702f Mon Sep 17 00:00:00 2001
+From a6db38065f674f33181c9f1af13b8e105e31cb11 Mon Sep 17 00:00:00 2001
 From: Alexandre Janniaux <alexandre.janniaux@gmail.com>
 Date: Wed, 28 Nov 2018 18:27:16 +0100
-Subject: [PATCH 23/49] transcode: add support for mutliple venc parameters
+Subject: [PATCH 23/54] transcode: add support for mutliple venc parameters
 
 Add support for multiple venc parameters for transcoding. Venc
 parameters are tested in th given order and fallback if the encoder
@@ -371,5 +371,5 @@ index 240b5f315f..a1d5a4cae1 100644
      char            *psz_venc;
      config_chain_t  *p_video_cfg;
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-146)
 

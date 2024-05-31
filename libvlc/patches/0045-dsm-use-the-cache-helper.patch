@@ -1,7 +1,7 @@
-From bcc71fea18b10fd510bd20396df04bbe82538945 Mon Sep 17 00:00:00 2001
+From 9a0c3da55bb7651e0f8537bff9649ff3285f4c26 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 13:17:02 +0100
-Subject: [PATCH 45/49] dsm: use the cache helper
+Subject: [PATCH 45/54] dsm: use the cache helper
 
 Cache the dsm session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.
@@ -171,5 +171,5 @@ index fcf5625ca7..13e253519e 100644
  error:
      vlc_credential_clean( &credential );
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-146)
 

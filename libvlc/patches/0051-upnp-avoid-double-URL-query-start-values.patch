@@ -1,0 +1,33 @@
+From f8ce51daa789af025c6e43d00763966e93126eb6 Mon Sep 17 00:00:00 2001
+From: Alaric Senat <dev.asenat@posteo.net>
+Date: Fri, 24 May 2024 18:34:34 +0200
+Subject: [PATCH 51/54] upnp: avoid double URL query start values
+
+This patch completes ac99cee9f34fa17e0595d8b31a2dd1ff723c0719.
+It avoids corrupting URLs with an already present query list.
+
+(cherry picked from commit 0cba1475ba9c2d89b19c4e81a928e4305e6e97ad)
+---
+ modules/services_discovery/upnp.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
+index 63e141f3af..323f6e5bcd 100644
+--- a/modules/services_discovery/upnp.cpp
++++ b/modules/services_discovery/upnp.cpp
+@@ -957,8 +957,11 @@ namespace
+             if ( unlikely(encoded_id == NULL) )
+                 return NULL;
+ 
++            const char opt_delim = strrchr( psz_root, '?' ) == NULL ? '?' : '&';
++
+             char* psz_url;
+-            const int ret = asprintf( &psz_url, "upnp://%s?ObjectID=%s", psz_root, encoded_id );
++            const int ret = asprintf( &psz_url, "upnp://%s%cObjectID=%s", psz_root,
++                                      opt_delim, encoded_id );
+             free( encoded_id );
+             if( ret < 0 )
+                 return NULL;
+-- 
+2.39.3 (Apple Git-146)
+

@@ -1,7 +1,7 @@
-From 9e9b9695ae6ef632c0c2cb924169dc3c78d2e7c6 Mon Sep 17 00:00:00 2001
+From a053111c84caa4f0d72ac0a30ad41310574eb9a2 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 29 Jun 2023 13:37:29 +0200
-Subject: [PATCH 48/49] contrib: upnp: add patch to fix potential busyloop
+Subject: [PATCH 48/54] contrib: upnp: add patch to fix potential busyloop
 
 Not tested.
 ---
@@ -147,5 +147,5 @@ index 54202e106f..8167611fd7 100644
  	$(MOVE)
  
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-146)
 

@@ -1,0 +1,46 @@
+From 41e265ec98a9ee66662965a8f5574ad12a57c7f6 Mon Sep 17 00:00:00 2001
+From: Alaric Senat <dev.asenat@posteo.net>
+Date: Fri, 24 May 2024 18:25:08 +0200
+Subject: [PATCH 50/54] upnp: encode the object ID in the exposed URL
+
+Object ID is not supposed to be URI-encoded by default and can be pretty
+much any valid string. Since we add it to a valid encoded URL, we need
+to encode it to preserve the URL validity.
+
+(cherry picked from commit 5d5ccbc0fa309d2aa07ca840ab66e9403fd15b03)
+---
+ modules/services_discovery/upnp.cpp | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/modules/services_discovery/upnp.cpp b/modules/services_discovery/upnp.cpp
+index f9853334c0..63e141f3af 100644
+--- a/modules/services_discovery/upnp.cpp
++++ b/modules/services_discovery/upnp.cpp
+@@ -953,8 +953,14 @@ namespace
+             if ( objectID == NULL || title == NULL )
+                 return NULL;
+ 
++            char *encoded_id = vlc_uri_encode( objectID );
++            if ( unlikely(encoded_id == NULL) )
++                return NULL;
++
+             char* psz_url;
+-            if( asprintf( &psz_url, "upnp://%s?ObjectID=%s", psz_root, objectID ) < 0 )
++            const int ret = asprintf( &psz_url, "upnp://%s?ObjectID=%s", psz_root, encoded_id );
++            free( encoded_id );
++            if( ret < 0 )
+                 return NULL;
+ 
+             input_item_t* p_item = input_item_NewDirectory( psz_url, title, ITEM_NET );
+@@ -1031,7 +1037,7 @@ MediaServer::MediaServer( stream_t *p_access, input_item_node_t *node )
+         // Remove this parameter from the URL, since it might cause some servers to fail
+         // Keep in mind that we added a '&' or a '?' to the URL, so remove it as well
+         *( psz_objectid - 1) = 0;
+-        m_psz_objectId = &psz_objectid[strlen( "ObjectID=" )];
++        m_psz_objectId = vlc_uri_decode( &psz_objectid[strlen("ObjectID=")] );
+     }
+ }
+ 
+-- 
+2.39.3 (Apple Git-146)
+
