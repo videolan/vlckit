@@ -1,7 +1,7 @@
-From ef0c4f0d77281e56b7e677aa4e7b074e9eb890c7 Mon Sep 17 00:00:00 2001
+From 494d3f1d81367f3054ee0b9f8e27526c1b98689c Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 15 Feb 2021 13:44:41 +0100
-Subject: [PATCH 07/13] contrib: disable rust when compiling on macOS ARM-64
+Subject: [PATCH 07/12] contrib: disable rust when compiling on macOS ARM-64
 
 ---
  contrib/src/main-rust.mak | 4 +++-

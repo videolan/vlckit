@@ -1,7 +1,7 @@
-From d95718d15379fb514b3e2e93a5b85c8d338e74c6 Mon Sep 17 00:00:00 2001
+From 08d1cf71f4965b0c203002a20dd9283a592bad32 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 25 Jan 2021 19:56:01 +0100
-Subject: [PATCH 06/13] webservices: avoid symbol conflict
+Subject: [PATCH 06/12] webservices: avoid symbol conflict
 
 ---
  modules/misc/webservices/json.c                   | 2 +-
