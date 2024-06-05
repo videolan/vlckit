@@ -1,3 +1,20 @@
+Version 3.6.0:
+--------------
+- update to libvlc 3.0.21
+- add new equalizer API and deprecate the previous
+- add new statistics API to VLCMedia and deprecate the previous
+- fix equalizer state
+- fix distribution of VLCDialogProvider.h on macOS solving compilation issue in swift enabled projects
+- improve threading on 64bit platforms
+- fix audio rendering regression
+- fix UPnP busy loop
+- backport new event manager from the master branch
+- expose API to modify the event configuration at runtime
+- fix crashes when using the list player and memory leaks
+- remove abort() when leaking event handlers
+- fix background thread use on macOS when accessing AppKit
+- fix UPnP URL generation leading to issues on iOS/tvOS 17 and macOS 14
+
 Version 3.5.1:
 --------------
 - Add missing references to the VLCKit umbrella header (macOS only)
