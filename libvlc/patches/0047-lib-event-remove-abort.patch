@@ -1,7 +1,7 @@
-From 51457da317f3461f289cc825fc77ec40d7c0c4a9 Mon Sep 17 00:00:00 2001
+From 1cd736b36a4ef236d8e4b338cb83eb628df563fc Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 21 Aug 2023 14:44:24 +0200
-Subject: [PATCH 47/54] lib/event: remove abort
+Subject: [PATCH 47/49] lib/event: remove abort
 
 Leaking is better than aborting
 ---

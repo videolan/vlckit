@@ -1,7 +1,7 @@
-From 5fd4aa356e2921cec8c15324f57eaa563c4d798a Mon Sep 17 00:00:00 2001
+From e2580cde72d4c69c2c6f2a8b321b66b6f394f642 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 19 Sep 2020 13:51:08 +0200
-Subject: [PATCH 26/54] contrib/libvpx: fix tvOS compilation
+Subject: [PATCH 26/49] contrib/libvpx: fix tvOS compilation
 
 ---
  contrib/src/vpx/libvpx-tvos.patch | 21 +++++++++++++++++++++
@@ -37,7 +37,7 @@ index 0000000000..f4a22f56ec
 +               add_cflags -isysroot ${alt_libc}
 +             fi
 diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
-index 37f23ca17e..2f0c5721dd 100644
+index 263ce7d1f0..5805042b66 100644
 --- a/contrib/src/vpx/rules.mak
 +++ b/contrib/src/vpx/rules.mak
 @@ -26,6 +26,9 @@ ifdef HAVE_MACOSX
@@ -48,8 +48,8 @@ index 37f23ca17e..2f0c5721dd 100644
 +ifdef HAVE_TVOS
 +	$(APPLY) $(SRC)/vpx/libvpx-tvos.patch
  endif
- 	$(MOVE)
- 
+ 	# Disable automatic addition of -fembed-bitcode for iOS
+ 	# as it is enabled through --extra-cflags if necessary.
 -- 
 2.39.3 (Apple Git-146)
 

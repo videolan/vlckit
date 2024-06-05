@@ -1,7 +1,7 @@
-From 89b82cb7030d83602b5e1c91cd698d749bb5691d Mon Sep 17 00:00:00 2001
+From 65aa35c2b984fc050a656714b74af87faafad242 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 12 Aug 2020 17:58:43 +0200
-Subject: [PATCH 30/54] audio_filter: add ebur128 "audio meter" plugin
+Subject: [PATCH 30/49] audio_filter: add ebur128 "audio meter" plugin
 
 ---
  configure.ac                      |   5 +
@@ -12,10 +12,10 @@ Subject: [PATCH 30/54] audio_filter: add ebur128 "audio meter" plugin
  create mode 100644 modules/audio_filter/libebur128.c
 
 diff --git a/configure.ac b/configure.ac
-index 71fd156fa0..0eb4210bc1 100644
+index 8fa2a87595..9652c81649 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -3680,6 +3680,11 @@ dnl  soxr module
+@@ -3691,6 +3691,11 @@ dnl  soxr module
  dnl
  PKG_ENABLE_MODULES_VLC([SOXR], [], [soxr >= 0.1.2], [SoX Resampler library], [auto])
  

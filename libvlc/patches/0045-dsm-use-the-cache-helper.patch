@@ -1,7 +1,7 @@
-From 9a0c3da55bb7651e0f8537bff9649ff3285f4c26 Mon Sep 17 00:00:00 2001
+From accbb177f9aad6e3d7d4739284b9bd262d476b9d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 13:17:02 +0100
-Subject: [PATCH 45/54] dsm: use the cache helper
+Subject: [PATCH 45/49] dsm: use the cache helper
 
 Cache the dsm session when closing. It will be re-used if an other
 access is opened on the same server/share/username within 5 seconds.

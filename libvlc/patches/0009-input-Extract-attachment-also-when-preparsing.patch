@@ -1,7 +1,7 @@
-From 4d30cf816d67222c62d87270a1a412b740ce97b8 Mon Sep 17 00:00:00 2001
+From 1d8e291f917f0e54a38d99cdbdfe6489ab06533d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 09/54] input: Extract attachment also when preparsing
+Subject: [PATCH 09/49] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +

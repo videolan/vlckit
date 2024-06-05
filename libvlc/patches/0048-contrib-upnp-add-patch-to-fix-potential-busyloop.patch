@@ -1,7 +1,7 @@
-From a053111c84caa4f0d72ac0a30ad41310574eb9a2 Mon Sep 17 00:00:00 2001
+From f7a135506064c93a94c4fc9331954689fa549995 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 29 Jun 2023 13:37:29 +0200
-Subject: [PATCH 48/54] contrib: upnp: add patch to fix potential busyloop
+Subject: [PATCH 48/49] contrib: upnp: add patch to fix potential busyloop
 
 Not tested.
 ---
