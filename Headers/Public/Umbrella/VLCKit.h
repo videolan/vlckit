@@ -34,7 +34,6 @@
 #import <VLCKit/VLCMediaListPlayer.h>
 #import <VLCKit/VLCMediaThumbnailer.h>
 #import <VLCKit/VLCMediaMetaData.h>
-#import <VLCKit/VLCDialogProvider.h>
 #import <VLCKit/VLCTime.h>
 #import <VLCKit/VLCFilter.h>
 #import <VLCKit/VLCAdjustFilter.h>
@@ -44,7 +43,9 @@
 #import <VLCKit/VLCLogMessageFormatter.h>
 #import <VLCKit/VLCEventsConfiguration.h>
 #import <VLCKit/VLCMediaPlayerTitleDescription.h>
+#if !TARGET_OS_WATCH
 #import <VLCKit/VLCDialogProvider.h>
+#endif
 
 #if TARGET_OS_OSX
 #import <VLCKit/VLCTranscoder.h>
@@ -71,7 +72,9 @@
 @class VLCAudioEqualizer;
 @class VLCAudioEqualizerPreset;
 @class VLCAudioEqualizerBand;
+#if !TARGET_OS_WATCH
 @class VLCDialogProvider;
+#endif
 @class VLCRendererDiscoverer;
 @class VLCRendererDiscovererDescription;
 @class VLCRendererItem;
@@ -86,7 +89,6 @@
 
 #if TARGET_OS_IPHONE
 @class VLCAudio;
-@class VLCDialogProvider;
 @class VLCMediaListPlayer;
 @class VLCMediaPlayer;
 @class VLCMediaThumbnailer;

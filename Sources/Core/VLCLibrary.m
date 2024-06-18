@@ -71,6 +71,23 @@
 #endif
 #endif
 
+#if TARGET_OS_WATCH
+#if TARGET_OS_SIMULATOR
+#if __x86_64__
+# include "vlc-plugins-watch-simulator-x86_64.h"
+#else
+# include "vlc-plugins-watch-simulator-arm64.h"
+#endif
+#else
+#if __armv7k__
+#warning armv7k
+# include "vlc-plugins-watch-device-armv7k.h"
+#else
+# include "vlc-plugins-watch-device-arm64_32.h"
+#endif
+#endif
+#endif
+
 #include <vlc/vlc.h>
 #include <vlc_common.h>
 
