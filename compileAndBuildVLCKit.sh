@@ -18,6 +18,7 @@ TVOS=no
 MACOS=no
 IOS=yes
 XROS=no
+WATCHOS=no
 BITCODE=no
 INCLUDE_ARMV7=no
 OSVERSIONMINCFLAG=iphoneos
@@ -47,6 +48,7 @@ OPTIONS
    -t       Build for tvOS
    -x       Build for macOS / Mac OS X
    -i       Build for xrOS / visionOS
+   -w       Build for watchOS
    -b       Enable bitcode
    -a       Build framework for specific arch (all|x86_64|armv7|aarch64)
    -e       External VLC source path
@@ -127,6 +129,9 @@ buildxcodeproj()
         fi
         if [ "$XROS" = "yes" ]; then
             architectures="arm64"
+        fi
+        if [ "$WATCHOS" = "yes" ]; then
+            architectures="armv7k arm64_32"
         fi
     else
         architectures=`get_actual_arch $FARCH`
@@ -232,10 +237,17 @@ buildMobileKit() {
                 buildLibVLC "x86_64" "macosx"
             fi
             if [ "$XROS" = "yes" ]; then
-	            info "building for xrOS"
+                info "building for xrOS"
                 buildLibVLC "aarch64" "xros"
                 buildLibVLC "aarch64" "xrsimulator"
                 # there is no xrSimulator for the Intel platform
+            fi
+            if [ "$WATCHOS" = "yes" ]; then
+                info "building for watchOS"
+                buildLibVLC "arm64_32" "watchos"
+                buildLibVLC "armv7k" "watchos"
+                buildLibVLC "x86_64" "watchsimulator"
+                buildLibVLC "aarch64" "watchsimulator"
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
@@ -266,6 +278,9 @@ buildMobileKit() {
                 if [ "$XROS" = "yes" ]; then
                     PLATFORM="xrsimulator"
                 fi
+                if [ "$WATCHOS" = "yes" ]; then
+                    PLATFORM="watchsimulator"
+                fi
             else
                 if [ "$TVOS" = "yes" ]; then
                     PLATFORM="appletvos"
@@ -278,6 +293,9 @@ buildMobileKit() {
                 fi
                 if [ "$XROS" = "yes" ]; then
                     PLATFORM="xros"
+                fi
+                if [ "$WATCHOS" = "yes" ]; then
+                    PLATFORM="watchos"
                 fi
             fi
 
@@ -332,8 +350,9 @@ build_simulator_static_lib() {
     # brute-force test the available architectures we could lipo
     check_lipo "${OSSTYLE}simulator" x86_64
     check_lipo "${OSSTYLE}simulator" arm64
-    # XR is not -simulator suffixed in the script unfortunately.
+    # watch and XR is not -simulator suffixed in the script unfortunately.
     check_lipo "${OSSTYLE}" arm64
+    check_lipo "${OSSTYLE}" x86_64
 
     if [ ! -z "${VLCSTATICLIBS}" ]; then
         spushd ${VLCROOT}
@@ -361,7 +380,13 @@ build_device_static_lib() {
 
     # brute-force test the available architectures we could lipo
     check_lipo "${OSSTYLE}os" arm64
-    check_lipo "${OSSTYLE}os" armv7
+    if [ "$IOS" = "yes" ]; then
+        check_lipo "${OSSTYLE}os" armv7
+    fi
+    if [ "$WATCHOS" = "yes" ]; then
+        check_lipo "${OSSTYLE}" armv7k
+        check_lipo "${OSSTYLE}" arm64_32
+    fi
     # macosx and XR are not -os or -simulator suffixed in the script unfortunately.
     check_lipo "${OSSTYLE}" x86_64
     check_lipo "${OSSTYLE}" arm64
@@ -373,7 +398,7 @@ build_device_static_lib() {
     fi
 }
 
-while getopts "hvsfbrxintl7k:a:e:" OPTION
+while getopts "hvsfbrxiwntl7k:a:e:" OPTION
 do
      case $OPTION in
          h)
@@ -441,6 +466,17 @@ do
              SDK_MIN=1.0
              OSVERSIONMINCFLAG=xros
              OSVERSIONMINLDFLAG=xros
+             BUILD_DEVICE=yes
+             BUILD_FRAMEWORK=yes
+             ;;
+         w)
+             WATCHOS=yes
+             IOS=no
+             BITCODE=no
+             SDK_VERSION=`xcrun --sdk watchos --show-sdk-version`
+             SDK_MIN=7.4
+             OSVERSIONMINCFLAG=watchos
+             OSVERSIONMINLDFLAG=watchos
              BUILD_DEVICE=yes
              BUILD_FRAMEWORK=yes
              ;;
@@ -551,6 +587,10 @@ fi
 if [ "$XROS" = "yes" ]; then
     build_simulator_static_lib "xros"
     build_device_static_lib "xros"
+fi
+if [ "$WATCHOS" = "yes" ]; then
+    build_simulator_static_lib "watch"
+    build_device_static_lib "watchos"
 fi
 if [ "$MACOS" = "yes" ]; then
     build_device_static_lib "macosx"
@@ -665,6 +705,33 @@ if [ "$XROS" = "yes" ]; then
     spopd # build
 
     info "Build of VLCKit.xcframework for xrOS completed"
+fi
+if [ "$WATCHOS" = "yes" ]; then
+    info "Building VLCKit.xcframework for watchOS"
+
+    frameworks=""
+    platform=""
+    if [ "$FARCH" = "all" ] || (! is_simulator_arch $FARCH);then
+        platform="watchos"
+        buildxcodeproj VLCKit ${platform} watchOS
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
+    fi
+    if [ "$FARCH" = "all" ] || (is_simulator_arch $arch);then
+        platform="watchsimulator"
+        buildxcodeproj VLCKit ${platform} "watchOS Simulator"
+        dsymfolder=$PROJECT_DIR/build/VLCKit-${platform}.xcarchive/dSYMs/VLCKit.framework.dSYM
+        frameworks="$frameworks -framework VLCKit-${platform}.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
+    fi
+
+    # Assumes both platforms were built currently
+    spushd build
+    rm -rf watchOS
+    mkdir watchOS
+    xcodebuild -create-xcframework $frameworks -output watchOS/VLCKit.xcframework
+    spopd # build
+
+    info "Build of VLCKit.xcframework for watchOS completed"
 fi
 if [ "$MACOS" = "yes" ]; then
     CURRENT_DIR=`pwd`
