@@ -1,0 +1,483 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7D42D4702C21A8E800CB1BE2 /* SimplePlayback Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 7D42D46F2C21A8E800CB1BE2 /* SimplePlayback Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		7D42D4752C21A8E800CB1BE2 /* SimplePlaybackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D42D4742C21A8E800CB1BE2 /* SimplePlaybackApp.swift */; };
+		7D42D4772C21A8E800CB1BE2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D42D4762C21A8E800CB1BE2 /* ContentView.swift */; };
+		7D42D4792C21A8E900CB1BE2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D42D4782C21A8E900CB1BE2 /* Assets.xcassets */; };
+		7D42D47C2C21A8E900CB1BE2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D42D47B2C21A8E900CB1BE2 /* Preview Assets.xcassets */; };
+		7D42D48B2C21AC0B00CB1BE2 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D42D48A2C21AC0B00CB1BE2 /* VLCKit.framework */; };
+		7D42D48C2C21AC0B00CB1BE2 /* VLCKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7D42D48A2C21AC0B00CB1BE2 /* VLCKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7D42D4712C21A8E800CB1BE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7D42D4632C21A8E800CB1BE2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7D42D46E2C21A8E800CB1BE2;
+			remoteInfo = "SimplePlayback Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7D42D4822C21A8E900CB1BE2 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				7D42D4702C21A8E800CB1BE2 /* SimplePlayback Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D42D48D2C21AC0B00CB1BE2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7D42D48C2C21AC0B00CB1BE2 /* VLCKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7D42D4692C21A8E800CB1BE2 /* SimplePlayback.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplePlayback.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D42D46F2C21A8E800CB1BE2 /* SimplePlayback Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SimplePlayback Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D42D4742C21A8E800CB1BE2 /* SimplePlaybackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePlaybackApp.swift; sourceTree = "<group>"; };
+		7D42D4762C21A8E800CB1BE2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7D42D4782C21A8E900CB1BE2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7D42D47B2C21A8E900CB1BE2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7D42D4882C21ABDA00CB1BE2 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D42D48A2C21AC0B00CB1BE2 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D42D48E2C21AC2200CB1BE2 /* SimplePlayback-Watch-App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "SimplePlayback-Watch-App-Info.plist"; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7D42D46C2C21A8E800CB1BE2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D42D48B2C21AC0B00CB1BE2 /* VLCKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7D42D4622C21A8E800CB1BE2 = {
+			isa = PBXGroup;
+			children = (
+				7D42D4732C21A8E800CB1BE2 /* SimplePlayback Watch App */,
+				7D42D46A2C21A8E800CB1BE2 /* Products */,
+				7D42D4872C21ABD700CB1BE2 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7D42D46A2C21A8E800CB1BE2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7D42D4692C21A8E800CB1BE2 /* SimplePlayback.app */,
+				7D42D46F2C21A8E800CB1BE2 /* SimplePlayback Watch App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7D42D4732C21A8E800CB1BE2 /* SimplePlayback Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				7D42D48E2C21AC2200CB1BE2 /* SimplePlayback-Watch-App-Info.plist */,
+				7D42D4742C21A8E800CB1BE2 /* SimplePlaybackApp.swift */,
+				7D42D4762C21A8E800CB1BE2 /* ContentView.swift */,
+				7D42D4782C21A8E900CB1BE2 /* Assets.xcassets */,
+				7D42D47A2C21A8E900CB1BE2 /* Preview Content */,
+			);
+			path = "SimplePlayback Watch App";
+			sourceTree = "<group>";
+		};
+		7D42D47A2C21A8E900CB1BE2 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				7D42D47B2C21A8E900CB1BE2 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		7D42D4872C21ABD700CB1BE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7D42D48A2C21AC0B00CB1BE2 /* VLCKit.framework */,
+				7D42D4882C21ABDA00CB1BE2 /* VLCKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7D42D4682C21A8E800CB1BE2 /* SimplePlayback */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D42D4832C21A8E900CB1BE2 /* Build configuration list for PBXNativeTarget "SimplePlayback" */;
+			buildPhases = (
+				7D42D4672C21A8E800CB1BE2 /* Resources */,
+				7D42D4822C21A8E900CB1BE2 /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7D42D4722C21A8E800CB1BE2 /* PBXTargetDependency */,
+			);
+			name = SimplePlayback;
+			productName = SimplePlayback;
+			productReference = 7D42D4692C21A8E800CB1BE2 /* SimplePlayback.app */;
+			productType = "com.apple.product-type.application.watchapp2-container";
+		};
+		7D42D46E2C21A8E800CB1BE2 /* SimplePlayback Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D42D47F2C21A8E900CB1BE2 /* Build configuration list for PBXNativeTarget "SimplePlayback Watch App" */;
+			buildPhases = (
+				7D42D46B2C21A8E800CB1BE2 /* Sources */,
+				7D42D46C2C21A8E800CB1BE2 /* Frameworks */,
+				7D42D46D2C21A8E800CB1BE2 /* Resources */,
+				7D42D48D2C21AC0B00CB1BE2 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SimplePlayback Watch App";
+			productName = "SimplePlayback Watch App";
+			productReference = 7D42D46F2C21A8E800CB1BE2 /* SimplePlayback Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7D42D4632C21A8E800CB1BE2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					7D42D4682C21A8E800CB1BE2 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					7D42D46E2C21A8E800CB1BE2 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+				};
+			};
+			buildConfigurationList = 7D42D4662C21A8E800CB1BE2 /* Build configuration list for PBXProject "SimplePlayback" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7D42D4622C21A8E800CB1BE2;
+			productRefGroup = 7D42D46A2C21A8E800CB1BE2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7D42D4682C21A8E800CB1BE2 /* SimplePlayback */,
+				7D42D46E2C21A8E800CB1BE2 /* SimplePlayback Watch App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7D42D4672C21A8E800CB1BE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7D42D46D2C21A8E800CB1BE2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D42D47C2C21A8E900CB1BE2 /* Preview Assets.xcassets in Resources */,
+				7D42D4792C21A8E900CB1BE2 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7D42D46B2C21A8E800CB1BE2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7D42D4772C21A8E800CB1BE2 /* ContentView.swift in Sources */,
+				7D42D4752C21A8E800CB1BE2 /* SimplePlaybackApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7D42D4722C21A8E800CB1BE2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7D42D46E2C21A8E800CB1BE2 /* SimplePlayback Watch App */;
+			targetProxy = 7D42D4712C21A8E800CB1BE2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7D42D47D2C21A8E900CB1BE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7D42D47E2C21A8E900CB1BE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		7D42D4802C21A8E900CB1BE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SimplePlayback Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SimplePlayback-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SimplePlayback;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.SimplePlayback.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Debug;
+		};
+		7D42D4812C21A8E900CB1BE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"SimplePlayback Watch App/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "SimplePlayback-Watch-App-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = SimplePlayback;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKWatchOnly = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.SimplePlayback.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 10.5;
+			};
+			name = Release;
+		};
+		7D42D4842C21A8E900CB1BE2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = SimplePlayback;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.SimplePlayback;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7D42D4852C21A8E900CB1BE2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_KEY_CFBundleDisplayName = SimplePlayback;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.SimplePlayback;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7D42D4662C21A8E800CB1BE2 /* Build configuration list for PBXProject "SimplePlayback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D42D47D2C21A8E900CB1BE2 /* Debug */,
+				7D42D47E2C21A8E900CB1BE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D42D47F2C21A8E900CB1BE2 /* Build configuration list for PBXNativeTarget "SimplePlayback Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D42D4802C21A8E900CB1BE2 /* Debug */,
+				7D42D4812C21A8E900CB1BE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7D42D4832C21A8E900CB1BE2 /* Build configuration list for PBXNativeTarget "SimplePlayback" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7D42D4842C21A8E900CB1BE2 /* Debug */,
+				7D42D4852C21A8E900CB1BE2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7D42D4632C21A8E800CB1BE2 /* Project object */;
+}
