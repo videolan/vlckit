@@ -131,7 +131,11 @@ buildxcodeproj()
             architectures="arm64"
         fi
         if [ "$WATCHOS" = "yes" ]; then
-            architectures="armv7k arm64_32"
+            if [ "$PLATFORM" = "watchsimulator" ]; then
+                architectures="x86_64 arm64"
+            else
+                architectures="arm64_32"
+            fi
         fi
     else
         architectures=`get_actual_arch $FARCH`
@@ -245,7 +249,6 @@ buildMobileKit() {
             if [ "$WATCHOS" = "yes" ]; then
                 info "building for watchOS"
                 buildLibVLC "arm64_32" "watchos"
-                buildLibVLC "armv7k" "watchos"
                 buildLibVLC "x86_64" "watchsimulator"
                 buildLibVLC "aarch64" "watchsimulator"
             fi
@@ -384,7 +387,6 @@ build_device_static_lib() {
         check_lipo "${OSSTYLE}os" armv7
     fi
     if [ "$WATCHOS" = "yes" ]; then
-        check_lipo "${OSSTYLE}" armv7k
         check_lipo "${OSSTYLE}" arm64_32
     fi
     # macosx and XR are not -os or -simulator suffixed in the script unfortunately.
