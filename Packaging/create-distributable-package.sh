@@ -22,6 +22,7 @@ IOS=no
 TVOS=no
 MACOS=no
 XROS=no
+WATCHOS=no
 BUILDFORALL=no
 VERBOSE=no
 USEZIP=no
@@ -46,6 +47,7 @@ OPTIONS:
    -m            Package VLCKit for iOS
    -t            Package VLCKit for tvOS
    -i            Package VLCKit for xrOS
+   -w            Package VLCKit for watchOS
    -a            Package VLCKit for all enabled OS
    -z            Use zip file format
    -d            Use dmg file format
@@ -53,7 +55,7 @@ EOF
 
 }
 
-while getopts "hvmxitza" OPTION
+while getopts "hvmxiwtza" OPTION
 do
      case $OPTION in
          h)
@@ -71,6 +73,9 @@ do
              ;;
          i)
              XROS=yes
+             ;;
+         w)
+             WATCHOS=yes
              ;;
          x)
              MACOS=yes
@@ -136,6 +141,14 @@ if [ "$XROS" = "yes" ]; then
     fi
     DMGITEMNAME="VLCKit-xrOS-REPLACEWITHVERSION"
 fi
+if [ "$WATCHOS" = "yes" ]; then
+    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
+        DMGFOLDERNAME="VLCKit-watchOS-binary"
+    else
+        DMGFOLDERNAME="VLCKit for watchOS - binary package"
+    fi
+    DMGITEMNAME="VLCKit-watchOS-REPLACEWITHVERSION"
+fi
 if [ "$BUILDFORALL" = "yes" ]; then
     if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
         DMGFOLDERNAME="VLCKit-binary"
@@ -189,6 +202,16 @@ if [ "$XROS" = "yes" ]; then
     dsymfolder=$BUILD_DIR/VLCKit-xros.xcarchive/dSYMs/VLCKit.framework.dSYM
     frameworks="$frameworks -framework $BUILD_DIR/VLCKit-xros.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
 fi
+if [ "$WATCHOS" = "yes" ]; then
+    if [ ! -e "build/watchOS/VLCKit.xcframework" ]; then
+        info "VLCKit for xrOS not found for distribution, creating... this will take long"
+        ./compileAndBuildVLCKit.sh -w -f
+    fi
+    dsymfolder=$BUILD_DIR/VLCKit-watchsimulator.xcarchive/dSYMs/VLCKit.framework.dSYM
+    frameworks="$frameworks -framework $BUILD_DIR/VLCKit-watchsimulator.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
+    dsymfolder=$BUILD_DIR/VLCKit-watchos.xcarchive/dSYMs/VLCKit.framework.dSYM
+    frameworks="$frameworks -framework $BUILD_DIR/VLCKit-watchos.xcarchive/Products/Library/Frameworks/VLCKit.framework -debug-symbols $dsymfolder"
+fi
 
 info "Deleting previous data"
 rm -rf "${DMGFOLDERNAME}"
@@ -211,6 +234,9 @@ if [ "$TVOS" = "yes" ]; then
 fi
 if [ "$XROS" = "yes" ]; then
     cp -R build/xrOS/VLCKit.xcframework "${DMGFOLDERNAME}"
+fi
+if [ "$WATCHOS" = "yes" ]; then
+    cp -R build/watchOS/VLCKit.xcframework "${DMGFOLDERNAME}"
 fi
 if [ "$IOS" = "yes" ]; then
     cp -R build/iOS/VLCKit.xcframework "${DMGFOLDERNAME}"
