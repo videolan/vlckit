@@ -27,7 +27,7 @@ continous-MobileVLCKit-main:
         - .continous-job-base-main
         - .continous-build-base-main
     variables:
-        BUILD_PARAM: "vf7"
+        BUILD_PARAM: "vf"
         JOB_NAME: "MobileVLCKit"
 
 continous-TVVLCKit-main:
