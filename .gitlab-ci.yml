@@ -76,7 +76,7 @@ dev-artifacts-MobileVLCKit-main:
         - .dev-artifacts-job-base-main
         - .dev-artifacts-build-base-main
     variables:
-        BUILD_PARAM: "vf7"
+        BUILD_PARAM: "vf"
         PACKAGING_PARAM: "vm"
         JOB_NAME: "MobileVLCKit"
 
