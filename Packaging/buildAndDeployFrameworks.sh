@@ -122,11 +122,6 @@ buildMobileVLCKit()
 
     local option="$1"
 
-    if [ "$DEPLOY_MOBILEVLCKIT" = "yes" ]; then
-        # enable legacy ARMv7 slice for distribution
-        option="-7"
-    fi
-
     if ! $BUILD_MOBILEVLCKIT $option; then
         log "Error" "MobileVLCKit build failed"
         rm -fr "build/"
