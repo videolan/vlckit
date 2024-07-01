@@ -1,4 +1,4 @@
-From e1e68b9e33c0344ce878ceb91565c3779ddbc024 Mon Sep 17 00:00:00 2001
+From 0729c2c78aabffc8146637755d37549e4338b9e8 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 09/12] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
@@ -39,7 +39,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 07df9220c3..4d1c229e8a 100644
+index 41a93a4fb5..064f4ab642 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -38,6 +38,12 @@ FFMPEGCONF = \
@@ -55,7 +55,7 @@ index 07df9220c3..4d1c229e8a 100644
  endif
  
  ifdef ENABLE_PDB
-@@ -232,6 +238,7 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
+@@ -239,6 +245,7 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
  	$(APPLY) $(SRC)/ffmpeg/0001-ffmpeg-add-target_os-support-for-emscripten.patch
  	$(APPLY) $(SRC)/ffmpeg/0011-avcodec-videotoolboxenc-disable-calls-on-unsupported.patch
  	$(APPLY) $(SRC)/ffmpeg/avcodec-fix-compilation-visionos.patch

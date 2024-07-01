@@ -1,4 +1,4 @@
-From 08d1cf71f4965b0c203002a20dd9283a592bad32 Mon Sep 17 00:00:00 2001
+From 1b134ea5c187361983a89c48346d787b10694209 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 25 Jan 2021 19:56:01 +0100
 Subject: [PATCH 06/12] webservices: avoid symbol conflict
