@@ -22,7 +22,7 @@ variables:
     script:
         - ./compileAndBuildVLCKit.sh -${BUILD_PARAM}
 
-continous-MobileVLCKit-main:
+continous-VLCKit-iOS-main:
     extends:
         - .continous-job-base-main
         - .continous-build-base-main
@@ -30,7 +30,7 @@ continous-MobileVLCKit-main:
         BUILD_PARAM: "vf"
         JOB_NAME: "MobileVLCKit"
 
-continous-TVVLCKit-main:
+continous-VLCKit-tvOS-main:
     extends:
         - .continous-job-base-main
         - .continous-build-base-main
@@ -38,13 +38,29 @@ continous-TVVLCKit-main:
         BUILD_PARAM: "vft"
         JOB_NAME: "TVVLCKit"
 
-continous-VLCKit-main:
+continous-VLCKit-macOS-main:
     extends:
         - .continous-job-base-main
         - .continous-build-base-main
     variables:
         BUILD_PARAM: "vx"
         JOB_NAME: "VLCKit"
+
+continous-VLCKit-xrOS-main:
+    extends:
+        - .continous-job-base-main
+        - .continous-build-base-main
+    variables:
+        BUILD_PARAM: "vfi"
+        JOB_NAME: "VLCKit-watchOS"
+
+continous-VLCKit-watchOS-main:
+    extends:
+        - .continous-job-base-main
+        - .continous-build-base-main
+    variables:
+        BUILD_PARAM: "vfw"
+        JOB_NAME: "VLCKit-watchOS"
 
 ############################################################
 ## Development artifacts builds                           ##
@@ -71,32 +87,50 @@ continous-VLCKit-main:
         - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
         - mv *.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
 
-dev-artifacts-MobileVLCKit-main:
+dev-artifacts-VLCKit-iOS-main:
     extends:
         - .dev-artifacts-job-base-main
         - .dev-artifacts-build-base-main
     variables:
-        BUILD_PARAM: "vf"
-        PACKAGING_PARAM: "vm"
-        JOB_NAME: "MobileVLCKit"
+        BUILD_PARAM: "f"
+        PACKAGING_PARAM: "m"
+        JOB_NAME: "VLCKit-iOS"
 
-dev-artifacts-TVVLCKit-main:
+dev-artifacts-VLCKit-tvOS-main:
     extends:
         - .dev-artifacts-job-base-main
         - .dev-artifacts-build-base-main
     variables:
-        BUILD_PARAM: "vft"
-        PACKAGING_PARAM: "vt"
-        JOB_NAME: "TVVLCKit"
+        BUILD_PARAM: "ft"
+        PACKAGING_PARAM: "t"
+        JOB_NAME: "VLCKit-tvOS"
 
-dev-artifacts-VLCKit-main:
+dev-artifacts-VLCKit-macOS-main:
     extends:
         - .dev-artifacts-job-base-main
         - .dev-artifacts-build-base-main
     variables:
-        BUILD_PARAM: "vx"
-        PACKAGING_PARAM: "vx"
-        JOB_NAME: "VLCKit"
+        BUILD_PARAM: "x"
+        PACKAGING_PARAM: "x"
+        JOB_NAME: "VLCKit-macOS"
+
+dev-artifacts-VLCKit-xrOS-main:
+    extends:
+        - .dev-artifacts-job-base-main
+        - .dev-artifacts-build-base-main
+    variables:
+        BUILD_PARAM: "fi"
+        PACKAGING_PARAM: "i"
+        JOB_NAME: "VLCKit-xrOS"
+
+dev-artifacts-VLCKit-watchOS-main:
+    extends:
+        - .dev-artifacts-job-base-main
+        - .dev-artifacts-build-base-main
+    variables:
+        BUILD_PARAM: "fw"
+        PACKAGING_PARAM: "w"
+        JOB_NAME: "VLCKit-watchOS"
 
 ####################
 ## Release builds ##
