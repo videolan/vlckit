@@ -1,7 +1,7 @@
-From a8304665f87e884135e75499f88305bf82d7eef0 Mon Sep 17 00:00:00 2001
+From f251b34edae8bf3f674621ceb7350be380d2b8a7 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:59:13 +0200
-Subject: [PATCH 01/12] Revert "contrib: live555: update to 2022.07.14"
+Subject: [PATCH 01/11] Revert "contrib: live555: update to 2022.07.14"
 
 This reverts commit 78998cab182bbdbd1915deeead1ad4bc945b514e.
 ---
@@ -17,7 +17,6 @@ This reverts commit 78998cab182bbdbd1915deeead1ad4bc945b514e.
  contrib/src/live555/winstore.patch            |  30 ++++
  10 files changed, 360 insertions(+), 113 deletions(-)
  create mode 100644 contrib/src/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
- delete mode 100644 contrib/src/live555/android-no-ifaddrs.patch
  create mode 100644 contrib/src/live555/in_addr-s_addr-field.patch
  create mode 100644 contrib/src/live555/no-null-reference.patch
  create mode 100644 contrib/src/live555/winstore.patch
@@ -68,10 +67,9 @@ index c4a0e2e9b7..6f477dc71e 100644
  --- live.2016.07.19/Makefile.head.orig	2017-01-19 18:47:50.376062631 +0100
  +++ live.2016.07.19/Makefile.head	2017-01-19 18:48:09.940063212 +0100
 diff --git a/contrib/src/live555/android-no-ifaddrs.patch b/contrib/src/live555/android-no-ifaddrs.patch
-deleted file mode 100644
-index 1944a7ba1b..0000000000
+index 1944a7ba1b..e69de29bb2 100644
 --- a/contrib/src/live555/android-no-ifaddrs.patch
-+++ /dev/null
++++ b/contrib/src/live555/android-no-ifaddrs.patch
 @@ -1,13 +0,0 @@
 -diff -ur live.orig/groupsock/GroupsockHelper.cpp live/groupsock/GroupsockHelper.cpp
 ---- live.orig/groupsock/GroupsockHelper.cpp	2022-07-20 18:02:26.691125894 +0000
@@ -585,7 +583,7 @@ index 0000000000..a1dea30fbc
 + 			     char const* rangeParamsStr, char const* rtpInfoParamsStr);
 +   Boolean handleTEARDOWNResponse(MediaSession& session, MediaSubsession& subsession);
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index c170e2de9a..6a748e76b6 100644
+index 752c48eae7..e40370a881 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,6 +1,6 @@
@@ -614,10 +612,10 @@ index c170e2de9a..6a748e76b6 100644
  ifdef HAVE_DARWIN_OS
 -LIVE_TARGET := macosx-bigsur
 +LIVE_TARGET := macosx
- else
+ endif
  ifdef HAVE_BSD
  LIVE_TARGET := freebsd
-@@ -75,6 +74,10 @@ endif
+@@ -74,6 +73,10 @@ endif
  	mv live live.$(LIVE555_VERSION)
  	# Patch for MSG_NOSIGNAL
  	$(APPLY) $(SRC)/live555/live555-nosignal.patch
@@ -628,7 +626,7 @@ index c170e2de9a..6a748e76b6 100644
  	# Add a pkg-config file
  	$(APPLY) $(SRC)/live555/add-pkgconfig-file.patch
  	# Expose Server:
-@@ -83,8 +86,8 @@ endif
+@@ -82,8 +85,8 @@ endif
  	$(APPLY) $(SRC)/live555/mingw-static-libs.patch
  	# FormatMessageA is available on all Windows versions, even WinRT
  	$(APPLY) $(SRC)/live555/live555-formatmessage.patch
@@ -676,5 +674,5 @@ index 0000000000..7723e3ba12
 + #endif
 +
 -- 
-2.39.3 (Apple Git-146)
+2.32.1 (Apple Git-133)
 
