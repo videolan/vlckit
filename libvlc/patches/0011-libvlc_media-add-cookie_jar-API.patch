@@ -1,4 +1,4 @@
-From 323926807d46e11183202cb7c1ec1c66053546c2 Mon Sep 17 00:00:00 2001
+From 80e099af7ca7d3723cbedf73576015fd7bb3e6a3 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
 Subject: [PATCH 11/11] libvlc_media: add cookie_jar API
@@ -71,7 +71,7 @@ index 4e29fb6385..0ee83fb564 100644
  libvlc_release
  libvlc_renderer_item_name
 diff --git a/lib/media.c b/lib/media.c
-index 489c05d377..22f735b255 100644
+index 20ab8ad42b..57fae57798 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -377,6 +377,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
@@ -138,7 +138,7 @@ index dd761acc9f..de5dfd9c6b 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 38fd4b9553..fed713a644 100644
+index ff67f89065..02c71771d8 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -163,5 +163,5 @@ index 38fd4b9553..fed713a644 100644
      if (ret == VLC_SUCCESS)
      {
 -- 
-2.32.1 (Apple Git-133)
+2.39.3 (Apple Git-146)
 
