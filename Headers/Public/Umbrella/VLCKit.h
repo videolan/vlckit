@@ -24,6 +24,7 @@
 
 #include <TargetConditionals.h>
 
+#import <VLCKit/VLCDrawable.h>
 #import <VLCKit/VLCAudio.h>
 #import <VLCKit/VLCLibrary.h>
 #import <VLCKit/VLCMedia.h>

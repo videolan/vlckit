@@ -271,7 +271,10 @@ OBJC_VISIBLE
 
 /**
  * set/retrieve a video view for rendering
- * This can be any UIView or NSView or instances of VLCVideoView / VLCVideoLayer if running on macOS
+ * This can be any 
+ * - UIView or NSView
+ * - NSObject conforming to VLCDrawable protocol
+ * - VLCVideoView or VLCVideoLayer
  */
 @property (strong, nullable) id drawable; /* The videoView or videoLayer */
 
