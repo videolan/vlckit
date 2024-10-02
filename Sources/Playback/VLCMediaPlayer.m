@@ -97,6 +97,8 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 // TODO: Documentation
 @interface VLCMediaPlayer (Private)
 
+@property (NS_NONATOMIC_IOSONLY, getter=isSeeking, readwrite) BOOL seeking;
+
 - (instancetype)initWithDrawable:(id)aDrawable options:(NSArray *)options;
 
 - (void)registerObservers;
@@ -135,6 +137,27 @@ static void HandleWatchTimeDiscontinuity(libvlc_time_t system_date, void * opaqu
         [eventsHandler handleEvent:^(id _Nonnull object) {
             VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerHandleTimeDiscontinuity:system_date];
+        }];
+    }
+}
+
+static void HandleWatchTimeOnSeek(
+    const libvlc_media_player_time_point_t *value, void *opaque)
+{
+    BOOL isSeeking = YES;
+    libvlc_media_player_time_point_t newTimePoint = {};
+    if (value == NULL) {
+        isSeeking = NO;
+    } else {
+        newTimePoint = *value;
+    }
+    @autoreleasepool {
+        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler*)opaque;
+        [eventsHandler handleEvent:^(id _Nonnull object) {
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
+            if (isSeeking)
+                [mediaPlayer mediaPlayerLastTimePointUpdated:newTimePoint];
+            mediaPlayer.seeking = isSeeking;
         }];
     }
 }
@@ -391,6 +414,7 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
     int64_t _lastInterpolatedTime;              ///< Cached time of the media being played
     int64_t _systemDateOfDiscontinuity;
     BOOL _timeDiscontinuityState;
+    BOOL _isSeeking;
     VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
     id _drawable;                               ///< The drawable associated to this media player
     NSMutableArray *_snapshots;                 ///< Array with snapshot file names
@@ -813,7 +837,8 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
                                    _minimalWatchTimePeriod,
                                    &HandleWatchTimeUpdate,
                                    &HandleWatchTimeDiscontinuity,
-                                   (__bridge void *)(self));
+                                   &HandleWatchTimeOnSeek,
+                                   (__bridge void *)(_eventsHandler));
 }
 
 - (int64_t)minimalTimePeriod
@@ -1289,6 +1314,25 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
     libvlc_media_player_set_position(_playerInstance, newPosition, NO);
 }
 
+- (BOOL)isSeeking
+{
+    __block BOOL isSeeking = NO;
+    dispatch_sync(_timeChangeLockQueue, ^{
+        isSeeking = _isSeeking;
+    });
+    return isSeeking;
+}
+
+- (void)setSeeking:(BOOL)seeking {
+    if (self.isSeeking == seeking)
+        return;
+    [self willChangeValueForKey:@"isSeeking"];
+    dispatch_sync(_timeChangeLockQueue, ^{
+        _isSeeking = seeking;
+    });
+    [self didChangeValueForKey:@"isSeeking"];
+}
+
 - (BOOL)isSeekable
 {
     return libvlc_media_player_is_seekable(_playerInstance);
@@ -1446,6 +1490,7 @@ static const struct event_handler_entry
                                        _minimalWatchTimePeriod,
                                        &HandleWatchTimeUpdate,
                                        &HandleWatchTimeDiscontinuity,
+                                       &HandleWatchTimeOnSeek,
                                        (__bridge void *)(_eventsHandler));
     });
 }
@@ -1476,6 +1521,8 @@ static const struct event_handler_entry
 
 - (void)mediaPlayerLastTimePointUpdated:(const libvlc_media_player_time_point_t)newTimePoint
 {
+    if (self.isSeeking)
+        return;
     dispatch_sync(_timeChangeLockQueue, ^{
         _timeDiscontinuityState = NO;
         _systemDateOfDiscontinuity = 0;

@@ -775,6 +775,13 @@ typedef NS_ENUM(unsigned, VLCAudioMixMode)
 @property (NS_NONATOMIC_IOSONLY) double position;
 
 /**
+ * property whether the current input is in a seeking state
+ * \return BOOL value
+ */
+
+@property (NS_NONATOMIC_IOSONLY, getter=isSeeking, readonly) BOOL seeking;
+
+/**
  * property whether the current input is seekable or not, e.g. it's a live stream
  * \note Setting position or time for non-seekable inputs does not have any effect and will fail silently
  * \return BOOL value
