@@ -115,6 +115,34 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 - (void)mediaPlayerSnapshot:(NSString *)fileName;
 @end
 
+@interface VLCMediaPlayer ()
+{
+    VLCLibrary *_privateLibrary;                ///< Internal
+    libvlc_media_player_t * _playerInstance;    ///< Internal
+    VLCMedia * _media;                          ///< Current media being played
+    libvlc_media_player_time_point_t _lastTimePoint; ///< Cached time point of the media being played
+    double _lastInterpolatedPosition;           ///< Cached position of the media being played
+    int64_t _lastInterpolatedTime;              ///< Cached time of the media being played
+    int64_t _systemDateOfDiscontinuity;
+    BOOL _timeDiscontinuityState;
+    BOOL _isSeeking;
+    VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
+    id _drawable;                               ///< The drawable associated to this media player
+    NSMutableArray *_snapshots;                 ///< Array with snapshot file names
+    VLCAudio *_audio;                           ///< The audio controller
+    libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
+    dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
+    int64_t _minimalWatchTimePeriod;            ///< Minimal period for the watch timer
+    VLCEventsHandler*       _eventsHandler;     ///< Handles libvlc event callbacks
+}
+
+/// Timer used to update time watch point interpolation on regular intervals
+@property (nonatomic) NSTimer *timeChangeUpdateTimer;
+@property (nonatomic) dispatch_queue_t timeChangeLockQueue;
+@property (NS_NONATOMIC_IOSONLY, getter=isSeeking, readwrite) BOOL seeking;
+
+@end
+
 static void HandleWatchTimeUpdate(const libvlc_media_player_time_point_t *value, void * opaque)
 {
     if (value == NULL || value->ts_us == -1) {
@@ -403,33 +431,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
         }];
     }
 }
-
-@interface VLCMediaPlayer ()
-{
-    VLCLibrary *_privateLibrary;                ///< Internal
-    libvlc_media_player_t * _playerInstance;    ///< Internal
-    VLCMedia * _media;                          ///< Current media being played
-    libvlc_media_player_time_point_t _lastTimePoint; ///< Cached time point of the media being played
-    double _lastInterpolatedPosition;           ///< Cached position of the media being played
-    int64_t _lastInterpolatedTime;              ///< Cached time of the media being played
-    int64_t _systemDateOfDiscontinuity;
-    BOOL _timeDiscontinuityState;
-    BOOL _isSeeking;
-    VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
-    id _drawable;                               ///< The drawable associated to this media player
-    NSMutableArray *_snapshots;                 ///< Array with snapshot file names
-    VLCAudio *_audio;                           ///< The audio controller
-    libvlc_video_viewpoint_t *_viewpoint;       ///< Current viewpoint of the media
-    dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
-    int64_t _minimalWatchTimePeriod;            ///< Minimal period for the watch timer
-    VLCEventsHandler*       _eventsHandler;     ///< Handles libvlc event callbacks
-}
-
-/// Timer used to update time watch point interpolation on regular intervals
-@property (nonatomic) NSTimer *timeChangeUpdateTimer;
-@property (nonatomic) dispatch_queue_t timeChangeLockQueue;
-
-@end
 
 @implementation VLCMediaPlayer
 @synthesize libraryInstance = _privateLibrary;
