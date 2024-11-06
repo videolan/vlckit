@@ -1,0 +1,32 @@
+From 6191b50f94179558279a70a727734d84c642ad76 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Tue, 5 Nov 2024 11:38:17 +0100
+Subject: [PATCH] extras/tools: prefer shasum over sha512sum
+
+This fixes the operation on macOS 15 which is shipping an incompatible
+variant of that tool.
+---
+ extras/tools/tools.mak | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/extras/tools/tools.mak b/extras/tools/tools.mak
+index d6d0faca8c..7322932a17 100644
+--- a/extras/tools/tools.mak
++++ b/extras/tools/tools.mak
+@@ -25,10 +25,10 @@ else
+ download = $(error Neither curl nor wget found!)
+ endif
+ 
+-ifeq ($(shell command -v sha512sum >/dev/null 2>&1 || echo FAIL),)
+-SHA512SUM = sha512sum -c
+-else ifeq ($(shell command -v shasum >/dev/null 2>&1 || echo FAIL),)
++ifeq ($(shell command -v shasum >/dev/null 2>&1 || echo FAIL),)
+ SHA512SUM = shasum -a 512 --check
++else ifeq ($(shell command -v sha512sum >/dev/null 2>&1 || echo FAIL),)
++SHA512SUM = sha512sum -c
+ else ifeq ($(shell command -v openssl >/dev/null 2>&1 || echo FAIL),)
+ SHA512SUM = openssl dgst -sha512
+ else
+-- 
+2.39.5 (Apple Git-154)
+
