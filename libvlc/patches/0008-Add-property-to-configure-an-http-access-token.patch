@@ -1,7 +1,7 @@
-From 1b0efd26cfe425241df79b5c0ac6342be2b65316 Mon Sep 17 00:00:00 2001
+From 8bff2d9043a32a9d91a24febc0288d23b64c29d4 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
-Subject: [PATCH 09/11] Add property to configure an http access token
+Subject: [PATCH 08/11] Add property to configure an http access token
 
 ---
  modules/access/http/access.c                   | 8 ++++++--
@@ -94,10 +94,10 @@ index de172200cc..ffb31e998e 100644
      struct vlc_url_t crd_url;
      vlc_UrlParse(&crd_url, params.getUrl().c_str());
 diff --git a/src/libvlc.c b/src/libvlc.c
-index de9537f2d2..be7077c952 100644
+index 51ccfcb92d..814cb85e95 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
-@@ -267,6 +267,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
+@@ -260,6 +260,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
      var_Create( p_libvlc, "app-version", VLC_VAR_STRING );
      var_SetString( p_libvlc, "app-version", PACKAGE_VERSION );
  

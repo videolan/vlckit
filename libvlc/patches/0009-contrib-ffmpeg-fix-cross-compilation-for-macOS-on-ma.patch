@@ -1,7 +1,7 @@
-From 0a4e81c34f34712099dd70fc4c553fd5d4845527 Mon Sep 17 00:00:00 2001
+From d2a22253c5866a6b6f03dfbe3aad418d7d4e5ef9 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 16 Feb 2021 17:04:59 +0100
-Subject: [PATCH 10/11] contrib/ffmpeg: fix cross-compilation for macOS on
+Subject: [PATCH 09/11] contrib/ffmpeg: fix cross-compilation for macOS on
  macOS
 
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 10/11] contrib/ffmpeg: fix cross-compilation for macOS on
  1 file changed, 2 insertions(+)
 
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 064f4ab642..8df01586fc 100644
+index 189833afe6..a9ccc645e7 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -154,6 +154,8 @@ FFMPEGCONF += --enable-parser='aac,aac_latm,ac3,adpcm,amr,aac_latm,ape,cook,dca,
+@@ -157,6 +157,8 @@ FFMPEGCONF += --enable-parser='aac,aac_latm,ac3,adpcm,amr,aac_latm,ape,cook,dca,
  FFMPEGCONF += --enable-demuxer='aac,ac3,adts,aiff,ape,asf,au,avi,caf,daud,dirac,dts,dv,ea,flac,flv,gsm,ivf,matroska,mmf,mov,mp3,mpeg,ogg,pcm,rm,sbc,sdp,shorten,voc,w64,wav,wv'
  FFMPEGCONF += --enable-swresample
  endif

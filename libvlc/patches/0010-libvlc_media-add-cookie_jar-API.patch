@@ -1,7 +1,7 @@
-From 80e099af7ca7d3723cbedf73576015fd7bb3e6a3 Mon Sep 17 00:00:00 2001
+From ef5394e010272ab6ae6c2a11f5c3ab1c9d246697 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 11/11] libvlc_media: add cookie_jar API
+Subject: [PATCH 10/11] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -12,10 +12,10 @@ Subject: [PATCH 11/11] libvlc_media: add cookie_jar API
  5 files changed, 71 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index b31fed8dee..b8e7122ec1 100644
+index 05ae456394..25e8e7cc8d 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -907,6 +907,41 @@ LIBVLC_API
+@@ -908,6 +908,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -58,10 +58,10 @@ index b31fed8dee..b8e7122ec1 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 4e29fb6385..0ee83fb564 100644
+index 2db44c951b..0dd171dba6 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -213,6 +213,8 @@ libvlc_media_get_meta_extra
+@@ -215,6 +215,8 @@ libvlc_media_get_meta_extra
  libvlc_media_set_meta_extra
  libvlc_media_get_meta_extra_names
  libvlc_media_meta_extra_names_release
@@ -71,18 +71,18 @@ index 4e29fb6385..0ee83fb564 100644
  libvlc_release
  libvlc_renderer_item_name
 diff --git a/lib/media.c b/lib/media.c
-index 20ab8ad42b..57fae57798 100644
+index 0152051555..593b72de7e 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -377,6 +377,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
-     atomic_init(&p_md->parsed_status, libvlc_media_parsed_status_none);
+@@ -376,6 +376,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
+     p_md->id = VLC_PREPARSER_REQ_ID_INVALID;
  
      libvlc_event_manager_init( &p_md->event_manager, p_md );
 +    p_md->p_cookie_jar      = NULL;
  
      input_item_Hold( p_md->p_input_item );
  
-@@ -506,6 +507,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
+@@ -505,6 +506,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
  
      input_item_Release( p_md->p_input_item );
  
@@ -92,7 +92,7 @@ index 20ab8ad42b..57fae57798 100644
      libvlc_event_manager_destroy( &p_md->event_manager );
      free( p_md );
  }
-@@ -1140,3 +1144,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+@@ -1200,3 +1204,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
      free( pp_slaves );
  }
@@ -118,27 +118,27 @@ index 20ab8ad42b..57fae57798 100644
 +        vlc_http_cookies_clear( p_md->p_cookie_jar );
 +}
 diff --git a/lib/media_internal.h b/lib/media_internal.h
-index dd761acc9f..de5dfd9c6b 100644
+index 16dce3af28..5d7ffc7556 100644
 --- a/lib/media_internal.h
 +++ b/lib/media_internal.h
-@@ -31,6 +31,7 @@
- #include <vlc_input.h>
+@@ -32,6 +32,7 @@
  #include <vlc_player.h>
+ #include <vlc_preparser.h>
  #include <vlc_atomic.h>
 +#include <vlc_http.h>
  
  struct libvlc_media_t
  {
-@@ -48,6 +49,7 @@ struct libvlc_media_t
-     atomic_uint worker_count;
+@@ -50,6 +51,7 @@ struct libvlc_media_t
  
      _Atomic libvlc_media_parsed_status_t parsed_status;
+     vlc_preparser_req_id id;
 +    vlc_http_cookie_jar_t *p_cookie_jar;
  };
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index ff67f89065..02c71771d8 100644
+index 1f798c7a54..a81dfba683 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
