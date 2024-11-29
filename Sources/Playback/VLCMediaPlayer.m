@@ -126,6 +126,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
     int64_t _systemDateOfDiscontinuity;
     BOOL _timeDiscontinuityState;
     BOOL _isSeeking;
+    dispatch_block_t _onSeekCompletion;
     VLCMediaPlayerState _cachedState;           ///< Cached state of the media being played
     id _drawable;                               ///< The drawable associated to this media player
     NSMutableArray *_snapshots;                 ///< Array with snapshot file names
@@ -140,6 +141,7 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
 @property (nonatomic) NSTimer *timeChangeUpdateTimer;
 @property (nonatomic) dispatch_queue_t timeChangeLockQueue;
 @property (NS_NONATOMIC_IOSONLY, getter=isSeeking, readwrite) BOOL seeking;
+@property (NS_NONATOMIC_IOSONLY) dispatch_block_t onSeekCompletion;
 
 @end
 
@@ -185,6 +187,11 @@ static void HandleWatchTimeOnSeek(
             VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             if (isSeeking)
                 [mediaPlayer mediaPlayerLastTimePointUpdated:newTimePoint];
+            else if (mediaPlayer.isSeeking && mediaPlayer.onSeekCompletion) {
+                dispatch_block_t onSeekCompletion = mediaPlayer.onSeekCompletion;
+                dispatch_async(dispatch_get_main_queue(), onSeekCompletion);
+                mediaPlayer.onSeekCompletion = nil;
+            }
             mediaPlayer.seeking = isSeeking;
         }];
     }
@@ -1222,12 +1229,19 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 }
 
 - (void)jumpWithOffset:(int)interval {
-    if ([self isSeekable]) {
-        int currentTime = [[self time] intValue];
-        int targetTime = (currentTime + interval);
-        VLCTime *newTime = [VLCTime timeWithInt: targetTime];
-        [self setTime: newTime];
-    }
+    [self jumpWithOffset:interval completion:nil];
+}
+
+- (BOOL)jumpWithOffset:(int)interval completion:(dispatch_block_t)completion {
+    if (![self isSeekable])
+        return NO;
+
+    self.onSeekCompletion = completion;
+    int currentTime = [[self time] intValue];
+    int targetTime = (currentTime + interval);
+    VLCTime *newTime = [VLCTime timeWithInt: targetTime];
+    [self setTime: newTime];
+    return YES;
 }
 
 - (void)jumpBackward:(double)interval
@@ -1332,6 +1346,23 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
         _isSeeking = seeking;
     });
     [self didChangeValueForKey:@"isSeeking"];
+}
+
+- (dispatch_block_t)onSeekCompletion
+{
+    __block dispatch_block_t onSeekCompletion;
+    dispatch_sync(_timeChangeLockQueue, ^{
+        onSeekCompletion = _onSeekCompletion;
+    });
+    return onSeekCompletion;
+}
+
+- (void)setOnSeekCompletion:(dispatch_block_t)onSeekCompletion {
+    if (self.onSeekCompletion == onSeekCompletion)
+        return;
+    dispatch_sync(_timeChangeLockQueue, ^{
+        _onSeekCompletion = onSeekCompletion;
+    });
 }
 
 - (BOOL)isSeekable

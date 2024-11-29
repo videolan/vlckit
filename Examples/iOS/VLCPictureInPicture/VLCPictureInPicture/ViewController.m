@@ -39,8 +39,6 @@
 {
     VLCMediaPlayer *_mediaPlayer;
     VLCLibrary *_vlc;
-    BOOL _playAfterSeek;
-    BOOL _invalidatePipAfterSeek;
 }
 
 - (void)viewDidLoad {
@@ -143,10 +141,12 @@
     [_mediaPlayer pause];
 }
 
-- (void)seekBy:(int64_t)offset {
-    _playAfterSeek = YES;
-    int64_t mediaTime = _mediaPlayer.time.value.integerValue;
-    [_mediaPlayer jumpWithOffset:(int)offset];
+- (void)seekBy:(int64_t)offset completion:(dispatch_block_t)completion {
+    [_mediaPlayer jumpWithOffset:(int)offset completion:completion];
+}
+
+- (BOOL)isMediaSeekable {
+    return _mediaPlayer.isSeekable;
 }
 
 - (BOOL)isMediaPlaying {
@@ -158,17 +158,7 @@
 - (void)mediaPlayerStateChanged:(VLCMediaPlayerState)newState {
     __block ViewController *vc = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        // Some media player apis can't be called from the caller's thread
-        // Hence We have to dispatch to another thread
         [vc.pipController invalidatePlaybackState];
-        int64_t mediaTime = vc->_mediaPlayer.time.value.integerValue;
-        if (!vc->_mediaPlayer.isPlaying && vc->_playAfterSeek)
-        {
-            // It seems seek is pausing playback
-            // This is a workaround to continue playback after a seek
-            vc->_playAfterSeek = NO;
-            [vc->_mediaPlayer play];
-        }
         vc = nil;
     });
 }

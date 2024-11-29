@@ -660,6 +660,15 @@ typedef NS_ENUM(unsigned, VLCAudioMixMode)
 - (void)jumpWithOffset:(int)offset;
 
 /**
+ * Jumps in current stream if seeking is supported and calls completion block
+ * when seeiking is finished to resume playback.
+ * \param offset interval requested from current time, in milliseconds.
+ * \param completion completion block called when seeking is finished
+ * \discussion completion block will be called on main thread.
+ */
+- (BOOL)jumpWithOffset:(int)interval completion:(dispatch_block_t)completion;
+
+/**
  * Jumps shortly backward in current stream if seeking is supported.
  * \param interval to skip, in sec.
  */
