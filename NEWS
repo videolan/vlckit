@@ -1,10 +1,13 @@
 Version 4.0.0:
 --------------
-- Remove support for ARMv7s, use the regular ARMv7 slice instead
+- Remove support for ARMv7s, use the regular, optional ARMv7 slice instead
 - Removed all API deprecated in version 3
 - Rename buildMobileVLCKit to compileAndBuildVLCKit
 - using libvlc HEAD leading to v4
 - unified Xcode project for all 3 flavors of the framework
+- unified VLCKit for all Apple platforms
+- added support for visionOS and watchOS
+- added support for Picture-in-Picture playback on iOS and macOS
 - new metadata API
 - new track management and selection API
 - support for two subtitles tracks at the same time
