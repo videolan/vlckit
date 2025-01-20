@@ -364,7 +364,7 @@ static const struct event_handler_entry {
     // we are using the default time-out value
     return [self parseWithOptions:options
                           timeout:timeoutValue
-                          library:[[VLCLibrary sharedLibrary] instance]];
+                          library:[VLCLibrary sharedLibrary]];
 }
 
 - (int)parseWithOptions:(VLCMediaParsingOptions)options
