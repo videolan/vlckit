@@ -1,4 +1,4 @@
-From 4dad613fa00b1238a1306dc1c53226fc5b319416 Mon Sep 17 00:00:00 2001
+From bac46c64f655b9b3b93826945d286cb7b737336f Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
 Subject: [PATCH 10/11] libvlc_media: add cookie_jar API
@@ -58,7 +58,7 @@ index 05ae456394..25e8e7cc8d 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index 2db44c951b..0dd171dba6 100644
+index a79147dec9..b7894a2570 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
 @@ -215,6 +215,8 @@ libvlc_media_get_meta_extra
@@ -71,7 +71,7 @@ index 2db44c951b..0dd171dba6 100644
  libvlc_release
  libvlc_renderer_item_name
 diff --git a/lib/media.c b/lib/media.c
-index 0152051555..593b72de7e 100644
+index f417e3a3bf..870d53b6d1 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -376,6 +376,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
@@ -138,7 +138,7 @@ index 16dce3af28..5d7ffc7556 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 1f798c7a54..a81dfba683 100644
+index 03b596b893..3ada802d5f 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -149,7 +149,7 @@ index 1f798c7a54..a81dfba683 100644
  
      /* Video */
      var_Create (mp, "vout", VLC_VAR_STRING|VLC_VAR_DOINHERIT);
-@@ -980,6 +981,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -982,6 +983,12 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
      vlc_player_t *player = p_mi->player;
      vlc_player_Lock(player);
  
