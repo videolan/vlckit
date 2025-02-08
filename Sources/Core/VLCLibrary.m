@@ -189,7 +189,9 @@ static id<VLCEventsConfiguring> _sharedEventsConfiguration = nil;
                       @"--no-osd",
                       @"--no-video-title-show",
                       @"--no-snapshot-preview",
+#if !TARGET_OS_WATCH
                       @"--http-reconnect",
+#endif
 #ifndef NOSCARYCODECS
 #ifndef __LP64__
                       @"--avcodec-fast",
