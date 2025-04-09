@@ -105,6 +105,17 @@ static id<VLCEventsConfiguring> _sharedEventsConfiguration = nil;
     [self setSharedEventsConfiguration:[VLCEventsLegacyConfiguration new]];
 }
 
++ (nullable NSString *)currentErrorMessage
+{
+    const char * __nullable errmsg = libvlc_errmsg();
+    return errmsg ? @(errmsg) : nil;
+}
+
++ (void)setCurrentErrorMessage:(nullable NSString *)currentErrorMessage
+{
+    currentErrorMessage ? libvlc_printerr(currentErrorMessage.UTF8String) : libvlc_clearerr();
+}
+
 + (VLCLibrary *)sharedLibrary
 {
     static dispatch_once_t onceToken;
