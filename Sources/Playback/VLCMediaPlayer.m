@@ -1667,6 +1667,24 @@ static const struct event_handler_entry
 
 #pragma mark - Track Selection
 
+- (void)selectTrackAtIndex:(NSInteger)index type:(VLCMediaTrackType)type
+{
+    libvlc_track_type_t trackType = (libvlc_track_type_t) type;
+    libvlc_media_tracklist_t *tracklist = libvlc_media_player_get_tracklist(_playerInstance, trackType, false);
+
+    if (!tracklist) {
+        return;
+    }
+
+    const size_t tracklistCount = libvlc_media_tracklist_count(tracklist);
+    if (index >= 0 && index < tracklistCount) {
+        libvlc_media_track_t *track = libvlc_media_tracklist_at(tracklist, index);
+        libvlc_media_player_select_track(_playerInstance, track);
+    }
+
+    libvlc_media_tracklist_delete(tracklist);
+}
+
 - (void)deselectAllAudioTracks
 {
     libvlc_media_player_unselect_track_type(_playerInstance, libvlc_track_audio);

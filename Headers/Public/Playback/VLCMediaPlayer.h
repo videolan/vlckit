@@ -873,6 +873,13 @@ typedef NS_ENUM(unsigned, VLCAudioMixMode)
 @property(nonatomic, readonly, copy) NSArray<VLCMediaPlayerTrack *> *textTracks;
 
 /**
+ * Select a track of a given type at the given index
+ * \param index position of the track in the list
+ * \param type type of the track being selected
+ */
+- (void)selectTrackAtIndex:(NSInteger)index type:(VLCMediaTrackType)type;
+
+/**
  * deselect all audio tracks
  */
 - (void)deselectAllAudioTracks;
