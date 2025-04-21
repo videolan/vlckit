@@ -1,7 +1,7 @@
-From bac46c64f655b9b3b93826945d286cb7b737336f Mon Sep 17 00:00:00 2001
+From a3888110ab5e6332b7dd7e0dc4c4f62c3ad3d36f Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 10/11] libvlc_media: add cookie_jar API
+Subject: [PATCH 10/12] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -58,10 +58,10 @@ index 05ae456394..25e8e7cc8d 100644
  
  # ifdef __cplusplus
 diff --git a/lib/libvlc.sym b/lib/libvlc.sym
-index a79147dec9..b7894a2570 100644
+index 707447e1bd..fdbc22b8e9 100644
 --- a/lib/libvlc.sym
 +++ b/lib/libvlc.sym
-@@ -215,6 +215,8 @@ libvlc_media_get_meta_extra
+@@ -217,6 +217,8 @@ libvlc_media_get_meta_extra
  libvlc_media_set_meta_extra
  libvlc_media_get_meta_extra_names
  libvlc_media_meta_extra_names_release
@@ -138,7 +138,7 @@ index 16dce3af28..5d7ffc7556 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 03b596b893..3ada802d5f 100644
+index 6d7ba5bf07..6a4c5af0a1 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )
@@ -163,5 +163,5 @@ index 03b596b893..3ada802d5f 100644
      if (ret == VLC_SUCCESS)
      {
 -- 
-2.39.3 (Apple Git-146)
+2.39.5 (Apple Git-154)
 
