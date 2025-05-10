@@ -20,8 +20,8 @@
 		6C21838428509122000C4AC9 /* VLCLogMessageFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837E28509122000C4AC9 /* VLCLogMessageFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C21838728509122000C4AC9 /* VLCLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21837F28509122000C4AC9 /* VLCLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6C21838A28509122000C4AC9 /* VLCConsoleLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C21838028509122000C4AC9 /* VLCConsoleLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6C78BB482CA2FAA800602498 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C78BB472CA2FAA800602498 /* AVKit.framework */; };
 		6C6348732C91F4BA0017A581 /* VLCDrawable.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C6348712C91F4BA0017A581 /* VLCDrawable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6C78BB482CA2FAA800602498 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C78BB472CA2FAA800602498 /* AVKit.framework */; };
 		6C9531FE297EDBCC00F41EC8 /* VLCEventsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C9531FA297EDBCC00F41EC8 /* VLCEventsHandler.m */; };
 		6C953202297EDC7500F41EC8 /* VLCEventsHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 6C953201297EDC7500F41EC8 /* VLCEventsHandler.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		7D24C2B61EC0A3390047E700 /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D24C2B51EC0A3390047E700 /* libbz2.tbd */; };
@@ -230,8 +230,8 @@
 		6C21837E28509122000C4AC9 /* VLCLogMessageFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCLogMessageFormatter.h; sourceTree = "<group>"; };
 		6C21837F28509122000C4AC9 /* VLCLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCLogging.h; sourceTree = "<group>"; };
 		6C21838028509122000C4AC9 /* VLCConsoleLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCConsoleLogger.h; sourceTree = "<group>"; };
-		6C78BB472CA2FAA800602498 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS17.5.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
 		6C6348712C91F4BA0017A581 /* VLCDrawable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCDrawable.h; sourceTree = "<group>"; };
+		6C78BB472CA2FAA800602498 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS17.5.sdk/System/Library/Frameworks/AVKit.framework; sourceTree = DEVELOPER_DIR; };
 		6C9531FA297EDBCC00F41EC8 /* VLCEventsHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCEventsHandler.m; sourceTree = "<group>"; };
 		6C953201297EDC7500F41EC8 /* VLCEventsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLCEventsHandler.h; sourceTree = "<group>"; };
 		7A5ECAC511DE8F7300F66AF3 /* VLCLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLCLibrary.m; sourceTree = "<group>"; };

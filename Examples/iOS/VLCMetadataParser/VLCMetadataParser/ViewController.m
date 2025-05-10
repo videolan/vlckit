@@ -24,7 +24,7 @@
  * POSSIBILITY OF SUCH DAMAGE. */
 
 #import "ViewController.h"
-#import <MobileVLCKit/MobileVLCKit.h>
+#import <VLCKit/VLCKit.h>
 #import <CommonCrypto/CommonDigest.h> // for MD5
 
 @interface ViewController () <VLCMediaPlayerDelegate, VLCMediaDelegate>
@@ -83,54 +83,56 @@
 {
     [_timeOutTimer invalidate];
 
-    NSMutableString *parsingOutput = [[NSMutableString alloc] initWithFormat:@"\n\nParsed: %@\nNumber of tracks: %lu\n", _media, (unsigned long)[[_media tracksInformation] count]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSMutableString *parsingOutput = [[NSMutableString alloc] initWithFormat:@"\n\nParsed: %@\nNumber of tracks: %lu\n", _media, (unsigned long)[[_media tracksInformation] count]];
 
-    _media.delegate = nil;
+        self->_media.delegate = nil;
 
-    VLCMediaMetaData *metaData = _media.metaData;
-    [metaData prefetch];
+        VLCMediaMetaData *metaData = self->_media.metaData;
+        [metaData prefetch];
 
-    NSArray *tracks = _media.tracksInformation;
-    for (VLCMediaTracksInformation *trackInfo in tracks) {
-        [parsingOutput appendString:@"\n"];
-        VLCMediaTracksInformationType type = trackInfo.type;
-        if (type == VLCMediaTracksInformationTypeVideo) {
-            [parsingOutput appendFormat:@"Video Track:\nDimensions: %ux%u\n",
-             trackInfo.video.width,
-             trackInfo.video.height];
-        } else if (type == VLCMediaTracksInformationTypeAudio) {
-            [parsingOutput appendFormat:@"Audio Track:\nSample rate: %u\nNumber of Channels: %u\n",
-             trackInfo.audio.rate,
-             trackInfo.audio.channelsNumber];
-        } else if (type == VLCMediaTracksInformationTypeText) {
-            [parsingOutput appendFormat:@"SPU track:\nText Encoding: %@\n", trackInfo.text.encoding];
+        NSArray *tracks = self->_media.tracksInformation;
+        for (VLCMediaTrack *trackInfo in tracks) {
+            [parsingOutput appendString:@"\n"];
+            VLCMediaTrackType type = trackInfo.type;
+            if (type == VLCMediaTrackTypeVideo) {
+                [parsingOutput appendFormat:@"Video Track:\nDimensions: %ux%u\n",
+                 trackInfo.video.width,
+                 trackInfo.video.height];
+            } else if (type == VLCMediaTrackTypeAudio) {
+                [parsingOutput appendFormat:@"Audio Track:\nSample rate: %u\nNumber of Channels: %u\n",
+                 trackInfo.audio.rate,
+                 trackInfo.audio.channelsNumber];
+            } else if (type == VLCMediaTrackTypeText) {
+                [parsingOutput appendFormat:@"SPU track:\nText Encoding: %@\n", trackInfo.text.encoding];
+            }
+
+            int fourcc = trackInfo.fourcc;
+            [parsingOutput appendFormat:@"Bitrate: %i\nCodec: %@\nFourCC: %4.4s\nCodec Level: %i\nCodec Profile: %i\nLanguage: %@\n",
+             trackInfo.bitrate,
+             [VLCMedia codecNameForFourCC:trackInfo.fourcc trackType:trackInfo.type],
+             (char *)&fourcc,
+             trackInfo.level,
+             trackInfo.profile,
+             trackInfo.language];
+        }
+        [parsingOutput appendFormat:@"\nDuration: %@\n", [[self->_media length] stringValue]];
+
+        [parsingOutput appendFormat:@"\nContent Info:\nTitle: %@\nArtist: %@\nAlbum Artist: %@\nAlbum name: %@\nGenre: %@\nTrack number: %u\nDisc number: %u\nArtwork URL: %@",
+         metaData.title, metaData.artist, metaData.albumArtist, metaData.album, metaData.genre, metaData.trackNumber, metaData.discNumber, metaData.artworkURL];
+
+        NSString *artworkPath = [self artworkPathForMediaItemWithTitle:metaData.title
+                                                                Artist:metaData.artist
+                                                          andAlbumName:metaData.album];
+        if (artworkPath) {
+            [parsingOutput appendFormat:@"\nArtwork path: %@", artworkPath];
         }
 
-        int fourcc = trackInfo.fourcc;
-        [parsingOutput appendFormat:@"Bitrate: %i\nCodec: %@\nFourCC: %4.4s\nCodec Level: %i\nCodec Profile: %i\nLanguage: %@\n",
-         trackInfo.bitrate,
-         [VLCMedia codecNameForFourCC:trackInfo.fourcc trackType:trackInfo.type],
-         (char *)&fourcc,
-         trackInfo.level,
-         trackInfo.profile,
-         trackInfo.language];
-    }
-    [parsingOutput appendFormat:@"\nDuration: %@\n", [[_media length] stringValue]];
+        NSLog(@"%@", parsingOutput);
 
-    [parsingOutput appendFormat:@"\nContent Info:\nTitle: %@\nArtist: %@\nAlbum Artist: %@\nAlbum name: %@\nGenre: %@\nTrack number: %u\nDisc number: %u\nArtwork URL: %@",
-     metaData.title, metaData.artist, metaData.albumArtist, metaData.album, metaData.genre, metaData.trackNumber, metaData.discNumber, metaData.artworkURL];
-
-    NSString *artworkPath = [self artworkPathForMediaItemWithTitle:metaData.title
-                                                            Artist:metaData.artist
-                                                      andAlbumName:metaData.album];
-    if (artworkPath) {
-        [parsingOutput appendFormat:@"\nArtwork path: %@", artworkPath];
-    }
-
-    NSLog(@"%@", parsingOutput);
-
-    [_activityIndicatorView stopAnimating];
-    _textView.text = parsingOutput;
+        [_activityIndicatorView stopAnimating];
+        self->_textView.text = parsingOutput;
+    });
 }
 
 #pragma mark - audio file specific code

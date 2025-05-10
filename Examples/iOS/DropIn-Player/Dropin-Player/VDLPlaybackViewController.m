@@ -196,37 +196,39 @@
     [self _resetIdleTimer];
 }
 
-- (void)mediaPlayerStateChanged:(NSNotification *)aNotification
+- (void)mediaPlayerStateChanged:(VLCMediaPlayerState)currentState
 {
-    VLCMediaPlayerState currentState = _mediaplayer.state;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (currentState == VLCMediaPlayerStateBuffering) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [_mediaplayer performSelector:@selector(setTextRendererFont:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFont]];
+            [_mediaplayer performSelector:@selector(setTextRendererFontSize:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFontSize]];
+            [_mediaplayer performSelector:@selector(setTextRendererFontColor:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFontColor]];
+            [_mediaplayer performSelector:@selector(setTextRendererFontForceBold:) withObject:[defaults objectForKey:kVLCSettingSubtitlesBoldFont]];
+        }
 
-    if (currentState == VLCMediaPlayerStateBuffering) {
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        [_mediaplayer performSelector:@selector(setTextRendererFont:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFont]];
-        [_mediaplayer performSelector:@selector(setTextRendererFontSize:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFontSize]];
-        [_mediaplayer performSelector:@selector(setTextRendererFontColor:) withObject:[defaults objectForKey:kVLCSettingSubtitlesFontColor]];
-        [_mediaplayer performSelector:@selector(setTextRendererFontForceBold:) withObject:[defaults objectForKey:kVLCSettingSubtitlesBoldFont]];
-    }
+        /* distruct view controller on error */
+        if (currentState == VLCMediaPlayerStateError)
+            [self performSelector:@selector(closePlayback:) withObject:nil afterDelay:2.];
 
-    /* distruct view controller on error */
-    if (currentState == VLCMediaPlayerStateError)
-        [self performSelector:@selector(closePlayback:) withObject:nil afterDelay:2.];
+        /* or if playback ended */
+        if (currentState == VLCMediaPlayerStateStopping || currentState == VLCMediaPlayerStateStopped)
+            [self performSelector:@selector(closePlayback:) withObject:nil afterDelay:2.];
 
-    /* or if playback ended */
-    if (currentState == VLCMediaPlayerStateStopping || currentState == VLCMediaPlayerStateStopped)
-        [self performSelector:@selector(closePlayback:) withObject:nil afterDelay:2.];
-
-    [self.playPauseButton setTitle:[_mediaplayer isPlaying]? @"Pause" : @"Play" forState:UIControlStateNormal];
+        [self.playPauseButton setTitle:[_mediaplayer isPlaying]? @"Pause" : @"Play" forState:UIControlStateNormal];
+    });
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    self.positionSlider.value = [_mediaplayer position];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.positionSlider.value = [_mediaplayer position];
 
-    if (_displayRemainingTime)
-        [self.timeDisplay setTitle:[[_mediaplayer remainingTime] stringValue] forState:UIControlStateNormal];
-    else
-        [self.timeDisplay setTitle:[[_mediaplayer time] stringValue] forState:UIControlStateNormal];
+        if (_displayRemainingTime)
+            [self.timeDisplay setTitle:[[_mediaplayer remainingTime] stringValue] forState:UIControlStateNormal];
+        else
+            [self.timeDisplay setTitle:[[_mediaplayer time] stringValue] forState:UIControlStateNormal];
+    });
 }
 
 - (IBAction)toggleTimeDisplay:(id)sender
@@ -301,7 +303,7 @@
         }
 
         [_mediaplayer setCropRatioWithNumerator:1 denominator:0];
-        _mediaplayer.videoAspectRatio = (char *)[_aspectRatios[_currentAspectRatioMask] UTF8String];
+        _mediaplayer.videoAspectRatio = _aspectRatios[_currentAspectRatioMask];
         NSLog(@"crop switched to %@", _aspectRatios[_currentAspectRatioMask]);
     }
 }
@@ -309,13 +311,11 @@
 - (IBAction)switchAudioTrack:(id)sender
 {
     _audiotrackActionSheet = [[UIActionSheet alloc] initWithTitle:@"audio track selector" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles: nil];
-    NSArray *audioTracks = [_mediaplayer audioTrackNames];
-    NSArray *audioTrackIndexes = [_mediaplayer audioTrackIndexes];
+    NSArray *audioTracks = _mediaplayer.audioTracks;
 
-    NSUInteger count = [audioTracks count];
-    for (NSUInteger i = 0; i < count; i++) {
-        NSString *indexIndicator = ([audioTrackIndexes[i] intValue] == [_mediaplayer currentAudioTrackIndex])? @"\u2713": @"";
-        NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", indexIndicator, audioTracks[i]];
+    for (VLCMediaPlayerTrack *audioTrack in audioTracks) {
+        NSString *indexIndicator = audioTrack.isSelected ? @"\u2713": @"";
+        NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", indexIndicator, audioTrack.trackName];
         [_audiotrackActionSheet addButtonWithTitle:buttonTitle];
     }
 
@@ -326,17 +326,16 @@
 
 - (IBAction)switchSubtitleTrack:(id)sender
 {
-    NSArray *spuTracks = [_mediaplayer videoSubTitlesNames];
-    NSArray *spuTrackIndexes = [_mediaplayer videoSubTitlesIndexes];
+    NSArray *spuTracks = _mediaplayer.textTracks;
 
     NSUInteger count = [spuTracks count];
     if (count <= 1)
         return;
     _subtitleActionSheet = [[UIActionSheet alloc] initWithTitle:@"subtitle track selector" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles: nil];
 
-    for (NSUInteger i = 0; i < count; i++) {
-        NSString *indexIndicator = ([spuTrackIndexes[i] intValue] == [_mediaplayer currentVideoSubTitleIndex])? @"\u2713": @"";
-        NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", indexIndicator, spuTracks[i]];
+    for (VLCMediaPlayerTrack *spuTrack in spuTracks) {
+        NSString *indexIndicator = spuTrack.selected ? @"\u2713": @"";
+        NSString *buttonTitle = [NSString stringWithFormat:@"%@ %@", indexIndicator, spuTrack.trackName];
         [_subtitleActionSheet addButtonWithTitle:buttonTitle];
     }
 
@@ -351,15 +350,9 @@
 
     NSArray *indexArray;
     if (actionSheet == _subtitleActionSheet) {
-        indexArray = _mediaplayer.videoSubTitlesIndexes;
-        if (buttonIndex <= indexArray.count) {
-            _mediaplayer.currentVideoSubTitleIndex = [indexArray[buttonIndex] intValue];
-        }
+        [_mediaplayer selectTrackAtIndex:buttonIndex type:VLCMediaTrackTypeText];
     } else if (actionSheet == _audiotrackActionSheet) {
-        indexArray = _mediaplayer.audioTrackIndexes;
-        if (buttonIndex <= indexArray.count) {
-            _mediaplayer.currentAudioTrackIndex = [indexArray[buttonIndex] intValue];
-        }
+        [_mediaplayer selectTrackAtIndex:buttonIndex type:VLCMediaTrackTypeAudio];
     }
 }
 

@@ -15,7 +15,7 @@
 		7D3035A31D37CDE400C39EC3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D3035A11D37CDE400C39EC3 /* LaunchScreen.storyboard */; };
 		7D33AF7D285A1EE20074C528 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D33AF7C285A1EE20074C528 /* UIKit.framework */; };
 		7D33AF7F285A1EE80074C528 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D33AF7E285A1EE80074C528 /* Foundation.framework */; };
-		7D33AF81285A1EEC0074C528 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D33AF80285A1EEC0074C528 /* MobileVLCKit.framework */; };
+		7DA975D82DCF7B9D00A7F2F5 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA975D72DCF7B9D00A7F2F5 /* VLCKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +41,7 @@
 		7D33AF7C285A1EE20074C528 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7D33AF7E285A1EE80074C528 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7D33AF80285A1EEC0074C528 /* MobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DA975D72DCF7B9D00A7F2F5 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D33AF81285A1EEC0074C528 /* MobileVLCKit.framework in Frameworks */,
+				7DA975D82DCF7B9D00A7F2F5 /* VLCKit.framework in Frameworks */,
 				7D33AF7F285A1EE80074C528 /* Foundation.framework in Frameworks */,
 				7D33AF7D285A1EE20074C528 /* UIKit.framework in Frameworks */,
 			);
@@ -101,6 +102,7 @@
 		7D3035BC1D37CFF500C39EC3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DA975D72DCF7B9D00A7F2F5 /* VLCKit.framework */,
 				7D33AF80285A1EEC0074C528 /* MobileVLCKit.framework */,
 				7D33AF7E285A1EE80074C528 /* Foundation.framework */,
 				7D33AF7C285A1EE20074C528 /* UIKit.framework */,

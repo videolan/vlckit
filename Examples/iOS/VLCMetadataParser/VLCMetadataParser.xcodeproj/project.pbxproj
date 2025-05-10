@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7D33AF83285A1FAD0074C528 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D33AF82285A1FAD0074C528 /* MobileVLCKit.framework */; };
 		7D33AF85285A1FB10074C528 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D33AF84285A1FB10074C528 /* UIKit.framework */; };
 		7D33AF87285A1FB90074C528 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D33AF86285A1FB90074C528 /* Foundation.framework */; };
 		7DA1A01F1D37D759001DA053 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1A01C1D37D759001DA053 /* AppDelegate.m */; };
@@ -16,6 +15,7 @@
 		7DA1A0261D37E2FB001DA053 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DA1A0251D37E2FB001DA053 /* main.m */; };
 		7DA1A0291D37E31E001DA053 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DA1A0271D37E31E001DA053 /* Main.storyboard */; };
 		7DA1A02C1D37E326001DA053 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DA1A02A1D37E326001DA053 /* LaunchScreen.storyboard */; };
+		7DA975DA2DCF7C4800A7F2F5 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA975D92DCF7C4800A7F2F5 /* VLCKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +41,7 @@
 		7DA1A0281D37E31E001DA053 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = VLCMetadataParser/Base.lproj/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		7DA1A02B1D37E326001DA053 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = VLCMetadataParser/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		7DA1A02D1D37E33E001DA053 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = VLCMetadataParser/Info.plist; sourceTree = SOURCE_ROOT; };
+		7DA975D92DCF7C4800A7F2F5 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,9 +49,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DA975DA2DCF7C4800A7F2F5 /* VLCKit.framework in Frameworks */,
 				7D33AF87285A1FB90074C528 /* Foundation.framework in Frameworks */,
 				7D33AF85285A1FB10074C528 /* UIKit.framework in Frameworks */,
-				7D33AF83285A1FAD0074C528 /* MobileVLCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,6 +103,7 @@
 		7D3035BC1D37CFF500C39EC3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DA975D92DCF7C4800A7F2F5 /* VLCKit.framework */,
 				7D33AF86285A1FB90074C528 /* Foundation.framework */,
 				7D33AF84285A1FB10074C528 /* UIKit.framework */,
 				7D33AF82285A1FAD0074C528 /* MobileVLCKit.framework */,

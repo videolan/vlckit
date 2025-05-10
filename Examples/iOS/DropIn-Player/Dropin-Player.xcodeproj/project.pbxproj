@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B369183BA71600FF0D25 /* UIKit.framework */; };
 		7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D11B36B183BA71600FF0D25 /* Foundation.framework */; };
-		7DB6E130285A1C50004EAF04 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E12F285A1C50004EAF04 /* MobileVLCKit.framework */; };
-		7DB6E131285A1CE3004EAF04 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DEBFE80183BF0AA00BC53D5 /* AVFoundation.framework */; };
+		7DA975F92DCF7F4C00A7F2F5 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA975F82DCF7F4C00A7F2F5 /* VLCKit.framework */; };
+		7DA975FB2DCF809600A7F2F5 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA975FA2DCF809600A7F2F5 /* AVFoundation.framework */; };
 		7DEBFE68183BEA9E00BC53D5 /* VDLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE65183BEA9E00BC53D5 /* VDLAppDelegate.m */; };
 		7DEBFE69183BEA9E00BC53D5 /* VDLPlaybackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DEBFE67183BEA9E00BC53D5 /* VDLPlaybackViewController.m */; };
 		7DEBFE6D183BEAB500BC53D5 /* VDLPlaybackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DEBFE6B183BEAB500BC53D5 /* VDLPlaybackViewController.xib */; };
@@ -27,23 +27,8 @@
 		7D11B366183BA71600FF0D25 /* Dropin-Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dropin-Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D11B369183BA71600FF0D25 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7D11B36B183BA71600FF0D25 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		7D7B6C481B70C40F00E879CF /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		7D7B6C4A1B70C41700E879CF /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
-		7D7B6C4C1B70C41D00E879CF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobileVLCKit.a; path = "../../build/Debug-iphoneos/libMobileVLCKit.a"; sourceTree = "<group>"; };
-		7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobileVLCKit.a; path = "../../build/Release-iphonesimulator/libMobileVLCKit.a"; sourceTree = "<group>"; };
-		7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		7D8745B7183BABE800FD09E0 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
-		7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		7D8745BC183BAC0D00FD09E0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		7D8745BE183BAC1200FD09E0 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		7D8745C0183BAC2300FD09E0 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = usr/lib/libbz2.dylib; sourceTree = SDKROOT; };
-		7D8745C2183BAC2700FD09E0 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
-		7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		7DB6E12F285A1C50004EAF04 /* MobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		7DA975F82DCF7F4C00A7F2F5 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DA975FA2DCF809600A7F2F5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7DEBFE64183BEA9E00BC53D5 /* VDLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VDLAppDelegate.h; path = "Dropin-Player/VDLAppDelegate.h"; sourceTree = SOURCE_ROOT; };
 		7DEBFE65183BEA9E00BC53D5 /* VDLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VDLAppDelegate.m; path = "Dropin-Player/VDLAppDelegate.m"; sourceTree = SOURCE_ROOT; };
 		7DEBFE66183BEA9E00BC53D5 /* VDLPlaybackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VDLPlaybackViewController.h; path = "Dropin-Player/VDLPlaybackViewController.h"; sourceTree = SOURCE_ROOT; };
@@ -56,12 +41,9 @@
 		7DEBFE75183BEAD500BC53D5 /* Dropin-Player-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Dropin-Player-Prefix.pch"; path = "Dropin-Player/Dropin-Player-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		7DEBFE76183BEAD500BC53D5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Dropin-Player/main.m"; sourceTree = SOURCE_ROOT; };
 		7DEBFE7C183BECDE00BC53D5 /* Dropin-Player-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Dropin-Player-Info.plist"; path = "Dropin-Player/Dropin-Player-Info.plist"; sourceTree = SOURCE_ROOT; };
-		7DEBFE7E183BEE7500BC53D5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		7DEBFE80183BF0AA00BC53D5 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		7DEBFE82183BFC6300BC53D5 /* VDLMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VDLMainViewController.h; sourceTree = SOURCE_ROOT; };
 		7DEBFE83183BFC6300BC53D5 /* VDLMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VDLMainViewController.m; sourceTree = SOURCE_ROOT; };
 		7DEBFE84183BFC6300BC53D5 /* VDLMainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VDLMainViewController.xib; sourceTree = SOURCE_ROOT; };
-		D4771D92189848E70087441B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,8 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DB6E131285A1CE3004EAF04 /* AVFoundation.framework in Frameworks */,
-				7DB6E130285A1C50004EAF04 /* MobileVLCKit.framework in Frameworks */,
+				7DA975FB2DCF809600A7F2F5 /* AVFoundation.framework in Frameworks */,
+				7DA975F92DCF7F4C00A7F2F5 /* VLCKit.framework in Frameworks */,
 				7D11B36A183BA71600FF0D25 /* UIKit.framework in Frameworks */,
 				7D11B36C183BA71600FF0D25 /* Foundation.framework in Frameworks */,
 			);
@@ -99,28 +81,10 @@
 		7D11B368183BA71600FF0D25 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7DB6E12F285A1C50004EAF04 /* MobileVLCKit.framework */,
-				7DBC87FC1FE2C0BD002A5ADC /* CoreImage.framework */,
-				7D7B6C7C1B70D0BA00E879CF /* libMobileVLCKit.a */,
-				7D7B6C4E1B70C43200E879CF /* CoreVideo.framework */,
-				7D7B6C4C1B70C41D00E879CF /* CoreMedia.framework */,
-				7D7B6C4A1B70C41700E879CF /* VideoToolbox.framework */,
-				7D7B6C481B70C40F00E879CF /* libc++.tbd */,
-				D4771D92189848E70087441B /* Security.framework */,
-				7DEBFE80183BF0AA00BC53D5 /* AVFoundation.framework */,
-				7DEBFE7E183BEE7500BC53D5 /* MediaPlayer.framework */,
-				7D8745B4183BA8F900FD09E0 /* libMobileVLCKit.a */,
-				7D8745C6183BACAE00FD09E0 /* QuartzCore.framework */,
-				7D8745C2183BAC2700FD09E0 /* libiconv.dylib */,
-				7D8745C0183BAC2300FD09E0 /* libbz2.dylib */,
-				7D8745BE183BAC1200FD09E0 /* CoreText.framework */,
-				7D8745BC183BAC0D00FD09E0 /* CFNetwork.framework */,
-				7D8745BA183BABEE00FD09E0 /* OpenGLES.framework */,
-				7D8745B6183BABE800FD09E0 /* AudioToolbox.framework */,
-				7D8745B7183BABE800FD09E0 /* AudioUnit.framework */,
+				7DA975FA2DCF809600A7F2F5 /* AVFoundation.framework */,
+				7DA975F82DCF7F4C00A7F2F5 /* VLCKit.framework */,
 				7D11B369183BA71600FF0D25 /* UIKit.framework */,
 				7D11B36B183BA71600FF0D25 /* Foundation.framework */,
-				7D11B36D183BA71600FF0D25 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

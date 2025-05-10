@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../../../VLCKit.xcodeproj">
+      location = "absolute:/Users/fkuehne/videolan/gits/VLCKit/VLCKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:VLCPictureInPicture.xcodeproj">
+      location = "group:SimplePlayback.xcodeproj">
    </FileRef>
 </Workspace>

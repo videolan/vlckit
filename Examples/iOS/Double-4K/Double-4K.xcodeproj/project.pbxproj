@@ -7,20 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7DA975FD2DCF81C300A7F2F5 /* VLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA975FC2DCF81C300A7F2F5 /* VLCKit.framework */; };
+		7DA975FF2DCF822B00A7F2F5 /* IMG_3858.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 7DA975FE2DCF822B00A7F2F5 /* IMG_3858.MOV */; };
 		7DB63110245C84B0009D6BB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB6310F245C84B0009D6BB4 /* AppDelegate.m */; };
 		7DB6311B245C84B2009D6BB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DB6311A245C84B2009D6BB4 /* Assets.xcassets */; };
 		7DB6311E245C84B2009D6BB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7DB6311C245C84B2009D6BB4 /* LaunchScreen.storyboard */; };
 		7DB63121245C84B2009D6BB4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB63120245C84B2009D6BB4 /* main.m */; };
 		7DB6312A245C8970009D6BB4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DB63128245C8970009D6BB4 /* ViewController.m */; };
 		7DB6312B245C8970009D6BB4 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7DB63129245C8970009D6BB4 /* ViewController.xib */; };
-		7DB6312D245C94EB009D6BB4 /* IMG_1456.MOV in Resources */ = {isa = PBXBuildFile; fileRef = 7DB6312C245C94EB009D6BB4 /* IMG_1456.MOV */; };
-		7DB6E133285A1D2E004EAF04 /* MobileVLCKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E132285A1D2E004EAF04 /* MobileVLCKit.framework */; };
 		7DB6E135285A1D32004EAF04 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E134285A1D32004EAF04 /* UIKit.framework */; };
 		7DB6E137285A1D37004EAF04 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DB6E136285A1D37004EAF04 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		34BD136E951255CBC0463C5E /* libPods-Double-4K.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Double-4K.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DA975FC2DCF81C300A7F2F5 /* VLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DA975FE2DCF822B00A7F2F5 /* IMG_3858.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = IMG_3858.MOV; sourceTree = "<group>"; };
 		7DB6310B245C84B0009D6BB4 /* Double-4K.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Double-4K.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB6310E245C84B0009D6BB4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7DB6310F245C84B0009D6BB4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -31,8 +32,6 @@
 		7DB63127245C8970009D6BB4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7DB63128245C8970009D6BB4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7DB63129245C8970009D6BB4 /* ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
-		7DB6312C245C94EB009D6BB4 /* IMG_1456.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = IMG_1456.MOV; path = ../../../../Downloads/IMG_1456.MOV; sourceTree = "<group>"; };
-		7DB6E132285A1D2E004EAF04 /* MobileVLCKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MobileVLCKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DB6E134285A1D32004EAF04 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7DB6E136285A1D37004EAF04 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -42,9 +41,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7DA975FD2DCF81C300A7F2F5 /* VLCKit.framework in Frameworks */,
 				7DB6E137285A1D37004EAF04 /* Foundation.framework in Frameworks */,
 				7DB6E135285A1D32004EAF04 /* UIKit.framework in Frameworks */,
-				7DB6E133285A1D2E004EAF04 /* MobileVLCKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,7 +75,7 @@
 				7DB63127245C8970009D6BB4 /* ViewController.h */,
 				7DB63128245C8970009D6BB4 /* ViewController.m */,
 				7DB63129245C8970009D6BB4 /* ViewController.xib */,
-				7DB6312C245C94EB009D6BB4 /* IMG_1456.MOV */,
+				7DA975FE2DCF822B00A7F2F5 /* IMG_3858.MOV */,
 				7DB6311A245C84B2009D6BB4 /* Assets.xcassets */,
 				7DB6311C245C84B2009D6BB4 /* LaunchScreen.storyboard */,
 				7DB6311F245C84B2009D6BB4 /* Info.plist */,
@@ -88,10 +87,9 @@
 		FAEE602B6FA31BF1189C225C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7DA975FC2DCF81C300A7F2F5 /* VLCKit.framework */,
 				7DB6E136285A1D37004EAF04 /* Foundation.framework */,
 				7DB6E134285A1D32004EAF04 /* UIKit.framework */,
-				7DB6E132285A1D2E004EAF04 /* MobileVLCKit.framework */,
-				34BD136E951255CBC0463C5E /* libPods-Double-4K.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -153,8 +151,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7DB6312D245C94EB009D6BB4 /* IMG_1456.MOV in Resources */,
 				7DB6311E245C84B2009D6BB4 /* LaunchScreen.storyboard in Resources */,
+				7DA975FF2DCF822B00A7F2F5 /* IMG_3858.MOV in Resources */,
 				7DB6312B245C8970009D6BB4 /* ViewController.xib in Resources */,
 				7DB6311B245C84B2009D6BB4 /* Assets.xcassets in Resources */,
 			);

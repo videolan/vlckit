@@ -24,7 +24,7 @@
 * POSSIBILITY OF SUCH DAMAGE. */
 
 #import "ViewController.h"
-#import <MobileVLCKit/MobileVLCKit.h>
+#import <VLCKit/VLCKit.h>
 
 @interface ViewController ()
 {
@@ -46,7 +46,7 @@
     [super viewDidLoad];
 
     // FIXME: set this to your own sample file
-    NSURL *mediaURL = [[NSBundle mainBundle] URLForResource:@"IMG_1456" withExtension:@"MOV"];
+    NSURL *mediaURL = [[NSBundle mainBundle] URLForResource:@"IMG_3858" withExtension:@"MOV"];
 
     _mediaOne = [VLCMedia mediaWithURL:mediaURL];
     _mediaPlayerOne = [[VLCMediaPlayer alloc] init];

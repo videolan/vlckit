@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import <MobileVLCKit/MobileVLCKit.h>
+#import <VLCKit/VLCKit.h>
 
 @interface ViewController ()
 {
