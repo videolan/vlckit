@@ -103,28 +103,28 @@
     [player pause];
 }
 
-- (void)mediaPlayerStateChanged:(NSNotification *)aNotification
+- (void)mediaPlayerStateChanged:(const VLCMediaPlayerState)newState
 {
-    if (player.media) {
-        NSArray *spuTracks = [player videoSubTitlesNames];
-        NSArray *spuTrackIndexes = [player videoSubTitlesIndexes];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (player.media) {
+            NSArray *spuTracks = [player textTracks];
 
-        NSUInteger count = [spuTracks count];
-        [spuPopup removeAllItems];
-        if (count <= 1)
-            return;
+            [spuPopup removeAllItems];
+            if ([spuTracks count] <= 1)
+                return;
 
-        for (NSUInteger x = 0; x < count; x++) {
-            [spuPopup addItemWithTitle:spuTracks[x]];
-            [[spuPopup lastItem] setTag:spuTrackIndexes[x]];
+            for (VLCMediaPlayerTrack *track in spuTracks) {
+                [spuPopup addItemWithTitle:track.trackName];
+                [[spuPopup lastItem] setTag:track.trackId];
+            }
         }
-    }
+    });
 }
 
 - (void)setSPU:(id)sender
 {
     if (player.media)
-        player.currentVideoSubTitleIndex = [[spuPopup selectedItem] tag];
+        [player selectTrackAtIndex:[[spuPopup selectedItem] tag] type:VLCMediaTrackTypeText];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -134,7 +134,7 @@
 }
 
 // NSTableView Implementation
-- (int)numberOfRowsInTableView:(NSTableView *)tableView
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
     return [playlist count];
 }
