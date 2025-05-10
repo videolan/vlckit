@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 
         mediaPlayer = VLCMediaPlayer()
         mediaPlayer.drawable = view
-        mediaPlayer.media = VLCMedia(url: URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")!)
+        mediaPlayer.media = VLCMedia(url: URL(string: "http://streams.videolan.org/streams/mp4/Mr_MrsSmith-h264_aac.mp4")!)
 
         mediaPlayer.play()
     }

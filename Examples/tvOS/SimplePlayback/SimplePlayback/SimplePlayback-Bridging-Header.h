@@ -1,1 +1,1 @@
-#import <TVVLCKit/TVVLCKit.h>
+#import <VLCKit/VLCKit.h>
