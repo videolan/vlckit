@@ -68,7 +68,7 @@ Here are some other common use-cases:
 [CocoaPods](http://cocoapods.org/) is a dependency manager for Cocoa projects. You can install it with the following command:
 
 ```bash
-gem install cocoapods
+sudo gem install cocoapods
 ```
 
 To integrate the latest VLCKit into your project, specify it in your `Podfile`:
