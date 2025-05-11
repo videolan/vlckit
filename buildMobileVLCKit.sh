@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (C) Pierre d'Herbemont, 2010
-# Copyright (C) Felix Paul Kühne, 2012-2024
+# Copyright (C) Felix Paul Kühne, 2012-2025
 
 set -e
 
@@ -26,7 +26,7 @@ ROOT_DIR=empty
 INCLUDE_32BIT=no
 FARCH="all"
 
-TESTEDHASH="ac310b4b" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="504ffcaa" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
