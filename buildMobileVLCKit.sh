@@ -534,6 +534,12 @@ buildLibVLC() {
     export ac_cv_func_aligned_alloc=no
     export ac_cv_func_timespec_get=no
 
+    if [ "$BITCODE" = "yes" ]; then
+        BITCODEOPTION="--enable-bitcode"
+    else
+        BITCODEOPTION=""
+    fi
+
     export USE_FFMPEG=1
     ../bootstrap --build=${BUILD_TRIPLET} --host=${HOST_TRIPLET} --prefix=${VLCROOT}/contrib/${OSSTYLE}${PLATFORM_IDENTIFIER}-${HOST_TRIPLET}-${ARCH} --disable-gpl \
         --enable-ad-clauses \
@@ -584,6 +590,7 @@ buildLibVLC() {
         --disable-asdcplib \
         --enable-soxr \
         ${CUSTOMOSOPTIONS} \
+        ${BITCODEOPTION} \
         --enable-taglib > ${out}
 
     rm -f config.mak
