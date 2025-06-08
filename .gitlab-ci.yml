@@ -13,7 +13,7 @@ variables:
 
 .continous-job-base:
     tags:
-        - macos-m1
+        - macos-xcode15
     stage: build
     only:
         - merge_requests
@@ -55,7 +55,7 @@ continous-VLCKit:
 
 .dev-artifacts-job-base:
     tags:
-        - macos-m1
+        - macos-xcode15
     stage: build
     rules:
         - if: '$CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "videolan/VLCKit"'
@@ -126,7 +126,7 @@ pages:
 
 .release-job-base:
     tags:
-        - macos-m1
+        - macos-xcode15
     stage: release
     only:
         - tags
