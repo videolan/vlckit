@@ -1,4 +1,4 @@
-From 8feb0dc9982f6139463d1be998158f38c365eb34 Mon Sep 17 00:00:00 2001
+From 4ab72c1b534b7df14ee74ac2353559c78d0ee586 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 07/12] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
@@ -39,7 +39,7 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 471bde1ba5..189833afe6 100644
+index 7bc4afe70e..8a06c81a8e 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
 @@ -41,6 +41,12 @@ FFMPEGCONF = --prefix="$(PREFIX)" --enable-static --disable-shared \

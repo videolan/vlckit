@@ -1,4 +1,4 @@
-From 8093aba16c41b7b3e9f855b69c91950408b2ca89 Mon Sep 17 00:00:00 2001
+From 904b30a15e5160c052d476598b7fdc228d9154f4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:10 +0200
 Subject: [PATCH 06/12] http: add vlc_http_cookies_clear
@@ -23,10 +23,10 @@ index b9b25e64b6..976f6e664a 100644
  
  /**
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index 47d8bee089..103eeef957 100644
+index 837b5c0866..b7edd01b22 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
-@@ -149,6 +149,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
+@@ -151,6 +151,7 @@ vlc_http_auth_ParseAuthenticationInfoHeader
  vlc_http_auth_FormatAuthorizationHeader
  vlc_http_cookies_new
  vlc_http_cookies_destroy

@@ -1,4 +1,4 @@
-From a3888110ab5e6332b7dd7e0dc4c4f62c3ad3d36f Mon Sep 17 00:00:00 2001
+From 949295b949f6cb02a52469b6168ab05d8bc0bc0d Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
 Subject: [PATCH 10/12] libvlc_media: add cookie_jar API
@@ -71,10 +71,10 @@ index 707447e1bd..fdbc22b8e9 100644
  libvlc_release
  libvlc_renderer_item_name
 diff --git a/lib/media.c b/lib/media.c
-index f417e3a3bf..870d53b6d1 100644
+index 4549dbedb4..79fbb98430 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -376,6 +376,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
+@@ -377,6 +377,7 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
      p_md->id = VLC_PREPARSER_REQ_ID_INVALID;
  
      libvlc_event_manager_init( &p_md->event_manager, p_md );
@@ -82,7 +82,7 @@ index f417e3a3bf..870d53b6d1 100644
  
      input_item_Hold( p_md->p_input_item );
  
-@@ -505,6 +506,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
+@@ -506,6 +507,9 @@ void libvlc_media_release( libvlc_media_t *p_md )
  
      input_item_Release( p_md->p_input_item );
  
@@ -92,7 +92,7 @@ index f417e3a3bf..870d53b6d1 100644
      libvlc_event_manager_destroy( &p_md->event_manager );
      free( p_md );
  }
-@@ -1200,3 +1204,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+@@ -1201,3 +1205,24 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
      free( pp_slaves );
  }
@@ -118,7 +118,7 @@ index f417e3a3bf..870d53b6d1 100644
 +        vlc_http_cookies_clear( p_md->p_cookie_jar );
 +}
 diff --git a/lib/media_internal.h b/lib/media_internal.h
-index 16dce3af28..5d7ffc7556 100644
+index 350167251a..e8ff103a40 100644
 --- a/lib/media_internal.h
 +++ b/lib/media_internal.h
 @@ -32,6 +32,7 @@
@@ -138,7 +138,7 @@ index 16dce3af28..5d7ffc7556 100644
  
  /* Media Descriptor */
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 6d7ba5bf07..6a4c5af0a1 100644
+index 78cb970af6..86bc66edae 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
 @@ -641,6 +641,7 @@ libvlc_media_player_new( libvlc_instance_t *instance )

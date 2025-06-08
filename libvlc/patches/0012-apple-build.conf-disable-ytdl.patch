@@ -1,4 +1,4 @@
-From 5560c4aa2357400d17ac56f3590080f392ff5118 Mon Sep 17 00:00:00 2001
+From 6bc6483a7dfa763080d73b3d5b7ea2a16b70fc2f Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 21 Apr 2025 19:35:58 +0200
 Subject: [PATCH 12/12] apple/build.conf: disable ytdl

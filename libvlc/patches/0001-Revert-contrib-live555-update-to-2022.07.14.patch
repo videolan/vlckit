@@ -1,4 +1,4 @@
-From 242c1f10c03f815f917b5983d78b5a16e1da3fd9 Mon Sep 17 00:00:00 2001
+From 4f36d9c5f66989ba4e31c90698ca26b9b4a5da06 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:59:13 +0200
 Subject: [PATCH 01/12] Revert "contrib: live555: update to 2022.07.14"
@@ -583,7 +583,7 @@ index 0000000000..a1dea30fbc
 + 			     char const* rangeParamsStr, char const* rtpInfoParamsStr);
 +   Boolean handleTEARDOWNResponse(MediaSession& session, MediaSubsession& subsession);
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index 752c48eae7..e40370a881 100644
+index 42fd128735..cce70cba6b 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,6 +1,6 @@
@@ -592,9 +592,9 @@ index 752c48eae7..e40370a881 100644
 -LIVE555_VERSION := 2022.07.14
 +LIVE555_VERSION := 2016.11.28
  LIVE555_FILE := live.$(LIVE555_VERSION).tar.gz
+ # XXX: No HTTPS available.
  LIVEDOTCOM_URL := http://live555.com/liveMedia/public/$(LIVE555_FILE)
- 
-@@ -19,7 +19,7 @@ $(TARBALLS)/$(LIVE555_FILE):
+@@ -20,7 +20,7 @@ $(TARBALLS)/$(LIVE555_FILE):
  
  .sum-live555: $(LIVE555_FILE)
  
@@ -603,7 +603,7 @@ index 752c48eae7..e40370a881 100644
  
  LIVE_TARGET = $(error live555 target not defined!)
  ifdef HAVE_LINUX
-@@ -31,10 +31,9 @@ LIVE_EXTRA_CFLAGS += -DDISABLE_LOOPBACK_IP_ADDRESS_CHECK=1
+@@ -32,10 +32,9 @@ LIVE_EXTRA_CFLAGS += -DDISABLE_LOOPBACK_IP_ADDRESS_CHECK=1
  endif
  ifdef HAVE_WIN32
  LIVE_TARGET := mingw
@@ -615,7 +615,7 @@ index 752c48eae7..e40370a881 100644
  endif
  ifdef HAVE_BSD
  LIVE_TARGET := freebsd
-@@ -74,6 +73,10 @@ endif
+@@ -75,6 +74,10 @@ endif
  	mv live live.$(LIVE555_VERSION)
  	# Patch for MSG_NOSIGNAL
  	$(APPLY) $(SRC)/live555/live555-nosignal.patch
@@ -626,7 +626,7 @@ index 752c48eae7..e40370a881 100644
  	# Add a pkg-config file
  	$(APPLY) $(SRC)/live555/add-pkgconfig-file.patch
  	# Expose Server:
-@@ -82,8 +85,8 @@ endif
+@@ -83,8 +86,8 @@ endif
  	$(APPLY) $(SRC)/live555/mingw-static-libs.patch
  	# FormatMessageA is available on all Windows versions, even WinRT
  	$(APPLY) $(SRC)/live555/live555-formatmessage.patch

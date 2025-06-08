@@ -1,4 +1,4 @@
-From 326829e94e18658e0ca2676e9a8d2e7c31912396 Mon Sep 17 00:00:00 2001
+From e9596266a1329f27114eb1bd451779696a47d8ac Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
 Subject: [PATCH 02/12] contrib: use live555 version that is compatible with
@@ -6,8 +6,8 @@ Subject: [PATCH 02/12] contrib: use live555 version that is compatible with
 
 ---
  contrib/src/live555/SHA512SUMS | 2 +-
- contrib/src/live555/rules.mak  | 5 +----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ contrib/src/live555/rules.mak  | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/contrib/src/live555/SHA512SUMS b/contrib/src/live555/SHA512SUMS
 index f459fb9d16..02b2a69734 100644
@@ -18,26 +18,10 @@ index f459fb9d16..02b2a69734 100644
 +10846fd6d5482bbea131ae805137077997e9dec242665e3c01d699d5584154c65049e8c520ea855599e554154a148e61fea77b592d97c814a4a98c773658d8f5  live.2016.10.21.tar.gz
 \ No newline at end of file
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index e40370a881..20d035259b 100644
+index cce70cba6b..b05c296cc9 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
-@@ -1,14 +1,12 @@
- # live555
- 
--LIVE555_VERSION := 2016.11.28
-+LIVE555_VERSION := 2016.10.21
- LIVE555_FILE := live.$(LIVE555_VERSION).tar.gz
- LIVEDOTCOM_URL := http://live555.com/liveMedia/public/$(LIVE555_FILE)
- 
- ifdef BUILD_NETWORK
--ifdef GNUV3
- PKGS += live555
- endif
--endif
- 
- ifeq ($(call need_pkg,"live555"),)
- PKGS_FOUND += live555
-@@ -95,7 +93,6 @@ endif
+@@ -96,7 +96,6 @@ endif
  LIVE555_SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
  
  .live555: live555
