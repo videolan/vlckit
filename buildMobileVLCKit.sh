@@ -102,7 +102,6 @@ do
          t)
              TVOS=yes
              IOS=no
-             BITCODE=yes
              SDK_VERSION=`xcrun --sdk appletvos --show-sdk-version`
              SDK_MIN=10.2
              OSVERSIONMINCFLAG=mtvos
