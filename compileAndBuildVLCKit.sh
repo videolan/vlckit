@@ -134,7 +134,7 @@ buildxcodeproj()
             if [ "$PLATFORM" = "watchsimulator" ]; then
                 architectures="x86_64 arm64"
             else
-                architectures="arm64_32"
+                architectures="arm64_32 arm64"
             fi
         fi
     else
@@ -249,6 +249,7 @@ buildMobileKit() {
             if [ "$WATCHOS" = "yes" ]; then
                 info "building for watchOS"
                 buildLibVLC "arm64_32" "watchos"
+                buildLibVLC "arm64" "watchos"
                 buildLibVLC "x86_64" "watchsimulator"
                 buildLibVLC "aarch64" "watchsimulator"
             fi
