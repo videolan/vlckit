@@ -29,4 +29,7 @@ Pod::Spec.new do |s|
 
   # Exclude x86_64 architecture for xrSimulator
   s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=xrsimulator*]' => 'x86_64' }
+
+  # Exclude armv7k architecture for watchOS
+  s.pod_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=watchos*]' => 'armv7k' }
 end
