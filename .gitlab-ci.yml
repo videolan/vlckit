@@ -1,7 +1,6 @@
 stages:
     - release
     - build
-    - cleanup
 
 variables:
     VLC_VERSION: "4.0"
