@@ -24,7 +24,6 @@ variables:
     after_script:
         - rm -rf build/ || true
         - rm -rf libvlc/vlc || true
-        - rm *.tar.xz || true
         - rm -rf *-binary || true
 
 continous-VLCKit-iOS-main:
@@ -94,7 +93,6 @@ continous-VLCKit-watchOS-main:
     after_script:
         - rm -rf build/ || true
         - rm -rf libvlc/vlc || true
-        - rm *.tar.xz || true
         - rm -rf *-binary || true
 
 dev-artifacts-VLCKit-iOS-main:
@@ -163,7 +161,6 @@ dev-artifacts-VLCKit-watchOS-main:
     after_script:
         - rm -rf build/ || true
         - rm -rf libvlc/vlc || true
-        - rm *.tar.xz || true
         - rm -rf *-binary || true
 
 MobileVLCKit-main:
