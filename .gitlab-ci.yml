@@ -20,6 +20,10 @@ variables:
 .continous-build-base:
     script:
         - ./buildMobileVLCKit.sh -${BUILD_PARAM}
+    after_script:
+        - rm -rf build/ || true
+        - rm -rf libvlc/vlc || true
+        - rm -rf *-binary || true
 
 continous-MobileVLCKit:
     tags:
@@ -73,6 +77,10 @@ continous-VLCKit:
         - ./buildMobileVLCKit.sh -${BUILD_PARAM}
         - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
         - mv ${JOB_NAME}-*.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
+    after_script:
+        - rm -rf build/ || true
+        - rm -rf libvlc/vlc || true
+        - rm -rf *-binary || true
 
 dev-artifacts-MobileVLCKit:
     tags:
@@ -144,6 +152,10 @@ pages:
     script:
         - cd Packaging
         - ./buildAndDeployFrameworks.sh -${BUILD_PARAM}
+    after_script:
+        - rm -rf build/ || true
+        - rm -rf libvlc/vlc || true
+        - rm -rf *-binary || true
 
 MobileVLCKit:
     tags:
