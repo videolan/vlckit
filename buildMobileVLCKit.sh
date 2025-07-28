@@ -49,7 +49,6 @@ OPTIONS
    -t       Build for tvOS
    -x       Build for macOS / Mac OS X
    -w       Build a limited stack of non-scary libraries only
-   -y       Build universal static libraries
    -b       Enable bitcode
    -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
    -3       Include optional 32bit slices (i386, ARMv7 and ARMv7s, iOS only)
