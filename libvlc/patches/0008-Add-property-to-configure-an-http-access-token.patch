@@ -1,4 +1,4 @@
-From edab790d47825cee06f7a08360c0b64c65d0c02c Mon Sep 17 00:00:00 2001
+From 050e2f4c118d74ac542b481b8cc947d737ff44b2 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
 Subject: [PATCH 08/12] Add property to configure an http access token
@@ -7,9 +7,9 @@ Subject: [PATCH 08/12] Add property to configure an http access token
  modules/access/http/access.c                   | 8 ++++++--
  modules/access/http/resource.c                 | 6 +++++-
  modules/access/http/resource.h                 | 1 +
- modules/demux/adaptive/http/HTTPConnection.cpp | 2 ++
+ modules/demux/adaptive/http/HTTPConnection.cpp | 1 +
  src/libvlc.c                                   | 2 ++
- 5 files changed, 16 insertions(+), 3 deletions(-)
+ 5 files changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http/access.c b/modules/access/http/access.c
 index e8417dfb71..4302c0d455 100644
@@ -81,14 +81,13 @@ index 66cc215361..92d3091711 100644
  
  int vlc_http_res_init(struct vlc_http_resource *,
 diff --git a/modules/demux/adaptive/http/HTTPConnection.cpp b/modules/demux/adaptive/http/HTTPConnection.cpp
-index de172200cc..ffb31e998e 100644
+index 4bc79e9959..b3694553d3 100644
 --- a/modules/demux/adaptive/http/HTTPConnection.cpp
 +++ b/modules/demux/adaptive/http/HTTPConnection.cpp
-@@ -310,6 +310,8 @@ RequestStatus LibVLCHTTPConnection::request(const std::string &path,
-     if(source->create(params.getUrl().c_str(), useragent,referer, range))
+@@ -419,6 +419,7 @@ RequestStatus LibVLCHTTPConnection::request(const std::string &path,
          return RequestStatus::GenericError;
  
-+    source->http_res->token = NULL;
+     /* Set credentials from URL. Deprecated warning will follow */
 +
      struct vlc_credential crd;
      struct vlc_url_t crd_url;
@@ -107,5 +106,5 @@ index 51ccfcb92d..814cb85e95 100644
      system_Configure( p_libvlc, i_argc - vlc_optind, ppsz_argv + vlc_optind );
  
 -- 
-2.39.5 (Apple Git-154)
+2.32.1 (Apple Git-133)
 
