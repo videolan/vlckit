@@ -1,4 +1,4 @@
-From 6921314083f6728d7804a110bd6756da47d0dff7 Mon Sep 17 00:00:00 2001
+From 096fbea4e71960f31113e35abef7a1f18f5165c6 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 21 Aug 2023 14:44:24 +0200
 Subject: [PATCH 42/45] lib/event: remove abort

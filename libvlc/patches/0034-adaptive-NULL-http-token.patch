@@ -1,4 +1,4 @@
-From 0153cbaab67b7adb480346488db1304626fd9e99 Mon Sep 17 00:00:00 2001
+From bf4223b4c0d54d2e2317cdd0e6d8d1177e230732 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 6 Jan 2022 01:08:11 +0100
 Subject: [PATCH 34/45] adaptive: NULL http-token

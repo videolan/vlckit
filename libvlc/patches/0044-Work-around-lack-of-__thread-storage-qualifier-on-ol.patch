@@ -1,4 +1,4 @@
-From c2be8e717dff9c76ee31ef9a3cd4a85f327e3bf6 Mon Sep 17 00:00:00 2001
+From 1786ab440ba6a666d19f752c8c74e55cf9302a0a Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
 Subject: [PATCH 44/45] Work around lack of __thread storage qualifier on old
@@ -14,7 +14,7 @@ Subject: [PATCH 44/45] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 997bfa73d0..967990035f 100644
+index 23a4c2ec42..13f19dbd79 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -665,8 +665,8 @@ dnl Check for system libs needed
@@ -22,9 +22,9 @@ index 997bfa73d0..967990035f 100644
  
  dnl Check for usual libc functions
 -AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getmntent_r getpwuid_r isatty lstat memalign mkostemp mmap newlocale open_memstream openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime uselocale])
--AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tdestroy tfind timegm timespec_get strverscmp pathconf])
+-AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tdestroy tfind timegm timespec_get strverscmp pathconf])
 +AC_CHECK_FUNCS([accept4 daemon fcntl flock fstatvfs fork getenv getmntent_r getpwuid_r isatty lstat memalign mkostemp mmap open_memstream openat pipe2 pread posix_fadvise posix_madvise posix_memalign setlocale stricmp strnicmp strptime tdestroy uselocale])
-+AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir ffsll flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tfind timegm timespec_get strverscmp pathconf])
++AC_REPLACE_FUNCS([aligned_alloc atof atoll dirfd fdopendir flockfile fsync getdelim getpid lfind lldiv memrchr nrand48 poll recvmsg rewind sendmsg setenv strcasecmp strcasestr strdup strlcpy strndup strnlen strnstr strsep strtof strtok_r strtoll swab tfind timegm timespec_get strverscmp pathconf])
  AC_REPLACE_FUNCS([gettimeofday])
  AC_CHECK_FUNC(fdatasync,,
    [AC_DEFINE(fdatasync, fsync, [Alias fdatasync() to fsync() if missing.])

@@ -1,4 +1,4 @@
-From b2d8408f6ca3ff51e833cae33047477948bafdaf Mon Sep 17 00:00:00 2001
+From 84d1a3b64a355e9b3d3ee7f31ce026081e993a71 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 16 Apr 2022 00:44:03 +0200
 Subject: [PATCH 37/45] smb2: remove unneeded compat code
@@ -10,7 +10,7 @@ not needed as we have the latest libsmb2, so let's remove it.
  1 file changed, 28 deletions(-)
 
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index b1bebf0b6b..3f4c96fddb 100644
+index b7ba237ad2..c8cfe1a4b1 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -201,34 +201,6 @@ smb2_set_error(struct vlc_smb2_op *op, const char *psz_func, int err)

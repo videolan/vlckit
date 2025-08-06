@@ -1,4 +1,4 @@
-From c3a9f8e79286fe05b112ddd9f6464ed7012aaebf Mon Sep 17 00:00:00 2001
+From f77acb1afe81783036f132fa91323fff62f62cd8 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 21 Jan 2022 17:28:13 +0100
 Subject: [PATCH 39/45] smb2: use the cache helper
@@ -31,7 +31,7 @@ index 8be84055fa..2e75013bad 100644
  if HAVE_DSM
  libsmb2_plugin_la_CFLAGS += $(DSM_CFLAGS) -DHAVE_DSM
 diff --git a/modules/access/smb2.c b/modules/access/smb2.c
-index 3f4c96fddb..9c7dc19896 100644
+index c8cfe1a4b1..f0bda6a313 100644
 --- a/modules/access/smb2.c
 +++ b/modules/access/smb2.c
 @@ -94,6 +94,7 @@ netbios_ns_interrupt_unregister(void)

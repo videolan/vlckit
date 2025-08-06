@@ -1,4 +1,4 @@
-From 3d414eeaa5ea659723b0f1f6e47c8d8f4395097d Mon Sep 17 00:00:00 2001
+From b97b0347b5967b6de85c700a21456d518e830253 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 20 Oct 2020 11:33:23 +0200
 Subject: [PATCH 24/45] lib: media_player: add stop/set_media async support

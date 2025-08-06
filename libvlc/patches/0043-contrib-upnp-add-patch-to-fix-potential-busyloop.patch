@@ -1,4 +1,4 @@
-From e0fc8b9a5dc0897227d667dee846fa364f646e82 Mon Sep 17 00:00:00 2001
+From a80c806edb680b8fd2dad5371db05c3b6882ecd7 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 29 Jun 2023 13:37:29 +0200
 Subject: [PATCH 43/45] contrib: upnp: add patch to fix potential busyloop
@@ -135,7 +135,7 @@ index 0000000000..9e81d17ece
 +2.39.2
 +
 diff --git a/contrib/src/upnp/rules.mak b/contrib/src/upnp/rules.mak
-index 628a2f0ae2..945b937606 100644
+index 173a700071..484e7674d5 100644
 --- a/contrib/src/upnp/rules.mak
 +++ b/contrib/src/upnp/rules.mak
 @@ -56,6 +56,7 @@ endif

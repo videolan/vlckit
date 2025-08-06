@@ -1,4 +1,4 @@
-From 5a9c541412bc34f7e6cbed430dfd99449af5956c Mon Sep 17 00:00:00 2001
+From 7c063d7c27d2e049cffce4c1624ac876b6c285c9 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 13:17:02 +0100
 Subject: [PATCH 40/45] dsm: use the cache helper
