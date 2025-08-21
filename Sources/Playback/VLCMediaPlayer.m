@@ -1695,6 +1695,30 @@ static const struct event_handler_entry
     libvlc_media_player_unselect_track_type(_playerInstance, libvlc_track_video);
 }
 
+- (void)selectTextTracks:(NSArray<VLCMediaPlayerTrack *> *)tracks
+{
+    if (tracks.count == 0) {
+        [self deselectAllTextTracks];
+        return;
+    }
+    
+    libvlc_media_player_t *p_mi = _playerInstance;
+    if (!p_mi)
+        return;
+    
+    NSMutableArray<NSString *> *trackIds = [NSMutableArray arrayWithCapacity:tracks.count];
+    for (VLCMediaPlayerTrack *track in tracks) {
+        if (track.type == VLCMediaTrackTypeText) {
+            [trackIds addObject:track.trackId];
+        }
+    }
+    
+    if (trackIds.count > 0) {
+        NSString *idsString = [trackIds componentsJoinedByString:@","];
+        libvlc_media_player_select_tracks_by_ids(p_mi, libvlc_track_text, idsString.UTF8String);
+    }
+}
+
 - (void)deselectAllTextTracks
 {
     libvlc_media_player_unselect_track_type(_playerInstance, libvlc_track_text);

@@ -890,6 +890,12 @@ typedef NS_ENUM(unsigned, VLCAudioMixMode)
 - (void)deselectAllVideoTracks;
 
 /**
+ * Select multiple text tracks simultaneously
+ * @param tracks Array of VLCMediaPlayerTrack objects to select
+ */
+- (void)selectTextTracks:(NSArray<VLCMediaPlayerTrack *> *)tracks;
+
+/**
  * deselect all text tracks
  */
 - (void)deselectAllTextTracks;
