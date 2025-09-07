@@ -1,4 +1,4 @@
-From 186b86f7b235eaea0b3fd72026c4263d6cfa9446 Mon Sep 17 00:00:00 2001
+From ff2450eb6a9d65e15193c9defb06c2e99366634e Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
 Subject: [PATCH 04/12] http access: retain auth struct for the runtime of the
@@ -100,5 +100,5 @@ index 572db699d6..e1d262d535 100644
          p_auth->i_nonce = 0;
  
 -- 
-2.32.1 (Apple Git-133)
+2.39.5 (Apple Git-154)
 

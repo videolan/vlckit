@@ -1,4 +1,4 @@
-From 1c36d1254abbbbb8a927cece637cd719a5a53fee Mon Sep 17 00:00:00 2001
+From b45504a6d6f0cae294594599f767b833928140f5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 5 Nov 2024 11:38:17 +0100
 Subject: [PATCH 11/12] extras/tools: prefer shasum over sha512sum
@@ -28,5 +28,5 @@ index ea4f822fd2..20b8068f48 100644
  SHA512SUM = openssl dgst -sha512
  else
 -- 
-2.32.1 (Apple Git-133)
+2.39.5 (Apple Git-154)
 
