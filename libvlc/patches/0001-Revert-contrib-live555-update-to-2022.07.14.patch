@@ -1,4 +1,4 @@
-From 7a823fc242e6e7adf0ff581915de4522a0d821a1 Mon Sep 17 00:00:00 2001
+From cc7dfc7dafa4b38472483e69d9ae9785391b4a85 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Thu, 11 Aug 2022 11:59:13 +0200
 Subject: [PATCH 01/12] Revert "contrib: live555: update to 2022.07.14"

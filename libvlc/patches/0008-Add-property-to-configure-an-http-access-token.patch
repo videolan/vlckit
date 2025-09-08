@@ -1,4 +1,4 @@
-From 304b3c969a07bda03cb3d25e3973eb9a0107eef8 Mon Sep 17 00:00:00 2001
+From e6899646cdbf37a398ff8c4ddf856b7fb2d257a9 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
 Subject: [PATCH 08/12] Add property to configure an http access token

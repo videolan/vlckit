@@ -1,4 +1,4 @@
-From ac28be19e633dde3f103e412f1601514e2d44357 Mon Sep 17 00:00:00 2001
+From 896d9c18d48a8d5c68b947220003bc3ccae38d89 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
 Subject: [PATCH 07/12] contrib/ffmpeg: use audiotoolbox on iOS for AC-3

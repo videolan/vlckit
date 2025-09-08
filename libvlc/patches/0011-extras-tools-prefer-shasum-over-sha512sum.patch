@@ -1,4 +1,4 @@
-From b45504a6d6f0cae294594599f767b833928140f5 Mon Sep 17 00:00:00 2001
+From ab1e3d7bc80d82d1ce3cb0a786d2de72d7ceea57 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 5 Nov 2024 11:38:17 +0100
 Subject: [PATCH 11/12] extras/tools: prefer shasum over sha512sum
