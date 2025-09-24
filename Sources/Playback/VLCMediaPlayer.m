@@ -47,10 +47,7 @@
 #if !TARGET_OS_IPHONE
 /* prevent system sleep */
 # import <CoreServices/CoreServices.h>
-/* FIXME: Ugly hack! */
-# ifdef __x86_64__
-#  import <CoreServices/../Frameworks/OSServices.framework/Headers/Power.h>
-# endif
+# import <IOKit/pwr_mgt/IOPMLib.h>
 #endif // !TARGET_OS_IPHONE
 
 #include <vlc/vlc.h>
@@ -93,6 +90,11 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
     };
     return stateToStrings[state];
 }
+
+#if !TARGET_OS_IPHONE
+// Display sleep assertion for preventing screen sleep during playback
+static IOPMAssertionID displaySleepAssertion = 0;
+#endif
 
 // TODO: Documentation
 @interface VLCMediaPlayer (Private)
@@ -543,6 +545,9 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 - (void)dealloc
 {
     [self stopTimeChangeUpdateTimer];
+#if !TARGET_OS_IPHONE
+    [self allowDisplaySleep];
+#endif
     [self unregisterObservers];
 
     // Always get rid of the delegate first so we can stop sending messages to it
@@ -1067,9 +1072,33 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 #pragma mark playback
 
 #if !TARGET_OS_IPHONE
-- (void)delaySleep
+- (void)preventDisplaySleep
 {
-    UpdateSystemActivity(UsrActivity);
+    if (displaySleepAssertion != 0)
+        return;
+
+    IOReturn result = IOPMAssertionCreateWithName(
+        kIOPMAssertionTypeNoDisplaySleep,
+        kIOPMAssertionLevelOn,
+        CFSTR("VLC Media Playback"),
+        &displaySleepAssertion
+    );
+
+    if (result != kIOReturnSuccess) {
+        NSLog(@"[VLCMediaPlayer] Failed to create display sleep assertion: %d", result);
+    }
+}
+
+- (void)allowDisplaySleep
+{
+    if (displaySleepAssertion == 0)
+        return;
+
+    IOReturn result = IOPMAssertionRelease(displaySleepAssertion);
+    if (result != kIOReturnSuccess) {
+        NSLog(@"[VLCMediaPlayer] Failed to release display sleep assertion: %d", result);
+    }
+    displaySleepAssertion = 0;
 }
 #endif
 
@@ -1101,11 +1130,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
     [[NSNotificationCenter defaultCenter] postNotification: notification];
     if ([self.delegate respondsToSelector:@selector(mediaPlayerTimeChanged:)])
         [self.delegate mediaPlayerTimeChanged: notification];
-
-#if !TARGET_OS_IPHONE
-    // This seems to be the most relevant place to delay sleeping and screen saver.
-    [self delaySleep];
-#endif
 
     [self willChangeValueForKey:@"position"];
     [self didChangeValueForKey:@"position"];
@@ -1582,8 +1606,14 @@ static const struct event_handler_entry
     
     if ([self isPlaying]) {
         [self startTimeChangeUpdateTimer];
+#if !TARGET_OS_IPHONE
+        [self preventDisplaySleep];
+#endif
     } else {
         [self stopTimeChangeUpdateTimer];
+#if !TARGET_OS_IPHONE
+        [self allowDisplaySleep];
+#endif
     }
     
     [self didChangeValueForKey:@"state"];
