@@ -30,7 +30,7 @@ if [ -z "$MAKEFLAGS" ]; then
     MAKEFLAGS="-j$(sysctl -n machdep.cpu.core_count || nproc)";
 fi
 
-TESTEDHASH="8e3d17c89" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="5e065cfa0" # libvlc hash that this version of VLCKit is build on
 
 usage()
 {
