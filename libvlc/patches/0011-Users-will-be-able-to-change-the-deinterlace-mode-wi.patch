@@ -1,4 +1,4 @@
-From abdd7a0c70b2f4e53f54c90413b4929c3d6a0f9c Mon Sep 17 00:00:00 2001
+From 425a4ed738382bafc17e90827eee449689524dde Mon Sep 17 00:00:00 2001
 From: Luis Fernandes <zipleen@gmail.com>
 Date: Wed, 9 May 2018 10:44:43 +0100
 Subject: [PATCH 11/45] Users will be able to change the deinterlace mode
@@ -28,7 +28,7 @@ index 897d183627..6991ce94c7 100644
  
  /**
 diff --git a/lib/video.c b/lib/video.c
-index a3e5b248e9..9bc0f634f5 100644
+index 7670664b2c..5b8db36fa0 100644
 --- a/lib/video.c
 +++ b/lib/video.c
 @@ -663,14 +663,15 @@ end:

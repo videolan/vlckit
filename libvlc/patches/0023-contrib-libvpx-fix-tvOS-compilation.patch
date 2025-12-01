@@ -1,4 +1,4 @@
-From 041897679e8fd67838f871206e8b0f36d0caf51a Mon Sep 17 00:00:00 2001
+From eea6b72b256043a764e79084271da6e7e4470186 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sat, 19 Sep 2020 13:51:08 +0200
 Subject: [PATCH 23/45] contrib/libvpx: fix tvOS compilation
@@ -37,7 +37,7 @@ index 0000000000..f4a22f56ec
 +               add_cflags -isysroot ${alt_libc}
 +             fi
 diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
-index 87994deea0..96539758b3 100644
+index 47d5c51046..7b45df099d 100644
 --- a/contrib/src/vpx/rules.mak
 +++ b/contrib/src/vpx/rules.mak
 @@ -28,6 +28,9 @@ ifdef HAVE_MACOSX

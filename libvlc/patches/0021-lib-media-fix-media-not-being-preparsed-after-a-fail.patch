@@ -1,4 +1,4 @@
-From 6b482ac090052f5c8299b617818288d9d3056502 Mon Sep 17 00:00:00 2001
+From bcb712c2e6431b2c141407bab5237b8db81458f9 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 13 Sep 2019 14:41:31 +0200
 Subject: [PATCH 21/45] lib: media: fix media not being preparsed after a

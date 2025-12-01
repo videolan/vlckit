@@ -1,4 +1,4 @@
-From 1786ab440ba6a666d19f752c8c74e55cf9302a0a Mon Sep 17 00:00:00 2001
+From a4e4d5dd344c92a5bb4acd22621c460031afd49e Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 23 Feb 2018 13:16:41 +0100
 Subject: [PATCH 44/45] Work around lack of __thread storage qualifier on old
@@ -14,10 +14,10 @@ Subject: [PATCH 44/45] Work around lack of __thread storage qualifier on old
  rename {compat => src/extras}/tdestroy.c (59%)
 
 diff --git a/configure.ac b/configure.ac
-index 23a4c2ec42..13f19dbd79 100644
+index e22de105eb..d9ce87813f 100644
 --- a/configure.ac
 +++ b/configure.ac
-@@ -665,8 +665,8 @@ dnl Check for system libs needed
+@@ -667,8 +667,8 @@ dnl Check for system libs needed
  need_libc=false
  
  dnl Check for usual libc functions
@@ -48,7 +48,7 @@ index 52e2838ea6..9589245458 100644
  
  /* Random numbers */
 diff --git a/po/POTFILES.in b/po/POTFILES.in
-index d4eb3fcce0..f440790396 100644
+index 0f2052efed..397acee945 100644
 --- a/po/POTFILES.in
 +++ b/po/POTFILES.in
 @@ -68,6 +68,7 @@ src/config/help.c
@@ -60,7 +60,7 @@ index d4eb3fcce0..f440790396 100644
  src/input/clock.c
  src/input/clock.h
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 0877dd0b61..6f47e17e0a 100644
+index c70f69e1ea..29a9c11f78 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -201,6 +201,7 @@ libvlccore_la_SOURCES = \

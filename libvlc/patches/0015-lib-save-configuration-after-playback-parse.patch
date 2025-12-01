@@ -1,4 +1,4 @@
-From 5936ddfbfa79fcbefd9ac6e76a0445a10801fb04 Mon Sep 17 00:00:00 2001
+From fb3eb73b6b5adc3d926c117e3d70cea84fb61ea7 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Wed, 17 Jan 2018 10:06:13 +0200
 Subject: [PATCH 15/45] lib: save configuration after playback/parse

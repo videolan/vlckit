@@ -1,4 +1,4 @@
-From aae65b9a8ef92102731604701d4f45f3cfb4248d Mon Sep 17 00:00:00 2001
+From 0ebfb9e3604523749b7c173a2ad5b4cda393ad3d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Mon, 26 Mar 2018 16:44:44 +0200
 Subject: [PATCH 09/45] modules:common: Use the full module name as MODULE_NAME

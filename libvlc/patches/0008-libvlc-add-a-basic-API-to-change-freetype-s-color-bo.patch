@@ -1,4 +1,4 @@
-From 6dfd2aa08fae0c93e9ba54550b15ba93486f87f4 Mon Sep 17 00:00:00 2001
+From 2707a508a73aba0073a5c28f4cbb055e5fdae4cb Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 17 Dec 2017 18:05:40 +0100
 Subject: [PATCH 08/45] libvlc: add a basic API to change freetype's color,
@@ -91,7 +91,7 @@ index 0a4b3e0a14..e9e84848fa 100644
      var_Create (mp, "aout", VLC_VAR_STRING | VLC_VAR_DOINHERIT);
      var_Create (mp, "audio-device", VLC_VAR_STRING);
 diff --git a/lib/video.c b/lib/video.c
-index acbba3a30f..035cc0ebf1 100644
+index 46c67d8b0c..ad3472bf16 100644
 --- a/lib/video.c
 +++ b/lib/video.c
 @@ -812,7 +812,7 @@ static bool find_sub_source_by_name( libvlc_media_player_t *p_mi, const char *re
@@ -111,7 +111,7 @@ index acbba3a30f..035cc0ebf1 100644
          case VLC_VAR_STRING:
              if( i_expected_type != opt->type )
              {
-@@ -1086,3 +1087,69 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
+@@ -1087,3 +1088,69 @@ float libvlc_video_get_adjust_float( libvlc_media_player_t *p_mi,
  {
      return get_float( p_mi, "adjust", adjust_option_bynumber(option) );
  }

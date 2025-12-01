@@ -1,4 +1,4 @@
-From 8ca8cd62b3bd9e20ecfca7bbfd13b85d7dd03452 Mon Sep 17 00:00:00 2001
+From 0d87c59c55259a9f6e77d1616b78b31957fdbb37 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Thu, 13 Aug 2020 15:55:24 +0200
 Subject: [PATCH 25/45] aout: add "audio-meter" filter type

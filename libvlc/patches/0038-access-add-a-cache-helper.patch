@@ -1,4 +1,4 @@
-From 85b330118c4706cb22bc563feea3d38684e58de2 Mon Sep 17 00:00:00 2001
+From 2e4a54862e99e5b4d9a44df182eb7effb1ad6ca8 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Sun, 10 Jun 2018 20:36:06 +0300
 Subject: [PATCH 38/45] access: add a cache helper
@@ -417,7 +417,7 @@ index 0000000000..9ace4d07ce
 +
 +#endif /* VLC_LIST_H */
 diff --git a/modules/access/Makefile.am b/modules/access/Makefile.am
-index f295947233..8be84055fa 100644
+index 7d23797bca..ee51aa63bd 100644
 --- a/modules/access/Makefile.am
 +++ b/modules/access/Makefile.am
 @@ -440,3 +440,11 @@ librist_plugin_la_SOURCES = access/rist.c access/rist.h
@@ -791,7 +791,7 @@ index 0000000000..4c1c136719
 +#warning "can't register access cache"
 +#endif
 diff --git a/src/Makefile.am b/src/Makefile.am
-index 1230ff688a..0877dd0b61 100644
+index 692a7a5274..c70f69e1ea 100644
 --- a/src/Makefile.am
 +++ b/src/Makefile.am
 @@ -61,6 +61,7 @@ pluginsinclude_HEADERS = \

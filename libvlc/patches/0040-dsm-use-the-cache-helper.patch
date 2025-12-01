@@ -1,4 +1,4 @@
-From 7c063d7c27d2e049cffce4c1624ac876b6c285c9 Mon Sep 17 00:00:00 2001
+From fa763a90deb96d611ad74fb8a4a1f2e794732128 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Tue, 25 Jan 2022 13:17:02 +0100
 Subject: [PATCH 40/45] dsm: use the cache helper
@@ -18,7 +18,7 @@ Signed-off-by: Thomas Guillem <thomas@gllm.fr>
  2 files changed, 76 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/Makefile.am b/modules/access/Makefile.am
-index 2e75013bad..eb6ba6f3ff 100644
+index 0ab0cef67d..a977e61f44 100644
 --- a/modules/access/Makefile.am
 +++ b/modules/access/Makefile.am
 @@ -347,7 +347,7 @@ EXTRA_LTLIBRARIES += libsmb_plugin.la

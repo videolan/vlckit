@@ -1,4 +1,4 @@
-From 0dcf63aa1706d9018017cfee290d8ca2dabcb44f Mon Sep 17 00:00:00 2001
+From 436bf16b88980a453cba0026fe3b94e7fcdb2ce3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Sun, 11 May 2025 12:43:13 +0200
 Subject: [PATCH 45/45] contrib/libebur128: update cmake configuration
