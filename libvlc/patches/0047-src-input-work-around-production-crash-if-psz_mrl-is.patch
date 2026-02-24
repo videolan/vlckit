@@ -1,0 +1,31 @@
+From 07768e9b24adc0918e4f801666924f847357dc38 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Tue, 24 Feb 2026 21:06:12 +0100
+Subject: [PATCH 47/47] src/input: work-around production crash if psz_mrl is
+ NULL
+
+---
+ src/input/input.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/input/input.c b/src/input/input.c
+index ccfdf2b730..b17dbce3b7 100644
+--- a/src/input/input.c
++++ b/src/input/input.c
+@@ -2670,6 +2670,13 @@ static input_source_t *InputSourceNew( input_thread_t *p_input,
+ 
+     const char *psz_access, *psz_demux, *psz_path, *psz_anchor = NULL;
+ 
++    if( unlikely( psz_mrl == NULL ) )
++    {
++        msg_Err( p_input, "cannot create input source with a NULL MRL" );
++        vlc_object_release( in );
++        return NULL;
++    }
++
+     assert( psz_mrl );
+     char *psz_dup = strdup( psz_mrl );
+     char *psz_demux_var = NULL;
+-- 
+2.32.1 (Apple Git-133)
+
