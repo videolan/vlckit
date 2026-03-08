@@ -21,17 +21,18 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build (Partial)
         if: ${{ github.event_name == 'pull_request' }}
-        run: ./Packaging/create-distributable-package.sh -x -d
+        run: ./Packaging/create-distributable-package.sh -m -d
         shell: bash
       - name: Build (Full)
         if: ${{ github.event_name != 'pull_request' }}
         run: ./Packaging/create-distributable-package.sh -x -m -d
         shell: bash
       - name: Upload
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dmg
           path: "*.dmg"
+          archive: false
       - name: Get current time
         if: ${{ github.event.inputs.release }}
         uses: josStorer/get-current-time@v2
