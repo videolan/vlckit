@@ -1,0 +1,55 @@
+From 9b7892bfa4abda4121f45eccee73f196e1993f8d Mon Sep 17 00:00:00 2001
+From: ci7lus <7887955+ci7lus@users.noreply.github.com>
+Date: Sat, 7 Mar 2026 00:15:07 +0900
+Subject: [PATCH] fix: reshape video size on media replacement
+
+---
+ modules/video_output/apple/VLCVideoUIView.m | 24 +++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
+diff --git a/modules/video_output/apple/VLCVideoUIView.m b/modules/video_output/apple/VLCVideoUIView.m
+index 8f5d1d08e0..131057b1e8 100644
+--- a/modules/video_output/apple/VLCVideoUIView.m
++++ b/modules/video_output/apple/VLCVideoUIView.m
+@@ -274,8 +274,14 @@
+ {
+     assert(_enabled);
+     _subviews++;
+-    if (_subviews == 1)
++    if (_subviews == 1) {
++        /* Update the frame to the current viewContainer bounds before
++         * re-adding to the view hierarchy. The frame may be stale if
++         * the viewContainer was resized while this view was detached
++         * (e.g. switching between mini player and expanded mode). */
++        self.frame = self.viewContainerBounds;
+         [_viewContainer addSubview:self];
++    }
+ 
+     VLC_UNUSED(subview);
+ }
+@@ -336,9 +342,19 @@
+ 
+ - (void)didMoveToWindow
+ {
+-    #if !defined(TARGET_OS_VISION) || !TARGET_OS_VISION
+-        self.contentScaleFactor = self.window.screen.scale;
+-    #endif
++    /* Only update when moving TO a window, not when being removed.
++     * When self.window is nil (e.g. going to background or off-screen),
++     * updating the frame and contentScaleFactor can leave the display
++     * in an inconsistent state, causing a persistent black screen. */
++    if (self.window) {
++        /* Ensure the frame matches the viewContainer in case it was
++         * resized while this view was not in the hierarchy. */
++        self.frame = self.viewContainerBounds;
++        #if !defined(TARGET_OS_VISION) || !TARGET_OS_VISION
++            self.contentScaleFactor = self.window.screen.scale;
++        #endif
++        [self reshape];
++    }
+ }
+ 
+ - (void)layoutSubviews
+-- 
+2.39.1
+
