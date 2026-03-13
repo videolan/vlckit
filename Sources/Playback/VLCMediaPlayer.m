@@ -1157,9 +1157,6 @@ static void HandleMediaPlayerRecord(const libvlc_event_t * event, void * opaque)
 - (void)play
 {
     dispatch_async(_libVLCBackgroundQueue, ^{
-        if (_media) {
-            libvlc_media_player_set_media(_playerInstance, [_media libVLCMediaDescriptor]);
-        }
         libvlc_media_player_play(_playerInstance);
     });
 }
