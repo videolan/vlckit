@@ -1,7 +1,7 @@
-From d7ebf80acaa46cb22070e7113a23f9a25c71dec6 Mon Sep 17 00:00:00 2001
+From 30176056432062b0096bca64eb57639284da7e4a Mon Sep 17 00:00:00 2001
 From: ci7lus <7887955+ci7lus@users.noreply.github.com>
 Date: Sat, 21 Feb 2026 21:23:20 +0900
-Subject: [PATCH 1/3] feat: Add arib_dualmono stream filter
+Subject: [PATCH 2/4] feat: Add arib_dualmono stream filter
 
 ---
  contrib/src/tsreadex/SHA512SUMS               |   1 +
@@ -17,20 +17,20 @@ Subject: [PATCH 1/3] feat: Add arib_dualmono stream filter
 
 diff --git a/contrib/src/tsreadex/SHA512SUMS b/contrib/src/tsreadex/SHA512SUMS
 new file mode 100644
-index 0000000000..10573bbbd8
+index 0000000000..e5c5186e94
 --- /dev/null
 +++ b/contrib/src/tsreadex/SHA512SUMS
 @@ -0,0 +1 @@
-+ba521c9706e5eb002bb8d38a3aaf2d841a1c9bdd27ac25e89790784e8e7913e1da3d061a30c1402fe95e7a38a9db79fa7b3e9c06333189d93abb38ace423cef8  tsreadex-c9a2ebeb6317e02dd0e721b92fac9bbdc7bb78d5.tar.gz
++c864573101f402585f68693c9f586b976647885157535109a3da7ff3d9c66f3d0d8747f827304d79aa5312c3232ca5ca36766f508d2e092b51904c0e968f367d  tsreadex-772a2b2f19c4c6907aa5486b00e9c78ef6a025d7.tar.gz
 diff --git a/contrib/src/tsreadex/rules.mak b/contrib/src/tsreadex/rules.mak
 new file mode 100644
-index 0000000000..3070b1995a
+index 0000000000..5b214e3394
 --- /dev/null
 +++ b/contrib/src/tsreadex/rules.mak
 @@ -0,0 +1,24 @@
 +# tsreadex
 +
-+TSREADEX_GIT_HASH := c9a2ebeb6317e02dd0e721b92fac9bbdc7bb78d5
++TSREADEX_GIT_HASH := 772a2b2f19c4c6907aa5486b00e9c78ef6a025d7
 +TSREADEX_URL := https://github.com/neneka/tsreadex/archive/$(TSREADEX_GIT_HASH).tar.gz
 +
 +PKGS += tsreadex
@@ -53,13 +53,13 @@ index 0000000000..3070b1995a
 +	cd $< && install -m 644 libtsreadex.a "$(PREFIX)/lib/"
 +	touch $@
 diff --git a/modules/demux/mpeg/ts_psi.c b/modules/demux/mpeg/ts_psi.c
-index fdf198e224..f0749a9d7b 100644
+index 17c909fd44..7ef3dd8721 100644
 --- a/modules/demux/mpeg/ts_psi.c
 +++ b/modules/demux/mpeg/ts_psi.c
 @@ -2130,6 +2130,21 @@ static void PMTCallBack( void *data, dvbpsi_pmt_t *p_dvbpsipmt )
          }
      }
-
+ 
 +    /* Install ARIB dualmono filter */
 +    if ( p_sys->standard == TS_STANDARD_ARIB && p_sys->stream == p_demux->s )
 +    {
@@ -83,7 +83,7 @@ index 1d6a5499b2..aa14a96201 100644
 --- a/modules/stream_filter/Makefile.am
 +++ b/modules/stream_filter/Makefile.am
 @@ -46,3 +46,8 @@ stream_filter_LTLIBRARIES += libadf_plugin.la
-
+ 
  libskiptags_plugin_la_SOURCES = stream_filter/skiptags.c
  stream_filter_LTLIBRARIES += libskiptags_plugin.la
 +
@@ -324,6 +324,6 @@ index 9f9ae2cd80..2e196be902 100644
 +    ),
 +    'cpp_args' : ['-std=c++14']
 +}
---
+-- 
 2.39.1
 
