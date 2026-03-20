@@ -1,17 +1,17 @@
-From 0084f3e0b9f790420433e8b9071be564059fefc5 Mon Sep 17 00:00:00 2001
+From 72515eccde4ad782654918ba8ff1618fc36129f4 Mon Sep 17 00:00:00 2001
 From: ci7lus <7887955+ci7lus@users.noreply.github.com>
 Date: Fri, 13 Feb 2026 00:39:21 +0900
-Subject: [PATCH] demux/mpeg: Add `is-mpegts` demuxer flag and
+Subject: [PATCH 01/12] demux/mpeg: Add `is-mpegts` demuxer flag and
  `trust_demux_pos` to refine position calc
 
 ---
- modules/demux/mpeg/ts.c | 13 ++++++++++---
+ modules/demux/mpeg/ts.c | 54 +++++++++++++++++++++++++++++++++++------
  src/player/player.h     |  3 +++
- src/player/timer.c      | 35 ++++++++++++++++++++++++++++++++++-
- 3 files changed, 47 insertions(+), 4 deletions(-)
+ src/player/timer.c      | 35 +++++++++++++++++++++++++-
+ 3 files changed, 83 insertions(+), 9 deletions(-)
 
 diff --git a/modules/demux/mpeg/ts.c b/modules/demux/mpeg/ts.c
-index 642947e346..e63ad9f421 100644
+index 642947e346..44d819f2a7 100644
 --- a/modules/demux/mpeg/ts.c
 +++ b/modules/demux/mpeg/ts.c
 @@ -503,6 +503,10 @@ static int Open( vlc_object_t *p_this )
@@ -34,17 +34,59 @@ index 642947e346..e63ad9f421 100644
               p_pmt &&
               p_pmt->pcr.i_first != VLC_TICK_INVALID &&
               p_pmt->i_last_dts != VLC_TICK_INVALID &&
-@@ -1014,7 +1020,8 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -1014,13 +1020,45 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
      {
          vlc_tick_t i_time = va_arg( args, vlc_tick_t );
  
 -        if( p_sys->b_canseek && p_pmt && p_pmt->pcr.i_first != VLC_TICK_INVALID &&
-+        // 時間指定移動はcanfastseek(ローカルファイル)時以外はSET_POSITIONにフォールバックさせる
-+        if( p_sys->b_canfastseek && p_pmt && p_pmt->pcr.i_first != VLC_TICK_INVALID &&
-            !SeekToTime( p_demux, p_pmt, p_pmt->pcr.i_first + i_time ) )
+-           !SeekToTime( p_demux, p_pmt, p_pmt->pcr.i_first + i_time ) )
++        if( p_sys->b_canfastseek && p_pmt && p_pmt->pcr.i_first != VLC_TICK_INVALID )
          {
-             ReadyQueuesPostSeek( p_demux );
-@@ -1062,8 +1069,8 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+-            ReadyQueuesPostSeek( p_demux );
+-            es_out_Control( p_demux->out, ES_OUT_SET_NEXT_DISPLAY_TIME,
+-                            p_pmt->pcr.i_first + i_time - VLC_TICK_0 );
+-            return VLC_SUCCESS;
++            if( !SeekToTime( p_demux, p_pmt, p_pmt->pcr.i_first + i_time ) )
++            {
++                ReadyQueuesPostSeek( p_demux );
++                es_out_Control( p_demux->out, ES_OUT_SET_NEXT_DISPLAY_TIME,
++                                p_pmt->pcr.i_first + i_time - VLC_TICK_0 );
++                return VLC_SUCCESS;
++            }
++        }
++        else if( !p_sys->b_canfastseek && p_pmt &&
++                 p_pmt->pcr.i_current != VLC_TICK_INVALID &&
++                 ( p_pmt->pcr.i_first != VLC_TICK_INVALID || p_pmt->pcr.i_first_dts != VLC_TICK_INVALID ) &&
++                 p_pmt->i_last_dts != VLC_TICK_INVALID )
++        {
++            /* 非高速シーク時（ストリーム等）のフォールバックを、
++             * 現在の絶対バイト位置を基準にした相対移動で行う。 */
++            vlc_tick_t i_start = (p_pmt->pcr.i_first != VLC_TICK_INVALID) ? p_pmt->pcr.i_first :
++                                  p_pmt->pcr.i_first_dts;
++            vlc_tick_t i_last = p_pmt->i_last_dts + p_pmt->pcr.i_pcroffset;
++            vlc_tick_t i_duration = i_last - i_start;
++
++            uint64_t u64;
++            if( i_duration > 0 && vlc_stream_GetSize( p_sys->stream, &u64 ) == VLC_SUCCESS )
++            {
++                double f_current_pos = (double)vlc_stream_Tell( p_sys->stream ) / (double)u64;
++                vlc_tick_t i_current_time = p_pmt->pcr.i_current - p_pmt->pcr.i_first;
++                double f_diff = (double)(i_time - i_current_time) / (double)i_duration;
++                double f_target = f_current_pos + f_diff;
++
++                if( f_target < 0.0 ) f_target = 0.0;
++                else if( f_target > 1.0 ) f_target = 1.0;
++
++                if( vlc_stream_Seek( p_sys->stream, (uint64_t)(u64 * f_target) ) == VLC_SUCCESS )
++                {
++                    ReadyQueuesPostSeek( p_demux );
++                    return VLC_SUCCESS;
++                }
++            }
+         }
+         break;
+     }
+@@ -1062,8 +1100,8 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
              }
          }
  
