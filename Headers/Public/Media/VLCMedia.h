@@ -388,6 +388,23 @@ typedef NS_OPTIONS(int, VLCMediaParsingOptions) {
 - (void)addOptions:(NSDictionary*)options;
 
 /**
+ * Add a custom HTTP request header for this media.
+ *
+ * Multiple headers with the same name are allowed.
+ */
+- (void)addHTTPHeaderWithName:(NSString *)name value:(NSString *)value;
+
+/**
+ * Remove all custom HTTP request headers that match the specified name.
+ */
+- (void)removeHTTPHeadersWithName:(NSString *)name;
+
+/**
+ * Remove all custom HTTP request headers.
+ */
+- (void)removeAllHTTPHeaders;
+
+/**
  * Parse a value of an incoming Set-Cookie header (see RFC 6265) and append the
  * cookie to the stored cookies if appropriate. The "secure" attribute can be added
  * to cookie to limit the scope of the cookie to secured channels (https).
