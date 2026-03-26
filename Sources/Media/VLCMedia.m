@@ -98,12 +98,15 @@ void close_cb(void *opaque) {
     _Nullable id            _userData;              /// libvlc_media_user_data
     VLCEventsHandler*       _eventsHandler;          /// handles libvlc callbacks
     VLCMediaMetaData *_metaData;
+    NSMutableArray<NSDictionary<NSString *, NSString *> *> *_httpHeaders;
 }
 
 /* Make our properties internally readwrite */
 @property (nonatomic, readwrite, strong, nullable) VLCMediaList * subitems;
 
 - (void)parseIfNeeded;
+- (void)loadCustomHTTPHeaders;
+- (void)applyCustomHTTPHeaders;
 
 /* Callback Methods */
 - (void)parsedChanged;
@@ -399,6 +402,50 @@ static const struct event_handler_entry {
     }];
 }
 
+- (void)addHTTPHeaderWithName:(NSString *)name value:(NSString *)value
+{
+    if (name.length == 0 || value.length == 0)
+        return;
+
+    NSString *normalizedName = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *normalizedValue = [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (normalizedName.length == 0 || normalizedValue.length == 0)
+        return;
+
+    @synchronized (self) {
+        if (!_httpHeaders)
+            _httpHeaders = [NSMutableArray array];
+        [_httpHeaders addObject:@{@"name": normalizedName, @"value": normalizedValue}];
+        [self applyCustomHTTPHeaders];
+    }
+}
+
+- (void)removeHTTPHeadersWithName:(NSString *)name
+{
+    if (name.length == 0)
+        return;
+
+    NSString *normalizedName = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (normalizedName.length == 0)
+        return;
+
+    @synchronized (self) {
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary<NSString *, NSString *> *entry, NSDictionary<NSString *,id> *bindings) {
+            return [entry[@"name"] caseInsensitiveCompare:normalizedName] != NSOrderedSame;
+        }];
+        [_httpHeaders filterUsingPredicate:predicate];
+        [self applyCustomHTTPHeaders];
+    }
+}
+
+- (void)removeAllHTTPHeaders
+{
+    @synchronized (self) {
+        [_httpHeaders removeAllObjects];
+        [self applyCustomHTTPHeaders];
+    }
+}
+
 - (int)storeCookie:(NSString *)cookie
            forHost:(NSString *)host
               path:(NSString *)path
@@ -508,6 +555,7 @@ static const struct event_handler_entry {
     if (!_url)
         return;
 
+    [self loadCustomHTTPHeaders];
 
     /* We bind each event to the handler defined in the table above. */
     libvlc_event_manager_t * p_em = libvlc_media_event_manager(p_md);
@@ -525,6 +573,56 @@ static const struct event_handler_entry {
         self.subitems = [VLCMediaList mediaListWithLibVLCMediaList:p_mlist];
         libvlc_media_list_release( p_mlist );
     }
+}
+
+- (void)loadCustomHTTPHeaders
+{
+    _httpHeaders = [NSMutableArray array];
+
+    char *serializedHeaders = libvlc_media_get_http_headers(p_md);
+    if (!serializedHeaders)
+        return;
+
+    NSString *headerString = @(serializedHeaders);
+    free(serializedHeaders);
+
+    [headerString enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
+        NSRange separatorRange = [line rangeOfString:@":"];
+        if (separatorRange.location == NSNotFound)
+            return;
+
+        NSString *name = [[line substringToIndex:separatorRange.location] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        NSString *value = [[line substringFromIndex:separatorRange.location + 1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if (name.length == 0 || value.length == 0)
+            return;
+
+        [_httpHeaders addObject:@{@"name": name, @"value": value}];
+    }];
+}
+
+- (void)applyCustomHTTPHeaders
+{
+    if (_httpHeaders.count == 0) {
+        libvlc_media_set_http_headers(p_md, NULL);
+        return;
+    }
+
+    NSMutableArray<NSString *> *headerLines = [NSMutableArray arrayWithCapacity:_httpHeaders.count];
+    for (NSDictionary<NSString *, NSString *> *entry in _httpHeaders) {
+        NSString *name = entry[@"name"];
+        NSString *value = entry[@"value"];
+        if (name.length == 0 || value.length == 0)
+            continue;
+        [headerLines addObject:[NSString stringWithFormat:@"%@: %@", name, value]];
+    }
+
+    if (headerLines.count == 0) {
+        libvlc_media_set_http_headers(p_md, NULL);
+        return;
+    }
+
+    NSString *serializedHeaders = [headerLines componentsJoinedByString:@"\n"];
+    libvlc_media_set_http_headers(p_md, [serializedHeaders UTF8String]);
 }
 
 - (void)parseIfNeeded

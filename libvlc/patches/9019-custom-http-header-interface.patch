@@ -1,0 +1,280 @@
+From 5655cc2e7f91d1352586f737b8a6ced7ed43d7bc Mon Sep 17 00:00:00 2001
+From: ci7lus <7887955+ci7lus@users.noreply.github.com>
+Date: Mon, 23 Mar 2026 22:17:27 +0900
+Subject: [PATCH] feat: Add custom http header interface
+
+---
+ include/vlc/libvlc_media.h     | 24 ++++++++++++++
+ include/vlc_input_item.h       |  1 +
+ lib/libvlc.sym                 |  2 ++
+ lib/media.c                    | 30 +++++++++++++++++
+ modules/access/http/access.c   |  1 +
+ modules/access/http/resource.c | 60 ++++++++++++++++++++++++++++++++++
+ modules/access/http/resource.h |  2 ++
+ src/input/item.c               |  5 +++
+ 8 files changed, 125 insertions(+)
+
+diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
+index 25e8e7cc8d..6a83faef8f 100644
+--- a/include/vlc/libvlc_media.h
++++ b/include/vlc/libvlc_media.h
+@@ -686,6 +686,30 @@ LIBVLC_API void
+  */
+ LIBVLC_API void *libvlc_media_get_user_data( libvlc_media_t *p_md );
+ 
++/**
++ * Sets serialized custom HTTP request headers for this media descriptor.
++ *
++ * The string is expected to contain one header per line in the form
++ * "Header-Name: value", separated by '\n'. Passing NULL or an empty string
++ * clears all custom headers.
++ *
++ * \param p_md media descriptor object
++ * \param psz_headers serialized headers string or NULL
++ */
++LIBVLC_API void
++libvlc_media_set_http_headers( libvlc_media_t *p_md, const char *psz_headers );
++
++/**
++ * Gets serialized custom HTTP request headers from this media descriptor.
++ *
++ * The returned value must be released with libvlc_free().
++ *
++ * \param p_md media descriptor object
++ * \return heap-allocated serialized headers string or NULL
++ */
++LIBVLC_API char *
++libvlc_media_get_http_headers( libvlc_media_t *p_md );
++
+ /**
+  * Get the track list for one type
+  *
+diff --git a/include/vlc_input_item.h b/include/vlc_input_item.h
+index 94f5b19d90..62687a1620 100644
+--- a/include/vlc_input_item.h
++++ b/include/vlc_input_item.h
+@@ -129,6 +129,7 @@ struct input_item_t
+     enum input_item_type_e i_type;   /**< Type (file, disc, ... see input_item_type_e) */
+     bool        b_net;               /**< Net: always true for TYPE_STREAM, it
+                                           depends for others types */
++    char        *psz_http_headers;   /**< Serialized custom HTTP request headers */
+ 
+     void        *libvlc_owner;       /**< LibVLC private data, can only be set
+                                           before events are registered. */
+diff --git a/lib/libvlc.sym b/lib/libvlc.sym
+index 7277467fc5..5fd0216314 100644
+--- a/lib/libvlc.sym
++++ b/lib/libvlc.sym
+@@ -69,6 +69,7 @@ libvlc_media_event_manager
+ libvlc_media_get_codec_description
+ libvlc_media_get_duration
+ libvlc_media_get_filestat
++libvlc_media_get_http_headers
+ libvlc_media_get_meta
+ libvlc_media_get_mrl
+ libvlc_media_get_stats
+@@ -211,6 +212,7 @@ libvlc_media_slaves_clear
+ libvlc_media_slaves_get
+ libvlc_media_slaves_release
+ libvlc_media_set_meta
++libvlc_media_set_http_headers
+ libvlc_media_set_user_data
+ libvlc_media_subitems
+ libvlc_media_get_meta_extra
+diff --git a/lib/media.c b/lib/media.c
+index e5dc764b2c..b30032a352 100644
+--- a/lib/media.c
++++ b/lib/media.c
+@@ -870,6 +870,36 @@ libvlc_media_get_user_data( libvlc_media_t * p_md )
+     return p_md->p_user_data;
+ }
+ 
++void
++libvlc_media_set_http_headers( libvlc_media_t *p_md, const char *psz_headers )
++{
++    assert( p_md );
++    input_item_t *p_input_item = p_md->p_input_item;
++
++    vlc_mutex_lock( &p_input_item->lock );
++    free( p_input_item->psz_http_headers );
++    if (psz_headers != NULL && psz_headers[0] != '\0')
++        p_input_item->psz_http_headers = strdup(psz_headers);
++    else
++        p_input_item->psz_http_headers = NULL;
++    vlc_mutex_unlock( &p_input_item->lock );
++}
++
++char *
++libvlc_media_get_http_headers( libvlc_media_t *p_md )
++{
++    assert( p_md );
++    input_item_t *p_input_item = p_md->p_input_item;
++
++    vlc_mutex_lock( &p_input_item->lock );
++    char *psz_headers = p_input_item->psz_http_headers != NULL
++                      ? strdup(p_input_item->psz_http_headers)
++                      : NULL;
++    vlc_mutex_unlock( &p_input_item->lock );
++
++    return psz_headers;
++}
++
+ libvlc_media_tracklist_t *
+ libvlc_media_get_tracklist( libvlc_media_t *p_md, libvlc_track_type_t type )
+ {
+diff --git a/modules/access/http/access.c b/modules/access/http/access.c
+index 4302c0d455..778779a664 100644
+--- a/modules/access/http/access.c
++++ b/modules/access/http/access.c
+@@ -189,6 +189,7 @@ static int Open(vlc_object_t *obj)
+ 
+     if (sys->resource == NULL)
+         goto error;
++    sys->resource->item = access->p_input_item;
+ 
+     ret = vlc_credential_get(&crd, obj, NULL, NULL, NULL, NULL);
+     if (ret == 0) {
+diff --git a/modules/access/http/resource.c b/modules/access/http/resource.c
+index d15b1decc4..0da9c6daf7 100644
+--- a/modules/access/http/resource.c
++++ b/modules/access/http/resource.c
+@@ -30,12 +30,55 @@
+ #include <string.h>
+ 
+ #include <vlc_common.h>
++#include <vlc_input_item.h>
+ #include <vlc_url.h>
+ #include <vlc_strings.h>
+ #include "message.h"
+ #include "connmgr.h"
+ #include "resource.h"
+ 
++static void vlc_http_res_add_custom_headers(struct vlc_http_msg *req,
++                                            char *headers)
++{
++    if (headers == NULL || headers[0] == '\0')
++        return;
++
++    char *saveptr = NULL;
++    for (char *line = strtok_r(headers, "\n", &saveptr);
++         line != NULL;
++         line = strtok_r(NULL, "\n", &saveptr))
++    {
++        while (*line == ' ' || *line == '\t' || *line == '\r')
++            line++;
++
++        size_t len = strlen(line);
++        while (len > 0 && (line[len - 1] == '\r' || line[len - 1] == ' '
++                        || line[len - 1] == '\t'))
++            line[--len] = '\0';
++        if (len == 0)
++            continue;
++
++        char *sep = strchr(line, ':');
++        if (sep == NULL)
++            continue;
++
++        *sep++ = '\0';
++        while (*sep == ' ' || *sep == '\t')
++            sep++;
++        if (*sep == '\0')
++            continue;
++
++        len = strlen(line);
++        while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\t'))
++            line[--len] = '\0';
++        if (len == 0)
++            continue;
++
++        vlc_http_msg_add_header(req, line, "%s", sep);
++    }
++
++}
++
+ static struct vlc_http_msg *
+ vlc_http_res_req(const struct vlc_http_resource *res, void *opaque)
+ {
+@@ -70,6 +113,22 @@ vlc_http_res_req(const struct vlc_http_resource *res, void *opaque)
+     if (res->referrer != NULL) /* TODO: validate URL */
+         vlc_http_msg_add_header(req, "Referer", "%s", res->referrer);
+ 
++    if (res->item != NULL)
++    {
++        char *headers = NULL;
++
++        vlc_mutex_lock(&res->item->lock);
++        if (res->item->psz_http_headers != NULL)
++            headers = strdup(res->item->psz_http_headers);
++        vlc_mutex_unlock(&res->item->lock);
++
++        if (headers != NULL)
++        {
++            vlc_http_res_add_custom_headers(req, headers);
++            free(headers);
++        }
++    }
++
+     vlc_http_msg_add_cookies(req, vlc_http_mgr_get_jar(res->manager));
+ 
+     /* TODO: vlc_http_msg_add_header(req, "TE", "gzip, deflate"); */
+@@ -209,6 +268,7 @@ int vlc_http_res_init(struct vlc_http_resource *restrict res,
+     res->agent = (ua != NULL) ? strdup(ua) : NULL;
+     res->referrer = (ref != NULL) ? strdup(ref) : NULL;
+     res->token = NULL;
++    res->item = NULL;
+ 
+     const char *path = url.psz_path;
+     if (path == NULL)
+diff --git a/modules/access/http/resource.h b/modules/access/http/resource.h
+index 92d3091711..b0583160e3 100644
+--- a/modules/access/http/resource.h
++++ b/modules/access/http/resource.h
+@@ -31,6 +31,7 @@
+ struct vlc_http_msg;
+ struct vlc_http_mgr;
+ struct vlc_http_resource;
++struct input_item_t;
+ 
+ struct vlc_http_resource_cbs
+ {
+@@ -57,6 +58,7 @@ struct vlc_http_resource
+     char *agent;
+     char *referrer;
+     char *token;
++    struct input_item_t *item;
+ };
+ 
+ int vlc_http_res_init(struct vlc_http_resource *,
+diff --git a/src/input/item.c b/src/input/item.c
+index 767675bf2d..b55608743b 100644
+--- a/src/input/item.c
++++ b/src/input/item.c
+@@ -415,6 +415,7 @@ void input_item_Release( input_item_t *p_item )
+ 
+     free( p_item->psz_name );
+     free( p_item->psz_uri );
++    free( p_item->psz_http_headers );
+     free( p_item->p_stats );
+     vlc_meta_Delete( p_item->p_meta );
+ 
+@@ -1005,6 +1006,7 @@ input_item_NewExt( const char *psz_uri, const char *psz_name,
+     }
+ 
+     TAB_INIT( p_input->i_options, p_input->ppsz_options );
++    p_input->psz_http_headers = NULL;
+     p_input->optflagc = 0;
+     p_input->optflagv = NULL;
+     p_input->opaques = NULL;
+@@ -1057,6 +1059,9 @@ input_item_t *input_item_Copy( input_item_t *p_input )
+         }
+     }
+ 
++    if (p_input->psz_http_headers != NULL)
++        item->psz_http_headers = strdup(p_input->psz_http_headers);
++
+     vlc_mutex_unlock( &p_input->lock );
+ 
+     /* No need to lock; no other thread has seen this new item yet. */
+-- 
+2.39.1
+
