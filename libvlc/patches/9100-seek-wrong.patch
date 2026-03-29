@@ -1,0 +1,61 @@
+From c4c3047af5c2e98eab5e6063d1977dd1d550faf1 Mon Sep 17 00:00:00 2001
+From: ci7lus <7887955+ci7lus@users.noreply.github.com>
+Date: Sun, 29 Mar 2026 16:07:41 +0900
+Subject: [PATCH] tmp
+
+---
+ modules/demux/mpeg/ts.c                 | 16 +++++++++++++---
+ modules/demux/mpeg/ts_streams_private.h |  3 +++
+ 2 files changed, 16 insertions(+), 3 deletions(-)
+
+diff --git a/modules/demux/mpeg/ts.c b/modules/demux/mpeg/ts.c
+index 7b7b461f6e..9b66105a66 100644
+--- a/modules/demux/mpeg/ts.c
++++ b/modules/demux/mpeg/ts.c
+@@ -1045,9 +1045,12 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+             uint64_t u64;
+             if( i_duration > 0 && vlc_stream_GetSize( p_sys->stream, &u64 ) == VLC_SUCCESS )
+             {
+-                double f_current_pos = (double)vlc_stream_Tell( p_sys->stream ) / (double)u64;
+-                vlc_tick_t i_current_time = p_pmt->pcr.i_current - p_pmt->pcr.i_first;
+-                double f_diff = (double)(i_time - i_current_time) / (double)i_duration;
++                /* 直近のPCR受信位置を基準に相対移動量を計算する */
++                uint64_t i_base_pos = p_pmt->pcr.i_last_pcr_pos;
++                vlc_tick_t i_base_time = p_pmt->pcr.i_last_pcr - p_pmt->pcr.i_first;
++
++                double f_current_pos = (double)i_base_pos / (double)u64;
++                double f_diff = (double)(i_time - i_base_time) / (double)i_duration;
+                 double f_target = f_current_pos + f_diff;
+ 
+                 if( f_target < 0.0 ) f_target = 0.0;
+@@ -2325,6 +2328,13 @@ static void ProgramSetPCR( demux_t *p_demux, ts_pmt_t *p_pmt, vlc_tick_t i_pcr )
+     if( p_pmt->pcr.i_first == VLC_TICK_INVALID )
+     {
+         p_pmt->pcr.i_first = i_pcr; // now seen
++        p_pmt->pcr.i_last_pcr = i_pcr;
++        p_pmt->pcr.i_last_pcr_pos = vlc_stream_Tell( p_demux->s );
++    }
++    else if( i_pcr > p_pmt->pcr.i_last_pcr + VLC_TICK_FROM_MS(500) )
++    {
++        p_pmt->pcr.i_last_pcr = i_pcr;
++        p_pmt->pcr.i_last_pcr_pos = vlc_stream_Tell( p_demux->s );
+     }
+ 
+     if ( p_sys->i_pmt_es )
+diff --git a/modules/demux/mpeg/ts_streams_private.h b/modules/demux/mpeg/ts_streams_private.h
+index 03b3db17c0..1207a4b131 100644
+--- a/modules/demux/mpeg/ts_streams_private.h
++++ b/modules/demux/mpeg/ts_streams_private.h
+@@ -61,6 +61,9 @@ struct ts_pmt_t
+     {
+         vlc_tick_t i_current;
+         vlc_tick_t i_first; // seen <> != TS_TICK_UNKNOWN
++        /* local bitrate estimation */
++        vlc_tick_t i_last_pcr;
++        uint64_t i_last_pcr_pos;
+         /* broken PCR handling */
+         vlc_tick_t i_first_dts;
+         vlc_tick_t i_pcroffset;
+-- 
+2.39.1
+
