@@ -1,5 +1,4 @@
 stages:
-    - release
     - build
 
 variables:
@@ -12,7 +11,7 @@ variables:
 
 .continous-job-base-main:
     tags:
-        - macos-xcode15
+        - macos-xcode26
     stage: build
     only:
         - merge_requests
@@ -67,119 +66,31 @@ continous-VLCKit-watchOS-main:
         JOB_NAME: "VLCKit-watchOS"
 
 ############################################################
-## Development artifacts builds                           ##
-## These are running every time a merge request is merged ##
-## or a commit gets pushed to the default branch          ##
+## Dev artifacts & release builds                         ##
+## Compile all 5 platforms, then create a single package  ##
 ############################################################
 
-.dev-artifacts-job-base-main:
+dev-artifacts-VLCKit:
     tags:
-        - macos-xcode15
+        - macos-xcode26
+    stage: build
     rules:
         - if: '$CI_PIPELINE_SOURCE == "push" && $CI_PROJECT_PATH == "videolan/VLCKit"'
         - if: '$CI_COMMIT_TAG'
-          when: never
-
     artifacts:
         paths:
             - ./*.tar.xz
-    stage: build
-
-.dev-artifacts-build-base-main:
     script:
-        - ./compileAndBuildVLCKit.sh -${BUILD_PARAM}
-        - ./Packaging/create-distributable-package.sh -${PACKAGING_PARAM}
-        - mv *.tar.xz ${JOB_NAME}-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
+        - ./compileAndBuildVLCKit.sh -f
+        - ./compileAndBuildVLCKit.sh -nft
+        - ./compileAndBuildVLCKit.sh -nxf
+        - ./compileAndBuildVLCKit.sh -nfi
+        - ./compileAndBuildVLCKit.sh -nfw
+        - ./Packaging/create-distributable-package.sh -a -x -m -t -i -w
+        - mv *.tar.xz VLCKit-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
+        - rm -rf build/ || true
+        - rm -rf libvlc/vlc || true
     after_script:
         - rm -rf build/ || true
         - rm -rf libvlc/vlc || true
         - rm -rf *-binary || true
-
-dev-artifacts-VLCKit-iOS-main:
-    extends:
-        - .dev-artifacts-job-base-main
-        - .dev-artifacts-build-base-main
-    variables:
-        BUILD_PARAM: "f"
-        PACKAGING_PARAM: "m"
-        JOB_NAME: "VLCKit-iOS"
-
-dev-artifacts-VLCKit-tvOS-main:
-    extends:
-        - .dev-artifacts-job-base-main
-        - .dev-artifacts-build-base-main
-    variables:
-        BUILD_PARAM: "ft"
-        PACKAGING_PARAM: "t"
-        JOB_NAME: "VLCKit-tvOS"
-
-dev-artifacts-VLCKit-macOS-main:
-    extends:
-        - .dev-artifacts-job-base-main
-        - .dev-artifacts-build-base-main
-    variables:
-        BUILD_PARAM: "x"
-        PACKAGING_PARAM: "x"
-        JOB_NAME: "VLCKit-macOS"
-
-dev-artifacts-VLCKit-xrOS-main:
-    extends:
-        - .dev-artifacts-job-base-main
-        - .dev-artifacts-build-base-main
-    variables:
-        BUILD_PARAM: "fi"
-        PACKAGING_PARAM: "i"
-        JOB_NAME: "VLCKit-xrOS"
-
-dev-artifacts-VLCKit-watchOS-main:
-    extends:
-        - .dev-artifacts-job-base-main
-        - .dev-artifacts-build-base-main
-    variables:
-        BUILD_PARAM: "fw"
-        PACKAGING_PARAM: "w"
-        JOB_NAME: "VLCKit-watchOS"
-
-####################
-## Release builds ##
-####################
-
-.release-job-base-main:
-    tags:
-        - macos-xcode15
-    stage: release
-    only:
-        - tags
-    artifacts:
-        paths:
-            - ./*.tar.xz
-
-.release-build-base-main:
-    script:
-        - cd Packaging
-        - ./buildAndDeployFrameworks.sh -${BUILD_PARAM}
-    after_script:
-        - rm -rf build/ || true
-        - rm -rf libvlc/vlc || true
-        - rm -rf *-binary || true
-
-MobileVLCKit-main:
-    extends:
-        - .release-job-base-main
-        - .release-build-base-main
-    variables:
-        BUILD_PARAM: "m"
-
-TVVLCKit-main:
-    extends:
-        - .release-job-base-main
-        - .release-build-base-main
-    variables:
-        BUILD_PARAM: "t"
-
-VLCKit-main:
-    extends:
-        - .release-job-base-main
-        - .release-build-base-main
-    variables:
-        BUILD_PARAM: "x"
