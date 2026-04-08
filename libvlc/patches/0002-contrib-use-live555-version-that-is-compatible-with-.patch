@@ -1,4 +1,4 @@
-From 14e37e0f2eff98926026a6e913e5735423448155 Mon Sep 17 00:00:00 2001
+From 3310d337817b840e00730f5f0964d033d5c31c0f Mon Sep 17 00:00:00 2001
 From: Carola Nitz <nitz.carola@googlemail.com>
 Date: Fri, 29 Sep 2017 14:49:02 +0200
 Subject: [PATCH 02/12] contrib: use live555 version that is compatible with
@@ -18,7 +18,7 @@ index f459fb9d16..02b2a69734 100644
 +10846fd6d5482bbea131ae805137077997e9dec242665e3c01d699d5584154c65049e8c520ea855599e554154a148e61fea77b592d97c814a4a98c773658d8f5  live.2016.10.21.tar.gz
 \ No newline at end of file
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index b87ebd458c..0834be5ed8 100644
+index 6afe1f7800..f758ad3f47 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
 @@ -1,14 +1,12 @@

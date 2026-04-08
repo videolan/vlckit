@@ -1,0 +1,294 @@
+From 9bdc96950592791d0b68a59d70d73ef43f45f8e5 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Wed, 8 Apr 2026 18:02:16 +0200
+Subject: [PATCH 12/12] json: use function pointers to avoid duplicate symbols
+ when statically linking
+
+json_read and json_parse_error were defined as global symbols in each
+plugin using the json parser, causing duplicate symbol errors when all
+plugins are statically linked into a single binary.
+
+Move the single definitions into json.c as dispatchers that call through
+function pointers provided via a new json_parse_sys struct. Each plugin
+now passes its own static callbacks through this struct, eliminating
+global symbol collisions.
+---
+ modules/demux/json/grammar.y                    |  6 +++---
+ modules/demux/json/json.c                       | 12 ++++++++++++
+ modules/demux/json/json.h                       |  8 +++++++-
+ modules/demux/ytdl.c                            | 11 ++++++++---
+ .../misc/preparser_serializer/json/serializer.c | 11 ++++++++---
+ modules/misc/webservices/acoustid.c             | 13 +++++++++----
+ modules/misc/webservices/json_helper.h          |  6 +++---
+ modules/misc/webservices/musicbrainz.c          | 13 +++++++++----
+ .../stream_out/chromecast/chromecast_ctrl.cpp   | 17 +++++++++++------
+ 9 files changed, 70 insertions(+), 27 deletions(-)
+
+diff --git a/modules/demux/json/grammar.y b/modules/demux/json/grammar.y
+index 150a9c8dd5..df35f0ddf2 100644
+--- a/modules/demux/json/grammar.y
++++ b/modules/demux/json/grammar.y
+@@ -211,15 +211,15 @@ value:
+ 
+ %%
+ 
+-int json_parse(void *opaque, struct json_object *result)
++int json_parse(struct json_parse_sys *sys, struct json_object *result)
+ {
+ 	void *scanner;
+-	int ret = jsonlex_init_extra(opaque, &scanner);
++	int ret = jsonlex_init_extra(sys, &scanner);
+ 
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = yyparse(opaque, scanner, result);
++	ret = yyparse(sys, scanner, result);
+ 	jsonlex_destroy(scanner);
+ 	return ret;
+ }
+diff --git a/modules/demux/json/json.c b/modules/demux/json/json.c
+index 7edb87fcda..910500c45f 100644
+--- a/modules/demux/json/json.c
++++ b/modules/demux/json/json.c
+@@ -31,6 +31,18 @@
+ #include <vlc_charset.h>
+ #include "json.h"
+ 
++size_t json_read(void *data, void *buf, size_t max)
++{
++    struct json_parse_sys *sys = data;
++    return sys->pf_read(sys->opaque, buf, max);
++}
++
++void json_parse_error(void *data, const char *msg)
++{
++    struct json_parse_sys *sys = data;
++    sys->pf_error(sys->opaque, msg);
++}
++
+ #ifdef WORDS_BIGENDIAN
+ # define ENDIAN(x) x "BE"
+ #else
+diff --git a/modules/demux/json/json.h b/modules/demux/json/json.h
+index 98d052b72e..36ed0398c5 100644
+--- a/modules/demux/json/json.h
++++ b/modules/demux/json/json.h
+@@ -61,11 +61,17 @@ struct json_member {
+     struct json_value value;
+ };
+ 
++struct json_parse_sys {
++    void *opaque;
++    size_t (*pf_read)(void *opaque, void *buf, size_t max);
++    void (*pf_error)(void *opaque, const char *msg);
++};
++
+ size_t json_read(void *opaque, void *buf, size_t max);
+ void json_parse_error(void *opaque, const char *msg);
+ char *json_unescape(const char *, size_t);
+ 
+-int json_parse(void *opaque, struct json_object *result);
++int json_parse(struct json_parse_sys *sys, struct json_object *result);
+ void json_free(struct json_object *);
+ 
+ const struct json_value *json_get(const struct json_object *obj,
+diff --git a/modules/demux/ytdl.c b/modules/demux/ytdl.c
+index 586c486729..6c39e165c6 100644
+--- a/modules/demux/ytdl.c
++++ b/modules/demux/ytdl.c
+@@ -50,14 +50,14 @@ struct ytdl_json {
+     int fd;
+ };
+ 
+-void json_parse_error(void *data, const char *msg)
++static void ytdl_json_parse_error(void *data, const char *msg)
+ {
+     struct ytdl_json *sys = data;
+ 
+     vlc_error(sys->logger, "%s", msg);
+ }
+ 
+-size_t json_read(void *data, void *buf, size_t size)
++static size_t ytdl_json_read(void *data, void *buf, size_t size)
+ {
+     struct ytdl_json *sys = data;
+ 
+@@ -405,7 +405,12 @@ static int OpenCommon(vlc_object_t *obj, const char *src_url)
+ 
+     free(path);
+ 
+-    int val = json_parse(&jsdata, &sys->json);
++    struct json_parse_sys json_sys;
++    json_sys.opaque = &jsdata;
++    json_sys.pf_read = ytdl_json_read;
++    json_sys.pf_error = ytdl_json_parse_error;
++
++    int val = json_parse(&json_sys, &sys->json);
+ 
+     kill(pid, SIGTERM);
+     vlc_close(jsdata.fd);
+diff --git a/modules/misc/preparser_serializer/json/serializer.c b/modules/misc/preparser_serializer/json/serializer.c
+index 73acbf3cc8..fe7fadf0c0 100644
+--- a/modules/misc/preparser_serializer/json/serializer.c
++++ b/modules/misc/preparser_serializer/json/serializer.c
+@@ -318,7 +318,7 @@ serdes_Serialize(struct vlc_preparser_msg_serdes *serdes,
+ /**
+  * JSON read callback
+  */
+-size_t json_read(void *opaque, void *buf, size_t max)
++static size_t serdes_json_read(void *opaque, void *buf, size_t max)
+ {
+     assert(opaque != NULL);
+     assert(buf != NULL);
+@@ -336,7 +336,7 @@ size_t json_read(void *opaque, void *buf, size_t max)
+     return ret;
+ }
+ 
+-void json_parse_error(void *opaque, const char *msg)
++static void serdes_json_parse_error(void *opaque, const char *msg)
+ {
+     assert(opaque != NULL);
+     assert(msg != NULL);
+@@ -360,8 +360,13 @@ serdes_Deserialize(struct vlc_preparser_msg_serdes *serdes,
+     sys->size = 0;
+     sys->parent = serdes;
+ 
++    struct json_parse_sys json_sys;
++    json_sys.opaque = sys;
++    json_sys.pf_read = serdes_json_read;
++    json_sys.pf_error = serdes_json_parse_error;
++
+     struct json_object obj;
+-    if (json_parse(sys, &obj) != 0) {
++    if (json_parse(&json_sys, &obj) != 0) {
+         return sys->error;
+     }
+ 
+diff --git a/modules/misc/webservices/acoustid.c b/modules/misc/webservices/acoustid.c
+index 93f3794903..9dcebf6ad4 100644
+--- a/modules/misc/webservices/acoustid.c
++++ b/modules/misc/webservices/acoustid.c
+@@ -89,10 +89,15 @@ static void parse_recordings( vlc_object_t *p_obj, const struct json_object *obj
+ static bool ParseJson( vlc_object_t *p_obj, const void *p_buffer, size_t i_buffer,
+                        acoustid_results_t *p_results )
+ {
+-    struct json_helper_sys sys;
+-    sys.logger = p_obj->logger;
+-    sys.buffer = p_buffer;
+-    sys.size = i_buffer;
++    struct json_helper_sys jsdata;
++    jsdata.logger = p_obj->logger;
++    jsdata.buffer = p_buffer;
++    jsdata.size = i_buffer;
++
++    struct json_parse_sys sys;
++    sys.opaque = &jsdata;
++    sys.pf_read = json_helper_read;
++    sys.pf_error = json_helper_parse_error;
+ 
+     struct json_object json;
+     int val = json_parse(&sys, &json);
+diff --git a/modules/misc/webservices/json_helper.h b/modules/misc/webservices/json_helper.h
+index 86e4ec4c6d..9c9f7d502b 100644
+--- a/modules/misc/webservices/json_helper.h
++++ b/modules/misc/webservices/json_helper.h
+@@ -85,19 +85,19 @@ struct json_helper_sys {
+     size_t size;
+ };
+ 
+-void json_parse_error(void *data, const char *msg)
++static void json_helper_parse_error(void *data, const char *msg)
+ {
+     struct json_helper_sys *sys = data;
+ 
+     vlc_error(sys->logger, "%s", msg);
+ }
+ 
+-size_t json_read(void *data, void *buf, size_t size)
++static size_t json_helper_read(void *data, void *buf, size_t size)
+ {
+     struct json_helper_sys *sys = data;
+ 
+     /* Read the smallest number of byte between size and the string length */
+-    size_t s = size < sys->size ? size : sys->size; 
++    size_t s = size < sys->size ? size : sys->size;
+     memcpy(buf, sys->buffer, s);
+ 
+     sys->buffer += s;
+diff --git a/modules/misc/webservices/musicbrainz.c b/modules/misc/webservices/musicbrainz.c
+index 7560654e2d..e3a9661607 100644
+--- a/modules/misc/webservices/musicbrainz.c
++++ b/modules/misc/webservices/musicbrainz.c
+@@ -61,10 +61,15 @@ static musicbrainz_lookup_t * musicbrainz_lookup(vlc_object_t *p_obj, const char
+         return NULL;
+     }
+ 
+-    struct json_helper_sys sys;
+-    sys.logger = p_obj->logger;
+-    sys.buffer = p_buffer;
+-    sys.size = i_buffer;
++    struct json_helper_sys jsdata;
++    jsdata.logger = p_obj->logger;
++    jsdata.buffer = p_buffer;
++    jsdata.size = i_buffer;
++
++    struct json_parse_sys sys;
++    sys.opaque = &jsdata;
++    sys.pf_read = json_helper_read;
++    sys.pf_error = json_helper_parse_error;
+ 
+     int val = json_parse(&sys, &p_lookup->json);
+     free(p_buffer);
+diff --git a/modules/stream_out/chromecast/chromecast_ctrl.cpp b/modules/stream_out/chromecast/chromecast_ctrl.cpp
+index 1a923dfa23..bcbbfe2a2e 100644
+--- a/modules/stream_out/chromecast/chromecast_ctrl.cpp
++++ b/modules/stream_out/chromecast/chromecast_ctrl.cpp
+@@ -58,7 +58,7 @@ struct chromecast_ctrl_json {
+     const char *string;
+ };
+ 
+-void json_parse_error(void *data, const char *msg)
++static void chromecast_json_parse_error(void *data, const char *msg)
+ {
+     vlc_assert(data != NULL);
+ 
+@@ -66,7 +66,7 @@ void json_parse_error(void *data, const char *msg)
+     vlc_error(sys->logger, "%s", msg);
+ }
+ 
+-size_t json_read(void *data, void *buf, size_t size)
++static size_t chromecast_json_read(void *data, void *buf, size_t size)
+ {
+     vlc_assert(data != NULL);
+     vlc_assert(buf != NULL);
+@@ -75,7 +75,7 @@ size_t json_read(void *data, void *buf, size_t size)
+     size_t len = strlen(sys->string);
+ 
+     /* Read the smallest number of byte between size and the string length */
+-    size_t s = size < len ? size : len; 
++    size_t s = size < len ? size : len;
+     memcpy(buf, sys->string, s);
+ 
+     sys->string += s;
+@@ -610,9 +610,14 @@ bool intf_sys_t::processMessage(const castchannel::CastMessage &msg)
+         return true;
+     }
+ 
+-    struct chromecast_ctrl_json sys;
+-    sys.logger = m_module->logger;
+-    sys.string = msg.payload_utf8().c_str();
++    struct chromecast_ctrl_json jsdata;
++    jsdata.logger = m_module->logger;
++    jsdata.string = msg.payload_utf8().c_str();
++
++    struct json_parse_sys sys;
++    sys.opaque = &jsdata;
++    sys.pf_read = chromecast_json_read;
++    sys.pf_error = chromecast_json_parse_error;
+ 
+     struct json_object json;
+     int val = json_parse(&sys, &json);
+-- 
+2.39.5 (Apple Git-154)
+

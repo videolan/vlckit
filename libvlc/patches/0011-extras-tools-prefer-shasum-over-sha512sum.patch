@@ -1,4 +1,4 @@
-From ab1e3d7bc80d82d1ce3cb0a786d2de72d7ceea57 Mon Sep 17 00:00:00 2001
+From 604c446e6a7a3940458fe036cff228e7b99aca6d Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 5 Nov 2024 11:38:17 +0100
 Subject: [PATCH 11/12] extras/tools: prefer shasum over sha512sum
@@ -10,7 +10,7 @@ variant of that tool.
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/extras/tools/tools.mak b/extras/tools/tools.mak
-index ea4f822fd2..20b8068f48 100644
+index 9dfc863f91..355dd5eec1 100644
 --- a/extras/tools/tools.mak
 +++ b/extras/tools/tools.mak
 @@ -25,10 +25,10 @@ else

@@ -1,4 +1,4 @@
-From e6899646cdbf37a398ff8c4ddf856b7fb2d257a9 Mon Sep 17 00:00:00 2001
+From 9895a1b403fdbe2d85ef81f070472d9465a27c19 Mon Sep 17 00:00:00 2001
 From: Alex Pilgrim <pilgrim.sa@gmail.com>
 Date: Fri, 21 Feb 2020 12:34:07 +0200
 Subject: [PATCH 08/12] Add property to configure an http access token
@@ -81,10 +81,10 @@ index 66cc215361..92d3091711 100644
  
  int vlc_http_res_init(struct vlc_http_resource *,
 diff --git a/modules/demux/adaptive/http/HTTPConnection.cpp b/modules/demux/adaptive/http/HTTPConnection.cpp
-index 4bc79e9959..b3694553d3 100644
+index 4e86e86d98..c577336500 100644
 --- a/modules/demux/adaptive/http/HTTPConnection.cpp
 +++ b/modules/demux/adaptive/http/HTTPConnection.cpp
-@@ -419,6 +419,7 @@ RequestStatus LibVLCHTTPConnection::request(const std::string &path,
+@@ -420,6 +420,7 @@ RequestStatus LibVLCHTTPConnection::request(const std::string &path,
          return RequestStatus::GenericError;
  
      /* Set credentials from URL. Deprecated warning will follow */
@@ -93,7 +93,7 @@ index 4bc79e9959..b3694553d3 100644
      struct vlc_url_t crd_url;
      vlc_UrlParse(&crd_url, params.getUrl().c_str());
 diff --git a/src/libvlc.c b/src/libvlc.c
-index 51ccfcb92d..814cb85e95 100644
+index 278a06f5cb..df5cdd9a2d 100644
 --- a/src/libvlc.c
 +++ b/src/libvlc.c
 @@ -260,6 +260,8 @@ int libvlc_InternalInit( libvlc_int_t *p_libvlc, int i_argc,
