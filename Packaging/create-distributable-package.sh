@@ -26,8 +26,7 @@ WATCHOS=no
 BUILDFORALL=no
 VERBOSE=no
 USEZIP=no
-USECOMPRESSEDARCHIVE=yes
-USEDMG=no
+USESPM=no
 
 usage()
 {
@@ -38,7 +37,7 @@ Package VLCKit
 
   By default, VLCKit will be packaged as a tar.xz archive.
   You can use the options below to package a different flavor of VLCKit
-  or/and to store the binaries in a zip or a dmg file instead.
+  or/and to store the binaries in a zip file instead.
 
 OPTIONS:
    -h            Show some help
@@ -50,12 +49,12 @@ OPTIONS:
    -w            Package VLCKit for watchOS
    -a            Package VLCKit for all enabled OS
    -z            Use zip file format
-   -d            Use dmg file format
+   -s            Create Swift Package Manager zip (xcframework only)
 EOF
 
 }
 
-while getopts "hvmxiwtza" OPTION
+while getopts "hvmxiwtzsa" OPTION
 do
      case $OPTION in
          h)
@@ -86,9 +85,8 @@ do
          z)
              USEZIP=yes
              ;;
-         z)
-             USEDMG=yes
-             USECOMPRESSEDARCHIVE=no
+         s)
+             USESPM=yes
              ;;
      esac
 done
@@ -110,51 +108,27 @@ DMGFOLDERNAME=""
 DMGITEMNAME=""
 
 if [ "$MACOS" = "yes" ]; then
-    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
-        DMGFOLDERNAME="VLCKit-macOS-binary"
-    else
-        DMGFOLDERNAME="VLCKit for macOS - binary package"
-    fi
+    DMGFOLDERNAME="VLCKit-macOS-binary"
     DMGITEMNAME="VLCKit-macOS-REPLACEWITHVERSION"
 fi
 if [ "$IOS" = "yes" ]; then
-    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
-        DMGFOLDERNAME="VLCKit-iOS-binary"
-    else
-        DMGFOLDERNAME="VLCKit for iOS - binary package"
-    fi
+    DMGFOLDERNAME="VLCKit-iOS-binary"
     DMGITEMNAME="VLCKit-iOS-REPLACEWITHVERSION"
 fi
 if [ "$TVOS" = "yes" ]; then
-    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
-        DMGFOLDERNAME="VLCKit-tvOS-binary"
-    else
-        DMGFOLDERNAME="VLCKit for tvOS - binary package"
-    fi
+    DMGFOLDERNAME="VLCKit-tvOS-binary"
     DMGITEMNAME="VLCKit-tvOS-REPLACEWITHVERSION"
 fi
 if [ "$XROS" = "yes" ]; then
-    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
-        DMGFOLDERNAME="VLCKit-xrOS-binary"
-    else
-        DMGFOLDERNAME="VLCKit for xrOS - binary package"
-    fi
+    DMGFOLDERNAME="VLCKit-xrOS-binary"
     DMGITEMNAME="VLCKit-xrOS-REPLACEWITHVERSION"
 fi
 if [ "$WATCHOS" = "yes" ]; then
-    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
-        DMGFOLDERNAME="VLCKit-watchOS-binary"
-    else
-        DMGFOLDERNAME="VLCKit for watchOS - binary package"
-    fi
+    DMGFOLDERNAME="VLCKit-watchOS-binary"
     DMGITEMNAME="VLCKit-watchOS-REPLACEWITHVERSION"
 fi
 if [ "$BUILDFORALL" = "yes" ]; then
-    if [ "$USECOMPRESSEDARCHIVE" = "yes" ]; then
-        DMGFOLDERNAME="VLCKit-binary"
-    else
-        DMGFOLDERNAME="VLCKit - binary package"
-    fi
+    DMGFOLDERNAME="VLCKit-binary"
     DMGITEMNAME="VLCKit-REPLACEWITHVERSION"
 fi
 
@@ -251,36 +225,26 @@ mv NEWS NEWS.txt
 mv COPYING COPYING.txt
 spopd
 
-if [ "$USEDMG" = "yes" ]; then
-    info "Creating disk-image"
-    rm -f ${DMGITEMNAME}-rw.dmg
-    hdiutil create -srcfolder "${DMGFOLDERNAME}" "${DMGITEMNAME}-rw.dmg" -scrub -format UDRW
-    mkdir -p ./mount
-
-    info "Moving file icons around"
-    hdiutil attach -readwrite -noverify -noautoopen -mountRoot ./mount ${DMGITEMNAME}-rw.dmg
-    if [ "$MOBILE" = "no" ]; then
-    osascript Packaging/dmg_setup.scpt "${DMGFOLDERNAME}"
-    else
-        if [ "$TV" = "no" ]; then
-            osascript Packaging/mobile_dmg_setup.scpt "${DMGFOLDERNAME}"
-        fi
-    fi
-    hdiutil detach ./mount/"${DMGFOLDERNAME}"
-
-    info "Compressing disk-image"
-    rm -f ${DMGITEMNAME}.dmg
-    hdiutil convert "${DMGITEMNAME}-rw.dmg" -format UDBZ -o "${DMGITEMNAME}.dmg"
-    rm -f ${DMGITEMNAME}-rw.dmg
+if [ "$USESPM" = "yes" ]; then
+    info "Creating Swift Package Manager zip"
+    SPMZIP=${DMGITEMNAME}-spm.zip
+    rm -f ${SPMZIP}
+    spushd "${DMGFOLDERNAME}"
+    zip -y -r ../${SPMZIP} VLCKit.xcframework
+    spopd
+    CHECKSUM=`swift package compute-checksum ${SPMZIP}`
+    info "SPM zip checksum: ${CHECKSUM}"
     rm -rf "${DMGFOLDERNAME}"
+    info "SPM distributable package created: ${SPMZIP}"
+    exit 0
+fi
+
+if [ "$USEZIP" = "yes" ]; then
+    info "Creating zip-archive"
+    zip -y -r ${DMGITEMNAME}.zip "${DMGFOLDERNAME}"
 else
-    if [ "$USEZIP" = "yes" ]; then
-        info "Creating zip-archive"
-        zip -y -r ${DMGITEMNAME}.zip "${DMGFOLDERNAME}"
-    else
-        info "Creating xz-archive"
-        tar -cJf ${DMGITEMNAME}.tar.xz "${DMGFOLDERNAME}"
-    fi
+    info "Creating xz-archive"
+    tar -cJf ${DMGITEMNAME}.tar.xz "${DMGFOLDERNAME}"
 fi
 
 spopd
