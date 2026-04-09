@@ -82,10 +82,14 @@ dev-artifacts-VLCKit:
             - ./*.tar.xz
     script:
         - ./compileAndBuildVLCKit.sh -f
-        - ./compileAndBuildVLCKit.sh -nft
-        - ./compileAndBuildVLCKit.sh -nxf
-        - ./compileAndBuildVLCKit.sh -nfi
-        - ./compileAndBuildVLCKit.sh -nfw
+        - rm -rf libvlc/vlc || true
+        - ./compileAndBuildVLCKit.sh -ft
+        - rm -rf libvlc/vlc || true
+        - ./compileAndBuildVLCKit.sh -xf
+        - rm -rf libvlc/vlc || true
+        - ./compileAndBuildVLCKit.sh -fi
+        - rm -rf libvlc/vlc || true
+        - ./compileAndBuildVLCKit.sh -fw
         - ./Packaging/create-distributable-package.sh -a -x -m -t -i -w
         - mv *.tar.xz VLCKit-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
         - rm -rf build/ || true
