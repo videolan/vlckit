@@ -31,6 +31,17 @@ NS_ASSUME_NONNULL_BEGIN
 @class VLCMediaList;
 
 /**
+ * criteria to sort a media list by
+ * \see -[VLCMediaList mediaSortedByCriteria:ascending:]
+ */
+typedef NS_ENUM(NSUInteger, VLCMediaListSortCriteria) {
+    VLCMediaListSortCriteriaDefault,
+    VLCMediaListSortCriteriaName,
+    VLCMediaListSortCriteriaModificationDate,
+    VLCMediaListSortCriteriaSize,
+};
+
+/**
  * VLCMediaList
  */
 OBJC_VISIBLE
@@ -99,6 +110,21 @@ OBJC_VISIBLE
  * If media does not exist in the list, returns NSNotFound.
  */
 - (NSUInteger)indexOfMedia:(VLCMedia *)media;
+
+/**
+ * return the list's media sorted by the given criteria
+ *
+ * \param criteria the sort criteria, see VLCMediaListSortCriteria
+ * \param ascending sort in ascending (YES) or descending (NO) order
+ * \return a new array holding the list's media in the requested order
+ *
+ * \note the receiver is not modified
+ * \note VLCMediaListSortCriteriaDefault returns the media in the list's
+ *       existing order and ignores the ascending parameter
+ * \note media lacking the requested value (e.g. an unavailable modification
+ *       date or size) are ordered last, regardless of the sort direction
+ */
+- (NSArray<VLCMedia *> *)mediaSortedByCriteria:(VLCMediaListSortCriteria)criteria ascending:(BOOL)ascending;
 
 /* Properties */
 /**

@@ -26,6 +26,8 @@
  *****************************************************************************/
 
 #import <VLCMediaList.h>
+#import <VLCMedia.h>
+#import <VLCMediaMetaData.h>
 #import <VLCLibrary.h>
 #import <VLCLibVLCBridging.h>
 #ifdef HAVE_CONFIG_H
@@ -182,6 +184,39 @@
             result = cachedIndex.unsignedIntegerValue;
     });
     return result;
+}
+
+static BOOL VLCMediaListStatValue(VLCMedia *media, VLCMediaFileStatType type, uint64_t *value)
+{
+    return [media fileStatValueForType:type value:value] == VLCMediaFileStatReturnTypeSuccess && *value > 0;
+}
+
+- (NSArray<VLCMedia *> *)mediaSortedByCriteria:(VLCMediaListSortCriteria)criteria ascending:(BOOL)ascending
+{
+    __block NSArray<VLCMedia *> *snapshot;
+    dispatch_sync(_serialMediaObjectsQueue, ^{
+        snapshot = [_mediaObjects copy];
+    });
+
+    if (criteria == VLCMediaListSortCriteriaDefault)
+        return snapshot;
+
+    return [snapshot sortedArrayUsingComparator:^NSComparisonResult(VLCMedia *a, VLCMedia *b) {
+        if (criteria != VLCMediaListSortCriteriaName) {
+            VLCMediaFileStatType statType = (criteria == VLCMediaListSortCriteriaSize) ? VLCMediaFileStatTypeSize : VLCMediaFileStatTypeMtime;
+            uint64_t valueA = 0, valueB = 0;
+            BOOL hasA = VLCMediaListStatValue(a, statType, &valueA);
+            BOOL hasB = VLCMediaListStatValue(b, statType, &valueB);
+            if (hasA != hasB)
+                return hasA ? NSOrderedAscending : NSOrderedDescending;
+            if (hasA && valueA != valueB) {
+                NSComparisonResult result = (valueA < valueB) ? NSOrderedAscending : NSOrderedDescending;
+                return ascending ? result : (NSComparisonResult)(-result);
+            }
+        }
+        NSComparisonResult result = [(a.metaData.title ?: @"") localizedCaseInsensitiveCompare:(b.metaData.title ?: @"")];
+        return ascending ? result : (NSComparisonResult)(-result);
+    }];
 }
 
 /* KVC Compliance: For the @"media" key */
