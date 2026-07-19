@@ -201,20 +201,36 @@ static BOOL VLCMediaListStatValue(VLCMedia *media, VLCMediaFileStatType type, ui
     if (criteria == VLCMediaListSortCriteriaDefault)
         return snapshot;
 
+    // precompute each media's sort key once instead of re-fetching it on every
+    // O(n log n) comparison; pointer-identity keys skip -hash/-isEqual on VLCMedia
+    BOOL byName = (criteria == VLCMediaListSortCriteriaName);
+    VLCMediaFileStatType statType = (criteria == VLCMediaListSortCriteriaSize) ? VLCMediaFileStatTypeSize : VLCMediaFileStatTypeMtime;
+
+    NSMapTable<VLCMedia *, NSString *> *titles = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsObjectPointerPersonality
+                                                                      valueOptions:NSPointerFunctionsStrongMemory];
+    NSMapTable<VLCMedia *, NSNumber *> *stats = byName ? nil : [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsObjectPointerPersonality
+                                                                                    valueOptions:NSPointerFunctionsStrongMemory];
+
+    for (VLCMedia *media in snapshot) {
+        [titles setObject:(media.metaData.title ?: @"") forKey:media];
+        if (!byName) {
+            uint64_t value = 0;
+            if (VLCMediaListStatValue(media, statType, &value))
+                [stats setObject:@(value) forKey:media];
+        }
+    }
+
     return [snapshot sortedArrayUsingComparator:^NSComparisonResult(VLCMedia *a, VLCMedia *b) {
-        if (criteria != VLCMediaListSortCriteriaName) {
-            VLCMediaFileStatType statType = (criteria == VLCMediaListSortCriteriaSize) ? VLCMediaFileStatTypeSize : VLCMediaFileStatTypeMtime;
-            uint64_t valueA = 0, valueB = 0;
-            BOOL hasA = VLCMediaListStatValue(a, statType, &valueA);
-            BOOL hasB = VLCMediaListStatValue(b, statType, &valueB);
-            if (hasA != hasB)
-                return hasA ? NSOrderedAscending : NSOrderedDescending;
-            if (hasA && valueA != valueB) {
-                NSComparisonResult result = (valueA < valueB) ? NSOrderedAscending : NSOrderedDescending;
+        if (!byName) {
+            NSNumber *valueA = [stats objectForKey:a], *valueB = [stats objectForKey:b];
+            if ((valueA != nil) != (valueB != nil))
+                return valueA ? NSOrderedAscending : NSOrderedDescending;
+            if (valueA && ![valueA isEqualToNumber:valueB]) {
+                NSComparisonResult result = [valueA compare:valueB];
                 return ascending ? result : (NSComparisonResult)(-result);
             }
         }
-        NSComparisonResult result = [(a.metaData.title ?: @"") localizedCaseInsensitiveCompare:(b.metaData.title ?: @"")];
+        NSComparisonResult result = [[titles objectForKey:a] localizedCaseInsensitiveCompare:[titles objectForKey:b]];
         return ascending ? result : (NSComparisonResult)(-result);
     }];
 }
