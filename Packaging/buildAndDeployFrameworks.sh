@@ -14,6 +14,7 @@ STABLE_UPLOAD_URL="https://download.videolan.org/cocoapods/unstable/"
 MOBILE_PODSPEC="MobileVLCKit-unstable.podspec"
 TV_PODSPEC="TVVLCKit-unstable.podspec"
 MACOS_PODSPEC="VLCKit.podspec"
+SPM_PACKAGE="Package.swift"
 
 # Note: create-distributable-package script is building VLCKit(s) if not found.
 # Note: by default, VLCKit will be build if no option is passed.
@@ -70,6 +71,7 @@ VLC_HASH=""
 VLCKIT_HASH=""
 DISTRIBUTION_PACKAGE=""
 DISTRIBUTION_PACKAGE_SHA=""
+DISTRIBUTION_PACKAGE_CHECKSUM=""
 TARGET=""
 
 ##################
@@ -154,6 +156,21 @@ renamePackage()
         DISTRIBUTION_PACKAGE="${TARGET}-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.tar.xz"
         mv $packageName "$DISTRIBUTION_PACKAGE"
         log "Info" "Finished renaming package with name: ${DISTRIBUTION_PACKAGE}"
+    fi
+}
+
+# The Swift package is monolithic: a single universal VLCKit.xcframework
+# covering all platforms, hence no per-OS prefix in the package name.
+renameSPMPackage()
+{
+    getVLCHashes
+
+    local packageName="VLCKit-REPLACEWITHVERSION-spm.zip"
+
+    if [ -f $packageName ]; then
+        DISTRIBUTION_PACKAGE="VLCKit-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}-spm.zip"
+        mv $packageName "$DISTRIBUTION_PACKAGE"
+        log "Info" "Finished renaming SPM package with name: ${DISTRIBUTION_PACKAGE}"
     fi
 }
 
@@ -289,6 +306,43 @@ podOperations()
         rm -rf ${TARGET}-binary
     fi
 }
+
+getSPMChecksum()
+{
+    DISTRIBUTION_PACKAGE_CHECKSUM=$(swift package compute-checksum "$DISTRIBUTION_PACKAGE" | cut -d " " -f 1)
+    log "Info" "Distribution SPM package checksum: ${DISTRIBUTION_PACKAGE_CHECKSUM}"
+}
+
+bumpSPMPackage()
+{
+    local uploadURL="            url: \"${UPLOAD_URL}${DISTRIBUTION_PACKAGE}\","
+    local checksum="            checksum: \"${DISTRIBUTION_PACKAGE_CHECKSUM}\""
+
+    perl -i -pe's#.*url: ".*#'"${uploadURL}"'#g' $1
+    perl -i -pe's#.*checksum: ".*#'"${checksum}"'#g' $1
+}
+
+spmDeploy()
+{
+    log "Info" "Starting SPM operations..."
+    if bumpSPMPackage $SPM_PACKAGE && \
+       swift package dump-package > /dev/null && \
+       gitCommit $SPM_PACKAGE; then
+        log "Info" "SPM operations successfully finished!"
+    else
+        git checkout $SPM_PACKAGE
+        log "Error" "SPM operations failed."
+    fi
+}
+
+spmOperations()
+{
+    if [ "$TEST_MODE" = "yes" ]; then
+        log "Info" "TODO SPM: nothing for now"
+    else
+        spmDeploy
+    fi
+}
 ##################
 # Command Center #
 ##################
@@ -324,4 +378,11 @@ spushd "$ROOT_DIR"
     # Note: Disable uploading and podoperations for now.
     #uploadPackage
     #podOperations
+
+    # Swift Package Manager: build a single, monolithic universal
+    # VLCKit.xcframework covering all platforms and bump Package.swift.
+    packageBuild "-mtxiwas"
+    renameSPMPackage
+    getSPMChecksum
+    spmOperations
 spopd #ROOT_DIR
