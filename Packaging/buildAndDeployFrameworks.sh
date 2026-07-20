@@ -165,10 +165,10 @@ renameSPMPackage()
 {
     getVLCHashes
 
-    local packageName="VLCKit-REPLACEWITHVERSION-spm.zip"
+    local packageName="VLCKit-REPLACEWITHVERSION.zip"
 
     if [ -f $packageName ]; then
-        DISTRIBUTION_PACKAGE="VLCKit-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}-spm.zip"
+        DISTRIBUTION_PACKAGE="VLCKit-${VERSION}-${VLCKIT_HASH}-${VLC_HASH}.zip"
         mv $packageName "$DISTRIBUTION_PACKAGE"
         log "Info" "Finished renaming SPM package with name: ${DISTRIBUTION_PACKAGE}"
     fi
@@ -372,17 +372,17 @@ UPLOAD_URL=${STABLE_UPLOAD_URL}
 spushd "$ROOT_DIR"
     buildMobileVLCKit $options
     setCurrentPodspec
-    packageBuild $options
-    renamePackage $options
+
+    # A single zip serves both CocoaPods and Swift Package Manager: it ships one
+    # monolithic universal VLCKit.xcframework covering all platforms, and its
+    # sha256 is exactly the checksum SwiftPM expects.
+    packageBuild "-mtxiwas"
+    renameSPMPackage
     getSHA
+    getSPMChecksum
+
     # Note: Disable uploading and podoperations for now.
     #uploadPackage
     #podOperations
-
-    # Swift Package Manager: build a single, monolithic universal
-    # VLCKit.xcframework covering all platforms and bump Package.swift.
-    packageBuild "-mtxiwas"
-    renameSPMPackage
-    getSPMChecksum
     spmOperations
 spopd #ROOT_DIR

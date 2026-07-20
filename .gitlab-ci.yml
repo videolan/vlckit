@@ -79,7 +79,7 @@ dev-artifacts-VLCKit:
         - if: '$CI_COMMIT_TAG'
     artifacts:
         paths:
-            - ./*.tar.xz
+            - ./*.zip
     script:
         - ./compileAndBuildVLCKit.sh -f
         - rm -rf libvlc/vlc || true
@@ -90,8 +90,8 @@ dev-artifacts-VLCKit:
         - ./compileAndBuildVLCKit.sh -fi
         - rm -rf libvlc/vlc || true
         - ./compileAndBuildVLCKit.sh -fw
-        - ./Packaging/create-distributable-package.sh -a -x -m -t -i -w
-        - mv *.tar.xz VLCKit-${VLC_VERSION}-`date +%Y%m%d-%H%M`.tar.xz
+        - ./Packaging/create-distributable-package.sh -a -x -m -t -i -w -s
+        - mv *.zip VLCKit-${VLC_VERSION}-`date +%Y%m%d-%H%M`.zip
         - rm -rf build/ || true
         - rm -rf libvlc/vlc || true
     after_script:

@@ -49,7 +49,7 @@ OPTIONS:
    -w            Package VLCKit for watchOS
    -a            Package VLCKit for all enabled OS
    -z            Use zip file format
-   -s            Create Swift Package Manager zip (xcframework only)
+   -s            Create a zip consumable by Swift Package Manager and CocoaPods
 EOF
 
 }
@@ -227,10 +227,14 @@ spopd
 
 if [ "$USESPM" = "yes" ]; then
     info "Creating Swift Package Manager zip"
-    SPMZIP=${DMGITEMNAME}-spm.zip
+    SPMZIP=${DMGITEMNAME}.zip
     rm -f ${SPMZIP}
+    # Store the payload at the archive root rather than inside a wrapper folder:
+    # SwiftPM searches the archive for the single .xcframework and ignores the
+    # remaining entries, while CocoaPods never flattens zip archives, so the
+    # podspec's VLCKit.xcframework and COPYING.txt paths resolve as they are.
     spushd "${DMGFOLDERNAME}"
-    zip -y -r ../${SPMZIP} VLCKit.xcframework
+    zip -y -r ../${SPMZIP} .
     spopd
     CHECKSUM=`swift package compute-checksum ${SPMZIP}`
     info "SPM zip checksum: ${CHECKSUM}"
