@@ -148,6 +148,9 @@ static void updateProgressCallback(void *p_data,
     libvlc_dialog_set_callbacks(_libraryInstance.instance,
                                 NULL,
                                 NULL);
+    libvlc_dialog_set_error_callback(_libraryInstance.instance,
+                                     NULL,
+                                     NULL);
 }
 
 - (instancetype)initWithLibrary:(VLCLibrary *)library
