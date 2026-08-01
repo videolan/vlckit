@@ -32,6 +32,7 @@
 @interface VLCAudio ()
 {
     void *_instance;
+    VLCEventsHandler *_eventsHandler;
 }
 @end
 
@@ -63,12 +64,14 @@ NSNotificationName const VLCMediaPlayerVolumeChangedNotification = @"VLCMediaPla
         return nil;
     _instance = [mediaPlayer libVLCMediaPlayer];
     libvlc_media_player_retain([self instance]);
+    _eventsHandler = mediaPlayer.eventsHandler;
     return self;
 }
 
 - (void) dealloc
 {
     libvlc_media_player_release([self instance]);
+    _eventsHandler = nil;
 }
 
 - (void)setMuted:(BOOL)value

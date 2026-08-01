@@ -38,6 +38,8 @@
 #import <VLCRendererItem.h>
 #endif // !TARGET_OS_TV
 
+@class VLCEventsHandler;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -102,6 +104,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Properties */
 @property (readonly) void * libVLCMediaPlayer;    ///< LibVLC media list pointer.
+@property (readonly) VLCEventsHandler *eventsHandler;
 @end
 
 /**

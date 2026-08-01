@@ -1767,6 +1767,11 @@ static void HandleMediaPlayerPreviousFrameStatus(void *opaque, int status)
     return _playerInstance;
 }
 
+- (VLCEventsHandler *)eventsHandler
+{
+    return _eventsHandler;
+}
+
 - (void)startRecordingAtPath:(NSString *)path
 {
     libvlc_media_player_record(_playerInstance, YES, [path UTF8String]);
