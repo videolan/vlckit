@@ -1,0 +1,59 @@
+From b9d7a54e712397694678cc1be7278c13da6ed1ef Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Tue, 4 Aug 2026 15:44:34 +0200
+Subject: [PATCH 24/27] mp4: read the iTunes cpil compilation flag
+
+---
+ modules/demux/mp4/libmp4.c |  1 +
+ modules/demux/mp4/libmp4.h |  1 +
+ modules/demux/mp4/meta.c   | 10 ++++++++++
+ 3 files changed, 12 insertions(+)
+
+diff --git a/modules/demux/mp4/libmp4.c b/modules/demux/mp4/libmp4.c
+index 42fc3ff6a1..487bd39e48 100644
+--- a/modules/demux/mp4/libmp4.c
++++ b/modules/demux/mp4/libmp4.c
+@@ -5247,6 +5247,7 @@ static const struct
+     { ATOM_atID,    MP4_ReadBox_Metadata,    ATOM_ilst }, /* iTunes */
+     { ATOM_cnID,    MP4_ReadBox_Metadata,    ATOM_ilst }, /* iTunes */
+     { ATOM_covr,    MP4_ReadBoxContainer,    ATOM_ilst },
++    { ATOM_cpil,    MP4_ReadBox_Metadata,    ATOM_ilst },
+     { ATOM_desc,    MP4_ReadBox_Metadata,    ATOM_ilst },
+     { ATOM_disk,    MP4_ReadBox_Metadata,    ATOM_ilst },
+     { ATOM_flvr,    MP4_ReadBox_Metadata,    ATOM_ilst },
+diff --git a/modules/demux/mp4/libmp4.h b/modules/demux/mp4/libmp4.h
+index dda74ae92d..0b9c768203 100644
+--- a/modules/demux/mp4/libmp4.h
++++ b/modules/demux/mp4/libmp4.h
+@@ -395,6 +395,7 @@ typedef int64_t stime_t;
+ #define ATOM_0xa9xyz VLC_FOURCC( 0xa9, 'x', 'y', 'z' )
+ #define ATOM_aART VLC_FOURCC( 'a', 'A', 'R', 'T' )
+ #define ATOM_chpl VLC_FOURCC( 'c', 'h', 'p', 'l' )
++#define ATOM_cpil VLC_FOURCC( 'c', 'p', 'i', 'l' )
+ #define ATOM_HMMT VLC_FOURCC( 'H', 'M', 'M', 'T' )
+ #define ATOM_desc VLC_FOURCC( 'd', 'e', 's', 'c' )
+ #define ATOM_disk VLC_FOURCC( 'd', 'i', 's', 'k' )
+diff --git a/modules/demux/mp4/meta.c b/modules/demux/mp4/meta.c
+index 21896b6a07..aa07ec3fda 100644
+--- a/modules/demux/mp4/meta.c
++++ b/modules/demux/mp4/meta.c
+@@ -470,6 +470,16 @@ static void SetupmdirMeta( vlc_meta_t *p_meta, const MP4_Box_t *p_box, void *pri
+         }
+         break;
+     }
++    case ATOM_cpil:
++    {
++        if ( BOXDATA(p_data)->i_blob >= 1 &&
++             BOXDATA(p_data)->e_wellknowntype == DATA_WKT_BE_SIGNED )
++        {
++            vlc_meta_SetCompilation( p_meta,
++                                     *BOXDATA(p_data)->p_blob ? "1" : "0" );
++        }
++        break;
++    }
+     case ATOM_disk:
+     {
+         if ( BOXDATA(p_data)->i_blob >= 6 &&
+-- 
+2.50.1 (Apple Git-155)
+

@@ -1,7 +1,7 @@
-From eb118f9807fcc59da0ea8abadf9eb6845cad3826 Mon Sep 17 00:00:00 2001
+From f141e4e4c95d33236492eb6ebc1385110df53d66 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 10/20] libvlc_media: add cookie_jar API
+Subject: [PATCH 10/27] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 ++++++++++++++++++++
@@ -61,7 +61,7 @@ index bad769de9c..9fa05db9b1 100644
  
  # ifdef __cplusplus
 diff --git a/include/vlc_player.h b/include/vlc_player.h
-index c98924f831..f37e4f4808 100644
+index 94c28a0749..f21e763302 100644
 --- a/include/vlc_player.h
 +++ b/include/vlc_player.h
 @@ -114,6 +114,18 @@ vlc_player_New(vlc_object_t *parent, enum vlc_player_lock_type lock_type);
@@ -97,7 +97,7 @@ index daadc8fdf7..b6d66e2881 100644
  libvlc_release
  libvlc_renderer_item_name
 diff --git a/lib/media.c b/lib/media.c
-index b866b5abbc..239e2d2779 100644
+index 7833552c3f..5e198d9283 100644
 --- a/lib/media.c
 +++ b/lib/media.c
 @@ -217,6 +217,8 @@ void libvlc_media_add_subtree(libvlc_media_t *p_md, const input_item_node_t *nod
@@ -273,10 +273,10 @@ index 76cecbb9a4..983733fec4 100644
  vlc_player_GetNextMedia
  vlc_player_GetError
 diff --git a/src/player/player.c b/src/player/player.c
-index c2fdc80134..2ff1d38b6e 100644
+index 120060396f..6f9b33921f 100644
 --- a/src/player/player.c
 +++ b/src/player/player.c
-@@ -2062,6 +2062,12 @@ vlc_player_Delete(vlc_player_t *player)
+@@ -2096,6 +2096,12 @@ vlc_player_Delete(vlc_player_t *player)
      vlc_object_delete(player);
  }
  

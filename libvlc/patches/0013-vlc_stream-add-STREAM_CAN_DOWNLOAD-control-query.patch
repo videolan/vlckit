@@ -1,7 +1,7 @@
-From d0181332225258d83c2a3ee9f41eb7ae65f43df6 Mon Sep 17 00:00:00 2001
+From f1ce1d0e4a002aa621fd894c9c4eaa75939a9ea2 Mon Sep 17 00:00:00 2001
 From: Ayush Dey <deyayush6@gmail.com>
 Date: Mon, 11 Aug 2025 00:23:33 +0530
-Subject: [PATCH 13/20] vlc_stream: add STREAM_CAN_DOWNLOAD control query
+Subject: [PATCH 13/27] vlc_stream: add STREAM_CAN_DOWNLOAD control query
 
 To identify access modules that will support file downloading
 via the future LibVLC downloader API. This query is intended

@@ -1,7 +1,7 @@
-From f2f190ebb8118d68142943620a7416638dfdefa9 Mon Sep 17 00:00:00 2001
+From 25dd51e921191053b4cbeaf17306c25d91cf110b Mon Sep 17 00:00:00 2001
 From: Ayush Dey <deyayush6@gmail.com>
 Date: Mon, 11 Aug 2025 11:42:39 +0530
-Subject: [PATCH 14/20] lib: add libvlc_downloader API
+Subject: [PATCH 14/27] lib: add libvlc_downloader API
 
 Used to download a file readable by VLC over a limited
 set of protocols: http(s), ftp, file, nfs, smb, sftp

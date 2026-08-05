@@ -1,7 +1,7 @@
-From 0e55d02f6ba612f6e995665f1e914598a84fbd4d Mon Sep 17 00:00:00 2001
+From c196055bd7fddace24e0657ba8721770ad9f1296 Mon Sep 17 00:00:00 2001
 From: Ayush Dey <deyayush6@gmail.com>
 Date: Tue, 16 Sep 2025 12:04:39 +0530
-Subject: [PATCH 15/20] input: add vlctest_ protocol
+Subject: [PATCH 15/27] input: add vlctest_ protocol
 
 Add vlctest_ protocol as a file type. This will be required
 in the next commit for using a dummy access module with the

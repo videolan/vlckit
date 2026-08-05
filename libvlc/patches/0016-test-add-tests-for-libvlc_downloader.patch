@@ -1,7 +1,7 @@
-From f2bc858eeec6a50b3148d7430c8f860658215de0 Mon Sep 17 00:00:00 2001
+From 0b1fb252d189f3d7d82614f274dfb9b70fc6517e Mon Sep 17 00:00:00 2001
 From: Ayush Dey <deyayush6@gmail.com>
 Date: Mon, 1 Sep 2025 13:30:05 +0530
-Subject: [PATCH 16/20] test: add tests for libvlc_downloader
+Subject: [PATCH 16/27] test: add tests for libvlc_downloader
 
 ---
  test/Makefile.am         |   3 +
@@ -10,7 +10,7 @@ Subject: [PATCH 16/20] test: add tests for libvlc_downloader
  create mode 100644 test/libvlc/downloader.c
 
 diff --git a/test/Makefile.am b/test/Makefile.am
-index 349d0b8693..dff27cd2ab 100644
+index cf305e211e..00f4e2b7a1 100644
 --- a/test/Makefile.am
 +++ b/test/Makefile.am
 @@ -32,6 +32,7 @@ player_programs = \
@@ -21,7 +21,7 @@ index 349d0b8693..dff27cd2ab 100644
  	test_libvlc_equalizer \
  	test_libvlc_media \
  	test_libvlc_media_callback \
-@@ -158,6 +159,8 @@ LIBVLC = -L../lib -lvlc
+@@ -160,6 +161,8 @@ LIBVLC = -L../lib -lvlc
  
  test_libvlc_core_SOURCES = libvlc/core.c
  test_libvlc_core_LDADD = $(LIBVLC)
