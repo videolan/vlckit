@@ -51,7 +51,7 @@ OBJC_VISIBLE
  * @warning
  * This will be NULL if there was no error.
  */
-@property (class, nonatomic, copy, nullable) NSString *currentErrorMessage;
+@property (class, nonatomic, readonly, copy, nullable) NSString *currentErrorMessage;
 
 /**
  * Returns the library's shared instance

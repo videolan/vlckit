@@ -127,11 +127,6 @@ static id<VLCEventsConfiguring> _sharedEventsConfiguration = nil;
     return errmsg ? @(errmsg) : nil;
 }
 
-+ (void)setCurrentErrorMessage:(nullable NSString *)currentErrorMessage
-{
-    currentErrorMessage ? libvlc_printerr(currentErrorMessage.UTF8String) : libvlc_clearerr();
-}
-
 + (VLCLibrary *)sharedLibrary
 {
     static dispatch_once_t onceToken;
