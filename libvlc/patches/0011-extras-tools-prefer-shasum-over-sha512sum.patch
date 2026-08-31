@@ -1,7 +1,7 @@
-From f17958ccca037bf348ee7ace54a9a2efa44b081f Mon Sep 17 00:00:00 2001
+From f0e94642e24ec617b21eea8c3493490d05fe5381 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Tue, 5 Nov 2024 11:38:17 +0100
-Subject: [PATCH 11/27] extras/tools: prefer shasum over sha512sum
+Subject: [PATCH 11/17] extras/tools: prefer shasum over sha512sum
 
 This fixes the operation on macOS 15 which is shipping an incompatible
 variant of that tool.
@@ -10,7 +10,7 @@ variant of that tool.
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/extras/tools/tools.mak b/extras/tools/tools.mak
-index 10b3f6fafe..53e87473e0 100644
+index e684ef19eb..24605a69db 100644
 --- a/extras/tools/tools.mak
 +++ b/extras/tools/tools.mak
 @@ -25,10 +25,10 @@ else

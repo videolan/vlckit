@@ -1,7 +1,7 @@
-From 25dd51e921191053b4cbeaf17306c25d91cf110b Mon Sep 17 00:00:00 2001
+From 3f7c7497753c3097b72fbff1bbd1a191e2c013ea Mon Sep 17 00:00:00 2001
 From: Ayush Dey <deyayush6@gmail.com>
 Date: Mon, 11 Aug 2025 11:42:39 +0530
-Subject: [PATCH 14/27] lib: add libvlc_downloader API
+Subject: [PATCH 14/17] lib: add libvlc_downloader API
 
 Used to download a file readable by VLC over a limited
 set of protocols: http(s), ftp, file, nfs, smb, sftp
@@ -34,7 +34,7 @@ index d01caed7c1..c62b1d0328 100644
     selection and selected-track reporting
   * Add media-player timer/watch APIs, record API, program API, next-media API,
 diff --git a/include/meson.build b/include/meson.build
-index 9e9d4d5165..e022df2f75 100644
+index b6c761c2a3..7e93332b63 100644
 --- a/include/meson.build
 +++ b/include/meson.build
 @@ -3,6 +3,7 @@ install_headers(
@@ -1034,7 +1034,7 @@ index b6d66e2881..7b702ca6a7 100644
  libvlc_media_player_can_pause
  libvlc_media_player_program_scrambled
 diff --git a/lib/meson.build b/lib/meson.build
-index 59ad21e6d3..8a29f2a618 100644
+index 23190dfbd0..e800baf437 100644
 --- a/lib/meson.build
 +++ b/lib/meson.build
 @@ -1,6 +1,7 @@

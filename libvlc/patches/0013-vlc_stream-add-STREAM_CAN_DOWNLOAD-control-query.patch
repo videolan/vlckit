@@ -1,7 +1,7 @@
-From f1ce1d0e4a002aa621fd894c9c4eaa75939a9ea2 Mon Sep 17 00:00:00 2001
+From b1933f6c324c84a8ded491f199c80b568c6800a0 Mon Sep 17 00:00:00 2001
 From: Ayush Dey <deyayush6@gmail.com>
 Date: Mon, 11 Aug 2025 00:23:33 +0530
-Subject: [PATCH 13/27] vlc_stream: add STREAM_CAN_DOWNLOAD control query
+Subject: [PATCH 13/17] vlc_stream: add STREAM_CAN_DOWNLOAD control query
 
 To identify access modules that will support file downloading
 via the future LibVLC downloader API. This query is intended
@@ -86,10 +86,10 @@ index c1ce2ffef7..a69c33d47f 100644
              *pb_bool = true;    /* FIXME */
              break;
 diff --git a/modules/access/http.c b/modules/access/http.c
-index 4278f51fba..5159d58f1e 100644
+index a53681f25d..a47b32803a 100644
 --- a/modules/access/http.c
 +++ b/modules/access/http.c
-@@ -570,6 +570,7 @@ static int Control( stream_t *p_access, int i_query, va_list args )
+@@ -568,6 +568,7 @@ static int Control( stream_t *p_access, int i_query, va_list args )
              break;
          case STREAM_CAN_PAUSE:
          case STREAM_CAN_CONTROL_PACE:

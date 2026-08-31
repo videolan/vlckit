@@ -1,7 +1,7 @@
-From 63aee47e219f38c08590521135ec5b1c66ce043c Mon Sep 17 00:00:00 2001
+From 14255918f6275ac77ed521664a061f165550d4f0 Mon Sep 17 00:00:00 2001
 From: Ayush Dey <deyayush6@gmail.com>
 Date: Tue, 16 Sep 2025 13:13:28 +0530
-Subject: [PATCH 17/27] doc: add samples_libvlc_downloader
+Subject: [PATCH 17/17] doc: add samples_libvlc_downloader
 
 ---
  doc/Makefile.am         |   3 +

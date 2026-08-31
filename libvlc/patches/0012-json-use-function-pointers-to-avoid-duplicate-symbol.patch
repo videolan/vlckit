@@ -1,7 +1,7 @@
-From 19895ab77b0dce2b2d9e127ed8ca4f09e0d2481b Mon Sep 17 00:00:00 2001
+From 8e90101a0e287e93e2e783c4a26b6fe96cdbe6b3 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Wed, 8 Apr 2026 18:02:16 +0200
-Subject: [PATCH 12/27] json: use function pointers to avoid duplicate symbols
+Subject: [PATCH 12/17] json: use function pointers to avoid duplicate symbols
  when statically linking
 
 json_read and json_parse_error were defined as global symbols in each
@@ -48,7 +48,7 @@ index 150a9c8dd5..df35f0ddf2 100644
  	return ret;
  }
 diff --git a/modules/demux/json/json.c b/modules/demux/json/json.c
-index 7edb87fcda..910500c45f 100644
+index cec70ade9d..9e708636de 100644
 --- a/modules/demux/json/json.c
 +++ b/modules/demux/json/json.c
 @@ -31,6 +31,18 @@

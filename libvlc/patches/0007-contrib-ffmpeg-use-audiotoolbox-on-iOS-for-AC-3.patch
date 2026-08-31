@@ -1,7 +1,7 @@
-From ec6b685d89d2fbc4c0f5b140c043851b0672859a Mon Sep 17 00:00:00 2001
+From c4386ec9554daf3a3953ef5ee49a2588a084c244 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Fri, 22 Jul 2016 11:11:44 +0200
-Subject: [PATCH 07/27] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
+Subject: [PATCH 07/17] contrib/ffmpeg: use audiotoolbox on iOS for AC-3
 
 This enforces the use of the audiotoolbox decoders for AC-3 and E-AC-3
 as introduced in iOS 9 and disables the use of the MLP decoder to be in
@@ -39,10 +39,10 @@ index 0000000000..2d60cf7140
 +         in_format.mSampleRate = avctx->sample_rate ? avctx->sample_rate : 44100;
 +         in_format.mChannelsPerFrame = avctx->channels ? avctx->channels : 1;
 diff --git a/contrib/src/ffmpeg/rules.mak b/contrib/src/ffmpeg/rules.mak
-index 206692eff5..653fe1d29f 100644
+index 2e2287085f..ab50f1cead 100644
 --- a/contrib/src/ffmpeg/rules.mak
 +++ b/contrib/src/ffmpeg/rules.mak
-@@ -41,6 +41,12 @@ FFMPEGCONF = --prefix="$(PREFIX)" --enable-static --disable-shared \
+@@ -43,6 +43,12 @@ FFMPEGCONF = --prefix="$(PREFIX)" --enable-static --disable-shared \
  ifdef HAVE_DARWIN_OS
  FFMPEGCONF += \
  	--disable-securetransport
@@ -55,10 +55,10 @@ index 206692eff5..653fe1d29f 100644
  endif
  
  ifdef ENABLE_PDB
-@@ -242,6 +248,7 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
- 	$(APPLY) $(SRC)/ffmpeg/0001-fix-mf_utils-compilation-with-mingw64.patch
+@@ -245,6 +251,7 @@ ffmpeg: ffmpeg-$(FFMPEG_VERSION).tar.xz .sum-ffmpeg
  	$(APPLY) $(SRC)/ffmpeg/0011-avcodec-videotoolboxenc-disable-calls-on-unsupported.patch
  	$(APPLY) $(SRC)/ffmpeg/avcodec-fix-compilation-visionos.patch
+ 	$(APPLY) $(SRC)/ffmpeg/0009-swscale-x86-use-HOSTCPPFLAGS-instead-of-CPPFLAGS-for.patch
 +	$(APPLY) $(SRC)/ffmpeg/avcodec-enable-audiotoolbox-ac3.patch
  	$(MOVE)
  

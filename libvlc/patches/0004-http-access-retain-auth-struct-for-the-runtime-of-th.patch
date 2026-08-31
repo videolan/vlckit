@@ -1,7 +1,7 @@
-From 816eabc62f2eda188d9859286e9c083f8c60df66 Mon Sep 17 00:00:00 2001
+From d870291363ae1f4817397ced03f18697f07cb62b Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
 Date: Mon, 10 Sep 2018 20:55:11 +0200
-Subject: [PATCH 04/27] http access: retain auth struct for the runtime of the
+Subject: [PATCH 04/17] http access: retain auth struct for the runtime of the
  module
 
 Previously, it was retained for a given connection only, so all information needed for a digest login was lost as soon as the module was reconnecting due to the expected 401 on attempted basic login
@@ -11,7 +11,7 @@ Previously, it was retained for a given connection only, so all information need
  2 files changed, 25 insertions(+), 3 deletions(-)
 
 diff --git a/modules/access/http.c b/modules/access/http.c
-index 5e56a4ffc4..4278f51fba 100644
+index 5e56a4ffc4..a53681f25d 100644
 --- a/modules/access/http.c
 +++ b/modules/access/http.c
 @@ -265,11 +265,15 @@ static int Open( vlc_object_t *p_this )

@@ -1,7 +1,7 @@
-From f141e4e4c95d33236492eb6ebc1385110df53d66 Mon Sep 17 00:00:00 2001
+From a3597717c9d3eeb4b157e0f6e5d2afeabbf55373 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 10/27] libvlc_media: add cookie_jar API
+Subject: [PATCH 10/17] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 ++++++++++++++++++++
@@ -15,10 +15,10 @@ Subject: [PATCH 10/27] libvlc_media: add cookie_jar API
  8 files changed, 153 insertions(+)
 
 diff --git a/include/vlc/libvlc_media.h b/include/vlc/libvlc_media.h
-index bad769de9c..9fa05db9b1 100644
+index 285dee1429..1b9eb85acd 100644
 --- a/include/vlc/libvlc_media.h
 +++ b/include/vlc/libvlc_media.h
-@@ -707,6 +707,41 @@ LIBVLC_API
+@@ -708,6 +708,41 @@ LIBVLC_API
  void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
                                    unsigned int i_count );
  
@@ -97,10 +97,10 @@ index daadc8fdf7..b6d66e2881 100644
  libvlc_release
  libvlc_renderer_item_name
 diff --git a/lib/media.c b/lib/media.c
-index 7833552c3f..5e198d9283 100644
+index 750fd96bec..acc8570f69 100644
 --- a/lib/media.c
 +++ b/lib/media.c
-@@ -217,6 +217,8 @@ void libvlc_media_add_subtree(libvlc_media_t *p_md, const input_item_node_t *nod
+@@ -218,6 +218,8 @@ void libvlc_media_add_subtree(libvlc_media_t *p_md, const input_item_node_t *nod
      input_item_add_subnode( p_md, node );
  }
  
@@ -109,7 +109,7 @@ index 7833552c3f..5e198d9283 100644
  static void media_destroy( void *libvlc_owner )
  {
      libvlc_media_t *p_md = libvlc_owner;
-@@ -224,6 +226,8 @@ static void media_destroy( void *libvlc_owner )
+@@ -225,6 +227,8 @@ static void media_destroy( void *libvlc_owner )
      if( p_md->p_subitems )
          libvlc_media_list_release( p_md->p_subitems );
  
@@ -118,7 +118,7 @@ index 7833552c3f..5e198d9283 100644
      free( p_md );
  }
  
-@@ -267,6 +271,8 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
+@@ -268,6 +272,8 @@ libvlc_media_t * libvlc_media_new_from_input_item(input_item_t *p_input_item )
      input_item_SetLibvlcOwner( p_md->p_input_item, p_md, media_destroy );
      atomic_init(&p_md->parsed_status, libvlc_media_parsed_status_none);
      p_md->req = NULL;
@@ -127,7 +127,7 @@ index 7833552c3f..5e198d9283 100644
  
      input_item_Hold( p_md->p_input_item );
  
-@@ -818,3 +824,63 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
+@@ -821,3 +827,63 @@ void libvlc_media_slaves_release( libvlc_media_slave_t **pp_slaves,
      }
      free( pp_slaves );
  }
@@ -238,10 +238,10 @@ index b5b1e36b5e..e3ba8f254c 100644
  libvlc_media_t * libvlc_media_new_from_input_item( input_item_t * );
  
 diff --git a/lib/media_player.c b/lib/media_player.c
-index 64af8b1f78..c5e8e7ee02 100644
+index 652361a5fd..3fffa9145a 100644
 --- a/lib/media_player.c
 +++ b/lib/media_player.c
-@@ -1032,6 +1032,18 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
+@@ -1046,6 +1046,18 @@ int libvlc_media_player_play( libvlc_media_player_t *p_mi )
      vlc_player_t *player = p_mi->player;
      vlc_player_Lock(player);
  
@@ -261,7 +261,7 @@ index 64af8b1f78..c5e8e7ee02 100644
      if (ret == VLC_SUCCESS)
      {
 diff --git a/src/libvlccore.sym b/src/libvlccore.sym
-index 76cecbb9a4..983733fec4 100644
+index a7dd79920b..238df2feff 100644
 --- a/src/libvlccore.sym
 +++ b/src/libvlccore.sym
 @@ -870,6 +870,7 @@ vlc_player_GetAtoBLoop
