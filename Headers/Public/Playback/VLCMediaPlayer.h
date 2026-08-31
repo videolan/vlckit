@@ -52,6 +52,7 @@ FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerSnapshotTakenNotificati
 FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerProgramListChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.programListChangedNotification);
 FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerProgramSelectionChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.programSelectionChangedNotification);
 FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerCapabilitiesChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.capabilitiesChangedNotification); ///< Notification message for when the player's capabilities (such as seekable or canPause) have changed
+FOUNDATION_EXPORT NSNotificationName const VLCMediaPlayerRateChangedNotification NS_SWIFT_NAME(VLCMediaPlayer.rateChangedNotification); ///< Notification message for when the rate applied to the current media has changed
 
 /**
  * VLCMediaPlayerState describes the state of the media player.
@@ -131,6 +132,14 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
  * \note this is always called with 0.0 and 1.0 before a successful playback
  */
 - (void)mediaPlayerBufferingChanged:(float)progress;
+
+/**
+ * Called when the media player signal that the rate applied to the current
+ * media changed.
+ * \param rate the rate effectively applied, which can differ from the one
+ * requested through the rate property
+ */
+- (void)mediaPlayerRateChanged:(float)rate;
 
 /**
  * Called when the media player signal that a new track is available
