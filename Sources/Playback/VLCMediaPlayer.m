@@ -1734,14 +1734,6 @@ static void HandleMediaPlayerPreviousFrameStatus(void *opaque, int status)
     return libvlc_media_player_can_pause(_playerInstance);
 }
 
-- (void)mediaPlayerCapabilitiesChanged
-{
-    [self willChangeValueForKey:@"seekable"];
-    [self willChangeValueForKey:@"canPause"];
-    [self didChangeValueForKey:@"canPause"];
-    [self didChangeValueForKey:@"seekable"];
-}
-
 - (nullable NSArray *)snapshots
 {
     if (!_snapshots)
@@ -1959,6 +1951,14 @@ static void HandleMediaPlayerPreviousFrameStatus(void *opaque, int status)
 {
     [self willChangeValueForKey:@"currentChapterIndex"];
     [self didChangeValueForKey:@"currentChapterIndex"];
+}
+
+- (void)mediaPlayerCapabilitiesChanged
+{
+    [self willChangeValueForKey:@"seekable"];
+    [self willChangeValueForKey:@"canPause"];
+    [self didChangeValueForKey:@"canPause"];
+    [self didChangeValueForKey:@"seekable"];
 }
 
 - (void)mediaPlayerSnapshot:(NSString *)fileName
