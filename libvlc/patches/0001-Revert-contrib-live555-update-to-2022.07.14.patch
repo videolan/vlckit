@@ -14,9 +14,9 @@ This reverts commit 78998cab182bbdbd1915deeead1ad4bc945b514e.
  contrib/src/live555/live555-nosignal.patch    | 139 ++++++++++++++++++
  contrib/src/live555/live555-vista-inet.patch  |  33 -----
  contrib/src/live555/no-null-reference.patch   | 128 ++++++++++++++++
- contrib/src/live555/rules.mak                 |  93 +++++-------
+ contrib/src/live555/rules.mak                 |  90 +++++-------
  contrib/src/live555/winstore.patch            |  30 ++++
- 11 files changed, 429 insertions(+), 132 deletions(-)
+ 11 files changed, 429 insertions(+), 129 deletions(-)
  create mode 100644 contrib/src/live555/DISABLE_LOOPBACK_IP_ADDRESS_CHECK.patch
  create mode 100644 contrib/src/live555/in_addr-s_addr-field.patch
  create mode 100644 contrib/src/live555/live555-nosignal.patch
@@ -583,10 +583,10 @@ index 0000000000..a1dea30fbc
 + 			     char const* rangeParamsStr, char const* rtpInfoParamsStr);
 +   Boolean handleTEARDOWNResponse(MediaSession& session, MediaSubsession& subsession);
 diff --git a/contrib/src/live555/rules.mak b/contrib/src/live555/rules.mak
-index d98cef8ff4..b8284d47b9 100644
+index cfe6851b66..b8284d47b9 100644
 --- a/contrib/src/live555/rules.mak
 +++ b/contrib/src/live555/rules.mak
-@@ -1,25 +1,9 @@
+@@ -1,20 +1,9 @@
  # live555
  
 -LIVE555_VERSION := 2026.06.24
@@ -594,26 +594,21 @@ index d98cef8ff4..b8284d47b9 100644
  LIVE555_FILE := live.$(LIVE555_VERSION).tar.gz
  LIVEDOTCOM_URL := $(CONTRIB_VIDEOLAN)/live555/$(LIVE555_FILE)
  
--ifdef HAVE_GCC
--# older GCC doesn't support -std=c++20 required for std::atomic_flag
--ifeq ($(call gcc_at_least, 10), true)
--HAVE_LIVE555_CPP20=1
--endif
--else
--ifdef HAVE_CLANG
--# older CLANG doesn't support -std=c++20 required for std::atomic_flag
--ifeq ($(call clang_at_least, 12), true)
--HAVE_LIVE555_CPP20=1
--endif
--else
--HAVE_LIVE555_CPP20=1
--endif
+-define CXX20_ATOMIC_FLAG_CHECK
+-#include <atomic> \n
+-#if !defined(__cpp_lib_atomic_flag_test) \n
+-FAIL! \n
+-#endif \n
+-endef
+-
+-ifeq ($(call try_cxx_compile,$(CXX20_ATOMIC_FLAG_CHECK),-std=c++20),true)
+-HAVE_LIVE555_CPP20_ATOMIC_TEST=1
 -endif
 -
  ifdef BUILD_NETWORK
  ifdef GNUV3
  PKGS += live555
-@@ -35,7 +19,7 @@ $(TARBALLS)/$(LIVE555_FILE):
+@@ -30,7 +19,7 @@ $(TARBALLS)/$(LIVE555_FILE):
  
  .sum-live555: $(LIVE555_FILE)
  
@@ -622,7 +617,7 @@ index d98cef8ff4..b8284d47b9 100644
  
  LIVE_TARGET = $(error live555 target not defined!)
  ifdef HAVE_LINUX
-@@ -47,10 +31,9 @@ LIVE_EXTRA_CFLAGS += -DDISABLE_LOOPBACK_IP_ADDRESS_CHECK=1
+@@ -42,10 +31,9 @@ LIVE_EXTRA_CFLAGS += -DDISABLE_LOOPBACK_IP_ADDRESS_CHECK=1
  endif
  ifdef HAVE_WIN32
  LIVE_TARGET := mingw
@@ -634,7 +629,7 @@ index d98cef8ff4..b8284d47b9 100644
  endif
  ifdef HAVE_BSD
  LIVE_TARGET := freebsd
-@@ -63,59 +46,61 @@ LIVE_TARGET := solaris-32bit
+@@ -58,61 +46,61 @@ LIVE_TARGET := solaris-32bit
  endif
  endif
  
@@ -649,13 +644,15 @@ index d98cef8ff4..b8284d47b9 100644
 +	chmod -R u+w live
  	# Remove hardcoded cc, c++, ar variables
 -	sed -e 's%C_COMPILER%#C_COMPILER%' -e 's%CPLUSPLUS_COMPILER%#CPLUSPLUS_COMPILER%' -e 's%LIBRARY_LINK%#LIBRARY_LINK%' -i.orig $(UNPACK_DIR)/config.$(LIVE_TARGET)
+-	# Use CXXFLAGS when compiling C++ code
+-	sed -e 's%CPLUSPLUS_FLAGS =%CPLUSPLUS_FLAGS = $$(CXXFLAGS)%' -i.orig $(UNPACK_DIR)/config.$(LIVE_TARGET)
 -	# Remove hardcoded --std=c+20 on un supported compilers
--ifndef HAVE_LIVE555_CPP20
+-ifndef HAVE_LIVE555_CPP20_ATOMIC_TEST
 -	sed -e 's%-std=c++20% -DNO_STD_LIB=1%' -i.orig $(UNPACK_DIR)/config.$(LIVE_TARGET)
 -endif
 -	# Add the Extra_CFLAGS to the config files
 -	sed -i.orig \
--		-e 's%^\(COMPILE_OPTS.*\)$$%\1 '"$(LIVE_EXTRA_CFLAGS)%" $(UNPACK_DIR)/config.$(LIVE_TARGET)
+-		-e 's%COMPILE_OPTS =%COMPILE_OPTS = $$(EXTRA_CFLAGS)%' $(UNPACK_DIR)/config.$(LIVE_TARGET)
 +	cd live && sed -e 's%cc%$(CC)%' -e 's%c++%$(CXX)%' -e 's%LIBRARY_LINK =.*ar%LIBRARY_LINK = $(AR)%' -i.orig config.$(LIVE_TARGET)
 +	# Replace libtool -s by ar cr for macOS only
 +	cd live && sed -i.orig -e s/"libtool -s -o"/"ar cr"/g config.macosx*
@@ -711,7 +708,7 @@ index d98cef8ff4..b8284d47b9 100644
 +	mv live.$(LIVE555_VERSION) $@ && touch $@
  
 -LIVE555_ENV := $(HOSTVARS) C_COMPILER=$(CC) CPLUSPLUS_COMPILER=$(CXX) LIBRARY_LINK="$(AR) cr " \
--	PREFIX=$(PREFIX) DESTDIR= LIBDIR=$(PREFIX)/lib
+-	PREFIX=$(PREFIX) DESTDIR= LIBDIR=$(PREFIX)/lib EXTRA_CFLAGS="$(LIVE_EXTRA_CFLAGS)"
 +LIVE555_SUBDIRS=groupsock liveMedia UsageEnvironment BasicUsageEnvironment
  
 -.live555: BUILD_DIR=$<
@@ -768,4 +765,3 @@ index 0000000000..7723e3ba12
 +
 -- 
 2.50.1 (Apple Git-155)
-
