@@ -19,10 +19,10 @@ global symbol collisions.
  modules/demux/ytdl.c                            | 11 ++++++++---
  .../misc/preparser_serializer/json/serializer.c | 11 ++++++++---
  modules/misc/webservices/acoustid.c             | 13 +++++++++----
- modules/misc/webservices/json_helper.h          |  6 +++---
+ modules/misc/webservices/json_helper.h          |  4 ++--
  modules/misc/webservices/musicbrainz.c          | 13 +++++++++----
  .../stream_out/chromecast/chromecast_ctrl.cpp   | 17 +++++++++++------
- 9 files changed, 70 insertions(+), 27 deletions(-)
+ 9 files changed, 69 insertions(+), 26 deletions(-)
 
 diff --git a/modules/demux/json/grammar.y b/modules/demux/json/grammar.y
 index 150a9c8dd5..df35f0ddf2 100644
@@ -190,10 +190,10 @@ index 93f3794903..9dcebf6ad4 100644
      struct json_object json;
      int val = json_parse(&sys, &json);
 diff --git a/modules/misc/webservices/json_helper.h b/modules/misc/webservices/json_helper.h
-index 86e4ec4c6d..9c9f7d502b 100644
+index e938a74232..c91efd26fc 100644
 --- a/modules/misc/webservices/json_helper.h
 +++ b/modules/misc/webservices/json_helper.h
-@@ -85,19 +85,19 @@ struct json_helper_sys {
+@@ -87,19 +87,19 @@ struct json_helper_sys {
      size_t size;
  };
  
@@ -211,8 +211,7 @@ index 86e4ec4c6d..9c9f7d502b 100644
      struct json_helper_sys *sys = data;
  
      /* Read the smallest number of byte between size and the string length */
--    size_t s = size < sys->size ? size : sys->size; 
-+    size_t s = size < sys->size ? size : sys->size;
+     size_t s = size < sys->size ? size : sys->size;
      memcpy(buf, sys->buffer, s);
  
      sys->buffer += s;
@@ -291,4 +290,3 @@ index 7e18708483..f9f8ae640c 100644
      int val = json_parse(&sys, &json);
 -- 
 2.50.1 (Apple Git-155)
-
