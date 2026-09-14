@@ -27,7 +27,7 @@ variables:
 
 continous-MobileVLCKit:
     tags:
-        - macos-m1
+        - monterey
     extends:
         - .continous-job-base
         - .continous-build-base
@@ -37,7 +37,7 @@ continous-MobileVLCKit:
 
 continous-TVVLCKit:
     tags:
-        - macos-xcode15
+        - monterey
     extends:
         - .continous-job-base
         - .continous-build-base
@@ -47,7 +47,7 @@ continous-TVVLCKit:
 
 continous-VLCKit:
     tags:
-        - macos-xcode15
+        - monterey
     extends:
         - .continous-job-base
         - .continous-build-base
@@ -84,7 +84,7 @@ continous-VLCKit:
 
 dev-artifacts-MobileVLCKit:
     tags:
-        - macos-m1
+        - monterey
     extends:
         - .dev-artifacts-job-base
         - .dev-artifacts-build-base
@@ -95,7 +95,7 @@ dev-artifacts-MobileVLCKit:
 
 dev-artifacts-TVVLCKit:
     tags:
-        - macos-xcode15
+        - monterey
     extends:
         - .dev-artifacts-job-base
         - .dev-artifacts-build-base
@@ -106,7 +106,7 @@ dev-artifacts-TVVLCKit:
 
 dev-artifacts-VLCKit:
     tags:
-        - macos-xcode15
+        - monterey
     extends:
         - .dev-artifacts-job-base
         - .dev-artifacts-build-base
@@ -159,7 +159,7 @@ pages:
 
 MobileVLCKit:
     tags:
-        - macos-m1
+        - monterey
     extends:
         - .release-job-base
         - .release-build-base
@@ -168,7 +168,7 @@ MobileVLCKit:
 
 TVVLCKit:
     tags:
-        - macos-xcode15
+        - monterey
     extends:
         - .release-job-base
         - .release-build-base
@@ -177,7 +177,7 @@ TVVLCKit:
 
 VLCKit:
     tags:
-        - macos-xcode15
+        - monterey
     extends:
         - .release-job-base
         - .release-build-base
