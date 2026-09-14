@@ -37,7 +37,7 @@ continous-MobileVLCKit:
 
 continous-TVVLCKit:
     tags:
-        - monterey
+        - macos-xcode26
     extends:
         - .continous-job-base
         - .continous-build-base
