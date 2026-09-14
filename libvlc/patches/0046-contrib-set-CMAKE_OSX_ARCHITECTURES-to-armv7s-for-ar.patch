@@ -1,0 +1,29 @@
+From 6030ae0b6ff40613e3c4cf3914d2d6db0d5aaf24 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Mon, 14 Sep 2026 15:20:51 +0200
+Subject: [PATCH] contrib: set CMAKE_OSX_ARCHITECTURES to armv7s for armv7s
+ hosts
+
+---
+ contrib/src/main.mak | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/contrib/src/main.mak b/contrib/src/main.mak
+index 01041febce..f8f1715ff9 100644
+--- a/contrib/src/main.mak
++++ b/contrib/src/main.mak
+@@ -693,7 +693,11 @@ ifeq ($(ARCH),aarch64)
+ 	echo "set(CMAKE_OSX_ARCHITECTURES \"arm64\" CACHE STRING \"\")" >> $@
+ else
+ ifeq ($(ARCH),arm)
++ifneq ($(findstring armv7s,$(HOST)),)
++	echo "set(CMAKE_OSX_ARCHITECTURES \"armv7s\" CACHE STRING \"\")" >> $@
++else
+ 	echo "set(CMAKE_OSX_ARCHITECTURES \"armv7\" CACHE STRING \"\")" >> $@
++endif
+ else
+ 	echo "set(CMAKE_OSX_ARCHITECTURES \"$(ARCH)\" CACHE STRING \"\")" >> $@
+ endif
+-- 
+2.50.1 (Apple Git-155)
+
