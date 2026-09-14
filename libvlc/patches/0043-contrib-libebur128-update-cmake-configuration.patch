@@ -1,0 +1,28 @@
+From 8ce4a5100d200c940c70a3522236c617113c28c8 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <felix@feepk.net>
+Date: Sun, 11 May 2025 12:43:13 +0200
+Subject: [PATCH 43/44] contrib/libebur128: update cmake configuration
+
+---
+ contrib/src/libebur128/rules.mak | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/contrib/src/libebur128/rules.mak b/contrib/src/libebur128/rules.mak
+index f8a0066c53..e2ee5fab7b 100644
+--- a/contrib/src/libebur128/rules.mak
++++ b/contrib/src/libebur128/rules.mak
+@@ -19,7 +19,8 @@ libebur128: libebur128-$(LIBEBUR128_VERSION).tar.gz .sum-libebur128
+ 	$(MOVE)
+ 
+ .libebur128: libebur128 toolchain.cmake
+-	cd $< && $(HOSTVARS_PIC) $(CMAKE) -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+-	cd $< && $(MAKE) install
+-	rm -f $(PREFIX)/lib/libebur128.so*
++	$(CMAKECLEAN)
++	$(HOSTVARS) $(CMAKE) -DCMAKE_POLICY_VERSION_MINIMUM=3.5
++	+$(CMAKEBUILD)
++	$(CMAKEINSTALL)
+ 	touch $@
+-- 
+2.50.1 (Apple Git-155)
+

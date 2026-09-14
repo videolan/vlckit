@@ -1,0 +1,25 @@
+From cb80d7fbcba570e04f28aa9456fe1edbf7464808 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Felix=20Paul=20K=C3=BChne?= <fkuehne@videolan.org>
+Date: Mon, 14 Sep 2026 13:05:43 +0200
+Subject: [PATCH] contrib: vpx: only use the macOS linker flags on macOS
+
+---
+ contrib/src/vpx/rules.mak | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/contrib/src/vpx/rules.mak b/contrib/src/vpx/rules.mak
+index 828f19abe6..61f23cc969 100644
+--- a/contrib/src/vpx/rules.mak
++++ b/contrib/src/vpx/rules.mak
+@@ -163,6 +163,8 @@ ifneq ($(call apple_clang_at_least, 13), true)
+ # arm_neon.h broken on Apple Clang 12
+ VPX_CONF += --disable-neon-dotprod
+ endif
++endif
++ifdef HAVE_MACOSX
+ VPX_LDFLAGS := -L$(MACOSX_SDK)/usr/lib -isysroot $(MACOSX_SDK) -mmacosx-version-min=10.7
+ endif
+ VPX_LDFLAGS += -arch $(PLATFORM_SHORT_ARCH)
+-- 
+2.50.1 (Apple Git-155)
+

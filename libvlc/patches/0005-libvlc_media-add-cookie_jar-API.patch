@@ -1,7 +1,7 @@
-From f0c96126312b7dde2528ed6b7a830eecc9e30238 Mon Sep 17 00:00:00 2001
+From 44495bc7b0862cfe306553fc64f5c72c89196ae4 Mon Sep 17 00:00:00 2001
 From: Thomas Guillem <thomas@gllm.fr>
 Date: Fri, 16 Sep 2016 15:51:11 +0200
-Subject: [PATCH 05/45] libvlc_media: add cookie_jar API
+Subject: [PATCH 05/44] libvlc_media: add cookie_jar API
 
 ---
  include/vlc/libvlc_media.h | 35 +++++++++++++++++++++++++++++++++++
@@ -163,5 +163,5 @@ index fda1091cc8..0b324cc796 100644
  
      p_input_thread = input_Create( p_mi, p_mi->p_md->p_input_item, NULL,
 -- 
-2.39.5 (Apple Git-154)
+2.50.1 (Apple Git-155)
 

@@ -1,7 +1,7 @@
-From 0ebfb9e3604523749b7c173a2ad5b4cda393ad3d Mon Sep 17 00:00:00 2001
+From 62f3a931aa6d3d73d41308989289857e0b85fac5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Mon, 26 Mar 2018 16:44:44 +0200
-Subject: [PATCH 09/45] modules:common: Use the full module name as MODULE_NAME
+Subject: [PATCH 09/44] modules:common: Use the full module name as MODULE_NAME
 
 This avoid conflicts when linking modules staticly on platforms that don't
 have objdump
@@ -29,5 +29,5 @@ index 1b9117c98d..fc67a39bca 100644
  AM_CFLAGS =
  AM_CXXFLAGS =
 -- 
-2.39.5 (Apple Git-154)
+2.50.1 (Apple Git-155)
 

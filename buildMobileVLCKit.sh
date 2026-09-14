@@ -1,6 +1,6 @@
 #!/bin/sh
 # Copyright (C) Pierre d'Herbemont, 2010
-# Copyright (C) Felix Paul Kühne, 2012-2025
+# Copyright (C) Felix Paul Kühne, 2012-2026
 
 set -e
 
@@ -26,7 +26,7 @@ ROOT_DIR=empty
 INCLUDE_32BIT=no
 FARCH="all"
 
-TESTEDHASH="79128878" # libvlc hash that this version of VLCKit is build on
+TESTEDHASH="d27b8e94" # libvlc hash that this version of VLCKit is build on
 
 if [ -z "$MAKE_JOBS" ]; then
     CORE_COUNT=`sysctl -n machdep.cpu.core_count`
@@ -661,7 +661,6 @@ buildLibVLC() {
         ${DEBUGFLAG} \
         ${SCARYFLAG} \
         --disable-macosx \
-        --disable-macosx-qtkit \
         --disable-macosx-avfoundation \
         --disable-shared \
         --enable-opus \

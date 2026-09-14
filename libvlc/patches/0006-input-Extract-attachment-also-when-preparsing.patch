@@ -1,7 +1,7 @@
-From c96a5f85377f5e707854f9c1abe0cc50d6b34c3a Mon Sep 17 00:00:00 2001
+From 7344c8698f5ac423af2d5836e68f0e29d9526890 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Hugo=20Beauz=C3=A9e-Luyssen?= <hugo@beauzee.fr>
 Date: Fri, 29 Nov 2019 15:41:08 +0100
-Subject: [PATCH 06/45] input: Extract attachment also when preparsing
+Subject: [PATCH 06/44] input: Extract attachment also when preparsing
 
 ---
  include/vlc/libvlc_events.h                  |  10 +
@@ -521,7 +521,7 @@ index 7c93e41d5f..ef763fb1f0 100644
  
  #include <vlc_common.h>
 diff --git a/lib/media_list_player.c b/lib/media_list_player.c
-index c76cd6934e..64b5c0964e 100644
+index 1e2ab4f00c..9d264ea30d 100644
 --- a/lib/media_list_player.c
 +++ b/lib/media_list_player.c
 @@ -33,6 +33,7 @@
@@ -863,7 +863,7 @@ index 9623f82369..b4eddfaeba 100644
  
  /* */
 diff --git a/modules/access/bluray.c b/modules/access/bluray.c
-index 07472dc4e8..c75cb6b27a 100644
+index 3dec0b026f..5c81469b6c 100644
 --- a/modules/access/bluray.c
 +++ b/modules/access/bluray.c
 @@ -1042,7 +1042,7 @@ static void blurayClose(vlc_object_t *object)
@@ -887,7 +887,7 @@ index 07472dc4e8..c75cb6b27a 100644
          return VLC_SUCCESS;
      }
 diff --git a/modules/codec/libass.c b/modules/codec/libass.c
-index 3ff6a9a728..de65499b00 100644
+index b8f0de402c..fccbc29a12 100644
 --- a/modules/codec/libass.c
 +++ b/modules/codec/libass.c
 @@ -198,7 +198,7 @@ static int Create( vlc_object_t *p_this )
@@ -900,7 +900,7 @@ index 3ff6a9a728..de65499b00 100644
      free( pp_attachments );
  
 diff --git a/modules/codec/subsusf.c b/modules/codec/subsusf.c
-index 147f45f264..35fb6d763f 100644
+index e710e87e9e..e91e63c0bd 100644
 --- a/modules/codec/subsusf.c
 +++ b/modules/codec/subsusf.c
 @@ -548,7 +548,7 @@ static int ParseImageAttachments( decoder_t *p_dec )
@@ -937,7 +937,7 @@ index 8db8dd2a07..4c04f79954 100644
              *pi_int = i;
              return VLC_SUCCESS;
 diff --git a/modules/demux/avi/avi.c b/modules/demux/avi/avi.c
-index 38f66007fd..6ad6465570 100644
+index 7ab6f5c681..bc1f8312a8 100644
 --- a/modules/demux/avi/avi.c
 +++ b/modules/demux/avi/avi.c
 @@ -295,7 +295,7 @@ static void Close ( vlc_object_t * p_this )
@@ -949,7 +949,7 @@ index 38f66007fd..6ad6465570 100644
      free(p_sys->attachment);
  
      free( p_sys );
-@@ -1920,7 +1920,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -1930,7 +1930,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
              {
                  *pi_int = p_sys->i_attachment;
                  for( unsigned i = 0; i < p_sys->i_attachment; i++ )
@@ -981,10 +981,10 @@ index 1b7c2c6b1a..7abe78ec16 100644
      }
      else if( i_query == DEMUX_GET_TITLE_INFO )
 diff --git a/modules/demux/mkv/demux.cpp b/modules/demux/mkv/demux.cpp
-index 42df08d80e..f28d9301df 100644
+index 50fff21d74..44b907befc 100644
 --- a/modules/demux/mkv/demux.cpp
 +++ b/modules/demux/mkv/demux.cpp
-@@ -439,8 +439,6 @@ demux_sys_t::~demux_sys_t()
+@@ -525,8 +525,6 @@ demux_sys_t::~demux_sys_t()
          delete opened_segments[i];
      for ( i=0; i<used_vsegments.size(); i++ )
          delete used_vsegments[i];
@@ -994,11 +994,11 @@ index 42df08d80e..f28d9301df 100644
  
      while( titles.size() )
 diff --git a/modules/demux/mkv/demux.hpp b/modules/demux/mkv/demux.hpp
-index dc67c613fd..282b095614 100644
+index b2606192fc..150cd21796 100644
 --- a/modules/demux/mkv/demux.hpp
 +++ b/modules/demux/mkv/demux.hpp
-@@ -290,6 +290,8 @@ typedef struct {
- #endif
+@@ -204,6 +204,8 @@ struct pci_t {
+ 
  ////////////////////////////////////////
  
 +#include <memory>
@@ -1006,7 +1006,7 @@ index dc67c613fd..282b095614 100644
  class virtual_segment_c;
  class chapter_item_c;
  
-@@ -362,7 +364,8 @@ public:
+@@ -276,7 +278,8 @@ public:
      size_t                           i_current_title;
  
      std::vector<matroska_stream_c*>  streams;
@@ -1017,13 +1017,13 @@ index dc67c613fd..282b095614 100644
      std::vector<virtual_segment_c*>  used_vsegments;
      virtual_segment_c                *p_current_vsegment;
 diff --git a/modules/demux/mkv/matroska_segment_parse.cpp b/modules/demux/mkv/matroska_segment_parse.cpp
-index 9e5e985755..3ec3da2604 100644
+index daa505e377..811f1966d3 100644
 --- a/modules/demux/mkv/matroska_segment_parse.cpp
 +++ b/modules/demux/mkv/matroska_segment_parse.cpp
-@@ -1283,33 +1283,31 @@ void matroska_segment_c::ParseAttachments( KaxAttachments *attachments )
-         char *psz_tmp_utf8 =  ToUTF8( UTFstring( GetChild<KaxFileName>( *attachedFile ) ) );
-         std::string attached_filename(psz_tmp_utf8);
-         free(psz_tmp_utf8);
+@@ -1351,33 +1351,31 @@ void matroska_segment_c::ParseAttachments( KaxAttachments *attachments )
+     {
+         KaxFileData  &img_data     = GetChild<KaxFileData>( *attachedFile );
+         std::string attached_filename( UTFstring( GetChild<KaxFileName>( *attachedFile ) ).GetUTF8() );
 -        attachment_c *new_attachment = new attachment_c( attached_filename,
 -                                                         GetChild<KaxMimeType>( *attachedFile ),
 -                                                         img_data.GetSize() );
@@ -1069,11 +1069,11 @@ index 9e5e985755..3ec3da2604 100644
 +        sys.stored_attachments.push_back(
 +                    std::unique_ptr<input_attachment_t, decltype(&vlc_input_attachment_Release)>(
 +                        new_attachment, &vlc_input_attachment_Release ) );
-         attachedFile = &GetNextChild<KaxAttached>( *attachments, *attachedFile );
+         attachedFile = FindNextChild<KaxAttached>( *attachments, *attachedFile );
      }
  }
 diff --git a/modules/demux/mkv/mkv.cpp b/modules/demux/mkv/mkv.cpp
-index 2a252a1001..21f2fb4857 100644
+index 90a5bd5bc5..fd96c26a91 100644
 --- a/modules/demux/mkv/mkv.cpp
 +++ b/modules/demux/mkv/mkv.cpp
 @@ -313,14 +313,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
@@ -1093,20 +1093,20 @@ index 2a252a1001..21f2fb4857 100644
              return VLC_SUCCESS;
  
 diff --git a/modules/demux/mkv/mkv.hpp b/modules/demux/mkv/mkv.hpp
-index 8497d08742..402ed6d08e 100644
+index 614e02f83e..2b43e8131d 100644
 --- a/modules/demux/mkv/mkv.hpp
 +++ b/modules/demux/mkv/mkv.hpp
-@@ -133,36 +133,6 @@ Type * FindNextChild(const EbmlMaster & Master, const Type & PastElt)
+@@ -147,36 +147,6 @@ Type * FindNextChild(const EbmlMaster & Master, const Type & PastElt)
  
  using namespace LIBMATROSKA_NAMESPACE;
  
 -class attachment_c
 -{
 -public:
--    attachment_c( const std::string& _psz_file_name, const std::string& _psz_mime_type, int _i_size )
+-    attachment_c( const std::string& _str_file_name, const std::string& _str_mime_type, int _i_size )
 -        :i_size(_i_size)
--        ,psz_file_name( _psz_file_name)
--        ,psz_mime_type( _psz_mime_type)
+-        ,str_file_name( _str_file_name)
+-        ,str_mime_type( _str_mime_type)
 -    {
 -        p_data = NULL;
 -    }
@@ -1119,25 +1119,25 @@ index 8497d08742..402ed6d08e 100644
 -        return (p_data != NULL);
 -    }
 -
--    const char* fileName() const { return psz_file_name.c_str(); }
--    const char* mimeType() const { return psz_mime_type.c_str(); }
+-    const char* fileName() const { return str_file_name.c_str(); }
+-    const char* mimeType() const { return str_mime_type.c_str(); }
 -    int         size() const    { return i_size; }
 -
 -    void          *p_data;
 -private:
 -    int            i_size;
--    std::string    psz_file_name;
--    std::string    psz_mime_type;
+-    std::string    str_file_name;
+-    std::string    str_mime_type;
 -};
 -
  class matroska_segment_c;
  struct matroska_stream_c
  {
 diff --git a/modules/demux/mp4/mp4.c b/modules/demux/mp4/mp4.c
-index bd24b5076c..048a51337c 100644
+index e5db797c8b..f637af1b04 100644
 --- a/modules/demux/mp4/mp4.c
 +++ b/modules/demux/mp4/mp4.c
-@@ -123,6 +123,8 @@ struct demux_sys_t
+@@ -124,6 +124,8 @@ struct demux_sys_t
      } hacks;
  
      mp4_fragments_index_t *p_fragsindex;
@@ -1146,7 +1146,7 @@ index bd24b5076c..048a51337c 100644
  };
  
  #define DEMUX_INCREMENT (CLOCK_FREQ / 4) /* How far the pcr will go, each round */
-@@ -799,6 +801,7 @@ static int Open( vlc_object_t * p_this )
+@@ -813,6 +815,7 @@ static int Open( vlc_object_t * p_this )
      p_demux->pf_control = Control;
  
      p_sys->context.i_lastseqnumber = UINT32_MAX;
@@ -1154,7 +1154,7 @@ index bd24b5076c..048a51337c 100644
  
      p_demux->p_sys = p_sys;
  
-@@ -2058,112 +2061,123 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -2085,112 +2088,123 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
              input_attachment_t ***ppp_attach = va_arg( args, input_attachment_t*** );
              int *pi_int = va_arg( args, int * );
  
@@ -1365,7 +1365,7 @@ index bd24b5076c..048a51337c 100644
              return VLC_SUCCESS;
          }
  
-@@ -2262,6 +2276,10 @@ static void Close ( vlc_object_t * p_this )
+@@ -2289,6 +2303,10 @@ static void Close ( vlc_object_t * p_this )
          MP4_TrackClean( p_demux->out, &p_sys->track[i_track] );
      free( p_sys->track );
  
@@ -1377,10 +1377,10 @@ index bd24b5076c..048a51337c 100644
  }
  
 diff --git a/modules/demux/mpeg/ts.c b/modules/demux/mpeg/ts.c
-index 44493046bb..5a30a6bc15 100644
+index 73b95d0167..6baeb470bc 100644
 --- a/modules/demux/mpeg/ts.c
 +++ b/modules/demux/mpeg/ts.c
-@@ -553,7 +553,7 @@ static int Open( vlc_object_t *p_this )
+@@ -554,7 +554,7 @@ static int Open( vlc_object_t *p_this )
  static void FreeDictAttachment( void *p_value, void *p_obj )
  {
      VLC_UNUSED(p_obj);
@@ -1389,7 +1389,7 @@ index 44493046bb..5a30a6bc15 100644
  }
  
  static void Close( vlc_object_t *p_this )
-@@ -1176,7 +1176,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -1177,7 +1177,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
                                           p_entry; p_entry = p_entry->p_next )
              {
                  msg_Err(p_demux, "GET ATTACHMENT %s", p_entry->psz_key);
@@ -1399,10 +1399,10 @@ index 44493046bb..5a30a6bc15 100644
                  if( (*ppp_attach)[*pi_int] )
                      (*pi_int)++;
 diff --git a/modules/demux/ogg.c b/modules/demux/ogg.c
-index db1b404b4e..bad21665be 100644
+index 43b0ebf046..8f4b3ee6ba 100644
 --- a/modules/demux/ogg.c
 +++ b/modules/demux/ogg.c
-@@ -835,7 +835,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
+@@ -837,7 +837,7 @@ static int Control( demux_t *p_demux, int i_query, va_list args )
                  return VLC_ENOMEM;
              *pi_int = p_sys->i_attachments;
              for( int i = 0; i < p_sys->i_attachments; i++ )
@@ -1411,7 +1411,7 @@ index db1b404b4e..bad21665be 100644
              return VLC_SUCCESS;
          }
  
-@@ -2296,7 +2296,7 @@ static void Ogg_EndOfStream( demux_t *p_demux )
+@@ -2307,7 +2307,7 @@ static void Ogg_EndOfStream( demux_t *p_demux )
      p_ogg->p_meta = NULL;
  
      for(int i=0; i<p_ogg->i_attachments; i++)
@@ -1835,5 +1835,5 @@ index db7f4030b9..8454600451 100644
 +vlc_input_attachment_Hold
 +vlc_input_attachment_Release
 -- 
-2.39.5 (Apple Git-154)
+2.50.1 (Apple Git-155)
 
