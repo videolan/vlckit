@@ -537,6 +537,10 @@ buildLibVLC() {
     export ac_cv_func_aligned_alloc=no
     export ac_cv_func_timespec_get=no
 
+    # Undeclared in Apple SDK headers but falsely link-detectable since iOS simulator SDK 26.4
+    export ac_cv_func_dup3=no
+    export ac_cv_func_pipe2=no
+
     # autoconf 2.73 adds -std=gnu23 to CC but not OBJC, breaking libtool's ObjC tag inference
     export ac_cv_prog_cc_c23=no
 
