@@ -209,6 +209,7 @@ cleantheenvironment()
     export CXXFLAGS=""
     export CXXCPPFLAGS=""
     export OBJC=""
+    export OBJCXX=""
     export OBJCFLAGS=""
     export LD=""
     export LDFLAGS=""
@@ -409,14 +410,18 @@ buildLibVLC() {
     if [ "$PLATFORM" = "OS" ]; then
     if [ "$ARCH" != "aarch64" ]; then
     EXTRA_CFLAGS+=" -mcpu=cortex-a8 -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+    EXTRA_LDFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     else
     EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+    EXTRA_LDFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     fi
     else
     if [ "$MACOS" = "yes" ]; then
     EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
+    EXTRA_LDFLAGS+=" -${OSVERSIONMINCFLAG}-version-min=${SDK_MIN}"
     else
     EXTRA_CFLAGS+=" -${OSVERSIONMINCFLAG}-simulator-version-min=${SDK_MIN}"
+    EXTRA_LDFLAGS+=" -${OSVERSIONMINCFLAG}-simulator-version-min=${SDK_MIN}"
     fi
     fi
 
@@ -852,6 +857,7 @@ buildMobileKit() {
         export CXX="`xcrun --find clang++`"
         export NM="`xcrun --find nm`"
         export OBJC="`xcrun --find clang`"
+        export OBJCXX="`xcrun --find clang++`"
         export RANLIB="`xcrun --find ranlib`"
         export STRINGS="`xcrun --find strings`"
         export STRIP="`xcrun --find strip`"
