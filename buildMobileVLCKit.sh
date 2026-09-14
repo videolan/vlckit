@@ -537,6 +537,9 @@ buildLibVLC() {
     export ac_cv_func_aligned_alloc=no
     export ac_cv_func_timespec_get=no
 
+    # autoconf 2.73 adds -std=gnu23 to CC but not OBJC, breaking libtool's ObjC tag inference
+    export ac_cv_prog_cc_c23=no
+
     if [ "$BITCODE" = "yes" ]; then
         BITCODEOPTION="--enable-bitcode"
     else
