@@ -50,8 +50,8 @@ OPTIONS
    -x       Build for macOS / Mac OS X
    -w       Build a limited stack of non-scary libraries only
    -b       Enable bitcode
-   -a       Build framework for specific arch (all|i386|x86_64|armv7|armv7s|aarch64)
-   -3       Include optional 32bit slices (i386, ARMv7 and ARMv7s, iOS only)
+   -a       Build framework for specific arch (all|x86_64|armv7|armv7s|aarch64)
+   -3       Include optional 32bit slices (ARMv7 and ARMv7s, iOS only)
 EOF
 }
 
@@ -155,7 +155,7 @@ get_arch() {
 }
 
 is_simulator_arch() {
-    if [ "$1" = "i386" -o "$1" = "x86_64" ];then
+    if [ "$1" = "x86_64" ];then
         return 0
     else
         return 1
@@ -237,11 +237,7 @@ buildxcodeproj()
         fi
         if [ "$IOS" = "yes" ]; then
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                if [ "$INCLUDE_32BIT" = "yes" ]; then
-                    architectures="i386 x86_64 arm64"
-                else
-                    architectures="arm64 x86_64"
-                fi
+                architectures="arm64 x86_64"
             else
                 if [ "$INCLUDE_32BIT" = "yes" ]; then
                     architectures="armv7 armv7s arm64"
@@ -884,9 +880,6 @@ buildMobileKit() {
             fi
             if [ "$IOS" = "yes" ]; then
                 if [ "$PLATFORM" = "iphonesimulator" ]; then
-                    if [ "$INCLUDE_32BIT" = "yes" ]; then
-                        buildLibVLC "i386" "Simulator"
-                    fi
                     buildLibVLC "x86_64" "Simulator"
                     buildLibVLC "aarch64" "Simulator"
                 else
@@ -898,7 +891,7 @@ buildMobileKit() {
                 fi
             fi
         else
-            if [ "$FARCH" != "x86_64" -a "$FARCH" != "aarch64" -a "$FARCH" != "i386" \
+            if [ "$FARCH" != "x86_64" -a "$FARCH" != "aarch64" \
               -a "$FARCH" != "armv7" -a "$FARCH" != "armv7s" ];then
                 echo "*** Framework ARCH: ${FARCH} is invalid ***"
                 exit 1
@@ -906,7 +899,7 @@ buildMobileKit() {
 
             local buildPlatform=""
             if [ "$PLATFORM" = "iphonesimulator" ]; then
-                if [ "$FARCH" == "x86_64" -o "$FARCH" == "i386" -o "$FARCH" == "aarch64" ];then
+                if [ "$FARCH" == "x86_64" -o "$FARCH" == "aarch64" ];then
                     buildPlatform="Simulator"
                 fi
             else
