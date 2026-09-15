@@ -54,6 +54,7 @@ static void HandleMediaChanged(void *opaque, libvlc_media_t *md)
         [eventsHandler handleEvent:^(id _Nonnull object) {
             VLCMedia *media = [[VLCMedia alloc] initWithLibVLCMediaDescriptor:md];
             VLCMediaListPlayer *mediaListPlayer = (VLCMediaListPlayer *)object;
+            [mediaListPlayer.mediaPlayer mediaPlayerMediaChanged:media];
             [mediaListPlayer mediaListPlayerNextItemSet: media];
         }];
     }
