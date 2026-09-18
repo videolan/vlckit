@@ -628,6 +628,31 @@ static void HandleMediaPlayerPreviousFrameStatus(void *opaque, int status)
     }
 }
 
+static const struct libvlc_media_player_cbs VLCMediaPlayerCallbacks = {
+    .version = 0,
+    .on_state_changed = HandleMediaInstanceStateChanged,
+    .on_buffering_changed = HandleMediaPlayerBuffering,
+    .on_capabilities_changed = HandleMediaPlayerCapabilitiesChanged,
+    .on_length_changed = HandleMediaPlayerLengthChanged,
+    .on_track_list_changed = HandleMediaPlayerTrackChanged,
+    .on_track_selection_changed = HandleMediaPlayerTrackSelectionChanged,
+    .on_media_changed = HandleMediaPlayerMediaChanged,
+    .on_media_meta_changed = HandleMediaPlayerMediaMetaChanged,
+    .on_media_subitems_changed = HandleMediaPlayerMediaSubItemsChanged,
+    .on_media_attachments_added = HandleMediaPlayerMediaAttachmentsAdded,
+    .on_title_selection_changed = HandleMediaTitleSelectionChanged,
+    .on_titles_changed = HandleMediaTitleListChanged,
+    .on_chapter_selection_changed = HandleMediaChapterChanged,
+    .on_program_list_changed = HandleMediaProgramListChanged,
+    .on_program_selection_changed = HandleMediaProgramSelectionChanged,
+    .on_screenshot_taken = HandleMediaPlayerSnapshot,
+    .on_recording_changed = HandleMediaPlayerRecord,
+    .on_audio_volume_changed = HandleMediaPlayerAudioVolumeChanged,
+    .on_next_frame_status = HandleMediaPlayerNextFrameStatus,
+    .on_prev_frame_status = HandleMediaPlayerPreviousFrameStatus,
+    .on_rate_changed = HandleMediaPlayerRateChanged,
+};
+
 @implementation VLCMediaPlayer
 @synthesize libraryInstance = _privateLibrary;
 
@@ -675,32 +700,8 @@ static void HandleMediaPlayerPreviousFrameStatus(void *opaque, int status)
         _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
         _minimalWatchTimePeriod = 500000;
         _privateLibrary = library;
-        static const struct libvlc_media_player_cbs player_cbs = {
-            .version = 0,
-            .on_state_changed = HandleMediaInstanceStateChanged,
-            .on_buffering_changed = HandleMediaPlayerBuffering,
-            .on_capabilities_changed = HandleMediaPlayerCapabilitiesChanged,
-            .on_length_changed = HandleMediaPlayerLengthChanged,
-            .on_track_list_changed = HandleMediaPlayerTrackChanged,
-            .on_track_selection_changed = HandleMediaPlayerTrackSelectionChanged,
-            .on_media_changed = HandleMediaPlayerMediaChanged,
-            .on_media_meta_changed = HandleMediaPlayerMediaMetaChanged,
-            .on_media_subitems_changed = HandleMediaPlayerMediaSubItemsChanged,
-            .on_media_attachments_added = HandleMediaPlayerMediaAttachmentsAdded,
-            .on_title_selection_changed = HandleMediaTitleSelectionChanged,
-            .on_titles_changed = HandleMediaTitleListChanged,
-            .on_chapter_selection_changed = HandleMediaChapterChanged,
-            .on_program_list_changed = HandleMediaProgramListChanged,
-            .on_program_selection_changed = HandleMediaProgramSelectionChanged,
-            .on_screenshot_taken = HandleMediaPlayerSnapshot,
-            .on_recording_changed = HandleMediaPlayerRecord,
-            .on_audio_volume_changed = HandleMediaPlayerAudioVolumeChanged,
-            .on_next_frame_status = HandleMediaPlayerNextFrameStatus,
-            .on_prev_frame_status = HandleMediaPlayerPreviousFrameStatus,
-            .on_rate_changed = HandleMediaPlayerRateChanged,
-        };
         _playerInstance = libvlc_media_player_new([_privateLibrary instance],
-                                                  &player_cbs, (__bridge void *)_eventsHandler);
+                                                  &VLCMediaPlayerCallbacks, (__bridge void *)_eventsHandler);
         if (_playerInstance == NULL) {
             NSAssert(0, @"%s: player initialization failed", __PRETTY_FUNCTION__);
             return nil;
@@ -1820,32 +1821,8 @@ static void HandleMediaPlayerPreviousFrameStatus(void *opaque, int status)
             _privateLibrary = [VLCLibrary sharedLibrary];
         }
 
-        static const struct libvlc_media_player_cbs cbs = {
-            .version = 0,
-            .on_state_changed = HandleMediaInstanceStateChanged,
-            .on_buffering_changed = HandleMediaPlayerBuffering,
-            .on_capabilities_changed = HandleMediaPlayerCapabilitiesChanged,
-            .on_length_changed = HandleMediaPlayerLengthChanged,
-            .on_track_list_changed = HandleMediaPlayerTrackChanged,
-            .on_track_selection_changed = HandleMediaPlayerTrackSelectionChanged,
-            .on_media_changed = HandleMediaPlayerMediaChanged,
-            .on_media_meta_changed = HandleMediaPlayerMediaMetaChanged,
-            .on_media_subitems_changed = HandleMediaPlayerMediaSubItemsChanged,
-            .on_media_attachments_added = HandleMediaPlayerMediaAttachmentsAdded,
-            .on_title_selection_changed = HandleMediaTitleSelectionChanged,
-            .on_titles_changed = HandleMediaTitleListChanged,
-            .on_chapter_selection_changed = HandleMediaChapterChanged,
-            .on_program_list_changed = HandleMediaProgramListChanged,
-            .on_program_selection_changed = HandleMediaProgramSelectionChanged,
-            .on_screenshot_taken = HandleMediaPlayerSnapshot,
-            .on_recording_changed = HandleMediaPlayerRecord,
-            .on_audio_volume_changed = HandleMediaPlayerAudioVolumeChanged,
-            .on_next_frame_status = HandleMediaPlayerNextFrameStatus,
-            .on_prev_frame_status = HandleMediaPlayerPreviousFrameStatus,
-            .on_rate_changed = HandleMediaPlayerRateChanged,
-        };
         _playerInstance = libvlc_media_player_new([_privateLibrary instance],
-                                                  &cbs, (__bridge void *)_eventsHandler);
+                                                  &VLCMediaPlayerCallbacks, (__bridge void *)_eventsHandler);
         if (_playerInstance == NULL) {
             NSAssert(0, @"%s: player initialization failed", __PRETTY_FUNCTION__);
             return nil;
