@@ -140,6 +140,7 @@ static IOPMAssertionID displaySleepAssertion = 0;
     dispatch_queue_t _libVLCBackgroundQueue;    ///< Background dispatch queue to call libvlc
     int64_t _minimalWatchTimePeriod;            ///< Minimal period for the watch timer
     VLCEventsHandler*       _eventsHandler;     ///< Handles libvlc event callbacks
+    libvlc_media_list_player_t *_mediaListPlayerInstance;
 }
 
 /// Timer used to update time watch point interpolation on regular intervals
@@ -147,6 +148,7 @@ static IOPMAssertionID displaySleepAssertion = 0;
 @property (nonatomic) dispatch_queue_t timeChangeLockQueue;
 @property (NS_NONATOMIC_IOSONLY, getter=isSeeking, readwrite) BOOL seeking;
 @property (NS_NONATOMIC_IOSONLY) dispatch_block_t onSeekCompletion;
+@property (nonatomic, weak, readonly) id<VLCMediaListPlayerEvents> mediaListPlayer;
 
 @end
 
@@ -241,6 +243,8 @@ static void HandleMediaInstanceStateChanged(void *opaque, libvlc_state_t state)
             [[NSNotificationCenter defaultCenter] postNotification: notification];
             if([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerStateChanged:)])
                 [mediaPlayer.delegate mediaPlayerStateChanged:newState];
+            if (newState == VLCMediaPlayerStateStopped)
+                [mediaPlayer.mediaListPlayer mediaListPlayerStopped];
         }];
     }
 }
@@ -375,6 +379,8 @@ static void HandleMediaPlayerMediaChanged(void *opaque, libvlc_media_t *libvlc_m
             }
             VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerMediaChanged: newMedia];
+            if (newMedia != nil)
+                [mediaPlayer.mediaListPlayer mediaListPlayerNextItemSet:newMedia];
         }];
     }
 }
@@ -731,6 +737,35 @@ static const struct libvlc_media_player_cbs VLCMediaPlayerCallbacks = {
         _privateLibrary = library;
 
         _playerInstance = playerInstance;
+
+        static const struct libvlc_media_player_watch_time_cbs watch_time_cbs = {
+            .version = 0,
+            .on_update = HandleWatchTimeUpdate,
+            .on_paused = HandleWatchTimeDiscontinuity,
+            .on_seek = HandleWatchTimeOnSeek,
+        };
+        libvlc_media_player_watch_time(_playerInstance, _minimalWatchTimePeriod,
+                                       &watch_time_cbs, (__bridge void *)_eventsHandler);
+    }
+    return self;
+}
+
+- (instancetype)initWithMediaListPlayer:(id<VLCMediaListPlayerEvents>)mediaListPlayer library:(VLCLibrary *)library
+{
+    if (self = [self initCommon]) {
+        _cachedState = VLCMediaPlayerStateStopped;
+        _libVLCBackgroundQueue = [self libVLCBackgroundQueue];
+        _minimalWatchTimePeriod = 500000;
+        _privateLibrary = library;
+        _mediaListPlayer = mediaListPlayer;
+
+        _mediaListPlayerInstance = libvlc_media_list_player_new([_privateLibrary instance],
+                                                                &VLCMediaPlayerCallbacks, (__bridge void *)_eventsHandler);
+        if (_mediaListPlayerInstance == NULL) {
+            NSAssert(0, @"%s: list player initialization failed", __PRETTY_FUNCTION__);
+            return nil;
+        }
+        _playerInstance = libvlc_media_list_player_get_media_player(_mediaListPlayerInstance);
 
         static const struct libvlc_media_player_watch_time_cbs watch_time_cbs = {
             .version = 0,
@@ -2059,6 +2094,10 @@ static const struct libvlc_media_player_cbs VLCMediaPlayerCallbacks = {
 
 - (libvlc_media_player_t *)playerInstance {
     return _playerInstance;
+}
+
+- (libvlc_media_list_player_t *)mediaListPlayerInstance {
+    return _mediaListPlayerInstance;
 }
 
 @end

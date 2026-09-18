@@ -26,10 +26,16 @@
 
 #import <VLCMediaPlayer.h>
 
+@protocol VLCMediaListPlayerEvents <NSObject>
+- (void)mediaListPlayerNextItemSet:(VLCMedia *)media;
+- (void)mediaListPlayerStopped;
+@end
+
 @interface VLCMediaPlayer (Internal)
 @property (readonly) libvlc_media_player_t *playerInstance;
-- (void)mediaPlayerStateChanged:(VLCMediaPlayerState)newState;
 - (void)mediaPlayerMediaChanged:(VLCMedia *)newMedia;
+@property (readonly) libvlc_media_list_player_t *mediaListPlayerInstance;
+- (instancetype)initWithMediaListPlayer:(id<VLCMediaListPlayerEvents>)mediaListPlayer library:(VLCLibrary *)library;
 @end
 
 #endif /* VLCMediaPlayer_Internal_h */

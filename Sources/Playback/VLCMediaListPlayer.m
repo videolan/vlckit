@@ -32,80 +32,16 @@
 #import <VLCMediaList.h>
 #import <VLCLibVLCBridging.h>
 #import <VLCLibrary.h>
-#import <VLCEventsHandler.h>
 
-@interface VLCMediaListPlayer () {
+@interface VLCMediaListPlayer () <VLCMediaListPlayerEvents> {
     void *instance;
     VLCMedia *_rootMedia;
     VLCMediaPlayer *_mediaPlayer;
     VLCMediaList *_mediaList;
     VLCRepeatMode _repeatMode;
     dispatch_queue_t _libVLCBackgroundQueue;
-    VLCEventsHandler *_eventsHandler;
 }
-- (void)mediaListPlayerNextItemSet:(VLCMedia *)media;
-- (void)mediaListPlayerStopped;
 @end
-
-static void HandleMediaChanged(void *opaque, libvlc_media_t *md)
-{
-    @autoreleasepool {
-        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler *)opaque;
-        [eventsHandler handleEvent:^(id _Nonnull object) {
-            VLCMedia *media = [[VLCMedia alloc] initWithLibVLCMediaDescriptor:md];
-            VLCMediaListPlayer *mediaListPlayer = (VLCMediaListPlayer *)object;
-            [mediaListPlayer.mediaPlayer mediaPlayerMediaChanged:media];
-            [mediaListPlayer mediaListPlayerNextItemSet: media];
-        }];
-    }
-}
-
-static void HandleStateChanged(void *opaque, libvlc_state_t state)
-{
-    VLCMediaPlayerState newState;
-
-    switch (state) {
-        case libvlc_Playing:
-            newState = VLCMediaPlayerStatePlaying;
-            break;
-        case libvlc_Paused:
-            newState = VLCMediaPlayerStatePaused;
-            break;
-        case libvlc_Stopping:
-            newState = VLCMediaPlayerStateStopping;
-            break;
-        case libvlc_Stopped:
-            newState = VLCMediaPlayerStateStopped;
-            break;
-        case libvlc_Error:
-            newState = VLCMediaPlayerStateError;
-            break;
-        case libvlc_Opening:
-            newState = VLCMediaPlayerStateOpening;
-            break;
-
-        default:
-            VKLog(@"%s: Unknown event", __FUNCTION__);
-            return;
-    }
-
-    @autoreleasepool {
-        VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler *)opaque;
-        [eventsHandler handleEvent:^(id _Nonnull object) {
-            VLCMediaListPlayer *mediaListPlayer = (VLCMediaListPlayer *)object;
-            VLCMediaPlayer *mediaPlayer = mediaListPlayer.mediaPlayer;
-
-            [mediaPlayer mediaPlayerStateChanged:newState];
-            NSNotification *notification = [NSNotification notificationWithName:VLCMediaPlayerStateChangedNotification object:mediaPlayer];
-            [[NSNotificationCenter defaultCenter] postNotification:notification];
-            if ([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerStateChanged:)])
-                [mediaPlayer.delegate mediaPlayerStateChanged:newState];
-
-            if (state == libvlc_Stopped)
-                [mediaListPlayer mediaListPlayerStopped];
-        }];
-    }
-}
 
 @implementation VLCMediaListPlayer
 
@@ -120,18 +56,8 @@ static void HandleStateChanged(void *opaque, libvlc_state_t state)
         } else
             library = [VLCLibrary sharedLibrary];
 
-        _eventsHandler = [VLCEventsHandler handlerWithObject:self configuration:[VLCLibrary sharedEventsConfiguration]];
-
-        static const struct libvlc_media_player_cbs cbs = {
-            .version = 0,
-            .on_media_changed = HandleMediaChanged,
-            .on_state_changed = HandleStateChanged,
-        };
-
-        instance = libvlc_media_list_player_new([library instance],
-                                                &cbs, (__bridge void *)_eventsHandler);
-
-        _mediaPlayer = [[VLCMediaPlayer alloc] initWithLibVLCInstance:libvlc_media_list_player_get_media_player(instance) andLibrary:library];
+        _mediaPlayer = [[VLCMediaPlayer alloc] initWithMediaListPlayer:self library:library];
+        instance = _mediaPlayer.mediaListPlayerInstance;
         if (drawable != nil)
             [_mediaPlayer setDrawable:drawable];
     }
