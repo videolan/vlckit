@@ -284,9 +284,11 @@ static const struct libvlc_downloader_cbs downloader_cbs = {
         .media = p_media,
     };
 
-    libvlc_downloader_task *p_task = libvlc_downloader_queue(_downloader, &request,
-                                                             &downloader_cbs, (__bridge void *)task);
-    if (p_task == NULL) {
+    libvlc_downloader_task *p_task = libvlc_downloader_task_new(_downloader, &request,
+                                                                &downloader_cbs, (__bridge void *)task);
+    if (p_task == NULL || libvlc_downloader_submit(_downloader, p_task) != 0) {
+        if (p_task != NULL)
+            libvlc_downloader_task_release(p_task);
         @synchronized (self) {
             [_activeTasks removeObject:task];
         }
