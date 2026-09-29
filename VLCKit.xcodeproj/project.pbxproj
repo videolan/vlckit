@@ -1448,11 +1448,6 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				"OTHER_LDFLAGS[sdk=iphonesimulator*]" = (
-					"-ObjC",
-					"-read_only_relocs",
-					suppress,
-				);
 				"OTHER_LDFLAGS[sdk=xros*]" = (
 					"-ObjC",
 					"-ld64",
@@ -1461,7 +1456,6 @@
 					"-ObjC",
 					"-ld64",
 				);
-				"OTHER_LIBTOOLFLAGS[sdk=iphonesimulator*]" = "-read_only_relocs suppress";
 				PRODUCT_BUNDLE_IDENTIFIER = org.videolan.vlckit;
 				PRODUCT_NAME = VLCKit;
 				SDKROOT = xros;
