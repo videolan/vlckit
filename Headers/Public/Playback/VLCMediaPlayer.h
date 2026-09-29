@@ -33,7 +33,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, VLCMediaTrackType) NS_SWIFT_NAME(VLCMedia.TrackType);
+typedef NS_ENUM(NSInteger, VLCMediaTrackType);
 @class VLCLibrary, VLCMedia, VLCTime, VLCAudio, VLCMediaPlayer, VLCMediaPlayerTrack, VLCAdjustFilter, VLCAudioEqualizer, VLCMediaPlayerTitleDescription, VLCMediaPlayerChapterDescription, VLCProgramDescription;
 #if !TARGET_OS_IPHONE
 @class VLCVideoView, VLCVideoLayer;
