@@ -1627,7 +1627,7 @@ static const struct libvlc_media_player_cbs VLCMediaPlayerCallbacks = {
     [self jumpWithOffset:interval completion:nil];
 }
 
-- (BOOL)jumpWithOffset:(int)interval completion:(dispatch_block_t)completion {
+- (BOOL)jumpWithOffset:(int)interval completion:(nullable dispatch_block_t)completion {
     if (![self isSeekable])
         return NO;
 

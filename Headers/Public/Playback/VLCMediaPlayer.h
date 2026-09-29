@@ -815,7 +815,7 @@ typedef NS_ENUM(unsigned, VLCAudioMixMode)
  * \param completion completion block called when seeking is finished
  * \discussion completion block will be called on main thread.
  */
-- (BOOL)jumpWithOffset:(int)interval completion:(dispatch_block_t)completion;
+- (BOOL)jumpWithOffset:(int)interval completion:(nullable dispatch_block_t)completion;
 
 /**
  * Jumps shortly backward in current stream if seeking is supported.
