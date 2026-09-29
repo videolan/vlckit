@@ -191,17 +191,23 @@ static const struct libvlc_thumbnailer_cbs thumbnailer_cbs = {
         request.seek.value.pos = _snapshotPosition > 0 ? _snapshotPosition : kSnapshotPosition;
     }
 
-    _task = libvlc_parser_task_new_thumbnail(_parser, &request, &thumbnailer_cbs, (__bridge void *)_eventsHandler);
-    if (_task == NULL) {
-        [_thumbnailingDelegate mediaThumbnailerDidTimeOut:self];
-        return;
+    BOOL failed = NO;
+    @synchronized (self) {
+        if (_cancelled)
+            return;
+
+        _task = libvlc_parser_task_new_thumbnail(_parser, &request, &thumbnailer_cbs, (__bridge void *)_eventsHandler);
+        if (_task == NULL) {
+            failed = YES;
+        } else if (libvlc_parser_submit(_parser, _task) != 0) {
+            libvlc_parser_task_release(_task);
+            _task = NULL;
+            failed = YES;
+        }
     }
 
-    if (libvlc_parser_submit(_parser, _task) != 0) {
-        libvlc_parser_task_release(_task);
-        _task = NULL;
+    if (failed)
         [_thumbnailingDelegate mediaThumbnailerDidTimeOut:self];
-    }
 }
 
 - (void)cancel
