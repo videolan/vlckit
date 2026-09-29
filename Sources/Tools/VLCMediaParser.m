@@ -152,12 +152,19 @@ static const struct libvlc_parser_cbs parser_cbs = {
     @synchronized (self) {
         [_mediaDict setObject:media forKey:valueKey];
 
-        libvlc_parser_task *task = libvlc_parser_queue(_parser, &request, &parser_cbs, (__bridge void *)_eventHandler);
+        libvlc_parser_task *task = libvlc_parser_task_new_parse(_parser, &request, &parser_cbs, (__bridge void *)_eventHandler);
         if (task == NULL) {
             [_mediaDict removeObjectForKey:valueKey];
             return -1;
         }
         [_taskDict setObject:[NSValue valueWithPointer:task] forKey:valueKey];
+
+        if (libvlc_parser_submit(_parser, task) != 0) {
+            [_mediaDict removeObjectForKey:valueKey];
+            [_taskDict removeObjectForKey:valueKey];
+            libvlc_parser_task_release(task);
+            return -1;
+        }
     }
     return 0;
 }
