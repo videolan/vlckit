@@ -570,9 +570,8 @@
 
 - (void)setUnsigned:(const unsigned)u forKey:(const libvlc_meta_t)key
 {
-    const size_t size = 11;
-    char value[size];
-    snprintf(value, size, "%u", u);
+    char value[11];
+    snprintf(value, sizeof(value), "%u", u);
     [self setMetadata: value forKey: key];
 }
 
