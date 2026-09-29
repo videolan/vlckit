@@ -65,21 +65,21 @@ NSNotificationName const VLCMediaPlayerProgramSelectionChangedNotification = @"V
 NSNotificationName const VLCMediaPlayerCapabilitiesChangedNotification = @"VLCMediaPlayerCapabilitiesChangedNotification";
 NSNotificationName const VLCMediaPlayerRateChangedNotification = @"VLCMediaPlayerRateChangedNotification";
 
-static_assert(VLCAudioStereoModeUnset == libvlc_AudioStereoMode_Unset
-           && VLCAudioStereoModeStereo == libvlc_AudioStereoMode_Stereo
-           && VLCAudioStereoModeRStereo == libvlc_AudioStereoMode_RStereo
-           && VLCAudioStereoModeLeft == libvlc_AudioStereoMode_Left
-           && VLCAudioStereoModeRight == libvlc_AudioStereoMode_Right
-           && VLCAudioStereoModeDolbys == libvlc_AudioStereoMode_Dolbys
-           && VLCAudioStereoModeMono == libvlc_AudioStereoMode_Mono
+static_assert(VLCAudioStereoModeUnset == (VLCAudioStereoMode)libvlc_AudioStereoMode_Unset
+           && VLCAudioStereoModeStereo == (VLCAudioStereoMode)libvlc_AudioStereoMode_Stereo
+           && VLCAudioStereoModeRStereo == (VLCAudioStereoMode)libvlc_AudioStereoMode_RStereo
+           && VLCAudioStereoModeLeft == (VLCAudioStereoMode)libvlc_AudioStereoMode_Left
+           && VLCAudioStereoModeRight == (VLCAudioStereoMode)libvlc_AudioStereoMode_Right
+           && VLCAudioStereoModeDolbys == (VLCAudioStereoMode)libvlc_AudioStereoMode_Dolbys
+           && VLCAudioStereoModeMono == (VLCAudioStereoMode)libvlc_AudioStereoMode_Mono
               , "Audio stereo mode doesn't match with libvlc");
 
-static_assert(VLCAudioMixModeUnset == libvlc_AudioMixMode_Unset
-           && VLCAudioMixModeStereo == libvlc_AudioMixMode_Stereo
-           && VLCAudioMixModeBinaural == libvlc_AudioMixMode_Binaural
-           && VLCAudioMixMode4_0 == libvlc_AudioMixMode_4_0
-           && VLCAudioMixMode5_1 == libvlc_AudioMixMode_5_1
-           && VLCAudioMixMode7_1 == libvlc_AudioMixMode_7_1
+static_assert(VLCAudioMixModeUnset == (VLCAudioMixMode)libvlc_AudioMixMode_Unset
+           && VLCAudioMixModeStereo == (VLCAudioMixMode)libvlc_AudioMixMode_Stereo
+           && VLCAudioMixModeBinaural == (VLCAudioMixMode)libvlc_AudioMixMode_Binaural
+           && VLCAudioMixMode4_0 == (VLCAudioMixMode)libvlc_AudioMixMode_4_0
+           && VLCAudioMixMode5_1 == (VLCAudioMixMode)libvlc_AudioMixMode_5_1
+           && VLCAudioMixMode7_1 == (VLCAudioMixMode)libvlc_AudioMixMode_7_1
               , "Audio mix mode doesn't match with libvlc");
 
 NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state)
@@ -1382,12 +1382,12 @@ static const struct libvlc_media_player_cbs VLCMediaPlayerCallbacks = {
 
 - (void)setAudioMixMode:(VLCAudioMixMode)mode
 {
-    libvlc_audio_set_mixmode(_playerInstance, mode);
+    libvlc_audio_set_mixmode(_playerInstance, (libvlc_audio_output_mixmode_t)mode);
 }
 
 - (VLCAudioMixMode)audioMixMode
 {
-    return libvlc_audio_get_mixmode(_playerInstance);
+    return (VLCAudioMixMode)libvlc_audio_get_mixmode(_playerInstance);
 }
 
 - (void)setCurrentAudioPlaybackDelay:(NSInteger)index
