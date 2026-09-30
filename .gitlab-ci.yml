@@ -95,7 +95,7 @@ dev-artifacts-MobileVLCKit:
 
 dev-artifacts-TVVLCKit:
     tags:
-        - monterey
+        - macos-xcode26
     extends:
         - .dev-artifacts-job-base
         - .dev-artifacts-build-base
@@ -168,7 +168,7 @@ MobileVLCKit:
 
 TVVLCKit:
     tags:
-        - monterey
+        - macos-xcode26
     extends:
         - .release-job-base
         - .release-build-base
