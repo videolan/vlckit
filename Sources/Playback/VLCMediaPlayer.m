@@ -369,14 +369,16 @@ static void HandleMediaPlayerMediaChanged(void *opaque, libvlc_media_t *libvlc_m
 {
     @autoreleasepool {
         VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler *)opaque;
-        [eventsHandler handleEvent:^(id _Nonnull object) {
-            VLCMedia *newMedia = nil;
-            if (libvlc_media != NULL) {
-                newMedia = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
-                if (newMedia == nil) {
-                    newMedia = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
-                }
+        // Resolve the wrapper while the callback's borrowed descriptor is valid.
+        // The event block owns the wrapper (and its descriptor) until delivery.
+        VLCMedia *newMedia = nil;
+        if (libvlc_media != NULL) {
+            newMedia = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
+            if (newMedia == nil) {
+                newMedia = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
             }
+        }
+        [eventsHandler handleEvent:^(id _Nonnull object) {
             VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
             [mediaPlayer mediaPlayerMediaChanged: newMedia];
             if (newMedia != nil)
@@ -389,12 +391,13 @@ static void HandleMediaPlayerMediaMetaChanged(void *opaque, libvlc_media_t *libv
 {
     @autoreleasepool {
         VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler *)opaque;
+        if (libvlc_media == NULL)
+            return;
+        // Capture a strong wrapper, never a borrowed descriptor, across dispatch.
+        VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
+        if (media == nil)
+            media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
         [eventsHandler handleEvent:^(id _Nonnull object) {
-            if (libvlc_media == NULL)
-                return;
-            VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
-            if (media == nil)
-                media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
             [media metaChanged];
         }];
     }
@@ -404,12 +407,13 @@ static void HandleMediaPlayerMediaSubItemsChanged(void *opaque, libvlc_media_t *
 {
     @autoreleasepool {
         VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler *)opaque;
+        if (libvlc_media == NULL)
+            return;
+        // Capture a strong wrapper, never a borrowed descriptor, across dispatch.
+        VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
+        if (media == nil)
+            media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
         [eventsHandler handleEvent:^(id _Nonnull object) {
-            if (libvlc_media == NULL)
-                return;
-            VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
-            if (media == nil)
-                media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
             [media subitemsChanged];
         }];
     }
@@ -441,10 +445,11 @@ static void HandleMediaPlayerMediaAttachmentsAdded(void *opaque, libvlc_media_t 
             return;
 
         VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler *)opaque;
+        // Keep the wrapper alive just as we keep the copied attachment alive.
+        VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
+        if (media == nil)
+            media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
         [eventsHandler handleEvent:^(id _Nonnull object) {
-            VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
-            if (media == nil)
-                media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
             [media artworkAttachmentReceived:artworkData];
         }];
     }
