@@ -403,14 +403,19 @@ static void HandleMediaPlayerMediaMetaChanged(void *opaque, libvlc_media_t *libv
 static void HandleMediaPlayerMediaSubItemsChanged(void *opaque, libvlc_media_t *libvlc_media)
 {
     @autoreleasepool {
+        if (libvlc_media == NULL)
+            return;
+
+        // Keep the originating playlist alive when event delivery is asynchronous.
+        VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
+        if (media == nil)
+            media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
         VLCEventsHandler *eventsHandler = (__bridge VLCEventsHandler *)opaque;
         [eventsHandler handleEvent:^(id _Nonnull object) {
-            if (libvlc_media == NULL)
-                return;
-            VLCMedia *media = (__bridge VLCMedia *)libvlc_media_get_user_data(libvlc_media);
-            if (media == nil)
-                media = [VLCMedia mediaWithLibVLCMediaDescriptor:libvlc_media];
             [media subitemsChanged];
+            VLCMediaPlayer *mediaPlayer = (VLCMediaPlayer *)object;
+            if ([mediaPlayer.delegate respondsToSelector:@selector(mediaPlayerSubitemsChanged:)])
+                [mediaPlayer.delegate mediaPlayerSubitemsChanged:media];
         }];
     }
 }

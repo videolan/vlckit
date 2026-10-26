@@ -142,6 +142,15 @@ NSString * VLCMediaPlayerStateToString(VLCMediaPlayerState state);
 - (void)mediaPlayerRateChanged:(float)rate;
 
 /**
+ * Called when the player discovers playlist subitems.
+ * \param media the playlist whose subitems changed. Its subitems property is
+ * updated before this method is called.
+ * \note Delivered using the library's shared events configuration, including
+ * when a media list player automatically advances to a playlist.
+ */
+- (void)mediaPlayerSubitemsChanged:(VLCMedia *)media;
+
+/**
  * Called when the media player signal that a new track is available
  * for selection.
  * \param trackId the track identifier to find the track
