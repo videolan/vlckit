@@ -229,10 +229,11 @@ typedef NS_ENUM(NSUInteger, VLCMediaType) {
 @property (nonatomic, weak, nullable) id<VLCMediaDelegate> delegate;
 
 /**
+ * Reads the current native duration on each access, including playback updates.
  * A VLCTime object describing the length of the media resource, only if it is
  * available.
  */
-@property (nonatomic, readwrite, strong) VLCTime * length;
+@property (nonatomic, readonly, strong) VLCTime * length;
 
 /**
  * list of possible parsed states returnable by parsedStatus

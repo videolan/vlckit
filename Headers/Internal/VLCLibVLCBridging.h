@@ -112,13 +112,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface VLCMedia (VLCMediaPlayerBridging)
 /**
- * Set's the length of the media object.  This value becomes available once the
- * media object is being played.
- * \param value the length value
- */
-- (void)setLength:(VLCTime *)value;
-
-/**
  * Called by the media player when libvlc reports that the media's metadata has
  * been updated. Invalidates the cached metadata and notifies observers.
  */

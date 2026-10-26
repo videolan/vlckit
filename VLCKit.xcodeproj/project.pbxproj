@@ -13,6 +13,7 @@
 		3CB1FD042ABC1A5D00997CFB /* VLCMediaPlayerTitleDescription.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB1FD032ABC1A5D00997CFB /* VLCMediaPlayerTitleDescription.m */; };
 		3CD18254298D8C9900E466A3 /* VLCAudioEqualizer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CD18253298D8C9900E466A3 /* VLCAudioEqualizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CD18258298D8CC600E466A3 /* VLCAudioEqualizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD18257298D8CC600E466A3 /* VLCAudioEqualizer.m */; };
+		516D48A43B4C030D2C82337A /* VLCMediaDurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C7D8423BE2A126C02571F82B /* VLCMediaDurationTest.m */; };
 		6C218374285090F2000C4AC9 /* VLCConsoleLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218371285090F2000C4AC9 /* VLCConsoleLogger.m */; };
 		6C218377285090F2000C4AC9 /* VLCLogMessageFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218372285090F2000C4AC9 /* VLCLogMessageFormatter.m */; };
 		6C21837A285090F2000C4AC9 /* VLCFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C218373285090F2000C4AC9 /* VLCFileLogger.m */; };
@@ -383,6 +384,7 @@
 		8D2CE64E203EEA47004BB7F6 /* VLCRendererItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VLCRendererItem.h; sourceTree = "<group>"; };
 		8D2CE64F203EEA47004BB7F6 /* VLCRendererItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VLCRendererItem.m; sourceTree = "<group>"; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C7D8423BE2A126C02571F82B /* VLCMediaDurationTest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = VLCMediaDurationTest.m; sourceTree = "<group>"; };
 		CA1E134D21087D750066F32F /* Video.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		CA1E135221087D8E0066F32F /* german.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = german.srt; sourceTree = "<group>"; };
 		CA1E135321087D8E0066F32F /* slovak.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = slovak.srt; sourceTree = "<group>"; };
@@ -987,6 +989,7 @@
 				CAA9F00120D254A600CDBB2C /* VLCTimeTest.swift */,
 				CABF4D4020D8DBA900FCCE29 /* VLCMediaTest.swift */,
 				E20790012610000000000002 /* VLCMediaPlayerTest.swift */,
+				C7D8423BE2A126C02571F82B /* VLCMediaDurationTest.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1268,6 +1271,7 @@
 				ED2560A621F3AA4600396F9B /* VLCAudioTest.swift in Sources */,
 				ED2560A721F3AA4600396F9B /* VLCLibraryTest.swift in Sources */,
 				ED2560A821F3AA4600396F9B /* Video.swift in Sources */,
+				516D48A43B4C030D2C82337A /* VLCMediaDurationTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
