@@ -1,0 +1,117 @@
+From aef71e96f64b86c7cd174a59dd74e5d846c693b1 Mon Sep 17 00:00:00 2001
+From: Marvin Scholz <epirat07@gmail.com>
+Date: Fri, 16 Jan 2026 15:52:07 +0100
+Subject: [PATCH] sout: chromecast: fix exposed URL formatting
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Chromecast devices need to know the local IP address to reach or HTTP
+server, serving both media and art cover.
+We use `net_GetSockAddress` to retrieve the host IP address, which does
+not specify the IP version. Contacting a chromecast via IPv6 often leads
+to `net_GetSockAddress` giving the host IPv6, which is fine, but needs
+proper formatting.
+
+Bracketing the IPv6 address is mandatory according to RFC 3986.
+
+Co-Authored-By: Alaric Senat <alaric@videolabs.io>
+
+Ref #29544
+
+(cherry picked from commit 5efe99a912ce3ebc9d62829e91b0aed5280345ba)
+Signed-off-by: Felix Paul Kühne <fkuehne@videolan.org>
+---
+ modules/stream_out/chromecast/chromecast.h    |  6 ++---
+ .../chromecast/chromecast_communication.cpp   | 26 ++++++++++++++++---
+ .../stream_out/chromecast/chromecast_ctrl.cpp |  4 +--
+ 3 files changed, 25 insertions(+), 11 deletions(-)
+
+diff --git a/modules/stream_out/chromecast/chromecast.h b/modules/stream_out/chromecast/chromecast.h
+index 031055476a6..b99ec1b7066 100644
+--- a/modules/stream_out/chromecast/chromecast.h
++++ b/modules/stream_out/chromecast/chromecast.h
+@@ -131,10 +131,8 @@ public:
+                                  float volume, bool mute);
+     ssize_t receive( uint8_t *p_data, size_t i_size, int i_timeout, bool *pb_timeout );
+ 
+-    const std::string getServerIp()
+-    {
+-        return m_serverIp;
+-    }
++    std::string getServerBaseURL() const;
++
+ private:
+     int sendMessage(const castchannel::CastMessage &msg);
+ 
+diff --git a/modules/stream_out/chromecast/chromecast_communication.cpp b/modules/stream_out/chromecast/chromecast_communication.cpp
+index 477b3fde114..2f5ff299133 100644
+--- a/modules/stream_out/chromecast/chromecast_communication.cpp
++++ b/modules/stream_out/chromecast/chromecast_communication.cpp
+@@ -34,6 +34,8 @@
+ 
+ #include <iomanip>
+ 
++#include <vlc_url.h>
++
+ ChromecastCommunication::ChromecastCommunication( vlc_object_t* p_module,
+     std::string serverPath, unsigned int serverPort, const char* targetIP, unsigned int devicePort )
+     : m_module( p_module )
+@@ -283,6 +285,23 @@ static std::string meta_get_escaped(const vlc_meta_t *p_meta, vlc_meta_type_t ty
+     return escape_json(std::string(psz));
+ }
+ 
++std::string ChromecastCommunication::getServerBaseURL() const
++{
++
++    vlc_url_t url_comps{};
++    url_comps.psz_protocol = (char*)"http";
++    url_comps.psz_host = (char*)m_serverIp.c_str();
++    url_comps.i_port = m_serverPort;
++
++    char *url = vlc_uri_compose(&url_comps);
++    if (!url)
++        throw std::bad_alloc();
++    std::string url_str = url;
++    std::free(url);
++
++    return url_str;
++}
++
+ std::string ChromecastCommunication::GetMedia( const std::string& mime,
+                                                const vlc_meta_t *p_meta )
+ {
+@@ -344,12 +363,11 @@ std::string ChromecastCommunication::GetMedia( const std::string& mime,
+         }
+     }
+ 
+-    std::stringstream chromecast_url;
+-    chromecast_url << "http://" << m_serverIp << ":" << m_serverPort << m_serverPath;
++    const std::string chromecast_url = getServerBaseURL() + m_serverPath;
+ 
+-    msg_Dbg( m_module, "s_chromecast_url: %s", chromecast_url.str().c_str());
++    msg_Dbg( m_module, "s_chromecast_url: %s", chromecast_url.c_str());
+ 
+-    ss << "\"contentId\":\"" << chromecast_url.str() << "\""
++    ss << "\"contentId\":\"" << chromecast_url << "\""
+        << ",\"streamType\":\"LIVE\""
+        << ",\"contentType\":\"" << mime << "\"";
+ 
+diff --git a/modules/stream_out/chromecast/chromecast_ctrl.cpp b/modules/stream_out/chromecast/chromecast_ctrl.cpp
+index 01800007976..4dba49f260a 100644
+--- a/modules/stream_out/chromecast/chromecast_ctrl.cpp
++++ b/modules/stream_out/chromecast/chromecast_ctrl.cpp
+@@ -131,9 +131,7 @@ intf_sys_t::intf_sys_t(vlc_object_t * const p_this, int port, std::string device
+     vlc_cond_init( &m_stateChangedCond );
+     vlc_cond_init( &m_pace_cond );
+ 
+-    std::stringstream ss;
+-    ss << "http://" << m_communication->getServerIp() << ":" << port;
+-    m_art_http_ip = ss.str();
++    m_art_http_ip = m_communication->getServerBaseURL();
+ 
+     char *device_name = var_GetString(p_this, "sout-chromecast-device-name");
+     if (device_name)
+-- 
+GitLab
+
