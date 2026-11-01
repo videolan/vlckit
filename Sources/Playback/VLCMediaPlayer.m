@@ -2,8 +2,8 @@
  * VLCMediaPlayer.m: VLCKit.framework VLCMediaPlayer implementation
  *****************************************************************************
  * Copyright (C) 2007-2009 Pierre d'Herbemont
- * Copyright (C) 2007-2024 VLC authors and VideoLAN
- * Partial Copyright (C) 2009-2024 Felix Paul Kühne
+ * Copyright (C) 2007-2026 VLC authors and VideoLAN
+ * Partial Copyright (C) 2009-2026 Felix Paul Kühne
  * $Id$
  *
  * Authors: Pierre d'Herbemont <pdherbemont # videolan.org>
@@ -1932,6 +1932,14 @@ static const struct libvlc_media_player_cbs VLCMediaPlayerCallbacks = {
 
 - (void)mediaPlayerMediaChanged:(VLCMedia *)newMedia
 {
+    dispatch_sync(_timeChangeLockQueue, ^{
+        _lastTimePoint.ts_us = -1;
+        _lastInterpolatedTime = 0;
+        _lastInterpolatedPosition = 0.;
+        _systemDateOfDiscontinuity = 0;
+        _timeDiscontinuityState = NO;
+    });
+
     [self willChangeValueForKey:@"media"];
     if (_media != newMedia) {
         _media = newMedia;
